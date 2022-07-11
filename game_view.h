@@ -11,6 +11,28 @@ class game_view
 {
 public:
   game_view();
+
+  /// Run the game, until the user quits
+  void exec();
+
+private:
+
+  /// The game logic
+  game m_game;
+
+  /// The resources (images, sounds, etc.) of the game
+  game_resources m_game_resources;
+
+  /// The window to draw to
+  sf::RenderWindow m_window;
+
+
+  /// Process all events
+  /// @return if the user wants to quit
+  bool process_events();
+
+  /// Show the game on-screen
+  void show();
 };
 
 void test_game_view();

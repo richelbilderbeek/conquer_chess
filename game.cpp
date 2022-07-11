@@ -12,6 +12,11 @@ game::game()
 
 }
 
+void game::tick()
+{
+
+}
+
 void test_game() //!OCLINT tests may be many
 {
 #ifndef NDEBUG // no tests in release

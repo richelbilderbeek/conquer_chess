@@ -21,7 +21,20 @@ void test()
 #endif
 }
 
-int main() //!OCLINT tests may be long
+std::vector<std::string> collect_args(int argc, char **argv) {
+  std::vector<std::string> v(argv, argv + argc);
+  return v;
+}
+
+int main(int argc, char **argv) //!OCLINT tests may be long
 {
-  game_view gv;
+  const auto args = collect_args(argc, argv);
+  if (args.size() == 2 && args[1] == "--test") {
+    test();
+  }
+
+  if (args.size() == 1) {
+    game_view v;
+    v.exec();
+  }
 }

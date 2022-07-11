@@ -1,5 +1,22 @@
 <RCC>
     <qresource prefix="/">
-        <file>ninja_gods.ogg</file>
+        <file>resources/ninja_gods.ogg</file>
+        <file>resources/bb.png</file>
+        <file>resources/bw.png</file>
+        <file>resources/d.png</file>
+        <file>resources/kb.png</file>
+        <file>resources/kw.png</file>
+        <file>resources/l.png</file>
+        <file>resources/nb.png</file>
+        <file>resources/nw.png</file>
+        <file>resources/pb.png</file>
+        <file>resources/pw.png</file>
+        <file>resources/qb.png</file>
+        <file>resources/qm.png</file>
+        <file>resources/qw.png</file>
+        <file>resources/rb.png</file>
+        <file>resources/rw.png</file>
+        <file>resources/t.png</file>
+        <file>resources/arial.ttf</file>
     </qresource>
 </RCC>

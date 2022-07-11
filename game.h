@@ -7,6 +7,9 @@ class game
 {
 public:
   game();
+
+  /// Go to the next frame
+  void tick();
 };
 
 void test_game();
