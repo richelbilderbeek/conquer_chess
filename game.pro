@@ -27,7 +27,8 @@ CONFIG(debug, debug|release) {
 }
 
 # Qt5
-QT += core gui
+QT += core gui \
+  widgets
 
 # GNU/Linux
 unix:!macx {
