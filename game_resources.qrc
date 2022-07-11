@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ninja_gods.ogg</file>
+    </qresource>
+</RCC>
