@@ -1,6 +1,7 @@
 #include "game.h"
 #include "game_resources.h"
 #include "game_view.h"
+#include "game_view_layout.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -13,6 +14,7 @@ void test()
 {
 #ifndef NDEBUG
   test_game();
+  test_game_view_layout();
 
 #ifndef LOGIC_ONLY
   test_game_view();
@@ -28,6 +30,9 @@ std::vector<std::string> collect_args(int argc, char **argv) {
 
 int main(int argc, char **argv) //!OCLINT tests may be long
 {
+  #ifndef NDEBUG
+  test();
+  #endif
   const auto args = collect_args(argc, argv);
   if (args.size() == 2 && args[1] == "--test") {
     test();

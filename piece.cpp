@@ -10,9 +10,15 @@ piece::piece(
   : m_color{color},
     m_coordinat{coordinat},
     m_f_health{1.0},
+    m_is_selected{false},
     m_type{type}
 {
 
+}
+
+void piece::do_lmb_down()
+{
+  m_is_selected = !m_is_selected;
 }
 
 std::vector<piece> get_starting_pieces() noexcept

@@ -1,6 +1,7 @@
 #ifndef GAME_VIEW_LAYOUT_H
 #define GAME_VIEW_LAYOUT_H
 
+#include "game_coordinat.h"
 #include "screen_coordinat.h"
 
 /// The layout of the game view
@@ -26,8 +27,12 @@ class game_view_layout
 {
 public:
   game_view_layout(
-    const screen_coordinat& window_size
+    const screen_coordinat& window_size = screen_coordinat(1024, 576)
   );
+
+  double get_board_height() const noexcept;
+  double get_board_width() const noexcept;
+
   screen_coordinat get_br_board() const noexcept { return m_br_board; }
   screen_coordinat get_br_side() const noexcept { return m_br_side; }
 
@@ -46,5 +51,20 @@ private:
   /// The size of the window
   screen_coordinat m_window_size;
 };
+
+/// Convert an in-game coordinat to an on-screen coordinat
+screen_coordinat convert_to_screen_coordinat(
+  const game_coordinat& coordinat,
+  const game_view_layout& layout
+);
+
+/// Convert an on-screen coordinat to an in-game coordinat
+game_coordinat convert_to_game_coordinat(
+  const screen_coordinat& coordinat,
+  const game_view_layout& layout
+);
+
+/// Test the game_view_layout class
+void test_game_view_layout();
 
 #endif // GAME_VIEW_LAYOUT_H

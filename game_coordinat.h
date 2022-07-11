@@ -17,4 +17,10 @@ private:
   double m_y;
 };
 
+
+game_coordinat operator-(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
+game_coordinat operator+(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
+
+double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
+
 #endif // GAME_COORDINAT_H

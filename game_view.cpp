@@ -7,12 +7,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 
+#include <iostream>
 #include <cmath>
 #include <string>
 #include <sstream>
 
-game_view::game_view(const screen_coordinat& screen_size)
-  : m_layout{screen_size}
+game_view::game_view(const game& game)
+  : m_game{game}
 {
 
 }
@@ -62,25 +63,31 @@ bool game_view::process_events()
     }
     if (event.type == sf::Event::MouseMoved)
     {
-      m_game.add_action(
-        create_mouse_move_action(
-          screen_coordinat(
-            event.mouseButton.x,
-            event.mouseButton.y
-          )
+      const auto mouse_screen_pos{
+        screen_coordinat(event.mouseMove.x, event.mouseMove.y)
+      };
+      //std::clog << "(" << mouse_screen_pos.get_x() << ", " << mouse_screen_pos.get_y() << ")\n";
+      const auto mouse_game_pos{
+        convert_to_game_coordinat(
+          mouse_screen_pos,
+          m_game.get_layout()
         )
-      );
-
+      };
+      //std::clog << "(" << mouse_game_pos.get_x() << ", " << mouse_game_pos.get_y() << ")\n";
+      m_game.add_action(create_mouse_move_action(mouse_game_pos));
     }
     else if (event.type == sf::Event::MouseButtonPressed)
     {
+      const auto mouse_screen_pos{
+        screen_coordinat(event.mouseButton.x, event.mouseButton.y)
+      };
       if (event.mouseButton.button == sf::Mouse::Left)
       {
         m_game.add_action(
           create_press_lmb_action(
-            screen_coordinat(
-              event.mouseButton.x,
-              event.mouseButton.y
+            convert_to_game_coordinat(
+              mouse_screen_pos,
+              m_game.get_layout()
             )
           )
         );
@@ -106,6 +113,9 @@ void game_view::show()
   // Show only the pieces
   show_pieces();
 
+  // Show the sidebar
+  show_sidebar();
+
   // Show the pieces' health bars
   show_health_bars();
 
@@ -118,16 +128,20 @@ void game_view::show()
 
 void game_view::show_health_bars()
 {
+  const auto& layout = m_game.get_layout();
   for (const auto& piece: m_game.get_pieces())
   {
     // Black box around it
     sf::RectangleShape black_box;
 
-    black_box.setSize(sf::Vector2f(m_layout.get_square_width() - 4.0 - 4.0, 16.0 - 4.0));
+    black_box.setSize(sf::Vector2f(layout.get_square_width() - 4.0 - 4.0, 16.0 - 4.0));
     //black_box.setScale(1.0, 1.0);
     black_box.setFillColor(sf::Color(0, 0, 0));
     black_box.setOrigin(0.0, 0.0);
-    const auto black_box_pos = convert_to_screen_coordinat(piece.get_coordinat());
+    const auto black_box_pos = convert_to_screen_coordinat(
+      piece.get_coordinat(),
+      layout
+    );
     black_box.setPosition(
       2.0 + black_box_pos.get_x(),
       2.0 + black_box_pos.get_y()
@@ -137,7 +151,7 @@ void game_view::show_health_bars()
 
     // Health
     sf::RectangleShape health_bar;
-    health_bar.setSize(sf::Vector2f(m_layout.get_square_width() - 8.0 - 4.0, 16.0 - 8.0));
+    health_bar.setSize(sf::Vector2f(layout.get_square_width() - 8.0 - 4.0, 16.0 - 8.0));
     //health_bar.setScale(1.0, 1.0);
     health_bar.setFillColor(
       sf::Color(
@@ -147,7 +161,7 @@ void game_view::show_health_bars()
       )
     );
     health_bar.setOrigin(0.0, 0.0);
-    const auto health_bar_pos = convert_to_screen_coordinat(piece.get_coordinat());
+    const auto health_bar_pos = convert_to_screen_coordinat(piece.get_coordinat(), layout);
     health_bar.setPosition(
       4.0 + health_bar_pos.get_x(),
       4.0 + health_bar_pos.get_y()
@@ -159,18 +173,20 @@ void game_view::show_health_bars()
 
 void game_view::show_mouse_cursor()
 {
+  const auto& layout = m_game.get_layout();
   sf::CircleShape cursor;
   cursor.setRadius(16.0);
   cursor.setFillColor(sf::Color::Transparent);
   cursor.setOutlineColor(sf::Color::Black);
+  cursor.setOutlineThickness(2.0);
   cursor.setScale(1.0, 1.0);
-  cursor.setOrigin(0.0, 0.0);
+  cursor.setOrigin(16.0, 16.0);
   const screen_coordinat cursor_pos{
     convert_to_screen_coordinat(
-      m_game.get_mouse_pos()
+      m_game.get_mouse_pos(),
+      layout
     )
   };
-
   cursor.setPosition(
     cursor_pos.get_x(),
     cursor_pos.get_y()
@@ -179,26 +195,11 @@ void game_view::show_mouse_cursor()
   m_window.draw(cursor);
 }
 
-screen_coordinat game_view::convert_to_screen_coordinat(const game_coordinat& coordinat) const
-{
-  const auto tl_board{m_layout.get_tl_board()};
-  const auto br_board{m_layout.get_br_board()};
-  const double square_width{
-    static_cast<double>(br_board.get_x() - tl_board.get_x()) / 8.0
-  };
-  const double square_height{
-    static_cast<double>(br_board.get_y() - tl_board.get_y()) / 8.0
-  };
-  return screen_coordinat(
-    tl_board.get_x() + (square_width * coordinat.get_x()),
-    br_board.get_y() - square_height - (square_height * coordinat.get_y()) // The first rank (e.g. with the white king) is at the bottom
-  );
-}
-
 void game_view::show_pieces()
 {
-  const double square_width{m_layout.get_square_width()};
-  const double square_height{m_layout.get_square_height()};
+  const auto& layout = m_game.get_layout();
+  const double square_width{layout.get_square_width()};
+  const double square_height{layout.get_square_height()};
   for (const auto& piece: m_game.get_pieces())
   {
     sf::RectangleShape sprite;
@@ -209,8 +210,12 @@ void game_view::show_pieces()
         piece.get_type()
       )
     );
+    if (piece.get_is_selected())
+    {
+      sprite.setFillColor(sf::Color::Red);
+    }
     sprite.setOrigin(0.0, 0.0);
-    const auto screen_position = convert_to_screen_coordinat(piece.get_coordinat());
+    const auto screen_position = convert_to_screen_coordinat(piece.get_coordinat(), layout);
     sprite.setPosition(
       screen_position.get_x(),
       screen_position.get_y()
@@ -220,10 +225,38 @@ void game_view::show_pieces()
   }
 }
 
+void game_view::show_sidebar()
+{
+  const auto& layout = m_game.get_layout();
+
+  sf::Text text;
+  text.setFont(m_game_resources.get_font());
+  std::stringstream s;
+  s << "Game position: ("
+    << m_game.get_mouse_pos().get_x()
+    << ", "
+    << m_game.get_mouse_pos().get_y()
+    << ")"
+    << '\n'
+    << "Screen position: ("
+    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_x()
+    << ", "
+    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_y()
+    << ")"  ;
+  text.setString(s.str());
+  text.setCharacterSize(20);
+  text.setPosition(
+    layout.get_tl_side().get_x(),
+    layout.get_tl_side().get_y()
+  );
+  m_window.draw(text);
+}
+
 void game_view::show_squares()
 {
-  const double square_width{m_layout.get_square_width()};
-  const double square_height{m_layout.get_square_height()};
+  const auto& layout = m_game.get_layout();
+  const double square_width{layout.get_square_width()};
+  const double square_height{layout.get_square_height()};
 
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width, square_height));
