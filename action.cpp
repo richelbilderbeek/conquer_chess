@@ -8,6 +8,11 @@ action::action(
 
 }
 
+action create_mouse_move_action(const screen_coordinat& coordinat)
+{
+  return action(action_type::mouse_move, coordinat);
+}
+
 action create_press_lmb_action(const screen_coordinat& coordinat)
 {
   return action(action_type::lmb_down, coordinat);

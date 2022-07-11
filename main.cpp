@@ -34,7 +34,7 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   }
 
   if (args.size() == 1) {
-    game_view v;
+    game_view v(screen_coordinat(600, 600));
     v.exec();
   }
 }

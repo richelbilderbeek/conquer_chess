@@ -7,7 +7,10 @@
 class screen_coordinat
 {
 public:
-  screen_coordinat(const int x, const int y);
+  screen_coordinat(const int x = 0, const int y = 0);
+
+  int get_x() const noexcept { return m_x; }
+  int get_y() const noexcept { return m_y; }
 
 private:
 
