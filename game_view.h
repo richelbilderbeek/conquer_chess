@@ -33,6 +33,15 @@ private:
 
   /// Show the game on-screen
   void show();
+
+  /// Show the pieces' health bars on-screen
+  void show_health_bars();
+
+  /// Show the pieces of the board on-screen
+  void show_pieces();
+
+  /// Show the squares of the board on-screen
+  void show_squares();
 };
 
 void test_game_view();

@@ -8,6 +8,7 @@
 #include <random>
 
 game::game()
+  : m_pieces{get_starting_pieces()}
 {
 
 }
