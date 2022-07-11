@@ -13,6 +13,12 @@ game::game()
 
 }
 
+void game::add_action(const action a)
+{
+  // These will be processed in 'tick'
+  m_actions.push_back(a);
+}
+
 void game::tick()
 {
 

@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "action.h"
 #include "piece.h"
 #include <vector>
 
@@ -11,6 +12,9 @@ class game
 public:
   game();
 
+  /// Add an action. These will be processed in 'tick'
+  void add_action(const action a);
+
   /// Get all the pieces
   const auto& get_pieces() const noexcept { return m_pieces; }
 
@@ -19,6 +23,7 @@ public:
 
 private:
 
+  std::vector<action> m_actions;
   std::vector<piece> m_pieces;
 };
 

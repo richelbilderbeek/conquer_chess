@@ -2,6 +2,7 @@
 
 #include "game.h"
 #include "game_resources.h"
+#include "screen_coordinat.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <cmath>
@@ -55,6 +56,20 @@ bool game_view::process_events()
       }
       // Maybe a player input?
       // Nothing yet
+    }
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+      if (event.mouseButton.button == sf::Mouse::Left)
+      {
+        m_game.add_action(
+          create_press_lmb_action(
+            screen_coordinat(
+              event.mouseButton.x,
+              event.mouseButton.y
+            )
+          )
+        );
+      }
     }
     else if (event.type == sf::Event::KeyReleased)
     {

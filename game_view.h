@@ -15,6 +15,8 @@ public:
   /// Run the game, until the user quits
   void exec();
 
+  std::pair<double, double> convert_screen_to_board(const int x, const int y);
+
 private:
 
   /// The game logic
@@ -45,5 +47,6 @@ private:
 };
 
 void test_game_view();
+
 
 #endif // GAME_VIEW_H
