@@ -36,6 +36,12 @@ private:
   /// Show the game on-screen
   void show();
 
+  /// Show the controls (e.g. for a unit) on-screen
+  void show_controls();
+
+  /// Show debug info on-screen
+  void show_debug();
+
   /// Show the pieces' health bars on-screen
   void show_health_bars();
 
@@ -50,6 +56,9 @@ private:
 
   /// Show the squares of the board on-screen
   void show_squares();
+
+  /// Show the selected unit(s) on-screen
+  void show_units();
 };
 
 void test_game_view();

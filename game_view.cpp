@@ -113,7 +113,7 @@ void game_view::show()
   // Show only the pieces
   show_pieces();
 
-  // Show the sidebar
+  // Show the sidebar: controls, units, debug
   show_sidebar();
 
   // Show the pieces' health bars
@@ -124,6 +124,48 @@ void game_view::show()
 
   // Display all shapes
   m_window.display();
+}
+
+void game_view::show_controls()
+{
+  const auto& layout = m_game.get_layout();
+  sf::Text text;
+  text.setFont(m_game_resources.get_font());
+  std::stringstream s;
+  s << "LMB to select a unit";
+  text.setString(s.str());
+  text.setCharacterSize(20);
+  text.setPosition(
+    layout.get_tl_controls().get_x(),
+    layout.get_tl_controls().get_y()
+  );
+  m_window.draw(text);
+}
+
+void game_view::show_debug()
+{
+  const auto& layout = m_game.get_layout();
+  sf::Text text;
+  text.setFont(m_game_resources.get_font());
+  std::stringstream s;
+  s << "Game position: ("
+    << m_game.get_mouse_pos().get_x()
+    << ", "
+    << m_game.get_mouse_pos().get_y()
+    << ")"
+    << '\n'
+    << "Screen position: ("
+    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_x()
+    << ", "
+    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_y()
+    << ")"  ;
+  text.setString(s.str());
+  text.setCharacterSize(20);
+  text.setPosition(
+    layout.get_tl_debug().get_x(),
+    layout.get_tl_debug().get_y()
+  );
+  m_window.draw(text);
 }
 
 void game_view::show_health_bars()
@@ -227,36 +269,54 @@ void game_view::show_pieces()
 
 void game_view::show_sidebar()
 {
-  const auto& layout = m_game.get_layout();
+  show_controls();
+  show_units();
+  show_debug();
+}
 
-  // Top
-  {
-    sf::Text text;
-    text.setFont(m_game_resources.get_font());
-    std::stringstream s;
-    s << "Game position: ("
-      << m_game.get_mouse_pos().get_x()
-      << ", "
-      << m_game.get_mouse_pos().get_y()
-      << ")"
-      << '\n'
-      << "Screen position: ("
-      << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_x()
-      << ", "
-      << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_y()
-      << ")"  ;
-    text.setString(s.str());
-    text.setCharacterSize(20);
-    text.setPosition(
-      layout.get_tl_side().get_x(),
-      layout.get_tl_side().get_y()
-    );
-    m_window.draw(text);
-  }
-  // Selected pieces
+void game_view::show_squares()
+{
+  const auto& layout = m_game.get_layout();
   const double square_width{layout.get_square_width()};
   const double square_height{layout.get_square_height()};
-  screen_coordinat screen_position = layout.get_tl_side() + screen_coordinat(0, 100);
+
+  sf::RectangleShape black_square;
+  black_square.setSize(sf::Vector2f(square_width, square_height));
+  black_square.setTexture(&m_game_resources.get_black_square());
+  black_square.setOrigin(0.0, 0.0);
+  black_square.setPosition(100.0, 200.0);
+  black_square.setRotation(0.0);
+
+  sf::RectangleShape white_square;
+  white_square.setSize(sf::Vector2f(square_width, square_height));
+  white_square.setTexture(&m_game_resources.get_white_square());
+  white_square.setOrigin(0.0, 0.0);
+  white_square.setPosition(100.0, 200.0);
+  white_square.setRotation(0.0);
+
+  for (int x = 0; x != 8; ++x)
+  {
+    for (int y = 0; y != 8; ++y)
+    {
+      sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
+      const screen_coordinat square_pos{
+        convert_to_screen_coordinat(
+          game_coordinat(x, y),
+          layout
+        )
+      };
+      s.setPosition(square_pos.get_x(), square_pos.get_y());
+      m_window.draw(s);
+    }
+  }
+}
+
+void game_view::show_units()
+{
+  const auto& layout = m_game.get_layout();
+  const double square_width{layout.get_square_width()};
+  const double square_height{layout.get_square_height()};
+  screen_coordinat screen_position = layout.get_tl_units();
   for (const auto& piece: get_selected_pieces(m_game))
   {
     // sprite of the piece
@@ -296,45 +356,8 @@ void game_view::show_sidebar()
     m_window.draw(text);
     screen_position += screen_coordinat(0, square_height);
   }
-
 }
 
-void game_view::show_squares()
-{
-  const auto& layout = m_game.get_layout();
-  const double square_width{layout.get_square_width()};
-  const double square_height{layout.get_square_height()};
-
-  sf::RectangleShape black_square;
-  black_square.setSize(sf::Vector2f(square_width, square_height));
-  black_square.setTexture(&m_game_resources.get_black_square());
-  black_square.setOrigin(0.0, 0.0);
-  black_square.setPosition(100.0, 200.0);
-  black_square.setRotation(0.0);
-
-  sf::RectangleShape white_square;
-  white_square.setSize(sf::Vector2f(square_width, square_height));
-  white_square.setTexture(&m_game_resources.get_white_square());
-  white_square.setOrigin(0.0, 0.0);
-  white_square.setPosition(100.0, 200.0);
-  white_square.setRotation(0.0);
-
-  for (int x = 0; x != 8; ++x)
-  {
-    for (int y = 0; y != 8; ++y)
-    {
-      sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
-      const screen_coordinat square_pos{
-        convert_to_screen_coordinat(
-          game_coordinat(x, y),
-          layout
-        )
-      };
-      s.setPosition(square_pos.get_x(), square_pos.get_y());
-      m_window.draw(s);
-    }
-  }
-}
 
 void test_game_view() //!OCLINT tests may be many
 {
