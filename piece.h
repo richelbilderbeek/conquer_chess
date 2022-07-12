@@ -27,6 +27,7 @@ public:
   /// Get the color of the piece, i.e. white or black
   chess_color get_color() const noexcept { return m_color; }
 
+  /// Get the coordinat at the center of the piece
   game_coordinat get_coordinat() const noexcept { return m_coordinat; }
 
   /// Get the health of the unit

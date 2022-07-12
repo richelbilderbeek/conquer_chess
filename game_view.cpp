@@ -233,7 +233,7 @@ void show_pieces(game_view& view)
     {
       sprite.setFillColor(sf::Color::Red);
     }
-    sprite.setOrigin(0.0, 0.0);
+    sprite.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
     const auto screen_position = convert_to_screen_coordinat(piece.get_coordinat(), layout);
     sprite.setPosition(
       screen_position.get_x(),
@@ -261,14 +261,14 @@ void show_squares(game_view& view)
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
   black_square.setTexture(&view.get_game_resources().get_black_square());
-  black_square.setOrigin(0.0, 0.0);
+  black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   black_square.setPosition(100.0, 200.0);
   black_square.setRotation(0.0);
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
   white_square.setTexture(&view.get_game_resources().get_white_square());
-  white_square.setOrigin(0.0, 0.0);
+  white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   white_square.setPosition(100.0, 200.0);
   white_square.setRotation(0.0);
 
@@ -279,7 +279,7 @@ void show_squares(game_view& view)
       sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
       const screen_coordinat square_pos{
         convert_to_screen_coordinat(
-          game_coordinat(x, y),
+          game_coordinat(x + 0.5, y + 0.5),
           layout
         )
       };
@@ -303,7 +303,7 @@ void show_unit_health_bars(game_view& view)
     black_box.setFillColor(sf::Color(0, 0, 0));
     black_box.setOrigin(0.0, 0.0);
     const auto black_box_pos = convert_to_screen_coordinat(
-      piece.get_coordinat(),
+      piece.get_coordinat() + game_coordinat(-0.5, 0.5), // to top-left
       layout
     );
     black_box.setPosition(
@@ -325,7 +325,10 @@ void show_unit_health_bars(game_view& view)
       )
     );
     health_bar.setOrigin(0.0, 0.0);
-    const auto health_bar_pos = convert_to_screen_coordinat(piece.get_coordinat(), layout);
+    const auto health_bar_pos = convert_to_screen_coordinat(
+      piece.get_coordinat() + game_coordinat(-0.5, 0.5), // to top-left,
+      layout
+    );
     health_bar.setPosition(
       4.0 + health_bar_pos.get_x(),
       4.0 + health_bar_pos.get_y()

@@ -36,7 +36,7 @@ std::vector<double> calc_distances(
     [coordinat](const auto& piece) {
       return calc_distance(
         coordinat,
-        piece.get_coordinat() + game_coordinat(0.5, -0.5) // Center on piece
+        piece.get_coordinat()
       );
     }
   );

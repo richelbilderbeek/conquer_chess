@@ -48,8 +48,8 @@ std::string describe_actions(const piece& p)
 std::vector<piece> get_starting_pieces() noexcept
 {
   return {
-    piece(chess_color::white, piece_type::king, game_coordinat(4.0, 0.0)),
-    piece(chess_color::black, piece_type::king, game_coordinat(4.0, 7.0))
+    piece(chess_color::white, piece_type::king, game_coordinat(3.5, 0.5)),
+    piece(chess_color::black, piece_type::king, game_coordinat(3.5, 7.5))
   };
 }
 

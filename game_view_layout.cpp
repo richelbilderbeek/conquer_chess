@@ -52,7 +52,7 @@ game_coordinat convert_to_game_coordinat(
   };
   return game_coordinat(
     8.0 * f_x,
-    7.0 - (8.0 * f_y)
+    8.0 - (8.0 * f_y)
   );
 }
 
@@ -71,7 +71,7 @@ screen_coordinat convert_to_screen_coordinat(
   };
   return screen_coordinat(
     tl_board.get_x() + (square_width * coordinat.get_x()),
-    br_board.get_y() - square_height - (square_height * coordinat.get_y()) // The first rank (e.g. with the white king) is at the bottom
+    br_board.get_y() - (square_height * coordinat.get_y()) // The first rank (e.g. with the white king) is at the bottom
   );
 }
 
@@ -136,22 +136,22 @@ void test_game_view_layout()
   //--------------------------------------------------------------------------
   // game -> screen
   //--------------------------------------------------------------------------
-  // in-game (0,7) must be top-left of screen board
+  // in-game (0,8) must be top-left of screen board
   {
     const game_view_layout layout;
     const auto tl_board = convert_to_screen_coordinat(
-      game_coordinat(0.0, 7.0),
+      game_coordinat(0.0, 8.0),
       layout
     );
     assert(tl_board.get_x() == layout.get_tl_board().get_x());
     assert(tl_board.get_y() == layout.get_tl_board().get_y());
   }
-  // in-game (8,-1) must be bottom-right of screen board
+  // in-game (8,0) must be bottom-right of screen board
   // (no piece can ever have its top-right at the bottom-right of the board)
   {
     const game_view_layout layout;
     const auto br_board = convert_to_screen_coordinat(
-      game_coordinat(8.0, -1.0),
+      game_coordinat(8.0, 0.0),
       layout
     );
     assert(br_board.get_x() == layout.get_br_board().get_x());
@@ -160,15 +160,22 @@ void test_game_view_layout()
   //--------------------------------------------------------------------------
   // screen -> game
   //--------------------------------------------------------------------------
-  // top-left of screen board must be in-game (0,7)
+  // top-left of screen board must be in-game (0,8)
+  // bottom-right of screen board must be in-game (8,0)
   {
     const game_view_layout layout;
+    const auto br_board = convert_to_game_coordinat(
+      layout.get_br_board(),
+      layout
+    );
     const auto tl_board = convert_to_game_coordinat(
       layout.get_tl_board(),
       layout
     );
     assert(tl_board.get_x() == 0.0);
-    assert(tl_board.get_y() == 7.0);
+    assert(tl_board.get_y() == 8.0);
+    assert(br_board.get_x() == 8.0);
+    assert(br_board.get_y() == 0.0);
   }
   #endif
 }
