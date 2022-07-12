@@ -36,25 +36,15 @@ public:
   sf::Music &get_ninja_gods() noexcept { return m_ninja_gods; }
 
 private:
-  /// Sprite of a black/dark king
   sf::Texture m_black_king;
-
-  /// Sprite of a black/dark square
+  sf::Texture m_black_queen;
   sf::Texture m_black_square;
-
-  /// Sprite of a white/light king
   sf::Texture m_white_king;
-
-  /// Sprite of a white/light king's portrait
   sf::Texture m_white_king_portrait;
-
-  /// Sprite of a white/light square
+  sf::Texture m_white_queen;
+  sf::Texture m_white_queen_portrait;
   sf::Texture m_white_square;
-
-  /// Font
   sf::Font m_font;
-
-  /// Ninja Gods music
   sf::Music m_ninja_gods;
 };
 

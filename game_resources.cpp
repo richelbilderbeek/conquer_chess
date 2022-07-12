@@ -16,6 +16,17 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load the black/dark queen
+  {
+    const QString filename{"qb.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_black_queen.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
   // Load the black/dark square
   {
     const QString filename{"d.png"};
@@ -38,12 +49,34 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
-  // Load the white/light king
+  // Load the white/light king portrait
   {
     const QString filename{"kw_portrait.png"};
     QFile f(":/resources/" + filename);
     f.copy(filename);
     if (!m_white_king_portrait.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Load the white/light queen
+  {
+    const QString filename{"qw.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_white_queen.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Load the white/light queen portrait
+  {
+    const QString filename{"qw_portrait.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_white_queen_portrait.loadFromFile(filename.toStdString()))
     {
       QString msg{"Cannot find image file '" + filename + "'"};
       throw std::runtime_error(msg.toStdString());
@@ -93,10 +126,12 @@ sf::Texture& game_resources::get_piece(
   if (color == chess_color::black)
   {
     if (type == piece_type::king) return m_black_king;
+    if (type == piece_type::queen) return m_black_queen;
   }
   else
   {
     if (type == piece_type::king) return m_white_king;
+    if (type == piece_type::queen) return m_white_queen;
   }
 
   assert(!"Should not get here");
@@ -111,10 +146,12 @@ sf::Texture& game_resources::get_piece_portrait(
   if (color == chess_color::black)
   {
     if (type == piece_type::king) return m_white_king_portrait;
+    if (type == piece_type::queen) return m_white_king_portrait;
   }
   else
   {
     if (type == piece_type::king) return m_white_king_portrait;
+    if (type == piece_type::queen) return m_white_queen_portrait;
   }
 
   assert(!"Should not get here");
