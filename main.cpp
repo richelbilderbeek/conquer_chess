@@ -14,6 +14,7 @@
 void test()
 {
 #ifndef NDEBUG
+  test_game_coordinat();
   test_screen_coordinat();
   test_game();
   test_game_view_layout();

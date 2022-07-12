@@ -7,8 +7,9 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 
-#include <iostream>
+#include <cassert>
 #include <cmath>
+#include <iostream>
 #include <string>
 #include <sstream>
 
@@ -16,6 +17,11 @@ game_view::game_view(const game& game)
   : m_game{game}
 {
 
+}
+
+std::string bool_to_str(const bool b) noexcept
+{
+  return b ? "true" : "false";
 }
 
 void game_view::exec()
@@ -69,14 +75,12 @@ bool game_view::process_events()
       const auto mouse_screen_pos{
         screen_coordinat(event.mouseMove.x, event.mouseMove.y)
       };
-      //std::clog << "(" << mouse_screen_pos.get_x() << ", " << mouse_screen_pos.get_y() << ")\n";
       const auto mouse_game_pos{
         convert_to_game_coordinat(
           mouse_screen_pos,
           m_game.get_layout()
         )
       };
-      //std::clog << "(" << mouse_game_pos.get_x() << ", " << mouse_game_pos.get_y() << ")\n";
       m_game.add_action(create_mouse_move_action(mouse_game_pos));
     }
     else if (event.type == sf::Event::MouseButtonPressed)
@@ -110,17 +114,11 @@ void game_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  // Show only the squares
-  show_squares();
-
-  // Show only the pieces
-  show_pieces();
+  // Show the board: squares, unit paths, pieces, health bars
+  show_board(*this);
 
   // Show the sidebar: controls, units, debug
-  show_sidebar();
-
-  // Show the pieces' health bars
-  show_unit_health_bars();
+  show_sidebar(*this);
 
   // Show the mouse cursor
   show_mouse_cursor();
@@ -129,13 +127,21 @@ void game_view::show()
   m_window.display();
 }
 
-void game_view::show_controls()
+void show_board(game_view& view)
 {
-  const auto& layout = m_game.get_layout();
+  show_squares(view);
+  show_unit_paths(view);
+  show_pieces(view);
+  show_unit_health_bars(view);
+}
+
+void show_controls(game_view& view)
+{
+  const auto& layout = view.get_game().get_layout();
   sf::Text text;
-  text.setFont(m_game_resources.get_font());
+  text.setFont(view.get_game_resources().get_font());
   std::stringstream s;
-  const auto& selected_units = get_selected_pieces(m_game);
+  const auto& selected_units = get_selected_pieces(view.get_game());
   if (selected_units.empty()) {
     s << "LMB: to select a unit";
   } else {
@@ -149,33 +155,38 @@ void game_view::show_controls()
     layout.get_tl_controls().get_x(),
     layout.get_tl_controls().get_y()
   );
-  m_window.draw(text);
+  view.get_window().draw(text);
 }
 
-void game_view::show_debug()
+void show_debug(game_view& view)
 {
-  const auto& layout = m_game.get_layout();
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
   sf::Text text;
-  text.setFont(m_game_resources.get_font());
+  text.setFont(view.get_game_resources().get_font());
   std::stringstream s;
-  s << "Game position: ("
-    << m_game.get_mouse_pos().get_x()
-    << ", "
-    << m_game.get_mouse_pos().get_y()
-    << ")"
+  s << "Game position: "
+    << game.get_mouse_pos()
     << '\n'
-    << "Screen position: ("
-    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_x()
-    << ", "
-    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_y()
-    << ")"  ;
+    << "Screen position: "
+    << convert_to_screen_coordinat(game.get_mouse_pos(), layout)
+    << '\n'
+    << "Is there a piece here: "
+    << bool_to_str(is_piece_at(game, game.get_mouse_pos(), 0.5))
+    << '\n'
+  ;
+  const piece& closest_piece{
+    game.get_closest_piece_to(game.get_mouse_pos())
+  };
+  s << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat();
+
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
     layout.get_tl_debug().get_x(),
     layout.get_tl_debug().get_y()
   );
-  m_window.draw(text);
+  view.get_window().draw(text);
 }
 
 void game_view::show_mouse_cursor()
@@ -202,17 +213,18 @@ void game_view::show_mouse_cursor()
   m_window.draw(cursor);
 }
 
-void game_view::show_pieces()
+void show_pieces(game_view& view)
 {
-  const auto& layout = m_game.get_layout();
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
   const double square_width{layout.get_square_width()};
   const double square_height{layout.get_square_height()};
-  for (const auto& piece: m_game.get_pieces())
+  for (const auto& piece: game.get_pieces())
   {
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(square_width, square_height));
     sprite.setTexture(
-      &m_game_resources.get_piece(
+      &view.get_game_resources().get_piece(
         piece.get_color(),
         piece.get_type()
       )
@@ -228,33 +240,34 @@ void game_view::show_pieces()
       screen_position.get_y()
     );
     sprite.setRotation(0.0);
-    m_window.draw(sprite);
+    view.get_window().draw(sprite);
   }
 }
 
-void game_view::show_sidebar()
+void show_sidebar(game_view& view)
 {
-  show_controls();
-  show_unit_sprites();
-  show_debug();
+  show_controls(view);
+  show_unit_sprites(view);
+  show_debug(view);
 }
 
-void game_view::show_squares()
+void show_squares(game_view& view)
 {
-  const auto& layout = m_game.get_layout();
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
   const double square_width{layout.get_square_width()};
   const double square_height{layout.get_square_height()};
 
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  black_square.setTexture(&m_game_resources.get_black_square());
+  black_square.setTexture(&view.get_game_resources().get_black_square());
   black_square.setOrigin(0.0, 0.0);
   black_square.setPosition(100.0, 200.0);
   black_square.setRotation(0.0);
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  white_square.setTexture(&m_game_resources.get_white_square());
+  white_square.setTexture(&view.get_game_resources().get_white_square());
   white_square.setOrigin(0.0, 0.0);
   white_square.setPosition(100.0, 200.0);
   white_square.setRotation(0.0);
@@ -271,15 +284,16 @@ void game_view::show_squares()
         )
       };
       s.setPosition(square_pos.get_x(), square_pos.get_y());
-      m_window.draw(s);
+      view.get_window().draw(s);
     }
   }
 }
 
-void game_view::show_unit_health_bars()
+void show_unit_health_bars(game_view& view)
 {
-  const auto& layout = m_game.get_layout();
-  for (const auto& piece: m_game.get_pieces())
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  for (const auto& piece: game.get_pieces())
   {
     // Black box around it
     sf::RectangleShape black_box;
@@ -297,7 +311,7 @@ void game_view::show_unit_health_bars()
       2.0 + black_box_pos.get_y()
     );
     black_box.setRotation(0.0);
-    m_window.draw(black_box);
+    view.get_window().draw(black_box);
 
     // Health
     sf::RectangleShape health_bar;
@@ -317,47 +331,70 @@ void game_view::show_unit_health_bars()
       4.0 + health_bar_pos.get_y()
     );
     health_bar.setRotation(0.0);
-    m_window.draw(health_bar);
+    view.get_window().draw(health_bar);
   }
 }
 
-void game_view::show_unit_paths()
+void show_unit_paths(game_view& view)
 {
-  const auto& layout = m_game.get_layout();
-  for (const auto& piece: get_pieces(m_game))
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  for (const auto& piece: get_pieces(game))
   {
     if (is_idle(piece)) continue;
-    const auto piece_pos{
-      convert_to_screen_coordinat(piece.get_coordinat(), layout)
-    };
-    const auto target_pos{
+    std::vector<screen_coordinat> coordinats;
+    coordinats.reserve(piece.get_actions().size() + 1); // +1 for current position
+    coordinats.push_back(
       convert_to_screen_coordinat(
-        piece.get_actions().front().get_coordinat(),
+        piece.get_coordinat(),
         layout
       )
-    };
-    sf::VertexArray line(sf::LinesStrip, 2);
-    line[0].position = sf::Vector2f(piece_pos.get_x(), piece_pos.get_y());
-    line[0].color  = sf::Color::Red;
-    line[1].position = sf::Vector2f(target_pos.get_x(), target_pos.get_y());
-    line[1].color = sf::Color::Red;
-    m_window.draw(line);
+    );
+    const auto& actions = piece.get_actions();
+    std::transform(
+      std::begin(actions),
+      std::end(actions),
+      std::back_inserter(coordinats),
+      [layout](const auto& action)
+      {
+        return convert_to_screen_coordinat(
+          action.get_coordinat(),
+          layout
+        );
+      }
+    );
+    sf::VertexArray lines(sf::LineStrip, coordinats.size());
+    assert(coordinats.size() == actions.size() + 1);
+    const int n_coordinats{static_cast<int>(coordinats.size())};
+    for (int i = 0; i != n_coordinats; ++i)
+    {
+      assert(i < static_cast<int>(coordinats.size()));
+      lines[i].position = sf::Vector2f(
+        coordinats[i].get_x(),
+        coordinats[i].get_y()
+      );
+      lines[i].color = sf::Color::Blue;
+      //lines[i].color = actions[i].get_type() == piece_action_type::move
+      //  ? sf::Color::Blue : sf::Color::Red
+      //;
+    }
+    view.get_window().draw(lines);
   }
 }
 
-void game_view::show_unit_sprites()
+void show_unit_sprites(game_view& view)
 {
-  const auto& layout = m_game.get_layout();
+  const auto& layout = view.get_game().get_layout();
   const double square_width{layout.get_square_width()};
   const double square_height{layout.get_square_height()};
   screen_coordinat screen_position = layout.get_tl_units();
-  for (const auto& piece: get_selected_pieces(m_game))
+  for (const auto& piece: get_selected_pieces(view.get_game()))
   {
     // sprite of the piece
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(square_width, square_height));
     sprite.setTexture(
-      &m_game_resources.get_piece_portrait(
+      &view.get_game_resources().get_piece_portrait(
         piece.get_color(),
         piece.get_type()
       )
@@ -368,26 +405,28 @@ void game_view::show_unit_sprites()
       screen_position.get_y()
     );
     sprite.setRotation(0.0);
-    m_window.draw(sprite);
+    view.get_window().draw(sprite);
     // text
     sf::Text text;
-    text.setFont(m_game_resources.get_font());
+    text.setFont(view.get_game_resources().get_font());
     std::stringstream s;
 
     s << piece.get_type() << ": "
       << piece.get_health() << "/"
-      << piece.get_max_health()
+      << piece.get_max_health() << '\n'
+      << piece.get_coordinat() << '\n'
+      << describe_actions(piece)
     ;
     text.setString(s.str());
     text.setCharacterSize(20);
     const auto text_position{
-      screen_position + screen_coordinat(square_width + 10, square_height / 2)
+      screen_position + screen_coordinat(square_width + 10, 0)
     };
     text.setPosition(
       text_position.get_x(),
       text_position.get_y()
     );
-    m_window.draw(text);
+    view.get_window().draw(text);
     screen_position += screen_coordinat(0, square_height);
   }
 }

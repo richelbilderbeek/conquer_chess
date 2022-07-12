@@ -2,6 +2,11 @@
 
 #include "piece_type.h"
 
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <sstream>
+
 piece::piece(
   const chess_color color,
   const piece_type type,
@@ -17,9 +22,26 @@ piece::piece(
 
 }
 
-void piece::do_lmb_down()
+void piece::add_action(const piece_action& action)
 {
-  m_is_selected = !m_is_selected;
+  m_actions.push_back(action);
+}
+
+std::string describe_actions(const piece& p)
+{
+  const auto& actions = p.get_actions();
+  if (actions.empty()) return "idle";
+  std::stringstream s;
+  std::transform(
+    std::begin(actions),
+    std::end(actions),
+    std::ostream_iterator<std::string>(s, ", "),
+    [](const piece_action& action) { return describe_action(action); }
+  );
+  std::string t = s.str();
+  t.pop_back();
+  t.pop_back();
+  return t;
 }
 
 std::vector<piece> get_starting_pieces() noexcept
@@ -38,4 +60,24 @@ bool has_actions(const piece& p) noexcept
 bool is_idle(const piece& p) noexcept
 {
   return !has_actions(p);
+}
+
+void select(piece& p) noexcept
+{
+  p.set_selected(true);
+}
+
+void piece::set_selected(const bool is_selected) noexcept
+{
+  m_is_selected = is_selected;
+}
+
+void toggle_select(piece& p) noexcept
+{
+  p.set_selected(!p.is_selected());
+}
+
+void unselect(piece& p) noexcept
+{
+  p.set_selected(false);
 }

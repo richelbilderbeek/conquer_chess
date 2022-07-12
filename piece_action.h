@@ -1,6 +1,9 @@
 #ifndef PIECE_ACTION_H
 #define PIECE_ACTION_H
 
+#include <iosfwd>
+#include <string>
+
 #include "piece_action_type.h"
 #include "game_coordinat.h"
 
@@ -21,5 +24,10 @@ private:
   piece_action_type m_type;
   game_coordinat m_coordinat;
 };
+
+/// Describe the 'piece_action' in words, e.g. 'move to (3, 4)'
+std::string describe_action(const piece_action& p);
+
+std::ostream& operator<<(std::ostream& os, const piece_action& p);
 
 #endif // PIECE_ACTION_H

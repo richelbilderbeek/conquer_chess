@@ -1,6 +1,7 @@
 #ifndef SCREEN_COORDINAT_H
 #define SCREEN_COORDINAT_H
 
+#include <iosfwd>
 
 /// Coordinats on the screen.
 /// @see game_coordinat for the coordinats in the game
@@ -20,6 +21,8 @@ private:
 
 /// Get the default screen size, where x is the width and y is the height
 screen_coordinat get_default_screen_size() noexcept;
+
+std::ostream& operator<<(std::ostream& os, const screen_coordinat& coordinat);
 
 screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 

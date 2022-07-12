@@ -20,6 +20,12 @@ public:
   /// Add an action. These will be processed in 'tick'
   void add_action(const action a);
 
+  /// Get the piece that is closest to the coordinat
+  const piece& get_closest_piece_to(const game_coordinat& coordinat) const;
+
+  /// Get the piece that is closest to the coordinat
+  piece& get_closest_piece_to(const game_coordinat& coordinat);
+
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
@@ -57,11 +63,24 @@ std::vector<double> calc_distances(
 
 game get_default_game() noexcept;
 
+/// Get the index of the piece that is closest to the coordinat
+int get_index_of_closest_piece_to(
+  const game& g,
+  const game_coordinat& coordinat
+);
+
 /// Get all the selected pieces
 std::vector<piece> get_selected_pieces(const game& g);
 
 /// Get all the pieces
 const std::vector<piece>& get_pieces(const game& g) noexcept;
+
+/// Determine if there is a piece at the coordinat
+bool is_piece_at(
+  const game& g,
+  const game_coordinat& coordinat,
+  const double distance = 0.5
+);
 
 void test_game();
 

@@ -1,6 +1,7 @@
 #include "screen_coordinat.h"
 
 #include <cassert>
+#include <iostream>
 
 screen_coordinat::screen_coordinat(const int x, const int y)
   : m_x{x}, m_y{y}
@@ -10,7 +11,14 @@ screen_coordinat::screen_coordinat(const int x, const int y)
 
 screen_coordinat get_default_screen_size() noexcept
 {
-  return screen_coordinat(1024, 576);
+  //return screen_coordinat(1024, 576);
+  return screen_coordinat(1024 + 800, 576);
+}
+
+std::ostream& operator<<(std::ostream& os, const screen_coordinat& coordinat)
+{
+  os << "(" << coordinat.get_x() << ","  << coordinat.get_y() << ")";
+  return os;
 }
 
 screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept

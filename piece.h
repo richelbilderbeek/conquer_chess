@@ -6,6 +6,7 @@
 #include "piece_action.h"
 #include "game_coordinat.h"
 
+#include <string>
 #include <vector>
 
 /// A chesspiece
@@ -18,8 +19,8 @@ public:
     const game_coordinat& coordinat
   );
 
-  /// Do a left-mouse button down, to un-/select this piece
-  void do_lmb_down();
+  /// Add an action for the piece to do
+  void add_action(const piece_action& action);
 
   const auto& get_actions() const noexcept { return m_actions; }
 
@@ -42,6 +43,9 @@ public:
 
   /// Is the piece selected?
   bool is_selected() const noexcept { return m_is_selected; }
+
+  /// Set the selectedness of the piece
+  void set_selected(bool is_selected) noexcept;
 
 private:
 
@@ -67,6 +71,9 @@ private:
   piece_type m_type;
 };
 
+/// Describe the actions a piece have, e.g. 'idle', or 'moving to (3, 4)'
+std::string describe_actions(const piece& p);
+
 /// Get all the pieces in the starting position
 std::vector<piece> get_starting_pieces() noexcept;
 
@@ -76,6 +83,14 @@ bool has_actions(const piece& p) noexcept;
 /// Is the unit idle?
 bool is_idle(const piece& p) noexcept;
 
+/// Select the piece
+void select(piece& p) noexcept;
+
+/// Select the piece
+void toggle_select(piece& p) noexcept;
+
+/// Unselect the piece
+void unselect(piece& p) noexcept;
 
 
 
