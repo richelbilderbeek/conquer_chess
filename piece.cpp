@@ -29,3 +29,13 @@ std::vector<piece> get_starting_pieces() noexcept
     piece(chess_color::black, piece_type::king, game_coordinat(4.0, 7.0))
   };
 }
+
+bool has_actions(const piece& p) noexcept
+{
+  return !p.get_actions().empty();
+}
+
+bool is_idle(const piece& p) noexcept
+{
+  return !has_actions(p);
+}

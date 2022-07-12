@@ -13,7 +13,7 @@ class game
 {
 public:
   game(
-    const screen_coordinat& screen_size,
+    const screen_coordinat& screen_size = get_default_screen_size(),
     const int margin_width = 10
   );
 
@@ -55,8 +55,13 @@ std::vector<double> calc_distances(
   const game_coordinat& coordinat
 );
 
+game get_default_game() noexcept;
+
 /// Get all the selected pieces
 std::vector<piece> get_selected_pieces(const game& g);
+
+/// Get all the pieces
+const std::vector<piece>& get_pieces(const game& g) noexcept;
 
 void test_game();
 

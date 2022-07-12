@@ -4,6 +4,9 @@
 #include "game_coordinat.h"
 #include "screen_coordinat.h"
 
+/// Get the default margin width/size
+int get_default_margin_width() noexcept;
+
 /// The layout of the game view
 ///
 /// +------------------------------+
@@ -34,8 +37,8 @@ class game_view_layout
 {
 public:
   game_view_layout(
-    const screen_coordinat& window_size = screen_coordinat(1024, 576),
-    const int margin_width = 10
+    const screen_coordinat& window_size = get_default_screen_size(),
+    const int margin_width = get_default_margin_width()
   );
 
   int get_board_height() const noexcept { return m_board_height; }
@@ -53,6 +56,8 @@ public:
   screen_coordinat get_tl_controls() const noexcept { return m_tl_controls; }
   screen_coordinat get_tl_debug() const noexcept { return m_tl_debug; }
   screen_coordinat get_tl_units() const noexcept { return m_tl_units; }
+
+  screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
 private:
 

@@ -22,7 +22,10 @@ void game_view::exec()
 {
   // Open window
   m_window.create(
-    sf::VideoMode(128 * 8, 128 * 8),
+    sf::VideoMode(
+      m_game.get_layout().get_window_size().get_x(),
+      m_game.get_layout().get_window_size().get_y()
+    ),
     "knokchess"
   );
   while (m_window.isOpen())
@@ -117,7 +120,7 @@ void game_view::show()
   show_sidebar();
 
   // Show the pieces' health bars
-  show_health_bars();
+  show_unit_health_bars();
 
   // Show the mouse cursor
   show_mouse_cursor();
@@ -173,51 +176,6 @@ void game_view::show_debug()
     layout.get_tl_debug().get_y()
   );
   m_window.draw(text);
-}
-
-void game_view::show_health_bars()
-{
-  const auto& layout = m_game.get_layout();
-  for (const auto& piece: m_game.get_pieces())
-  {
-    // Black box around it
-    sf::RectangleShape black_box;
-
-    black_box.setSize(sf::Vector2f(layout.get_square_width() - 4.0, 16.0 - 4.0));
-    //black_box.setScale(1.0, 1.0);
-    black_box.setFillColor(sf::Color(0, 0, 0));
-    black_box.setOrigin(0.0, 0.0);
-    const auto black_box_pos = convert_to_screen_coordinat(
-      piece.get_coordinat(),
-      layout
-    );
-    black_box.setPosition(
-      2.0 + black_box_pos.get_x(),
-      2.0 + black_box_pos.get_y()
-    );
-    black_box.setRotation(0.0);
-    m_window.draw(black_box);
-
-    // Health
-    sf::RectangleShape health_bar;
-    health_bar.setSize(sf::Vector2f(layout.get_square_width() - 8.0, 16.0 - 8.0));
-    //health_bar.setScale(1.0, 1.0);
-    health_bar.setFillColor(
-      sf::Color(
-        static_cast<sf::Uint8>(piece.get_f_health() * 255.0),
-        static_cast<sf::Uint8>(piece.get_f_health() * 255.0),
-        static_cast<sf::Uint8>(piece.get_f_health() * 255.0)
-      )
-    );
-    health_bar.setOrigin(0.0, 0.0);
-    const auto health_bar_pos = convert_to_screen_coordinat(piece.get_coordinat(), layout);
-    health_bar.setPosition(
-      4.0 + health_bar_pos.get_x(),
-      4.0 + health_bar_pos.get_y()
-    );
-    health_bar.setRotation(0.0);
-    m_window.draw(health_bar);
-  }
 }
 
 void game_view::show_mouse_cursor()
@@ -277,7 +235,7 @@ void game_view::show_pieces()
 void game_view::show_sidebar()
 {
   show_controls();
-  show_units();
+  show_unit_sprites();
   show_debug();
 }
 
@@ -288,14 +246,14 @@ void game_view::show_squares()
   const double square_height{layout.get_square_height()};
 
   sf::RectangleShape black_square;
-  black_square.setSize(sf::Vector2f(square_width, square_height));
+  black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
   black_square.setTexture(&m_game_resources.get_black_square());
   black_square.setOrigin(0.0, 0.0);
   black_square.setPosition(100.0, 200.0);
   black_square.setRotation(0.0);
 
   sf::RectangleShape white_square;
-  white_square.setSize(sf::Vector2f(square_width, square_height));
+  white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
   white_square.setTexture(&m_game_resources.get_white_square());
   white_square.setOrigin(0.0, 0.0);
   white_square.setPosition(100.0, 200.0);
@@ -318,7 +276,76 @@ void game_view::show_squares()
   }
 }
 
-void game_view::show_units()
+void game_view::show_unit_health_bars()
+{
+  const auto& layout = m_game.get_layout();
+  for (const auto& piece: m_game.get_pieces())
+  {
+    // Black box around it
+    sf::RectangleShape black_box;
+
+    black_box.setSize(sf::Vector2f(layout.get_square_width() - 4.0, 16.0 - 4.0));
+    //black_box.setScale(1.0, 1.0);
+    black_box.setFillColor(sf::Color(0, 0, 0));
+    black_box.setOrigin(0.0, 0.0);
+    const auto black_box_pos = convert_to_screen_coordinat(
+      piece.get_coordinat(),
+      layout
+    );
+    black_box.setPosition(
+      2.0 + black_box_pos.get_x(),
+      2.0 + black_box_pos.get_y()
+    );
+    black_box.setRotation(0.0);
+    m_window.draw(black_box);
+
+    // Health
+    sf::RectangleShape health_bar;
+    health_bar.setSize(sf::Vector2f(layout.get_square_width() - 8.0, 16.0 - 8.0));
+    //health_bar.setScale(1.0, 1.0);
+    health_bar.setFillColor(
+      sf::Color(
+        static_cast<sf::Uint8>(piece.get_f_health() * 255.0),
+        static_cast<sf::Uint8>(piece.get_f_health() * 255.0),
+        static_cast<sf::Uint8>(piece.get_f_health() * 255.0)
+      )
+    );
+    health_bar.setOrigin(0.0, 0.0);
+    const auto health_bar_pos = convert_to_screen_coordinat(piece.get_coordinat(), layout);
+    health_bar.setPosition(
+      4.0 + health_bar_pos.get_x(),
+      4.0 + health_bar_pos.get_y()
+    );
+    health_bar.setRotation(0.0);
+    m_window.draw(health_bar);
+  }
+}
+
+void game_view::show_unit_paths()
+{
+  const auto& layout = m_game.get_layout();
+  for (const auto& piece: get_pieces(m_game))
+  {
+    if (is_idle(piece)) continue;
+    const auto piece_pos{
+      convert_to_screen_coordinat(piece.get_coordinat(), layout)
+    };
+    const auto target_pos{
+      convert_to_screen_coordinat(
+        piece.get_actions().front().get_coordinat(),
+        layout
+      )
+    };
+    sf::VertexArray line(sf::LinesStrip, 2);
+    line[0].position = sf::Vector2f(piece_pos.get_x(), piece_pos.get_y());
+    line[0].color  = sf::Color::Red;
+    line[1].position = sf::Vector2f(target_pos.get_x(), target_pos.get_y());
+    line[1].color = sf::Color::Red;
+    m_window.draw(line);
+  }
+}
+
+void game_view::show_unit_sprites()
 {
   const auto& layout = m_game.get_layout();
   const double square_width{layout.get_square_width()};
@@ -330,7 +357,7 @@ void game_view::show_units()
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(square_width, square_height));
     sprite.setTexture(
-      &m_game_resources.get_piece(
+      &m_game_resources.get_piece_portrait(
         piece.get_color(),
         piece.get_type()
       )
@@ -364,7 +391,6 @@ void game_view::show_units()
     screen_position += screen_coordinat(0, square_height);
   }
 }
-
 
 void test_game_view() //!OCLINT tests may be many
 {

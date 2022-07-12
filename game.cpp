@@ -57,6 +57,14 @@ void game::do_lmb_down(const game_coordinat& coordinat)
   p.do_lmb_down();
 }
 
+game get_default_game() noexcept
+{
+  return game{
+    get_default_screen_size(),
+    get_default_margin_width()
+  };
+}
+
 std::vector<piece> get_selected_pieces(const game& g)
 {
   std::vector<piece> pieces;
@@ -68,6 +76,11 @@ std::vector<piece> get_selected_pieces(const game& g)
     [](const auto& piece) { return piece.is_selected(); }
   );
   return pieces;
+}
+
+const std::vector<piece>& get_pieces(const game& g) noexcept
+{
+  return g.get_pieces();
 }
 
 void game::tick()
@@ -89,6 +102,9 @@ void game::tick()
 void test_game() //!OCLINT tests may be many
 {
 #ifndef NDEBUG // no tests in release
+  {
+    game g;
+  }
 #endif // no tests in release
 }
 

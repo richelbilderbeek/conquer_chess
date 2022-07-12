@@ -38,6 +38,17 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load the white/light king
+  {
+    const QString filename{"kw_portrait.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_white_king_portrait.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
   // Load the white/light square
   {
     const QString filename{"l.png"};
@@ -82,14 +93,28 @@ sf::Texture& game_resources::get_piece(
   if (color == chess_color::black)
   {
     if (type == piece_type::king) return m_black_king;
-
-
   }
   else
   {
     if (type == piece_type::king) return m_white_king;
+  }
 
+  assert(!"Should not get here");
+  return m_white_square;
+}
 
+sf::Texture& game_resources::get_piece_portrait(
+  const chess_color color,
+  const piece_type type
+)
+{
+  if (color == chess_color::black)
+  {
+    if (type == piece_type::king) return m_white_king_portrait;
+  }
+  else
+  {
+    if (type == piece_type::king) return m_white_king_portrait;
   }
 
   assert(!"Should not get here");

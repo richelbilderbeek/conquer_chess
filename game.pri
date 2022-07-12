@@ -9,6 +9,8 @@ HEADERS += \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
     $$PWD/piece.h \
+    $$PWD/piece_action.h \
+    $$PWD/piece_action_type.h \
     $$PWD/piece_type.h \
     $$PWD/screen_coordinat.h
 
@@ -23,6 +25,8 @@ SOURCES += \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \
     $$PWD/piece.cpp \
+    $$PWD/piece_action.cpp \
+    $$PWD/piece_action_type.cpp \
     $$PWD/piece_type.cpp \
     $$PWD/screen_coordinat.cpp
 

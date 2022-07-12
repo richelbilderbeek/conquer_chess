@@ -21,6 +21,12 @@ public:
     const piece_type type
   );
 
+  /// Get texture of a portrait of a piece
+  sf::Texture& get_piece_portrait(
+    const chess_color color,
+    const piece_type type
+  );
+
   /// Get a picture of a white/light square
   sf::Texture& get_white_square() noexcept { return m_white_square; }
 
@@ -38,6 +44,9 @@ private:
 
   /// Sprite of a white/light king
   sf::Texture m_white_king;
+
+  /// Sprite of a white/light king's portrait
+  sf::Texture m_white_king_portrait;
 
   /// Sprite of a white/light square
   sf::Texture m_white_square;

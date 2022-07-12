@@ -8,6 +8,11 @@ screen_coordinat::screen_coordinat(const int x, const int y)
 
 }
 
+screen_coordinat get_default_screen_size() noexcept
+{
+  return screen_coordinat(1024, 576);
+}
+
 screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept
 {
   return screen_coordinat(

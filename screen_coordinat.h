@@ -18,6 +18,9 @@ private:
   int m_y;
 };
 
+/// Get the default screen size, where x is the width and y is the height
+screen_coordinat get_default_screen_size() noexcept;
+
 screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 
 screen_coordinat& operator+=(screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;

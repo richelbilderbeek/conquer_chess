@@ -3,6 +3,7 @@
 
 #include "chess_color.h"
 #include "piece_type.h"
+#include "piece_action.h"
 #include "game_coordinat.h"
 
 #include <vector>
@@ -19,6 +20,8 @@ public:
 
   /// Do a left-mouse button down, to un-/select this piece
   void do_lmb_down();
+
+  const auto& get_actions() const noexcept { return m_actions; }
 
   /// Get the color of the piece, i.e. white or black
   chess_color get_color() const noexcept { return m_color; }
@@ -42,6 +45,9 @@ public:
 
 private:
 
+  /// The actions the piece is doing, or about to do
+  std::vector<piece_action> m_actions;
+
   /// The color of the piece, i.e. white or black
   chess_color m_color;
 
@@ -63,6 +69,13 @@ private:
 
 /// Get all the pieces in the starting position
 std::vector<piece> get_starting_pieces() noexcept;
+
+/// Does the piece have actions to do?
+bool has_actions(const piece& p) noexcept;
+
+/// Is the unit idle?
+bool is_idle(const piece& p) noexcept;
+
 
 
 

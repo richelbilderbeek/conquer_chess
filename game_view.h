@@ -11,7 +11,7 @@
 class game_view
 {
 public:
-  game_view(const game& game);
+  game_view(const game& game = get_default_game());
 
   /// Run the game, until the user quits
   void exec();
@@ -42,8 +42,6 @@ private:
   /// Show debug info on-screen
   void show_debug();
 
-  /// Show the pieces' health bars on-screen
-  void show_health_bars();
 
   /// Show the mouse cursor on-screen
   void show_mouse_cursor();
@@ -57,8 +55,14 @@ private:
   /// Show the squares of the board on-screen
   void show_squares();
 
+  /// Show the pieces' health bars on-screen
+  void show_unit_health_bars();
+
+  /// Show the planned paths for the units on-screen
+  void show_unit_paths();
+
   /// Show the selected unit(s) on-screen
-  void show_units();
+  void show_unit_sprites();
 };
 
 void test_game_view();
