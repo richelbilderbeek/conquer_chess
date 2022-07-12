@@ -134,7 +134,7 @@ void game_view::show_health_bars()
     // Black box around it
     sf::RectangleShape black_box;
 
-    black_box.setSize(sf::Vector2f(layout.get_square_width() - 4.0 - 4.0, 16.0 - 4.0));
+    black_box.setSize(sf::Vector2f(layout.get_square_width() - 4.0, 16.0 - 4.0));
     //black_box.setScale(1.0, 1.0);
     black_box.setFillColor(sf::Color(0, 0, 0));
     black_box.setOrigin(0.0, 0.0);
@@ -151,7 +151,7 @@ void game_view::show_health_bars()
 
     // Health
     sf::RectangleShape health_bar;
-    health_bar.setSize(sf::Vector2f(layout.get_square_width() - 8.0 - 4.0, 16.0 - 8.0));
+    health_bar.setSize(sf::Vector2f(layout.get_square_width() - 8.0, 16.0 - 8.0));
     //health_bar.setScale(1.0, 1.0);
     health_bar.setFillColor(
       sf::Color(
@@ -324,7 +324,13 @@ void game_view::show_squares()
     for (int y = 0; y != 8; ++y)
     {
       sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
-      s.setPosition(square_width * x, square_height * y);
+      const screen_coordinat square_pos{
+        convert_to_screen_coordinat(
+          game_coordinat(x, y),
+          layout
+        )
+      };
+      s.setPosition(square_pos.get_x(), square_pos.get_y());
       m_window.draw(s);
     }
   }

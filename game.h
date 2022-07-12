@@ -12,7 +12,10 @@
 class game
 {
 public:
-  game(const screen_coordinat& screen_size);
+  game(
+    const screen_coordinat& screen_size,
+    const int margin_width = 10
+  );
 
   /// Add an action. These will be processed in 'tick'
   void add_action(const action a);

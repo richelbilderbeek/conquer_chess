@@ -9,25 +9,29 @@
 /// +------------------------------+
 /// |                              |
 /// | 1-------------+ 2----------+ |
-/// | |             | |          | |
-/// | |             | |          | |
-/// | |             | |          | |
-/// | |             | |          | |
-/// | |             | |          | |
-/// | |             | |          | |
-/// | +-------------3 +----------4 |
+/// | |             | | units    | |
+/// | | board       | +----------+ |
+/// | |             |              |
+/// | |             | +----------+ |
+/// | |             | | controls | |
+/// | |             | +----------+ |
+/// | |             |              |
+/// | |             | +----------+ |
+/// | |             | | debug    | |
+/// | +-------------2 +----------4 |
 /// |                              |
 /// +------------------------------+
 ///
 /// 1: tl_board
+/// 2: br_board
 /// 2: tl_side
-/// 3: br_board
 /// 4: br_side
 class game_view_layout
 {
 public:
   game_view_layout(
-    const screen_coordinat& window_size = screen_coordinat(1024, 576)
+    const screen_coordinat& window_size = screen_coordinat(1024, 576),
+    const int margin_width = 10
   );
 
   double get_board_height() const noexcept;

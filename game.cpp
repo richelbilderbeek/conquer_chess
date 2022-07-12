@@ -7,8 +7,11 @@
 #include <fstream>
 #include <random>
 
-game::game(const screen_coordinat& screen_size)
-  : m_layout{screen_size},
+game::game(
+  const screen_coordinat& screen_size,
+  const int margin_width
+)
+  : m_layout{screen_size, margin_width},
     m_pieces{get_starting_pieces()}
 {
 
