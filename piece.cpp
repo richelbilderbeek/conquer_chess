@@ -3,6 +3,7 @@
 #include "piece_type.h"
 
 #include <algorithm>
+#include <cassert>
 #include <iostream>
 #include <iterator>
 #include <sstream>
@@ -70,6 +71,30 @@ void select(piece& p) noexcept
 void piece::set_selected(const bool is_selected) noexcept
 {
   m_is_selected = is_selected;
+}
+
+void piece::tick(const double delta_t)
+{
+  assert(delta_t > 0.0);
+  assert(delta_t <= 1.0);
+  if (m_actions.empty()) return;
+  const auto& first_action{m_actions[0]};
+  if (first_action.get_type() == piece_action_type::move)
+  {
+    const auto full_delta{first_action.get_coordinat() - m_coordinat};
+    const double full_length{calc_length(full_delta)};
+    if (full_length < delta_t)
+    {
+      std::vector<decltype(m_actions)::value_type>(m_actions.begin() + 1, m_actions.end()).swap(m_actions);
+    }
+    const auto delta{full_delta / (full_length / delta_t)};
+    m_coordinat += delta;
+
+  }
+  else
+  {
+    assert(first_action.get_type() == piece_action_type::attack);
+  }
 }
 
 void toggle_select(piece& p) noexcept

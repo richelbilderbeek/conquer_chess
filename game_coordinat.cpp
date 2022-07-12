@@ -20,6 +20,14 @@ double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexc
   return std::sqrt((dx * dx) + (dy * dy));
 }
 
+double calc_length(const game_coordinat& coordinat) noexcept
+{
+  return calc_distance(
+    coordinat,
+    game_coordinat()
+  );
+}
+
 void test_game_coordinat()
 {
   #ifndef NDEBUG
@@ -56,5 +64,20 @@ game_coordinat operator+(const game_coordinat& lhs, const game_coordinat& rhs) n
     lhs.get_x() + rhs.get_x(),
     lhs.get_y() + rhs.get_y()
   );
+}
+
+game_coordinat& operator+=(game_coordinat& lhs, const game_coordinat& rhs) noexcept
+{
+  lhs = game_coordinat(lhs + rhs);
+  return lhs;
+}
+
+game_coordinat operator/(const game_coordinat& coordinat, const double factor) noexcept
+{
+  return game_coordinat(
+    coordinat.get_x() / factor,
+    coordinat.get_y() / factor
+  );
+
 }
 

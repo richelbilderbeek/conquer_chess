@@ -146,6 +146,9 @@ void game::tick()
     }
   }
   m_actions = std::vector<action>();
+
+  for (auto& p: m_pieces) p.tick();
+
 }
 
 void test_game() //!OCLINT tests may be many

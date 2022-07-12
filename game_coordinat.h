@@ -23,12 +23,18 @@ private:
 /// Calculate the distance between two points
 double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 
+/// Calculate the length of the vector,
+/// a.k.a. the distance between the coordinat and the origin
+double calc_length(const game_coordinat& coordinat) noexcept;
+
 void test_game_coordinat();
 
 std::ostream& operator<<(std::ostream& os, const game_coordinat& coordinat);
 
 game_coordinat operator-(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator+(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
+game_coordinat& operator+=(game_coordinat& lhs, const game_coordinat& rhs) noexcept;
+game_coordinat operator/(const game_coordinat& coordinat, const double factor) noexcept;
 
 
 #endif // GAME_COORDINAT_H

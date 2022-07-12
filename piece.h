@@ -47,6 +47,12 @@ public:
   /// Set the selectedness of the piece
   void set_selected(bool is_selected) noexcept;
 
+  /// Do one frame of movement, resulting in a piece movement of 1 * delta_t
+  /// @param delta_t the fraction of a full move that is done, where
+  ///   0.01 means that only 1% of the full move is done and
+  ///   1.0 denotes doing a full move.
+  void tick(const double delta_t = 0.001);
+
 private:
 
   /// The actions the piece is doing, or about to do
