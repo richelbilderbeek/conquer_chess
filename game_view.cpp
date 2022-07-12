@@ -262,15 +262,11 @@ void show_squares(game_view& view)
   black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
   black_square.setTexture(&view.get_game_resources().get_black_square());
   black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
-  black_square.setPosition(100.0, 200.0);
-  black_square.setRotation(0.0);
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
   white_square.setTexture(&view.get_game_resources().get_white_square());
   white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
-  white_square.setPosition(100.0, 200.0);
-  white_square.setRotation(0.0);
 
   for (int x = 0; x != 8; ++x)
   {
@@ -286,6 +282,31 @@ void show_squares(game_view& view)
       s.setPosition(square_pos.get_x(), square_pos.get_y());
       view.get_window().draw(s);
     }
+  }
+  // Square under cursor
+  {
+    const int x{static_cast<int>(std::trunc(game.get_mouse_pos().get_x()))};
+    const int y{static_cast<int>(std::trunc(game.get_mouse_pos().get_y()))};
+    sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
+    const screen_coordinat square_pos{
+      convert_to_screen_coordinat(
+        game_coordinat(x + 0.5, y + 0.5),
+        layout
+      )
+    };
+    s.setPosition(square_pos.get_x(), square_pos.get_y());
+    const auto old_fill_color = s.getFillColor();
+    const auto old_outline_color = s.getOutlineColor();
+    const auto old_thickness = s.getOutlineThickness();
+    s.setFillColor(sf::Color(255, 196, 196));
+    s.setOutlineColor(sf::Color::Red);
+    s.setOutlineThickness(4);
+    s.rotate(5.0);
+    view.get_window().draw(s);
+    s.setFillColor(old_fill_color);
+    s.setOutlineColor(old_outline_color);
+    s.setOutlineThickness(old_thickness);
+    s.rotate(-5.0);
   }
 }
 
