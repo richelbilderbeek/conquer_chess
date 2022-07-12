@@ -29,6 +29,10 @@ double calc_length(const game_coordinat& coordinat) noexcept;
 
 void test_game_coordinat();
 
+/// center a coordinat on the center of a square,
+/// i.e. at coorddinat (x.5, y.5)
+game_coordinat center_on_center(const game_coordinat& coordinat);
+
 std::ostream& operator<<(std::ostream& os, const game_coordinat& coordinat);
 
 game_coordinat operator-(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;

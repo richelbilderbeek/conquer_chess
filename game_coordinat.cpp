@@ -28,6 +28,14 @@ double calc_length(const game_coordinat& coordinat) noexcept
   );
 }
 
+game_coordinat center_on_center(const game_coordinat& coordinat)
+{
+  return game_coordinat(
+    std::trunc(coordinat.get_x()) + 0.5,
+    std::trunc(coordinat.get_y()) + 0.5
+  );
+}
+
 void test_game_coordinat()
 {
   #ifndef NDEBUG

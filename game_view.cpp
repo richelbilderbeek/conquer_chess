@@ -43,7 +43,7 @@ void game_view::exec()
     // Do a tick
     m_game.tick();
 
-    // Show thw new state
+    // Show the new state
     show();
   }
 }
@@ -231,7 +231,7 @@ void show_pieces(game_view& view)
     );
     if (piece.is_selected())
     {
-      sprite.setFillColor(sf::Color::Red);
+      sprite.setFillColor(sf::Color(255, 196, 196));
     }
     sprite.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
     const auto screen_position = convert_to_screen_coordinat(piece.get_coordinat(), layout);
@@ -301,12 +301,12 @@ void show_squares(game_view& view)
     s.setFillColor(sf::Color(255, 196, 196));
     s.setOutlineColor(sf::Color::Red);
     s.setOutlineThickness(4);
-    s.rotate(5.0);
+    s.rotate(2.0);
     view.get_window().draw(s);
     s.setFillColor(old_fill_color);
     s.setOutlineColor(old_outline_color);
     s.setOutlineThickness(old_thickness);
-    s.rotate(-5.0);
+    s.rotate(-2.0);
   }
 }
 

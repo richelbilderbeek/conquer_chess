@@ -58,9 +58,15 @@ void game::do_lmb_down(const game_coordinat& coordinat)
       // Move selected pieces there
       for (auto& p: m_pieces)
       {
-        if (p.is_selected()) p.add_action(
-          piece_action(piece_action_type::move, coordinat)
-        );
+        if (p.is_selected())
+        {
+          p.add_action(
+            piece_action(
+              piece_action_type::move,
+              center_on_center(coordinat)
+            )
+          );
+        }
       }
     }
   }
