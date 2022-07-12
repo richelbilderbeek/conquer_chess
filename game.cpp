@@ -54,6 +54,19 @@ void game::do_lmb_down(const game_coordinat& coordinat)
   p.do_lmb_down();
 }
 
+std::vector<piece> get_selected_pieces(const game& g)
+{
+  std::vector<piece> pieces;
+  const auto& all_pieces = g.get_pieces();
+  std::copy_if(
+    std::begin(all_pieces),
+    std::end(all_pieces),
+    std::back_inserter(pieces),
+    [](const auto& piece) { return piece.is_selected(); }
+  );
+  return pieces;
+}
+
 void game::tick()
 {
   for (const auto& action: m_actions)

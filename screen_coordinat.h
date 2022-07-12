@@ -18,4 +18,11 @@ private:
   int m_y;
 };
 
+screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
+
+screen_coordinat& operator+=(screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
+
+/// Run the tests for the screen coordinat
+void test_screen_coordinat();
+
 #endif // SCREEN_COORDINAT_H

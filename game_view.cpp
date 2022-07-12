@@ -210,7 +210,7 @@ void game_view::show_pieces()
         piece.get_type()
       )
     );
-    if (piece.get_is_selected())
+    if (piece.is_selected())
     {
       sprite.setFillColor(sf::Color::Red);
     }
@@ -229,27 +229,74 @@ void game_view::show_sidebar()
 {
   const auto& layout = m_game.get_layout();
 
-  sf::Text text;
-  text.setFont(m_game_resources.get_font());
-  std::stringstream s;
-  s << "Game position: ("
-    << m_game.get_mouse_pos().get_x()
-    << ", "
-    << m_game.get_mouse_pos().get_y()
-    << ")"
-    << '\n'
-    << "Screen position: ("
-    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_x()
-    << ", "
-    << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_y()
-    << ")"  ;
-  text.setString(s.str());
-  text.setCharacterSize(20);
-  text.setPosition(
-    layout.get_tl_side().get_x(),
-    layout.get_tl_side().get_y()
-  );
-  m_window.draw(text);
+  // Top
+  {
+    sf::Text text;
+    text.setFont(m_game_resources.get_font());
+    std::stringstream s;
+    s << "Game position: ("
+      << m_game.get_mouse_pos().get_x()
+      << ", "
+      << m_game.get_mouse_pos().get_y()
+      << ")"
+      << '\n'
+      << "Screen position: ("
+      << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_x()
+      << ", "
+      << convert_to_screen_coordinat(m_game.get_mouse_pos(), layout).get_y()
+      << ")"  ;
+    text.setString(s.str());
+    text.setCharacterSize(20);
+    text.setPosition(
+      layout.get_tl_side().get_x(),
+      layout.get_tl_side().get_y()
+    );
+    m_window.draw(text);
+  }
+  // Selected pieces
+  const double square_width{layout.get_square_width()};
+  const double square_height{layout.get_square_height()};
+  screen_coordinat screen_position = layout.get_tl_side() + screen_coordinat(0, 100);
+  for (const auto& piece: get_selected_pieces(m_game))
+  {
+    // sprite of the piece
+    sf::RectangleShape sprite;
+    sprite.setSize(sf::Vector2f(square_width, square_height));
+    sprite.setTexture(
+      &m_game_resources.get_piece(
+        piece.get_color(),
+        piece.get_type()
+      )
+    );
+    sprite.setOrigin(0.0, 0.0);
+    sprite.setPosition(
+      screen_position.get_x(),
+      screen_position.get_y()
+    );
+    sprite.setRotation(0.0);
+    m_window.draw(sprite);
+    // text
+    sf::Text text;
+    text.setFont(m_game_resources.get_font());
+    std::stringstream s;
+
+    s << piece.get_type() << ": "
+      << piece.get_health() << "/"
+      << piece.get_max_health()
+    ;
+    text.setString(s.str());
+    text.setCharacterSize(20);
+    const auto text_position{
+      screen_position + screen_coordinat(square_width + 10, square_height / 2)
+    };
+    text.setPosition(
+      text_position.get_x(),
+      text_position.get_y()
+    );
+    m_window.draw(text);
+    screen_position += screen_coordinat(0, square_height);
+  }
+
 }
 
 void game_view::show_squares()

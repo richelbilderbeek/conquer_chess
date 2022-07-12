@@ -52,6 +52,9 @@ std::vector<double> calc_distances(
   const game_coordinat& coordinat
 );
 
+/// Get all the selected pieces
+std::vector<piece> get_selected_pieces(const game& g);
+
 void test_game();
 
 #endif // GAME_H

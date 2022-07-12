@@ -9,8 +9,9 @@ piece::piece(
 )
   : m_color{color},
     m_coordinat{coordinat},
-    m_f_health{1.0},
+    m_health{::get_max_health(type)},
     m_is_selected{false},
+    m_max_health{::get_max_health(type)},
     m_type{type}
 {
 
