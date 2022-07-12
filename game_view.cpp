@@ -132,7 +132,14 @@ void game_view::show_controls()
   sf::Text text;
   text.setFont(m_game_resources.get_font());
   std::stringstream s;
-  s << "LMB to select a unit";
+  const auto& selected_units = get_selected_pieces(m_game);
+  if (selected_units.empty()) {
+    s << "LMB: to select a unit";
+  } else {
+    s << "LMB: move to square\n"
+      << "RMB: attack square"
+    ;
+  }
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
