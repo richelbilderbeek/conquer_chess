@@ -40,7 +40,7 @@ game_resources::game_resources()
   }
   // Load the black/dark rook portrait
   {
-    const QString filename{"rb_portrait.png"};
+    const QString filename{"rb_portrait_2.png"};
     QFile f(":/resources/" + filename);
     f.copy(filename);
     if (!m_black_rook_portrait.loadFromFile(filename.toStdString()))
