@@ -284,9 +284,10 @@ void show_squares(game_view& view)
     }
   }
   // Square under cursor
+  const int x{static_cast<int>(std::trunc(game.get_mouse_pos().get_x()))};
+  const int y{static_cast<int>(std::trunc(game.get_mouse_pos().get_y()))};
+  if (x >= 0 && x < 8 && y >= 0 && y < 8)
   {
-    const int x{static_cast<int>(std::trunc(game.get_mouse_pos().get_x()))};
-    const int y{static_cast<int>(std::trunc(game.get_mouse_pos().get_y()))};
     sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
     const screen_coordinat square_pos{
       convert_to_screen_coordinat(
