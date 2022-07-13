@@ -67,8 +67,11 @@ bool game_view::process_events()
         m_window.close();
         return true;
       }
-      // Maybe a player input?
-      // Nothing yet
+      if (key_pressed == sf::Keyboard::Key::F3)
+      {
+        // debug
+        std::clog << "Debug";
+      }
     }
     if (event.type == sf::Event::MouseMoved)
     {
@@ -175,6 +178,9 @@ void show_debug(game_view& view)
   const auto& layout = game.get_layout();
   sf::Text text;
   text.setFont(view.get_game_resources().get_font());
+  const piece& closest_piece{
+    game.get_closest_piece_to(game.get_mouse_pos())
+  };
   std::stringstream s;
   s << "Game position: "
     << game.get_mouse_pos()
@@ -185,11 +191,11 @@ void show_debug(game_view& view)
     << "Is there a piece here: "
     << bool_to_str(is_piece_at(game, game.get_mouse_pos(), 0.5))
     << '\n'
+    << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
+    << "Number of game actions: " << count_game_actions(game) << '\n'
+    << "Number of selected units: " << count_selected_units(game) << '\n'
+    << "Number of piece actions: " << count_piece_actions(game) << '\n'
   ;
-  const piece& closest_piece{
-    game.get_closest_piece_to(game.get_mouse_pos())
-  };
-  s << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat();
 
   text.setString(s.str());
   text.setCharacterSize(20);
@@ -386,7 +392,7 @@ void show_unit_paths(game_view& view)
         layout
       )
     );
-    const auto& actions = piece.get_actions();
+    const auto& actions{piece.get_actions()};
     std::transform(
       std::begin(actions),
       std::end(actions),

@@ -20,6 +20,9 @@ public:
   /// Add an action. These will be processed in 'tick'
   void add_action(const action a);
 
+  /// Get the game actions, should be zero after each tick
+  const auto& get_actions() const noexcept { return m_actions; }
+
   /// Get the piece that is closest to the coordinat
   const piece& get_closest_piece_to(const game_coordinat& coordinat) const;
 
@@ -68,8 +71,19 @@ std::vector<double> calc_distances(
   const game_coordinat& coordinat
 );
 
+/// Count the total number of actions to be done by the game,
+/// which should be zero after each tick
+int count_game_actions(const game& g);
+
+/// Count the total number of actions to be done by pieces
+int count_piece_actions(const game& g);
+
 /// Count the number of selected units
 int count_selected_units(const game& g);
+
+/// Create a game in which it is only a king versus a king,
+/// to be used in debugging
+game create_king_versus_king_game();
 
 /// Find zero, one or more chess pieces of the specified type and color
 std::vector<piece> find_pieces(

@@ -4,8 +4,8 @@
 #include "game_coordinat.h"
 #include "screen_coordinat.h"
 
-/// Get the default margin width/size
-int get_default_margin_width() noexcept;
+/// Get the default margin width/size, in pixels
+constexpr int get_default_margin_width() noexcept { return 10; }
 
 /// The layout of the game view
 ///
@@ -92,6 +92,7 @@ game_coordinat convert_to_game_coordinat(
   const screen_coordinat& coordinat,
   const game_view_layout& layout
 );
+
 
 /// Test the game_view_layout class
 void test_game_view_layout();

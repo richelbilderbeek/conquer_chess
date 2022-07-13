@@ -28,6 +28,17 @@ void piece::add_action(const piece_action& action)
   m_actions.push_back(action);
 }
 
+void clear_actions(piece& p)
+{
+  p.get_actions().clear();
+  assert(count_piece_actions(p) == 0);
+}
+
+int count_piece_actions(const piece& p)
+{
+  return static_cast<int>(p.get_actions().size());
+}
+
 std::string describe_actions(const piece& p)
 {
   const auto& actions = p.get_actions();
@@ -45,7 +56,7 @@ std::string describe_actions(const piece& p)
   return t;
 }
 
-std::vector<piece> get_starting_pieces() noexcept
+std::vector<piece> get_default_starting_pieces() noexcept
 {
   return {
     piece(chess_color::white, piece_type::king, game_coordinat(3.5, 0.5)),
@@ -53,6 +64,20 @@ std::vector<piece> get_starting_pieces() noexcept
     piece(chess_color::black, piece_type::king, game_coordinat(3.5, 7.5)),
     piece(chess_color::black, piece_type::queen, game_coordinat(4.5, 7.5))
   };
+}
+
+std::vector<piece> get_king_versus_king_starting_pieces() noexcept
+{
+  const auto all_pieces{get_default_starting_pieces()};
+  std::vector<piece> pieces;
+  pieces.reserve(2);
+  std::copy_if(
+    std::begin(all_pieces),
+    std::end(all_pieces),
+    std::back_inserter(pieces),
+    [](const auto& piece) { return piece.get_type() == piece_type::king; }
+  );
+  return pieces;
 }
 
 bool has_actions(const piece& p) noexcept

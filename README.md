@@ -4,6 +4,8 @@ Chess variant
 
 ## Screenshots
 
+![](screenshots/20220713_2.png)
+
 ![](screenshots/20220713_1.png)
 
 ![](screenshots/20220712_6.png)

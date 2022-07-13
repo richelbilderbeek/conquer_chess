@@ -12,7 +12,7 @@ game::game(
 )
   : m_layout{options.get_screen_size(), options.get_margin_width()},
     m_options{options},
-    m_pieces{get_starting_pieces()}
+    m_pieces{options.get_starting_pieces()}
 {
 
 }
@@ -44,6 +44,25 @@ std::vector<double> calc_distances(
   return distances;
 }
 
+int count_game_actions(const game& g)
+{
+  return static_cast<int>(g.get_actions().size());
+}
+
+int count_piece_actions(const game& g)
+{
+  const auto& pieces{g.get_pieces()};
+  return std::accumulate(
+    std::begin(pieces),
+    std::end(pieces),
+    0,
+    [](const int n, const auto& piece)
+    {
+      return n + count_piece_actions(piece);
+    }
+  );
+}
+
 int count_selected_units(const game& g)
 {
   return std::count_if(
@@ -51,6 +70,17 @@ int count_selected_units(const game& g)
     std::end(g.get_pieces()),
     [](const auto& piece) { return piece.is_selected(); }
   );
+}
+
+game create_king_versus_king_game()
+{
+  const game_options options(
+    get_default_screen_size(),
+    get_king_versus_king_starting_pieces(),
+    get_default_delta_t(),
+    get_default_margin_width()
+  );
+  return game(options);
 }
 
 void game::do_lmb_down(const game_coordinat& coordinat)
@@ -116,6 +146,9 @@ void game::do_rmb_down(const game_coordinat& coordinat)
   {
     if (p.is_selected())
     {
+      // No shift, so all current actions are void
+      clear_actions(p);
+
       p.add_action(
         piece_action(
           piece_action_type::move,
@@ -250,6 +283,24 @@ void unselect_all_pieces(game & g)
 void test_game() //!OCLINT tests may be many
 {
 #ifndef NDEBUG // no tests in release
+  // Actions in pieces accumulate
+  {
+    game g = create_king_versus_king_game();
+    g.get_pieces().at(0).add_action(
+      piece_action(
+        piece_action_type::move,
+        game_coordinat(1.0, 1.0)
+      )
+    );
+    assert(count_piece_actions(g) == 1);
+    g.get_pieces().at(0).add_action(
+      piece_action(
+        piece_action_type::move,
+        game_coordinat(2.0, 2.0)
+      )
+    );
+    assert(count_piece_actions(g) == 2);
+  }
   {
     game g;
     assert(!is_piece_at(g, game_coordinat(3, 3)));
@@ -290,6 +341,30 @@ void test_game() //!OCLINT tests may be many
     g.add_action(create_press_lmb_action(white_queen.get_coordinat()));
     g.tick();
     assert(count_selected_units(g) == 1);
+  }
+  // LMB then RMB makes a unit move
+  {
+    game g;
+    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.tick();
+    assert(count_piece_actions(g) == 0);
+    g.add_action(create_press_rmb_action(white_king.get_coordinat() + game_coordinat(1.0, 1.0)));
+    g.tick();
+    assert(count_piece_actions(g) == 1);
+  }
+  // 2x LMB then RMB makes a unit move 1 stretch (not 2)
+  {
+    game g;
+    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.add_action(create_press_rmb_action(white_king.get_coordinat() + game_coordinat(1.0, 1.0)));
+    g.tick();
+    assert(count_piece_actions(g) == 1);
+    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.add_action(create_press_rmb_action(white_king.get_coordinat() + game_coordinat(2.0, 2.0)));
+    g.tick();
+    assert(count_piece_actions(g) == 1);
   }
 #endif // no tests in release
 }

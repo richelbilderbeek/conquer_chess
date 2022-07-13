@@ -22,7 +22,11 @@ public:
   /// Add an action for the piece to do
   void add_action(const piece_action& action);
 
+  /// Get all the piece actions
   const auto& get_actions() const noexcept { return m_actions; }
+
+  /// Get all the piece actions
+  auto& get_actions() noexcept { return m_actions; }
 
   /// Get the color of the piece, i.e. white or black
   chess_color get_color() const noexcept { return m_color; }
@@ -78,11 +82,20 @@ private:
   piece_type m_type;
 };
 
+/// Clear all the actions
+void clear_actions(piece& p);
+
+/// Count the number of actions a piece has
+int count_piece_actions(const piece& p);
+
 /// Describe the actions a piece have, e.g. 'idle', or 'moving to (3, 4)'
 std::string describe_actions(const piece& p);
 
 /// Get all the pieces in the starting position
-std::vector<piece> get_starting_pieces() noexcept;
+std::vector<piece> get_default_starting_pieces() noexcept;
+
+/// Get a king-versus-king starting position
+std::vector<piece> get_king_versus_king_starting_pieces() noexcept;
 
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;
@@ -98,7 +111,5 @@ void toggle_select(piece& p) noexcept;
 
 /// Unselect the piece
 void unselect(piece& p) noexcept;
-
-
 
 #endif // PIECE_H

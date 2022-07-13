@@ -75,11 +75,6 @@ screen_coordinat convert_to_screen_coordinat(
   );
 }
 
-int get_default_margin_width() noexcept
-{
-  return 10;
-}
-
 double game_view_layout::get_square_height() const noexcept
 {
   return static_cast<double>(get_board_height()) / 8.0;
