@@ -115,6 +115,17 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load the white/light rook portrait
+  {
+    const QString filename{"rw_portrait.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_white_rook_portrait.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
   // Load the white/light square
   {
     const QString filename{"l.png"};
@@ -189,7 +200,7 @@ sf::Texture& game_resources::get_piece_portrait(
   {
     if (type == piece_type::king) return m_white_king_portrait;
     if (type == piece_type::queen) return m_white_queen_portrait;
-    if (type == piece_type::rook) return m_white_square;
+    if (type == piece_type::rook) return m_white_rook_portrait;
   }
 
   assert(!"Should not get here");

@@ -46,6 +46,7 @@ private:
   sf::Texture m_white_queen;
   sf::Texture m_white_queen_portrait;
   sf::Texture m_white_rook;
+  sf::Texture m_white_rook_portrait;
   sf::Texture m_white_square;
   sf::Font m_font;
   sf::Music m_ninja_gods;
