@@ -33,4 +33,4 @@ SOURCES += \
     $$PWD/screen_coordinat.cpp
 
 RESOURCES += \
-    game_resources.qrc
+    $$PWD/game_resources.qrc

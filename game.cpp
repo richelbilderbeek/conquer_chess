@@ -44,6 +44,23 @@ std::vector<double> calc_distances(
   return distances;
 }
 
+bool can_select_piece_at_mouse_pos(const game& g)
+{
+  const auto& mouse_pos{g.get_mouse_pos()};
+  if (
+    !is_piece_at(
+      g,
+      mouse_pos,
+      g.get_options().get_click_distance()
+    )
+  )
+  {
+    return false;
+  }
+  const auto& piece{g.get_closest_piece_to(mouse_pos)};
+  return !piece.is_selected();
+}
+
 int count_game_actions(const game& g)
 {
   return static_cast<int>(g.get_actions().size());

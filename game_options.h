@@ -18,6 +18,10 @@ public:
   );
 
 
+  /// Get the distance the mouse must be maximally in
+  /// for a click to connect to a piece
+  auto get_click_distance() const noexcept { return m_click_distance; }
+
   /// Get the fraction of a full move that is done per tick,
   /// where
   ///   * 0.01 means that only 1% of the full move is done
@@ -34,6 +38,11 @@ public:
   const auto& get_starting_pieces() const noexcept { return m_starting_pieces; }
 
 private:
+
+
+  /// Get the distance the mouse must be maximally in
+  /// for a click to connect to a piece
+  double m_click_distance;
 
   /// The fraction of a full move that is done per tick,
   /// where

@@ -35,6 +35,9 @@ public:
   /// Get the in-game mouse position
   const auto& get_mouse_pos() const noexcept { return m_mouse_pos; }
 
+  /// Get the game options
+  const auto& get_options() const noexcept { return m_options; }
+
   /// Get all the pieces
   auto& get_pieces() noexcept { return m_pieces; }
 
@@ -54,6 +57,7 @@ private:
   /// The in-game coordinat of the mouse
   game_coordinat m_mouse_pos;
 
+  /// The game options
   game_options m_options;
 
   std::vector<piece> m_pieces;
@@ -70,6 +74,9 @@ std::vector<double> calc_distances(
   const std::vector<piece>& pieces,
   const game_coordinat& coordinat
 );
+
+/// Can the player select a piece at the current mouse position?
+bool can_select_piece_at_mouse_pos(const game& g);
 
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick

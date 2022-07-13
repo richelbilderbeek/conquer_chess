@@ -24,6 +24,34 @@ std::string bool_to_str(const bool b) noexcept
   return b ? "true" : "false";
 }
 
+sf::RectangleShape create_black_square(game_view& view)
+{
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  const double square_width{layout.get_square_width()};
+  const double square_height{layout.get_square_height()};
+
+  sf::RectangleShape black_square;
+  black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
+  black_square.setTexture(&view.get_game_resources().get_black_square());
+  black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
+  return black_square;
+}
+
+sf::RectangleShape create_white_square(game_view& view)
+{
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  const double square_width{layout.get_square_width()};
+  const double square_height{layout.get_square_height()};
+
+  sf::RectangleShape white_square;
+  white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
+  white_square.setTexture(&view.get_game_resources().get_white_square());
+  white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
+  return white_square;
+}
+
 void game_view::exec()
 {
   // Open window
@@ -272,18 +300,9 @@ void show_squares(game_view& view)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
-  const double square_width{layout.get_square_width()};
-  const double square_height{layout.get_square_height()};
 
-  sf::RectangleShape black_square;
-  black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  black_square.setTexture(&view.get_game_resources().get_black_square());
-  black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
-
-  sf::RectangleShape white_square;
-  white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  white_square.setTexture(&view.get_game_resources().get_white_square());
-  white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
+  sf::RectangleShape black_square = create_black_square(view);
+  sf::RectangleShape white_square = create_white_square(view);
 
   for (int x = 0; x != 8; ++x)
   {
@@ -300,12 +319,22 @@ void show_squares(game_view& view)
       view.get_window().draw(s);
     }
   }
-  // Square under cursor
+  show_square_under_cursor(view);
+}
+void show_square_under_cursor(game_view& view)
+{
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
   const int x{static_cast<int>(std::trunc(game.get_mouse_pos().get_x()))};
   const int y{static_cast<int>(std::trunc(game.get_mouse_pos().get_y()))};
+
   if (x >= 0 && x < 8 && y >= 0 && y < 8)
   {
-    sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
+    sf::RectangleShape s{
+      (x + y) % 2 == 1
+      ? create_black_square(view)
+      : create_white_square(view)
+    };
     const screen_coordinat square_pos{
       convert_to_screen_coordinat(
         game_coordinat(x + 0.5, y + 0.5),
@@ -316,15 +345,22 @@ void show_squares(game_view& view)
     const auto old_fill_color = s.getFillColor();
     const auto old_outline_color = s.getOutlineColor();
     const auto old_thickness = s.getOutlineThickness();
-    s.setFillColor(sf::Color(255, 196, 196));
-    s.setOutlineColor(sf::Color::Red);
+    const bool valid{would_be_valid(view)};
+    if (valid)
+    {
+      s.setFillColor(sf::Color(196, 255, 196));
+      s.setOutlineColor(sf::Color::Green);
+    }
+    else
+    {
+      s.setFillColor(sf::Color(255, 196, 196));
+      s.setOutlineColor(sf::Color::Red);
+    }
     s.setOutlineThickness(4);
-    s.rotate(2.0);
     view.get_window().draw(s);
     s.setFillColor(old_fill_color);
     s.setOutlineColor(old_outline_color);
     s.setOutlineThickness(old_thickness);
-    s.rotate(-2.0);
   }
 }
 
@@ -477,4 +513,14 @@ void test_game_view() //!OCLINT tests may be many
 {
   #ifndef NDEBUG // no tests in release
   #endif //NDEBUG
+}
+
+bool would_be_valid(const game_view& view)
+{
+  const auto& game{view.get_game()};
+  if (count_selected_units(game) == 0)
+  {
+    return can_select_piece_at_mouse_pos(game);
+  }
+  return false;
 }

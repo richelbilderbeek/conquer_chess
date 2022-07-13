@@ -47,6 +47,12 @@ private:
 /// Convert 'true' to 'true' and 'false' to 'false'
 std::string bool_to_str(const bool b) noexcept;
 
+/// Create a black/dark square at the right size
+sf::RectangleShape create_black_square(game_view& view);
+
+/// Create a white/ligt square at the right size
+sf::RectangleShape create_white_square(game_view& view);
+
 /// Show the board: squares, unit paths, pieces, health bars
 void show_board(game_view& view);
 
@@ -65,6 +71,9 @@ void show_sidebar(game_view& view);
 /// Show the squares of the board on-screen
 void show_squares(game_view& view);
 
+/// Show the highlighted square under the cursor on-screen
+void show_square_under_cursor(game_view& view);
+
 /// Show the pieces' health bars on-screen
 void show_unit_health_bars(game_view& view);
 
@@ -76,5 +85,7 @@ void show_unit_sprites(game_view& view);
 
 void test_game_view();
 
+/// Would it be a valid move if the user would press LMB or RMB?
+bool would_be_valid(const game_view& view);
 
 #endif // GAME_VIEW_H
