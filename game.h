@@ -3,6 +3,7 @@
 
 #include "action.h"
 #include "game_coordinat.h"
+#include "game_options.h"
 #include "game_view_layout.h"
 #include "piece.h"
 #include <vector>
@@ -13,8 +14,7 @@ class game
 {
 public:
   game(
-    const screen_coordinat& screen_size = get_default_screen_size(),
-    const int margin_width = 10
+    const game_options& options = get_default_game_options()
   );
 
   /// Add an action. These will be processed in 'tick'
@@ -50,6 +50,8 @@ private:
 
   /// The in-game coordinat of the mouse
   game_coordinat m_mouse_pos;
+
+  game_options m_options;
 
   std::vector<piece> m_pieces;
 

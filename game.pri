@@ -5,6 +5,7 @@ HEADERS += \
     $$PWD/chess_color.h \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
+    $$PWD/game_options.h \
     $$PWD/game_resources.h \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
@@ -21,6 +22,7 @@ SOURCES += \
     $$PWD/chess_color.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
+    $$PWD/game_options.cpp \
     $$PWD/game_resources.cpp \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \

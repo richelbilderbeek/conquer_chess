@@ -8,10 +8,10 @@
 #include <random>
 
 game::game(
-  const screen_coordinat& screen_size,
-  const int margin_width
+  const game_options& options
 )
-  : m_layout{screen_size, margin_width},
+  : m_layout{options.get_screen_size(), options.get_margin_width()},
+    m_options{options},
     m_pieces{get_starting_pieces()}
 {
 
@@ -160,8 +160,7 @@ piece& game::get_closest_piece_to(const game_coordinat& coordinat)
 game get_default_game() noexcept
 {
   return game{
-    get_default_screen_size(),
-    get_default_margin_width()
+    get_default_game_options()
   };
 }
 
@@ -236,7 +235,7 @@ void game::tick()
   }
   m_actions = std::vector<action>();
 
-  for (auto& p: m_pieces) p.tick();
+  for (auto& p: m_pieces) p.tick(m_options.get_delta_t());
 
 }
 
