@@ -19,6 +19,7 @@ private:
 
 action create_mouse_move_action(const game_coordinat& coordinat);
 action create_press_lmb_action(const game_coordinat& coordinat);
+action create_press_rmb_action(const game_coordinat& coordinat);
 
 
 #endif // ACTION_H

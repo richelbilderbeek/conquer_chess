@@ -44,33 +44,107 @@ std::vector<double> calc_distances(
   return distances;
 }
 
+int count_selected_units(const game& g)
+{
+  return std::count_if(
+    std::begin(g.get_pieces()),
+    std::end(g.get_pieces()),
+    [](const auto& piece) { return piece.is_selected(); }
+  );
+}
+
 void game::do_lmb_down(const game_coordinat& coordinat)
 {
-  if (get_selected_pieces(*this).empty()) {
+  // #|Has selected pieces? |Clicking on what?|Do what?
+  // -|---------------------|-----------------|----------------
+  // 1|Yes                  |Selected unit    |Unselect unit
+  // 2|Yes                  |Unselected unit  |Select unit
+  // 3|Yes                  |Empty square     |Unselect all units
+  // 4|No                   |Selected unit    |NA
+  // 5|No                   |Unselected unit  |Select unit
+  // 6|No                   |Empty square     |Nothing
+
+  if (has_selected_pieces(*this))
+  {
     if (is_piece_at(*this, coordinat)) {
-      select(get_closest_piece_to(coordinat));
-    }
-  } else {
-    // There is a piece there? Select it
-    if (is_piece_at(*this, coordinat)) {
-      toggle_select(get_closest_piece_to(coordinat));
-    } else {
-      // Move selected pieces there
-      for (auto& p: m_pieces)
+      auto& piece{get_closest_piece_to(coordinat)};
+      if (piece.get_color() == chess_color::white)
       {
-        if (p.is_selected())
+        if (piece.is_selected())
         {
-          p.add_action(
-            piece_action(
-              piece_action_type::move,
-              center_on_center(coordinat)
-            )
-          );
+          unselect(piece); // 1
+        }
+        else
+        {
+          unselect_all_pieces(*this);
+          select(piece); // 2
         }
       }
     }
+    else
+    {
+      unselect_all_pieces(*this); // 3
+    }
   }
+  else
+  {
+    if (is_piece_at(*this, coordinat)) {
+      auto& piece{get_closest_piece_to(coordinat)};
+      if (piece.get_color() == chess_color::white)
+      {
+        if (piece.is_selected())
+        {
+          assert(!"Should never happen, as there are no selected pieces at all");
+          unselect(piece); // 4
+        }
+        else
+        {
+          select(piece); // 5
+        }
+      }
+    }
+    else
+    {
+      // 6
+    }
+  }
+}
 
+void game::do_rmb_down(const game_coordinat& coordinat)
+{
+  for (auto& p: m_pieces)
+  {
+    if (p.is_selected())
+    {
+      p.add_action(
+        piece_action(
+          piece_action_type::move,
+          center_on_center(coordinat)
+        )
+      );
+    }
+  }
+  unselect_all_pieces(*this);
+}
+
+std::vector<piece> find_pieces(
+  const game& g,
+  const piece_type type,
+  const chess_color color
+)
+{
+  std::vector<piece> pieces;
+  std::copy_if(
+    std::begin(g.get_pieces()),
+    std::end(g.get_pieces()),
+    std::back_inserter(pieces),
+    [type, color](const auto& piece)
+    {
+      return piece.get_color() == color
+        && piece.get_type() == type;
+    }
+  );
+  return pieces;
 }
 
 const piece& game::get_closest_piece_to(const game_coordinat& coordinat) const
@@ -122,6 +196,11 @@ const std::vector<piece>& get_pieces(const game& g) noexcept
   return g.get_pieces();
 }
 
+bool has_selected_pieces(const game& g)
+{
+  return !get_selected_pieces(g).empty();
+}
+
 bool is_piece_at(
   const game& g,
   const game_coordinat& coordinat,
@@ -150,11 +229,23 @@ void game::tick()
     {
       do_lmb_down(action.get_coordinat());
     }
+    else if (action.get_type() == action_type::rmb_down)
+    {
+      do_rmb_down(action.get_coordinat());
+    }
   }
   m_actions = std::vector<action>();
 
   for (auto& p: m_pieces) p.tick();
 
+}
+
+void unselect_all_pieces(game & g)
+{
+  for (auto& piece: g.get_pieces())
+  {
+    unselect(piece);
+  }
 }
 
 void test_game() //!OCLINT tests may be many
@@ -167,6 +258,39 @@ void test_game() //!OCLINT tests may be many
     {
       assert(is_piece_at(g, piece.get_coordinat(), 1.0));
     }
+  }
+  // Clicking a unit once with LMB selects it
+  {
+    game g;
+    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    assert(count_selected_units(g) == 0);
+    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.tick();
+    assert(count_selected_units(g) == 1);
+  }
+  // Clicking a unit twice with LMB selects and unselects it
+  {
+    game g;
+    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    assert(count_selected_units(g) == 0);
+    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.tick();
+    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.tick();
+    assert(count_selected_units(g) == 0);
+  }
+  // Clicking a unit with LMB, then another unit with LMB, only the last unit is selected
+  {
+    game g;
+    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    const auto white_queen{find_pieces(g, piece_type::queen, chess_color::white).at(0)};
+    assert(count_selected_units(g) == 0);
+    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.tick();
+    assert(count_selected_units(g) == 1);
+    g.add_action(create_press_lmb_action(white_queen.get_coordinat()));
+    g.tick();
+    assert(count_selected_units(g) == 1);
   }
 #endif // no tests in release
 }

@@ -52,7 +52,7 @@ public:
   /// @param delta_t the fraction of a full move that is done, where
   ///   0.01 means that only 1% of the full move is done and
   ///   1.0 denotes doing a full move.
-  void tick(const double delta_t = 0.001);
+  void tick(const double delta_t = 0.0001);
 
 private:
 

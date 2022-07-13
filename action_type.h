@@ -5,6 +5,7 @@
 enum class action_type
 {
   lmb_down,
+  rmb_down,
   mouse_move
 };
 

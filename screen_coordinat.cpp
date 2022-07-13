@@ -11,8 +11,8 @@ screen_coordinat::screen_coordinat(const int x, const int y)
 
 screen_coordinat get_default_screen_size() noexcept
 {
-  //return screen_coordinat(1024, 576);
-  return screen_coordinat(1024 + 800, 576);
+  return screen_coordinat(1024, 576);
+  //return screen_coordinat(1024 + 800, 576);
 }
 
 std::ostream& operator<<(std::ostream& os, const screen_coordinat& coordinat)

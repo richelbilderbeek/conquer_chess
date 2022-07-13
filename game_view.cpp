@@ -99,6 +99,17 @@ bool game_view::process_events()
           )
         );
       }
+      else if (event.mouseButton.button == sf::Mouse::Right)
+      {
+        m_game.add_action(
+          create_press_rmb_action(
+            convert_to_game_coordinat(
+              mouse_screen_pos,
+              m_game.get_layout()
+            )
+          )
+        );
+      }
     }
     else if (event.type == sf::Event::KeyReleased)
     {
@@ -143,10 +154,10 @@ void show_controls(game_view& view)
   std::stringstream s;
   const auto& selected_units = get_selected_pieces(view.get_game());
   if (selected_units.empty()) {
-    s << "LMB: to select a unit";
+    s << "LMB: select a unit";
   } else {
-    s << "LMB: move to square\n"
-      << "RMB: attack square"
+    s << "LMB: select a unit\n"
+      << "RMB: move selected unit to square"
     ;
   }
   text.setString(s.str());
