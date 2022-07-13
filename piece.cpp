@@ -59,10 +59,14 @@ std::string describe_actions(const piece& p)
 std::vector<piece> get_default_starting_pieces() noexcept
 {
   return {
+    piece(chess_color::white, piece_type::rook, game_coordinat(0.5, 0.5)),
     piece(chess_color::white, piece_type::king, game_coordinat(3.5, 0.5)),
     piece(chess_color::white, piece_type::queen, game_coordinat(4.5, 0.5)),
+    piece(chess_color::white, piece_type::rook, game_coordinat(7.5, 0.5)),
+    piece(chess_color::black, piece_type::rook, game_coordinat(0.5, 7.5)),
     piece(chess_color::black, piece_type::king, game_coordinat(3.5, 7.5)),
-    piece(chess_color::black, piece_type::queen, game_coordinat(4.5, 7.5))
+    piece(chess_color::black, piece_type::queen, game_coordinat(4.5, 7.5)),
+    piece(chess_color::black, piece_type::rook, game_coordinat(7.5, 7.5))
   };
 }
 

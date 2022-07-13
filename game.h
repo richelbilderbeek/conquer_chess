@@ -36,6 +36,9 @@ public:
   const auto& get_mouse_pos() const noexcept { return m_mouse_pos; }
 
   /// Get the game options
+  auto& get_options() noexcept { return m_options; }
+
+  /// Get the game options
   const auto& get_options() const noexcept { return m_options; }
 
   /// Get all the pieces
@@ -129,5 +132,8 @@ bool is_piece_at(
 void unselect_all_pieces(game & g);
 
 void test_game();
+
+/// Toggle the color of the active player
+void toggle_player(game& g);
 
 #endif // GAME_H

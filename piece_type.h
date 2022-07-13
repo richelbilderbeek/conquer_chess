@@ -6,7 +6,8 @@
 enum class piece_type
 {
   king,
-  queen
+  queen,
+  rook
 };
 
 /// Get the maximum health for a piece

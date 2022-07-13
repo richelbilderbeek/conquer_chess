@@ -12,6 +12,7 @@ class game_options
 public:
   game_options(
     const screen_coordinat& screen_size,
+    const chess_color player_color,
     const std::vector<piece>& starting_pieces,
     const double delta_t,
     const int margin_width
@@ -31,11 +32,17 @@ public:
   /// Get the width of the margin in pixels
   auto get_margin_width() const noexcept { return m_margin_width; }
 
+  /// Get the color of the player
+  auto get_player_color() const noexcept { return m_player_color; }
+
   /// Get the size of the screen in pixels
   const auto& get_screen_size() const noexcept { return m_screen_size; }
 
   /// Get the starting pieces
   const auto& get_starting_pieces() const noexcept { return m_starting_pieces; }
+
+  /// Set the color of the player
+  void set_player_color(const chess_color c) noexcept;
 
 private:
 
@@ -52,6 +59,9 @@ private:
 
   /// The width of the margin in pixels
   const int m_margin_width;
+
+  /// The color of the player
+  chess_color m_player_color;
 
   /// The size of the screen in pixels
   screen_coordinat m_screen_size;
@@ -70,5 +80,8 @@ private:
 double get_default_delta_t();
 
 game_options get_default_game_options();
+
+/// Toggle the color of the active player
+void toggle_player(game_options& options);
 
 #endif // GAME_OPTIONS_H

@@ -16,6 +16,8 @@ public:
   /// Run the game, until the user quits
   void exec();
 
+  auto& get_game() noexcept { return m_game; }
+
   const auto& get_game() const noexcept { return m_game; }
 
   auto& get_game_resources() noexcept { return m_game_resources; }
@@ -84,6 +86,9 @@ void show_unit_paths(game_view& view);
 void show_unit_sprites(game_view& view);
 
 void test_game_view();
+
+/// Toggle the color of the active player
+void toggle_player(game_view& view);
 
 /// Would it be a valid move if the user would press LMB or RMB?
 bool would_be_valid(const game_view& view);

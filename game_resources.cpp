@@ -27,6 +27,28 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load the black/dark rook
+  {
+    const QString filename{"rb.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_black_rook.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Load the black/dark rook portrait
+  {
+    const QString filename{"rb_portrait.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_black_rook_portrait.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
   // Load the black/dark square
   {
     const QString filename{"d.png"};
@@ -82,6 +104,17 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load the white/light rook
+  {
+    const QString filename{"rw.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_white_rook.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
   // Load the white/light square
   {
     const QString filename{"l.png"};
@@ -104,6 +137,7 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load music
   // Playing sound on Travis gives thousands of error lines, which causes the
   // build to fail
   {
@@ -127,11 +161,13 @@ sf::Texture& game_resources::get_piece(
   {
     if (type == piece_type::king) return m_black_king;
     if (type == piece_type::queen) return m_black_queen;
+    if (type == piece_type::rook) return m_black_rook;
   }
   else
   {
     if (type == piece_type::king) return m_white_king;
     if (type == piece_type::queen) return m_white_queen;
+    if (type == piece_type::rook) return m_white_rook;
   }
 
   assert(!"Should not get here");
@@ -145,13 +181,15 @@ sf::Texture& game_resources::get_piece_portrait(
 {
   if (color == chess_color::black)
   {
-    if (type == piece_type::king) return m_white_king_portrait;
-    if (type == piece_type::queen) return m_white_king_portrait;
+    if (type == piece_type::king) return m_black_square; //m_black_king_portrait;
+    if (type == piece_type::queen) return m_black_square; // m_black_queen_portrait;
+    if (type == piece_type::rook) return m_black_rook_portrait;
   }
   else
   {
     if (type == piece_type::king) return m_white_king_portrait;
     if (type == piece_type::queen) return m_white_queen_portrait;
+    if (type == piece_type::rook) return m_white_square;
   }
 
   assert(!"Should not get here");

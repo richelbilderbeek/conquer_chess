@@ -100,6 +100,10 @@ bool game_view::process_events()
         // debug
         std::clog << "Debug";
       }
+      if (key_pressed == sf::Keyboard::Key::F4)
+      {
+        toggle_player(*this);
+      }
     }
     if (event.type == sf::Event::MouseMoved)
     {
@@ -348,6 +352,7 @@ void show_square_under_cursor(game_view& view)
     const bool valid{would_be_valid(view)};
     if (valid)
     {
+      assert(1 == 2); // TODO
       s.setFillColor(sf::Color(196, 255, 196));
       s.setOutlineColor(sf::Color::Green);
     }
@@ -513,6 +518,11 @@ void test_game_view() //!OCLINT tests may be many
 {
   #ifndef NDEBUG // no tests in release
   #endif //NDEBUG
+}
+
+void toggle_player(game_view& view)
+{
+  toggle_player(view.get_game());
 }
 
 bool would_be_valid(const game_view& view)

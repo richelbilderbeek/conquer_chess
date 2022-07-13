@@ -93,6 +93,7 @@ game create_king_versus_king_game()
 {
   const game_options options(
     get_default_screen_size(),
+    chess_color::white,
     get_king_versus_king_starting_pieces(),
     get_default_delta_t(),
     get_default_margin_width()
@@ -110,12 +111,12 @@ void game::do_lmb_down(const game_coordinat& coordinat)
   // 4|No                   |Selected unit    |NA
   // 5|No                   |Unselected unit  |Select unit
   // 6|No                   |Empty square     |Nothing
-
+  const auto player_color{get_options().get_player_color()};
   if (has_selected_pieces(*this))
   {
     if (is_piece_at(*this, coordinat)) {
       auto& piece{get_closest_piece_to(coordinat)};
-      if (piece.get_color() == chess_color::white)
+      if (piece.get_color() == player_color)
       {
         if (piece.is_selected())
         {
@@ -137,7 +138,7 @@ void game::do_lmb_down(const game_coordinat& coordinat)
   {
     if (is_piece_at(*this, coordinat)) {
       auto& piece{get_closest_piece_to(coordinat)};
-      if (piece.get_color() == chess_color::white)
+      if (piece.get_color() == player_color)
       {
         if (piece.is_selected())
         {
@@ -386,4 +387,7 @@ void test_game() //!OCLINT tests may be many
 #endif // no tests in release
 }
 
-
+void toggle_player(game& g)
+{
+  toggle_player(g.get_options());
+}
