@@ -1,7 +1,8 @@
 # resources
 
-Image              |Description                         |URL
+Image              |Description                         |Adapted from picture at URL
 -------------------|------------------------------------|--------------------------------------------------------------------------------------
+`kb_portrait.png`  |Prins Claus                         |https://commons.wikimedia.org/wiki/File:Prince_Claus_of_the_Netherlands_1986.jpg
 `kw_portrait.png`  |Carl XVI Gustaf                     |https://commons.wikimedia.org/wiki/File:Carlos_Gustavo_da_Su%C3%A9cia_(meio_corpo).jpg
 `qb_portrait.png`  |Queen Beatrix                       |https://commons.wikimedia.org/wiki/File:Queen_Beatrix_and_Wim_Pijbes.jpg
 `qw_portrait.png`  |Silvia Renate Sommerlath            |https://commons.wikimedia.org/wiki/Category:Queen_Silvia_of_Sweden#/media/File:Queen_Silvia_of_Sweden_in_2018.jpg
