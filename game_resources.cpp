@@ -38,6 +38,28 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load the black/dark knight
+  {
+    const QString filename{"nb.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_black_knight.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Load the black/dark knight portrait
+  {
+    const QString filename{"nb_portrait.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_black_knight_portrait.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
   // Load the black/dark queen
   {
     const QString filename{"qb.png"};
@@ -121,6 +143,28 @@ game_resources::game_resources()
     QFile f(":/resources/" + filename);
     f.copy(filename);
     if (!m_white_king_portrait.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Load the white/light knight
+  {
+    const QString filename{"nw.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_white_knight.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Load the white/light knight portrait
+  {
+    const QString filename{"nw_portrait.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_white_knight_portrait.loadFromFile(filename.toStdString()))
     {
       QString msg{"Cannot find image file '" + filename + "'"};
       throw std::runtime_error(msg.toStdString());
@@ -216,6 +260,7 @@ sf::Texture& game_resources::get_piece(
   {
     if (type == piece_type::bishop) return m_black_bishop;
     if (type == piece_type::king) return m_black_king;
+    if (type == piece_type::knight) return m_black_knight;
     if (type == piece_type::queen) return m_black_queen;
     if (type == piece_type::rook) return m_black_rook;
   }
@@ -223,6 +268,7 @@ sf::Texture& game_resources::get_piece(
   {
     if (type == piece_type::bishop) return m_white_bishop;
     if (type == piece_type::king) return m_white_king;
+    if (type == piece_type::knight) return m_white_knight;
     if (type == piece_type::queen) return m_white_queen;
     if (type == piece_type::rook) return m_white_rook;
   }
@@ -240,6 +286,7 @@ sf::Texture& game_resources::get_piece_portrait(
   {
     if (type == piece_type::bishop) return m_black_bishop_portrait;
     if (type == piece_type::king) return m_black_square; //m_black_king_portrait;
+    if (type == piece_type::knight) return m_black_knight_portrait;
     if (type == piece_type::queen) return m_black_square; // m_black_queen_portrait;
     if (type == piece_type::rook) return m_black_rook_portrait;
   }
@@ -247,6 +294,7 @@ sf::Texture& game_resources::get_piece_portrait(
   {
     if (type == piece_type::bishop) return m_white_bishop_portrait;
     if (type == piece_type::king) return m_white_king_portrait;
+    if (type == piece_type::knight) return m_white_knight_portrait;
     if (type == piece_type::queen) return m_white_queen_portrait;
     if (type == piece_type::rook) return m_white_rook_portrait;
   }

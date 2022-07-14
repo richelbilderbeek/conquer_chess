@@ -11,7 +11,9 @@
         <file>resources/kw_portrait.png</file>
         <file>resources/l.png</file>
         <file>resources/nb.png</file>
+        <file>resources/nb_portrait.png</file>
         <file>resources/nw.png</file>
+        <file>resources/nw_portrait.png</file>
         <file>resources/pb.png</file>
         <file>resources/pw.png</file>
         <file>resources/qb.png</file>
