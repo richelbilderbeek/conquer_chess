@@ -20,8 +20,8 @@ void test()
   test_screen_coordinat();
   test_game();
   test_game_view_layout();
-  test_game_resources();
 #ifndef LOGIC_ONLY
+  test_game_resources();
   test_game_view();
 #endif // LOGIC_ONLY
 #endif

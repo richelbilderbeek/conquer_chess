@@ -1,5 +1,7 @@
 #include "game_resources.h"
 
+#ifndef LOGIC_ONLY
+
 #include <QFile>
 #include <cassert>
 
@@ -380,3 +382,5 @@ void test_game_resources()
   assert(r.get_white_square().getSize().x > 0.0);
   #endif
 }
+
+#endif // LOGIC_ONLY

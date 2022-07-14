@@ -1,6 +1,8 @@
 #ifndef GAME_RESOURCES_H
 #define GAME_RESOURCES_H
 
+#ifndef LOGIC_ONLY
+
 #include "chess_color.h"
 #include "piece_type.h"
 
@@ -68,5 +70,7 @@ private:
 
 /// Test the game resources
 void test_game_resources();
+
+#endif // LOGIC_ONLY
 
 #endif // GAME_RESOURCES_H
