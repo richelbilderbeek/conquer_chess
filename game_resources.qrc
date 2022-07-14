@@ -7,6 +7,7 @@
         <file>resources/bw_portrait.png</file>
         <file>resources/d.png</file>
         <file>resources/kb.png</file>
+        <file>resources/kb_portrait.png</file>
         <file>resources/kw.png</file>
         <file>resources/kw_portrait.png</file>
         <file>resources/l.png</file>
@@ -15,9 +16,11 @@
         <file>resources/nw.png</file>
         <file>resources/nw_portrait.png</file>
         <file>resources/pb.png</file>
+        <file>resources/pb_portrait.png</file>
         <file>resources/pw.png</file>
         <file>resources/pw_portrait.png</file>
         <file>resources/qb.png</file>
+        <file>resources/qb_portrait.png</file>
         <file>resources/qm.png</file>
         <file>resources/qw.png</file>
         <file>resources/qw_portrait.png</file>

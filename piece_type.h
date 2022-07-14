@@ -8,6 +8,7 @@ enum class piece_type
   bishop,
   king,
   knight,
+  pawn,
   queen,
   rook
 };
