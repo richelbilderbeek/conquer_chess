@@ -29,7 +29,7 @@ jobs:
         run: ./game --test
 
       - name: Measure codecov 1
-        run: ./get_code_cov.sh
+        run: ./scripts/get_code_cov.sh
 
       - name: Measure codecov 2
         run: codecov
