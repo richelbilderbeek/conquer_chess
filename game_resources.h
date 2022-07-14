@@ -31,7 +31,7 @@ public:
   sf::Texture& get_white_square() noexcept { return m_white_square; }
 
   /// Get a font
-  sf::Font &get_font() noexcept {return m_font; }
+  sf::Font& get_font() noexcept {return m_font; }
 
   sf::Music &get_ninja_gods() noexcept { return m_ninja_gods; }
 

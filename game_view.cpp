@@ -6,7 +6,6 @@
 #include "game_view_layout.h"
 #include "game_resources.h"
 #include "screen_coordinat.h"
-#include "player_index.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 

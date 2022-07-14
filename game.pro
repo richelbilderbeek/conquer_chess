@@ -3,6 +3,7 @@
 #
 # Other .pro files are used for specific tasks,
 # such as codecov or profiling
+DEFINES += LOGIC_ONLY
 
 # All files are in here, the rest are just settings
 include(game.pri)
@@ -25,7 +26,6 @@ CONFIG(debug, debug|release) {
   QMAKE_CXXFLAGS += -Werror
 }
 
-# DEFINES += LOGIC_ONLY
 
 # Qt5
 QT += core gui \
