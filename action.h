@@ -18,8 +18,15 @@ private:
 };
 
 action create_mouse_move_action(const game_coordinat& coordinat);
+action create_press_attack_action();
+action create_press_down_action();
+action create_press_left_action();
 action create_press_lmb_action(const game_coordinat& coordinat);
+action create_press_move_action();
+action create_press_right_action();
 action create_press_rmb_action(const game_coordinat& coordinat);
+action create_press_select_action();
+action create_press_up_action();
 
 
 #endif // ACTION_H

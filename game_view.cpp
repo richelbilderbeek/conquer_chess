@@ -97,12 +97,40 @@ bool game_view::process_events()
         m_window.close();
         return true;
       }
-      if (key_pressed == sf::Keyboard::Key::F3)
+      else if (key_pressed == sf::Keyboard::Key::Up)
+      {
+        m_game.add_action(create_press_up_action());
+      }
+      else if (key_pressed == sf::Keyboard::Key::Right)
+      {
+        m_game.add_action(create_press_right_action());
+      }
+      else if (key_pressed == sf::Keyboard::Key::Down)
+      {
+        m_game.add_action(create_press_down_action());
+      }
+      else if (key_pressed == sf::Keyboard::Key::Left)
+      {
+        m_game.add_action(create_press_left_action());
+      }
+      else if (key_pressed == sf::Keyboard::Key::Space)
+      {
+        m_game.add_action(create_press_select_action());
+      }
+      else if (key_pressed == sf::Keyboard::Key::M)
+      {
+        m_game.add_action(create_press_move_action());
+      }
+      else if (key_pressed == sf::Keyboard::Key::A)
+      {
+        m_game.add_action(create_press_attack_action());
+      }
+      else if (key_pressed == sf::Keyboard::Key::F3)
       {
         // debug
         std::clog << "Debug";
       }
-      if (key_pressed == sf::Keyboard::Key::F4)
+      else if (key_pressed == sf::Keyboard::Key::F4)
       {
         toggle_player(*this);
       }

@@ -71,8 +71,11 @@ private:
 
   std::vector<piece> m_pieces;
 
-  /// Process a left-mouse-button down
-  void do_lmb_down(const game_coordinat& coordinat);
+  /// Process a space or left-mouse-button
+  void do_select(
+    const game_coordinat& coordinat,
+    const chess_color player_color
+  );
 
   /// Process a right-mouse-button down
   void do_rmb_down(const game_coordinat& coordinat);
@@ -141,12 +144,15 @@ bool is_piece_at(
   const double distance = 0.5
 );
 
-/// Unselect all pieces
-void unselect_all_pieces(game & g);
-
 void test_game();
 
 /// Toggle the color of the active player
 void toggle_player(game& g);
+
+/// Unselect all pieces of a certain color
+void unselect_all_pieces(
+  game & g,
+  const chess_color color
+);
 
 #endif // GAME_H

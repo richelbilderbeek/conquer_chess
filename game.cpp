@@ -102,7 +102,10 @@ game create_king_versus_king_game()
   return game(options);
 }
 
-void game::do_lmb_down(const game_coordinat& coordinat)
+void game::do_select(
+  const game_coordinat& coordinat,
+  const chess_color player_color
+)
 {
   // #|Has selected pieces? |Clicking on what?|Do what?
   // -|---------------------|-----------------|----------------
@@ -112,7 +115,6 @@ void game::do_lmb_down(const game_coordinat& coordinat)
   // 4|No                   |Selected unit    |NA
   // 5|No                   |Unselected unit  |Select unit
   // 6|No                   |Empty square     |Nothing
-  const auto player_color{get_options().get_mouse_user_player_color()};
   if (has_selected_pieces(*this, player_color))
   {
     if (is_piece_at(*this, coordinat)) {
@@ -125,14 +127,14 @@ void game::do_lmb_down(const game_coordinat& coordinat)
         }
         else
         {
-          unselect_all_pieces(*this);
+          unselect_all_pieces(*this, player_color);
           select(piece); // 2
         }
       }
     }
     else
     {
-      unselect_all_pieces(*this); // 3
+      unselect_all_pieces(*this, player_color); // 3
     }
   }
   else
@@ -161,6 +163,7 @@ void game::do_lmb_down(const game_coordinat& coordinat)
 
 void game::do_rmb_down(const game_coordinat& coordinat)
 {
+  const auto player_color{chess_color::black};
   for (auto& p: m_pieces)
   {
     if (p.is_selected())
@@ -176,7 +179,7 @@ void game::do_rmb_down(const game_coordinat& coordinat)
       );
     }
   }
-  unselect_all_pieces(*this);
+  unselect_all_pieces(*this, player_color);
 }
 
 std::vector<piece> find_pieces(
@@ -278,13 +281,41 @@ void game::tick()
 {
   for (const auto& action: m_actions)
   {
-    if (action.get_type() == action_type::mouse_move)
+    if (action.get_type() == action_type::press_attack)
+    {
+      // TODO
+    }
+    else if (action.get_type() == action_type::press_down)
+    {
+      m_player_1_pos += game_coordinat(0.0, 1.0);
+    }
+    else if (action.get_type() == action_type::press_left)
+    {
+      m_player_1_pos += game_coordinat(-1.0, 0);
+    }
+    else if (action.get_type() == action_type::press_move)
+    {
+      // TODO
+    }
+    else if (action.get_type() == action_type::press_right)
+    {
+      m_player_1_pos += game_coordinat(1.0, 0);
+    }
+    else if (action.get_type() == action_type::press_select)
+    {
+      do_select(m_player_1_pos, chess_color::white);
+    }
+    else if (action.get_type() == action_type::press_up)
+    {
+      m_player_1_pos += game_coordinat(0.0, -1.0);
+    }
+    else if (action.get_type() == action_type::mouse_move)
     {
       m_player_2_pos = action.get_coordinat();
     }
     else if (action.get_type() == action_type::lmb_down)
     {
-      do_lmb_down(action.get_coordinat());
+      do_select(action.get_coordinat(), chess_color::black);
     }
     else if (action.get_type() == action_type::rmb_down)
     {
@@ -297,11 +328,14 @@ void game::tick()
 
 }
 
-void unselect_all_pieces(game & g)
+void unselect_all_pieces(
+  game & g,
+  const chess_color color
+)
 {
   for (auto& piece: g.get_pieces())
   {
-    unselect(piece);
+    if (piece.get_color() == color) unselect(piece);
   }
 }
 
