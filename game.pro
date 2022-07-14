@@ -25,10 +25,16 @@ CONFIG(release, debug|release) {
   DEFINES += NDEBUG
 }
 CONFIG(debug, debug|release) {
-  # A warning is an error, only in debug mode
-  QMAKE_CXXFLAGS += -Werror
-}
+  # High warning levels
+  QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
 
+  # A warning is an error
+  QMAKE_CXXFLAGS += -Werror
+
+  # gcov
+  QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+  LIBS += -lgcov
+}
 
 # Qt5
 QT += core gui \
