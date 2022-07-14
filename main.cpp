@@ -18,11 +18,8 @@ void test()
   test_screen_coordinat();
   test_game();
   test_game_view_layout();
-
-#ifndef LOGIC_ONLY
   test_game_view();
   test_game_resources();
-#endif // LOGIC_ONLY
 #endif
 }
 
@@ -37,11 +34,8 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   test();
   #endif
   const auto args = collect_args(argc, argv);
-  if (args.size() == 2 && args[1] == "--test") {
-    test();
-  }
-
-  if (args.size() == 1) {
+  if (args.size() == 1)
+  {
     game_view v;
     v.exec();
   }
