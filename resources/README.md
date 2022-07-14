@@ -3,6 +3,7 @@
 Image              |Description                         |URL
 -------------------|------------------------------------|--------------------------------------------------------------------------------------
 `kw_portrait.png`  |Carl XVI Gustaf                     |https://commons.wikimedia.org/wiki/File:Carlos_Gustavo_da_Su%C3%A9cia_(meio_corpo).jpg
+`qb_portrait.png`  |Queen Beatrix                       |https://commons.wikimedia.org/wiki/File:Queen_Beatrix_and_Wim_Pijbes.jpg
 `qw_portrait.png`  |Silvia Renate Sommerlath            |https://commons.wikimedia.org/wiki/Category:Queen_Silvia_of_Sweden#/media/File:Queen_Silvia_of_Sweden_in_2018.jpg
 `nw_portrait.png`  |Streiff                             |https://sv.wikipedia.org/wiki/Streiff#/media/Fil:Streiff_-_Livrustkammaren_-_32931.tif
 Unused             |Hugo                                |https://commons.wikimedia.org/wiki/File:Oosterhout_-_Hugo_(1981)_van_Harry_Storms_-_1.jpg
