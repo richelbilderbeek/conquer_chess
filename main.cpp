@@ -1,3 +1,5 @@
+/// Use LOGIC_ONLY to be able to run on GHA
+
 #include "game.h"
 #include "game_resources.h"
 #include "game_view.h"
@@ -18,8 +20,10 @@ void test()
   test_screen_coordinat();
   test_game();
   test_game_view_layout();
-  test_game_view();
   test_game_resources();
+#ifndef LOGIC_ONLY
+  test_game_view();
+#endif // LOGIC_ONLY
 #endif
 }
 
@@ -36,7 +40,9 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   const auto args = collect_args(argc, argv);
   if (args.size() == 1)
   {
+    #ifndef LOGIC_ONLY
     game_view v;
     v.exec();
+    #endif // LOGIC_ONLY
   }
 }

@@ -20,7 +20,7 @@ jobs:
         run: sudo pip install codecov
 
       - name: qmake
-        run: qmake game.pro
+        run: qmake "DEFINES+=LOGIC_ONLY" game.pro
 
       - name: make
         run: make debug --silent

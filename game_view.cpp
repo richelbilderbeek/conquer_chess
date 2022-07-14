@@ -1,5 +1,7 @@
 #include "game_view.h"
 
+#ifndef LOGIC_ONLY
+
 #include "game.h"
 #include "game_view_layout.h"
 #include "game_resources.h"
@@ -534,3 +536,5 @@ bool would_be_valid(const game_view& view)
   }
   return false;
 }
+
+#endif // LOGIC_ONLY

@@ -1,6 +1,8 @@
 #ifndef GAME_VIEW_H
 #define GAME_VIEW_H
 
+#ifndef LOGIC_ONLY
+
 #include "game.h"
 #include "game_resources.h"
 #include "game_view_layout.h"
@@ -92,5 +94,7 @@ void toggle_player(game_view& view);
 
 /// Would it be a valid move if the user would press LMB or RMB?
 bool would_be_valid(const game_view& view);
+
+#endif // LOGIC_ONLY
 
 #endif // GAME_VIEW_H
