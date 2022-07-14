@@ -36,6 +36,8 @@ public:
   sf::Music &get_ninja_gods() noexcept { return m_ninja_gods; }
 
 private:
+  sf::Texture m_black_bishop;
+  sf::Texture m_black_bishop_portrait;
   sf::Texture m_black_king;
   sf::Texture m_black_queen;
   sf::Texture m_black_rook;

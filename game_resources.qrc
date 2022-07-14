@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>resources/ninja_gods.ogg</file>
         <file>resources/bb.png</file>
+        <file>resources/bb_portrait.png</file>
         <file>resources/bw.png</file>
         <file>resources/bw_portrait.png</file>
         <file>resources/d.png</file>
