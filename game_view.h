@@ -60,22 +60,34 @@ sf::RectangleShape create_white_square(game_view& view);
 /// Show the board: squares, unit paths, pieces, health bars
 void show_board(game_view& view);
 
-/// Show the controls (e.g. for a unit) on-screen
+/// Show the controls (e.g. for a unit) on-screen for player 2
+void show_controls_1(game_view& view);
+
+/// Show the controls (e.g. for a unit) on-screen for player 2
 void show_controls_2(game_view& view);
 
-/// Show debug info on-screen
+/// Show debug info on-screen for player 1
+void show_debug_1(game_view& view);
+
+/// Show debug info on-screen for player 2
 void show_debug_2(game_view& view);
 
 /// Show the pieces of the board on-screen
 void show_pieces(game_view& view);
 
-/// Show the info on the side-bar on-screen
+/// Show the info on the side-bar on-screen for player 1
+void show_sidebar_1(game_view& view);
+
+/// Show the info on the side-bar on-screen for player 2
 void show_sidebar_2(game_view& view);
 
 /// Show the squares of the board on-screen
 void show_squares(game_view& view);
 
-/// Show the highlighted square under the cursor on-screen
+/// Show the highlighted square under the cursor on-screen for player 1
+void show_square_under_cursor_1(game_view& view);
+
+/// Show the highlighted square under the cursor on-screen for player 2
 void show_square_under_cursor_2(game_view& view);
 
 /// Show the pieces' health bars on-screen
@@ -84,7 +96,10 @@ void show_unit_health_bars(game_view& view);
 /// Show the planned paths for the units on-screen
 void show_unit_paths(game_view& view);
 
-/// Show the selected unit(s) on-screen
+/// Show the selected unit(s) on-screen for player 1
+void show_unit_sprites_1(game_view& view);
+
+/// Show the selected unit(s) on-screen for player 2
 void show_unit_sprites_2(game_view& view);
 
 void test_game_view();

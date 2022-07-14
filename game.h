@@ -32,6 +32,9 @@ public:
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
+  /// Get the in-game keyboard position
+  const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
+
   /// Get the in-game mouse position
   const auto& get_player_2_pos() const noexcept { return m_player_2_pos; }
 
@@ -56,6 +59,9 @@ private:
 
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
+
+  /// The in-game coordinat of the keyboard user
+  game_coordinat m_player_1_pos;
 
   /// The in-game coordinat of the mouse
   game_coordinat m_player_2_pos;
@@ -111,15 +117,22 @@ int get_index_of_closest_piece_to(
 );
 
 /// Get all the selected pieces
+/// @param g a game
+/// @param player the color of the player, which is white for player 1
 /// @see use 'has_selected_piece' to see if there is at least 1 piece selected
-std::vector<piece> get_selected_pieces(const game& g);
+std::vector<piece> get_selected_pieces(
+  const game& g,
+  const chess_color player
+);
 
 /// Get all the pieces
 const std::vector<piece>& get_pieces(const game& g) noexcept;
 
 /// See if there is at least 1 piece selected
+/// @param g a game
+/// @param player the color of the player, which is white for player 1
 /// @see use 'get_selected_pieces' to get all the selected pieces
-bool has_selected_pieces(const game& g);
+bool has_selected_pieces(const game& g, const chess_color player);
 
 /// Determine if there is a piece at the coordinat
 bool is_piece_at(

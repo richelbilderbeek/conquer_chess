@@ -11,6 +11,8 @@ game::game(
   const game_options& options
 )
   : m_layout{options.get_screen_size(), options.get_margin_width()},
+    m_player_1_pos{0.5, 4.5},
+    m_player_2_pos{7.5, 4.5},
     m_options{options},
     m_pieces{options.get_starting_pieces()}
 {
@@ -93,7 +95,6 @@ game create_king_versus_king_game()
 {
   const game_options options(
     get_default_screen_size(),
-    chess_color::white,
     get_king_versus_king_starting_pieces(),
     get_default_delta_t(),
     get_default_margin_width()
@@ -111,8 +112,8 @@ void game::do_lmb_down(const game_coordinat& coordinat)
   // 4|No                   |Selected unit    |NA
   // 5|No                   |Unselected unit  |Select unit
   // 6|No                   |Empty square     |Nothing
-  const auto player_color{get_options().get_player_color()};
-  if (has_selected_pieces(*this))
+  const auto player_color{get_options().get_mouse_user_player_color()};
+  if (has_selected_pieces(*this, player_color))
   {
     if (is_piece_at(*this, coordinat)) {
       auto& piece{get_closest_piece_to(coordinat)};
@@ -228,7 +229,10 @@ int get_index_of_closest_piece_to(
   return index;
 }
 
-std::vector<piece> get_selected_pieces(const game& g)
+std::vector<piece> get_selected_pieces(
+  const game& g,
+  const chess_color player
+)
 {
   std::vector<piece> pieces;
   const auto& all_pieces = g.get_pieces();
@@ -236,7 +240,10 @@ std::vector<piece> get_selected_pieces(const game& g)
     std::begin(all_pieces),
     std::end(all_pieces),
     std::back_inserter(pieces),
-    [](const auto& piece) { return piece.is_selected(); }
+    [player](const auto& piece)
+    {
+      return piece.is_selected() && piece.get_color() == player;
+    }
   );
   return pieces;
 }
@@ -246,9 +253,9 @@ const std::vector<piece>& get_pieces(const game& g) noexcept
   return g.get_pieces();
 }
 
-bool has_selected_pieces(const game& g)
+bool has_selected_pieces(const game& g, const chess_color player)
 {
-  return !get_selected_pieces(g).empty();
+  return !get_selected_pieces(g, player).empty();
 }
 
 bool is_piece_at(
@@ -330,57 +337,57 @@ void test_game() //!OCLINT tests may be many
   // Clicking a unit once with LMB selects it
   {
     game g;
-    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(count_selected_units(g) == 0);
-    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(count_selected_units(g) == 1);
   }
   // Clicking a unit twice with LMB selects and unselects it
   {
     game g;
-    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(count_selected_units(g) == 0);
-    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
-    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(count_selected_units(g) == 0);
   }
   // Clicking a unit with LMB, then another unit with LMB, only the last unit is selected
   {
     game g;
-    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
-    const auto white_queen{find_pieces(g, piece_type::queen, chess_color::white).at(0)};
+    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
+    const auto black_queen{find_pieces(g, piece_type::queen, chess_color::black).at(0)};
     assert(count_selected_units(g) == 0);
-    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(count_selected_units(g) == 1);
-    g.add_action(create_press_lmb_action(white_queen.get_coordinat()));
+    g.add_action(create_press_lmb_action(black_queen.get_coordinat()));
     g.tick();
     assert(count_selected_units(g) == 1);
   }
   // LMB then RMB makes a unit move
   {
     game g;
-    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
-    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
+    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(count_piece_actions(g) == 0);
-    g.add_action(create_press_rmb_action(white_king.get_coordinat() + game_coordinat(1.0, 1.0)));
+    g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(1.0, 1.0)));
     g.tick();
     assert(count_piece_actions(g) == 1);
   }
   // 2x LMB then RMB makes a unit move 1 stretch (not 2)
   {
     game g;
-    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
-    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
-    g.add_action(create_press_rmb_action(white_king.get_coordinat() + game_coordinat(1.0, 1.0)));
+    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
+    g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(1.0, 1.0)));
     g.tick();
     assert(count_piece_actions(g) == 1);
-    g.add_action(create_press_lmb_action(white_king.get_coordinat()));
-    g.add_action(create_press_rmb_action(white_king.get_coordinat() + game_coordinat(2.0, 2.0)));
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
+    g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(2.0, 2.0)));
     g.tick();
     assert(count_piece_actions(g) == 1);
   }

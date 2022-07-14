@@ -6,6 +6,7 @@
 #include "game_view_layout.h"
 #include "game_resources.h"
 #include "screen_coordinat.h"
+#include "player_index.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 
@@ -166,10 +167,13 @@ void game_view::show()
   show_board(*this);
 
   // Show the sidebar: controls, units, debug
+  show_sidebar_1(*this);
+
+  // Show the sidebar: controls, units, debug
   show_sidebar_2(*this);
 
   // Show the mouse cursor
-  show_mouse_cursor();
+  //show_mouse_cursor();
 
   // Display all shapes
   m_window.display();
@@ -183,13 +187,42 @@ void show_board(game_view& view)
   show_unit_health_bars(view);
 }
 
+void show_controls_1(game_view& view)
+{
+  const auto& layout = view.get_game().get_layout();
+  sf::Text text;
+  text.setFont(view.get_game_resources().get_font());
+  std::stringstream s;
+  const auto& selected_units = get_selected_pieces(
+    view.get_game(),
+    chess_color::black
+  );
+  if (selected_units.empty()) {
+    s << "SPACE: select a unit";
+  } else {
+    s << "SPACE: select a unit\n"
+      << "M: move selected unit to square"
+    ;
+  }
+  text.setString(s.str());
+  text.setCharacterSize(20);
+  text.setPosition(
+    layout.get_tl_controls_1().get_x(),
+    layout.get_tl_controls_1().get_y()
+  );
+  view.get_window().draw(text);
+}
+
 void show_controls_2(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
   sf::Text text;
   text.setFont(view.get_game_resources().get_font());
   std::stringstream s;
-  const auto& selected_units = get_selected_pieces(view.get_game());
+  const auto& selected_units = get_selected_pieces(
+    view.get_game(),
+    chess_color::black
+  );
   if (selected_units.empty()) {
     s << "LMB: select a unit";
   } else {
@@ -202,6 +235,40 @@ void show_controls_2(game_view& view)
   text.setPosition(
     layout.get_tl_controls_2().get_x(),
     layout.get_tl_controls_2().get_y()
+  );
+  view.get_window().draw(text);
+}
+
+void show_debug_1(game_view& view)
+{
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  sf::Text text;
+  text.setFont(view.get_game_resources().get_font());
+  const piece& closest_piece{
+    game.get_closest_piece_to(game.get_player_1_pos())
+  };
+  std::stringstream s;
+  s << "Game position: "
+    << game.get_player_1_pos()
+    << '\n'
+    << "Screen position: "
+    << convert_to_screen_coordinat(game.get_player_1_pos(), layout)
+    << '\n'
+    << "Is there a piece here: "
+    << bool_to_str(is_piece_at(game, game.get_player_1_pos(), 0.5))
+    << '\n'
+    << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
+    << "Number of game actions: " << count_game_actions(game) << '\n'
+    << "Number of selected units: " << count_selected_units(game) << '\n'
+    << "Number of piece actions: " << count_piece_actions(game) << '\n'
+  ;
+
+  text.setString(s.str());
+  text.setCharacterSize(20);
+  text.setPosition(
+    layout.get_tl_debug_1().get_x(),
+    layout.get_tl_debug_1().get_y()
   );
   view.get_window().draw(text);
 }
@@ -295,6 +362,13 @@ void show_pieces(game_view& view)
   }
 }
 
+void show_sidebar_1(game_view& view)
+{
+  show_controls_1(view);
+  show_unit_sprites_1(view);
+  show_debug_1(view);
+}
+
 void show_sidebar_2(game_view& view)
 {
   show_controls_2(view);
@@ -325,8 +399,54 @@ void show_squares(game_view& view)
       view.get_window().draw(s);
     }
   }
+  show_square_under_cursor_1(view);
   show_square_under_cursor_2(view);
 }
+
+void show_square_under_cursor_1(game_view& view)
+{
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  const int x{static_cast<int>(std::trunc(game.get_player_1_pos().get_x()))};
+  const int y{static_cast<int>(std::trunc(game.get_player_1_pos().get_y()))};
+
+  if (x >= 0 && x < 8 && y >= 0 && y < 8)
+  {
+    sf::RectangleShape s{
+      (x + y) % 2 == 1
+      ? create_black_square(view)
+      : create_white_square(view)
+    };
+    const screen_coordinat square_pos{
+      convert_to_screen_coordinat(
+        game_coordinat(x + 0.5, y + 0.5),
+        layout
+      )
+    };
+    s.setPosition(square_pos.get_x(), square_pos.get_y());
+    const auto old_fill_color = s.getFillColor();
+    const auto old_outline_color = s.getOutlineColor();
+    const auto old_thickness = s.getOutlineThickness();
+    const bool valid{would_be_valid(view)};
+    if (valid)
+    {
+      assert(1 == 2); // TODO
+      s.setFillColor(sf::Color(196, 255, 196));
+      s.setOutlineColor(sf::Color::Green);
+    }
+    else
+    {
+      s.setFillColor(sf::Color(196, 196, 255));
+      s.setOutlineColor(sf::Color::Blue);
+    }
+    s.setOutlineThickness(4);
+    view.get_window().draw(s);
+    s.setFillColor(old_fill_color);
+    s.setOutlineColor(old_outline_color);
+    s.setOutlineThickness(old_thickness);
+  }
+}
+
 void show_square_under_cursor_2(game_view& view)
 {
   const auto& game = view.get_game();
@@ -467,13 +587,62 @@ void show_unit_paths(game_view& view)
   }
 }
 
+void show_unit_sprites_1(game_view& view)
+{
+  const auto& layout = view.get_game().get_layout();
+  const double square_width{layout.get_square_width()};
+  const double square_height{layout.get_square_height()};
+  screen_coordinat screen_position = layout.get_tl_units_1();
+  for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::white))
+  {
+    // sprite of the piece
+    sf::RectangleShape sprite;
+    sprite.setSize(sf::Vector2f(square_width, square_height));
+    sprite.setTexture(
+      &view.get_game_resources().get_piece_portrait(
+        piece.get_color(),
+        piece.get_type()
+      )
+    );
+    sprite.setOrigin(0.0, 0.0);
+    sprite.setPosition(
+      screen_position.get_x(),
+      screen_position.get_y()
+    );
+    sprite.setRotation(0.0);
+    view.get_window().draw(sprite);
+    // text
+    sf::Text text;
+    text.setFont(view.get_game_resources().get_font());
+    std::stringstream s;
+
+    s << piece.get_type() << ": "
+      << piece.get_health() << "/"
+      << piece.get_max_health() << '\n'
+      << piece.get_coordinat() << '\n'
+      << describe_actions(piece)
+    ;
+    text.setString(s.str());
+    text.setCharacterSize(20);
+    const auto text_position{
+      screen_position + screen_coordinat(square_width + 10, 0)
+    };
+    text.setPosition(
+      text_position.get_x(),
+      text_position.get_y()
+    );
+    view.get_window().draw(text);
+    screen_position += screen_coordinat(0, square_height);
+  }
+}
+
 void show_unit_sprites_2(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
   const double square_width{layout.get_square_width()};
   const double square_height{layout.get_square_height()};
   screen_coordinat screen_position = layout.get_tl_units_2();
-  for (const auto& piece: get_selected_pieces(view.get_game()))
+  for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::black))
   {
     // sprite of the piece
     sf::RectangleShape sprite;
