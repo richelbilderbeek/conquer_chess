@@ -46,7 +46,7 @@ std::vector<double> calc_distances(
 
 bool can_select_piece_at_mouse_pos(const game& g)
 {
-  const auto& mouse_pos{g.get_mouse_pos()};
+  const auto& mouse_pos{g.get_player_2_pos()};
   if (
     !is_piece_at(
       g,
@@ -273,7 +273,7 @@ void game::tick()
   {
     if (action.get_type() == action_type::mouse_move)
     {
-      m_mouse_pos = action.get_coordinat();
+      m_player_2_pos = action.get_coordinat();
     }
     else if (action.get_type() == action_type::lmb_down)
     {

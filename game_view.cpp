@@ -166,7 +166,7 @@ void game_view::show()
   show_board(*this);
 
   // Show the sidebar: controls, units, debug
-  show_sidebar(*this);
+  show_sidebar_2(*this);
 
   // Show the mouse cursor
   show_mouse_cursor();
@@ -183,7 +183,7 @@ void show_board(game_view& view)
   show_unit_health_bars(view);
 }
 
-void show_controls(game_view& view)
+void show_controls_2(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
   sf::Text text;
@@ -206,24 +206,24 @@ void show_controls(game_view& view)
   view.get_window().draw(text);
 }
 
-void show_debug(game_view& view)
+void show_debug_2(game_view& view)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
   sf::Text text;
   text.setFont(view.get_game_resources().get_font());
   const piece& closest_piece{
-    game.get_closest_piece_to(game.get_mouse_pos())
+    game.get_closest_piece_to(game.get_player_2_pos())
   };
   std::stringstream s;
   s << "Game position: "
-    << game.get_mouse_pos()
+    << game.get_player_2_pos()
     << '\n'
     << "Screen position: "
-    << convert_to_screen_coordinat(game.get_mouse_pos(), layout)
+    << convert_to_screen_coordinat(game.get_player_2_pos(), layout)
     << '\n'
     << "Is there a piece here: "
-    << bool_to_str(is_piece_at(game, game.get_mouse_pos(), 0.5))
+    << bool_to_str(is_piece_at(game, game.get_player_2_pos(), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_game_actions(game) << '\n'
@@ -252,7 +252,7 @@ void game_view::show_mouse_cursor()
   cursor.setOrigin(16.0, 16.0);
   const screen_coordinat cursor_pos{
     convert_to_screen_coordinat(
-      m_game.get_mouse_pos(),
+      m_game.get_player_2_pos(),
       layout
     )
   };
@@ -295,11 +295,11 @@ void show_pieces(game_view& view)
   }
 }
 
-void show_sidebar(game_view& view)
+void show_sidebar_2(game_view& view)
 {
-  show_controls(view);
-  show_unit_sprites(view);
-  show_debug(view);
+  show_controls_2(view);
+  show_unit_sprites_2(view);
+  show_debug_2(view);
 }
 
 void show_squares(game_view& view)
@@ -325,14 +325,14 @@ void show_squares(game_view& view)
       view.get_window().draw(s);
     }
   }
-  show_square_under_cursor(view);
+  show_square_under_cursor_2(view);
 }
-void show_square_under_cursor(game_view& view)
+void show_square_under_cursor_2(game_view& view)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
-  const int x{static_cast<int>(std::trunc(game.get_mouse_pos().get_x()))};
-  const int y{static_cast<int>(std::trunc(game.get_mouse_pos().get_y()))};
+  const int x{static_cast<int>(std::trunc(game.get_player_2_pos().get_x()))};
+  const int y{static_cast<int>(std::trunc(game.get_player_2_pos().get_y()))};
 
   if (x >= 0 && x < 8 && y >= 0 && y < 8)
   {
@@ -467,7 +467,7 @@ void show_unit_paths(game_view& view)
   }
 }
 
-void show_unit_sprites(game_view& view)
+void show_unit_sprites_2(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
   const double square_width{layout.get_square_width()};

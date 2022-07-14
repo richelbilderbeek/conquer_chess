@@ -33,7 +33,7 @@ public:
   const auto& get_layout() const noexcept { return m_layout; }
 
   /// Get the in-game mouse position
-  const auto& get_mouse_pos() const noexcept { return m_mouse_pos; }
+  const auto& get_player_2_pos() const noexcept { return m_player_2_pos; }
 
   /// Get the game options
   auto& get_options() noexcept { return m_options; }
@@ -58,7 +58,7 @@ private:
   game_view_layout m_layout;
 
   /// The in-game coordinat of the mouse
-  game_coordinat m_mouse_pos;
+  game_coordinat m_player_2_pos;
 
   /// The game options
   game_options m_options;

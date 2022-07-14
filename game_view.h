@@ -61,22 +61,22 @@ sf::RectangleShape create_white_square(game_view& view);
 void show_board(game_view& view);
 
 /// Show the controls (e.g. for a unit) on-screen
-void show_controls(game_view& view);
+void show_controls_2(game_view& view);
 
 /// Show debug info on-screen
-void show_debug(game_view& view);
+void show_debug_2(game_view& view);
 
 /// Show the pieces of the board on-screen
 void show_pieces(game_view& view);
 
 /// Show the info on the side-bar on-screen
-void show_sidebar(game_view& view);
+void show_sidebar_2(game_view& view);
 
 /// Show the squares of the board on-screen
 void show_squares(game_view& view);
 
 /// Show the highlighted square under the cursor on-screen
-void show_square_under_cursor(game_view& view);
+void show_square_under_cursor_2(game_view& view);
 
 /// Show the pieces' health bars on-screen
 void show_unit_health_bars(game_view& view);
@@ -85,7 +85,7 @@ void show_unit_health_bars(game_view& view);
 void show_unit_paths(game_view& view);
 
 /// Show the selected unit(s) on-screen
-void show_unit_sprites(game_view& view);
+void show_unit_sprites_2(game_view& view);
 
 void test_game_view();
 
