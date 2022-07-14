@@ -1,7 +1,10 @@
 #!/bin/bash
 
 make clean
-rm game
-rm *.gcda
-rm *.gcno
+rm -f Makefile
+rm -f Makefile.Debug
+rm -f Makefile.Release
+rm -f game
+rm -f *.gcda
+rm -f *.gcno
 
