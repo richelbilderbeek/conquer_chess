@@ -13,6 +13,8 @@ Chess variant
 
 ## Screenshots
 
+![](screenshots/20220714_4.png)
+
 ![](screenshots/20220714_3.png)
 
 ![](screenshots/20220714_2.png)
