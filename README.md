@@ -2,6 +2,10 @@
 
 Chess variant
 
+## Acknowledgments
+
+ * Selecting the portraits for the pieces: Johanna Söderström
+
 ## Screenshots
 
 ![](screenshots/20220714_1.png)
