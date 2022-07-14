@@ -5,6 +5,7 @@
 
 enum class piece_type
 {
+  bishop,
   king,
   queen,
   rook

@@ -41,6 +41,8 @@ private:
   sf::Texture m_black_rook;
   sf::Texture m_black_rook_portrait;
   sf::Texture m_black_square;
+  sf::Texture m_white_bishop;
+  sf::Texture m_white_bishop_portrait;
   sf::Texture m_white_king;
   sf::Texture m_white_king_portrait;
   sf::Texture m_white_queen;

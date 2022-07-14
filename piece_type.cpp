@@ -7,6 +7,7 @@ double get_max_health(const piece_type type)
 {
   switch (type)
   {
+    case piece_type::bishop: return 100.0;
     case piece_type::king: return 100.0;
     case piece_type::queen: return 100.0;
     case piece_type::rook: return 100.0;
@@ -19,6 +20,7 @@ std::ostream& operator<<(std::ostream& os, const piece_type type)
 {
   switch (type)
   {
+    case piece_type::bishop: os << "bishop"; break;
     case piece_type::king: os << "king"; break;
     case piece_type::queen: os << "queen"; break;
     case piece_type::rook: os << "rook"; break;
