@@ -198,8 +198,8 @@ void show_controls(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_tl_controls().get_x(),
-    layout.get_tl_controls().get_y()
+    layout.get_tl_controls_2().get_x(),
+    layout.get_tl_controls_2().get_y()
   );
   view.get_window().draw(text);
 }
@@ -232,8 +232,8 @@ void show_debug(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_tl_debug().get_x(),
-    layout.get_tl_debug().get_y()
+    layout.get_tl_debug_2().get_x(),
+    layout.get_tl_debug_2().get_y()
   );
   view.get_window().draw(text);
 }
@@ -470,7 +470,7 @@ void show_unit_sprites(game_view& view)
   const auto& layout = view.get_game().get_layout();
   const double square_width{layout.get_square_width()};
   const double square_height{layout.get_square_height()};
-  screen_coordinat screen_position = layout.get_tl_units();
+  screen_coordinat screen_position = layout.get_tl_units_2();
   for (const auto& piece: get_selected_pieces(view.get_game()))
   {
     // sprite of the piece

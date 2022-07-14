@@ -45,17 +45,17 @@ public:
   int get_board_width() const noexcept { return m_board_width; }
 
   screen_coordinat get_br_board() const noexcept { return m_br_board; }
-  screen_coordinat get_br_controls() const noexcept { return m_br_controls; }
-  screen_coordinat get_br_debug() const noexcept { return m_br_debug; }
-  screen_coordinat get_br_units() const noexcept { return m_br_units; }
+  screen_coordinat get_br_controls_2() const noexcept { return m_br_controls_2; }
+  screen_coordinat get_br_debug_2() const noexcept { return m_br_debug_2; }
+  screen_coordinat get_br_units_2() const noexcept { return m_br_units_2; }
 
   double get_square_height() const noexcept;
   double get_square_width() const noexcept;
 
   screen_coordinat get_tl_board() const noexcept { return m_tl_board; }
-  screen_coordinat get_tl_controls() const noexcept { return m_tl_controls; }
-  screen_coordinat get_tl_debug() const noexcept { return m_tl_debug; }
-  screen_coordinat get_tl_units() const noexcept { return m_tl_units; }
+  screen_coordinat get_tl_controls_2() const noexcept { return m_tl_controls_2; }
+  screen_coordinat get_tl_debug_2() const noexcept { return m_tl_debug_2; }
+  screen_coordinat get_tl_units_2() const noexcept { return m_tl_units_2; }
 
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
@@ -65,17 +65,17 @@ private:
   int m_board_height;
 
   screen_coordinat m_br_board;
-  screen_coordinat m_br_controls;
-  screen_coordinat m_br_debug;
-  screen_coordinat m_br_units;
+  screen_coordinat m_br_controls_2;
+  screen_coordinat m_br_debug_2;
+  screen_coordinat m_br_units_2;
 
   int m_panel_width;
   int m_panel_height;
 
   screen_coordinat m_tl_board;
-  screen_coordinat m_tl_controls;
-  screen_coordinat m_tl_debug;
-  screen_coordinat m_tl_units;
+  screen_coordinat m_tl_controls_2;
+  screen_coordinat m_tl_debug_2;
+  screen_coordinat m_tl_units_2;
 
   /// The size of the window
   screen_coordinat m_window_size;

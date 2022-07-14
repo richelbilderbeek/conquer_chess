@@ -21,14 +21,14 @@ game_view_layout::game_view_layout(
   // side
   m_panel_height = static_cast<int>(static_cast<double>(window_size.get_y() - (4 * margin_width)) / 3.0);
   m_panel_width = static_cast<int>(static_cast<double>(window_size.get_x() - m_board_width - (3 * margin_width)));
-  m_tl_units = screen_coordinat(margin_width + m_board_width + margin_width, margin_width);
-  m_tl_controls = m_tl_units + screen_coordinat(0, m_panel_height + margin_width);
-  m_tl_debug = m_tl_controls + screen_coordinat(0, m_panel_height + margin_width);
+  m_tl_units_2 = screen_coordinat(margin_width + m_board_width + margin_width, margin_width);
+  m_tl_controls_2 = m_tl_units_2 + screen_coordinat(0, m_panel_height + margin_width);
+  m_tl_debug_2 = m_tl_controls_2 + screen_coordinat(0, m_panel_height + margin_width);
 
 
-  m_br_units = m_tl_units + screen_coordinat(m_panel_width, m_panel_height);
-  m_br_controls = m_tl_controls + screen_coordinat(m_panel_width, m_panel_height);
-  m_br_debug = m_tl_debug + screen_coordinat(m_panel_width, m_panel_height);
+  m_br_units_2 = m_tl_units_2 + screen_coordinat(m_panel_width, m_panel_height);
+  m_br_controls_2 = m_tl_controls_2 + screen_coordinat(m_panel_width, m_panel_height);
+  m_br_debug_2 = m_tl_debug_2 + screen_coordinat(m_panel_width, m_panel_height);
 }
 
 game_coordinat convert_to_game_coordinat(
@@ -97,10 +97,10 @@ void test_game_view_layout()
     assert(layout.get_tl_board().get_x() > 0.0);
     assert(layout.get_tl_board().get_y() > 0.0);
 
-    assert(layout.get_br_debug().get_x() > 0.0);
-    assert(layout.get_br_debug().get_y() > 0.0);
-    assert(layout.get_tl_units().get_x() > 0.0);
-    assert(layout.get_tl_units().get_y() > 0.0);
+    assert(layout.get_br_debug_2().get_x() > 0.0);
+    assert(layout.get_br_debug_2().get_y() > 0.0);
+    assert(layout.get_tl_units_2().get_x() > 0.0);
+    assert(layout.get_tl_units_2().get_y() > 0.0);
     assert(layout.get_board_width() > 0.0);
     assert(layout.get_board_height() > 0.0);
     assert(layout.get_square_width() > 0.0);
@@ -115,10 +115,10 @@ void test_game_view_layout()
     assert(layout.get_br_board().get_x() == 576.0 - margin_width);
     assert(layout.get_br_board().get_y() == 576.0 - margin_width);
 
-    assert(layout.get_tl_units().get_x() == 576.0 - margin_width + margin_width);
-    assert(layout.get_tl_units().get_y() == margin_width);
-    assert(layout.get_br_debug().get_x() == 1024 - margin_width);
-    assert(is_close(layout.get_br_debug().get_y(), 576 - margin_width, 3));
+    assert(layout.get_tl_units_2().get_x() == 576.0 - margin_width + margin_width);
+    assert(layout.get_tl_units_2().get_y() == margin_width);
+    assert(layout.get_br_debug_2().get_x() == 1024 - margin_width);
+    assert(is_close(layout.get_br_debug_2().get_y(), 576 - margin_width, 3));
     const int board_width{layout.get_board_width()};
     assert(board_width == 576.0 - margin_width - margin_width);
     const int board_height{layout.get_board_height()};
