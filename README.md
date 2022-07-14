@@ -1,9 +1,9 @@
 # knokchess
 
-Branch     |[GitHub Actions](https://github.com/richelbilderbeek/knokchess/actions)                           |[![Codecov logo](images/Codecov.png)](https://www.codecov.io)
------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
-`master`   |![check](https://github.com/richelbilderbeek/knokchess/workflows/check/badge.svg?branch=master)   |[![codecov.io](https://codecov.io/github/richelbilderbeek/knokchess/coverage.svg?branch=master)](https://codecov.io/github/richelbilderbeek/knokchess/branch/master)
-`develop`  |![check](https://github.com/richelbilderbeek/knokchess/workflows/check/badge.svg?branch=develop)  |[![codecov.io](https://codecov.io/github/richelbilderbeek/knokchess/coverage.svg?branch=develop)](https://codecov.io/github/richelbilderbeek/knokchess/branch/develop)
+Branch     |[![GitHub Actions logo](images/GitHubActions.png)](https://github.com/richelbilderbeek/knokchess/actions) |[![Codecov logo](images/Codecov.png)](https://www.codecov.io)
+-----------|----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
+`master`   |![check](https://github.com/richelbilderbeek/knokchess/workflows/check/badge.svg?branch=master)           |[![codecov.io](https://codecov.io/github/richelbilderbeek/knokchess/coverage.svg?branch=master)](https://codecov.io/github/richelbilderbeek/knokchess/branch/master)
+`develop`  |![check](https://github.com/richelbilderbeek/knokchess/workflows/check/badge.svg?branch=develop)          |[![codecov.io](https://codecov.io/github/richelbilderbeek/knokchess/coverage.svg?branch=develop)](https://codecov.io/github/richelbilderbeek/knokchess/branch/develop)
 
 Chess variant
 
