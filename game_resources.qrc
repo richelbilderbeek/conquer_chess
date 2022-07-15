@@ -1,6 +1,12 @@
 <RCC>
     <qresource prefix="/">
+        <file>resources/faring_into_battle.ogg</file>
+        <file>resources/its_time_to_rock.ogg</file>
+        <file>resources/jumping_into_battle.ogg</file>
+        <file>resources/lets_rule.ogg</file>
+        <file>resources/moving_forward.ogg</file>
         <file>resources/ninja_gods.ogg</file>
+        <file>resources/to_rule_is_to_act.ogg</file>
         <file>resources/bb.png</file>
         <file>resources/bb_portrait.png</file>
         <file>resources/bw.png</file>
