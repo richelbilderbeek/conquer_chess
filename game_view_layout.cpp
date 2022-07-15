@@ -79,7 +79,7 @@ game_coordinat convert_to_game_coordinat(
   };
   return game_coordinat(
     8.0 * f_x,
-    8.0 - (8.0 * f_y)
+    8.0 * f_y
   );
 }
 
@@ -98,7 +98,7 @@ screen_coordinat convert_to_screen_coordinat(
   };
   return screen_coordinat(
     tl_board.get_x() + (square_width * coordinat.get_x()),
-    br_board.get_y() - (square_height * coordinat.get_y()) // The first rank (e.g. with the white king) is at the bottom
+    tl_board.get_y() + (square_height * coordinat.get_y())
   );
 }
 
@@ -171,10 +171,6 @@ void test_game_view_layout()
     assert(layout.get_br_board().get_x() == x4);
     assert(layout.get_br_board().get_y() == y6);
 
-
-
-
-
     assert(layout.get_tl_units_2().get_x() == x5);
     assert(layout.get_tl_units_2().get_y() == y1);
     assert(layout.get_br_units_2().get_x() == x6);
@@ -189,36 +185,26 @@ void test_game_view_layout()
     assert(layout.get_tl_debug_2().get_y() == y5);
     assert(layout.get_br_debug_2().get_x() == x6);
     assert(layout.get_br_debug_2().get_y() == y6);
-    /*
-    const int board_width{layout.get_board_width()};
-    assert(board_width == 576.0 - margin_width - margin_width);
-    const int board_height{layout.get_board_height()};
-    assert(board_height == 576.0 - margin_width - margin_width);
-    const double square_width{board_width / 8.0};
-    assert(layout.get_square_width() == square_width);
-    const double square_height{board_height / 8.0};
-    assert(layout.get_square_height() == square_height);
-    */
   }
   //--------------------------------------------------------------------------
   // game -> screen
   //--------------------------------------------------------------------------
-  // in-game (0,8) must be top-left of screen board
+  // in-game (0,0) must be top-left of screen board
   {
     const game_view_layout layout;
     const auto tl_board = convert_to_screen_coordinat(
-      game_coordinat(0.0, 8.0),
+      game_coordinat(0.0, 0.0),
       layout
     );
     assert(tl_board.get_x() == layout.get_tl_board().get_x());
     assert(tl_board.get_y() == layout.get_tl_board().get_y());
   }
-  // in-game (8,0) must be bottom-right of screen board
+  // in-game (8,8) must be bottom-right of screen board
   // (no piece can ever have its top-right at the bottom-right of the board)
   {
     const game_view_layout layout;
     const auto br_board = convert_to_screen_coordinat(
-      game_coordinat(8.0, 0.0),
+      game_coordinat(8.0, 8.0),
       layout
     );
     assert(br_board.get_x() == layout.get_br_board().get_x());
@@ -227,8 +213,8 @@ void test_game_view_layout()
   //--------------------------------------------------------------------------
   // screen -> game
   //--------------------------------------------------------------------------
-  // top-left of screen board must be in-game (0,8)
-  // bottom-right of screen board must be in-game (8,0)
+  // top-left of screen board must be in-game (0,0)
+  // bottom-right of screen board must be in-game (8,8)
   {
     const game_view_layout layout;
     const auto br_board = convert_to_game_coordinat(
@@ -240,9 +226,9 @@ void test_game_view_layout()
       layout
     );
     assert(tl_board.get_x() == 0.0);
-    assert(tl_board.get_y() == 8.0);
+    assert(tl_board.get_y() == 0.0);
     assert(br_board.get_x() == 8.0);
-    assert(is_close(br_board.get_y(), 0.0, 0.03));
+    assert(is_close(br_board.get_y(), 8.0, 0.03));
   }
   #endif
 }
