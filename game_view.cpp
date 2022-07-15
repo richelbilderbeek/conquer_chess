@@ -18,6 +18,7 @@
 game_view::game_view(const game& game)
   : m_game{game}
 {
+  m_game_resources.get_ninja_gods().setVolume(m_game.get_options().get_volume());
   m_game_resources.get_ninja_gods().setLoop(true);
   m_game_resources.get_ninja_gods().play();
 
@@ -532,7 +533,7 @@ void show_unit_health_bars(game_view& view)
     black_box.setFillColor(sf::Color(0, 0, 0));
     black_box.setOrigin(0.0, 0.0);
     const auto black_box_pos = convert_to_screen_coordinat(
-      piece.get_coordinat() + game_coordinat(-0.5, 0.5), // to top-left
+      piece.get_coordinat() + game_coordinat(-0.5, -0.5),
       layout
     );
     black_box.setPosition(
@@ -555,7 +556,7 @@ void show_unit_health_bars(game_view& view)
     );
     health_bar.setOrigin(0.0, 0.0);
     const auto health_bar_pos = convert_to_screen_coordinat(
-      piece.get_coordinat() + game_coordinat(-0.5, 0.5), // to top-left,
+      piece.get_coordinat() + game_coordinat(-0.5, -0.5),
       layout
     );
     health_bar.setPosition(

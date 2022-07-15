@@ -43,6 +43,8 @@ public:
   /// Get the starting pieces
   const auto& get_starting_pieces() const noexcept { return m_starting_pieces; }
 
+  auto get_volume() const noexcept { return m_volume; }
+
   /// Set the color of the player
   void set_player_color(const chess_color c) noexcept;
 
@@ -71,9 +73,11 @@ private:
   /// The size of the screen in pixels
   screen_coordinat m_screen_size;
 
-
   /// The starting pieces
   std::vector<piece> m_starting_pieces;
+
+  /// Volume in percent: 0.0 is silent, 100 is loudest
+  double m_volume;
 
 };
 
