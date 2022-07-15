@@ -729,7 +729,6 @@ bool would_be_valid(
   chess_color player_color
 )
 {
-  //const auto pos = get_cursor_pos(view.get_game(), player_color);
   const auto& game{view.get_game()};
   if (count_selected_units(game, player_color) == 0)
   {
