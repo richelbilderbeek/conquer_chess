@@ -290,7 +290,7 @@ void show_debug_1(game_view& view)
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_game_actions(game) << '\n'
-    << "Number of selected units: " << count_selected_units(game) << '\n'
+    << "Number of selected units: " << count_selected_units(game, chess_color::white) << '\n'
     << "Number of piece actions: " << count_piece_actions(game) << '\n'
   ;
 
@@ -324,7 +324,7 @@ void show_debug_2(game_view& view)
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_game_actions(game) << '\n'
-    << "Number of selected units: " << count_selected_units(game) << '\n'
+    << "Number of selected units: " << count_selected_units(game, chess_color::black) << '\n'
     << "Number of piece actions: " << count_piece_actions(game) << '\n'
   ;
 
@@ -457,7 +457,7 @@ void show_square_under_cursor_1(game_view& view)
     const auto old_fill_color = s.getFillColor();
     const auto old_outline_color = s.getOutlineColor();
     const auto old_thickness = s.getOutlineThickness();
-    const bool valid{would_be_valid(view)};
+    const bool valid{would_be_valid(view, chess_color::white)};
     if (valid)
     {
       s.setFillColor(sf::Color(196, 255, 196));
@@ -500,7 +500,7 @@ void show_square_under_cursor_2(game_view& view)
     const auto old_fill_color = s.getFillColor();
     const auto old_outline_color = s.getOutlineColor();
     const auto old_thickness = s.getOutlineThickness();
-    const bool valid{would_be_valid(view)};
+    const bool valid{would_be_valid(view, chess_color::black)};
     if (valid)
     {
       s.setFillColor(sf::Color(196, 255, 196));
@@ -724,12 +724,16 @@ void toggle_player(game_view& view)
   toggle_player(view.get_game());
 }
 
-bool would_be_valid(const game_view& view)
+bool would_be_valid(
+  const game_view& view,
+  chess_color player_color
+)
 {
+  //const auto pos = get_cursor_pos(view.get_game(), player_color);
   const auto& game{view.get_game()};
-  if (count_selected_units(game) == 0)
+  if (count_selected_units(game, player_color) == 0)
   {
-    return can_select_piece_at_mouse_pos(game);
+    return can_player_select_piece_at_cursor_pos(game, player_color);
   }
   return false;
 }

@@ -108,7 +108,10 @@ void test_game_view();
 void toggle_player(game_view& view);
 
 /// Would it be a valid move if the user would press LMB or RMB?
-bool would_be_valid(const game_view& view);
+bool would_be_valid(
+  const game_view& view,
+  chess_color player_color
+);
 
 #endif // LOGIC_ONLY
 

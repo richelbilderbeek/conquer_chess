@@ -91,7 +91,10 @@ std::vector<double> calc_distances(
 );
 
 /// Can the player select a piece at the current mouse position?
-bool can_select_piece_at_mouse_pos(const game& g);
+bool can_player_select_piece_at_cursor_pos(
+  const game& g,
+  const chess_color player
+);
 
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick
@@ -100,8 +103,11 @@ int count_game_actions(const game& g);
 /// Count the total number of actions to be done by pieces
 int count_piece_actions(const game& g);
 
-/// Count the number of selected units
-int count_selected_units(const game& g);
+/// Count the number of selected units of a player
+int count_selected_units(
+  const game& g,
+  const chess_color player
+);
 
 /// Create a game in which it is only a king versus a king,
 /// to be used in debugging
@@ -112,6 +118,12 @@ std::vector<piece> find_pieces(
   const game& g,
   const piece_type type,
   const chess_color color
+);
+
+/// Get the cursor position for a player
+game_coordinat get_cursor_pos(
+  const game& g,
+  const chess_color c
 );
 
 game get_default_game() noexcept;
