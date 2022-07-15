@@ -18,6 +18,8 @@
 game_view::game_view(const game& game)
   : m_game{game}
 {
+  m_game_resources.get_ninja_gods().setLoop(true);
+  m_game_resources.get_ninja_gods().play();
 
 }
 
