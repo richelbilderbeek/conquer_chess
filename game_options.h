@@ -28,6 +28,9 @@ public:
   ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
   auto get_delta_t() const noexcept { return m_delta_t; }
 
+  /// Get the color of the player that uses the keyboard
+  auto get_keyboard_user_player_color() const noexcept { return m_keyboard_user_player_color; }
+
   /// Get the width of the margin in pixels
   auto get_margin_width() const noexcept { return m_margin_width; }
 
@@ -56,10 +59,13 @@ private:
   ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
   double m_delta_t;
 
+  /// The color of the player that uses the keyboard
+  chess_color m_keyboard_user_player_color;
+
   /// The width of the margin in pixels
   const int m_margin_width;
 
-  /// The color of the player
+  /// The color of the player that uses the mouse
   chess_color m_mouse_user_player_color;
 
   /// The size of the screen in pixels

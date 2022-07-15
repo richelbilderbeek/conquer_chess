@@ -9,6 +9,7 @@ game_options::game_options(
   const double delta_t,
   const int margin_width
 ) : m_delta_t{delta_t},
+    m_keyboard_user_player_color{chess_color::white},
     m_margin_width{margin_width},
     m_mouse_user_player_color{chess_color::black},
     m_screen_size{screen_size},
@@ -19,6 +20,7 @@ game_options::game_options(
   assert(m_screen_size.get_x() > 0);
   assert(m_screen_size.get_y() > 0);
   assert(m_starting_pieces.size() >= 2);
+  assert(m_keyboard_user_player_color != m_mouse_user_player_color);
 }
 
 game_options get_default_game_options()

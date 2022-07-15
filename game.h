@@ -77,8 +77,11 @@ private:
     const chess_color player_color
   );
 
-  /// Process a right-mouse-button down
-  void do_rmb_down(const game_coordinat& coordinat);
+  /// Process an M or right-mouse-button down
+  void start_move_unit(
+    const game_coordinat& coordinat,
+    const chess_color player_color
+  );
 };
 
 /// Calculate the distances that each piece has to a coordinat

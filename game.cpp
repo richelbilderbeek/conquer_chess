@@ -161,12 +161,14 @@ void game::do_select(
   }
 }
 
-void game::do_rmb_down(const game_coordinat& coordinat)
+void game::start_move_unit(
+  const game_coordinat& coordinat,
+  const chess_color player_color
+)
 {
-  const auto player_color{chess_color::black};
   for (auto& p: m_pieces)
   {
-    if (p.is_selected())
+    if (p.is_selected() && p.get_color() == player_color)
     {
       // No shift, so all current actions are void
       clear_actions(p);
@@ -303,7 +305,10 @@ void game::tick()
     }
     else if (action.get_type() == action_type::press_move)
     {
-      // TODO
+      start_move_unit(
+        m_player_1_pos,
+        m_options.get_keyboard_user_player_color()
+      );
     }
     else if (action.get_type() == action_type::press_right)
     {
@@ -335,7 +340,10 @@ void game::tick()
     }
     else if (action.get_type() == action_type::rmb_down)
     {
-      do_rmb_down(action.get_coordinat());
+      start_move_unit(
+        action.get_coordinat(),
+        m_options.get_mouse_user_player_color()
+      );
     }
   }
   m_actions = std::vector<action>();

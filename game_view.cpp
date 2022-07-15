@@ -459,7 +459,6 @@ void show_square_under_cursor_1(game_view& view)
     const bool valid{would_be_valid(view)};
     if (valid)
     {
-      assert(1 == 2); // TODO
       s.setFillColor(sf::Color(196, 255, 196));
       s.setOutlineColor(sf::Color::Green);
     }
@@ -503,7 +502,6 @@ void show_square_under_cursor_2(game_view& view)
     const bool valid{would_be_valid(view)};
     if (valid)
     {
-      assert(1 == 2); // TODO
       s.setFillColor(sf::Color(196, 255, 196));
       s.setOutlineColor(sf::Color::Green);
     }
