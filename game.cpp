@@ -288,10 +288,18 @@ void game::tick()
     else if (action.get_type() == action_type::press_down)
     {
       m_player_1_pos += game_coordinat(0.0, 1.0);
+      if (m_player_1_pos.get_y() > 8.0)
+      {
+        m_player_1_pos += game_coordinat(0.0, -8.0);
+      }
     }
     else if (action.get_type() == action_type::press_left)
     {
       m_player_1_pos += game_coordinat(-1.0, 0);
+      if (m_player_1_pos.get_x() < 0.0)
+      {
+        m_player_1_pos += game_coordinat(8.0, 0.0);
+      }
     }
     else if (action.get_type() == action_type::press_move)
     {
@@ -300,6 +308,10 @@ void game::tick()
     else if (action.get_type() == action_type::press_right)
     {
       m_player_1_pos += game_coordinat(1.0, 0);
+      if (m_player_1_pos.get_x() > 8.0)
+      {
+        m_player_1_pos += game_coordinat(-8.0, 0.0);
+      }
     }
     else if (action.get_type() == action_type::press_select)
     {
@@ -308,6 +320,10 @@ void game::tick()
     else if (action.get_type() == action_type::press_up)
     {
       m_player_1_pos += game_coordinat(0.0, -1.0);
+      if (m_player_1_pos.get_y() < 0.0)
+      {
+        m_player_1_pos += game_coordinat(0.0, 8.0);
+      }
     }
     else if (action.get_type() == action_type::mouse_move)
     {
