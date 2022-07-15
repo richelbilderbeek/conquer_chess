@@ -441,6 +441,31 @@ sf::Texture& game_resources::get_piece_portrait(
   return m_white_square;
 }
 
+void game_resources::play_sound(
+  const chess_color color,
+  const piece_type type
+)
+{
+  if (color == chess_color::black)
+  {
+    if (type == piece_type::bishop) m_faring_into_battle.play();
+    if (type == piece_type::king) m_lets_rule.play();
+    if (type == piece_type::knight) m_jumping_into_battle.play();
+    if (type == piece_type::pawn) m_moving_forward.play();
+    if (type == piece_type::queen) m_to_rule_is_to_act.play();
+    if (type == piece_type::rook) m_its_time_to_rock.play();
+  }
+  else
+  {
+    if (type == piece_type::bishop) m_faring_into_battle.play();
+    if (type == piece_type::king) m_lets_rule.play();
+    if (type == piece_type::knight) m_jumping_into_battle.play();
+    if (type == piece_type::pawn) m_moving_forward.play();
+    if (type == piece_type::queen) m_to_rule_is_to_act.play();
+    if (type == piece_type::rook) m_its_time_to_rock.play();
+  }
+}
+
 void test_game_resources()
 {
   #ifndef NDEBUG // no tests in release

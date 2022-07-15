@@ -35,7 +35,13 @@ public:
   /// Get a font
   sf::Font& get_font() noexcept {return m_font; }
 
-  sf::Music &get_ninja_gods() noexcept { return m_ninja_gods; }
+  sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
+
+  /// Get texture of a piece
+  void play_sound(
+    const chess_color color,
+    const piece_type type
+  );
 
 private:
   sf::Texture m_black_bishop;
