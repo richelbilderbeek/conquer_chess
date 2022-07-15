@@ -38,7 +38,7 @@ game_options get_default_game_options()
 
 double get_default_delta_t()
 {
-  return 0.001;
+  return 0.0001;
 }
 
 void game_options::set_player_color(const chess_color c) noexcept
