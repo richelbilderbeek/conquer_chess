@@ -94,6 +94,12 @@ std::vector<piece> get_default_starting_pieces() noexcept
   };
 }
 
+double get_f_health(const piece& p) noexcept
+{
+
+  return p.get_health() / p.get_max_health();
+}
+
 std::vector<piece> get_king_versus_king_starting_pieces() noexcept
 {
   const auto all_pieces{get_default_starting_pieces()};

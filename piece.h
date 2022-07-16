@@ -20,6 +20,7 @@ public:
   );
 
   /// Add an action for the piece to do
+  /// @see 'tick' processes the actions
   void add_action(const piece_action& action);
 
   /// Get all the piece actions
@@ -37,9 +38,6 @@ public:
   /// Get the health of the unit
   double get_health() const noexcept { return m_health; }
 
-  /// Get the fraction of the health, where 1.0 denotes full health
-  double get_f_health() const noexcept { return m_health / m_max_health; }
-
   /// Get the maximum health of the unit
   double get_max_health() const noexcept { return m_max_health; }
 
@@ -56,6 +54,7 @@ public:
   /// @param delta_t the fraction of a full move that is done, where
   ///   0.01 means that only 1% of the full move is done and
   ///   1.0 denotes doing a full move.
+  /// @see use 'add_action' to add an action to be processed
   void tick(const double delta_t);
 
 private:
@@ -94,8 +93,12 @@ std::string describe_actions(const piece& p);
 /// Get all the pieces in the starting position
 std::vector<piece> get_default_starting_pieces() noexcept;
 
+/// Get the fraction of the health, where 1.0 denotes full health
+double get_f_health(const piece& p) noexcept;
+
 /// Get a king-versus-king starting position
 std::vector<piece> get_king_versus_king_starting_pieces() noexcept;
+
 
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;
