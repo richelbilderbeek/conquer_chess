@@ -374,7 +374,7 @@ void show_pieces(game_view& view)
   for (const auto& piece: game.get_pieces())
   {
     sf::RectangleShape sprite;
-    sprite.setSize(sf::Vector2f(square_width, square_height));
+    sprite.setSize(sf::Vector2f(0.9 * square_width, 0.9 * square_height));
     sprite.setTexture(
       &view.get_game_resources().get_piece(
         piece.get_color(),
@@ -385,8 +385,11 @@ void show_pieces(game_view& view)
     {
       sprite.setFillColor(sf::Color(255, 196, 196));
     }
-    sprite.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
-    const auto screen_position = convert_to_screen_coordinat(piece.get_coordinat(), layout);
+    sprite.setOrigin(sf::Vector2f(0.45 * square_width, 0.45 * square_height));
+    const auto screen_position = convert_to_screen_coordinat(
+      piece.get_coordinat() + game_coordinat(0.0, 0.1),
+      layout
+    );
     sprite.setPosition(
       screen_position.get_x(),
       screen_position.get_y()
