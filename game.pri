@@ -1,7 +1,7 @@
 # Files
 HEADERS += \
-    $$PWD/action.h \
     $$PWD/chess_color.h \
+    $$PWD/control_action.h \
     $$PWD/control_action_type.h \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
@@ -17,9 +17,9 @@ HEADERS += \
 
 
 SOURCES += \
-    $$PWD/action.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/control_action_type.cpp \
+    $$PWD/controlaction.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_options.cpp \

@@ -295,7 +295,7 @@ void show_debug_1(game_view& view)
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_game_actions(game) << '\n'
     << "Number of selected units: " << count_selected_units(game, chess_color::white) << '\n'
-    << "Number of piece actions: " << count_piece_actions(game) << '\n'
+    << "Number of piece actions: " << count_piece_actions(game, chess_color::white) << '\n'
   ;
 
   text.setString(s.str());
@@ -329,7 +329,7 @@ void show_debug_2(game_view& view)
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_game_actions(game) << '\n'
     << "Number of selected units: " << count_selected_units(game, chess_color::black) << '\n'
-    << "Number of piece actions: " << count_piece_actions(game) << '\n'
+    << "Number of piece actions: " << count_piece_actions(game, chess_color::black) << '\n'
   ;
 
   text.setString(s.str());
@@ -592,10 +592,10 @@ void show_unit_paths(game_view& view)
       std::begin(actions),
       std::end(actions),
       std::back_inserter(coordinats),
-      [layout](const auto& action)
+      [layout](const auto& control_action)
       {
         return convert_to_screen_coordinat(
-          action.get_coordinat(),
+          control_action.get_coordinat(),
           layout
         );
       }

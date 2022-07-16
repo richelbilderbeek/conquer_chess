@@ -19,7 +19,7 @@ game::game(
 
 }
 
-void game::add_action(const action a)
+void game::add_action(const control_action a)
 {
   // These will be processed in 'tick'
   m_actions.push_back(a);
@@ -71,16 +71,23 @@ int count_game_actions(const game& g)
   return static_cast<int>(g.get_actions().size());
 }
 
-int count_piece_actions(const game& g)
+int count_piece_actions(
+  const game& g,
+  const chess_color player
+)
 {
   const auto& pieces{g.get_pieces()};
   return std::accumulate(
     std::begin(pieces),
     std::end(pieces),
     0,
-    [](const int n, const auto& piece)
+    [player](const int n, const auto& piece)
     {
-      return n + count_piece_actions(piece);
+      if (piece.get_color() == player)
+      {
+        return n + count_piece_actions(piece);
+      }
+      return n;
     }
   );
 }
@@ -369,7 +376,7 @@ void game::tick()
       );
     }
   }
-  m_actions = std::vector<action>();
+  m_actions = std::vector<control_action>();
 
   for (auto& p: m_pieces) p.tick(m_options.get_delta_t());
 
@@ -398,14 +405,14 @@ void test_game() //!OCLINT tests may be many
         game_coordinat(1.0, 1.0)
       )
     );
-    assert(count_piece_actions(g) == 1);
+    assert(count_piece_actions(g, chess_color::white) == 1);
     g.get_pieces().at(0).add_action(
       piece_action(
         piece_action_type::move,
         game_coordinat(2.0, 2.0)
       )
     );
-    assert(count_piece_actions(g) == 2);
+    assert(count_piece_actions(g, chess_color::white) == 2);
   }
   {
     game g;
@@ -454,10 +461,10 @@ void test_game() //!OCLINT tests may be many
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
-    assert(count_piece_actions(g) == 0);
+    assert(count_piece_actions(g, chess_color::black) == 0);
     g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(1.0, 1.0)));
     g.tick();
-    assert(count_piece_actions(g) == 1);
+    assert(count_piece_actions(g, chess_color::black) == 1);
   }
   // 2x LMB then RMB makes a unit move 1 stretch (not 2)
   {
@@ -466,11 +473,11 @@ void test_game() //!OCLINT tests may be many
     g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(1.0, 1.0)));
     g.tick();
-    assert(count_piece_actions(g) == 1);
+    assert(count_piece_actions(g, chess_color::black) == 1);
     g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(2.0, 2.0)));
     g.tick();
-    assert(count_piece_actions(g) == 1);
+    assert(count_piece_actions(g, chess_color::black) == 1);
   }
 #endif // no tests in release
 }

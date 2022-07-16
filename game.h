@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "action.h"
+#include "control_action.h"
 #include "game_coordinat.h"
 #include "game_options.h"
 #include "game_view_layout.h"
@@ -18,7 +18,7 @@ public:
   );
 
   /// Add an action. These will be processed in 'tick'
-  void add_action(const action a);
+  void add_action(const control_action a);
 
   /// Get the game actions, should be zero after each tick
   const auto& get_actions() const noexcept { return m_actions; }
@@ -55,7 +55,7 @@ public:
 
 private:
 
-  std::vector<action> m_actions;
+  std::vector<control_action> m_actions;
 
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
@@ -100,8 +100,11 @@ bool can_player_select_piece_at_cursor_pos(
 /// which should be zero after each tick
 int count_game_actions(const game& g);
 
-/// Count the total number of actions to be done by pieces
-int count_piece_actions(const game& g);
+/// Count the total number of actions to be done by pieces of a player
+int count_piece_actions(
+  const game& g,
+  const chess_color player
+);
 
 /// Count the number of selected units of a player
 int count_selected_units(
