@@ -1,8 +1,8 @@
 # Files
 HEADERS += \
     $$PWD/action.h \
-    $$PWD/action_type.h \
     $$PWD/chess_color.h \
+    $$PWD/control_action_type.h \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
     $$PWD/game_options.h \
@@ -18,8 +18,8 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/action.cpp \
-    $$PWD/action_type.cpp \
     $$PWD/chess_color.cpp \
+    $$PWD/control_action_type.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_options.cpp \

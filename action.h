@@ -1,20 +1,20 @@
 #ifndef ACTION_H
 #define ACTION_H
 
-#include "action_type.h"
+#include "control_action_type.h"
 #include "game_coordinat.h"
 
 /// An action
 class action
 {
 public:
-  action(const action_type type, const game_coordinat& coordinat);
+  action(const control_action_type type, const game_coordinat& coordinat);
   auto& get_coordinat() const noexcept { return m_coordinat; }
   auto get_type() const noexcept { return m_type; }
 
 private:
   game_coordinat m_coordinat;
-  action_type m_type;
+  control_action_type m_type;
 };
 
 action create_mouse_move_action(const game_coordinat& coordinat);

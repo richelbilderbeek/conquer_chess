@@ -306,11 +306,11 @@ void game::tick()
 {
   for (const auto& action: m_actions)
   {
-    if (action.get_type() == action_type::press_attack)
+    if (action.get_type() == control_action_type::press_attack)
     {
       // TODO
     }
-    else if (action.get_type() == action_type::press_down)
+    else if (action.get_type() == control_action_type::press_down)
     {
       m_player_1_pos += game_coordinat(0.0, 1.0);
       if (m_player_1_pos.get_y() > 8.0)
@@ -318,7 +318,7 @@ void game::tick()
         m_player_1_pos += game_coordinat(0.0, -8.0);
       }
     }
-    else if (action.get_type() == action_type::press_left)
+    else if (action.get_type() == control_action_type::press_left)
     {
       m_player_1_pos += game_coordinat(-1.0, 0);
       if (m_player_1_pos.get_x() < 0.0)
@@ -326,14 +326,14 @@ void game::tick()
         m_player_1_pos += game_coordinat(8.0, 0.0);
       }
     }
-    else if (action.get_type() == action_type::press_move)
+    else if (action.get_type() == control_action_type::press_move)
     {
       start_move_unit(
         m_player_1_pos,
         m_options.get_keyboard_user_player_color()
       );
     }
-    else if (action.get_type() == action_type::press_right)
+    else if (action.get_type() == control_action_type::press_right)
     {
       m_player_1_pos += game_coordinat(1.0, 0);
       if (m_player_1_pos.get_x() > 8.0)
@@ -341,11 +341,11 @@ void game::tick()
         m_player_1_pos += game_coordinat(-8.0, 0.0);
       }
     }
-    else if (action.get_type() == action_type::press_select)
+    else if (action.get_type() == control_action_type::press_select)
     {
       do_select(m_player_1_pos, chess_color::white);
     }
-    else if (action.get_type() == action_type::press_up)
+    else if (action.get_type() == control_action_type::press_up)
     {
       m_player_1_pos += game_coordinat(0.0, -1.0);
       if (m_player_1_pos.get_y() < 0.0)
@@ -353,15 +353,15 @@ void game::tick()
         m_player_1_pos += game_coordinat(0.0, 8.0);
       }
     }
-    else if (action.get_type() == action_type::mouse_move)
+    else if (action.get_type() == control_action_type::mouse_move)
     {
       m_player_2_pos = action.get_coordinat();
     }
-    else if (action.get_type() == action_type::lmb_down)
+    else if (action.get_type() == control_action_type::lmb_down)
     {
       do_select(action.get_coordinat(), chess_color::black);
     }
-    else if (action.get_type() == action_type::rmb_down)
+    else if (action.get_type() == control_action_type::rmb_down)
     {
       start_move_unit(
         action.get_coordinat(),

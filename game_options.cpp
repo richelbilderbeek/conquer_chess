@@ -14,7 +14,7 @@ game_options::game_options(
     m_mouse_user_player_color{chess_color::black},
     m_screen_size{screen_size},
     m_starting_pieces{starting_pieces},
-    m_volume{100.0}
+    m_volume{0.0}
 {
   assert(m_delta_t > 0.0);
   assert(m_margin_width >= 0);
