@@ -6,8 +6,8 @@
 #include "chess_color.h"
 #include "piece_type.h"
 #include "textures.h"
-
-#include <SFML/Audio.hpp>
+#include "sound_effects.h"
+#include "sound_effect.h"
 
 /// The raw game resources
 class game_resources
@@ -35,33 +35,19 @@ public:
 
   sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
 
-  /// Get texture of a piece
-  void play_sound(
-    const chess_color color,
-    const piece_type type
+  /// Play a sound effect
+  void play(
+    const sound_effect& effect
   );
 
   textures& get_textures() noexcept {return m_textures; }
 
 private:
+  sound_effects m_sound_effects;
   textures m_textures;
 
   sf::Font m_font;
   sf::Music m_ninja_gods;
-
-  sf::Sound m_faring_into_battle;
-  sf::Sound m_its_time_to_rock;
-  sf::Sound m_jumping_into_battle;
-  sf::Sound m_lets_rule;
-  sf::Sound m_moving_forward;
-  sf::Sound m_to_rule_is_to_act;
-
-  sf::SoundBuffer m_faring_into_battle_buffer;
-  sf::SoundBuffer m_its_time_to_rock_buffer;
-  sf::SoundBuffer m_jumping_into_battle_buffer;
-  sf::SoundBuffer m_lets_rule_buffer;
-  sf::SoundBuffer m_moving_forward_buffer;
-  sf::SoundBuffer m_to_rule_is_to_act_buffer;
 };
 
 /// Get a picture of a black/dark square

@@ -15,6 +15,9 @@ HEADERS += \
     $$PWD/piece_type.h \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
+    $$PWD/sound_effect.h \
+    $$PWD/sound_effect_type.h \
+    $$PWD/sound_effects.h \
     $$PWD/textures.h
 
 
@@ -34,6 +37,9 @@ SOURCES += \
     $$PWD/piece_type.cpp \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
+    $$PWD/sound_effect.cpp \
+    $$PWD/sound_effect_type.cpp \
+    $$PWD/sound_effects.cpp \
     $$PWD/textures.cpp
 
 RESOURCES += \
