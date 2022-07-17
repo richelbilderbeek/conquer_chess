@@ -2,6 +2,8 @@
 
 #include <QFile>
 
+#ifndef LOGIC_ONLY
+
 sound_effects::sound_effects()
 {
   {
@@ -113,3 +115,5 @@ void sound_effects::play(const sound_effect& effect)
     }
   }
 }
+
+#endif // LOGIC_ONLY
