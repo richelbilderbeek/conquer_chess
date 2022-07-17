@@ -5,6 +5,7 @@
 #include "piece_type.h"
 #include "piece_action.h"
 #include "game_coordinat.h"
+#include "sound_effect_type.h"
 
 #include <string>
 #include <vector>
@@ -40,6 +41,7 @@ public:
 
   /// Get the maximum health of the unit
   double get_max_health() const noexcept { return m_max_health; }
+
 
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }

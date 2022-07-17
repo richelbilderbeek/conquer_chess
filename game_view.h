@@ -37,6 +37,9 @@ private:
   /// The window to draw to
   sf::RenderWindow m_window;
 
+  /// Play the new sound effects
+  void play_sound_effects();
+
   /// Process all events
   /// @return if the user wants to quit
   bool process_events();

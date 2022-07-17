@@ -6,6 +6,7 @@
 #include "game_options.h"
 #include "game_view_layout.h"
 #include "piece.h"
+#include "sound_effect.h"
 #include <vector>
 
 /// Contains the game logic.
@@ -19,6 +20,10 @@ public:
 
   /// Add an action. These will be processed in 'tick'
   void add_action(const control_action a);
+
+  /// Clear the sound effects to be processed,
+  /// i.e. resize to zero
+  void clear_sound_effects() noexcept;
 
   /// Get the game actions, should be zero after each tick
   const auto& get_actions() const noexcept { return m_actions; }
@@ -53,6 +58,9 @@ public:
   /// Get all the pieces
   const auto& get_pieces() const noexcept { return m_pieces; }
 
+  /// Get all the sound effects to be processed
+  const auto& get_sound_effects() const noexcept { return m_sound_effects; };
+
   /// Go to the next frame
   void tick();
 
@@ -73,6 +81,8 @@ private:
   game_options m_options;
 
   std::vector<piece> m_pieces;
+
+  std::vector<sound_effect> m_sound_effects;
 
   /// Process a space or left-mouse-button
   void do_select(

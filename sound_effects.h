@@ -19,6 +19,7 @@ public:
 
 private:
   sf::Sound m_faring_into_battle;
+  sf::Sound m_hide;
   sf::Sound m_its_time_to_rock;
   sf::Sound m_jumping_into_battle;
   sf::Sound m_lets_rule;
@@ -26,6 +27,7 @@ private:
   sf::Sound m_to_rule_is_to_act;
 
   sf::SoundBuffer m_faring_into_battle_buffer;
+  sf::SoundBuffer m_hide_buffer;
   sf::SoundBuffer m_its_time_to_rock_buffer;
   sf::SoundBuffer m_jumping_into_battle_buffer;
   sf::SoundBuffer m_lets_rule_buffer;

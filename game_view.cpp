@@ -81,7 +81,19 @@ void game_view::exec()
 
     // Show the new state
     show();
+
+    // Play the new sounds to be played
+    play_sound_effects();
   }
+}
+
+void game_view::play_sound_effects()
+{
+  for (const auto sound_effect: m_game.get_sound_effects())
+  {
+    m_game_resources.play(sound_effect);
+  }
+  m_game.clear_sound_effects();
 }
 
 bool game_view::process_events()

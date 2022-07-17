@@ -66,6 +66,12 @@ bool can_player_select_piece_at_cursor_pos(
   return !piece.is_selected();
 }
 
+void game::clear_sound_effects() noexcept
+{
+  m_sound_effects.clear();
+  assert(m_sound_effects.empty());
+}
+
 int count_game_actions(const game& g)
 {
   return static_cast<int>(g.get_actions().size());
@@ -146,6 +152,13 @@ void game::do_select(
         {
           unselect_all_pieces(*this, player_color);
           select(piece); // 2
+          m_sound_effects.push_back(
+            sound_effect(
+              sound_effect_type::select,
+              piece.get_color(),
+              piece.get_type()
+            )
+          );
         }
       }
     }
@@ -168,6 +181,13 @@ void game::do_select(
         else
         {
           select(piece); // 5
+          m_sound_effects.push_back(
+            sound_effect(
+              sound_effect_type::select,
+              piece.get_color(),
+              piece.get_type()
+            )
+          );
         }
       }
     }
@@ -199,6 +219,14 @@ void game::start_move_unit(
         piece_action(
           piece_action_type::move,
           center_on_center(coordinat)
+        )
+      );
+
+      m_sound_effects.push_back(
+        sound_effect(
+          sound_effect_type::start_move,
+          p.get_color(),
+          p.get_type()
         )
       );
     }

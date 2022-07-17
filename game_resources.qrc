@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/faring_into_battle.ogg</file>
+        <file>resources/hide.ogg</file>
         <file>resources/its_time_to_rock.ogg</file>
         <file>resources/jumping_into_battle.ogg</file>
         <file>resources/lets_rule.ogg</file>

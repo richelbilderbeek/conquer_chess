@@ -1,5 +1,7 @@
 # resources
 
+## Images
+
 Image              |Description                         |Adapted from picture at URL
 -------------------|------------------------------------|--------------------------------------------------------------------------------------
 `kb_portrait.png`  |Prins Claus                         |https://commons.wikimedia.org/wiki/File:Prince_Claus_of_the_Netherlands_1986.jpg
@@ -17,6 +19,8 @@ Unused             |Hugo                                |https://commons.wikimed
 `rb_portrait_1.png`|De Waag at night                    |https://commons.wikimedia.org/wiki/File:De_Waag,_Amsterdam.jpg
 `rb_portrait_2.png`|De Waag at day                      |https://commons.wikimedia.org/wiki/File:Waag_Amsterdam_02.JPG
 
+## Sounds
 
-
-
+Sound              |Description                                            |URL
+-------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------
+`hide.ogg`         |Hide sounds from tresinformal game, by Sebastian Mader |https://github.com/tresinformal/game/blob/master/hide.ogg
