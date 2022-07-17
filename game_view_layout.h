@@ -1,8 +1,11 @@
 #ifndef GAME_VIEW_LAYOUT_H
 #define GAME_VIEW_LAYOUT_H
 
+#include "screen_rect.h"
 #include "game_coordinat.h"
 #include "screen_coordinat.h"
+
+#include <vector>
 
 /// Get the default margin width/size, in pixels
 constexpr int get_default_margin_width() noexcept { return 10; }
@@ -54,55 +57,44 @@ public:
     const int margin_width = get_default_margin_width()
   );
 
-  int get_board_height() const noexcept { return m_board_height; }
-  int get_board_width() const noexcept { return m_board_width; }
+  const auto& get_board() const noexcept { return m_board; }
 
-  screen_coordinat get_br_board() const noexcept { return m_br_board; }
+  screen_coordinat get_br_board() const noexcept;
   screen_coordinat get_br_controls_1() const noexcept { return m_br_controls_1; }
   screen_coordinat get_br_controls_2() const noexcept { return m_br_controls_2; }
   screen_coordinat get_br_debug_1() const noexcept { return m_br_debug_1; }
   screen_coordinat get_br_debug_2() const noexcept { return m_br_debug_2; }
-  screen_coordinat get_br_units_1() const noexcept { return m_br_units_1; }
+  screen_coordinat get_br_units_1() const noexcept { return m_units_1.get_br(); }
   screen_coordinat get_br_units_2() const noexcept { return m_br_units_2; }
 
-  int get_panel_width() const noexcept { return m_panel_width; }
-  int get_panel_height() const noexcept { return m_panel_height; }
+  int get_panel_width() const noexcept;
+  int get_panel_height() const noexcept;
 
-  double get_square_height() const noexcept;
-  double get_square_width() const noexcept;
-
-  screen_coordinat get_tl_board() const noexcept { return m_tl_board; }
+  screen_coordinat get_tl_board() const noexcept;
   screen_coordinat get_tl_controls_1() const noexcept { return m_tl_controls_1; }
   screen_coordinat get_tl_controls_2() const noexcept { return m_tl_controls_2; }
   screen_coordinat get_tl_debug_1() const noexcept { return m_tl_debug_1; }
   screen_coordinat get_tl_debug_2() const noexcept { return m_tl_debug_2; }
-  screen_coordinat get_tl_units_1() const noexcept { return m_tl_units_1; }
+  screen_coordinat get_tl_units_1() const noexcept { return m_units_1.get_tl(); }
   screen_coordinat get_tl_units_2() const noexcept { return m_tl_units_2; }
 
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
 private:
 
-  int m_board_width;
-  int m_board_height;
+  screen_rect m_board;
+  screen_rect m_units_1;
 
-  screen_coordinat m_br_board;
   screen_coordinat m_br_controls_1;
   screen_coordinat m_br_controls_2;
   screen_coordinat m_br_debug_1;
   screen_coordinat m_br_debug_2;
-  screen_coordinat m_br_units_1;
   screen_coordinat m_br_units_2;
 
-  int m_panel_width;
-  int m_panel_height;
-
-  screen_coordinat m_tl_board;
   screen_coordinat m_tl_controls_1;
   screen_coordinat m_tl_controls_2;
   screen_coordinat m_tl_debug_1;
   screen_coordinat m_tl_debug_2;
-  screen_coordinat m_tl_units_1;
   screen_coordinat m_tl_units_2;
 
   /// The size of the window
@@ -119,6 +111,28 @@ screen_coordinat convert_to_screen_coordinat(
 game_coordinat convert_to_game_coordinat(
   const screen_coordinat& coordinat,
   const game_view_layout& layout
+);
+
+/// Get the height of the board in pixels
+int get_board_height(const game_view_layout& layout) noexcept;
+
+/// Get the width of the board in pixels
+int get_board_width(const game_view_layout& layout) noexcept;
+
+/// Get the height of a square
+double get_square_height(const game_view_layout& layout) noexcept;
+
+/// Get the width of a square
+double get_square_width(const game_view_layout& layout) noexcept;
+
+/// Get the panels in the layout
+std::vector<screen_rect> get_panels(const game_view_layout& layout);
+
+/// Resize the layout to a new size
+void resize(
+  game_view_layout& g,
+  const screen_coordinat& window_size,
+  const int margin_width = get_default_margin_width()
 );
 
 

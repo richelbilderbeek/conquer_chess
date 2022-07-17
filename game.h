@@ -32,6 +32,9 @@ public:
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
+  /// Get the layout of the screen
+  auto& get_layout() noexcept { return m_layout; }
+
   /// Get the in-game keyboard position
   const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
 
@@ -160,6 +163,14 @@ bool is_piece_at(
   const game& g,
   const game_coordinat& coordinat,
   const double distance = 0.5
+);
+
+
+//// Resize the window of the game
+void resize_window(
+  game& g,
+  const screen_coordinat& window_size,
+  const int margin_width = get_default_margin_width()
 );
 
 void test_game();

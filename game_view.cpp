@@ -21,7 +21,6 @@ game_view::game_view(const game& game)
   m_game_resources.get_ninja_gods().setVolume(m_game.get_options().get_volume());
   m_game_resources.get_ninja_gods().setLoop(true);
   m_game_resources.get_ninja_gods().play();
-
 }
 
 std::string bool_to_str(const bool b) noexcept
@@ -33,8 +32,8 @@ sf::RectangleShape create_black_square(game_view& view)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
-  const double square_width{layout.get_square_width()};
-  const double square_height{layout.get_square_height()};
+  const double square_width{get_square_width(layout)};
+  const double square_height{get_square_height(layout)};
 
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
@@ -47,8 +46,8 @@ sf::RectangleShape create_white_square(game_view& view)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
-  const double square_width{layout.get_square_width()};
-  const double square_height{layout.get_square_height()};
+  const double square_width{get_square_width(layout)};
+  const double square_height{get_square_height(layout)};
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
@@ -87,12 +86,26 @@ bool game_view::process_events()
   sf::Event event;
   while (m_window.pollEvent(event))
   {
-    if (event.type == sf::Event::Closed)
+    if (event.type == sf::Event::Resized)
+    {
+      // From https://www.sfml-dev.org/tutorials/2.2/graphics-view.php#showing-more-when-the-window-is-resized
+      const sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
+      m_window.setView(sf::View(visibleArea));
+      resize_window(
+        m_game,
+        screen_coordinat(
+          static_cast<int>(event.size.width),
+          static_cast<int>(event.size.height)
+        ),
+        get_default_margin_width()
+      );
+    }
+    else if (event.type == sf::Event::Closed)
     {
         m_window.close();
         return true; // Game is done
     }
-    if (event.type == sf::Event::KeyPressed)
+    else if (event.type == sf::Event::KeyPressed)
     {
       sf::Keyboard::Key key_pressed = event.key.code;
       if (key_pressed == sf::Keyboard::Key::Escape)
@@ -197,6 +210,9 @@ void game_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
+  // Show the layout of the screen: board and sidebars
+  show_layout(*this);
+
   // Show the board: squares, unit paths, pieces, health bars
   show_board(*this);
 
@@ -207,7 +223,7 @@ void game_view::show()
   show_sidebar_2(*this);
 
   // Show the mouse cursor
-  //show_mouse_cursor();
+  show_mouse_cursor();
 
   // Display all shapes
   m_window.display();
@@ -365,12 +381,36 @@ void game_view::show_mouse_cursor()
   m_window.draw(cursor);
 }
 
+void show_layout(game_view& view)
+{
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  for (const auto& panel: get_panels(layout))
+  {
+    sf::RectangleShape rectangle;
+    const auto& tl{panel.get_tl()};
+    rectangle.setOrigin(0.0, 0.0);
+    rectangle.setPosition(tl.get_x(), tl.get_y());
+    rectangle.setSize(
+      sf::Vector2f(
+        get_width(panel),
+        get_height(panel)
+      )
+    );
+    rectangle.setFillColor(sf::Color::Black);
+    rectangle.setOutlineThickness(1);
+    rectangle.setOutlineColor(sf::Color::White);
+    view.get_window().draw(rectangle);
+  }
+}
+
+
 void show_pieces(game_view& view)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
-  const double square_width{layout.get_square_width()};
-  const double square_height{layout.get_square_height()};
+  const double square_width{get_square_width(layout)};
+  const double square_height{get_square_height(layout)};
   for (const auto& piece: game.get_pieces())
   {
     sf::RectangleShape sprite;
@@ -535,7 +575,7 @@ void show_unit_health_bars(game_view& view)
     // Black box around it
     sf::RectangleShape black_box;
 
-    black_box.setSize(sf::Vector2f(layout.get_square_width() - 4.0, 16.0 - 4.0));
+    black_box.setSize(sf::Vector2f(get_square_width(layout) - 4.0, 16.0 - 4.0));
     //black_box.setScale(1.0, 1.0);
     black_box.setFillColor(sf::Color(0, 0, 0));
     black_box.setOrigin(0.0, 0.0);
@@ -552,7 +592,7 @@ void show_unit_health_bars(game_view& view)
 
     // Health
     sf::RectangleShape health_bar;
-    health_bar.setSize(sf::Vector2f(layout.get_square_width() - 8.0, 16.0 - 8.0));
+    health_bar.setSize(sf::Vector2f(get_square_width(layout) - 8.0, 16.0 - 8.0));
     //health_bar.setScale(1.0, 1.0);
     health_bar.setFillColor(
       sf::Color(
@@ -625,8 +665,8 @@ void show_unit_paths(game_view& view)
 void show_unit_sprites_1(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
-  const double square_width{layout.get_square_width()};
-  const double square_height{layout.get_square_height()};
+  const double square_width{get_square_width(layout)};
+  const double square_height{get_square_height(layout)};
   screen_coordinat screen_position = layout.get_tl_units_1();
   for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::white))
   {
@@ -674,8 +714,8 @@ void show_unit_sprites_1(game_view& view)
 void show_unit_sprites_2(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
-  const double square_width{layout.get_square_width()};
-  const double square_height{layout.get_square_height()};
+  const double square_width{get_square_width(layout)};
+  const double square_height{get_square_height(layout)};
   screen_coordinat screen_position = layout.get_tl_units_2();
   for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::black))
   {

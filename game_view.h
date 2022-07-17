@@ -72,6 +72,9 @@ void show_debug_1(game_view& view);
 /// Show debug info on-screen for player 2
 void show_debug_2(game_view& view);
 
+/// Show the layout of the window: board and panels
+void show_layout(game_view& view);
+
 /// Show the pieces of the board on-screen
 void show_pieces(game_view& view);
 
