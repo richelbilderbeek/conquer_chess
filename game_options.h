@@ -17,6 +17,8 @@ public:
     const int margin_width
   );
 
+  /// Are selected units shown on-screen?
+  auto do_show_selected() const noexcept { return false; }
 
   /// Get the distance the mouse must be maximally in
   /// for a click to connect to a piece
@@ -80,6 +82,9 @@ private:
   double m_volume;
 
 };
+
+/// Are selected squares shown on-screen?
+bool do_show_selected(const game_options& options) noexcept;
 
 /// Get the default delta_t,
 /// which is the fraction of a full move that is done per tick,

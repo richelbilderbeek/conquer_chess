@@ -178,6 +178,11 @@ void game::do_select(
   }
 }
 
+bool do_show_selected(const game& g) noexcept
+{
+  return do_show_selected(g.get_options());
+}
+
 void game::start_move_unit(
   const game_coordinat& coordinat,
   const chess_color player_color

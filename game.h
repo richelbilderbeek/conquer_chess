@@ -119,6 +119,9 @@ int count_selected_units(
 /// to be used in debugging
 game create_king_versus_king_game();
 
+/// Are selected squares shown on-screen?
+bool do_show_selected(const game& g) noexcept;
+
 /// Find zero, one or more chess pieces of the specified type and color
 std::vector<piece> find_pieces(
   const game& g,

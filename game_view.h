@@ -57,6 +57,9 @@ sf::RectangleShape create_black_square(game_view& view);
 /// Create a white/ligt square at the right size
 sf::RectangleShape create_white_square(game_view& view);
 
+/// Are selected squares shown on-screen?
+bool do_show_selected(const game_view& view);
+
 /// Show the board: squares, unit paths, pieces, health bars
 void show_board(game_view& view);
 

@@ -56,6 +56,11 @@ sf::RectangleShape create_white_square(game_view& view)
   return white_square;
 }
 
+bool do_show_selected(const game_view& view)
+{
+  return do_show_selected(view.get_game());
+}
+
 void game_view::exec()
 {
   // Open window
@@ -223,7 +228,7 @@ void game_view::show()
   show_sidebar_2(*this);
 
   // Show the mouse cursor
-  show_mouse_cursor();
+  //show_mouse_cursor();
 
   // Display all shapes
   m_window.display();
@@ -421,9 +426,10 @@ void show_pieces(game_view& view)
         piece.get_type()
       )
     );
-    if (piece.is_selected())
+    if (do_show_selected(view) && piece.is_selected())
     {
-      sprite.setFillColor(sf::Color(255, 196, 196));
+      sprite.setOutlineColor(sf::Color(255, 0, 0));
+      sprite.setOutlineThickness(2);
     }
     sprite.setOrigin(sf::Vector2f(0.45 * square_width, 0.45 * square_height));
     const auto screen_position = convert_to_screen_coordinat(

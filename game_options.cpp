@@ -26,6 +26,11 @@ game_options::game_options(
   assert(m_volume <= 100.0);
 }
 
+bool do_show_selected(const game_options& options) noexcept
+{
+  return options.do_show_selected();
+}
+
 game_options get_default_game_options()
 {
   return game_options(
