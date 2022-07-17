@@ -156,7 +156,13 @@ bool game_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::F5)
       {
-        m_game_resources.play_sound(chess_color::white, piece_type::pawn);
+        m_game_resources.play(
+          sound_effect(
+            sound_effect_type::start_move,
+            chess_color::white,
+            piece_type::pawn
+          )
+        );
       }
     }
     if (event.type == sf::Event::MouseMoved)

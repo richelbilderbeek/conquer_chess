@@ -52,7 +52,6 @@ public:
 
 private:
 
-
   /// Get the distance the mouse must be maximally in
   /// for a click to connect to a piece
   double m_click_distance;
@@ -80,7 +79,6 @@ private:
 
   /// Volume in percent: 0.0 is silent, 100 is loudest
   double m_volume;
-
 };
 
 /// Are selected squares shown on-screen?

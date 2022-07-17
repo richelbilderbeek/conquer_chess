@@ -15,6 +15,9 @@ public:
     const chess_color c,
     const piece_type pc
   );
+  auto get_sound_effect_type() const noexcept { return m_sound_effect_type; }
+  auto get_color() const noexcept { return m_chess_color; }
+  auto get_piece_type() const noexcept { return m_piece_type; }
   private:
 
   sound_effect_type m_sound_effect_type;
