@@ -3,6 +3,7 @@
 #include "game.h"
 #include "game_resources.h"
 #include "game_view.h"
+#include "menu_view.h"
 #include "game_view_layout.h"
 #include "screen_coordinat.h"
 
@@ -39,6 +40,13 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   #endif
   const auto args = collect_args(argc, argv);
   if (args.size() == 1)
+  {
+    #ifndef LOGIC_ONLY
+    menu_view v;
+    v.exec();
+    #endif // LOGIC_ONLY
+  }
+  else
   {
     #ifndef LOGIC_ONLY
     game_view v;
