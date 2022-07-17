@@ -8,6 +8,7 @@
 #include <iostream>
 
 menu_view::menu_view()
+  : m_margin_size{10}
 {
 
 }
@@ -92,13 +93,20 @@ bool menu_view::process_events()
       {
         //m_game.add_action(create_press_select_action());
       }
-      else if (key_pressed == sf::Keyboard::Key::M)
+      else if (key_pressed == sf::Keyboard::Key::O)
       {
-        //m_game.add_action(create_press_move_action());
+        options_view view;
+        view.exec();
       }
-      else if (key_pressed == sf::Keyboard::Key::A)
+      else if (key_pressed == sf::Keyboard::Key::S)
       {
-        //m_game.add_action(create_press_attack_action());
+        game_view view;
+        view.exec();
+      }
+      else if (key_pressed == sf::Keyboard::Key::Q)
+      {
+        m_window.close();
+        return true;
       }
       else if (key_pressed == sf::Keyboard::Key::F3)
       {
@@ -175,18 +183,135 @@ void menu_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setPosition(100, 100);
-  rectangle.setSize(sf::Vector2f(400, 200));
-  rectangle.setFillColor(sf::Color::Black);
-  rectangle.setOutlineThickness(1);
-  rectangle.setOutlineColor(sf::Color::White);
-  m_window.draw(rectangle);
+  show_panel_1(*this);
+  show_panel_2(*this);
+  show_panel_3(*this);
+  show_panel_4(*this);
 
   // Display all shapes
   m_window.display();
 
+}
+
+void show_panel_1(menu_view& v)
+{
+  const int height{static_cast<int>(v.get_window().getSize().y)};
+  const int width{static_cast<int>(v.get_window().getSize().x)};
+  const int margin{v.get_margin_size()};
+
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      width - (2 * margin),
+      (height  - (5 * margin)) / 4
+    )
+  );
+  rectangle.setFillColor(sf::Color::Black);
+  rectangle.setOutlineThickness(1);
+  rectangle.setOutlineColor(sf::Color::White);
+  rectangle.setPosition(margin, margin);
+  v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(v.get_resources().get_font());
+  text.setString(" knokchess ");
+  text.setCharacterSize((height  - (5 * margin)) / 4);
+  text.setOrigin(0.0, 0.0);
+  text.setFillColor(sf::Color::Red);
+  v.get_window().draw(text);
+}
+
+void show_panel_2(menu_view& v)
+{
+  const int height{static_cast<int>(v.get_window().getSize().y)};
+  const int width{static_cast<int>(v.get_window().getSize().x)};
+  const int margin{v.get_margin_size()};
+
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      width - (2 * margin),
+      (height  - (5 * margin)) / 4
+    )
+  );
+  rectangle.setFillColor(sf::Color::Black);
+  rectangle.setOutlineThickness(1);
+  rectangle.setOutlineColor(sf::Color::White);
+  rectangle.setPosition(margin, margin + (1 * height / 4));
+  v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(v.get_resources().get_font());
+  text.setString(" (S)tart ");
+  text.setCharacterSize(((height  - (5 * margin)) / 4) * 8 / 10);
+  text.setOrigin(0.0, 0.0);
+  text.setFillColor(sf::Color::Red);
+  text.setPosition(rectangle.getPosition());
+  v.get_window().draw(text);
+}
+
+void show_panel_3(menu_view& v)
+{
+  const int height{static_cast<int>(v.get_window().getSize().y)};
+  const int width{static_cast<int>(v.get_window().getSize().x)};
+  const int margin{v.get_margin_size()};
+
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      width - (2 * margin),
+      (height  - (5 * margin)) / 4
+    )
+  );
+  rectangle.setFillColor(sf::Color::Black);
+  rectangle.setOutlineThickness(1);
+  rectangle.setOutlineColor(sf::Color::White);
+
+  rectangle.setPosition(margin, margin + (2 * height / 4));
+  v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(v.get_resources().get_font());
+  text.setString(" (O)ptions ");
+  text.setCharacterSize(((height  - (5 * margin)) / 4) * 8 / 10);
+  text.setOrigin(0.0, 0.0);
+  text.setFillColor(sf::Color::Red);
+  text.setPosition(rectangle.getPosition());
+  v.get_window().draw(text);
+}
+
+void show_panel_4(menu_view& v)
+{
+  const int height{static_cast<int>(v.get_window().getSize().y)};
+  const int width{static_cast<int>(v.get_window().getSize().x)};
+  const int margin{v.get_margin_size()};
+
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      width - (2 * margin),
+      (height  - (5 * margin)) / 4
+    )
+  );
+  rectangle.setFillColor(sf::Color::Black);
+  rectangle.setOutlineThickness(1);
+  rectangle.setOutlineColor(sf::Color::White);
+
+  rectangle.setPosition(margin, margin + (3 * height / 4));
+  v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(v.get_resources().get_font());
+  text.setString(" (Q)uit ");
+  text.setCharacterSize(((height  - (5 * margin)) / 4) * 8 / 10);
+  text.setOrigin(0.0, 0.0);
+  text.setFillColor(sf::Color::Red);
+  text.setPosition(rectangle.getPosition());
+  v.get_window().draw(text);
 }
 
 #endif // LOGIC_ONLY
