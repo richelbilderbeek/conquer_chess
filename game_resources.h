@@ -5,17 +5,18 @@
 
 #include "chess_color.h"
 #include "piece_type.h"
+#include "textures.h"
 
 #include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
 
+/// The raw game resources
 class game_resources
 {
 public:
   game_resources();
 
-  /// Get a picture of a black/dark square
-  sf::Texture& get_black_square() noexcept { return m_black_square; }
+  /// Get a chess board square
+  sf::Texture& get_square(const chess_color color) noexcept;
 
   /// Get texture of a piece
   sf::Texture& get_piece(
@@ -29,9 +30,6 @@ public:
     const piece_type type
   );
 
-  /// Get a picture of a white/light square
-  sf::Texture& get_white_square() noexcept { return m_white_square; }
-
   /// Get a font
   sf::Font& get_font() noexcept {return m_font; }
 
@@ -43,33 +41,11 @@ public:
     const piece_type type
   );
 
+  textures& get_textures() noexcept {return m_textures; }
+
 private:
-  sf::Texture m_black_bishop;
-  sf::Texture m_black_bishop_portrait;
-  sf::Texture m_black_king;
-  sf::Texture m_black_king_portrait;
-  sf::Texture m_black_knight;
-  sf::Texture m_black_knight_portrait;
-  sf::Texture m_black_pawn;
-  sf::Texture m_black_pawn_portrait;
-  sf::Texture m_black_queen;
-  sf::Texture m_black_queen_portrait;
-  sf::Texture m_black_rook;
-  sf::Texture m_black_rook_portrait;
-  sf::Texture m_black_square;
-  sf::Texture m_white_bishop;
-  sf::Texture m_white_bishop_portrait;
-  sf::Texture m_white_king;
-  sf::Texture m_white_king_portrait;
-  sf::Texture m_white_knight;
-  sf::Texture m_white_knight_portrait;
-  sf::Texture m_white_queen;
-  sf::Texture m_white_queen_portrait;
-  sf::Texture m_white_pawn;
-  sf::Texture m_white_pawn_portrait;
-  sf::Texture m_white_rook;
-  sf::Texture m_white_rook_portrait;
-  sf::Texture m_white_square;
+  textures m_textures;
+
   sf::Font m_font;
   sf::Music m_ninja_gods;
 
@@ -87,6 +63,12 @@ private:
   sf::SoundBuffer m_moving_forward_buffer;
   sf::SoundBuffer m_to_rule_is_to_act_buffer;
 };
+
+/// Get a picture of a black/dark square
+sf::Texture& get_black_square(game_resources& r) noexcept;
+
+/// Get a picture of a white/light square
+sf::Texture& get_white_square(game_resources& r) noexcept;
 
 /// Test the game resources
 void test_game_resources();

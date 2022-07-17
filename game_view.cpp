@@ -37,7 +37,7 @@ sf::RectangleShape create_black_square(game_view& view)
 
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  black_square.setTexture(&view.get_game_resources().get_black_square());
+  black_square.setTexture(&view.get_game_resources().get_square(chess_color::black));
   black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   return black_square;
 }
@@ -51,7 +51,7 @@ sf::RectangleShape create_white_square(game_view& view)
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  white_square.setTexture(&view.get_game_resources().get_white_square());
+  white_square.setTexture(&view.get_game_resources().get_square(chess_color::white));
   white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   return white_square;
 }

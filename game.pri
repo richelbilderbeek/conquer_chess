@@ -14,7 +14,8 @@ HEADERS += \
     $$PWD/piece_action_type.h \
     $$PWD/piece_type.h \
     $$PWD/screen_coordinat.h \
-    $$PWD/screen_rect.h
+    $$PWD/screen_rect.h \
+    $$PWD/textures.h
 
 
 SOURCES += \
@@ -32,7 +33,8 @@ SOURCES += \
     $$PWD/piece_action_type.cpp \
     $$PWD/piece_type.cpp \
     $$PWD/screen_coordinat.cpp \
-    $$PWD/screen_rect.cpp
+    $$PWD/screen_rect.cpp \
+    $$PWD/textures.cpp
 
 RESOURCES += \
     $$PWD/game_resources.qrc
