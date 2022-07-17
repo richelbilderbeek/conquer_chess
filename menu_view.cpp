@@ -124,27 +124,9 @@ bool menu_view::process_events()
         view.exec();
       }
     }
-    if (event.type == sf::Event::MouseMoved)
+    if (event.type == sf::Event::MouseButtonPressed)
     {
       /*
-      const auto mouse_screen_pos{
-        screen_coordinat(event.mouseMove.x, event.mouseMove.y)
-      };
-      const auto mouse_game_pos{
-        convert_to_game_coordinat(
-          mouse_screen_pos,
-          m_game.get_layout()
-        )
-      };
-      m_game.add_action(create_mouse_move_action(mouse_game_pos));
-      */
-    }
-    else if (event.type == sf::Event::MouseButtonPressed)
-    {
-      /*
-      const auto mouse_screen_pos{
-        screen_coordinat(event.mouseButton.x, event.mouseButton.y)
-      };
       if (event.mouseButton.button == sf::Mouse::Left)
       {
         m_game.add_action(
@@ -156,26 +138,10 @@ bool menu_view::process_events()
           )
         );
       }
-      else if (event.mouseButton.button == sf::Mouse::Right)
-      {
-        m_game.add_action(
-          create_press_rmb_action(
-            convert_to_game_coordinat(
-              mouse_screen_pos,
-              m_game.get_layout()
-            )
-          )
-        );
-      }
       */
     }
-    else if (event.type == sf::Event::KeyReleased)
-    {
-      // Maybe a player input?
-      // Nothing yet
-    }
   }
-  return false; // if no events proceed with tick
+  return false; // Do not close the window :-)
 }
 
 void menu_view::show()
