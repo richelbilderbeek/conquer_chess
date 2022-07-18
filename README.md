@@ -1,4 +1,4 @@
-# ConquerChess: Battle for Liberty
+# Conquer Chess: Battle for Liberty
 
 Branch     |[![GitHub Actions logo](images/GitHubActions.png)](https://github.com/richelbilderbeek/knokchess/actions) |[![Codecov logo](images/Codecov.png)](https://www.codecov.io)
 -----------|----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -9,21 +9,7 @@ Chess variant
 
 ## FAQ
 
-### What is ConquerChess?
-
-ConquerChess is a real-time strategy game
-that is a mix between chess and some classic real-time strategy games.
-
-### Why the name 'ConquerChess: Battle for Liberty'?
-
-The name 'ConquerChess: Battle for Liberty' is a mix 
-of classic real-time strategy games:
-
- * Command and Conquer
- * Dune 2: Battle for Arrakis
- * Starcraft 2: Wings of Liberty
-
-Mix those names and you'll get 'ConquerChess: Battle for Liberty'.
+See [FAQ](FAQ.md)
 
 ## Acknowledgments
 
