@@ -9,6 +9,8 @@ HEADERS += \
     $$PWD/game_resources.h \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
+    $$PWD/layout.h \
+    $$PWD/menu_view_layout.h \
     $$PWD/piece.h \
     $$PWD/piece_action.h \
     $$PWD/piece_action_type.h \
@@ -31,6 +33,8 @@ SOURCES += \
     $$PWD/game_resources.cpp \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \
+    $$PWD/layout.cpp \
+    $$PWD/menu_view_layout.cpp \
     $$PWD/piece.cpp \
     $$PWD/piece_action.cpp \
     $$PWD/piece_action_type.cpp \

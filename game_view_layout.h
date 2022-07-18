@@ -4,11 +4,10 @@
 #include "screen_rect.h"
 #include "game_coordinat.h"
 #include "screen_coordinat.h"
+#include "layout.h"
 
 #include <vector>
 
-/// Get the default margin width/size, in pixels
-constexpr int get_default_margin_width() noexcept { return 10; }
 
 /// The layout of the game view
 ///   x          x x             x x          x

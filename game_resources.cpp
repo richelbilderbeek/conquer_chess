@@ -67,6 +67,16 @@ sf::Texture& game_resources::get_square(const chess_color color) noexcept
   return m_textures.get_square(color);
 }
 
+sf::Texture& game_resources::get_subtitle() noexcept
+{
+  return m_textures.get_subtitle();
+}
+
+sf::Texture& game_resources::get_title() noexcept
+{
+  return m_textures.get_title();
+}
+
 void game_resources::play(
   const sound_effect& effect
 )

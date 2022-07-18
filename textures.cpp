@@ -295,6 +295,29 @@ textures::textures()
       throw std::runtime_error(msg.toStdString());
     }
   }
+
+  // Load the white/light square
+  {
+    const QString filename{"title.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_title.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Load the white/light square
+  {
+    const QString filename{"subtitle.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_subtitle.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
 }
 
 sf::Texture& get_black_square(textures& t) noexcept

@@ -8,7 +8,6 @@
 #include <iostream>
 
 menu_view::menu_view()
-  : m_margin_size{10}
 {
 
 }
@@ -49,16 +48,11 @@ bool menu_view::process_events()
       // From https://www.sfml-dev.org/tutorials/2.2/graphics-view.php#showing-more-when-the-window-is-resized
       const sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
       m_window.setView(sf::View(visibleArea));
-      /*
-      resize_window(
-        m_game,
-        screen_coordinat(
-          static_cast<int>(event.size.width),
-          static_cast<int>(event.size.height)
-        ),
+
+      m_layout = menu_view_layout(
+        screen_coordinat(visibleArea.width, visibleArea.height),
         get_default_margin_width()
       );
-      */
     }
     else if (event.type == sf::Event::Closed)
     {
@@ -149,135 +143,83 @@ void menu_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  show_panel_1(*this);
-  show_panel_2(*this);
-  show_panel_3(*this);
-  show_panel_4(*this);
+  show_panels(*this);
+
+  show_title_panel(*this);
+  show_subtitle_panel(*this);
+  //show_start_panel(*this);
+  //show_options_panel(*this);
+  //show_about_panel(*this);
+  //show_quit_panel(*this);
 
   // Display all shapes
   m_window.display();
 
 }
 
-void show_panel_1(menu_view& v)
+void show_panels(menu_view& v)
 {
-  const int height{static_cast<int>(v.get_window().getSize().y)};
-  const int width{static_cast<int>(v.get_window().getSize().x)};
-  const int margin{v.get_margin_size()};
-
-  sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      width - (2 * margin),
-      (height  - (5 * margin)) / 4
-    )
-  );
-  rectangle.setFillColor(sf::Color::Black);
-  rectangle.setOutlineThickness(1);
-  rectangle.setOutlineColor(sf::Color::White);
-  rectangle.setPosition(margin, margin);
-  v.get_window().draw(rectangle);
-
-  sf::Text text;
-  text.setFont(v.get_resources().get_font());
-  text.setString(" Conquer Chess ");
-  text.setCharacterSize((height  - (5 * margin)) / 4);
-  text.setOrigin(0.0, 0.0);
-  text.setFillColor(sf::Color::Red);
-  v.get_window().draw(text);
+  for (const auto& screen_rect: get_panels(v.get_layout()))
+  {
+    sf::RectangleShape rectangle;
+    rectangle.setOrigin(0.0, 0.0);
+    rectangle.setSize(
+      sf::Vector2f(
+        get_width(screen_rect),
+        get_height(screen_rect)
+      )
+    );
+    rectangle.setFillColor(sf::Color(32, 32, 32));
+    //rectangle.setOutlineThickness(1);
+    //rectangle.setOutlineColor(sf::Color::White);
+    rectangle.setPosition(
+      screen_rect.get_tl().get_x(),
+      screen_rect.get_tl().get_y()
+    );
+    v.get_window().draw(rectangle);
+  }
 }
 
-void show_panel_2(menu_view& v)
+void show_title_panel(menu_view& v)
 {
-  const int height{static_cast<int>(v.get_window().getSize().y)};
-  const int width{static_cast<int>(v.get_window().getSize().x)};
-  const int margin{v.get_margin_size()};
-
+  const auto screen_rect{v.get_layout().get_title()};
   sf::RectangleShape rectangle;
   rectangle.setOrigin(0.0, 0.0);
   rectangle.setSize(
     sf::Vector2f(
-      width - (2 * margin),
-      (height  - (5 * margin)) / 4
+      get_width(screen_rect),
+      get_height(screen_rect)
     )
   );
-  rectangle.setFillColor(sf::Color::Black);
-  rectangle.setOutlineThickness(1);
-  rectangle.setOutlineColor(sf::Color::White);
-  rectangle.setPosition(margin, margin + (1 * height / 4));
+  rectangle.setTexture(
+    &v.get_resources().get_title()
+  );
+  rectangle.setPosition(
+    screen_rect.get_tl().get_x(),
+    screen_rect.get_tl().get_y()
+  );
   v.get_window().draw(rectangle);
-
-  sf::Text text;
-  text.setFont(v.get_resources().get_font());
-  text.setString(" (S)tart ");
-  text.setCharacterSize(((height  - (5 * margin)) / 4) * 8 / 10);
-  text.setOrigin(0.0, 0.0);
-  text.setFillColor(sf::Color::Red);
-  text.setPosition(rectangle.getPosition());
-  v.get_window().draw(text);
 }
 
-void show_panel_3(menu_view& v)
+void show_subtitle_panel(menu_view& v)
 {
-  const int height{static_cast<int>(v.get_window().getSize().y)};
-  const int width{static_cast<int>(v.get_window().getSize().x)};
-  const int margin{v.get_margin_size()};
-
+  const auto screen_rect{v.get_layout().get_subtitle()};
   sf::RectangleShape rectangle;
   rectangle.setOrigin(0.0, 0.0);
   rectangle.setSize(
     sf::Vector2f(
-      width - (2 * margin),
-      (height  - (5 * margin)) / 4
+      get_width(screen_rect),
+      get_height(screen_rect)
     )
   );
-  rectangle.setFillColor(sf::Color::Black);
-  rectangle.setOutlineThickness(1);
-  rectangle.setOutlineColor(sf::Color::White);
-
-  rectangle.setPosition(margin, margin + (2 * height / 4));
-  v.get_window().draw(rectangle);
-
-  sf::Text text;
-  text.setFont(v.get_resources().get_font());
-  text.setString(" (O)ptions ");
-  text.setCharacterSize(((height  - (5 * margin)) / 4) * 8 / 10);
-  text.setOrigin(0.0, 0.0);
-  text.setFillColor(sf::Color::Red);
-  text.setPosition(rectangle.getPosition());
-  v.get_window().draw(text);
-}
-
-void show_panel_4(menu_view& v)
-{
-  const int height{static_cast<int>(v.get_window().getSize().y)};
-  const int width{static_cast<int>(v.get_window().getSize().x)};
-  const int margin{v.get_margin_size()};
-
-  sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      width - (2 * margin),
-      (height  - (5 * margin)) / 4
-    )
+  rectangle.setTexture(
+    &v.get_resources().get_subtitle()
   );
-  rectangle.setFillColor(sf::Color::Black);
-  rectangle.setOutlineThickness(1);
-  rectangle.setOutlineColor(sf::Color::White);
-
-  rectangle.setPosition(margin, margin + (3 * height / 4));
+  rectangle.setPosition(
+    screen_rect.get_tl().get_x(),
+    screen_rect.get_tl().get_y()
+  );
   v.get_window().draw(rectangle);
-
-  sf::Text text;
-  text.setFont(v.get_resources().get_font());
-  text.setString(" (Q)uit ");
-  text.setCharacterSize(((height  - (5 * margin)) / 4) * 8 / 10);
-  text.setOrigin(0.0, 0.0);
-  text.setFillColor(sf::Color::Red);
-  text.setPosition(rectangle.getPosition());
-  v.get_window().draw(text);
 }
 
 #endif // LOGIC_ONLY

@@ -30,6 +30,9 @@ public:
     const piece_type type
   );
 
+  sf::Texture& get_subtitle() noexcept;
+  sf::Texture& get_title() noexcept;
+
   /// Get a font
   sf::Font& get_font() noexcept {return m_font; }
 
