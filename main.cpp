@@ -3,8 +3,9 @@
 #include "game.h"
 #include "game_resources.h"
 #include "game_view.h"
-#include "menu_view.h"
 #include "game_view_layout.h"
+#include "menu_view.h"
+#include "menu_view_layout.h"
 #include "options_view_layout.h"
 #include "screen_coordinat.h"
 
