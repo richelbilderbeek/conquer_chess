@@ -1,4 +1,4 @@
-# knokchess
+# ConquerChess: Battle of Liberty
 
 Branch     |[![GitHub Actions logo](images/GitHubActions.png)](https://github.com/richelbilderbeek/knokchess/actions) |[![Codecov logo](images/Codecov.png)](https://www.codecov.io)
 -----------|----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
