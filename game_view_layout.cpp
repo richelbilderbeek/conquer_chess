@@ -64,13 +64,18 @@ game_view_layout::game_view_layout(
   assert(get_width(m_board) == get_height(m_board));
 
   // Panel 2
-  m_tl_units_2 = screen_coordinat(x5, y1);
-  m_tl_controls_2 = screen_coordinat(x5, y3);
-  m_tl_debug_2 = screen_coordinat(x5, y5);
-
-  m_br_units_2 = screen_coordinat(x6, y2);
-  m_br_controls_2 = screen_coordinat(x6, y4);
-  m_br_debug_2 = screen_coordinat(x6, y6);
+  m_units_2 = screen_rect(
+    screen_coordinat(x5, y1),
+    screen_coordinat(x6, y2)
+  );
+  m_controls_2 = screen_rect(
+    screen_coordinat(x5, y3),
+    screen_coordinat(x6, y4)
+  );
+  m_debug_2 = screen_rect(
+    screen_coordinat(x5, y5),
+    screen_coordinat(x6, y6)
+  );
 
   assert(get_board_width(*this) == get_board_height(*this));
   assert(get_square_width(*this) == get_square_height(*this));
