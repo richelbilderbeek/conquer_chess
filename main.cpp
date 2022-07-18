@@ -5,6 +5,7 @@
 #include "game_view.h"
 #include "menu_view.h"
 #include "game_view_layout.h"
+#include "options_view_layout.h"
 #include "screen_coordinat.h"
 
 #include <SFML/Graphics.hpp>
@@ -24,6 +25,8 @@ void test()
   test_piece_action();
   test_game();
   test_game_view_layout();
+  test_menu_view_layout();
+  test_options_view_layout();
 #ifndef LOGIC_ONLY
   test_game_resources();
   test_game_view();

@@ -148,6 +148,7 @@ void test_options_view_layout()
   // Minimal tests
   {
     const options_view_layout layout;
+    assert(!get_panels(layout).empty());
   }
   #endif
 }

@@ -88,6 +88,7 @@ void test_menu_view_layout()
   // Minimal tests
   {
     const menu_view_layout layout;
+    assert(!get_panels(layout).empty());
   }
   #endif
 }

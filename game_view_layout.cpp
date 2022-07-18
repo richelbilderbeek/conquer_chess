@@ -185,10 +185,12 @@ void resize(
 void test_game_view_layout()
 {
   #ifndef NDEBUG
-  // Minimal tests
   {
     const game_view_layout layout;
-
+    assert(!get_panels(layout).empty());
+  }
+  {
+    const game_view_layout layout;
     assert(layout.get_board().get_br().get_x() > 0.0);
     assert(layout.get_board().get_br().get_y() > 0.0);
     assert(layout.get_board().get_tl().get_x() > 0.0);
