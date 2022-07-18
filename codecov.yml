@@ -1,0 +1,10 @@
+ignore:
+-"game_view.cpp"
+-"game_view.h"
+-"game_resources.cpp"
+-"game_resources.h"
+-"main.cpp"
+-"menu_view.cpp"
+-"menu_view.h"
+-"options_view.cpp"
+-"options_view.h"
