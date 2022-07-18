@@ -6,6 +6,7 @@
 #include "game_view.h"
 #include "options_view.h"
 
+#include "sfml_helper.h"
 #include <cmath>
 #include <iostream>
 
@@ -160,19 +161,9 @@ void show_about_panel(menu_view& v)
 {
   const auto screen_rect{v.get_layout().get_about()};
   sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      get_width(screen_rect),
-      get_height(screen_rect)
-    )
-  );
+  set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &get_strip(v.get_resources(), chess_color::white)
-  );
-  rectangle.setPosition(
-    screen_rect.get_tl().get_x(),
-    screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
 
@@ -182,16 +173,7 @@ void show_about_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setPosition(
-    get_center(screen_rect).get_x(),
-    get_center(screen_rect).get_y()
-  );
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setOrigin(
-    std::round(text.getLocalBounds().width / 2.0),
-    std::round(text.getLocalBounds().height / 2.0)
-  );
+  set_text(text, screen_rect);
   v.get_window().draw(text);
 }
 
@@ -199,19 +181,9 @@ void show_options_panel(menu_view& v)
 {
   const auto screen_rect{v.get_layout().get_options()};
   sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      get_width(screen_rect),
-      get_height(screen_rect)
-    )
-  );
+  set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &get_strip(v.get_resources(), chess_color::black)
-  );
-  rectangle.setPosition(
-    screen_rect.get_tl().get_x(),
-    screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
 
@@ -221,16 +193,7 @@ void show_options_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setPosition(
-    get_center(screen_rect).get_x(),
-    get_center(screen_rect).get_y()
-  );
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setOrigin(
-    std::round(text.getLocalBounds().width / 2.0),
-    std::round(text.getLocalBounds().height / 2.0)
-  );
+  set_text(text, screen_rect);
   v.get_window().draw(text);
 }
 
@@ -239,20 +202,8 @@ void show_panels(menu_view& v)
   for (const auto& screen_rect: get_panels(v.get_layout()))
   {
     sf::RectangleShape rectangle;
-    rectangle.setOrigin(0.0, 0.0);
-    rectangle.setSize(
-      sf::Vector2f(
-        get_width(screen_rect),
-        get_height(screen_rect)
-      )
-    );
+    set_rect(rectangle, screen_rect);
     rectangle.setFillColor(sf::Color(32, 32, 32));
-    //rectangle.setOutlineThickness(1);
-    //rectangle.setOutlineColor(sf::Color::White);
-    rectangle.setPosition(
-      screen_rect.get_tl().get_x(),
-      screen_rect.get_tl().get_y()
-    );
     v.get_window().draw(rectangle);
   }
 }
@@ -261,19 +212,9 @@ void show_quit_panel(menu_view& v)
 {
   const auto screen_rect{v.get_layout().get_quit()};
   sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      get_width(screen_rect),
-      get_height(screen_rect)
-    )
-  );
+  set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &get_strip(v.get_resources(), chess_color::black)
-  );
-  rectangle.setPosition(
-    screen_rect.get_tl().get_x(),
-    screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
 
@@ -283,16 +224,7 @@ void show_quit_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setPosition(
-    get_center(screen_rect).get_x(),
-    get_center(screen_rect).get_y()
-  );
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setOrigin(
-    text.getLocalBounds().width / 2.0,
-    text.getLocalBounds().height / 2.0
-  );
+  set_text(text, screen_rect);
   v.get_window().draw(text);
 }
 
@@ -300,19 +232,9 @@ void show_start_panel(menu_view& v)
 {
   const auto screen_rect{v.get_layout().get_start()};
   sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      get_width(screen_rect),
-      get_height(screen_rect)
-    )
-  );
+  set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &get_strip(v.get_resources(), chess_color::white)
-  );
-  rectangle.setPosition(
-    screen_rect.get_tl().get_x(),
-    screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
 
@@ -322,16 +244,7 @@ void show_start_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setPosition(
-    get_center(screen_rect).get_x(),
-    get_center(screen_rect).get_y()
-  );
-  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setOrigin(
-    text.getLocalBounds().width / 2.0,
-    text.getLocalBounds().height / 2.0
-  );
+  set_text(text, screen_rect);
   v.get_window().draw(text);
 }
 
@@ -339,19 +252,9 @@ void show_subtitle_panel(menu_view& v)
 {
   const auto screen_rect{v.get_layout().get_subtitle()};
   sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      get_width(screen_rect),
-      get_height(screen_rect)
-    )
-  );
+  set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &get_subtitle(v.get_resources())
-  );
-  rectangle.setPosition(
-    screen_rect.get_tl().get_x(),
-    screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
 }
@@ -360,19 +263,9 @@ void show_title_panel(menu_view& v)
 {
   const auto screen_rect{v.get_layout().get_title()};
   sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setSize(
-    sf::Vector2f(
-      get_width(screen_rect),
-      get_height(screen_rect)
-    )
-  );
+  set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &get_title(v.get_resources())
-  );
-  rectangle.setPosition(
-    screen_rect.get_tl().get_x(),
-    screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
 }

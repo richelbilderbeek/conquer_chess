@@ -11,6 +11,7 @@ HEADERS += \
     $$PWD/helper.h \
     $$PWD/layout.h \
     $$PWD/menu_view_layout.h \
+    $$PWD/options_view_layout.h \
     $$PWD/piece.h \
     $$PWD/piece_action.h \
     $$PWD/piece_action_type.h \
@@ -35,6 +36,7 @@ SOURCES += \
     $$PWD/helper.cpp \
     $$PWD/layout.cpp \
     $$PWD/menu_view_layout.cpp \
+    $$PWD/options_view_layout.cpp \
     $$PWD/piece.cpp \
     $$PWD/piece_action.cpp \
     $$PWD/piece_action_type.cpp \
