@@ -6,6 +6,7 @@
 
 #include "screen_coordinat.h"
 #include "game_view.h"
+#include "sfml_helper.h"
 #include <iostream>
 
 options_view::options_view()
@@ -49,16 +50,10 @@ bool options_view::process_events()
       // From https://www.sfml-dev.org/tutorials/2.2/graphics-view.php#showing-more-when-the-window-is-resized
       const sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
       m_window.setView(sf::View(visibleArea));
-      /*
-      resize_window(
-        m_game,
-        screen_coordinat(
-          static_cast<int>(event.size.width),
-          static_cast<int>(event.size.height)
-        ),
+      m_layout = options_view_layout(
+        screen_coordinat(visibleArea.width, visibleArea.height),
         get_default_margin_width()
       );
-      */
     }
     else if (event.type == sf::Event::Closed)
     {
@@ -106,68 +101,6 @@ bool options_view::process_events()
         // debug
         std::clog << "Debug";
       }
-      else if (key_pressed == sf::Keyboard::Key::F4)
-      {
-        // debug
-        game_view view;
-        view.exec();
-      }
-      else if (key_pressed == sf::Keyboard::Key::F5)
-      {
-        // debug
-        options_view view;
-        view.exec();
-      }
-    }
-    if (event.type == sf::Event::MouseMoved)
-    {
-      /*
-      const auto mouse_screen_pos{
-        screen_coordinat(event.mouseMove.x, event.mouseMove.y)
-      };
-      const auto mouse_game_pos{
-        convert_to_game_coordinat(
-          mouse_screen_pos,
-          m_game.get_layout()
-        )
-      };
-      m_game.add_action(create_mouse_move_action(mouse_game_pos));
-      */
-    }
-    else if (event.type == sf::Event::MouseButtonPressed)
-    {
-      /*
-      const auto mouse_screen_pos{
-        screen_coordinat(event.mouseButton.x, event.mouseButton.y)
-      };
-      if (event.mouseButton.button == sf::Mouse::Left)
-      {
-        m_game.add_action(
-          create_press_lmb_action(
-            convert_to_game_coordinat(
-              mouse_screen_pos,
-              m_game.get_layout()
-            )
-          )
-        );
-      }
-      else if (event.mouseButton.button == sf::Mouse::Right)
-      {
-        m_game.add_action(
-          create_press_rmb_action(
-            convert_to_game_coordinat(
-              mouse_screen_pos,
-              m_game.get_layout()
-            )
-          )
-        );
-      }
-      */
-    }
-    else if (event.type == sf::Event::KeyReleased)
-    {
-      // Maybe a player input?
-      // Nothing yet
     }
   }
   return false; // if no events proceed with tick
@@ -178,18 +111,22 @@ void options_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  sf::RectangleShape rectangle;
-  rectangle.setOrigin(0.0, 0.0);
-  rectangle.setPosition(100, 100);
-  rectangle.setSize(sf::Vector2f(400, 200));
-  rectangle.setFillColor(sf::Color::Black);
-  rectangle.setOutlineThickness(2);
-  rectangle.setOutlineColor(sf::Color::White);
-  m_window.draw(rectangle);
+  show_panels(*this);
 
   // Display all shapes
   m_window.display();
 
+}
+
+void show_panels(options_view& v)
+{
+  for (const auto& screen_rect: get_panels(v.get_layout()))
+  {
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 32, 32));
+    v.get_window().draw(rectangle);
+  }
 }
 
 #endif // LOGIC_ONLY
