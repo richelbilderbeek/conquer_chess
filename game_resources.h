@@ -55,11 +55,14 @@ sf::Texture& get_about(game_resources& r) noexcept;
 /// Get a picture of a black/dark square
 sf::Texture& get_black_square(game_resources& r) noexcept;
 
+sf::Font& get_font(game_resources& r) noexcept;
+
 sf::Texture& get_options(game_resources& r) noexcept;
 
 sf::Texture& get_quit(game_resources& r) noexcept;
 
 sf::Texture& get_start(game_resources& r) noexcept;
+sf::Texture& get_strip(game_resources& r, const chess_color c) noexcept;
 sf::Texture& get_subtitle(game_resources& r) noexcept;
 sf::Texture& get_title(game_resources& r) noexcept;
 

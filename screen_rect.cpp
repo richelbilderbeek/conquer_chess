@@ -11,11 +11,19 @@ screen_rect::screen_rect(
 
 }
 
-int get_height(const screen_rect& r)
+screen_coordinat get_center(const screen_rect& r) noexcept
+{
+  return screen_coordinat(
+    (r.get_tl().get_x() + r.get_br().get_x()) / 2,
+    (r.get_tl().get_y() + r.get_br().get_y()) / 2
+  );
+}
+
+int get_height(const screen_rect& r) noexcept
 {
   return r.get_br().get_y() - r.get_tl().get_y();
 }
-int get_width(const screen_rect& r)
+int get_width(const screen_rect& r) noexcept
 {
   return r.get_br().get_x() - r.get_tl().get_x();
 }

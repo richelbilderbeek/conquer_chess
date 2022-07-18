@@ -38,6 +38,9 @@ public:
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
 
+  /// Get a strip of chess board squares
+  sf::Texture& get_strip(const chess_color color) noexcept;
+
   /// Get the subtitle image
   sf::Texture& get_subtitle() noexcept { return m_subtitle; }
 
@@ -47,6 +50,10 @@ public:
 
 private:
 
+
+
+
+  sf::Texture m_about;
   sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;
   sf::Texture m_black_king;
@@ -60,25 +67,23 @@ private:
   sf::Texture m_black_rook;
   sf::Texture m_black_rook_portrait;
   sf::Texture m_black_square;
-
-  sf::Texture m_title;
-  sf::Texture m_subtitle;
-  sf::Texture m_about;
+  sf::Texture m_dark_strip;
+  sf::Texture m_light_strip;
   sf::Texture m_options;
-  sf::Texture m_start;
   sf::Texture m_quit;
-
-
+  sf::Texture m_start;
+  sf::Texture m_subtitle;
+  sf::Texture m_title;
   sf::Texture m_white_bishop;
   sf::Texture m_white_bishop_portrait;
   sf::Texture m_white_king;
   sf::Texture m_white_king_portrait;
   sf::Texture m_white_knight;
   sf::Texture m_white_knight_portrait;
-  sf::Texture m_white_queen;
-  sf::Texture m_white_queen_portrait;
   sf::Texture m_white_pawn;
   sf::Texture m_white_pawn_portrait;
+  sf::Texture m_white_queen;
+  sf::Texture m_white_queen_portrait;
   sf::Texture m_white_rook;
   sf::Texture m_white_rook_portrait;
   sf::Texture m_white_square;

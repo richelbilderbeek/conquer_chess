@@ -5,6 +5,8 @@
 #include "screen_coordinat.h"
 #include "game_view.h"
 #include "options_view.h"
+
+#include <cmath>
 #include <iostream>
 
 menu_view::menu_view()
@@ -27,9 +29,6 @@ void menu_view::exec()
     // Process user input and play game until instructed to exit
     const bool must_quit{process_events()};
     if (must_quit) return;
-
-    // Do a tick
-    //m_game.tick();
 
     // Show the new state
     show();
@@ -169,13 +168,31 @@ void show_about_panel(menu_view& v)
     )
   );
   rectangle.setTexture(
-    &get_about(v.get_resources())
+    &get_strip(v.get_resources(), chess_color::white)
   );
   rectangle.setPosition(
     screen_rect.get_tl().get_x(),
     screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(get_font(v.get_resources()));
+  text.setString("About");
+  text.setStyle(sf::Text::Bold);
+  text.setCharacterSize(64);
+  text.setFillColor(sf::Color::Black);
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setPosition(
+    get_center(screen_rect).get_x(),
+    get_center(screen_rect).get_y()
+  );
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setOrigin(
+    std::round(text.getLocalBounds().width / 2.0),
+    std::round(text.getLocalBounds().height / 2.0)
+  );
+  v.get_window().draw(text);
 }
 
 void show_options_panel(menu_view& v)
@@ -190,13 +207,31 @@ void show_options_panel(menu_view& v)
     )
   );
   rectangle.setTexture(
-    &get_options(v.get_resources())
+    &get_strip(v.get_resources(), chess_color::black)
   );
   rectangle.setPosition(
     screen_rect.get_tl().get_x(),
     screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(get_font(v.get_resources()));
+  text.setString("Options");
+  text.setStyle(sf::Text::Bold);
+  text.setCharacterSize(64);
+  text.setFillColor(sf::Color::Black);
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setPosition(
+    get_center(screen_rect).get_x(),
+    get_center(screen_rect).get_y()
+  );
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setOrigin(
+    std::round(text.getLocalBounds().width / 2.0),
+    std::round(text.getLocalBounds().height / 2.0)
+  );
+  v.get_window().draw(text);
 }
 
 void show_panels(menu_view& v)
@@ -234,13 +269,31 @@ void show_quit_panel(menu_view& v)
     )
   );
   rectangle.setTexture(
-    &get_quit(v.get_resources())
+    &get_strip(v.get_resources(), chess_color::black)
   );
   rectangle.setPosition(
     screen_rect.get_tl().get_x(),
     screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(get_font(v.get_resources()));
+  text.setString("Quit");
+  text.setStyle(sf::Text::Bold);
+  text.setCharacterSize(64);
+  text.setFillColor(sf::Color::Black);
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setPosition(
+    get_center(screen_rect).get_x(),
+    get_center(screen_rect).get_y()
+  );
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setOrigin(
+    text.getLocalBounds().width / 2.0,
+    text.getLocalBounds().height / 2.0
+  );
+  v.get_window().draw(text);
 }
 
 void show_start_panel(menu_view& v)
@@ -255,13 +308,31 @@ void show_start_panel(menu_view& v)
     )
   );
   rectangle.setTexture(
-    &get_start(v.get_resources())
+    &get_strip(v.get_resources(), chess_color::white)
   );
   rectangle.setPosition(
     screen_rect.get_tl().get_x(),
     screen_rect.get_tl().get_y()
   );
   v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setFont(get_font(v.get_resources()));
+  text.setString("Start");
+  text.setStyle(sf::Text::Bold);
+  text.setCharacterSize(64);
+  text.setFillColor(sf::Color::Black);
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setPosition(
+    get_center(screen_rect).get_x(),
+    get_center(screen_rect).get_y()
+  );
+  // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
+  text.setOrigin(
+    text.getLocalBounds().width / 2.0,
+    text.getLocalBounds().height / 2.0
+  );
+  v.get_window().draw(text);
 }
 
 void show_subtitle_panel(menu_view& v)

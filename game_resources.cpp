@@ -46,6 +46,11 @@ sf::Texture& get_black_square(game_resources& r) noexcept
   return r.get_square(chess_color::black);
 }
 
+sf::Font& get_font(game_resources& r) noexcept
+{
+  return r.get_font();
+}
+
 sf::Texture& get_options(game_resources& r) noexcept
 {
   return r.get_textures().get_options();
@@ -85,6 +90,11 @@ sf::Texture& get_white_square(game_resources& r) noexcept
 sf::Texture& game_resources::get_square(const chess_color color) noexcept
 {
   return m_textures.get_square(color);
+}
+
+sf::Texture& get_strip(game_resources& r, const chess_color c) noexcept
+{
+  return r.get_textures().get_strip(c);
 }
 
 sf::Texture& get_subtitle(game_resources& r) noexcept

@@ -362,6 +362,28 @@ textures::textures()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Light strip
+  {
+    const QString filename{"light_strip.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_light_strip.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Dark strip
+  {
+    const QString filename{"dark_strip.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_dark_strip.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
 }
 
 sf::Texture& get_black_square(textures& t) noexcept
@@ -438,6 +460,16 @@ sf::Texture& textures::get_square(const chess_color color) noexcept
     case chess_color::black: return m_black_square;
     default:
     case chess_color::white: return m_white_square;
+  }
+}
+
+sf::Texture& textures::get_strip(const chess_color color) noexcept
+{
+  switch (color)
+  {
+    case chess_color::black: return m_dark_strip;
+    default:
+    case chess_color::white: return m_light_strip;
   }
 }
 

@@ -23,8 +23,9 @@ private:
 };
 
 
-int get_height(const screen_rect& r);
-int get_width(const screen_rect& r);
+screen_coordinat get_center(const screen_rect& r) noexcept;
+int get_height(const screen_rect& r) noexcept;
+int get_width(const screen_rect& r) noexcept;
 
 screen_rect& operator+=(screen_rect& rect, const screen_coordinat& delta) noexcept;
 

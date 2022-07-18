@@ -52,6 +52,7 @@ void show_subtitle_panel(menu_view& v);
 void show_start_panel(menu_view& v);
 void show_title_panel(menu_view& v);
 
+
 #endif // LOGIC_ONLY
 
 #endif // MENU_VIEW_H
