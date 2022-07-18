@@ -36,8 +36,14 @@ private:
   void show();
 };
 
+/// Show the bottom part
+void show_bottom(options_view& v);
+
 /// Show all the layout panels
 void show_panels(options_view& v);
+
+/// Show the top part
+void show_top(options_view& v);
 
 #endif // LOGIC_ONLY
 

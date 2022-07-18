@@ -30,12 +30,8 @@ void options_view::exec()
     const bool must_quit{process_events()};
     if (must_quit) return;
 
-    // Do a tick
-    //m_game.tick();
-
-    // Show the new state
+    // Show the current options on-screen
     show();
-
   }
 }
 
@@ -113,10 +109,67 @@ void options_view::show()
 
   show_panels(*this);
 
+  show_top(*this);
+  show_bottom(*this);
+
   // Display all shapes
   m_window.display();
 
 }
+
+void show_top(options_view& v)
+{
+  const auto& layout = v.get_layout();
+  // game speed label
+  {
+    const auto& screen_rect = layout.get_game_speed_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(132, 32, 32));
+    v.get_window().draw(rectangle);
+  }
+  // game speed value
+  {
+    const auto& screen_rect = layout.get_game_speed_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 132, 32));
+    v.get_window().draw(rectangle);
+  }
+  // music volume label
+  {
+    const auto& screen_rect = layout.get_music_volume_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 32, 132));
+    v.get_window().draw(rectangle);
+  }
+  // music volume value
+  {
+    const auto& screen_rect = layout.get_music_volume_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(232, 32, 32));
+    v.get_window().draw(rectangle);
+  }
+  // starting pos label
+  {
+    const auto& screen_rect = layout.get_starting_pos_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 232, 32));
+    v.get_window().draw(rectangle);
+  }
+  // starting pos value
+  {
+    const auto& screen_rect = layout.get_starting_pos_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 32, 232));
+    v.get_window().draw(rectangle);
+  }
+}
+
 
 void show_panels(options_view& v)
 {
@@ -125,6 +178,75 @@ void show_panels(options_view& v)
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
     rectangle.setFillColor(sf::Color(32, 32, 32));
+    v.get_window().draw(rectangle);
+  }
+}
+
+void show_bottom(options_view& v)
+{
+  const auto& layout = v.get_layout();
+  {
+    const auto& screen_rect = layout.get_player_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 32, 32));
+    v.get_window().draw(rectangle);
+  }
+  {
+    const auto& screen_rect = layout.get_color_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(132, 32, 32));
+    v.get_window().draw(rectangle);
+  }
+  {
+    const auto& screen_rect = layout.get_controls_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 132, 32));
+    v.get_window().draw(rectangle);
+  }
+  {
+    const auto& screen_rect = layout.get_left_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 32, 132));
+    v.get_window().draw(rectangle);
+  }
+  {
+    const auto& screen_rect = layout.get_right_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(232, 32, 32));
+    v.get_window().draw(rectangle);
+  }
+
+  {
+    const auto& screen_rect = layout.get_left_color_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 232, 32));
+    v.get_window().draw(rectangle);
+  }
+  {
+    const auto& screen_rect = layout.get_right_color_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(32, 32, 232));
+    v.get_window().draw(rectangle);
+  }
+  {
+    const auto& screen_rect = layout.get_left_controls_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(232, 232, 232));
+    v.get_window().draw(rectangle);
+  }
+  {
+    const auto& screen_rect = layout.get_right_controls_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setFillColor(sf::Color(132, 132, 123));
     v.get_window().draw(rectangle);
   }
 }
