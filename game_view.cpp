@@ -6,6 +6,7 @@
 #include "game_view_layout.h"
 #include "game_resources.h"
 #include "screen_coordinat.h"
+#include "sfml_helper.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 
@@ -279,8 +280,8 @@ void show_controls_1(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_tl_controls_1().get_x(),
-    layout.get_tl_controls_1().get_y()
+    layout.get_controls_1().get_tl().get_x(),
+    layout.get_controls_1().get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -410,15 +411,7 @@ void show_layout(game_view& view)
   for (const auto& panel: get_panels(layout))
   {
     sf::RectangleShape rectangle;
-    const auto& tl{panel.get_tl()};
-    rectangle.setOrigin(0.0, 0.0);
-    rectangle.setPosition(tl.get_x(), tl.get_y());
-    rectangle.setSize(
-      sf::Vector2f(
-        get_width(panel),
-        get_height(panel)
-      )
-    );
+    set_rect(rectangle, panel);
     rectangle.setFillColor(sf::Color::Black);
     rectangle.setOutlineThickness(1);
     rectangle.setOutlineColor(sf::Color::White);

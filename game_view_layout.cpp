@@ -140,13 +140,13 @@ std::vector<screen_rect> get_panels(const game_view_layout& layout)
 {
   return
   {
-    screen_rect(layout.get_board()),
-    screen_rect(layout.get_tl_units_1(), layout.get_br_units_1()),
-    screen_rect(layout.get_tl_controls_1(), layout.get_br_controls_1()),
-    screen_rect(layout.get_tl_debug_1(), layout.get_br_debug_1()),
-    screen_rect(layout.get_tl_units_2(), layout.get_br_units_2()),
-    screen_rect(layout.get_tl_controls_2(), layout.get_br_controls_2()),
-    screen_rect(layout.get_tl_debug_2(), layout.get_br_debug_2())
+    layout.get_board(),
+    layout.get_units_1(),
+    layout.get_controls_1(),
+    layout.get_debug_1(),
+    layout.get_units_2(),
+    layout.get_controls_2(),
+    layout.get_debug_2()
   };
 }
 
@@ -228,10 +228,10 @@ void test_game_view_layout()
     assert(layout.get_br_units_1().get_x() == x2);
     assert(layout.get_br_units_1().get_y() == y2);
 
-    assert(layout.get_tl_controls_1().get_x() == x1);
-    assert(layout.get_tl_controls_1().get_y() == y3);
-    assert(layout.get_br_controls_1().get_x() == x2);
-    assert(layout.get_br_controls_1().get_y() == y4);
+    assert(layout.get_controls_1().get_tl().get_x() == x1);
+    assert(layout.get_controls_1().get_tl().get_y() == y3);
+    assert(layout.get_controls_1().get_br().get_x() == x2);
+    assert(layout.get_controls_1().get_br().get_y() == y4);
 
     assert(layout.get_tl_debug_1().get_x() == x1);
     assert(layout.get_tl_debug_1().get_y() == y5);
