@@ -125,47 +125,86 @@ void show_top(options_view& v)
     const auto& screen_rect = layout.get_game_speed_label();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(132, 32, 32));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Game speed");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
   // game speed value
   {
     const auto& screen_rect = layout.get_game_speed_value();
     sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 132, 32));
     v.get_window().draw(rectangle);
   }
   // music volume label
   {
     const auto& screen_rect = layout.get_music_volume_label();
     sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 32, 132));
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Music volume");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
   // music volume value
   {
     const auto& screen_rect = layout.get_music_volume_value();
     sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(232, 32, 32));
     v.get_window().draw(rectangle);
   }
   // starting pos label
   {
     const auto& screen_rect = layout.get_starting_pos_label();
     sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 232, 32));
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Starting position");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
   // starting pos value
   {
     const auto& screen_rect = layout.get_starting_pos_value();
     sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 32, 232));
     v.get_window().draw(rectangle);
   }
 }
@@ -188,65 +227,128 @@ void show_bottom(options_view& v)
   {
     const auto& screen_rect = layout.get_player_label();
     sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 32, 32));
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Player");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
   {
     const auto& screen_rect = layout.get_color_label();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(132, 32, 32));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Color");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
   {
     const auto& screen_rect = layout.get_controls_label();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 132, 32));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Controls");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
   {
     const auto& screen_rect = layout.get_left_label();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 32, 132));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Left");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
   {
     const auto& screen_rect = layout.get_right_label();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(232, 32, 32));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    text.setFont(get_font(v.get_resources()));
+    text.setString("Right");
+    text.setStyle(sf::Text::Bold);
+    text.setCharacterSize(64);
+    text.setFillColor(sf::Color::Black);
+    set_text(text, screen_rect);
+    v.get_window().draw(text);
   }
 
   {
     const auto& screen_rect = layout.get_left_color_value();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 232, 32));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     v.get_window().draw(rectangle);
   }
   {
     const auto& screen_rect = layout.get_right_color_value();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 32, 232));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
     v.get_window().draw(rectangle);
   }
   {
     const auto& screen_rect = layout.get_left_controls_value();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(232, 232, 232));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
     v.get_window().draw(rectangle);
   }
   {
     const auto& screen_rect = layout.get_right_controls_value();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(132, 132, 123));
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
     v.get_window().draw(rectangle);
   }
 }

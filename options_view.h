@@ -4,6 +4,7 @@
 #ifndef LOGIC_ONLY
 
 #include "options_view_layout.h"
+#include "game_resources.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -17,6 +18,8 @@ public:
 
   const auto& get_layout() const noexcept { return m_layout; }
 
+  auto& get_resources() noexcept { return m_resources; }
+
   const auto& get_window() const noexcept { return m_window; }
 
   auto& get_window() noexcept { return m_window; }
@@ -24,6 +27,8 @@ public:
 private:
 
   options_view_layout m_layout;
+
+  game_resources m_resources;
 
   /// The window to draw to
   sf::RenderWindow m_window;
