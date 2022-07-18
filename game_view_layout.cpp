@@ -88,10 +88,10 @@ game_coordinat convert_to_game_coordinat(
 {
   // How many pixels on the board
   const int screen_on_board_x{
-    coordinat.get_x() - layout.get_tl_board().get_x()
+    coordinat.get_x() - layout.get_board().get_tl().get_x()
   };
   const int screen_on_board_y{
-    coordinat.get_y() - layout.get_tl_board().get_y()
+    coordinat.get_y() - layout.get_board().get_tl().get_y()
   };
   // Fraction of the board
   const double f_x{
@@ -111,8 +111,8 @@ screen_coordinat convert_to_screen_coordinat(
   const game_view_layout& layout
 )
 {
-  const auto tl_board{layout.get_tl_board()};
-  const auto br_board{layout.get_br_board()};
+  const auto tl_board{layout.get_board().get_tl()};
+  const auto br_board{layout.get_board().get_br()};
 
   const double square_width{
     get_square_width(layout)
@@ -136,16 +136,11 @@ int get_board_width(const game_view_layout& layout) noexcept
   return get_width(layout.get_board());
 }
 
-screen_coordinat game_view_layout::get_br_board() const noexcept
-{
-  return m_board.get_br();
-}
-
 std::vector<screen_rect> get_panels(const game_view_layout& layout)
 {
   return
   {
-    screen_rect(layout.get_tl_board(), layout.get_br_board()),
+    screen_rect(layout.get_board()),
     screen_rect(layout.get_tl_units_1(), layout.get_br_units_1()),
     screen_rect(layout.get_tl_controls_1(), layout.get_br_controls_1()),
     screen_rect(layout.get_tl_debug_1(), layout.get_br_debug_1()),
@@ -175,11 +170,6 @@ double get_square_width(const game_view_layout& layout) noexcept
   return static_cast<double>(get_board_width(layout)) / 8.0;
 }
 
-screen_coordinat game_view_layout::get_tl_board() const noexcept
-{
-  return m_board.get_tl();
-}
-
 void resize(
   game_view_layout& g,
   const screen_coordinat& window_size,
@@ -199,10 +189,10 @@ void test_game_view_layout()
   {
     const game_view_layout layout;
 
-    assert(layout.get_br_board().get_x() > 0.0);
-    assert(layout.get_br_board().get_y() > 0.0);
-    assert(layout.get_tl_board().get_x() > 0.0);
-    assert(layout.get_tl_board().get_y() > 0.0);
+    assert(layout.get_board().get_br().get_x() > 0.0);
+    assert(layout.get_board().get_br().get_y() > 0.0);
+    assert(layout.get_board().get_tl().get_x() > 0.0);
+    assert(layout.get_board().get_tl().get_y() > 0.0);
 
     assert(layout.get_br_debug_2().get_x() > 0.0);
     assert(layout.get_br_debug_2().get_y() > 0.0);
@@ -248,10 +238,10 @@ void test_game_view_layout()
     assert(layout.get_br_debug_1().get_x() == x2);
     assert(layout.get_br_debug_1().get_y() == y6);
 
-    assert(layout.get_tl_board().get_x() == x3);
-    assert(layout.get_tl_board().get_y() >= y1);
-    assert(layout.get_br_board().get_x() == x4);
-    assert(layout.get_br_board().get_y() <= y6);
+    assert(layout.get_board().get_tl().get_x() == x3);
+    assert(layout.get_board().get_tl().get_y() >= y1);
+    assert(layout.get_board().get_br().get_x() == x4);
+    assert(layout.get_board().get_br().get_y() <= y6);
 
     assert(layout.get_tl_units_2().get_x() == x5);
     assert(layout.get_tl_units_2().get_y() == y1);
@@ -278,8 +268,8 @@ void test_game_view_layout()
       game_coordinat(0.0, 0.0),
       layout
     );
-    assert(tl_board.get_x() == layout.get_tl_board().get_x());
-    assert(tl_board.get_y() == layout.get_tl_board().get_y());
+    assert(tl_board.get_x() == layout.get_board().get_tl().get_x());
+    assert(tl_board.get_y() == layout.get_board().get_tl().get_y());
   }
   // in-game (8,8) must be bottom-right of screen board
   // (no piece can ever have its top-right at the bottom-right of the board)
@@ -289,8 +279,8 @@ void test_game_view_layout()
       game_coordinat(8.0, 8.0),
       layout
     );
-    assert(br_board.get_x() == layout.get_br_board().get_x());
-    assert(br_board.get_y() == layout.get_br_board().get_y());
+    assert(br_board.get_x() == layout.get_board().get_br().get_x());
+    assert(br_board.get_y() == layout.get_board().get_br().get_y());
   }
   //--------------------------------------------------------------------------
   // screen -> game
@@ -300,11 +290,11 @@ void test_game_view_layout()
   {
     const game_view_layout layout;
     const auto br_board = convert_to_game_coordinat(
-      layout.get_br_board(),
+      layout.get_board().get_br(),
       layout
     );
     const auto tl_board = convert_to_game_coordinat(
-      layout.get_tl_board(),
+      layout.get_board().get_tl(),
       layout
     );
     assert(tl_board.get_x() == 0.0);
