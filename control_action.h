@@ -28,6 +28,8 @@ control_action create_press_rmb_action(const game_coordinat& coordinat);
 control_action create_press_select_action();
 control_action create_press_up_action();
 
+/// Test the 'control_action' class and its free functions
+void test_control_actions();
 
 #endif // CONTROL_ACTION_H
 

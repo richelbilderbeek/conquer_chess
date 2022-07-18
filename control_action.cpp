@@ -1,5 +1,7 @@
 #include "control_action.h"
 
+#include <cassert>
+
 control_action::control_action(
   const control_action_type type,
   const game_coordinat& coordinat
@@ -56,4 +58,22 @@ control_action create_press_select_action()
 control_action create_press_up_action()
 {
   return control_action(control_action_type::press_up, game_coordinat());
+}
+
+void test_control_actions()
+{
+#ifndef NDEBUG
+  {
+    assert(create_mouse_move_action(game_coordinat()).get_type() == control_action_type::mouse_move);
+    assert(create_press_attack_action().get_type() == control_action_type::press_attack);
+    assert(create_press_down_action().get_type() == control_action_type::press_down);
+    assert(create_press_left_action().get_type() == control_action_type::press_left);
+    assert(create_press_lmb_action(game_coordinat()).get_type() == control_action_type::lmb_down);
+    assert(create_press_move_action().get_type() == control_action_type::press_move);
+    assert(create_press_right_action().get_type() == control_action_type::press_right);
+    assert(create_press_rmb_action(game_coordinat()).get_type() == control_action_type::rmb_down);
+    assert(create_press_select_action().get_type() == control_action_type::press_select);
+    assert(create_press_up_action().get_type() == control_action_type::press_up);
+  }
+#endif // DEBUG
 }

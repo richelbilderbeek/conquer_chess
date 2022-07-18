@@ -23,6 +23,7 @@ void test()
   test_chess_color();
   test_game_coordinat();
   test_screen_coordinat();
+  test_control_actions();
   test_piece_action();
   test_game();
   test_game_view_layout();
