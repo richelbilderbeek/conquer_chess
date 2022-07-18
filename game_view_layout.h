@@ -64,16 +64,9 @@ public:
   const auto& get_controls_2() const noexcept { return m_controls_2; }
   const auto& get_debug_2() const noexcept { return m_debug_2; }
 
-  screen_coordinat get_br_controls_2() const noexcept { return m_controls_2.get_br(); }
-  screen_coordinat get_br_debug_1() const noexcept { return m_debug_1.get_br(); }
-  screen_coordinat get_br_debug_2() const noexcept { return m_debug_2.get_br(); }
-  screen_coordinat get_br_units_1() const noexcept { return m_units_1.get_br(); }
-  screen_coordinat get_br_units_2() const noexcept { return m_units_2.get_br(); }
-
   int get_panel_width() const noexcept;
   int get_panel_height() const noexcept;
 
-  //screen_coordinat get_tl_controls_1() const noexcept { return m_controls_1.get_tl(); }
   screen_coordinat get_tl_controls_2() const noexcept { return m_controls_2.get_tl(); }
   screen_coordinat get_tl_debug_1() const noexcept { return m_debug_1.get_tl(); }
   screen_coordinat get_tl_debug_2() const noexcept { return m_debug_2.get_tl(); }

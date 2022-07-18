@@ -194,8 +194,8 @@ void test_game_view_layout()
     assert(layout.get_board().get_tl().get_x() > 0.0);
     assert(layout.get_board().get_tl().get_y() > 0.0);
 
-    assert(layout.get_br_debug_2().get_x() > 0.0);
-    assert(layout.get_br_debug_2().get_y() > 0.0);
+    assert(layout.get_debug_2().get_br().get_x() > 0.0);
+    assert(layout.get_debug_2().get_br().get_y() > 0.0);
     assert(layout.get_tl_units_2().get_x() > 0.0);
     assert(layout.get_tl_units_2().get_y() > 0.0);
     assert(get_board_width(layout) > 0.0);
@@ -225,8 +225,8 @@ void test_game_view_layout()
 
     assert(layout.get_tl_units_1().get_x() == x1);
     assert(layout.get_tl_units_1().get_y() == y1);
-    assert(layout.get_br_units_1().get_x() == x2);
-    assert(layout.get_br_units_1().get_y() == y2);
+    assert(layout.get_units_1().get_br().get_x() == x2);
+    assert(layout.get_units_1().get_br().get_y() == y2);
 
     assert(layout.get_controls_1().get_tl().get_x() == x1);
     assert(layout.get_controls_1().get_tl().get_y() == y3);
@@ -235,8 +235,8 @@ void test_game_view_layout()
 
     assert(layout.get_tl_debug_1().get_x() == x1);
     assert(layout.get_tl_debug_1().get_y() == y5);
-    assert(layout.get_br_debug_1().get_x() == x2);
-    assert(layout.get_br_debug_1().get_y() == y6);
+    assert(layout.get_debug_1().get_br().get_x() == x2);
+    assert(layout.get_debug_1().get_br().get_y() == y6);
 
     assert(layout.get_board().get_tl().get_x() == x3);
     assert(layout.get_board().get_tl().get_y() >= y1);
@@ -245,18 +245,18 @@ void test_game_view_layout()
 
     assert(layout.get_tl_units_2().get_x() == x5);
     assert(layout.get_tl_units_2().get_y() == y1);
-    assert(layout.get_br_units_2().get_x() == x6);
-    assert(layout.get_br_units_2().get_y() == y2);
+    assert(layout.get_units_2().get_br().get_x() == x6);
+    assert(layout.get_units_2().get_br().get_y() == y2);
 
     assert(layout.get_tl_controls_2().get_x() == x5);
     assert(layout.get_tl_controls_2().get_y() == y3);
-    assert(layout.get_br_controls_2().get_x() == x6);
-    assert(layout.get_br_controls_2().get_y() == y4);
+    assert(layout.get_controls_2().get_br().get_x() == x6);
+    assert(layout.get_controls_2().get_br().get_y() == y4);
 
     assert(layout.get_tl_debug_2().get_x() == x5);
     assert(layout.get_tl_debug_2().get_y() == y5);
-    assert(layout.get_br_debug_2().get_x() == x6);
-    assert(layout.get_br_debug_2().get_y() == y6);
+    assert(layout.get_debug_2().get_br().get_x() == x6);
+    assert(layout.get_debug_2().get_br().get_y() == y6);
   }
   //--------------------------------------------------------------------------
   // game -> screen
