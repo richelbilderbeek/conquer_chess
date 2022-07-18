@@ -23,8 +23,8 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/chess_color.cpp \
+    $$PWD/control_action.cpp \
     $$PWD/control_action_type.cpp \
-    $$PWD/controlaction.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_options.cpp \

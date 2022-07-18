@@ -17,8 +17,11 @@
 void test()
 {
 #ifndef NDEBUG
+  test_piece_action_type();
+  test_chess_color();
   test_game_coordinat();
   test_screen_coordinat();
+  test_piece_action();
   test_game();
   test_game_view_layout();
 #ifndef LOGIC_ONLY

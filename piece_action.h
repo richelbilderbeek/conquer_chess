@@ -28,6 +28,11 @@ private:
 /// Describe the 'piece_action' in words, e.g. 'move to (3, 4)'
 std::string describe_action(const piece_action& p);
 
-std::ostream& operator<<(std::ostream& os, const piece_action& p);
+/// Test the 'piece_action' class and its free functions
+void test_piece_action();
+
+std::string to_str(const piece_action& a) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const piece_action& p) noexcept;
 
 #endif // PIECE_ACTION_H
