@@ -59,9 +59,9 @@ public:
   const auto& get_board() const noexcept { return m_board; }
 
   screen_coordinat get_br_board() const noexcept;
-  screen_coordinat get_br_controls_1() const noexcept { return m_br_controls_1; }
+  screen_coordinat get_br_controls_1() const noexcept { return m_controls_1.get_br(); }
   screen_coordinat get_br_controls_2() const noexcept { return m_br_controls_2; }
-  screen_coordinat get_br_debug_1() const noexcept { return m_br_debug_1; }
+  screen_coordinat get_br_debug_1() const noexcept { return m_debug_1.get_br(); }
   screen_coordinat get_br_debug_2() const noexcept { return m_br_debug_2; }
   screen_coordinat get_br_units_1() const noexcept { return m_units_1.get_br(); }
   screen_coordinat get_br_units_2() const noexcept { return m_br_units_2; }
@@ -70,9 +70,9 @@ public:
   int get_panel_height() const noexcept;
 
   screen_coordinat get_tl_board() const noexcept;
-  screen_coordinat get_tl_controls_1() const noexcept { return m_tl_controls_1; }
+  screen_coordinat get_tl_controls_1() const noexcept { return m_controls_1.get_tl(); }
   screen_coordinat get_tl_controls_2() const noexcept { return m_tl_controls_2; }
-  screen_coordinat get_tl_debug_1() const noexcept { return m_tl_debug_1; }
+  screen_coordinat get_tl_debug_1() const noexcept { return m_debug_1.get_tl(); }
   screen_coordinat get_tl_debug_2() const noexcept { return m_tl_debug_2; }
   screen_coordinat get_tl_units_1() const noexcept { return m_units_1.get_tl(); }
   screen_coordinat get_tl_units_2() const noexcept { return m_tl_units_2; }
@@ -83,16 +83,14 @@ private:
 
   screen_rect m_board;
   screen_rect m_units_1;
+  screen_rect m_controls_1;
+  screen_rect m_debug_1;
 
-  screen_coordinat m_br_controls_1;
   screen_coordinat m_br_controls_2;
-  screen_coordinat m_br_debug_1;
   screen_coordinat m_br_debug_2;
   screen_coordinat m_br_units_2;
 
-  screen_coordinat m_tl_controls_1;
   screen_coordinat m_tl_controls_2;
-  screen_coordinat m_tl_debug_1;
   screen_coordinat m_tl_debug_2;
   screen_coordinat m_tl_units_2;
 

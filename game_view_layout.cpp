@@ -40,11 +40,14 @@ game_view_layout::game_view_layout(
     screen_coordinat(x1, y1),
     screen_coordinat(x2, y2)
   );
-  m_tl_controls_1 = screen_coordinat(x1, y3);
-  m_tl_debug_1 = screen_coordinat(x1, y5);
-
-  m_br_controls_1 = screen_coordinat(x2, y4);
-  m_br_debug_1 = screen_coordinat(x2, y6);
+  m_controls_1 = screen_rect(
+    screen_coordinat(x1, y3),
+    screen_coordinat(x2, y4)
+  );
+  m_debug_1 = screen_rect(
+    screen_coordinat(x1, y5),
+    screen_coordinat(x2, y6)
+  );
 
   // Board
   m_board = screen_rect(
