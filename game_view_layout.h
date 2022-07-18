@@ -67,12 +67,6 @@ public:
   int get_panel_width() const noexcept;
   int get_panel_height() const noexcept;
 
-  screen_coordinat get_tl_controls_2() const noexcept { return m_controls_2.get_tl(); }
-  screen_coordinat get_tl_debug_1() const noexcept { return m_debug_1.get_tl(); }
-  screen_coordinat get_tl_debug_2() const noexcept { return m_debug_2.get_tl(); }
-  screen_coordinat get_tl_units_1() const noexcept { return m_units_1.get_tl(); }
-  screen_coordinat get_tl_units_2() const noexcept { return m_units_2.get_tl(); }
-
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
 private:

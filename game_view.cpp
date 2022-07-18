@@ -306,8 +306,8 @@ void show_controls_2(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_tl_controls_2().get_x(),
-    layout.get_tl_controls_2().get_y()
+    layout.get_controls_2().get_tl().get_x(),
+    layout.get_controls_2().get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -340,8 +340,8 @@ void show_debug_1(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_tl_debug_1().get_x(),
-    layout.get_tl_debug_1().get_y()
+    layout.get_debug_1().get_tl().get_x(),
+    layout.get_debug_1().get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -374,8 +374,8 @@ void show_debug_2(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_tl_debug_2().get_x(),
-    layout.get_tl_debug_2().get_y()
+    layout.get_debug_2().get_tl().get_x(),
+    layout.get_debug_2().get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -683,7 +683,7 @@ void show_unit_sprites_1(game_view& view)
   const auto& layout = view.get_game().get_layout();
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
-  screen_coordinat screen_position = layout.get_tl_units_1();
+  screen_coordinat screen_position = layout.get_units_1().get_tl();
   for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::white))
   {
     // sprite of the piece
@@ -732,7 +732,7 @@ void show_unit_sprites_2(game_view& view)
   const auto& layout = view.get_game().get_layout();
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
-  screen_coordinat screen_position = layout.get_tl_units_2();
+  screen_coordinat screen_position = layout.get_units_2().get_tl();
   for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::black))
   {
     // sprite of the piece
