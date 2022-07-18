@@ -10,23 +10,19 @@ menu_view_layout::menu_view_layout(
 {
   const int panel_height{
     static_cast<int>(
-      static_cast<double>(window_size.get_y() - (7 * margin_width)) / 6.0
+      static_cast<double>(window_size.get_y() - (9 * margin_width)) / 8.0
     )
   };
-  const int panel_width{
-    static_cast<int>(
-      window_size.get_x() - (2 * margin_width)
-    )
-  };
+  const int panel_width{500};
 
-  const int x1{margin_width};
-  const int x2{x1 + panel_width};
+  const int x1{(m_window_size.get_x() - (2 * panel_width)) / 2};
+  const int x2{m_window_size.get_x() - x1};
 
   const int y1{margin_width};
-  const int y2{y1 + panel_height};
+  const int y2{y1 + panel_height + margin_width + panel_height};
   const int y3{y2 + margin_width};
   const int y4{y3 + panel_height};
-  const int y5{y4 + margin_width};
+  const int y5{y4 + margin_width + panel_height + margin_width};
   const int y6{y5 + panel_height};
   const int y7{y6 + margin_width};
   const int y8{y7 + panel_height};

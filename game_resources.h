@@ -30,9 +30,6 @@ public:
     const piece_type type
   );
 
-  sf::Texture& get_subtitle() noexcept;
-  sf::Texture& get_title() noexcept;
-
   /// Get a font
   sf::Font& get_font() noexcept {return m_font; }
 
@@ -43,7 +40,7 @@ public:
     const sound_effect& effect
   );
 
-  textures& get_textures() noexcept {return m_textures; }
+  textures& get_textures() noexcept { return m_textures; }
 
 private:
   sound_effects m_sound_effects;
@@ -53,8 +50,18 @@ private:
   sf::Music m_ninja_gods;
 };
 
+sf::Texture& get_about(game_resources& r) noexcept;
+
 /// Get a picture of a black/dark square
 sf::Texture& get_black_square(game_resources& r) noexcept;
+
+sf::Texture& get_options(game_resources& r) noexcept;
+
+sf::Texture& get_quit(game_resources& r) noexcept;
+
+sf::Texture& get_start(game_resources& r) noexcept;
+sf::Texture& get_subtitle(game_resources& r) noexcept;
+sf::Texture& get_title(game_resources& r) noexcept;
 
 /// Get a picture of a white/light square
 sf::Texture& get_white_square(game_resources& r) noexcept;

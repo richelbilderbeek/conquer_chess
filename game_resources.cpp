@@ -36,9 +36,19 @@ game_resources::game_resources()
   m_ninja_gods.setLoop(true);
 }
 
+sf::Texture& get_about(game_resources& r) noexcept
+{
+  return r.get_textures().get_about();
+}
+
 sf::Texture& get_black_square(game_resources& r) noexcept
 {
   return r.get_square(chess_color::black);
+}
+
+sf::Texture& get_options(game_resources& r) noexcept
+{
+  return r.get_textures().get_options();
 }
 
 sf::Texture& game_resources::get_piece(
@@ -57,6 +67,16 @@ sf::Texture& game_resources::get_piece_portrait(
   return m_textures.get_piece_portrait(color, type);
 }
 
+sf::Texture& get_start(game_resources& r) noexcept
+{
+  return r.get_textures().get_start();
+}
+
+sf::Texture& get_quit(game_resources& r) noexcept
+{
+  return r.get_textures().get_quit();
+}
+
 sf::Texture& get_white_square(game_resources& r) noexcept
 {
   return get_white_square(r.get_textures());
@@ -67,14 +87,14 @@ sf::Texture& game_resources::get_square(const chess_color color) noexcept
   return m_textures.get_square(color);
 }
 
-sf::Texture& game_resources::get_subtitle() noexcept
+sf::Texture& get_subtitle(game_resources& r) noexcept
 {
-  return m_textures.get_subtitle();
+  return r.get_textures().get_subtitle();
 }
 
-sf::Texture& game_resources::get_title() noexcept
+sf::Texture& get_title(game_resources& r) noexcept
 {
-  return m_textures.get_title();
+  return r.get_textures().get_title();
 }
 
 void game_resources::play(

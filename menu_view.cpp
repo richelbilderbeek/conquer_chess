@@ -147,14 +147,56 @@ void menu_view::show()
 
   show_title_panel(*this);
   show_subtitle_panel(*this);
-  //show_start_panel(*this);
-  //show_options_panel(*this);
-  //show_about_panel(*this);
-  //show_quit_panel(*this);
+  show_start_panel(*this);
+  show_options_panel(*this);
+  show_about_panel(*this);
+  show_quit_panel(*this);
 
   // Display all shapes
   m_window.display();
 
+}
+
+void show_about_panel(menu_view& v)
+{
+  const auto screen_rect{v.get_layout().get_about()};
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      get_width(screen_rect),
+      get_height(screen_rect)
+    )
+  );
+  rectangle.setTexture(
+    &get_about(v.get_resources())
+  );
+  rectangle.setPosition(
+    screen_rect.get_tl().get_x(),
+    screen_rect.get_tl().get_y()
+  );
+  v.get_window().draw(rectangle);
+}
+
+void show_options_panel(menu_view& v)
+{
+  const auto screen_rect{v.get_layout().get_options()};
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      get_width(screen_rect),
+      get_height(screen_rect)
+    )
+  );
+  rectangle.setTexture(
+    &get_options(v.get_resources())
+  );
+  rectangle.setPosition(
+    screen_rect.get_tl().get_x(),
+    screen_rect.get_tl().get_y()
+  );
+  v.get_window().draw(rectangle);
 }
 
 void show_panels(menu_view& v)
@@ -180,9 +222,9 @@ void show_panels(menu_view& v)
   }
 }
 
-void show_title_panel(menu_view& v)
+void show_quit_panel(menu_view& v)
 {
-  const auto screen_rect{v.get_layout().get_title()};
+  const auto screen_rect{v.get_layout().get_quit()};
   sf::RectangleShape rectangle;
   rectangle.setOrigin(0.0, 0.0);
   rectangle.setSize(
@@ -192,7 +234,28 @@ void show_title_panel(menu_view& v)
     )
   );
   rectangle.setTexture(
-    &v.get_resources().get_title()
+    &get_quit(v.get_resources())
+  );
+  rectangle.setPosition(
+    screen_rect.get_tl().get_x(),
+    screen_rect.get_tl().get_y()
+  );
+  v.get_window().draw(rectangle);
+}
+
+void show_start_panel(menu_view& v)
+{
+  const auto screen_rect{v.get_layout().get_start()};
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      get_width(screen_rect),
+      get_height(screen_rect)
+    )
+  );
+  rectangle.setTexture(
+    &get_start(v.get_resources())
   );
   rectangle.setPosition(
     screen_rect.get_tl().get_x(),
@@ -213,7 +276,28 @@ void show_subtitle_panel(menu_view& v)
     )
   );
   rectangle.setTexture(
-    &v.get_resources().get_subtitle()
+    &get_subtitle(v.get_resources())
+  );
+  rectangle.setPosition(
+    screen_rect.get_tl().get_x(),
+    screen_rect.get_tl().get_y()
+  );
+  v.get_window().draw(rectangle);
+}
+
+void show_title_panel(menu_view& v)
+{
+  const auto screen_rect{v.get_layout().get_title()};
+  sf::RectangleShape rectangle;
+  rectangle.setOrigin(0.0, 0.0);
+  rectangle.setSize(
+    sf::Vector2f(
+      get_width(screen_rect),
+      get_height(screen_rect)
+    )
+  );
+  rectangle.setTexture(
+    &get_title(v.get_resources())
   );
   rectangle.setPosition(
     screen_rect.get_tl().get_x(),

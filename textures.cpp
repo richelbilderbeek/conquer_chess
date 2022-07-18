@@ -296,7 +296,7 @@ textures::textures()
     }
   }
 
-  // Load the white/light square
+  // Title
   {
     const QString filename{"title.png"};
     QFile f(":/resources/" + filename);
@@ -307,12 +307,56 @@ textures::textures()
       throw std::runtime_error(msg.toStdString());
     }
   }
-  // Load the white/light square
+  // Subtitle
   {
     const QString filename{"subtitle.png"};
     QFile f(":/resources/" + filename);
     f.copy(filename);
     if (!m_subtitle.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Start
+  {
+    const QString filename{"start.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_start.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Options
+  {
+    const QString filename{"options.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_options.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // About
+  {
+    const QString filename{"about.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_about.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+  // Quit
+  {
+    const QString filename{"quit.png"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_quit.loadFromFile(filename.toStdString()))
     {
       QString msg{"Cannot find image file '" + filename + "'"};
       throw std::runtime_error(msg.toStdString());

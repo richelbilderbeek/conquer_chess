@@ -8,6 +8,7 @@
         <file>resources/moving_forward.ogg</file>
         <file>resources/ninja_gods.ogg</file>
         <file>resources/to_rule_is_to_act.ogg</file>
+        <file>resources/about.png</file>
         <file>resources/bb.png</file>
         <file>resources/bb_portrait.png</file>
         <file>resources/bw.png</file>
@@ -22,6 +23,7 @@
         <file>resources/nb_portrait.png</file>
         <file>resources/nw.png</file>
         <file>resources/nw_portrait.png</file>
+        <file>resources/options.png</file>
         <file>resources/pb.png</file>
         <file>resources/pb_portrait.png</file>
         <file>resources/pw.png</file>
@@ -29,6 +31,7 @@
         <file>resources/qb.png</file>
         <file>resources/qb_portrait.png</file>
         <file>resources/qm.png</file>
+        <file>resources/quit.png</file>
         <file>resources/qw.png</file>
         <file>resources/qw_portrait.png</file>
         <file>resources/rb.png</file>
@@ -36,6 +39,7 @@
         <file>resources/rb_portrait_2.png</file>
         <file>resources/rw.png</file>
         <file>resources/rw_portrait.png</file>
+        <file>resources/start.png</file>
         <file>resources/subtitle.png</file>
         <file>resources/t.png</file>
         <file>resources/title.png</file>
