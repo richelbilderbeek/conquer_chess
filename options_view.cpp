@@ -21,7 +21,7 @@ void options_view::exec()
       get_default_screen_size().get_x(),
       get_default_screen_size().get_y()
     ),
-    "knokchess options"
+    "Conquer Chess: options menu"
   );
   while (m_window.isOpen())
   {

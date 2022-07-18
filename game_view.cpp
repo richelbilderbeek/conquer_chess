@@ -68,7 +68,7 @@ void game_view::exec()
       m_game.get_layout().get_window_size().get_x(),
       m_game.get_layout().get_window_size().get_y()
     ),
-    "knokchess"
+    "Conquer Chess"
   );
   while (m_window.isOpen())
   {

@@ -21,7 +21,7 @@ void menu_view::exec()
       get_default_screen_size().get_x(),
       get_default_screen_size().get_y()
     ),
-    "knokchess"
+    "Conquer Chess: main menu"
   );
   while (m_window.isOpen())
   {
@@ -181,7 +181,7 @@ void show_panel_1(menu_view& v)
 
   sf::Text text;
   text.setFont(v.get_resources().get_font());
-  text.setString(" knokchess ");
+  text.setString(" Conquer Chess ");
   text.setCharacterSize((height  - (5 * margin)) / 4);
   text.setOrigin(0.0, 0.0);
   text.setFillColor(sf::Color::Red);
