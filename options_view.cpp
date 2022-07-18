@@ -322,6 +322,7 @@ void show_bottom(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::white)
     );
+    rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
   }
   {
@@ -331,6 +332,7 @@ void show_bottom(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::black)
     );
+    rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
   }
   {
@@ -340,6 +342,7 @@ void show_bottom(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::black)
     );
+    rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
   }
   {
@@ -349,6 +352,7 @@ void show_bottom(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::white)
     );
+    rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
   }
 }

@@ -413,6 +413,7 @@ void game::tick()
 
   for (auto& p: m_pieces) p.tick(m_options.get_delta_t());
 
+  assert(get_actions().empty());
 }
 
 void unselect_all_pieces(
