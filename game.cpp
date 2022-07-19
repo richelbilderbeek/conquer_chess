@@ -457,6 +457,7 @@ void test_game() //!OCLINT tests may be many
   {
     auto g{create_king_versus_king_game()};
     auto& options = g.get_options();
+    assert(g.get_options().get_left_player_color() == chess_color::white);
     toggle_left_player_color(options);
     assert(g.get_options().get_left_player_color() == chess_color::black);
   }
