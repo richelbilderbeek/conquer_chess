@@ -3,8 +3,10 @@
 
 #include <vector>
 
+#include "delta_t.h"
 #include "piece.h"
 #include "screen_coordinat.h"
+#include "starting_position_type.h"
 
 /// Options for the game, such as speed
 class game_options
@@ -12,8 +14,8 @@ class game_options
 public:
   game_options(
     const screen_coordinat& screen_size,
-    const std::vector<piece>& starting_pieces,
-    const double delta_t,
+    const starting_position_type starting_position,
+    const delta_t& dt,
     const int margin_width
   );
 
@@ -42,8 +44,8 @@ public:
   /// Get the size of the screen in pixels
   const auto& get_screen_size() const noexcept { return m_screen_size; }
 
-  /// Get the starting pieces
-  const auto& get_starting_pieces() const noexcept { return m_starting_pieces; }
+  /// Get the starting position
+  auto get_starting_position() const noexcept { return m_starting_position; }
 
   auto get_volume() const noexcept { return m_volume; }
 
@@ -60,13 +62,13 @@ private:
   /// where
   ///   * 0.01 means that only 1% of the full move is done
   ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
-  double m_delta_t;
+  delta_t m_delta_t;
 
   /// The color of the player that uses the keyboard
   chess_color m_keyboard_user_player_color;
 
   /// The width of the margin in pixels
-  const int m_margin_width;
+  int m_margin_width;
 
   /// The color of the player that uses the mouse
   chess_color m_mouse_user_player_color;
@@ -74,8 +76,8 @@ private:
   /// The size of the screen in pixels
   screen_coordinat m_screen_size;
 
-  /// The starting pieces
-  std::vector<piece> m_starting_pieces;
+  /// The starting position
+  starting_position_type m_starting_position;
 
   /// Volume in percent: 0.0 is silent, 100 is loudest
   double m_volume;

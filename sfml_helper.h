@@ -14,7 +14,7 @@ void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect);
 
 /// Make 'text' have the same size and position as the 'screen_rect'
 /// Assumes the text already has a font
-void set_text(sf::Text& text, const screen_rect& screen_rect);
+void set_text_position(sf::Text& text, const screen_rect& screen_rect);
 
 #endif // LOGIC_ONLY
 

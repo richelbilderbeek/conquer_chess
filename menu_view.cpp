@@ -11,6 +11,7 @@
 #include <iostream>
 
 menu_view::menu_view()
+  : m_options{get_default_game_options()}
 {
 
 }
@@ -89,12 +90,13 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::O)
       {
-        options_view view;
+        options_view view(m_options);
         view.exec();
+        m_options = view.get_options();
       }
       else if (key_pressed == sf::Keyboard::Key::S)
       {
-        game_view view;
+        game_view view{game(m_options)};
         view.exec();
       }
       else if (key_pressed == sf::Keyboard::Key::Q)
@@ -106,16 +108,6 @@ bool menu_view::process_events()
       {
         // debug
         std::clog << "Debug";
-      }
-      else if (key_pressed == sf::Keyboard::Key::F4)
-      {
-        game_view view;
-        view.exec();
-      }
-      else if (key_pressed == sf::Keyboard::Key::F5)
-      {
-        options_view view;
-        view.exec();
       }
     }
     if (event.type == sf::Event::MouseButtonPressed)
@@ -173,7 +165,7 @@ void show_about_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  set_text(text, screen_rect);
+  set_text_position(text, screen_rect);
   v.get_window().draw(text);
 }
 
@@ -193,7 +185,7 @@ void show_options_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  set_text(text, screen_rect);
+  set_text_position(text, screen_rect);
   v.get_window().draw(text);
 }
 
@@ -224,7 +216,7 @@ void show_quit_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  set_text(text, screen_rect);
+  set_text_position(text, screen_rect);
   v.get_window().draw(text);
 }
 
@@ -244,7 +236,7 @@ void show_start_panel(menu_view& v)
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(64);
   text.setFillColor(sf::Color::Black);
-  set_text(text, screen_rect);
+  set_text_position(text, screen_rect);
   v.get_window().draw(text);
 }
 

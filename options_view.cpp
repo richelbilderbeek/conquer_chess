@@ -7,9 +7,12 @@
 #include "screen_coordinat.h"
 #include "game_view.h"
 #include "sfml_helper.h"
-#include <iostream>
 
-options_view::options_view()
+#include <iostream>
+#include <sstream>
+
+options_view::options_view(const game_options& options)
+  : m_options{options}
 {
 
 }
@@ -64,6 +67,11 @@ bool options_view::process_events()
         m_window.close();
         return true;
       }
+      if (key_pressed == sf::Keyboard::Key::Q)
+      {
+        m_window.close();
+        return true;
+      }
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
         //m_game.add_action(create_press_up_action());
@@ -102,6 +110,14 @@ bool options_view::process_events()
   return false; // if no events proceed with tick
 }
 
+void options_view::set_text_style(sf::Text& text)
+{
+  text.setFont(get_font(get_resources()));
+  text.setStyle(sf::Text::Bold);
+  text.setCharacterSize(64);
+  text.setFillColor(sf::Color::Black);
+}
+
 void options_view::show()
 {
   // Start drawing the new frame, by clearing the screen
@@ -117,7 +133,7 @@ void options_view::show()
 
 }
 
-void show_top(options_view& v)
+void show_game_speed(options_view& v)
 {
   const auto& layout = v.get_layout();
   // game speed label
@@ -131,12 +147,9 @@ void show_top(options_view& v)
     v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
+    v.set_text_style(text);
     text.setString("Game speed");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
   // game speed value
@@ -148,36 +161,20 @@ void show_top(options_view& v)
     );
     set_rect(rectangle, screen_rect);
     v.get_window().draw(rectangle);
-  }
-  // music volume label
-  {
-    const auto& screen_rect = layout.get_music_volume_label();
-    sf::RectangleShape rectangle;
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    set_rect(rectangle, screen_rect);
-    v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
-    text.setString("Music volume");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    v.set_text_style(text);
+
+
+    text.setString(to_human_str(v.get_options().get_delta_t()));
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
-  // music volume value
-  {
-    const auto& screen_rect = layout.get_music_volume_value();
-    sf::RectangleShape rectangle;
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    set_rect(rectangle, screen_rect);
-    v.get_window().draw(rectangle);
-  }
+}
+
+void show_starting_position(options_view& v)
+{
+  const auto& layout = v.get_layout();
   // starting pos label
   {
     const auto& screen_rect = layout.get_starting_pos_label();
@@ -189,12 +186,9 @@ void show_top(options_view& v)
     v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
+    v.set_text_style(text);
     text.setString("Starting position");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
   // starting pos value
@@ -206,7 +200,22 @@ void show_top(options_view& v)
     );
     set_rect(rectangle, screen_rect);
     v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString(to_str(v.get_options().get_starting_position()));
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
   }
+
+
+}
+
+void show_top(options_view& v)
+{
+  show_game_speed(v);
+  show_music_volume(v);
+  show_starting_position(v);
 }
 
 
@@ -218,6 +227,45 @@ void show_panels(options_view& v)
     set_rect(rectangle, screen_rect);
     rectangle.setFillColor(sf::Color(32, 32, 32));
     v.get_window().draw(rectangle);
+  }
+}
+
+void show_music_volume(options_view& v)
+{
+  const auto& layout = v.get_layout();
+  // music volume label
+  {
+    const auto& screen_rect = layout.get_music_volume_label();
+    sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
+    set_rect(rectangle, screen_rect);
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString("Music volume");
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+  // music volume value
+  {
+    const auto& screen_rect = layout.get_music_volume_value();
+    sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
+    set_rect(rectangle, screen_rect);
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    std::stringstream s;
+    s << v.get_options().get_volume() << " %";
+    text.setString(s.str());
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
   }
 }
 
@@ -234,12 +282,9 @@ void show_bottom(options_view& v)
     v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
+    v.set_text_style(text);
     text.setString("Player");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
   {
@@ -252,12 +297,9 @@ void show_bottom(options_view& v)
     v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
+    v.set_text_style(text);
     text.setString("Color");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
   {
@@ -270,12 +312,9 @@ void show_bottom(options_view& v)
     v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
+    v.set_text_style(text);
     text.setString("Controls");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
   {
@@ -288,12 +327,9 @@ void show_bottom(options_view& v)
     v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
+    v.set_text_style(text);
     text.setString("Left");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
   {
@@ -306,12 +342,9 @@ void show_bottom(options_view& v)
     v.get_window().draw(rectangle);
 
     sf::Text text;
-    text.setFont(get_font(v.get_resources()));
+    v.set_text_style(text);
     text.setString("Right");
-    text.setStyle(sf::Text::Bold);
-    text.setCharacterSize(64);
-    text.setFillColor(sf::Color::Black);
-    set_text(text, screen_rect);
+    set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
 

@@ -5,22 +5,20 @@
 
 game_options::game_options(
   const screen_coordinat& screen_size,
-  const std::vector<piece>& starting_pieces,
-  const double delta_t,
+  const starting_position_type starting_position,
+  const delta_t& dt,
   const int margin_width
-) : m_delta_t{delta_t},
+) : m_delta_t{dt},
     m_keyboard_user_player_color{chess_color::white},
     m_margin_width{margin_width},
     m_mouse_user_player_color{chess_color::black},
     m_screen_size{screen_size},
-    m_starting_pieces{starting_pieces},
+    m_starting_position{starting_position},
     m_volume{0.0}
 {
-  assert(m_delta_t > 0.0);
   assert(m_margin_width >= 0);
   assert(m_screen_size.get_x() > 0);
   assert(m_screen_size.get_y() > 0);
-  assert(m_starting_pieces.size() >= 2);
   assert(m_keyboard_user_player_color != m_mouse_user_player_color);
   assert(m_volume >= 0.0);
   assert(m_volume <= 100.0);
@@ -35,7 +33,7 @@ game_options get_default_game_options()
 {
   return game_options(
     get_default_screen_size(),
-    get_default_starting_pieces(),
+    get_default_starting_position(),
     get_default_delta_t(),
     get_default_margin_width()
   );

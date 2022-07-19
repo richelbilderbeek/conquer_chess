@@ -56,7 +56,7 @@ std::string describe_actions(const piece& p)
   return t;
 }
 
-std::vector<piece> get_default_starting_pieces() noexcept
+std::vector<piece> get_standard_starting_pieces() noexcept
 {
   return {
     piece(chess_color::white, piece_type::rook,   game_coordinat(0.5, 0.5)),
@@ -100,9 +100,9 @@ double get_f_health(const piece& p) noexcept
   return p.get_health() / p.get_max_health();
 }
 
-std::vector<piece> get_king_versus_king_starting_pieces() noexcept
+std::vector<piece> get_kings_only_starting_pieces() noexcept
 {
-  const auto all_pieces{get_default_starting_pieces()};
+  const auto all_pieces{get_standard_starting_pieces()};
   std::vector<piece> pieces;
   pieces.reserve(2);
   std::copy_if(
@@ -112,6 +112,16 @@ std::vector<piece> get_king_versus_king_starting_pieces() noexcept
     [](const auto& piece) { return piece.get_type() == piece_type::king; }
   );
   return pieces;
+}
+
+std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
+{
+  switch (t)
+  {
+    case starting_position_type::standard: return get_standard_starting_pieces();
+    default:
+    case starting_position_type::kings_only: return get_kings_only_starting_pieces();
+  }
 }
 
 bool has_actions(const piece& p) noexcept
@@ -134,21 +144,19 @@ void piece::set_selected(const bool is_selected) noexcept
   m_is_selected = is_selected;
 }
 
-void piece::tick(const double delta_t)
+void piece::tick(const delta_t& dt)
 {
-  assert(delta_t > 0.0);
-  assert(delta_t <= 1.0);
   if (m_actions.empty()) return;
   const auto& first_action{m_actions[0]};
   if (first_action.get_type() == piece_action_type::move)
   {
     const auto full_delta{first_action.get_coordinat() - m_coordinat};
     const double full_length{calc_length(full_delta)};
-    if (full_length < delta_t)
+    if (full_length < dt.get())
     {
       std::vector<decltype(m_actions)::value_type>(m_actions.begin() + 1, m_actions.end()).swap(m_actions);
     }
-    const auto delta{full_delta / (full_length / delta_t)};
+    const auto delta{full_delta / (full_length / dt.get())};
     m_coordinat += delta;
 
   }

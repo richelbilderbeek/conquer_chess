@@ -1,11 +1,13 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#include "delta_t.h"
 #include "chess_color.h"
 #include "piece_type.h"
 #include "piece_action.h"
 #include "game_coordinat.h"
 #include "sound_effect_type.h"
+#include "starting_position_type.h"
 
 #include <string>
 #include <vector>
@@ -57,7 +59,7 @@ public:
   ///   0.01 means that only 1% of the full move is done and
   ///   1.0 denotes doing a full move.
   /// @see use 'add_action' to add an action to be processed
-  void tick(const double delta_t);
+  void tick(const delta_t& dt);
 
 private:
 
@@ -92,15 +94,18 @@ int count_piece_actions(const piece& p);
 /// Describe the actions a piece have, e.g. 'idle', or 'moving to (3, 4)'
 std::string describe_actions(const piece& p);
 
-/// Get all the pieces in the starting position
-std::vector<piece> get_default_starting_pieces() noexcept;
 
 /// Get the fraction of the health, where 1.0 denotes full health
 double get_f_health(const piece& p) noexcept;
 
 /// Get a king-versus-king starting position
-std::vector<piece> get_king_versus_king_starting_pieces() noexcept;
+std::vector<piece> get_kings_only_starting_pieces() noexcept;
 
+/// Get all the pieces in the starting position
+std::vector<piece> get_standard_starting_pieces() noexcept;
+
+/// Get all the pieces in the starting position type
+std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept;
 
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;

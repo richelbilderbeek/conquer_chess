@@ -4,6 +4,7 @@
 #ifndef LOGIC_ONLY
 
 #include <SFML/Graphics.hpp>
+#include "game_options.h"
 #include "game_resources.h"
 #include "menu_view_layout.h"
 
@@ -28,6 +29,9 @@ private:
 
   /// The window to draw to
   sf::RenderWindow m_window;
+
+  /// The game options
+  game_options m_options;
 
   /// Resources
   game_resources m_resources;

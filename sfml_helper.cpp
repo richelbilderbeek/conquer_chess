@@ -20,7 +20,7 @@ void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect)
   );
 }
 
-void set_text(sf::Text& text, const screen_rect& screen_rect)
+void set_text_position(sf::Text& text, const screen_rect& screen_rect)
 {
   assert(text.getString().getSize() > 0);
   // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439

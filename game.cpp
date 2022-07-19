@@ -14,7 +14,7 @@ game::game(
     m_player_1_pos{0.5, 4.5},
     m_player_2_pos{7.5, 4.5},
     m_options{options},
-    m_pieces{options.get_starting_pieces()}
+    m_pieces{get_starting_pieces(options.get_starting_position())}
 {
 
 }
@@ -118,7 +118,7 @@ game create_king_versus_king_game()
 {
   const game_options options(
     get_default_screen_size(),
-    get_king_versus_king_starting_pieces(),
+    starting_position_type::kings_only,
     get_default_delta_t(),
     get_default_margin_width()
   );

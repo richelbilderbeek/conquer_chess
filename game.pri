@@ -3,6 +3,7 @@ HEADERS += \
     $$PWD/chess_color.h \
     $$PWD/control_action.h \
     $$PWD/control_action_type.h \
+    $$PWD/delta_t.h \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
     $$PWD/game_options.h \
@@ -21,6 +22,7 @@ HEADERS += \
     $$PWD/sound_effect.h \
     $$PWD/sound_effect_type.h \
     $$PWD/sound_effects.h \
+    $$PWD/starting_position_type.h \
     $$PWD/textures.h
 
 
@@ -28,6 +30,7 @@ SOURCES += \
     $$PWD/chess_color.cpp \
     $$PWD/control_action.cpp \
     $$PWD/control_action_type.cpp \
+    $$PWD/delta_t.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_options.cpp \
@@ -46,6 +49,7 @@ SOURCES += \
     $$PWD/sound_effect.cpp \
     $$PWD/sound_effect_type.cpp \
     $$PWD/sound_effects.cpp \
+    $$PWD/starting_position_type.cpp \
     $$PWD/textures.cpp
 
 RESOURCES += \
