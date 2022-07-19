@@ -80,8 +80,14 @@ private:
   screen_coordinat m_window_size;
 };
 
+/// Get the next panel
+screen_rect get_next(const screen_rect& there, const menu_view_layout& layout);
+
 /// Get the panels in the layout
 std::vector<screen_rect> get_panels(const menu_view_layout& layout);
+
+/// Get the previous panel
+screen_rect get_previous(const screen_rect& there, const menu_view_layout& layout);
 
 /// Resize the layout to a new size
 void resize(

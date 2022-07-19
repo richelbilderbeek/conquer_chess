@@ -57,6 +57,15 @@ menu_view_layout::menu_view_layout(
   );
 }
 
+screen_rect get_next(const screen_rect& there, const menu_view_layout& layout)
+{
+  if (there == layout.get_start()) return layout.get_options();
+  if (there == layout.get_options()) return layout.get_about();
+  if (there == layout.get_about()) return layout.get_quit();
+  assert(there == layout.get_quit());
+  return layout.get_start();
+}
+
 std::vector<screen_rect> get_panels(const menu_view_layout& layout)
 {
   return
@@ -68,6 +77,15 @@ std::vector<screen_rect> get_panels(const menu_view_layout& layout)
     layout.get_about(),
     layout.get_quit()
   };
+}
+
+screen_rect get_previous(const screen_rect& there, const menu_view_layout& layout)
+{
+  if (there == layout.get_start()) return layout.get_quit();
+  if (there == layout.get_options()) return layout.get_start();
+  if (there == layout.get_about()) return layout.get_options();
+  assert(there == layout.get_quit());
+  return layout.get_about();
 }
 
 void resize(
@@ -89,6 +107,30 @@ void test_menu_view_layout()
   {
     const menu_view_layout layout;
     assert(!get_panels(layout).empty());
+  }
+  // Get next
+  {
+    const menu_view_layout layout;
+    const auto start{layout.get_start()};
+    const auto options{layout.get_options()};
+    const auto about{layout.get_about()};
+    const auto quit{layout.get_quit()};
+    assert(get_next(start, layout) == options);
+    assert(get_next(options, layout) == about);
+    assert(get_next(about, layout) == quit);
+    assert(get_next(quit, layout) == start);
+  }
+  // Get previous
+  {
+    const menu_view_layout layout;
+    const auto start{layout.get_start()};
+    const auto options{layout.get_options()};
+    const auto about{layout.get_about()};
+    const auto quit{layout.get_quit()};
+    assert(get_previous(start, layout) == quit);
+    assert(get_previous(options, layout) == start);
+    assert(get_previous(about, layout) == options);
+    assert(get_previous(quit, layout) == about);
   }
   #endif
 }

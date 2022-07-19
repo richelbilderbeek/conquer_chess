@@ -9,7 +9,7 @@
 class screen_rect
 {
 public:
-  screen_rect(
+  explicit screen_rect(
     const screen_coordinat& top_left = screen_coordinat(),
     const screen_coordinat& bottom_right = screen_coordinat()
   );
@@ -27,9 +27,13 @@ screen_coordinat get_center(const screen_rect& r) noexcept;
 int get_height(const screen_rect& r) noexcept;
 int get_width(const screen_rect& r) noexcept;
 
+/// Is the coordinat in the rectangle?
+bool is_in(const screen_coordinat& pos, const screen_rect& r) noexcept;
+
 /// Test this class and its free functions
 void test_screen_rect();
 
+bool operator==(const screen_rect& lhs, const screen_rect& rhs) noexcept;
 screen_rect& operator+=(screen_rect& rect, const screen_coordinat& delta) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const screen_rect& r) noexcept;

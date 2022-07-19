@@ -35,12 +35,17 @@ private:
   /// The game options
   game_options m_options;
 
-
   /// Resources
   game_resources m_resources;
 
   /// The selected item
   screen_rect m_selected;
+
+  /// Run the game
+  void exec_game();
+
+  /// Run the options screen
+  void exec_options();
 
   /// Process all events
   /// @return if the user wants to quit
@@ -49,7 +54,6 @@ private:
   /// Show the menu on-screen
   void show();
 };
-
 
 void show_about_panel(menu_view& v);
 void show_options_panel(menu_view& v);

@@ -38,6 +38,19 @@ void menu_view::exec()
   }
 }
 
+void menu_view::exec_game()
+{
+  game_view view{game(m_options)};
+  view.exec();
+}
+
+void menu_view::exec_options()
+{
+  options_view view(m_options);
+  view.exec();
+  m_options = view.get_options();
+}
+
 bool menu_view::process_events()
 {
   // User interaction
@@ -57,8 +70,8 @@ bool menu_view::process_events()
     }
     else if (event.type == sf::Event::Closed)
     {
-        m_window.close();
-        return true; // Game is done
+      m_window.close();
+      return true; // Game is done
     }
     else if (event.type == sf::Event::KeyPressed)
     {
@@ -70,34 +83,37 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
-        //m_game.add_action(create_press_up_action());
+        m_selected = get_previous(m_selected, m_layout);
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
-        //m_game.add_action(create_press_right_action());
+        m_selected = get_next(m_selected, m_layout);
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
-        //m_game.add_action(create_press_down_action());
+        m_selected = get_next(m_selected, m_layout);
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
-        //m_game.add_action(create_press_left_action());
+        m_selected = get_previous(m_selected, m_layout);
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
-        //m_game.add_action(create_press_select_action());
+        if (m_selected == m_layout.get_start()) exec_game();
+        else if (m_selected == m_layout.get_options()) exec_options();
+        else if (m_selected == m_layout.get_quit())
+        {
+          m_window.close();
+          return true;
+        }
       }
       else if (key_pressed == sf::Keyboard::Key::O)
       {
-        options_view view(m_options);
-        view.exec();
-        m_options = view.get_options();
+        exec_options();
       }
       else if (key_pressed == sf::Keyboard::Key::S)
       {
-        game_view view{game(m_options)};
-        view.exec();
+        exec_game();
       }
       else if (key_pressed == sf::Keyboard::Key::Q)
       {
@@ -112,19 +128,19 @@ bool menu_view::process_events()
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
-      /*
       if (event.mouseButton.button == sf::Mouse::Left)
       {
-        m_game.add_action(
-          create_press_lmb_action(
-            convert_to_game_coordinat(
-              mouse_screen_pos,
-              m_game.get_layout()
-            )
-          )
-        );
+        const auto mouse_screen_pos{
+          screen_coordinat(event.mouseButton.x, event.mouseButton.y)
+        };
+        if (is_in(mouse_screen_pos, m_layout.get_start())) exec_game();
+        else if (is_in(mouse_screen_pos, m_layout.get_options())) exec_options();
+        else if (is_in(mouse_screen_pos, m_layout.get_quit()))
+        {
+          m_window.close();
+          return true;
+        }
       }
-      */
     }
   }
   return false; // Do not close the window :-)
@@ -232,7 +248,6 @@ void show_selected_panel(menu_view& v)
   );
   rectangle.setFillColor(sf::Color::Transparent);
   rectangle.setOutlineColor(sf::Color::Red);
-  rectangle.setRotation(0.1);
   rectangle.setOutlineThickness(5);
   v.get_window().draw(rectangle);
 }

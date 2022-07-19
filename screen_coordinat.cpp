@@ -36,6 +36,13 @@ screen_coordinat& operator+=(screen_coordinat& lhs, const screen_coordinat& rhs)
   return lhs;
 }
 
+bool operator==(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept
+{
+  return lhs.get_x() == rhs.get_x()
+    && lhs.get_y() == rhs.get_y()
+  ;
+}
+
 void test_screen_coordinat()
 {
   #ifndef NDEBUG
@@ -53,6 +60,14 @@ void test_screen_coordinat()
     c_3 += c_2;
     assert(c_1.get_x() + c_2.get_x() == c_3.get_x());
     assert(c_1.get_y() + c_2.get_y() == c_3.get_y());
+  }
+  // operator==
+  {
+    const screen_coordinat a(1, 2);
+    const screen_coordinat b(1, 2);
+    const screen_coordinat c(3, 4);
+    assert(a == b);
+    assert(!(a == c));
   }
   #endif
 }

@@ -24,6 +24,8 @@ screen_coordinat get_default_screen_size() noexcept;
 
 std::ostream& operator<<(std::ostream& os, const screen_coordinat& coordinat);
 
+bool operator==(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
+
 screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 
 screen_coordinat& operator+=(screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
