@@ -133,6 +133,167 @@ void options_view::show()
 
 }
 
+void show_bottom(options_view& v)
+{
+  show_bottom_header(v);
+  show_bottom_left(v);
+  show_bottom_right(v);
+}
+
+void show_bottom_header(options_view& v)
+{
+  const auto& layout = v.get_layout();
+  {
+    const auto& screen_rect = layout.get_player_label();
+    sf::RectangleShape rectangle;
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
+    set_rect(rectangle, screen_rect);
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString("Player");
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+  {
+    const auto& screen_rect = layout.get_color_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString("Color");
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+  {
+    const auto& screen_rect = layout.get_controls_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString("Controls");
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+}
+
+void show_bottom_left(options_view& v)
+{
+  const auto& layout = v.get_layout();
+  {
+    const auto& screen_rect = layout.get_left_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString("Left");
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+  {
+    const auto& screen_rect = layout.get_left_color_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
+    rectangle.setFillColor(sf::Color(128, 128, 128));
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString(to_str(get_left_player_color(v.get_options())));
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+  {
+    const auto& screen_rect = layout.get_left_controls_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
+    rectangle.setFillColor(sf::Color(128, 128, 128));
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString(to_str(v.get_options().get_left_controller_type()));
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+}
+
+void show_bottom_right(options_view& v)
+{
+  const auto& layout = v.get_layout();
+  {
+    const auto& screen_rect = layout.get_right_label();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString("Right");
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+  {
+    const auto& screen_rect = layout.get_right_color_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::black)
+    );
+    //rectangle.setFillColor(sf::Color(128, 128, 128));
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString(to_str(get_right_player_color(v.get_options())));
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+  {
+    const auto& screen_rect = layout.get_right_controls_value();
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &get_strip(v.get_resources(), chess_color::white)
+    );
+    rectangle.setFillColor(sf::Color(128, 128, 128));
+    v.get_window().draw(rectangle);
+
+    sf::Text text;
+    v.set_text_style(text);
+    text.setString(to_str(v.get_options().get_right_controller_type()));
+    set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+  }
+}
+
 void show_game_speed(options_view& v)
 {
   const auto& layout = v.get_layout();
@@ -266,127 +427,6 @@ void show_music_volume(options_view& v)
     text.setString(s.str());
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
-  }
-}
-
-void show_bottom(options_view& v)
-{
-  const auto& layout = v.get_layout();
-  {
-    const auto& screen_rect = layout.get_player_label();
-    sf::RectangleShape rectangle;
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    set_rect(rectangle, screen_rect);
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Player");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  {
-    const auto& screen_rect = layout.get_color_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Color");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  {
-    const auto& screen_rect = layout.get_controls_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Controls");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  {
-    const auto& screen_rect = layout.get_left_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Left");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  {
-    const auto& screen_rect = layout.get_right_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Right");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-
-  {
-    const auto& screen_rect = layout.get_left_color_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    rectangle.setFillColor(sf::Color(128, 128, 128));
-    v.get_window().draw(rectangle);
-  }
-  {
-    const auto& screen_rect = layout.get_right_color_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    rectangle.setFillColor(sf::Color(128, 128, 128));
-    v.get_window().draw(rectangle);
-  }
-  {
-    const auto& screen_rect = layout.get_left_controls_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    rectangle.setFillColor(sf::Color(128, 128, 128));
-    v.get_window().draw(rectangle);
-  }
-  {
-    const auto& screen_rect = layout.get_right_controls_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    rectangle.setFillColor(sf::Color(128, 128, 128));
-    v.get_window().draw(rectangle);
   }
 }
 

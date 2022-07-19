@@ -3,6 +3,7 @@ HEADERS += \
     $$PWD/chess_color.h \
     $$PWD/control_action.h \
     $$PWD/control_action_type.h \
+    $$PWD/controller_type.h \
     $$PWD/delta_t.h \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
@@ -30,6 +31,7 @@ SOURCES += \
     $$PWD/chess_color.cpp \
     $$PWD/control_action.cpp \
     $$PWD/control_action_type.cpp \
+    $$PWD/controller_type.cpp \
     $$PWD/delta_t.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \

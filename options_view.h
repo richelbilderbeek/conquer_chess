@@ -54,6 +54,15 @@ private:
 /// Show the bottom part
 void show_bottom(options_view& v);
 
+/// Show the header of the bottom part
+void show_bottom_header(options_view& v);
+
+/// Show the left player's settings of the bottom part
+void show_bottom_left(options_view& v);
+
+/// Show the right player's settings of the bottom part
+void show_bottom_right(options_view& v);
+
 /// Show the game speed label and value
 void show_game_speed(options_view& v);
 

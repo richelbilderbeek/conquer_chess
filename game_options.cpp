@@ -10,8 +10,11 @@ game_options::game_options(
   const int margin_width
 ) : m_delta_t{dt},
     m_keyboard_user_player_color{chess_color::white},
+    m_left_controller_type{controller_type::keyboard},
+    m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
     m_mouse_user_player_color{chess_color::black},
+    m_right_controller_type{controller_type::mouse},
     m_screen_size{screen_size},
     m_starting_position{starting_position},
     m_volume{0.0}
@@ -42,6 +45,16 @@ game_options get_default_game_options()
 double get_default_delta_t()
 {
   return 0.0001;
+}
+
+chess_color get_left_player_color(const game_options& options) noexcept
+{
+  return options.get_left_player_color();
+}
+
+chess_color get_right_player_color(const game_options& options) noexcept
+{
+  return get_other_color(options.get_left_player_color());
 }
 
 void game_options::set_player_color(const chess_color c) noexcept
