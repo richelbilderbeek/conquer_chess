@@ -19,6 +19,9 @@ private:
   double m_delta_t;
 };
 
+/// Test this class and its free functions
+void test_delta_t();
+
 /// Describe the delta_t to human
 std::string to_human_str(const delta_t& dt) noexcept;
 
