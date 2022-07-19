@@ -96,11 +96,13 @@ void test_game_options()
     assert(get_right_player_controller(options) == controller_type::mouse);
     assert(get_keyboard_user_player_color(options) == chess_color::white);
     assert(get_mouse_user_player_color(options) == chess_color::black);
+    assert(options.do_show_selected() || !options.do_show_selected());
+    assert(options.get_click_distance() > 0.0);
   }
 #endif // NDEBUG
 }
 
-void toggle_player(game_options& options)
+void toggle_left_player_color(game_options& options)
 {
   options.set_left_player_color(
     get_other_color(options.get_left_player_color())

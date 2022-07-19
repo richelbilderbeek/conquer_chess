@@ -119,6 +119,6 @@ controller_type get_right_player_controller(const game_options& options) noexcep
 void test_game_options();
 
 /// Toggle the color of the active player
-void toggle_player(game_options& options);
+void toggle_left_player_color(game_options& options);
 
 #endif // GAME_OPTIONS_H

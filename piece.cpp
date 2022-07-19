@@ -167,10 +167,20 @@ void test_piece()
     const auto p{get_test_piece()};
     assert(!describe_actions(p).empty());
   }
+  // get_health
+  {
+    const auto p{get_test_piece()};
+    assert(p.get_health() > 0.0);
+  }
   // get_f_health
   {
     const auto p{get_test_piece()};
     assert(get_f_health(p) == 1.0);
+  }
+  // get_max_health
+  {
+    const auto p{get_test_piece()};
+    assert(p.get_max_health() > 0.0);
   }
   // has_actions
   {

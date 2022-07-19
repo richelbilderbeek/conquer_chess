@@ -440,6 +440,36 @@ void resize_window(
 void test_game() //!OCLINT tests may be many
 {
 #ifndef NDEBUG // no tests in release
+  // Cursor positions
+  {
+    const auto g{create_king_versus_king_game()};
+    assert(g.get_player_1_pos().get_x() >= 0.0);
+    assert(g.get_player_1_pos().get_y() >= 0.0);
+    assert(g.get_player_2_pos().get_x() >= 0.0);
+    assert(g.get_player_2_pos().get_y() >= 0.0);
+  }
+  // Options, const
+  {
+    const auto g{get_default_game()};
+    assert(g.get_options().get_left_player_color() == chess_color::white);
+  }
+  // Options, non-const
+  {
+    auto g{create_king_versus_king_game()};
+    auto& options = g.get_options();
+    toggle_left_player_color(options);
+    assert(g.get_options().get_left_player_color() == chess_color::black);
+  }
+  // No game actions at start
+  {
+    const auto g{create_king_versus_king_game()};
+    assert(count_game_actions(g) == 0);
+  }
+  // do_show_selected
+  {
+    const auto g{create_king_versus_king_game()};
+    assert(do_show_selected(g) || !do_show_selected(g));
+  }
   // Actions in pieces accumulate
   {
     game g = create_king_versus_king_game();
@@ -526,7 +556,7 @@ void test_game() //!OCLINT tests may be many
 #endif // no tests in release
 }
 
-void toggle_player(game& g)
+void toggle_left_player_color(game& g)
 {
-  toggle_player(g.get_options());
+  toggle_left_player_color(g.get_options());
 }

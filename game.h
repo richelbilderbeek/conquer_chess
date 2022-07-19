@@ -186,10 +186,11 @@ void resize_window(
   const int margin_width = get_default_margin_width()
 );
 
+/// Test this class and its free functions
 void test_game();
 
 /// Toggle the color of the active player
-void toggle_player(game& g);
+void toggle_left_player_color(game& g);
 
 /// Unselect all pieces of a certain color
 void unselect_all_pieces(

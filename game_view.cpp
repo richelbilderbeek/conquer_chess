@@ -165,7 +165,7 @@ bool game_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::F4)
       {
-        toggle_player(*this);
+        toggle_left_player_color(*this);
       }
       else if (key_pressed == sf::Keyboard::Key::F5)
       {
@@ -782,9 +782,9 @@ void test_game_view() //!OCLINT tests may be many
   #endif //NDEBUG
 }
 
-void toggle_player(game_view& view)
+void toggle_left_player_color(game_view& view)
 {
-  toggle_player(view.get_game());
+  toggle_left_player_color(view.get_game());
 }
 
 bool would_be_valid(

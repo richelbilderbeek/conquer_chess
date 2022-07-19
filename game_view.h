@@ -114,7 +114,7 @@ void show_unit_sprites_2(game_view& view);
 void test_game_view();
 
 /// Toggle the color of the active player
-void toggle_player(game_view& view);
+void toggle_left_player_color(game_view& view);
 
 /// Would it be a valid move if the user would press LMB or RMB?
 bool would_be_valid(
