@@ -13,7 +13,7 @@
 menu_view::menu_view()
   : m_options{get_default_game_options()}
 {
-
+  m_selected = m_layout.get_start();
 }
 
 void menu_view::exec()
@@ -143,6 +143,7 @@ void menu_view::show()
   show_options_panel(*this);
   show_about_panel(*this);
   show_quit_panel(*this);
+  show_selected_panel(*this);
 
   // Display all shapes
   m_window.display();
@@ -218,6 +219,22 @@ void show_quit_panel(menu_view& v)
   text.setFillColor(sf::Color::Black);
   set_text_position(text, screen_rect);
   v.get_window().draw(text);
+}
+
+void show_selected_panel(menu_view& v)
+{
+  const auto select_rect{v.get_selected()};
+  sf::RectangleShape rectangle;
+  set_rect(rectangle, select_rect);
+  rectangle.setOrigin(
+    get_width(select_rect) / 2,
+    get_height(select_rect) / 2
+  );
+  rectangle.setFillColor(sf::Color::Transparent);
+  rectangle.setOutlineColor(sf::Color::Red);
+  rectangle.setRotation(0.1);
+  rectangle.setOutlineThickness(5);
+  v.get_window().draw(rectangle);
 }
 
 void show_start_panel(menu_view& v)

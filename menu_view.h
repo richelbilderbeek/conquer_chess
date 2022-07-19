@@ -20,6 +20,8 @@ public:
 
   auto& get_resources() noexcept { return m_resources; }
 
+  const auto& get_selected() const noexcept { return m_selected; }
+
   auto& get_window() noexcept { return m_window; }
 
 private:
@@ -33,8 +35,12 @@ private:
   /// The game options
   game_options m_options;
 
+
   /// Resources
   game_resources m_resources;
+
+  /// The selected item
+  screen_rect m_selected;
 
   /// Process all events
   /// @return if the user wants to quit
@@ -52,6 +58,7 @@ void show_options_panel(menu_view& v);
 void show_panels(menu_view& v);
 
 void show_quit_panel(menu_view& v);
+void show_selected_panel(menu_view& v);
 void show_subtitle_panel(menu_view& v);
 void show_start_panel(menu_view& v);
 void show_title_panel(menu_view& v);

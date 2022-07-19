@@ -7,16 +7,32 @@
 
 void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect)
 {
-  rectangle.setOrigin(0.0, 0.0);
+  if (1 + 1 == 2)
+  {
+    rectangle.setOrigin(
+      get_width(screen_rect) / 2,
+      get_height(screen_rect) / 2
+    );
+    rectangle.setPosition(
+      get_center(screen_rect).get_x(),
+      get_center(screen_rect).get_y()
+    );
+  }
+  else
+  {
+    rectangle.setOrigin(
+      0.0, 0.0
+    );
+  rectangle.setPosition(
+    screen_rect.get_tl().get_x(),
+    screen_rect.get_tl().get_y()
+  );
+  }
   rectangle.setSize(
     sf::Vector2f(
       get_width(screen_rect),
       get_height(screen_rect)
     )
-  );
-  rectangle.setPosition(
-    screen_rect.get_tl().get_x(),
-    screen_rect.get_tl().get_y()
   );
 }
 
