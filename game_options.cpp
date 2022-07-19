@@ -9,11 +9,9 @@ game_options::game_options(
   const delta_t& dt,
   const int margin_width
 ) : m_delta_t{dt},
-    m_keyboard_user_player_color{chess_color::white},
     m_left_controller_type{controller_type::keyboard},
     m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
-    m_mouse_user_player_color{chess_color::black},
     m_right_controller_type{controller_type::mouse},
     m_screen_size{screen_size},
     m_starting_position{starting_position},
@@ -22,9 +20,9 @@ game_options::game_options(
   assert(m_margin_width >= 0);
   assert(m_screen_size.get_x() > 0);
   assert(m_screen_size.get_y() > 0);
-  assert(m_keyboard_user_player_color != m_mouse_user_player_color);
   assert(m_volume >= 0.0);
   assert(m_volume <= 100.0);
+  assert(::get_keyboard_user_player_color(*this) != ::get_mouse_user_player_color(*this));
 }
 
 bool do_show_selected(const game_options& options) noexcept
@@ -47,9 +45,29 @@ double get_default_delta_t()
   return 0.0001;
 }
 
+chess_color get_keyboard_user_player_color(const game_options& options)
+{
+  if (options.get_left_controller_type() == controller_type::keyboard)
+  {
+    return get_left_player_color(options);
+  }
+  assert(options.get_right_controller_type() == controller_type::keyboard);
+  return get_right_player_color(options);
+}
+
 chess_color get_left_player_color(const game_options& options) noexcept
 {
   return options.get_left_player_color();
+}
+
+chess_color get_mouse_user_player_color(const game_options& options)
+{
+  if (options.get_left_controller_type() == controller_type::mouse)
+  {
+    return get_left_player_color(options);
+  }
+  assert(options.get_right_controller_type() == controller_type::mouse);
+  return get_right_player_color(options);
 }
 
 chess_color get_right_player_color(const game_options& options) noexcept
@@ -57,14 +75,14 @@ chess_color get_right_player_color(const game_options& options) noexcept
   return get_other_color(options.get_left_player_color());
 }
 
-void game_options::set_player_color(const chess_color c) noexcept
+void game_options::set_left_player_color(const chess_color c) noexcept
 {
-  m_mouse_user_player_color = c;
+  m_left_player_color = c;
 }
 
 void toggle_player(game_options& options)
 {
-  options.set_player_color(
-    get_other_color(options.get_mouse_user_player_color())
+  options.set_left_player_color(
+    get_other_color(options.get_left_player_color())
   );
 }

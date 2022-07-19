@@ -39,14 +39,8 @@ public:
   /// Color of the left player
   auto get_left_player_color() const noexcept { return m_left_player_color; }
 
-  /// Get the color of the player that uses the keyboard
-  auto get_keyboard_user_player_color() const noexcept { return m_keyboard_user_player_color; }
-
   /// Get the width of the margin in pixels
   auto get_margin_width() const noexcept { return m_margin_width; }
-
-  /// Get the color of the player that uses the mouse
-  auto get_mouse_user_player_color() const noexcept { return m_mouse_user_player_color; }
 
   /// Controller type of the left player
   auto get_right_controller_type() const noexcept { return m_right_controller_type; }
@@ -60,7 +54,7 @@ public:
   auto get_volume() const noexcept { return m_volume; }
 
   /// Set the color of the player
-  void set_player_color(const chess_color c) noexcept;
+  void set_left_player_color(const chess_color c) noexcept;
 
 private:
 
@@ -74,9 +68,6 @@ private:
   ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
   delta_t m_delta_t;
 
-  /// The color of the player that uses the keyboard
-  chess_color m_keyboard_user_player_color;
-
   /// Controller type of the left player
   controller_type m_left_controller_type;
 
@@ -85,9 +76,6 @@ private:
 
   /// The width of the margin in pixels
   int m_margin_width;
-
-  /// The color of the player that uses the mouse
-  chess_color m_mouse_user_player_color;
 
   /// Controller type of the right player
   controller_type m_right_controller_type;
@@ -114,8 +102,16 @@ double get_default_delta_t();
 
 game_options get_default_game_options();
 
+/// Get the color of the keyboard using player
+/// Will throw if no user uses a keyboard
+chess_color get_keyboard_user_player_color(const game_options& options);
+
 /// Get the color of the left player
 chess_color get_left_player_color(const game_options& options) noexcept;
+
+/// Get the color of the mouse using player
+/// Will throw if no user uses a mouse
+chess_color get_mouse_user_player_color(const game_options& options);
 
 /// Get the color of the right player
 chess_color get_right_player_color(const game_options& options) noexcept;

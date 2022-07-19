@@ -269,11 +269,11 @@ game_coordinat get_cursor_pos(
   const chess_color c
 )
 {
-  if (c == g.get_options().get_keyboard_user_player_color())
+  if (c == get_keyboard_user_player_color(g.get_options()))
   {
     return g.get_player_1_pos();
   }
-  assert(c == g.get_options().get_mouse_user_player_color());
+  assert(c == get_mouse_user_player_color(g.get_options()));
   return g.get_player_2_pos();
 }
 
@@ -370,7 +370,7 @@ void game::tick()
     {
       start_move_unit(
         m_player_1_pos,
-        m_options.get_keyboard_user_player_color()
+        get_keyboard_user_player_color(m_options)
       );
     }
     else if (action.get_type() == control_action_type::press_right)
@@ -405,7 +405,7 @@ void game::tick()
     {
       start_move_unit(
         action.get_coordinat(),
-        m_options.get_mouse_user_player_color()
+        get_mouse_user_player_color(m_options)
       );
     }
   }
