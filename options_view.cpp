@@ -215,7 +215,6 @@ void show_bottom_left(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::white)
     );
-    rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
 
     sf::Text text;
@@ -231,7 +230,6 @@ void show_bottom_left(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::black)
     );
-    rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
 
     sf::Text text;
@@ -267,7 +265,6 @@ void show_bottom_right(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::black)
     );
-    //rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
 
     sf::Text text;
@@ -283,7 +280,6 @@ void show_bottom_right(options_view& v)
     rectangle.setTexture(
       &get_strip(v.get_resources(), chess_color::white)
     );
-    rectangle.setFillColor(sf::Color(128, 128, 128));
     v.get_window().draw(rectangle);
 
     sf::Text text;
