@@ -124,9 +124,18 @@ std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
   }
 }
 
+piece get_test_piece() noexcept
+{
+  return piece(
+    chess_color::white,
+    piece_type::king,
+    game_coordinat(0.5, 3.5)
+  );
+}
+
 bool has_actions(const piece& p) noexcept
 {
-  return !p.get_actions().empty();
+  return count_piece_actions(p) != 0;
 }
 
 bool is_idle(const piece& p) noexcept
@@ -139,9 +148,50 @@ void select(piece& p) noexcept
   p.set_selected(true);
 }
 
+
 void piece::set_selected(const bool is_selected) noexcept
 {
   m_is_selected = is_selected;
+}
+
+void test_piece()
+{
+#ifndef NDEBUG
+  // count_piece_actions
+  {
+    const auto p{get_test_piece()};
+    assert(count_piece_actions(p) == 0);
+  }
+  // describe_actions
+  {
+    const auto p{get_test_piece()};
+    assert(!describe_actions(p).empty());
+  }
+  // get_f_health
+  {
+    const auto p{get_test_piece()};
+    assert(get_f_health(p) == 1.0);
+  }
+  // has_actions
+  {
+    const auto p{get_test_piece()};
+    assert(!has_actions(p));
+  }
+  // is_idle
+  {
+    const auto p{get_test_piece()};
+    assert(is_idle(p));
+  }
+  // toggle_select
+  {
+    auto p{get_test_piece()};
+    assert(!p.is_selected());
+    toggle_select(p);
+    assert(p.is_selected());
+    toggle_select(p);
+    assert(!p.is_selected());
+  }
+#endif // NDEBUG
 }
 
 void piece::tick(const delta_t& dt)

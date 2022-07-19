@@ -19,6 +19,13 @@ private:
   double m_delta_t;
 };
 
+/// Get the default delta_t,
+/// which is the fraction of a full move that is done per tick,
+/// where
+///   * 0.01 means that only 1% of the full move is done
+///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
+double get_default_delta_t();
+
 /// Test this class and its free functions
 void test_delta_t();
 

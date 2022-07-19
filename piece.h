@@ -107,6 +107,9 @@ std::vector<piece> get_standard_starting_pieces() noexcept;
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept;
 
+/// Create a piece to be used in testing: a white king on E1
+piece get_test_piece() noexcept;
+
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;
 
@@ -115,6 +118,9 @@ bool is_idle(const piece& p) noexcept;
 
 /// Select the piece
 void select(piece& p) noexcept;
+
+/// Test this class and its free functions
+void test_piece();
 
 /// Select the piece
 void toggle_select(piece& p) noexcept;

@@ -93,13 +93,6 @@ private:
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& options) noexcept;
 
-/// Get the default delta_t,
-/// which is the fraction of a full move that is done per tick,
-/// where
-///   * 0.01 means that only 1% of the full move is done
-///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
-double get_default_delta_t();
-
 game_options get_default_game_options();
 
 /// Get the color of the keyboard using player
@@ -109,12 +102,21 @@ chess_color get_keyboard_user_player_color(const game_options& options);
 /// Get the color of the left player
 chess_color get_left_player_color(const game_options& options) noexcept;
 
+/// Get the controller of the left player
+controller_type get_left_player_controller(const game_options& options) noexcept;
+
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse
 chess_color get_mouse_user_player_color(const game_options& options);
 
 /// Get the color of the right player
 chess_color get_right_player_color(const game_options& options) noexcept;
+
+/// Get the controller of the right player
+controller_type get_right_player_controller(const game_options& options) noexcept;
+
+/// Test this class and its free functions
+void test_game_options();
 
 /// Toggle the color of the active player
 void toggle_player(game_options& options);

@@ -27,6 +27,9 @@ screen_coordinat get_center(const screen_rect& r) noexcept;
 int get_height(const screen_rect& r) noexcept;
 int get_width(const screen_rect& r) noexcept;
 
+/// Test this class and its free functions
+void test_screen_rect();
+
 screen_rect& operator+=(screen_rect& rect, const screen_coordinat& delta) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const screen_rect& r) noexcept;

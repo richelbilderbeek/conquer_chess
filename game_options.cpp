@@ -40,11 +40,6 @@ game_options get_default_game_options()
   );
 }
 
-double get_default_delta_t()
-{
-  return 0.0001;
-}
-
 chess_color get_keyboard_user_player_color(const game_options& options)
 {
   if (options.get_left_controller_type() == controller_type::keyboard)
@@ -58,6 +53,11 @@ chess_color get_keyboard_user_player_color(const game_options& options)
 chess_color get_left_player_color(const game_options& options) noexcept
 {
   return options.get_left_player_color();
+}
+
+controller_type get_left_player_controller(const game_options& options) noexcept
+{
+  return options.get_left_controller_type();
 }
 
 chess_color get_mouse_user_player_color(const game_options& options)
@@ -75,9 +75,29 @@ chess_color get_right_player_color(const game_options& options) noexcept
   return get_other_color(options.get_left_player_color());
 }
 
+controller_type get_right_player_controller(const game_options& options) noexcept
+{
+  return options.get_right_controller_type();
+}
+
 void game_options::set_left_player_color(const chess_color c) noexcept
 {
   m_left_player_color = c;
+}
+
+void test_game_options()
+{
+#ifndef NDEBUG
+  {
+    const auto options{get_default_game_options()};
+    assert(get_left_player_color(options) == chess_color::white);
+    assert(get_right_player_color(options) == chess_color::black);
+    assert(get_left_player_controller(options) == controller_type::keyboard);
+    assert(get_right_player_controller(options) == controller_type::mouse);
+    assert(get_keyboard_user_player_color(options) == chess_color::white);
+    assert(get_mouse_user_player_color(options) == chess_color::black);
+  }
+#endif // NDEBUG
 }
 
 void toggle_player(game_options& options)

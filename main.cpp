@@ -21,9 +21,12 @@ void test()
 #ifndef NDEBUG
   test_delta_t();
   test_controller_type();
+  test_piece_type();
+  test_screen_rect();
   test_piece_action_type();
   test_starting_position_type();
   test_chess_color();
+  test_game_options();
   test_game_coordinat();
   test_screen_coordinat();
   test_control_actions();
