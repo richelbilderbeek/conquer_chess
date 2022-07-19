@@ -427,16 +427,6 @@ void unselect_all_pieces(
   }
 }
 
-void resize_window(
-  game& g,
-  const screen_coordinat& window_size,
-  const int margin_width
-)
-{
-  resize(g.get_layout(), window_size, margin_width);
-}
-
-
 void test_game() //!OCLINT tests may be many
 {
 #ifndef NDEBUG // no tests in release

@@ -112,12 +112,13 @@ double get_square_width(const game_view_layout& layout) noexcept;
 std::vector<screen_rect> get_panels(const game_view_layout& layout);
 
 /// Resize the layout to a new size
+/*
 void resize(
   game_view_layout& g,
   const screen_coordinat& window_size,
   const int margin_width = get_default_margin_width()
 );
-
+*/
 
 /// Test the game_view_layout class
 void test_game_view_layout();

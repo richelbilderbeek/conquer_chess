@@ -178,14 +178,6 @@ bool is_piece_at(
   const double distance = 0.5
 );
 
-
-//// Resize the window of the game
-void resize_window(
-  game& g,
-  const screen_coordinat& window_size,
-  const int margin_width = get_default_margin_width()
-);
-
 /// Test this class and its free functions
 void test_game();
 

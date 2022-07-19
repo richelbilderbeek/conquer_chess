@@ -108,8 +108,7 @@ bool game_view::process_events()
       // From https://www.sfml-dev.org/tutorials/2.2/graphics-view.php#showing-more-when-the-window-is-resized
       const sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
       m_window.setView(sf::View(visibleArea));
-      resize_window(
-        m_game,
+      m_game.get_layout() = game_view_layout(
         screen_coordinat(
           static_cast<int>(event.size.width),
           static_cast<int>(event.size.height)
