@@ -108,6 +108,21 @@ options_view_layout::options_view_layout(
   );
 }
 
+const auto& options_view_layout::get_rect(const options_view_item item) const noexcept
+{
+  switch (item)
+  {
+    case options_view_item::game_speed: return m_game_speed_value;
+    case options_view_item::music_volume: return m_music_volume_value;
+    case options_view_item::starting_position: return m_starting_pos_value;
+    case options_view_item::left_color: return m_left_color_value;
+    case options_view_item::right_color: return m_right_color_value;
+    case options_view_item::left_controls: return m_left_controls_value;
+    default:
+    case options_view_item::right_controls: return m_right_controls_value;
+  }
+}
+
 std::vector<screen_rect> get_panels(const options_view_layout& layout)
 {
   return

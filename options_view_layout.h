@@ -3,6 +3,7 @@
 
 #include "screen_rect.h"
 #include "layout.h"
+#include "options_view_item.h"
 
 #include <vector>
 
@@ -39,6 +40,9 @@ public:
     const int margin_width = get_default_margin_width()
   );
 
+
+  /// Get a selectable item
+  const auto& get_rect(const options_view_item item) const noexcept;
 
   screen_rect get_game_speed_label() const noexcept { return m_game_speed_label; }
   screen_rect get_game_speed_value() const noexcept { return m_game_speed_value; }
