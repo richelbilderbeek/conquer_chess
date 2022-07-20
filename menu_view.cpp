@@ -11,9 +11,9 @@
 #include <iostream>
 
 menu_view::menu_view()
-  : m_options{get_default_game_options()}
+  : m_options{get_default_game_options()},
+    m_selected{menu_view_item::start}
 {
-  m_selected = m_layout.get_start();
 }
 
 void menu_view::exec()
@@ -83,25 +83,25 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
-        m_selected = get_previous(m_selected, m_layout);
+        m_selected = get_previous(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
-        m_selected = get_next(m_selected, m_layout);
+        m_selected = get_next(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
-        m_selected = get_next(m_selected, m_layout);
+        m_selected = get_next(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
-        m_selected = get_previous(m_selected, m_layout);
+        m_selected = get_previous(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
-        if (m_selected == m_layout.get_start()) exec_game();
-        else if (m_selected == m_layout.get_options()) exec_options();
-        else if (m_selected == m_layout.get_quit())
+        if (m_selected == menu_view_item::start) exec_game();
+        else if (m_selected == menu_view_item::options) exec_options();
+        else if (m_selected == menu_view_item::quit)
         {
           m_window.close();
           return true;
@@ -239,7 +239,8 @@ void show_quit_panel(menu_view& v)
 
 void show_selected_panel(menu_view& v)
 {
-  const auto select_rect{v.get_selected()};
+
+  const auto select_rect{v.get_layout().get_selectable_rect(v.get_selected())};
   sf::RectangleShape rectangle;
   set_rect(rectangle, select_rect);
   rectangle.setOrigin(

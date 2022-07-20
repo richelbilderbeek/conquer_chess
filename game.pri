@@ -12,6 +12,7 @@ HEADERS += \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
     $$PWD/layout.h \
+    $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
     $$PWD/options_view_layout.h \
     $$PWD/piece.h \
@@ -40,6 +41,7 @@ SOURCES += \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \
     $$PWD/layout.cpp \
+    $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \
     $$PWD/options_view_layout.cpp \
     $$PWD/piece.cpp \

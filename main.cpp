@@ -5,6 +5,7 @@
 #include "game_view.h"
 #include "game_view_layout.h"
 #include "menu_view.h"
+#include "menu_view_item.h"
 #include "menu_view_layout.h"
 #include "options_view_layout.h"
 #include "screen_coordinat.h"
@@ -27,6 +28,7 @@ void test()
   test_game_coordinat();
   test_game_options();
   test_game_view_layout();
+  test_menu_view_item();
   test_menu_view_layout();
   test_options_view_layout();
   test_piece();

@@ -1,6 +1,7 @@
 #ifndef MENU_VIEW_LAYOUT_H
 #define MENU_VIEW_LAYOUT_H
 
+#include "menu_view_item.h"
 #include "screen_rect.h"
 #include "layout.h"
 
@@ -57,13 +58,15 @@ public:
     const int margin_width = get_default_margin_width()
   );
 
+  /// Get a screen rect
+  const screen_rect& get_selectable_rect(const menu_view_item item) const noexcept;
 
-  screen_rect get_title() const noexcept { return m_title; }
-  screen_rect get_subtitle() const noexcept { return m_subtitle; }
-  screen_rect get_start() const noexcept { return m_start; }
-  screen_rect get_about() const noexcept { return m_about; }
-  screen_rect get_options() const noexcept { return m_options; }
-  screen_rect get_quit() const noexcept { return m_quit; }
+  const auto& get_title() const noexcept { return m_title; }
+  const auto& get_subtitle() const noexcept { return m_subtitle; }
+  const auto& get_start() const noexcept { return m_start; }
+  const auto& get_about() const noexcept { return m_about; }
+  const auto& get_options() const noexcept { return m_options; }
+  const auto& get_quit() const noexcept { return m_quit; }
 
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
@@ -80,14 +83,8 @@ private:
   screen_coordinat m_window_size;
 };
 
-/// Get the next panel
-screen_rect get_next(const screen_rect& there, const menu_view_layout& layout);
-
 /// Get the panels in the layout
 std::vector<screen_rect> get_panels(const menu_view_layout& layout);
-
-/// Get the previous panel
-screen_rect get_previous(const screen_rect& there, const menu_view_layout& layout);
 
 /// Resize the layout to a new size
 void resize(

@@ -7,6 +7,7 @@
 #include "game_options.h"
 #include "game_resources.h"
 #include "menu_view_layout.h"
+#include "menu_view_item.h"
 
 class menu_view
 {
@@ -39,7 +40,7 @@ private:
   game_resources m_resources;
 
   /// The selected item
-  screen_rect m_selected;
+  menu_view_item m_selected;
 
   /// Run the game
   void exec_game();
