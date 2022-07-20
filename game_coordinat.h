@@ -27,6 +27,22 @@ double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexc
 /// a.k.a. the distance between the coordinat and the origin
 double calc_length(const game_coordinat& coordinat) noexcept;
 
+/// Get the game coordinat one square above this one,
+/// i.e. when the player presses up
+game_coordinat get_above(const game_coordinat& coordinat) noexcept;
+
+/// Get the game coordinat one square below this one,
+/// i.e. when the player presses down
+game_coordinat get_below(const game_coordinat& coordinat) noexcept;
+
+/// Get the game coordinat one square left of this one,
+/// i.e. when the player presses left
+game_coordinat get_left(const game_coordinat& coordinat) noexcept;
+
+/// Get the game coordinat one square right of this one,
+/// i.e. when the player presses right
+game_coordinat get_right(const game_coordinat& coordinat) noexcept;
+
 void test_game_coordinat();
 
 /// center a coordinat on the center of a square,

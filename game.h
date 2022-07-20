@@ -90,6 +90,12 @@ private:
     const chess_color player_color
   );
 
+  /// Get the position of the player that uses the keyboard
+  game_coordinat& get_keyboard_player_pos();
+
+  /// Get the position of the player that uses the mouse
+  game_coordinat& get_mouse_player_pos();
+
   /// Process an M or right-mouse-button down
   void start_move_unit(
     const game_coordinat& coordinat,

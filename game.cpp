@@ -297,6 +297,26 @@ int get_index_of_closest_piece_to(
   return index;
 }
 
+game_coordinat& game::get_keyboard_player_pos()
+{
+  if (get_left_player_controller(m_options) == controller_type::keyboard)
+  {
+    return m_player_1_pos;
+  }
+  assert(get_right_player_controller(m_options) == controller_type::keyboard);
+  return m_player_2_pos;
+}
+
+game_coordinat& game::get_mouse_player_pos()
+{
+  if (get_left_player_controller(m_options) == controller_type::mouse)
+  {
+    return m_player_1_pos;
+  }
+  assert(get_right_player_controller(m_options) == controller_type::mouse);
+  return m_player_2_pos;
+}
+
 std::vector<piece> get_selected_pieces(
   const game& g,
   const chess_color player
@@ -352,54 +372,49 @@ void game::tick()
     }
     else if (action.get_type() == control_action_type::press_down)
     {
-      m_player_1_pos += game_coordinat(0.0, 1.0);
-      if (m_player_1_pos.get_y() > 8.0)
-      {
-        m_player_1_pos += game_coordinat(0.0, -8.0);
-      }
+      auto& pos{get_keyboard_player_pos()};
+      pos = get_below(pos);
     }
     else if (action.get_type() == control_action_type::press_left)
     {
-      m_player_1_pos += game_coordinat(-1.0, 0);
-      if (m_player_1_pos.get_x() < 0.0)
-      {
-        m_player_1_pos += game_coordinat(8.0, 0.0);
-      }
+      auto& pos{get_keyboard_player_pos()};
+      pos = get_left(pos);
     }
     else if (action.get_type() == control_action_type::press_move)
     {
       start_move_unit(
-        m_player_1_pos,
+        get_keyboard_player_pos(),
         get_keyboard_user_player_color(m_options)
       );
     }
     else if (action.get_type() == control_action_type::press_right)
     {
-      m_player_1_pos += game_coordinat(1.0, 0);
-      if (m_player_1_pos.get_x() > 8.0)
-      {
-        m_player_1_pos += game_coordinat(-8.0, 0.0);
-      }
+      auto& pos{get_keyboard_player_pos()};
+      pos = get_right(pos);
     }
     else if (action.get_type() == control_action_type::press_select)
     {
-      do_select(m_player_1_pos, chess_color::white);
+      do_select(
+        get_keyboard_player_pos(),
+        get_keyboard_user_player_color(m_options)
+      );
     }
     else if (action.get_type() == control_action_type::press_up)
     {
-      m_player_1_pos += game_coordinat(0.0, -1.0);
-      if (m_player_1_pos.get_y() < 0.0)
-      {
-        m_player_1_pos += game_coordinat(0.0, 8.0);
-      }
+      auto& pos{get_keyboard_player_pos()};
+      pos = get_above(pos);
     }
     else if (action.get_type() == control_action_type::mouse_move)
     {
-      m_player_2_pos = action.get_coordinat();
+      auto& pos{get_mouse_player_pos()};
+      pos = action.get_coordinat();
     }
     else if (action.get_type() == control_action_type::lmb_down)
     {
-      do_select(action.get_coordinat(), chess_color::black);
+      do_select(
+        action.get_coordinat(),
+        get_mouse_user_player_color(m_options)
+      );
     }
     else if (action.get_type() == control_action_type::rmb_down)
     {
