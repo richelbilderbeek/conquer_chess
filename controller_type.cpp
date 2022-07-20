@@ -1,6 +1,7 @@
 #include "controller_type.h"
 
 #include <cassert>
+#include <iostream>
 
 controller_type get_next(const controller_type t) noexcept
 {
@@ -27,3 +28,8 @@ std::string to_str(const controller_type t) noexcept
   return "keyboard";
 }
 
+std::ostream& operator<<(std::ostream& os, const controller_type t) noexcept
+{
+  os << to_str(t);
+  return os;
+}

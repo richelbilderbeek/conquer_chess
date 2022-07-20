@@ -1,6 +1,7 @@
 #ifndef CONTROLLER_TYPE_H
 #define CONTROLLER_TYPE_H
 
+#include <iosfwd>
 #include <string>
 
 /// The type of controller
@@ -18,5 +19,7 @@ controller_type get_next(const controller_type t) noexcept;
 void test_controller_type();
 
 std::string to_str(const controller_type t) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const controller_type t) noexcept;
 
 #endif // CONTROLLER_TYPE_H

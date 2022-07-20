@@ -542,7 +542,7 @@ void test_game() //!OCLINT tests may be many
     g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(1.0, 1.0)));
+    g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(-1.0, 1.0)));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 1);
   }

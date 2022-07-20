@@ -351,8 +351,11 @@ void show_debug_1(game_view& view)
   const piece& closest_piece{
     game.get_closest_piece_to(game.get_player_1_pos())
   };
+  const auto color{get_left_player_color(game.get_options())};
   std::stringstream s;
-  s << "Game position: "
+  s << "Color: " << color << '\n'
+    << "Controller: " << get_left_player_controller(view.get_game().get_options()) << '\n'
+    << "Game position: "
     << game.get_player_1_pos()
     << '\n'
     << "Screen position: "
@@ -363,8 +366,8 @@ void show_debug_1(game_view& view)
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_game_actions(game) << '\n'
-    << "Number of selected units: " << count_selected_units(game, chess_color::white) << '\n'
-    << "Number of piece actions: " << count_piece_actions(game, chess_color::white) << '\n'
+    << "Number of selected units: " << count_selected_units(game, color) << '\n'
+    << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
   ;
 
   text.setString(s.str());
@@ -385,8 +388,11 @@ void show_debug_2(game_view& view)
   const piece& closest_piece{
     game.get_closest_piece_to(game.get_player_2_pos())
   };
+  const auto color{get_right_player_color(game.get_options())};
   std::stringstream s;
-  s << "Game position: "
+  s << "Color: " << color << '\n'
+    << "Controller: " << get_right_player_controller(game.get_options()) << '\n'
+    << "Game position: "
     << game.get_player_2_pos()
     << '\n'
     << "Screen position: "
@@ -397,8 +403,8 @@ void show_debug_2(game_view& view)
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_game_actions(game) << '\n'
-    << "Number of selected units: " << count_selected_units(game, chess_color::black) << '\n'
-    << "Number of piece actions: " << count_piece_actions(game, chess_color::black) << '\n'
+    << "Number of selected units: " << count_selected_units(game, color) << '\n'
+    << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
   ;
 
   text.setString(s.str());

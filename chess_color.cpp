@@ -1,6 +1,7 @@
 #include "chess_color.h"
 
 #include <cassert>
+#include <iostream>
 
 chess_color get_other_color(const chess_color c) noexcept
 {
@@ -30,4 +31,10 @@ std::string to_str(const chess_color c) noexcept
   if (c == chess_color::white) return "white";
   assert(c == chess_color::black);
   return "black";
+}
+
+std::ostream& operator<<(std::ostream& os, const chess_color c) noexcept
+{
+  os << to_str(c);
+  return os;
 }

@@ -69,7 +69,7 @@ game_coordinat get_left(const game_coordinat& coordinat) noexcept
 game_coordinat get_right(const game_coordinat& coordinat) noexcept
 {
   game_coordinat pos{coordinat + game_coordinat(1.0, 0.0)};
-  if (pos.get_x() > 0.0)
+  if (pos.get_x() > 8.0)
   {
     pos += game_coordinat(-8.0, 0.0);
   }
