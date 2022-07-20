@@ -90,6 +90,57 @@ void game_view::exec()
   }
 }
 
+std::string get_controls_text_1(const game_view& view)
+{
+  return get_controls_text(
+    view,
+    get_left_player_color(view.get_game().get_options()),
+    get_left_player_controller(view.get_game().get_options())
+  );
+}
+
+std::string get_controls_text_2(const game_view& view)
+{
+  return get_controls_text(
+    view,
+    get_right_player_color(view.get_game().get_options()),
+    get_right_player_controller(view.get_game().get_options())
+  );
+}
+
+std::string get_controls_text(
+  const game_view& view,
+  const chess_color player,
+  const controller_type controller
+)
+{
+  const auto& selected_units = get_selected_pieces(view.get_game(), player);
+  std::stringstream s;
+  if (controller == controller_type::keyboard)
+  {
+    if (selected_units.empty()) {
+      s << "SPACE: select a unit";
+    } else {
+      s << "SPACE: select a unit\n"
+        << "M: move selected unit to square"
+      ;
+    }
+  }
+  else
+  {
+    assert(controller == controller_type::mouse);
+    if (selected_units.empty()) {
+      s << "LMB: select a unit";
+    } else {
+      s << "LMB: select a unit\n"
+        << "RMB: move selected unit to square"
+      ;
+    }
+
+  }
+  return s.str();
+}
+
 void game_view::play_sound_effects()
 {
   for (const auto sound_effect: m_game.get_sound_effects())
@@ -267,18 +318,7 @@ void show_controls_1(game_view& view)
   sf::Text text;
   text.setFont(view.get_game_resources().get_font());
   std::stringstream s;
-  const auto& selected_units = get_selected_pieces(
-    view.get_game(),
-    get_left_player_color(view.get_game().get_options())
-  );
-  if (selected_units.empty()) {
-    s << "SPACE: select a unit";
-  } else {
-    s << "SPACE: select a unit\n"
-      << "M: move selected unit to square"
-    ;
-  }
-  text.setString(s.str());
+  text.setString(get_controls_text_1(view));
   text.setCharacterSize(20);
   text.setPosition(
     layout.get_controls_1().get_tl().get_x(),
@@ -293,18 +333,7 @@ void show_controls_2(game_view& view)
   sf::Text text;
   text.setFont(view.get_game_resources().get_font());
   std::stringstream s;
-  const auto& selected_units = get_selected_pieces(
-    view.get_game(),
-    get_right_player_color(view.get_game().get_options())
-  );
-  if (selected_units.empty()) {
-    s << "LMB: select a unit";
-  } else {
-    s << "LMB: select a unit\n"
-      << "RMB: move selected unit to square"
-    ;
-  }
-  text.setString(s.str());
+  text.setString(get_controls_text_2(view));
   text.setCharacterSize(20);
   text.setPosition(
     layout.get_controls_2().get_tl().get_x(),
