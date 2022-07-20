@@ -13,7 +13,7 @@ volume::volume(const int volume_in_percent)
 volume get_next(const volume& v) noexcept
 {
   return volume(
-    (v.get_percentage() + 1) % 100
+    (v.get_percentage() + 1) % 101
   );
 }
 

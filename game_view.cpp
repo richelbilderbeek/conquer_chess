@@ -269,7 +269,7 @@ void show_controls_1(game_view& view)
   std::stringstream s;
   const auto& selected_units = get_selected_pieces(
     view.get_game(),
-    chess_color::black
+    get_left_player_color(view.get_game().get_options())
   );
   if (selected_units.empty()) {
     s << "SPACE: select a unit";
@@ -295,7 +295,7 @@ void show_controls_2(game_view& view)
   std::stringstream s;
   const auto& selected_units = get_selected_pieces(
     view.get_game(),
-    chess_color::black
+    get_right_player_color(view.get_game().get_options())
   );
   if (selected_units.empty()) {
     s << "LMB: select a unit";
