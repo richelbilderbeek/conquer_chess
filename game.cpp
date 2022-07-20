@@ -307,6 +307,16 @@ game_coordinat& game::get_keyboard_player_pos()
   return m_player_2_pos;
 }
 
+game_coordinat get_keyboard_player_pos(const game& g)
+{
+  if (get_left_player_controller(g.get_options()) == controller_type::keyboard)
+  {
+    return g.get_player_1_pos();
+  }
+  assert(get_right_player_controller(g.get_options()) == controller_type::keyboard);
+  return g.get_player_2_pos();
+}
+
 game_coordinat& game::get_mouse_player_pos()
 {
   if (get_left_player_controller(m_options) == controller_type::mouse)
@@ -315,6 +325,16 @@ game_coordinat& game::get_mouse_player_pos()
   }
   assert(get_right_player_controller(m_options) == controller_type::mouse);
   return m_player_2_pos;
+}
+
+game_coordinat get_mouse_player_pos(const game& g)
+{
+  if (get_left_player_controller(g.get_options()) == controller_type::mouse)
+  {
+    return g.get_player_1_pos();
+  }
+  assert(get_right_player_controller(g.get_options()) == controller_type::mouse);
+  return g.get_player_2_pos();
 }
 
 std::vector<piece> get_selected_pieces(

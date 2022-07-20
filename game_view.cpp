@@ -419,6 +419,7 @@ void show_debug_2(game_view& view)
 void game_view::show_mouse_cursor()
 {
   const auto& layout = m_game.get_layout();
+
   sf::CircleShape cursor;
   cursor.setRadius(16.0);
   cursor.setFillColor(sf::Color::Transparent);
@@ -428,7 +429,7 @@ void game_view::show_mouse_cursor()
   cursor.setOrigin(16.0, 16.0);
   const screen_coordinat cursor_pos{
     convert_to_screen_coordinat(
-      m_game.get_player_2_pos(),
+      get_mouse_player_pos(m_game),
       layout
     )
   };

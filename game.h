@@ -159,6 +159,12 @@ int get_index_of_closest_piece_to(
   const game_coordinat& coordinat
 );
 
+/// Get the position of the player that uses the keyboard
+game_coordinat get_keyboard_player_pos(const game& g);
+
+/// Get the position of the player that uses the mouse
+game_coordinat get_mouse_player_pos(const game& g);
+
 /// Get all the selected pieces
 /// @param g a game
 /// @param player the color of the player, which is white for player 1
