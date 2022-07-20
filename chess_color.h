@@ -9,7 +9,7 @@ enum class chess_color
 };
 
 /// Get the other color
-chess_color get_other_color(const chess_color c);
+chess_color get_other_color(const chess_color c) noexcept;
 
 /// Test the chess_color functions
 void test_chess_color();

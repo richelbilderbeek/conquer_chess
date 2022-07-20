@@ -12,7 +12,8 @@
 #include <sstream>
 
 options_view::options_view(const game_options& options)
-  : m_options{options}
+  : m_options{options},
+    m_selected{options_view_item::game_speed}
 {
 
 }
@@ -74,23 +75,45 @@ bool options_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
-        //m_game.add_action(create_press_up_action());
+        m_selected = get_above(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
-        //m_game.add_action(create_press_right_action());
+        m_selected = get_right_of(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
-        //m_game.add_action(create_press_down_action());
+        m_selected = get_below(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
-        //m_game.add_action(create_press_left_action());
+        m_selected = get_left_of(m_selected);
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
-        //m_game.add_action(create_press_select_action());
+        switch (m_selected)
+        {
+          case options_view_item::game_speed:
+            m_options.set_delta_t(get_next(m_options.get_delta_t()));
+          break;
+          case options_view_item::music_volume:
+            m_options.set_volume(get_next(m_options.get_volume()));
+          break;
+          case options_view_item::starting_position:
+            m_options.set_starting_position(get_next(m_options.get_starting_position()));
+          break;
+          case options_view_item::left_color:
+          case options_view_item::right_color:
+            m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
+          break;
+          case options_view_item::left_controls:
+            m_options.set_left_controller_type(get_next(m_options.get_left_controller_type()));
+          break;
+          case options_view_item::right_controls:
+            m_options.set_right_controller_type(get_next(m_options.get_right_controller_type()));
+          break;
+        }
+
       }
       else if (key_pressed == sf::Keyboard::Key::M)
       {
@@ -124,9 +147,9 @@ void options_view::show()
   m_window.clear();
 
   show_panels(*this);
-
   show_top(*this);
   show_bottom(*this);
+  show_selected_panel(*this);
 
   // Display all shapes
   m_window.display();
@@ -424,6 +447,25 @@ void show_music_volume(options_view& v)
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
+}
+
+void show_selected_panel(options_view& v)
+{
+  const auto select_rect{
+    v.get_layout().get_selectable_rect(
+      v.get_selected()
+    )
+  };
+  sf::RectangleShape rectangle;
+  set_rect(rectangle, select_rect);
+  rectangle.setOrigin(
+    get_width(select_rect) / 2,
+    get_height(select_rect) / 2
+  );
+  rectangle.setFillColor(sf::Color::Transparent);
+  rectangle.setOutlineColor(sf::Color::Red);
+  rectangle.setOutlineThickness(5);
+  v.get_window().draw(rectangle);
 }
 
 #endif // LOGIC_ONLY

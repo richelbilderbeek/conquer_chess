@@ -26,7 +26,8 @@ HEADERS += \
     $$PWD/sound_effect_type.h \
     $$PWD/sound_effects.h \
     $$PWD/starting_position_type.h \
-    $$PWD/textures.h
+    $$PWD/textures.h \
+    $$PWD/volume.h
 
 
 SOURCES += \
@@ -56,7 +57,8 @@ SOURCES += \
     $$PWD/sound_effect_type.cpp \
     $$PWD/sound_effects.cpp \
     $$PWD/starting_position_type.cpp \
-    $$PWD/textures.cpp
+    $$PWD/textures.cpp \
+    $$PWD/volume.cpp
 
 RESOURCES += \
     $$PWD/game_resources.qrc

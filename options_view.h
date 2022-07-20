@@ -5,6 +5,7 @@
 
 #include "game_options.h"
 #include "options_view_layout.h"
+#include "options_view_item.h"
 #include "game_resources.h"
 
 #include <SFML/Graphics.hpp>
@@ -23,6 +24,8 @@ public:
 
   auto& get_resources() noexcept { return m_resources; }
 
+  options_view_item get_selected() const noexcept { return m_selected; }
+
   const auto& get_window() const noexcept { return m_window; }
 
   auto& get_window() noexcept { return m_window; }
@@ -38,6 +41,9 @@ private:
   game_options m_options;
 
   game_resources m_resources;
+
+  /// The selected item
+  options_view_item m_selected;
 
   /// The window to draw to
   sf::RenderWindow m_window;
@@ -73,6 +79,9 @@ void show_music_volume(options_view& v);
 void show_panels(options_view& v);
 
 void show_starting_position(options_view& v);
+
+/// Show the selected panel
+void show_selected_panel(options_view& v);
 
 /// Show the top part
 void show_top(options_view& v);

@@ -108,7 +108,7 @@ options_view_layout::options_view_layout(
   );
 }
 
-const auto& options_view_layout::get_rect(const options_view_item item) const noexcept
+const screen_rect& options_view_layout::get_selectable_rect(const options_view_item item) const noexcept
 {
   switch (item)
   {

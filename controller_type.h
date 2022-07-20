@@ -10,6 +10,10 @@ enum class controller_type
   mouse
 };
 
+/// Get the next controller type,
+/// i.e. when the player presses right
+controller_type get_next(const controller_type t) noexcept;
+
 /// Test this class and its free functions
 void test_controller_type();
 

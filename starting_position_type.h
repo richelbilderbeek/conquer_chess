@@ -12,6 +12,10 @@ enum class starting_position_type
 
 constexpr starting_position_type get_default_starting_position() { return starting_position_type::standard; }
 
+/// Get the next starting position,
+/// i.e. when the user presses right
+starting_position_type get_next(const starting_position_type starting_position) noexcept;
+
 /// Test this class and its free functions
 void test_starting_position_type();
 

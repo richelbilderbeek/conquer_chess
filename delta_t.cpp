@@ -14,6 +14,14 @@ double get_default_delta_t()
   return 0.0001;
 }
 
+delta_t get_next(const delta_t& dt) noexcept
+{
+  if (dt.get() <= 0.001) return 0.01;
+  if (dt.get() <= 0.01) return 0.1;
+  if (dt.get() <= 0.1) return 1.0;
+  return 0.001;
+}
+
 void test_delta_t()
 {
 #ifndef NDEBUG

@@ -8,6 +8,7 @@
 #include "piece.h"
 #include "screen_coordinat.h"
 #include "starting_position_type.h"
+#include "volume.h"
 
 /// Options for the game, such as speed
 class game_options
@@ -51,10 +52,29 @@ public:
   /// Get the starting position
   auto get_starting_position() const noexcept { return m_starting_position; }
 
+  /// Get the volume, as a percentage
   auto get_volume() const noexcept { return m_volume; }
+
+  /// Set the fraction of a full move that is done per tick,
+  /// where
+  ///   * 0.01 means that only 1% of the full move is done
+  ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
+  void set_delta_t(const delta_t& dt) noexcept { m_delta_t = dt; }
 
   /// Set the color of the player
   void set_left_player_color(const chess_color c) noexcept;
+
+  /// Set the controller type for the left player
+  void set_left_controller_type(const controller_type t) noexcept;
+
+  /// Set the controller type for the right player
+  void set_right_controller_type(const controller_type t) noexcept;
+
+  /// Set the starting position
+  void set_starting_position(const starting_position_type starting_position) noexcept { m_starting_position = starting_position; }
+
+  /// Set the volume, as a percentage
+  void set_volume(const volume& v) noexcept { m_volume = v; }
 
 private:
 
@@ -86,8 +106,8 @@ private:
   /// The starting position
   starting_position_type m_starting_position;
 
-  /// Volume in percent: 0.0 is silent, 100 is loudest
-  double m_volume;
+  /// Volume in percent: 0 is silent, 100 is loudest
+  volume m_volume;
 };
 
 /// Are selected squares shown on-screen?

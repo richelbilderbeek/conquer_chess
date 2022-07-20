@@ -19,7 +19,9 @@
 game_view::game_view(const game& game)
   : m_game{game}
 {
-  m_game_resources.get_ninja_gods().setVolume(m_game.get_options().get_volume());
+  m_game_resources.get_ninja_gods().setVolume(
+    static_cast<float>(m_game.get_options().get_volume().get_percentage())
+  );
   m_game_resources.get_ninja_gods().play();
 }
 

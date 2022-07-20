@@ -15,13 +15,11 @@ game_options::game_options(
     m_right_controller_type{controller_type::mouse},
     m_screen_size{screen_size},
     m_starting_position{starting_position},
-    m_volume{0.0}
+    m_volume{0}
 {
   assert(m_margin_width >= 0);
   assert(m_screen_size.get_x() > 0);
   assert(m_screen_size.get_y() > 0);
-  assert(m_volume >= 0.0);
-  assert(m_volume <= 100.0);
   assert(::get_keyboard_user_player_color(*this) != ::get_mouse_user_player_color(*this));
 }
 
@@ -83,6 +81,24 @@ controller_type get_right_player_controller(const game_options& options) noexcep
 void game_options::set_left_player_color(const chess_color c) noexcept
 {
   m_left_player_color = c;
+}
+
+void game_options::set_left_controller_type(const controller_type t) noexcept
+{
+  m_left_controller_type = t;
+  if (m_right_controller_type == t)
+  {
+    m_right_controller_type = get_next(m_right_controller_type);
+  }
+}
+
+void game_options::set_right_controller_type(const controller_type t) noexcept
+{
+  m_right_controller_type = t;
+  if (m_left_controller_type == t)
+  {
+    m_left_controller_type = get_next(m_left_controller_type);
+  }
 }
 
 void test_game_options()

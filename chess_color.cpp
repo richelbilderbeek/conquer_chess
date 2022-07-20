@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-chess_color get_other_color(const chess_color c)
+chess_color get_other_color(const chess_color c) noexcept
 {
   if (c == chess_color::white) return chess_color::black;
   assert(c == chess_color::black);

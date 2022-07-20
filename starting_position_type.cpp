@@ -2,6 +2,17 @@
 
 #include <cassert>
 
+starting_position_type get_next(const starting_position_type starting_position) noexcept
+{
+  if (starting_position == starting_position_type::standard)
+  {
+    return starting_position_type::kings_only;
+  }
+  assert(starting_position == starting_position_type::kings_only);
+  return starting_position_type::standard;
+}
+
+
 void test_starting_position_type()
 {
 #ifndef NDEBUG
