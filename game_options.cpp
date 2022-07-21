@@ -115,6 +115,7 @@ std::vector<piece> get_starting_pieces(
 void test_game_options()
 {
 #ifndef NDEBUG
+  // default game_options
   {
     const auto options{get_default_game_options()};
     assert(get_left_player_color(options) == chess_color::white);
@@ -125,6 +126,32 @@ void test_game_options()
     assert(get_mouse_user_player_color(options) == chess_color::black);
     assert(options.do_show_selected() || !options.do_show_selected());
     assert(options.get_click_distance() > 0.0);
+  }
+  // game_options with left/keyboard player being black
+  {
+    auto options{get_default_game_options()};
+    options.set_left_player_color(chess_color::black);
+    assert(get_left_player_color(options) == chess_color::black);
+    assert(get_right_player_color(options) == chess_color::white);
+    assert(get_keyboard_user_player_color(options) == chess_color::black);
+    assert(get_mouse_user_player_color(options) == chess_color::white);
+  }
+  // game_options with left player using mouse (instead of keyboard)
+  {
+    auto options{get_default_game_options()};
+    options.set_left_controller_type(controller_type::mouse);
+    assert(get_keyboard_user_player_color(options) == chess_color::black);
+    assert(get_mouse_user_player_color(options) == chess_color::white);
+  }
+  // game_options with left player being black and using mouse
+  {
+    auto options{get_default_game_options()};
+    options.set_left_player_color(chess_color::black);
+    options.set_left_controller_type(controller_type::mouse);
+    assert(get_left_player_color(options) == chess_color::black);
+    assert(get_right_player_color(options) == chess_color::white);
+    assert(get_keyboard_user_player_color(options) == chess_color::white);
+    assert(get_mouse_user_player_color(options) == chess_color::black);
   }
 #endif // NDEBUG
 }
