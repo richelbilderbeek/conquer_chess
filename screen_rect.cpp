@@ -73,6 +73,18 @@ void test_screen_rect()
     assert(c.get_x() == 6);
     assert(c.get_y() == 3);
   }
+  // is_in
+  {
+    const screen_rect r(
+      screen_coordinat(10, 20),
+      screen_coordinat(100, 200)
+    );
+    assert(is_in(screen_coordinat(50, 60), r));
+    assert(!is_in(screen_coordinat(0, 60), r));
+    assert(!is_in(screen_coordinat(1000, 60), r));
+    assert(!is_in(screen_coordinat(50, 0), r));
+    assert(!is_in(screen_coordinat(60, 600), r));
+  }
   // operator==
   {
     const screen_rect a;

@@ -37,6 +37,14 @@ void test_piece_action()
     s << a;
     assert(!s.str().empty());
   }
+  // operator==
+  {
+    const piece_action a(piece_action_type::move, game_coordinat());
+    const piece_action b(piece_action_type::move, game_coordinat());
+    const piece_action c(piece_action_type::attack, game_coordinat());
+    assert(a == b);
+    assert(!(a == c));
+  }
 #endif // DEBUG
 }
 
