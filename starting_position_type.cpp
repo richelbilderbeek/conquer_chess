@@ -21,6 +21,11 @@ void test_starting_position_type()
     assert(to_str(starting_position_type::standard) == "standard");
     assert(to_str(starting_position_type::kings_only) == "kings_only");
   }
+  // get_next
+  {
+    assert(get_next(starting_position_type::standard) == starting_position_type::kings_only);
+    assert(get_next(starting_position_type::kings_only) == starting_position_type::standard);
+  }
 #endif // DEBUG
 }
 

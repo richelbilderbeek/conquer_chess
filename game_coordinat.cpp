@@ -1,5 +1,7 @@
 #include "game_coordinat.h"
 
+#include "helper.h"
+
 #include <cassert>
 #include <cmath>
 #include <iostream>
@@ -87,6 +89,69 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept
 void test_game_coordinat()
 {
   #ifndef NDEBUG
+  // get
+  {
+    const double x{12.34};
+    const double y{23.45};
+    const game_coordinat c(x, y);
+    assert(c.get_x() == x);
+    assert(c.get_y() == y);
+  }
+  // get_above
+  {
+    const game_coordinat c(3.5, 3.5);
+    const auto above{get_above(c)};
+    assert(above.get_y() < c.get_y());
+  }
+  // get_above loops
+  {
+    const game_coordinat c(3.5, 0.5);
+    const auto above{get_above(c)};
+    assert(above.get_y() > c.get_y());
+  }
+  // get_below
+  {
+    const game_coordinat c(3.5, 3.5);
+    const auto below{get_below(c)};
+    assert(below.get_y() > c.get_y());
+  }
+  // get_below loops
+  {
+    const game_coordinat c(3.5, 7.5);
+    const auto below{get_below(c)};
+    assert(below.get_y() < c.get_y());
+  }
+  // get_left
+  {
+    const game_coordinat c(3.5, 3.5);
+    const auto left{get_left(c)};
+    assert(left.get_x() < c.get_x());
+  }
+  // get_left loops
+  {
+    const game_coordinat c(0.5, 3.5);
+    const auto left{get_left(c)};
+    assert(left.get_x() > c.get_x());
+  }
+  // get_right
+  {
+    const game_coordinat c(3.5, 3.5);
+    const auto right{get_right(c)};
+    assert(right.get_x() > c.get_x());
+  }
+  // get_right loops
+  {
+    const game_coordinat c(7.5, 3.5);
+    const auto right{get_right(c)};
+    assert(right.get_x() < c.get_x());
+  }
+  // get_rotated_coordinat
+  {
+    const game_coordinat c(1.5, 2.5);
+    const auto rotated{get_rotated_coordinat(c)};
+    assert(is_close(rotated.get_x(), 6.5, 0.1));
+    assert(is_close(rotated.get_y(), 5.5, 0.1));
+  }
   // operator ==
   {
     const game_coordinat a(1.2345, 6.7890);
