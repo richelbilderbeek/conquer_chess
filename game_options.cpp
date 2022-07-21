@@ -153,6 +153,16 @@ void test_game_options()
     assert(get_keyboard_user_player_color(options) == chess_color::white);
     assert(get_mouse_user_player_color(options) == chess_color::black);
   }
+  // set_right_controller_type
+  {
+    auto options{get_default_game_options()};
+    options.set_right_controller_type(controller_type::keyboard);
+    assert(options.get_left_controller_type() == controller_type::mouse);
+    assert(options.get_right_controller_type() == controller_type::keyboard);
+    options.set_right_controller_type(controller_type::mouse);
+    assert(options.get_left_controller_type() == controller_type::keyboard);
+    assert(options.get_right_controller_type() == controller_type::mouse);
+  }
 #endif // NDEBUG
 }
 
