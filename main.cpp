@@ -30,6 +30,7 @@ void test()
   test_game_view_layout();
   test_menu_view_item();
   test_menu_view_layout();
+  test_options_view_item();
   test_options_view_layout();
   test_piece();
   test_piece_action();

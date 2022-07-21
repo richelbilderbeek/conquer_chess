@@ -29,4 +29,7 @@ options_view_item get_left_of(const options_view_item item) noexcept;
 /// i.e. the item when the user presses right
 options_view_item get_right_of(const options_view_item item) noexcept;
 
+/// Test this class and free functions
+void test_options_view_item();
+
 #endif // OPTIONS_VIEW_ITEM_H
