@@ -1,88 +1,33 @@
 #include "sound_effects.h"
 
+#include <functional>
 #include <QFile>
 
 #ifndef LOGIC_ONLY
 
 sound_effects::sound_effects()
 {
+  const std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> v = {
+    std::make_tuple(std::ref(m_faring_into_battle), std::ref(m_faring_into_battle_buffer), "faring_into_battle.ogg"),
+    std::make_tuple(std::ref(m_hide), std::ref(m_hide_buffer), "hide.ogg"),
+    std::make_tuple(std::ref(m_its_time_to_rock), std::ref(m_its_time_to_rock_buffer), "its_time_to_rock.ogg"),
+    std::make_tuple(std::ref(m_jumping_into_battle), std::ref(m_jumping_into_battle_buffer), "jumping_into_battle.ogg"),
+    std::make_tuple(std::ref(m_lets_rule), std::ref(m_lets_rule_buffer), "lets_rule.ogg"),
+    std::make_tuple(std::ref(m_moving_forward), std::ref(m_moving_forward_buffer), "moving_forward.ogg"),
+    std::make_tuple(std::ref(m_to_rule_is_to_act), std::ref(m_to_rule_is_to_act_buffer), "to_rule_is_to_act.ogg")
+  };
+  for (const auto& p: v)
   {
-    const QString filename{"faring_into_battle.ogg"};
+    const QString filename{std::get<2>(p).c_str()};
     QFile f(":/resources/" + filename);
     f.copy(filename);
-    if (!m_faring_into_battle_buffer.loadFromFile(filename.toStdString()))
+    if (!std::get<1>(p).get().loadFromFile(filename.toStdString()))
     {
       QString msg{"Cannot find sound file '" + filename + "'"};
       throw std::runtime_error(msg.toStdString());
     }
+    std::get<0>(p).get().setBuffer(std::get<1>(p).get());
   }
-  {
-    const QString filename{"hide.ogg"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_hide_buffer.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find sound file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  {
-    const QString filename{"its_time_to_rock.ogg"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_its_time_to_rock_buffer.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find sound file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  {
-    const QString filename{"jumping_into_battle.ogg"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_jumping_into_battle_buffer.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find sound file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  {
-    const QString filename{"lets_rule.ogg"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_lets_rule_buffer.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find sound file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  {
-    const QString filename{"moving_forward.ogg"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_moving_forward_buffer.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find sound file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  {
-    const QString filename{"to_rule_is_to_act.ogg"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_to_rule_is_to_act_buffer.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find sound file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  m_faring_into_battle.setBuffer(m_faring_into_battle_buffer);
-  m_hide.setBuffer(m_hide_buffer);
-  m_its_time_to_rock.setBuffer(m_its_time_to_rock_buffer);
-  m_jumping_into_battle.setBuffer(m_jumping_into_battle_buffer);
-  m_lets_rule.setBuffer(m_lets_rule_buffer);
-  m_moving_forward.setBuffer(m_moving_forward_buffer);
-  m_to_rule_is_to_act.setBuffer(m_to_rule_is_to_act_buffer);
 }
 
 void sound_effects::play(const sound_effect& effect)

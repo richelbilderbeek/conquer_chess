@@ -29,6 +29,28 @@ private:
   sf::Sound m_moving_forward;
   sf::Sound m_to_rule_is_to_act;
 
+  sf::Sound m_heu_high;
+  sf::Sound m_heu_low;
+  sf::Sound m_heu_mid;
+  sf::Sound m_hmm_high;
+  sf::Sound m_hmm_low;
+  sf::Sound m_hmm_mid;
+  sf::Sound m_i_cannot_high;
+  sf::Sound m_i_cannot_low;
+  sf::Sound m_i_cannot_mid;
+  sf::Sound m_i_cant_high;
+  sf::Sound m_i_cant_low;
+  sf::Sound m_i_cant_mid;
+  sf::Sound m_no_high;
+  sf::Sound m_no_low;
+  sf::Sound m_no_mid;
+  sf::Sound m_nope_high;
+  sf::Sound m_nope_low;
+  sf::Sound m_nope_mid;
+  sf::Sound m_yes_high;
+  sf::Sound m_yes_low;
+  sf::Sound m_yes_mid;
+
   sf::SoundBuffer m_faring_into_battle_buffer;
   sf::SoundBuffer m_hide_buffer;
   sf::SoundBuffer m_its_time_to_rock_buffer;
