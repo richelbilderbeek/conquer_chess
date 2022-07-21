@@ -53,12 +53,12 @@ delta_t to_delta_t(const game_speed speed) noexcept
 {
   switch (speed)
   {
-    case game_speed::fastest: return delta_t(1.0);
-    case game_speed::fast: return delta_t(0.1);
-    case game_speed::normal: return delta_t(0.01);
-    case game_speed::slow: return delta_t(0.001);
+    case game_speed::fastest: return delta_t(1.0 / 50.0);
+    case game_speed::fast: return delta_t(0.1 / 50.0);
+    case game_speed::normal: return delta_t(0.01 / 50.0);
+    case game_speed::slow: return delta_t(0.001 / 50.0);
     default:
-    case game_speed::slowest: return delta_t(0.0001);
+    case game_speed::slowest: return delta_t(0.0001 / 50.0);
   }
 }
 
