@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-/// A chesspiece
+/// A chess piece
 class piece
 {
 public:
@@ -103,6 +103,7 @@ std::vector<piece> get_kings_only_starting_pieces(
   const chess_color left_player_color = chess_color::white
 ) noexcept;
 
+/*
 /// Get the piece after rotating the board
 piece get_rotated_piece(const piece& p) noexcept;
 
@@ -110,6 +111,7 @@ piece get_rotated_piece(const piece& p) noexcept;
 std::vector<piece> get_rotated_pieces(
   std::vector<piece>& pieces
 ) noexcept;
+*/
 
 /// Get all the pieces in the starting position
 std::vector<piece> get_standard_starting_pieces(

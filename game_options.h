@@ -135,6 +135,11 @@ chess_color get_right_player_color(const game_options& options) noexcept;
 /// Get the controller of the right player
 controller_type get_right_player_controller(const game_options& options) noexcept;
 
+/// Get all the pieces in the starting position type
+std::vector<piece> get_starting_pieces(
+  const game_options& options
+) noexcept;
+
 /// Test this class and its free functions
 void test_game_options();
 

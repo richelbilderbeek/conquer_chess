@@ -101,6 +101,17 @@ void game_options::set_right_controller_type(const controller_type t) noexcept
   }
 }
 
+/// Get all the pieces in the starting position type
+std::vector<piece> get_starting_pieces(
+  const game_options& options
+) noexcept
+{
+  return get_starting_pieces(
+    options.get_starting_position(),
+    options.get_left_player_color()
+  );
+}
+
 void test_game_options()
 {
 #ifndef NDEBUG

@@ -47,6 +47,13 @@ std::string to_str(const piece_action& a) noexcept
   return s.str();
 }
 
+bool operator==(const piece_action& lhs, const piece_action& rhs) noexcept
+{
+  return lhs.get_type() == rhs.get_type()
+    && lhs.get_coordinat() == rhs.get_coordinat()
+  ;
+}
+
 std::ostream& operator<<(std::ostream& os, const piece_action& a) noexcept
 {
   os << to_str(a);

@@ -43,6 +43,10 @@ game_coordinat get_left(const game_coordinat& coordinat) noexcept;
 /// i.e. when the player presses right
 game_coordinat get_right(const game_coordinat& coordinat) noexcept;
 
+/// Rotate the coordinat,
+/// i.e. turn the board 180 degrees
+game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept;
+
 void test_game_coordinat();
 
 /// center a coordinat on the center of a square,
@@ -51,7 +55,7 @@ game_coordinat center_on_center(const game_coordinat& coordinat);
 
 std::ostream& operator<<(std::ostream& os, const game_coordinat& coordinat);
 
-bool operator==(game_coordinat& lhs, const game_coordinat& rhs) noexcept;
+bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator-(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator+(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat& operator+=(game_coordinat& lhs, const game_coordinat& rhs) noexcept;

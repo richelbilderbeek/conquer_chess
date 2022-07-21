@@ -33,6 +33,8 @@ void test_piece_action();
 
 std::string to_str(const piece_action& a) noexcept;
 
+bool operator==(const piece_action& lhs, const piece_action& rhs) noexcept;
+
 std::ostream& operator<<(std::ostream& os, const piece_action& p) noexcept;
 
 #endif // PIECE_ACTION_H

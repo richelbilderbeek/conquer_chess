@@ -76,6 +76,14 @@ game_coordinat get_right(const game_coordinat& coordinat) noexcept
   return pos;
 }
 
+game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept
+{
+  return game_coordinat(
+    8.0 - coordinat.get_x(),
+    8.0 - coordinat.get_y()
+  );
+}
+
 void test_game_coordinat()
 {
   #ifndef NDEBUG
@@ -90,7 +98,7 @@ void test_game_coordinat()
   #endif // NDEBUG
 }
 
-bool operator==(game_coordinat& lhs, const game_coordinat& rhs) noexcept
+bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept
 {
   return lhs.get_x() == rhs.get_x()
     && rhs.get_y() == rhs.get_y()

@@ -56,69 +56,49 @@ std::string describe_actions(const piece& p)
   return t;
 }
 
-piece get_rotated_piece(const piece& p) noexcept
-{
-   return p;
-}
-
-std::vector<piece> get_rotated_pieces(
-  std::vector<piece>& pieces
-) noexcept
-{
-  std::vector<piece> rotated_pieces;
-  rotated_pieces.reserve(pieces.size());
-  std::transform(
-    std::begin(pieces),
-    std::end(pieces),
-    std::back_inserter(rotated_pieces),
-    [](const auto& piece) { return get_rotated_piece(piece); }
-  );
-  return rotated_pieces;
-}
-
 std::vector<piece> get_standard_starting_pieces(
   const chess_color left_player_color
 ) noexcept
 {
-  std::vector<piece> pieces{
-    piece(chess_color::white, piece_type::rook,   game_coordinat(0.5, 0.5)),
-    piece(chess_color::white, piece_type::knight, game_coordinat(0.5, 1.5)),
-    piece(chess_color::white, piece_type::bishop, game_coordinat(0.5, 2.5)),
-    piece(chess_color::white, piece_type::king,   game_coordinat(0.5, 3.5)),
-    piece(chess_color::white, piece_type::queen,  game_coordinat(0.5, 4.5)),
-    piece(chess_color::white, piece_type::bishop, game_coordinat(0.5, 5.5)),
-    piece(chess_color::white, piece_type::knight, game_coordinat(0.5, 6.5)),
-    piece(chess_color::white, piece_type::rook,   game_coordinat(0.5, 7.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 0.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 1.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 2.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 3.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 4.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 5.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 6.5)),
-    piece(chess_color::white, piece_type::pawn,   game_coordinat(1.5, 7.5)),
-    piece(chess_color::black, piece_type::rook,   game_coordinat(7.5, 0.5)),
-    piece(chess_color::black, piece_type::knight, game_coordinat(7.5, 1.5)),
-    piece(chess_color::black, piece_type::bishop, game_coordinat(7.5, 2.5)),
-    piece(chess_color::black, piece_type::king,   game_coordinat(7.5, 3.5)),
-    piece(chess_color::black, piece_type::queen,  game_coordinat(7.5, 4.5)),
-    piece(chess_color::black, piece_type::bishop, game_coordinat(7.5, 5.5)),
-    piece(chess_color::black, piece_type::knight, game_coordinat(7.5, 6.5)),
-    piece(chess_color::black, piece_type::rook,   game_coordinat(7.5, 7.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 0.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 1.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 2.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 3.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 4.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 5.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 6.5)),
-    piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 7.5))
+  const auto f{
+    left_player_color == chess_color::white
+    ? [](const game_coordinat& coordinat) { return coordinat; }
+    : [](const game_coordinat& coordinat) { return get_rotated_coordinat(coordinat); }
   };
-  if (left_player_color == chess_color::black)
-  {
-    return get_rotated_pieces(pieces);
-  }
-  assert(left_player_color == chess_color::white);
+  std::vector<piece> pieces{
+    piece(chess_color::white, piece_type::rook,   f(game_coordinat(0.5, 0.5))),
+    piece(chess_color::white, piece_type::knight, f(game_coordinat(0.5, 1.5))),
+    piece(chess_color::white, piece_type::bishop, f(game_coordinat(0.5, 2.5))),
+    piece(chess_color::white, piece_type::queen,  f(game_coordinat(0.5, 3.5))),
+    piece(chess_color::white, piece_type::king,   f(game_coordinat(0.5, 4.5))),
+    piece(chess_color::white, piece_type::bishop, f(game_coordinat(0.5, 5.5))),
+    piece(chess_color::white, piece_type::knight, f(game_coordinat(0.5, 6.5))),
+    piece(chess_color::white, piece_type::rook,   f(game_coordinat(0.5, 7.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 0.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 1.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 2.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 3.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 4.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 5.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 6.5))),
+    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 7.5))),
+    piece(chess_color::black, piece_type::rook,   f(game_coordinat(7.5, 0.5))),
+    piece(chess_color::black, piece_type::knight, f(game_coordinat(7.5, 1.5))),
+    piece(chess_color::black, piece_type::bishop, f(game_coordinat(7.5, 2.5))),
+    piece(chess_color::black, piece_type::queen,  f(game_coordinat(7.5, 3.5))),
+    piece(chess_color::black, piece_type::king,   f(game_coordinat(7.5, 4.5))),
+    piece(chess_color::black, piece_type::bishop, f(game_coordinat(7.5, 5.5))),
+    piece(chess_color::black, piece_type::knight, f(game_coordinat(7.5, 6.5))),
+    piece(chess_color::black, piece_type::rook,   f(game_coordinat(7.5, 7.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 0.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 1.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 2.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 3.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 4.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 5.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 6.5))),
+    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 7.5)))
+  };
   return pieces;
 }
 
@@ -235,11 +215,13 @@ void test_piece()
     assert(!p.is_selected());
   }
   // get_rotated_piece
+  /*
   {
     const auto piece{get_test_piece()};
     const auto rotated_piece{get_rotated_piece(piece)};
     assert(piece != rotated_piece);
   }
+  */
 #endif // NDEBUG
 }
 

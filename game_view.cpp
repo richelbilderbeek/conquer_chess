@@ -2,11 +2,13 @@
 
 #ifndef LOGIC_ONLY
 
+#include "control_action_type.h"
 #include "game.h"
-#include "game_view_layout.h"
 #include "game_resources.h"
+#include "game_view_layout.h"
 #include "screen_coordinat.h"
 #include "sfml_helper.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 
@@ -518,7 +520,7 @@ void show_squares(game_view& view)
   {
     for (int y = 0; y != 8; ++y)
     {
-      sf::RectangleShape& s = (x + y) % 2 == 1 ? black_square : white_square;
+      sf::RectangleShape& s = (x + y) % 2 == 0 ? black_square : white_square;
       const screen_coordinat square_pos{
         convert_to_screen_coordinat(
           game_coordinat(x + 0.5, y + 0.5),
@@ -543,7 +545,7 @@ void show_square_under_cursor_1(game_view& view)
   if (x >= 0 && x < 8 && y >= 0 && y < 8)
   {
     sf::RectangleShape s{
-      (x + y) % 2 == 1
+      (x + y) % 2 == 0
       ? create_black_square(view)
       : create_white_square(view)
     };
@@ -557,7 +559,8 @@ void show_square_under_cursor_1(game_view& view)
     const auto old_fill_color = s.getFillColor();
     const auto old_outline_color = s.getOutlineColor();
     const auto old_thickness = s.getOutlineThickness();
-    const bool valid{would_be_valid(view, chess_color::white)};
+    const auto player_color{get_left_player_color(game.get_options())};
+    const bool valid{would_be_valid(view, player_color)};
     if (valid)
     {
       s.setFillColor(sf::Color(196, 255, 196));
@@ -586,7 +589,7 @@ void show_square_under_cursor_2(game_view& view)
   if (x >= 0 && x < 8 && y >= 0 && y < 8)
   {
     sf::RectangleShape s{
-      (x + y) % 2 == 1
+      (x + y) % 2 == 0
       ? create_black_square(view)
       : create_white_square(view)
     };
@@ -600,7 +603,8 @@ void show_square_under_cursor_2(game_view& view)
     const auto old_fill_color = s.getFillColor();
     const auto old_outline_color = s.getOutlineColor();
     const auto old_thickness = s.getOutlineThickness();
-    const bool valid{would_be_valid(view, chess_color::black)};
+    const auto player_color{get_right_player_color(game.get_options())};
+    const bool valid{would_be_valid(view, player_color)};
     if (valid)
     {
       s.setFillColor(sf::Color(196, 255, 196));
@@ -721,7 +725,9 @@ void show_unit_sprites_1(game_view& view)
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
   screen_coordinat screen_position = layout.get_units_1().get_tl();
-  for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::white))
+  const auto player_color{get_left_player_color(view.get_game().get_options())};
+
+  for (const auto& piece: get_selected_pieces(view.get_game(), player_color))
   {
     // sprite of the piece
     sf::RectangleShape sprite;
@@ -770,7 +776,8 @@ void show_unit_sprites_2(game_view& view)
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
   screen_coordinat screen_position = layout.get_units_2().get_tl();
-  for (const auto& piece: get_selected_pieces(view.get_game(), chess_color::black))
+  const auto player_color{get_right_player_color(view.get_game().get_options())};
+  for (const auto& piece: get_selected_pieces(view.get_game(), player_color))
   {
     // sprite of the piece
     sf::RectangleShape sprite;
