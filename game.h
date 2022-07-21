@@ -101,6 +101,8 @@ private:
     const game_coordinat& coordinat,
     const chess_color player_color
   );
+
+  friend void test_game();
 };
 
 /// Calculate the distances that each piece has to a coordinat

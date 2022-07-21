@@ -160,6 +160,14 @@ void test_game_coordinat()
     assert(a == b);
     assert(!(a == c));
   }
+  // operator !=
+  {
+    const game_coordinat a(1.2345, 6.7890);
+    const game_coordinat b(1.2345, 6.7890);
+    const game_coordinat c(0.0, 0.0);
+    assert(!(a != b));
+    assert(a != c);
+  }
   // operator<<
   {
     std::stringstream s;
@@ -177,6 +185,11 @@ bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept
   return lhs.get_x() == rhs.get_x()
     && rhs.get_y() == rhs.get_y()
   ;
+}
+
+bool operator!=(const game_coordinat& lhs, const game_coordinat& rhs) noexcept
+{
+  return !(lhs == rhs);
 }
 
 std::ostream& operator<<(std::ostream& os, const game_coordinat& coordinat)

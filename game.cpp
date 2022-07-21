@@ -579,6 +579,54 @@ void test_game() //!OCLINT tests may be many
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 1);
   }
+  // clear_sound_effects
+  {
+    game g;
+    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
+    assert(g.get_sound_effects().empty());
+    // Add a sound by selecting a piece
+    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
+    g.tick();
+    assert(!g.get_sound_effects().empty());
+    g.clear_sound_effects();
+    assert(g.get_sound_effects().empty());
+  }
+  // get_cursor_pos
+  {
+    const game g;
+    assert(get_cursor_pos(g, chess_color::white) != get_cursor_pos(g, chess_color::black));
+  }
+  // get_keyboard_player_pos and get_mouse_player_pos
+  {
+    const game g;
+    assert(get_keyboard_player_pos(g) != get_mouse_player_pos(g));
+  }
+  // get_keyboard_player_pos
+  {
+    game g;
+    const auto& pos_before{get_keyboard_player_pos(g)};
+    auto& pos = g.get_keyboard_player_pos();
+    pos += game_coordinat(0.1, 0.1);
+    const auto& pos_after{get_keyboard_player_pos(g)};
+    assert(pos_before != pos_after);
+  }
+  // get_mouse_player_pos
+  {
+    game g;
+    const auto& pos_before{get_mouse_player_pos(g)};
+    auto& pos = g.get_mouse_player_pos();
+    pos += game_coordinat(0.1, 0.1);
+    const auto& pos_after{get_mouse_player_pos(g)};
+    assert(pos_before != pos_after);
+  }
+  // toggle_left_player_color
+  {
+    game g;
+    const auto color_before{get_left_player_color(g.get_options())};
+    toggle_left_player_color(g);
+    const auto color_after{get_left_player_color(g.get_options())};
+    assert(color_after != color_before);
+  }
 #endif // no tests in release
 }
 
