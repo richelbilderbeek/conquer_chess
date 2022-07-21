@@ -99,13 +99,28 @@ std::string describe_actions(const piece& p);
 double get_f_health(const piece& p) noexcept;
 
 /// Get a king-versus-king starting position
-std::vector<piece> get_kings_only_starting_pieces() noexcept;
+std::vector<piece> get_kings_only_starting_pieces(
+  const chess_color left_player_color = chess_color::white
+) noexcept;
+
+/// Get the piece after rotating the board
+piece get_rotated_piece(const piece& p) noexcept;
+
+/// Get the pieces after rotating the board
+std::vector<piece> get_rotated_pieces(
+  std::vector<piece>& pieces
+) noexcept;
 
 /// Get all the pieces in the starting position
-std::vector<piece> get_standard_starting_pieces() noexcept;
+std::vector<piece> get_standard_starting_pieces(
+  const chess_color left_player_color = chess_color::white
+) noexcept;
 
 /// Get all the pieces in the starting position type
-std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept;
+std::vector<piece> get_starting_pieces(
+  const starting_position_type t,
+  const chess_color left_player_color = chess_color::white
+) noexcept;
 
 /// Create a piece to be used in testing: a white king on E1
 piece get_test_piece() noexcept;
@@ -127,5 +142,8 @@ void toggle_select(piece& p) noexcept;
 
 /// Unselect the piece
 void unselect(piece& p) noexcept;
+
+bool operator==(const piece& lhs, const piece& rhs) noexcept;
+bool operator!=(const piece& lhs, const piece& rhs) noexcept;
 
 #endif // PIECE_H

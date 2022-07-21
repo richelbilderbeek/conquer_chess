@@ -51,10 +51,13 @@ game_coordinat center_on_center(const game_coordinat& coordinat);
 
 std::ostream& operator<<(std::ostream& os, const game_coordinat& coordinat);
 
+bool operator==(game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator-(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator+(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat& operator+=(game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator/(const game_coordinat& coordinat, const double factor) noexcept;
+
+
 
 
 #endif // GAME_COORDINAT_H

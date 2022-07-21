@@ -90,6 +90,13 @@ void test_game_coordinat()
   #endif // NDEBUG
 }
 
+bool operator==(game_coordinat& lhs, const game_coordinat& rhs) noexcept
+{
+  return lhs.get_x() == rhs.get_x()
+    && rhs.get_y() == rhs.get_y()
+  ;
+}
+
 std::ostream& operator<<(std::ostream& os, const game_coordinat& coordinat)
 {
   const double x{std::round(coordinat.get_x() * 10.0) / 10.0};

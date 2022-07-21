@@ -56,9 +56,31 @@ std::string describe_actions(const piece& p)
   return t;
 }
 
-std::vector<piece> get_standard_starting_pieces() noexcept
+piece get_rotated_piece(const piece& p) noexcept
 {
-  return {
+   return p;
+}
+
+std::vector<piece> get_rotated_pieces(
+  std::vector<piece>& pieces
+) noexcept
+{
+  std::vector<piece> rotated_pieces;
+  rotated_pieces.reserve(pieces.size());
+  std::transform(
+    std::begin(pieces),
+    std::end(pieces),
+    std::back_inserter(rotated_pieces),
+    [](const auto& piece) { return get_rotated_piece(piece); }
+  );
+  return rotated_pieces;
+}
+
+std::vector<piece> get_standard_starting_pieces(
+  const chess_color left_player_color
+) noexcept
+{
+  std::vector<piece> pieces{
     piece(chess_color::white, piece_type::rook,   game_coordinat(0.5, 0.5)),
     piece(chess_color::white, piece_type::knight, game_coordinat(0.5, 1.5)),
     piece(chess_color::white, piece_type::bishop, game_coordinat(0.5, 2.5)),
@@ -92,6 +114,12 @@ std::vector<piece> get_standard_starting_pieces() noexcept
     piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 6.5)),
     piece(chess_color::black, piece_type::pawn,   game_coordinat(6.5, 7.5))
   };
+  if (left_player_color == chess_color::black)
+  {
+    return get_rotated_pieces(pieces);
+  }
+  assert(left_player_color == chess_color::white);
+  return pieces;
 }
 
 double get_f_health(const piece& p) noexcept
@@ -100,9 +128,11 @@ double get_f_health(const piece& p) noexcept
   return p.get_health() / p.get_max_health();
 }
 
-std::vector<piece> get_kings_only_starting_pieces() noexcept
+std::vector<piece> get_kings_only_starting_pieces(
+  const chess_color left_player_color
+) noexcept
 {
-  const auto all_pieces{get_standard_starting_pieces()};
+  const auto all_pieces{get_standard_starting_pieces(left_player_color)};
   std::vector<piece> pieces;
   pieces.reserve(2);
   std::copy_if(
@@ -114,13 +144,16 @@ std::vector<piece> get_kings_only_starting_pieces() noexcept
   return pieces;
 }
 
-std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
+std::vector<piece> get_starting_pieces(
+  const starting_position_type t,
+  const chess_color left_player_color
+) noexcept
 {
   switch (t)
   {
-    case starting_position_type::standard: return get_standard_starting_pieces();
+    case starting_position_type::standard: return get_standard_starting_pieces(left_player_color);
     default:
-    case starting_position_type::kings_only: return get_kings_only_starting_pieces();
+    case starting_position_type::kings_only: return get_kings_only_starting_pieces(left_player_color);
   }
 }
 
@@ -201,6 +234,12 @@ void test_piece()
     toggle_select(p);
     assert(!p.is_selected());
   }
+  // get_rotated_piece
+  {
+    const auto piece{get_test_piece()};
+    const auto rotated_piece{get_rotated_piece(piece)};
+    assert(piece != rotated_piece);
+  }
 #endif // NDEBUG
 }
 
@@ -234,4 +273,21 @@ void toggle_select(piece& p) noexcept
 void unselect(piece& p) noexcept
 {
   p.set_selected(false);
+}
+
+bool operator==(const piece& lhs, const piece& rhs) noexcept
+{
+  return lhs.get_type() == rhs.get_type()
+    && lhs.get_color() == rhs.get_color()
+    && lhs.get_health() == rhs.get_health()
+    && lhs.get_actions() == rhs.get_actions()
+    && lhs.is_selected() == rhs.is_selected()
+    && lhs.get_coordinat() == rhs.get_coordinat()
+    && lhs.get_max_health() == rhs.get_max_health()
+  ;
+}
+
+bool operator!=(const piece& lhs, const piece& rhs) noexcept
+{
+  return !(lhs == rhs);
 }
