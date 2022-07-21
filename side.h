@@ -10,4 +10,7 @@ enum class side
 
 side get_other_side(const side s) noexcept;
 
+/// Test this class and its free functions
+void test_side();
+
 #endif // SIDE_H

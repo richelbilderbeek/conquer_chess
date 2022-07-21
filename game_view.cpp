@@ -82,7 +82,7 @@ void game_view::exec()
     if (must_quit) return;
 
     // Do a tick
-    m_game.tick();
+    m_game.tick(to_delta_t(m_game.get_options().get_game_speed()));
 
     // Show the new state
     show();

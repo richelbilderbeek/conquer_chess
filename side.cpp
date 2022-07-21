@@ -9,3 +9,13 @@ side get_other_side(const side s) noexcept
   return side::lhs;
 }
 
+void test_side()
+{
+#ifndef NDEBUG
+  {
+    assert(get_other_side(side::lhs) == side::rhs);
+    assert(get_other_side(side::rhs) == side::lhs);
+  }
+#endif // NDEBUG
+
+}

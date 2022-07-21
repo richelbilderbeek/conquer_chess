@@ -6,6 +6,7 @@
 /// as played by 'sound_effects'
 enum class sound_effect_type
 {
+  cannot,
   select,
   start_attack,
   start_move

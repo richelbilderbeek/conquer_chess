@@ -62,7 +62,7 @@ public:
   const auto& get_sound_effects() const noexcept { return m_sound_effects; };
 
   /// Go to the next frame
-  void tick();
+  void tick(const delta_t& dt = delta_t(1.0));
 
 private:
 

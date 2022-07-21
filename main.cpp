@@ -41,6 +41,7 @@ void test()
   test_piece_type();
   test_screen_coordinat();
   test_screen_rect();
+  test_side();
   test_starting_position_type();
   test_volume();
 #ifndef LOGIC_ONLY
