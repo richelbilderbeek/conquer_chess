@@ -86,13 +86,6 @@ private:
 /// Get the panels in the layout
 std::vector<screen_rect> get_panels(const menu_view_layout& layout);
 
-/// Resize the layout to a new size
-void resize(
-  menu_view_layout& g,
-  const screen_coordinat& window_size,
-  const int margin_width = get_default_margin_width()
-);
-
 /// Test the menu_view_layout class
 void test_menu_view_layout();
 

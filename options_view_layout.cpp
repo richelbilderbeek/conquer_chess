@@ -145,25 +145,24 @@ std::vector<screen_rect> get_panels(const options_view_layout& layout)
   };
 }
 
-void resize(
-  options_view_layout& g,
-  const screen_coordinat& window_size,
-  const int margin_width
-)
-{
-  g = options_view_layout(
-    window_size,
-    margin_width
-  );
-}
-
 void test_options_view_layout()
 {
   #ifndef NDEBUG
-  // Minimal tests
+  // get_panels
   {
     const options_view_layout layout;
     assert(!get_panels(layout).empty());
+  }
+  // get_selectable_rect
+  {
+    const options_view_layout layout;
+    assert(layout.get_selectable_rect(options_view_item::game_speed) == layout.get_game_speed_value());
+    assert(layout.get_selectable_rect(options_view_item::music_volume) == layout.get_music_volume_value());
+    assert(layout.get_selectable_rect(options_view_item::starting_position) == layout.get_starting_pos_value());
+    assert(layout.get_selectable_rect(options_view_item::left_color) == layout.get_left_color_value());
+    assert(layout.get_selectable_rect(options_view_item::left_controls) == layout.get_left_controls_value());
+    assert(layout.get_selectable_rect(options_view_item::right_color) == layout.get_right_color_value());
+    assert(layout.get_selectable_rect(options_view_item::right_controls) == layout.get_right_controls_value());
   }
   #endif
 }

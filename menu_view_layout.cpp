@@ -83,26 +83,21 @@ const screen_rect& menu_view_layout::get_selectable_rect(const menu_view_item it
   }
 }
 
-
-void resize(
-  menu_view_layout& g,
-  const screen_coordinat& window_size,
-  const int margin_width
-)
-{
-  g = menu_view_layout(
-    window_size,
-    margin_width
-  );
-}
-
 void test_menu_view_layout()
 {
   #ifndef NDEBUG
-  // Minimal tests
+  // get_panels
   {
     const menu_view_layout layout;
     assert(!get_panels(layout).empty());
+  }
+  // get_selectable_rect
+  {
+    const menu_view_layout layout;
+    assert(layout.get_selectable_rect(menu_view_item::start) == layout.get_start());
+    assert(layout.get_selectable_rect(menu_view_item::options) == layout.get_options());
+    assert(layout.get_selectable_rect(menu_view_item::about) == layout.get_about());
+    assert(layout.get_selectable_rect(menu_view_item::quit) == layout.get_quit());
   }
   #endif
 }

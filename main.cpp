@@ -27,6 +27,7 @@ void test()
   test_game();
   test_game_coordinat();
   test_game_options();
+  test_game_speed();
   test_game_view_layout();
   test_menu_view_item();
   test_menu_view_layout();

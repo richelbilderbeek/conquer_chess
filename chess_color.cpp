@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 chess_color get_other_color(const chess_color c) noexcept
 {
@@ -22,6 +23,12 @@ void test_chess_color()
   {
     assert(get_other_color(chess_color::white) == chess_color::black);
     assert(get_other_color(chess_color::black) == chess_color::white);
+  }
+  // operator<<
+  {
+    std::stringstream s;
+    s << chess_color::white;
+    assert(!s.str().empty());
   }
 #endif // DEBUG
 }
