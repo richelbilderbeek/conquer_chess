@@ -5,6 +5,19 @@
 
 /// Coordinat on the board
 /// @see use screen_coordinat for a coordinat on the screen
+///
+///        x coordinat
+/// |-----------------------|
+///
+/// 0  1  2  3  4  5  6  7  8
+/// +--+--+--+--+--+--+--+--+ 0  -
+/// |  |  |  |  |  |  |  |  |    |
+/// +--+--+--+--+--+--+--+--+ 1  |
+/// .  .  .  .  .  .  .  .  .    | y coordinat
+/// .  .  .  .  .  .  .  .  .    |
+/// +--+--+--+--+--+--+--+--+ 7  |
+/// |  |  |  |  |  |  |  |  |    |
+/// +--+--+--+--+--+--+--+--+ 8  -
 class game_coordinat
 {
 public:
@@ -20,7 +33,7 @@ private:
 };
 
 
-/// Calculate the distance between two points
+/// Calculate the euclidean distance between two points
 double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 
 /// Calculate the length of the vector,
@@ -47,6 +60,7 @@ game_coordinat get_right(const game_coordinat& coordinat) noexcept;
 /// i.e. turn the board 180 degrees
 game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept;
 
+/// Test this class and its free function
 void test_game_coordinat();
 
 /// center a coordinat on the center of a square,

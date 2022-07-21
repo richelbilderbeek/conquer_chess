@@ -87,6 +87,15 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept
 void test_game_coordinat()
 {
   #ifndef NDEBUG
+  // operator ==
+  {
+    const game_coordinat a(1.2345, 6.7890);
+    const game_coordinat b(1.2345, 6.7890);
+    const game_coordinat c(0.0, 0.0);
+    assert(a == b);
+    assert(!(a == c));
+  }
+  // operator<<
   {
     std::stringstream s;
     const game_coordinat c(1.2345, 6.7890);
