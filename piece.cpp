@@ -180,6 +180,11 @@ void test_piece()
     const auto p{get_test_piece()};
     assert(!describe_actions(p).empty());
   }
+  {
+    auto p{get_test_piece()};
+    p.add_action(piece_action(piece_action_type::move, game_coordinat()));
+    assert(!describe_actions(p).empty());
+  }
   // get_health
   {
     const auto p{get_test_piece()};
@@ -214,14 +219,22 @@ void test_piece()
     toggle_select(p);
     assert(!p.is_selected());
   }
-  // get_rotated_piece
-  /*
+  // operator==
   {
-    const auto piece{get_test_piece()};
-    const auto rotated_piece{get_rotated_piece(piece)};
-    assert(piece != rotated_piece);
+    const auto a{get_test_piece()};
+    const auto b{get_test_piece()};
+    const piece c{chess_color::black, piece_type::pawn, game_coordinat()};
+    assert(a == b);
+    assert(!(a == c));
   }
-  */
+  // operator!=
+  {
+    const auto a{get_test_piece()};
+    const auto b{get_test_piece()};
+    const piece c{chess_color::black, piece_type::pawn, game_coordinat()};
+    assert(!(a != b));
+    assert(a != c);
+  }
 #endif // NDEBUG
 }
 
