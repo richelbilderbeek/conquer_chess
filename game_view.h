@@ -106,6 +106,12 @@ void show_sidebar_2(game_view& view);
 /// Show the squares of the board on-screen
 void show_squares(game_view& view);
 
+/// Show the highlighted square under the cursor on-screen for a player
+void show_square_under_cursor(
+  game_view& view,
+  const chess_color player
+);
+
 /// Show the highlighted square under the cursor on-screen for player 1
 void show_square_under_cursor_1(game_view& view);
 

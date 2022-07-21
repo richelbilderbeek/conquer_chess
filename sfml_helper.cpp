@@ -51,4 +51,11 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
   );
 }
 
+sf::Color to_sfml_color(const chess_color color) noexcept
+{
+  if (color == chess_color::white) return sf::Color::White;
+  assert(color == chess_color::black);
+  return sf::Color::Black;
+}
+
 #endif // LOGIC_ONLY

@@ -63,7 +63,7 @@ bool can_player_select_piece_at_cursor_pos(
     return false;
   }
   const auto& piece{g.get_closest_piece_to(cursor_pos)};
-  return !piece.is_selected();
+  return !piece.is_selected() && piece.get_color() == player;
 }
 
 void game::clear_sound_effects() noexcept

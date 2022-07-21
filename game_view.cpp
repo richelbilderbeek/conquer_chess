@@ -560,16 +560,18 @@ void show_square_under_cursor_1(game_view& view)
     const auto old_outline_color = s.getOutlineColor();
     const auto old_thickness = s.getOutlineThickness();
     const auto player_color{get_left_player_color(game.get_options())};
-    const bool valid{would_be_valid(view, player_color)};
-    if (valid)
+    s.setOutlineColor(to_sfml_color(player_color));
+    if (1 == 2) // Show if a piece can be interacted with
     {
-      s.setFillColor(sf::Color(196, 255, 196));
-      s.setOutlineColor(sf::Color::Green);
-    }
-    else
-    {
-      s.setFillColor(sf::Color(196, 196, 255));
-      s.setOutlineColor(sf::Color::Blue);
+      const bool valid{would_be_valid(view, player_color)};
+      if (valid)
+      {
+        s.setFillColor(to_sfml_color(player_color));
+      }
+      else
+      {
+        s.setFillColor(sf::Color(255, 128, 128));
+      }
     }
     s.setOutlineThickness(4);
     view.get_window().draw(s);
@@ -604,16 +606,18 @@ void show_square_under_cursor_2(game_view& view)
     const auto old_outline_color = s.getOutlineColor();
     const auto old_thickness = s.getOutlineThickness();
     const auto player_color{get_right_player_color(game.get_options())};
-    const bool valid{would_be_valid(view, player_color)};
-    if (valid)
+    s.setOutlineColor(to_sfml_color(player_color));
+    if (1 == 2) // Show if a piece can be interacted with
     {
-      s.setFillColor(sf::Color(196, 255, 196));
-      s.setOutlineColor(sf::Color::Green);
-    }
-    else
-    {
-      s.setFillColor(sf::Color(255, 196, 196));
-      s.setOutlineColor(sf::Color::Red);
+      const bool valid{would_be_valid(view, player_color)};
+      if (valid)
+      {
+        s.setFillColor(to_sfml_color(player_color));
+      }
+      else
+      {
+        s.setFillColor(sf::Color(255, 128, 128));
+      }
     }
     s.setOutlineThickness(4);
     view.get_window().draw(s);
@@ -710,10 +714,7 @@ void show_unit_paths(game_view& view)
         coordinats[i].get_x(),
         coordinats[i].get_y()
       );
-      lines[i].color = sf::Color::Blue;
-      //lines[i].color = actions[i].get_type() == piece_action_type::move
-      //  ? sf::Color::Blue : sf::Color::Red
-      //;
+      lines[i].color = to_sfml_color(piece.get_color());
     }
     view.get_window().draw(lines);
   }
@@ -837,11 +838,7 @@ bool would_be_valid(
 )
 {
   const auto& game{view.get_game()};
-  if (count_selected_units(game, player_color) == 0)
-  {
-    return can_player_select_piece_at_cursor_pos(game, player_color);
-  }
-  return false;
+  return can_player_select_piece_at_cursor_pos(game, player_color);
 }
 
 #endif // LOGIC_ONLY
