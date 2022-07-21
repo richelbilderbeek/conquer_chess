@@ -358,6 +358,8 @@ void show_debug_1(game_view& view)
   s << "Color: " << color << '\n'
     << "Controller: " << get_left_player_controller(view.get_game().get_options()) << '\n'
     << "Game position: "
+    << to_notation(game.get_player_1_pos())
+    << " "
     << game.get_player_1_pos()
     << '\n'
     << "Screen position: "
@@ -395,6 +397,8 @@ void show_debug_2(game_view& view)
   s << "Color: " << color << '\n'
     << "Controller: " << get_right_player_controller(game.get_options()) << '\n'
     << "Game position: "
+    << to_notation(game.get_player_2_pos())
+    << " "
     << game.get_player_2_pos()
     << '\n'
     << "Screen position: "

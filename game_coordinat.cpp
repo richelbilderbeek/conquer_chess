@@ -201,6 +201,25 @@ void test_game_coordinat()
   #endif // NDEBUG
 }
 
+std::string to_notation(const game_coordinat& g)
+{
+  const int x{static_cast<int>(std::trunc(g.get_x()))};
+  const int y{static_cast<int>(std::trunc(g.get_y()))};
+  if (x >= 0 && x < 8 && y >= 0 && y < 8)
+  {
+    const char first = 'a' + y;
+    const char second = '1' + x;
+    std::string s;
+    s += first;
+    s += second;
+    return s;
+  }
+  else
+  {
+    return "--";
+  }
+}
+
 bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept
 {
   return lhs.get_x() == rhs.get_x()

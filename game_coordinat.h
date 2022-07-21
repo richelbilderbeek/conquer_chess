@@ -67,6 +67,9 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept;
 /// Test this class and its free function
 void test_game_coordinat();
 
+/// Convert to coordinat to chess notation, e.g. 'e2'
+std::string to_notation(const game_coordinat& g);
+
 /// center a coordinat on the center of a square,
 /// i.e. at coorddinat (x.5, y.5)
 game_coordinat center_on_center(const game_coordinat& coordinat);
