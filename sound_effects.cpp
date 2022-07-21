@@ -54,31 +54,31 @@ sound_effects::sound_effects()
 
 void sound_effects::play(const sound_effect& effect)
 {
+  const auto piece_type{effect.get_piece_type()};
   if (effect.get_sound_effect_type() == sound_effect_type::select)
   {
-     m_hide.play();
+    switch (piece_type)
+    {
+      case piece_type::bishop: m_hmm_high.play(); break;
+      case piece_type::king: m_yes_mid.play(); break;
+      case piece_type::knight: m_hmm_mid.play(); break;
+      case piece_type::pawn: m_heu_mid.play(); break;
+      case piece_type::queen: m_yes_high.play(); break;
+      default:
+      case piece_type::rook: m_heu_low.play(); break;
+    }
   }
   else
   {
-    const auto color{effect.get_color()};
-    const auto piece_type{effect.get_piece_type()};
-    if (color == chess_color::black)
+    switch (piece_type)
     {
-      if (piece_type == piece_type::bishop) m_faring_into_battle.play();
-      if (piece_type == piece_type::king) m_lets_rule.play();
-      if (piece_type == piece_type::knight) m_jumping_into_battle.play();
-      if (piece_type == piece_type::pawn) m_moving_forward.play();
-      if (piece_type == piece_type::queen) m_to_rule_is_to_act.play();
-      if (piece_type == piece_type::rook) m_its_time_to_rock.play();
-    }
-    else
-    {
-      if (piece_type == piece_type::bishop) m_faring_into_battle.play();
-      if (piece_type == piece_type::king) m_lets_rule.play();
-      if (piece_type == piece_type::knight) m_jumping_into_battle.play();
-      if (piece_type == piece_type::pawn) m_moving_forward.play();
-      if (piece_type == piece_type::queen) m_to_rule_is_to_act.play();
-      if (piece_type == piece_type::rook) m_its_time_to_rock.play();
+      case piece_type::bishop: m_faring_into_battle.play(); break;
+      case piece_type::king: m_lets_rule.play(); break;
+      case piece_type::knight: m_jumping_into_battle.play(); break;
+      case piece_type::pawn: m_moving_forward.play(); break;
+      case piece_type::queen: m_to_rule_is_to_act.play(); break;
+      default:
+      case piece_type::rook: m_its_time_to_rock.play(); break;
     }
   }
 }
