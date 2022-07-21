@@ -9,11 +9,6 @@ delta_t::delta_t(const double dt)
   assert(m_delta_t <= 1.0);
 }
 
-double get_default_delta_t()
-{
-  return 0.0001;
-}
-
 void test_delta_t()
 {
 #ifndef NDEBUG

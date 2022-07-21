@@ -112,7 +112,7 @@ screen_coordinat convert_to_screen_coordinat(
 )
 {
   const auto tl_board{layout.get_board().get_tl()};
-  const auto br_board{layout.get_board().get_br()};
+  //const auto br_board{layout.get_board().get_br()};
 
   const double square_width{
     get_square_width(layout)
@@ -168,18 +168,6 @@ double get_square_height(const game_view_layout& layout) noexcept
 double get_square_width(const game_view_layout& layout) noexcept
 {
   return static_cast<double>(get_board_width(layout)) / 8.0;
-}
-
-void resize(
-  game_view_layout& g,
-  const screen_coordinat& window_size,
-  const int margin_width
-)
-{
-  g = game_view_layout(
-    window_size,
-    margin_width
-  );
 }
 
 void test_game_view_layout()
