@@ -25,6 +25,9 @@ private:
 /// Get the next volume, i.e. the volume when the user presses right
 volume get_next(const volume& v) noexcept;
 
+/// Test this class and its free functions
+void test_volume();
+
 std::ostream& operator<<(std::ostream& os, const volume& v) noexcept;
 
 #endif // VOLUME_H

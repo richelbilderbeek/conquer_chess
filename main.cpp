@@ -39,6 +39,7 @@ void test()
   test_screen_coordinat();
   test_screen_rect();
   test_starting_position_type();
+  test_volume();
 #ifndef LOGIC_ONLY
   test_game_resources();
   test_game_view();
