@@ -48,6 +48,10 @@ game_coordinat get_above(const game_coordinat& coordinat) noexcept;
 /// i.e. when the player presses down
 game_coordinat get_below(const game_coordinat& coordinat) noexcept;
 
+/// Get a coordinat from chess notation, e.g. 'e2'
+/// Assumes the board has a1 at the top-left, a8 at the top-right
+game_coordinat get_coordinat(const std::string& notation);
+
 /// Get the game coordinat one square left of this one,
 /// i.e. when the player presses left
 game_coordinat get_left(const game_coordinat& coordinat) noexcept;

@@ -8,6 +8,7 @@
 #include "game_coordinat.h"
 #include "sound_effect_type.h"
 #include "starting_position_type.h"
+#include "side.h"
 
 #include <string>
 #include <vector>
@@ -19,7 +20,8 @@ public:
   piece(
     const chess_color color,
     const piece_type type,
-    const game_coordinat& coordinat
+    const game_coordinat& coordinat,
+    const side player
   );
 
   /// Add an action for the piece to do
@@ -44,6 +46,8 @@ public:
   /// Get the maximum health of the unit
   double get_max_health() const noexcept { return m_max_health; }
 
+  /// Get the side this piece is on
+  side get_player() const noexcept { return m_player; }
 
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }
@@ -80,6 +84,9 @@ private:
 
   /// The maximum health
   double m_max_health;
+
+  /// The side/player this piece belongs to
+  side m_player;
 
   /// The type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type m_type;

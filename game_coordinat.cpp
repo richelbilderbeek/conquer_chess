@@ -6,6 +6,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+#include <string>
 
 game_coordinat::game_coordinat(
   const double x,
@@ -56,6 +57,17 @@ game_coordinat get_below(const game_coordinat& coordinat) noexcept
     pos += game_coordinat(0.0, -8.0);
   }
   return pos;
+}
+
+game_coordinat get_coordinat(const std::string& notation)
+{
+  assert(notation.size() == 2);
+  const int x_int{notation[1] - '1'};
+  const int y_int{notation[0] - 'a'};
+  return game_coordinat(
+    0.5 + static_cast<double>(x_int),
+    0.5 + static_cast<double>(y_int)
+  );
 }
 
 game_coordinat get_left(const game_coordinat& coordinat) noexcept
@@ -114,6 +126,15 @@ void test_game_coordinat()
     const game_coordinat c(3.5, 3.5);
     const auto below{get_below(c)};
     assert(below.get_y() > c.get_y());
+  }
+  // get_coordinat
+  {
+    assert(get_coordinat("a1") == game_coordinat(0.5, 0.5));
+    const auto a8{get_coordinat("a8")};
+    assert(a8 == game_coordinat(7.5, 0.5));
+    assert(get_coordinat("a8") == game_coordinat(7.5, 0.5));
+    assert(get_coordinat("h1") == game_coordinat(0.5, 7.5));
+    assert(get_coordinat("h8") == game_coordinat(7.5, 7.5));
   }
   // get_below loops
   {

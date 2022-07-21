@@ -1,5 +1,6 @@
 #include "piece.h"
 
+#include "helper.h"
 #include "piece_type.h"
 
 #include <algorithm>
@@ -11,13 +12,15 @@
 piece::piece(
   const chess_color color,
   const piece_type type,
-  const game_coordinat& coordinat
+  const game_coordinat& coordinat,
+  const side player
 )
   : m_color{color},
     m_coordinat{coordinat},
     m_health{::get_max_health(type)},
     m_is_selected{false},
     m_max_health{::get_max_health(type)},
+    m_player{player},
     m_type{type}
 {
 
@@ -65,39 +68,46 @@ std::vector<piece> get_standard_starting_pieces(
     ? [](const game_coordinat& coordinat) { return coordinat; }
     : [](const game_coordinat& coordinat) { return get_rotated_coordinat(coordinat); }
   };
+  const side white_side{
+    left_player_color == chess_color::white
+    ? side::lhs
+    : side::rhs
+  };
+  const side black_side{get_other_side(white_side)};
+
   std::vector<piece> pieces{
-    piece(chess_color::white, piece_type::rook,   f(game_coordinat(0.5, 0.5))),
-    piece(chess_color::white, piece_type::knight, f(game_coordinat(0.5, 1.5))),
-    piece(chess_color::white, piece_type::bishop, f(game_coordinat(0.5, 2.5))),
-    piece(chess_color::white, piece_type::queen,  f(game_coordinat(0.5, 3.5))),
-    piece(chess_color::white, piece_type::king,   f(game_coordinat(0.5, 4.5))),
-    piece(chess_color::white, piece_type::bishop, f(game_coordinat(0.5, 5.5))),
-    piece(chess_color::white, piece_type::knight, f(game_coordinat(0.5, 6.5))),
-    piece(chess_color::white, piece_type::rook,   f(game_coordinat(0.5, 7.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 0.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 1.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 2.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 3.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 4.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 5.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 6.5))),
-    piece(chess_color::white, piece_type::pawn,   f(game_coordinat(1.5, 7.5))),
-    piece(chess_color::black, piece_type::rook,   f(game_coordinat(7.5, 0.5))),
-    piece(chess_color::black, piece_type::knight, f(game_coordinat(7.5, 1.5))),
-    piece(chess_color::black, piece_type::bishop, f(game_coordinat(7.5, 2.5))),
-    piece(chess_color::black, piece_type::queen,  f(game_coordinat(7.5, 3.5))),
-    piece(chess_color::black, piece_type::king,   f(game_coordinat(7.5, 4.5))),
-    piece(chess_color::black, piece_type::bishop, f(game_coordinat(7.5, 5.5))),
-    piece(chess_color::black, piece_type::knight, f(game_coordinat(7.5, 6.5))),
-    piece(chess_color::black, piece_type::rook,   f(game_coordinat(7.5, 7.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 0.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 1.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 2.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 3.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 4.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 5.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 6.5))),
-    piece(chess_color::black, piece_type::pawn,   f(game_coordinat(6.5, 7.5)))
+    piece(chess_color::white, piece_type::rook,   f(get_coordinat("a1")), white_side),
+    piece(chess_color::white, piece_type::knight, f(get_coordinat("b1")), white_side),
+    piece(chess_color::white, piece_type::bishop, f(get_coordinat("c1")), white_side),
+    piece(chess_color::white, piece_type::queen,  f(get_coordinat("d1")), white_side),
+    piece(chess_color::white, piece_type::king,   f(get_coordinat("e1")), white_side),
+    piece(chess_color::white, piece_type::bishop, f(get_coordinat("f1")), white_side),
+    piece(chess_color::white, piece_type::knight, f(get_coordinat("g1")), white_side),
+    piece(chess_color::white, piece_type::rook,   f(get_coordinat("h1")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("a2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("b2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("c2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("d2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("e2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("f2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("g2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("h2")), white_side),
+    piece(chess_color::black, piece_type::rook,   f(get_coordinat("a8")), black_side),
+    piece(chess_color::black, piece_type::knight, f(get_coordinat("b8")), black_side),
+    piece(chess_color::black, piece_type::bishop, f(get_coordinat("c8")), black_side),
+    piece(chess_color::black, piece_type::queen,  f(get_coordinat("d8")), black_side),
+    piece(chess_color::black, piece_type::king,   f(get_coordinat("e8")), black_side),
+    piece(chess_color::black, piece_type::bishop, f(get_coordinat("f8")), black_side),
+    piece(chess_color::black, piece_type::knight, f(get_coordinat("g8")), black_side),
+    piece(chess_color::black, piece_type::rook,   f(get_coordinat("h8")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("a7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("b7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("c7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("d7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("e7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("f7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("g7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("h7")), black_side)
   };
   return pieces;
 }
@@ -142,7 +152,8 @@ piece get_test_piece() noexcept
   return piece(
     chess_color::white,
     piece_type::king,
-    game_coordinat(0.5, 3.5)
+    get_coordinat("e1"),
+    side::lhs
   );
 }
 
@@ -219,11 +230,39 @@ void test_piece()
     toggle_select(p);
     assert(!p.is_selected());
   }
+  // A pawn for the lhs player can move right
+  {
+    piece p(
+      chess_color::white,
+      piece_type::pawn,
+      get_coordinat("e2"),
+      side::lhs
+    );
+    p.add_action(piece_action(piece_action_type::move, get_coordinat("e4")));
+    assert(!p.get_actions().empty());
+    p.tick(delta_t(1.0));
+    assert(!p.get_actions().empty());
+    assert(p.get_coordinat() == get_coordinat("e3"));
+  }
+  // A pawn for the rhs player cannot move right
+  {
+    piece p(
+      chess_color::white,
+      piece_type::pawn,
+      get_coordinat("e7"),
+      side::lhs
+    );
+    p.add_action(piece_action(piece_action_type::move, get_coordinat("e5")));
+    assert(!p.get_actions().empty());
+    p.tick(delta_t(1.0));
+    assert(p.get_actions().empty()); // Actions cleared
+    assert(p.get_coordinat() == get_coordinat("e7")); // Piece stays put
+  }
   // operator==
   {
     const auto a{get_test_piece()};
     const auto b{get_test_piece()};
-    const piece c{chess_color::black, piece_type::pawn, game_coordinat()};
+    const piece c{chess_color::black, piece_type::pawn, game_coordinat(), side::lhs};
     assert(a == b);
     assert(!(a == c));
   }
@@ -231,7 +270,7 @@ void test_piece()
   {
     const auto a{get_test_piece()};
     const auto b{get_test_piece()};
-    const piece c{chess_color::black, piece_type::pawn, game_coordinat()};
+    const piece c{chess_color::black, piece_type::pawn, game_coordinat(), side::lhs};
     assert(!(a != b));
     assert(a != c);
   }
@@ -244,11 +283,24 @@ void piece::tick(const delta_t& dt)
   const auto& first_action{m_actions[0]};
   if (first_action.get_type() == piece_action_type::move)
   {
+    // pawns can only move forward
+    if (m_type == piece_type::pawn
+      && ( (m_player == side::lhs && first_action.get_coordinat().get_x() < m_coordinat.get_x())
+          || (m_player == side::rhs && first_action.get_coordinat().get_x() > m_coordinat.get_x())
+        )
+      )
+    {
+      remove_first(m_actions);
+      return;
+    }
+
     const auto full_delta{first_action.get_coordinat() - m_coordinat};
     const double full_length{calc_length(full_delta)};
     if (full_length < dt.get())
     {
-      std::vector<decltype(m_actions)::value_type>(m_actions.begin() + 1, m_actions.end()).swap(m_actions);
+      // Done moving
+      remove_first(m_actions);
+      //std::vector<decltype(m_actions)::value_type>(m_actions.begin() + 1, m_actions.end()).swap(m_actions);
     }
     const auto delta{full_delta / (full_length / dt.get())};
     m_coordinat += delta;
@@ -279,6 +331,7 @@ bool operator==(const piece& lhs, const piece& rhs) noexcept
     && lhs.is_selected() == rhs.is_selected()
     && lhs.get_coordinat() == rhs.get_coordinat()
     && lhs.get_max_health() == rhs.get_max_health()
+    && lhs.get_player() == rhs.get_player()
   ;
 }
 
