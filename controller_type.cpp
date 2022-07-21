@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 controller_type get_next(const controller_type t) noexcept
 {
@@ -17,6 +18,18 @@ void test_controller_type()
   {
     assert(to_str(controller_type::mouse) == "mouse");
     assert(to_str(controller_type::keyboard) == "keyboard");
+  }
+  // get_next
+  {
+    assert(get_next(controller_type::mouse) == controller_type::keyboard);
+    assert(get_next(controller_type::keyboard) == controller_type::mouse);
+
+  }
+  // operator<<
+  {
+    std::stringstream s;
+    s << controller_type::mouse;
+    assert(!s.str().empty());
   }
 #endif // DEBUG
 }
