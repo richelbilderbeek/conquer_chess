@@ -14,10 +14,6 @@ class textures
 public:
   textures();
 
-  sf::Texture& get_about() noexcept { return m_about; }
-
-  sf::Texture& get_options() noexcept { return m_options; }
-
   /// Get texture of a piece
   sf::Texture& get_piece(
     const chess_color color,
@@ -29,11 +25,6 @@ public:
     const chess_color color,
     const piece_type type
   );
-
-
-  sf::Texture& get_quit() noexcept { return m_quit; }
-
-  sf::Texture& get_start() noexcept { return m_start; }
 
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
@@ -47,13 +38,8 @@ public:
   /// Get the title image
   sf::Texture& get_title() noexcept { return m_title; }
 
-
 private:
 
-
-
-
-  sf::Texture m_about;
   sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;
   sf::Texture m_black_king;
@@ -69,9 +55,6 @@ private:
   sf::Texture m_black_square;
   sf::Texture m_dark_strip;
   sf::Texture m_light_strip;
-  sf::Texture m_options;
-  sf::Texture m_quit;
-  sf::Texture m_start;
   sf::Texture m_subtitle;
   sf::Texture m_title;
   sf::Texture m_white_bishop;

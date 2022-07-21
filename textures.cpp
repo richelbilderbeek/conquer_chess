@@ -5,380 +5,49 @@
 #include "game_resources.h"
 
 #include <QFile>
+#include <functional>
 #include <cassert>
 
 textures::textures()
 {
-  // Load the black/dark bishop
+  const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
+    std::make_pair(std::ref(m_black_bishop), "bb.png"),
+    std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
+    std::make_pair(std::ref(m_black_king), "kb.png"),
+    std::make_pair(std::ref(m_black_king_portrait), "kb_portrait.png"),
+    std::make_pair(std::ref(m_black_knight), "nb.png"),
+    std::make_pair(std::ref(m_black_knight_portrait), "nb_portrait.png"),
+    std::make_pair(std::ref(m_black_pawn), "pb.png"),
+    std::make_pair(std::ref(m_black_pawn_portrait), "pb_portrait.png"),
+    std::make_pair(std::ref(m_black_queen), "qb.png"),
+    std::make_pair(std::ref(m_black_queen_portrait), "qb_portrait.png"),
+    std::make_pair(std::ref(m_black_rook), "rb.png"),
+    std::make_pair(std::ref(m_black_rook_portrait), "rb_portrait_2.png"),
+    std::make_pair(std::ref(m_black_square), "d.png"),
+    std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
+    std::make_pair(std::ref(m_light_strip), "light_strip.png"),
+    std::make_pair(std::ref(m_subtitle), "subtitle.png"),
+    std::make_pair(std::ref(m_title), "title.png"),
+    std::make_pair(std::ref(m_white_bishop), "bw.png"),
+    std::make_pair(std::ref(m_white_bishop_portrait), "bw_portrait.png"),
+    std::make_pair(std::ref(m_white_king), "kw.png"),
+    std::make_pair(std::ref(m_white_king_portrait), "kw_portrait.png"),
+    std::make_pair(std::ref(m_white_knight), "nw.png"),
+    std::make_pair(std::ref(m_white_knight_portrait), "nw_portrait.png"),
+    std::make_pair(std::ref(m_white_pawn), "pw.png"),
+    std::make_pair(std::ref(m_white_pawn_portrait), "pw_portrait.png"),
+    std::make_pair(std::ref(m_white_queen), "qw.png"),
+    std::make_pair(std::ref(m_white_queen_portrait), "qw_portrait.png"),
+    std::make_pair(std::ref(m_white_rook), "rw.png"),
+    std::make_pair(std::ref(m_white_square), "l.png"),
+    std::make_pair(std::ref(m_white_rook_portrait), "rw_portrait.png")
+  };
+  for (const auto& p: v)
   {
-    const QString filename{"bb.png"};
+    const QString filename{p.second.c_str()};
     QFile f(":/resources/" + filename);
     f.copy(filename);
-    if (!m_black_bishop.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark bishop portrait
-  {
-    const QString filename{"bb_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_bishop_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark king
-  {
-    const QString filename{"kb.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_king.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark king's portrait
-  {
-    const QString filename{"kb_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_king_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark knight
-  {
-    const QString filename{"nb.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_knight.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark knight portrait
-  {
-    const QString filename{"nb_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_knight_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark pawn
-  {
-    const QString filename{"pb.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_pawn.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark pawn portrait
-  {
-    const QString filename{"pb_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_pawn_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark queen
-  {
-    const QString filename{"qb.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_queen.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark queen's portrait
-  {
-    const QString filename{"qb_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_queen_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark rook
-  {
-    const QString filename{"rb.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_rook.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark rook portrait
-  {
-    const QString filename{"rb_portrait_2.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_rook_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the black/dark square
-  {
-    const QString filename{"d.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_black_square.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light bishop
-  {
-    const QString filename{"bw.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_bishop.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light bishop portrait
-  {
-    const QString filename{"bw_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_bishop_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light king
-  {
-    const QString filename{"kw.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_king.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light king portrait
-  {
-    const QString filename{"kw_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_king_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light knight
-  {
-    const QString filename{"nw.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_knight.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light knight portrait
-  {
-    const QString filename{"nw_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_knight_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light pawn
-  {
-    const QString filename{"pw.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_pawn.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light pawn portrait
-  {
-    const QString filename{"pw_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_pawn_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light queen
-  {
-    const QString filename{"qw.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_queen.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light queen portrait
-  {
-    const QString filename{"qw_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_queen_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light rook
-  {
-    const QString filename{"rw.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_rook.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light rook portrait
-  {
-    const QString filename{"rw_portrait.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_rook_portrait.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Load the white/light square
-  {
-    const QString filename{"l.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_white_square.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-
-  // Title
-  {
-    const QString filename{"title.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_title.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Subtitle
-  {
-    const QString filename{"subtitle.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_subtitle.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Start
-  {
-    const QString filename{"start.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_start.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Options
-  {
-    const QString filename{"options.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_options.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // About
-  {
-    const QString filename{"about.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_about.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Quit
-  {
-    const QString filename{"quit.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_quit.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Light strip
-  {
-    const QString filename{"light_strip.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_light_strip.loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find image file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-  }
-  // Dark strip
-  {
-    const QString filename{"dark_strip.png"};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!m_dark_strip.loadFromFile(filename.toStdString()))
+    if (!p.first.get().loadFromFile(filename.toStdString()))
     {
       QString msg{"Cannot find image file '" + filename + "'"};
       throw std::runtime_error(msg.toStdString());
