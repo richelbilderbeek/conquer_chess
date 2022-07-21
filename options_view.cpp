@@ -94,7 +94,7 @@ bool options_view::process_events()
         switch (m_selected)
         {
           case options_view_item::game_speed:
-            m_options.set_delta_t(get_next(m_options.get_delta_t()));
+            m_options.set_game_speed(get_next(m_options.get_game_speed()));
           break;
           case options_view_item::music_volume:
             m_options.set_volume(get_next(m_options.get_volume()));
@@ -346,7 +346,7 @@ void show_game_speed(options_view& v)
     v.set_text_style(text);
 
 
-    text.setString(to_human_str(v.get_options().get_delta_t()));
+    text.setString(to_str(v.get_options().get_game_speed()));
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }

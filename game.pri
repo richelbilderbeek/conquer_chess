@@ -9,6 +9,7 @@ HEADERS += \
     $$PWD/game_coordinat.h \
     $$PWD/game_options.h \
     $$PWD/game_resources.h \
+    $$PWD/game_speed.h \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
     $$PWD/layout.h \
@@ -40,6 +41,7 @@ SOURCES += \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_options.cpp \
     $$PWD/game_resources.cpp \
+    $$PWD/game_speed.cpp \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \
     $$PWD/layout.cpp \

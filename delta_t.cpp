@@ -14,32 +14,25 @@ double get_default_delta_t()
   return 0.0001;
 }
 
-delta_t get_next(const delta_t& dt) noexcept
-{
-  if (dt.get() <= 0.001) return 0.01;
-  if (dt.get() <= 0.01) return 0.1;
-  if (dt.get() <= 0.1) return 1.0;
-  return 0.001;
-}
-
 void test_delta_t()
 {
 #ifndef NDEBUG
-  // to_human_str
+  // get
   {
-    assert(to_human_str(delta_t(1.0)) == "fastest");
-    assert(to_human_str(delta_t(0.1)) == "fast");
-    assert(to_human_str(delta_t(0.01)) == "slow");
-    assert(to_human_str(delta_t(0.001)) == "slowest");
-    assert(to_human_str(delta_t(0.0001)) == "slowest");
+    const double dt{0.123};
+    const delta_t t{dt};
+    assert(t.get() == dt);
+  }
+  // operator>
+  {
+    const delta_t low{0.0001};
+    const delta_t high{0.11};
+    assert(high > low);
   }
 #endif // DEBUG
 }
 
-std::string to_human_str(const delta_t& dt) noexcept
+bool operator>(const delta_t& lhs, const delta_t& rhs) noexcept
 {
-  if (dt.get() <= 0.001) return "slowest";
-  if (dt.get() <= 0.01) return "slow";
-  if (dt.get() <= 0.1) return "fast";
-  return "fastest";
+  return lhs.get() > rhs.get();
 }

@@ -26,14 +26,9 @@ private:
 ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
 double get_default_delta_t();
 
-/// Get the next delta_t,
-/// i.e when the user presses the arrow to the right
-delta_t get_next(const delta_t& dt) noexcept;
-
 /// Test this class and its free functions
 void test_delta_t();
 
-/// Describe the delta_t to human
-std::string to_human_str(const delta_t& dt) noexcept;
+bool operator>(const delta_t& lhs, const delta_t& rhs) noexcept;
 
 #endif // DELTA_T_H

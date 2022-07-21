@@ -119,7 +119,7 @@ game create_king_versus_king_game()
   const game_options options(
     get_default_screen_size(),
     starting_position_type::kings_only,
-    get_default_delta_t(),
+    game_speed::normal,
     get_default_margin_width()
   );
   return game(options);
@@ -446,7 +446,7 @@ void game::tick()
   }
   m_actions = std::vector<control_action>();
 
-  for (auto& p: m_pieces) p.tick(m_options.get_delta_t());
+  for (auto& p: m_pieces) p.tick(to_delta_t(m_options.get_game_speed()));
 
   assert(get_actions().empty());
 }

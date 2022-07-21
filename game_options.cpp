@@ -6,9 +6,9 @@
 game_options::game_options(
   const screen_coordinat& screen_size,
   const starting_position_type starting_position,
-  const delta_t& dt,
+  const game_speed speed,
   const int margin_width
-) : m_delta_t{dt},
+) : m_game_speed{speed},
     m_left_controller_type{controller_type::keyboard},
     m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
@@ -33,7 +33,7 @@ game_options get_default_game_options()
   return game_options(
     get_default_screen_size(),
     get_default_starting_position(),
-    get_default_delta_t(),
+    game_speed::normal,
     get_default_margin_width()
   );
 }

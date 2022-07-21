@@ -9,6 +9,7 @@
 #include "screen_coordinat.h"
 #include "starting_position_type.h"
 #include "volume.h"
+#include "game_speed.h"
 
 /// Options for the game, such as speed
 class game_options
@@ -17,7 +18,7 @@ public:
   game_options(
     const screen_coordinat& screen_size,
     const starting_position_type starting_position,
-    const delta_t& dt,
+    const game_speed speed,
     const int margin_width
   );
 
@@ -28,11 +29,8 @@ public:
   /// for a click to connect to a piece
   auto get_click_distance() const noexcept { return m_click_distance; }
 
-  /// Get the fraction of a full move that is done per tick,
-  /// where
-  ///   * 0.01 means that only 1% of the full move is done
-  ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
-  auto get_delta_t() const noexcept { return m_delta_t; }
+  /// Get the game speed
+  auto get_game_speed() const noexcept { return m_game_speed; }
 
   /// Controller type of the left player
   auto get_left_controller_type() const noexcept { return m_left_controller_type; }
@@ -55,11 +53,8 @@ public:
   /// Get the volume, as a percentage
   auto get_volume() const noexcept { return m_volume; }
 
-  /// Set the fraction of a full move that is done per tick,
-  /// where
-  ///   * 0.01 means that only 1% of the full move is done
-  ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
-  void set_delta_t(const delta_t& dt) noexcept { m_delta_t = dt; }
+  /// Set the game speed
+  void set_game_speed(const game_speed speed) noexcept { m_game_speed = speed; }
 
   /// Set the color of the player
   void set_left_player_color(const chess_color c) noexcept;
@@ -82,11 +77,8 @@ private:
   /// for a click to connect to a piece
   double m_click_distance;
 
-  /// The fraction of a full move that is done per tick,
-  /// where
-  ///   * 0.01 means that only 1% of the full move is done
-  ///   * 1.0 denotes a full move, i.e. a piece traverses 1.0 game coordinat
-  delta_t m_delta_t;
+  /// The game speed
+  game_speed m_game_speed;
 
   /// Controller type of the left player
   controller_type m_left_controller_type;
