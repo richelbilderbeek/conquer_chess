@@ -116,4 +116,9 @@ void sound_effects::play(const sound_effect& effect)
   }
 }
 
+void sound_effects::play_hide() noexcept
+{
+  m_hide.play();
+}
+
 #endif // LOGIC_ONLY

@@ -35,6 +35,9 @@ public:
 
   sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
 
+  auto& get_sound_effects() noexcept { return m_sound_effects; }
+
+
   /// Play a sound effect
   void play(
     const sound_effect& effect

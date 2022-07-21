@@ -17,6 +17,9 @@ public:
   /// Play a sound effect
   void play(const sound_effect& effect);
 
+  /// Play the 'wooosh' effect
+  void play_hide() noexcept;
+
 private:
   sf::Sound m_faring_into_battle;
   sf::Sound m_hide;

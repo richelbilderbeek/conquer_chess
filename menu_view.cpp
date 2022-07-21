@@ -84,18 +84,22 @@ bool menu_view::process_events()
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
         m_selected = get_previous(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
         m_selected = get_next(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
         m_selected = get_next(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
         m_selected = get_previous(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {

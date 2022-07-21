@@ -76,18 +76,22 @@ bool options_view::process_events()
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
         m_selected = get_above(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
         m_selected = get_right_of(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
         m_selected = get_below(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
         m_selected = get_left_of(m_selected);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
@@ -114,14 +118,6 @@ bool options_view::process_events()
           break;
         }
 
-      }
-      else if (key_pressed == sf::Keyboard::Key::M)
-      {
-        //m_game.add_action(create_press_move_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::A)
-      {
-        //m_game.add_action(create_press_attack_action());
       }
       else if (key_pressed == sf::Keyboard::Key::F3)
       {
