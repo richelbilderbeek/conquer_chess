@@ -205,7 +205,7 @@ void control_actions::start_move_unit(
 
       const auto& from{p.get_coordinat()};
       const auto& to{coordinat};
-      if (can_move(p, from, to))
+      if (can_move(p.get_type(), from, to, p.get_player()))
       {
         p.add_action(
           piece_action(

@@ -33,12 +33,13 @@ void piece::add_action(const piece_action& action)
 
 /// Can a piece move from 'from' to 'to'?
 bool can_move(
-  const piece& p,
+  const piece_type& type,
   const game_coordinat& from,
-  const game_coordinat& to
+  const game_coordinat& to,
+  const side player
 )
 {
-  switch (p.get_type())
+  switch (type)
   {
     case piece_type::king:
       return are_on_same_rank(from, to)
@@ -47,7 +48,7 @@ bool can_move(
       ;
     case piece_type::pawn:
       return are_on_same_file(from, to)
-        && is_forward(from, to, p.get_player())
+        && is_forward(from, to, player)
       ;
     case piece_type::rook:
       return are_on_same_rank(from, to)
@@ -216,6 +217,71 @@ void piece::set_selected(const bool is_selected) noexcept
 void test_piece()
 {
 #ifndef NDEBUG
+  // can_move
+  {
+    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
+    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
+    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
+    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
+    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
+    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
+    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
+    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
+    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
+    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
+    assert(!can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
+    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
+    assert(can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
+    assert(can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+
+    assert(can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e3"), side::rhs));
+    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e5"), side::rhs));
+
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
+    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
+    assert(!can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+
+    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
+    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
+    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
+    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
+    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
+    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
+    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
+    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
+    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+  }
   // count_piece_actions
   {
     const auto p{get_test_piece()};

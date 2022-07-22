@@ -94,9 +94,10 @@ private:
 
 /// Can a piece move from 'from' to 'to'?
 bool can_move(
-  const piece& p,
+  const piece_type& p,
   const game_coordinat& from,
-  const game_coordinat& to
+  const game_coordinat& to,
+  const side player
 );
 
 /// Clear all the actions
