@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include "sound_effects.h"
+#include "square.h"
 
 #include <cassert>
 #include <cmath>
@@ -286,7 +287,7 @@ bool has_selected_pieces(const game& g, const chess_color player)
 
 bool is_piece_at(
   const game& g,
-  const game_coordinat& coordinat,
+  const square& coordinat,
   const double distance
 ) {
   const std::vector<double> distances{
@@ -413,10 +414,10 @@ void test_game() //!OCLINT tests may be many
   // LMB then RMB makes a unit move
   {
     game g = create_king_versus_king_game();
-    g.add_action(create_press_lmb_action(get_coordinat("e8")));
+    g.add_action(create_press_lmb_action(square("e8")));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    g.add_action(create_press_rmb_action(get_coordinat("e6")));
+    g.add_action(create_press_rmb_action(square("e6")));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 1);
   }

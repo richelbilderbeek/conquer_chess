@@ -20,7 +20,7 @@ public:
   piece(
     const chess_color color,
     const piece_type type,
-    const game_coordinat& coordinat,
+    const square& coordinat,
     const side player
   );
 
@@ -95,8 +95,8 @@ private:
 /// Can a piece move from 'from' to 'to'?
 bool can_move(
   const piece_type& p,
-  const game_coordinat& from,
-  const game_coordinat& to,
+  const square& from,
+  const square& to,
   const side player
 );
 

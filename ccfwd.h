@@ -21,6 +21,7 @@ class piece_action;
 class piece;
 class screen_coordinat;
 class screen_rect;
+class square;
 class sound_effect;
 class sound_effects;
 class textures;

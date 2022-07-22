@@ -186,7 +186,7 @@ bool has_selected_pieces(const game& g, const chess_color player);
 /// Determine if there is a piece at the coordinat
 bool is_piece_at(
   const game& g,
-  const game_coordinat& coordinat,
+  const square& coordinat,
   const double distance = 0.5
 );
 

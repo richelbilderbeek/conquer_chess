@@ -30,6 +30,7 @@ HEADERS += \
     $$PWD/sound_effect.h \
     $$PWD/sound_effect_type.h \
     $$PWD/sound_effects.h \
+    $$PWD/square.h \
     $$PWD/starting_position_type.h \
     $$PWD/textures.h \
     $$PWD/volume.h
@@ -65,6 +66,7 @@ SOURCES += \
     $$PWD/sound_effect.cpp \
     $$PWD/sound_effect_type.cpp \
     $$PWD/sound_effects.cpp \
+    $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \
     $$PWD/textures.cpp \
     $$PWD/volume.cpp

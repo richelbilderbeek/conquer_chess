@@ -2,6 +2,7 @@
 
 #include "helper.h"
 #include "piece_type.h"
+#include "square.h"
 
 #include <algorithm>
 #include <cassert>
@@ -12,11 +13,11 @@
 piece::piece(
   const chess_color color,
   const piece_type type,
-  const game_coordinat& coordinat,
+  const square& coordinat,
   const side player
 )
   : m_color{color},
-    m_coordinat{coordinat},
+    m_coordinat{to_coordinat(coordinat)},
     m_health{::get_max_health(type)},
     m_is_selected{false},
     m_max_health{::get_max_health(type)},
@@ -34,8 +35,8 @@ void piece::add_action(const piece_action& action)
 /// Can a piece move from 'from' to 'to'?
 bool can_move(
   const piece_type& type,
-  const game_coordinat& from,
-  const game_coordinat& to,
+  const square& from,
+  const square& to,
   const side player
 )
 {
@@ -101,8 +102,8 @@ std::vector<piece> get_standard_starting_pieces(
 {
   const auto f{
     left_player_color == chess_color::white
-    ? [](const game_coordinat& coordinat) { return coordinat; }
-    : [](const game_coordinat& coordinat) { return get_rotated_coordinat(coordinat); }
+    ? [](const square& position) { return position; }
+    : [](const square& position) { return get_rotated_square(position); }
   };
   const side white_side{
     left_player_color == chess_color::white
@@ -112,38 +113,38 @@ std::vector<piece> get_standard_starting_pieces(
   const side black_side{get_other_side(white_side)};
 
   std::vector<piece> pieces{
-    piece(chess_color::white, piece_type::rook,   f(get_coordinat("a1")), white_side),
-    piece(chess_color::white, piece_type::knight, f(get_coordinat("b1")), white_side),
-    piece(chess_color::white, piece_type::bishop, f(get_coordinat("c1")), white_side),
-    piece(chess_color::white, piece_type::queen,  f(get_coordinat("d1")), white_side),
-    piece(chess_color::white, piece_type::king,   f(get_coordinat("e1")), white_side),
-    piece(chess_color::white, piece_type::bishop, f(get_coordinat("f1")), white_side),
-    piece(chess_color::white, piece_type::knight, f(get_coordinat("g1")), white_side),
-    piece(chess_color::white, piece_type::rook,   f(get_coordinat("h1")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("a2")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("b2")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("c2")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("d2")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("e2")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("f2")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("g2")), white_side),
-    piece(chess_color::white, piece_type::pawn,   f(get_coordinat("h2")), white_side),
-    piece(chess_color::black, piece_type::rook,   f(get_coordinat("a8")), black_side),
-    piece(chess_color::black, piece_type::knight, f(get_coordinat("b8")), black_side),
-    piece(chess_color::black, piece_type::bishop, f(get_coordinat("c8")), black_side),
-    piece(chess_color::black, piece_type::queen,  f(get_coordinat("d8")), black_side),
-    piece(chess_color::black, piece_type::king,   f(get_coordinat("e8")), black_side),
-    piece(chess_color::black, piece_type::bishop, f(get_coordinat("f8")), black_side),
-    piece(chess_color::black, piece_type::knight, f(get_coordinat("g8")), black_side),
-    piece(chess_color::black, piece_type::rook,   f(get_coordinat("h8")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("a7")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("b7")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("c7")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("d7")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("e7")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("f7")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("g7")), black_side),
-    piece(chess_color::black, piece_type::pawn,   f(get_coordinat("h7")), black_side)
+    piece(chess_color::white, piece_type::rook,   f(square("a1")), white_side),
+    piece(chess_color::white, piece_type::knight, f(square("b1")), white_side),
+    piece(chess_color::white, piece_type::bishop, f(square("c1")), white_side),
+    piece(chess_color::white, piece_type::queen,  f(square("d1")), white_side),
+    piece(chess_color::white, piece_type::king,   f(square("e1")), white_side),
+    piece(chess_color::white, piece_type::bishop, f(square("f1")), white_side),
+    piece(chess_color::white, piece_type::knight, f(square("g1")), white_side),
+    piece(chess_color::white, piece_type::rook,   f(square("h1")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("a2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("b2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("c2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("d2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("e2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("f2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("g2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("h2")), white_side),
+    piece(chess_color::black, piece_type::rook,   f(square("a8")), black_side),
+    piece(chess_color::black, piece_type::knight, f(square("b8")), black_side),
+    piece(chess_color::black, piece_type::bishop, f(square("c8")), black_side),
+    piece(chess_color::black, piece_type::queen,  f(square("d8")), black_side),
+    piece(chess_color::black, piece_type::king,   f(square("e8")), black_side),
+    piece(chess_color::black, piece_type::bishop, f(square("f8")), black_side),
+    piece(chess_color::black, piece_type::knight, f(square("g8")), black_side),
+    piece(chess_color::black, piece_type::rook,   f(square("h8")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("a7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("b7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("c7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("d7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("e7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("f7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("g7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("h7")), black_side)
   };
   return pieces;
 }
@@ -188,7 +189,7 @@ piece get_test_piece() noexcept
   return piece(
     chess_color::white,
     piece_type::king,
-    get_coordinat("e1"),
+    square("e1"),
     side::lhs
   );
 }
@@ -219,68 +220,68 @@ void test_piece()
 #ifndef NDEBUG
   // can_move
   {
-    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
-    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
-    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
-    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
-    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
-    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
-    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
-    assert(can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
-    assert(!can_move(piece_type::bishop, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+    assert(can_move(piece_type::bishop, square("e4"), square("d3"), side::lhs));
+    assert(!can_move(piece_type::bishop, square("e4"), square("d4"), side::lhs));
+    assert(can_move(piece_type::bishop, square("e4"), square("d5"), side::lhs));
+    assert(!can_move(piece_type::bishop, square("e4"), square("e3"), side::lhs));
+    assert(!can_move(piece_type::bishop, square("e4"), square("e5"), side::lhs));
+    assert(can_move(piece_type::bishop, square("e4"), square("f3"), side::lhs));
+    assert(!can_move(piece_type::bishop, square("e4"), square("f4"), side::lhs));
+    assert(can_move(piece_type::bishop, square("e4"), square("f5"), side::lhs));
+    assert(!can_move(piece_type::bishop, square("e4"), square("f6"), side::lhs));
 
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
-    assert(can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
-    assert(!can_move(piece_type::king, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("d3"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("d4"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("d5"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("e3"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("e5"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("f3"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("f4"), side::lhs));
+    assert(can_move(piece_type::king, square("e4"), square("f5"), side::lhs));
+    assert(!can_move(piece_type::king, square("e4"), square("f6"), side::lhs));
 
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
-    assert(!can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
-    assert(can_move(piece_type::knight, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("d3"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("d4"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("d5"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("e3"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("e5"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("f3"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("f4"), side::lhs));
+    assert(!can_move(piece_type::knight, square("e4"), square("f5"), side::lhs));
+    assert(can_move(piece_type::knight, square("e4"), square("f6"), side::lhs));
 
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
-    assert(can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("d3"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("d4"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("d5"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("e3"), side::lhs));
+    assert(can_move(piece_type::pawn, square("e4"), square("e5"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("f3"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("f4"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("f5"), side::lhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("f6"), side::lhs));
 
-    assert(can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e3"), side::rhs));
-    assert(!can_move(piece_type::pawn, get_coordinat("e4"), get_coordinat("e5"), side::rhs));
+    assert(can_move(piece_type::pawn, square("e4"), square("e3"), side::rhs));
+    assert(!can_move(piece_type::pawn, square("e4"), square("e5"), side::rhs));
 
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
-    assert(can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
-    assert(!can_move(piece_type::queen, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("d3"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("d4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("d5"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e3"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e5"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("f3"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("f4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("f5"), side::lhs));
+    assert(!can_move(piece_type::queen, square("e4"), square("f6"), side::lhs));
 
-    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("d3"), side::lhs));
-    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("d4"), side::lhs));
-    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("d5"), side::lhs));
-    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("e3"), side::lhs));
-    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("e5"), side::lhs));
-    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f3"), side::lhs));
-    assert(can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f4"), side::lhs));
-    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f5"), side::lhs));
-    assert(!can_move(piece_type::rook, get_coordinat("e4"), get_coordinat("f6"), side::lhs));
+    assert(!can_move(piece_type::rook, square("e4"), square("d3"), side::lhs));
+    assert(can_move(piece_type::rook, square("e4"), square("d4"), side::lhs));
+    assert(!can_move(piece_type::rook, square("e4"), square("d5"), side::lhs));
+    assert(can_move(piece_type::rook, square("e4"), square("e3"), side::lhs));
+    assert(can_move(piece_type::rook, square("e4"), square("e5"), side::lhs));
+    assert(!can_move(piece_type::rook, square("e4"), square("f3"), side::lhs));
+    assert(can_move(piece_type::rook, square("e4"), square("f4"), side::lhs));
+    assert(!can_move(piece_type::rook, square("e4"), square("f5"), side::lhs));
+    assert(!can_move(piece_type::rook, square("e4"), square("f6"), side::lhs));
   }
   // count_piece_actions
   {
@@ -336,10 +337,10 @@ void test_piece()
     piece p(
       chess_color::white,
       piece_type::pawn,
-      get_coordinat("e2"),
+      square("e2"),
       side::lhs
     );
-    p.add_action(piece_action(piece_action_type::move, get_coordinat("e4")));
+    p.add_action(piece_action(piece_action_type::move, square("e4")));
     assert(!p.get_actions().empty());
     p.tick(delta_t(1.0));
     assert(!p.get_actions().empty());
@@ -350,10 +351,10 @@ void test_piece()
     piece p(
       chess_color::white,
       piece_type::pawn,
-      get_coordinat("e7"),
+      square("e7"),
       side::lhs
     );
-    p.add_action(piece_action(piece_action_type::move, get_coordinat("e5")));
+    p.add_action(piece_action(piece_action_type::move, square("e5")));
     assert(!p.get_actions().empty());
     p.tick(delta_t(1.0));
     assert(p.get_actions().empty()); // Actions cleared

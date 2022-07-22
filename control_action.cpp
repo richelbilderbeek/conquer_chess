@@ -2,32 +2,34 @@
 
 #include <cassert>
 
+#include "game_coordinat.h"
+
 control_action::control_action(
   const control_action_type type,
-  const game_coordinat& coordinat
+  const square& coordinat
 ) : m_coordinat{coordinat}, m_type{type}
 {
 
 }
 
-control_action create_mouse_move_action(const game_coordinat& coordinat)
+control_action create_mouse_move_action(const square& coordinat)
 {
   return control_action(control_action_type::mouse_move, coordinat);
 }
 
 control_action create_press_attack_action()
 {
-  return control_action(control_action_type::press_attack, game_coordinat());
+  return control_action(control_action_type::press_attack, square("a1"));
 }
 
 control_action create_press_down_action()
 {
-  return control_action(control_action_type::press_down, game_coordinat());
+  return control_action(control_action_type::press_down, square("a1"));
 }
 
 control_action create_press_left_action()
 {
-  return control_action(control_action_type::press_left, game_coordinat());
+  return control_action(control_action_type::press_left, square("a1"));
 }
 
 control_action create_press_lmb_action(const game_coordinat& coordinat)
@@ -37,12 +39,12 @@ control_action create_press_lmb_action(const game_coordinat& coordinat)
 
 control_action create_press_move_action()
 {
-  return control_action(control_action_type::press_move, game_coordinat());
+  return control_action(control_action_type::press_move, square("a1"));
 }
 
 control_action create_press_right_action()
 {
-  return control_action(control_action_type::press_right, game_coordinat());
+  return control_action(control_action_type::press_right, square("a1"));
 }
 
 control_action create_press_rmb_action(const game_coordinat& coordinat)
@@ -52,12 +54,12 @@ control_action create_press_rmb_action(const game_coordinat& coordinat)
 
 control_action create_press_select_action()
 {
-  return control_action(control_action_type::press_select, game_coordinat());
+  return control_action(control_action_type::press_select, square("a1"));
 }
 
 control_action create_press_up_action()
 {
-  return control_action(control_action_type::press_up, game_coordinat());
+  return control_action(control_action_type::press_up, square("a1"));
 }
 
 void test_control_actions()

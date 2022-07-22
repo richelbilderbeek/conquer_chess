@@ -44,7 +44,7 @@ private:
   /// Process a space or left-mouse-button
   void do_select(
     game& g,
-    const game_coordinat& coordinat,
+    const square& coordinat,
     const chess_color player_color
   );
 

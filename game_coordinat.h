@@ -35,20 +35,6 @@ private:
   double m_y;
 };
 
-/// Are the squares on the same diagonal, e.g. d1 and a4
-bool are_on_same_diagonal(const game_coordinat& a, const game_coordinat& b) noexcept;
-
-/// Are the squares on the same file, e.g. e2 and e4
-bool are_on_same_file(const game_coordinat& a, const game_coordinat& b) noexcept;
-
-/// Are the squares on the same half-diagonal,
-/// also 'the jump of a knight'
-/// e.g. b1 and c3
-bool are_on_same_half_diagonal(const game_coordinat& a, const game_coordinat& b) noexcept;
-
-/// Are the squares on the same rank, e.g. a1 and a8
-bool are_on_same_rank(const game_coordinat& a, const game_coordinat& b) noexcept;
-
 /// Calculate the euclidean distance between two points
 double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 
@@ -66,7 +52,11 @@ game_coordinat get_below(const game_coordinat& coordinat) noexcept;
 
 /// Get a coordinat from chess notation, e.g. 'e2'
 /// Assumes the board has a1 at the top-left, a8 at the top-right
-game_coordinat get_coordinat(const std::string& notation);
+//game_coordinat get_coordinat(const std::string& notation);
+
+/// Get a coordinat from chess notation, e.g. 'e2'
+/// Assumes the board has a1 at the top-left, a8 at the top-right
+//game_coordinat get_coordinat(const square& s);
 
 /// Get the game coordinat one square left of this one,
 /// i.e. when the player presses left
@@ -83,8 +73,8 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept;
 /// Is the 'to' coordinat forward, i.e. can a pawn move/attack
 /// in that direction?
 bool is_forward(
-  const game_coordinat& from,
-  const game_coordinat& to,
+  const square& from,
+  const square& to,
   const side player
 );
 

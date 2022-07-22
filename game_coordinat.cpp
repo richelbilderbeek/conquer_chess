@@ -1,6 +1,7 @@
 #include "game_coordinat.h"
 
 #include "helper.h"
+#include "square.h"
 
 #include <cassert>
 #include <cmath>
@@ -13,35 +14,6 @@ game_coordinat::game_coordinat(
   const double y
 ) : m_x{x}, m_y{y}
 {
-
-}
-
-bool are_on_same_diagonal(const game_coordinat& a, const game_coordinat& b) noexcept
-{
-  return std::abs(static_cast<int>(to_notation(a)[0] - to_notation(b)[0]))
-   == std::abs(static_cast<int>(to_notation(a)[1] - to_notation(b)[1]))
-  ;
-}
-
-bool are_on_same_file(const game_coordinat& a, const game_coordinat& b) noexcept
-{
-  return to_notation(a)[0] == to_notation(b)[0];
-}
-
-bool are_on_same_half_diagonal(const game_coordinat& a, const game_coordinat& b) noexcept
-{
-  const int dx{
-    std::abs(static_cast<int>(to_notation(a)[0] - to_notation(b)[0]))
-  };
-  const int dy{
-     std::abs(static_cast<int>(to_notation(a)[1] - to_notation(b)[1]))
-  };
-  return dx == dy * 2 || dy == dx * 2;
-}
-
-bool are_on_same_rank(const game_coordinat& a, const game_coordinat& b) noexcept
-{
-  return to_notation(a)[1] == to_notation(b)[1];
 
 }
 
@@ -88,6 +60,7 @@ game_coordinat get_below(const game_coordinat& coordinat) noexcept
   return pos;
 }
 
+/*
 game_coordinat get_coordinat(const std::string& notation)
 {
   assert(notation.size() == 2);
@@ -98,6 +71,7 @@ game_coordinat get_coordinat(const std::string& notation)
     0.5 + static_cast<double>(y_int)
   );
 }
+*/
 
 game_coordinat get_left(const game_coordinat& coordinat) noexcept
 {
@@ -128,12 +102,12 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept
 }
 
 bool is_forward(
-  const game_coordinat& from,
-  const game_coordinat& to,
+  const square& from,
+  const square& to,
   const side player
 )
 {
-  const bool is_right{to_notation(to)[1] > to_notation(from)[1]};
+  const bool is_right{to.get_pos()[1] > from.get_pos()[1]};
   return (player == side::rhs && !is_right)
     || (player == side::lhs && is_right)
   ;
@@ -142,22 +116,6 @@ bool is_forward(
 void test_game_coordinat()
 {
   #ifndef NDEBUG
-  // are_on_same_diagonal
-  {
-    assert(are_on_same_diagonal(get_coordinat("d1"), get_coordinat("a4")));
-  }
-  // are_on_same_file
-  {
-    assert(are_on_same_file(get_coordinat("e2"), get_coordinat("e4")));
-  }
-  // are_on_same_half_diagonal
-  {
-    assert(are_on_same_half_diagonal(get_coordinat("b1"), get_coordinat("c3")));
-  }
-  // are_on_same_rank
-  {
-    assert(are_on_same_rank(get_coordinat("a1"), get_coordinat("h1")));
-  }
   // get
   {
     const double x{12.34};
@@ -183,15 +141,6 @@ void test_game_coordinat()
     const game_coordinat c(3.5, 3.5);
     const auto below{get_below(c)};
     assert(below.get_y() > c.get_y());
-  }
-  // get_coordinat
-  {
-    assert(get_coordinat("a1") == game_coordinat(0.5, 0.5));
-    const auto a8{get_coordinat("a8")};
-    assert(a8 == game_coordinat(7.5, 0.5));
-    assert(get_coordinat("a8") == game_coordinat(7.5, 0.5));
-    assert(get_coordinat("h1") == game_coordinat(0.5, 7.5));
-    assert(get_coordinat("h8") == game_coordinat(7.5, 7.5));
   }
   // get_below loops
   {
@@ -260,21 +209,7 @@ void test_game_coordinat()
 
 std::string to_notation(const game_coordinat& g)
 {
-  const int x{static_cast<int>(std::trunc(g.get_x()))};
-  const int y{static_cast<int>(std::trunc(g.get_y()))};
-  if (x >= 0 && x < 8 && y >= 0 && y < 8)
-  {
-    const char first = 'a' + y;
-    const char second = '1' + x;
-    std::string s;
-    s += first;
-    s += second;
-    return s;
-  }
-  else
-  {
-    return "--";
-  }
+  return to_str(square(g));
 }
 
 bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept

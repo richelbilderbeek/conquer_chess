@@ -1,6 +1,7 @@
 #include "control_actions.h"
 
 #include "game.h"
+#include "square.h"
 
 #include <cassert>
 
@@ -27,7 +28,7 @@ int count_control_actions(const control_actions& a)
 
 void control_actions::do_select(
   game& g,
-  const game_coordinat& coordinat,
+  const square& coordinat,
   const chess_color player_color
 )
 {
@@ -157,7 +158,7 @@ void control_actions::process_control_actions(game& g)
     else if (action.get_type() == control_action_type::mouse_move)
     {
       auto& pos{get_mouse_player_pos(g)};
-      pos = action.get_coordinat();
+      pos = to_coordinat(action.get_square());
     }
     else if (action.get_type() == control_action_type::lmb_down)
     {
@@ -205,7 +206,7 @@ void control_actions::start_move_unit(
 
       const auto& from{p.get_coordinat()};
       const auto& to{coordinat};
-      if (can_move(p.get_type(), from, to, p.get_player()))
+      if (can_move(p.get_type(), square(from), square(to), p.get_player()))
       {
         p.add_action(
           piece_action(
