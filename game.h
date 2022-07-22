@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "control_action.h"
+#include "actions.h"
 #include "game_coordinat.h"
 #include "game_options.h"
 #include "game_view_layout.h"
@@ -21,12 +21,11 @@ public:
   /// Add an action. These will be processed in 'tick'
   void add_action(const control_action a);
 
-  /// Clear the sound effects to be processed,
-  /// i.e. resize to zero
-  void clear_sound_effects() noexcept;
-
-  /// Get the game actions, should be zero after each tick
+  /// Get the game actions
   const auto& get_actions() const noexcept { return m_actions; }
+
+  /// Get the game actions
+  auto& get_actions() noexcept { return m_actions; }
 
   /// Get the piece that is closest to the coordinat
   const piece& get_closest_piece_to(const game_coordinat& coordinat) const;
@@ -34,11 +33,17 @@ public:
   /// Get the piece that is closest to the coordinat
   piece& get_closest_piece_to(const game_coordinat& coordinat);
 
+  /// Get the position of the player that uses the keyboard
+  game_coordinat& get_keyboard_player_pos();
+
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
   /// Get the layout of the screen
   auto& get_layout() noexcept { return m_layout; }
+
+  /// Get the position of the player that uses the mouse
+  game_coordinat& get_mouse_player_pos();
 
   /// Get the in-game keyboard position
   const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
@@ -58,15 +63,12 @@ public:
   /// Get all the pieces
   const auto& get_pieces() const noexcept { return m_pieces; }
 
-  /// Get all the sound effects to be processed
-  const auto& get_sound_effects() const noexcept { return m_sound_effects; };
-
   /// Go to the next frame
   void tick(const delta_t& dt = delta_t(1.0));
 
 private:
 
-  std::vector<control_action> m_actions;
+  actions m_actions;
 
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
@@ -81,26 +83,6 @@ private:
   game_options m_options;
 
   std::vector<piece> m_pieces;
-
-  std::vector<sound_effect> m_sound_effects;
-
-  /// Process a space or left-mouse-button
-  void do_select(
-    const game_coordinat& coordinat,
-    const chess_color player_color
-  );
-
-  /// Get the position of the player that uses the keyboard
-  game_coordinat& get_keyboard_player_pos();
-
-  /// Get the position of the player that uses the mouse
-  game_coordinat& get_mouse_player_pos();
-
-  /// Process an M or right-mouse-button down
-  void start_move_unit(
-    const game_coordinat& coordinat,
-    const chess_color player_color
-  );
 
   friend void test_game();
 };
@@ -117,9 +99,13 @@ bool can_player_select_piece_at_cursor_pos(
   const chess_color player
 );
 
+/// Clear the sound effects to be processed,
+/// i.e. resize to zero
+void clear_sound_effects(game& g) noexcept;
+
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick
-int count_game_actions(const game& g);
+int count_control_actions(const game& g);
 
 /// Count the total number of actions to be done by pieces of a player
 int count_piece_actions(
@@ -164,8 +150,17 @@ int get_index_of_closest_piece_to(
 /// Get the position of the player that uses the keyboard
 game_coordinat get_keyboard_player_pos(const game& g);
 
+/// Get the position of the player that uses the keyboard
+game_coordinat& get_keyboard_player_pos(game& g);
+
 /// Get the position of the player that uses the mouse
 game_coordinat get_mouse_player_pos(const game& g);
+
+/// Get the position of the player that uses the mouse
+game_coordinat& get_mouse_player_pos(game& g);
+
+/// Get the game options
+game_options get_options(const game& g);
 
 /// Get all the selected pieces
 /// @param g a game
@@ -175,6 +170,9 @@ std::vector<piece> get_selected_pieces(
   const game& g,
   const chess_color player
 );
+
+/// Get all the sound effects to be processed
+const std::vector<sound_effect>& get_sound_effects(const game& g) noexcept;
 
 /// Get all the pieces
 const std::vector<piece>& get_pieces(const game& g) noexcept;

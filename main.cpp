@@ -5,6 +5,7 @@
 #include "game_view.h"
 #include "game_view_layout.h"
 #include "helper.h"
+#include "id.h"
 #include "menu_view.h"
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
@@ -31,6 +32,7 @@ void test()
   test_game_speed();
   test_game_view_layout();
   test_helper();
+  test_id();
   test_menu_view_item();
   test_menu_view_layout();
   test_options_view_item();

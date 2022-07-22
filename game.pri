@@ -1,5 +1,7 @@
 # Files
 HEADERS += \
+    $$PWD/actions.h \
+    $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
     $$PWD/control_action.h \
     $$PWD/control_action_type.h \
@@ -12,6 +14,7 @@ HEADERS += \
     $$PWD/game_speed.h \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
+    $$PWD/id.h \
     $$PWD/layout.h \
     $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
@@ -33,6 +36,7 @@ HEADERS += \
 
 
 SOURCES += \
+    $$PWD/actions.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/control_action.cpp \
     $$PWD/control_action_type.cpp \
@@ -45,6 +49,7 @@ SOURCES += \
     $$PWD/game_speed.cpp \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \
+    $$PWD/id.cpp \
     $$PWD/layout.cpp \
     $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \

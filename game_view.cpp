@@ -145,11 +145,11 @@ std::string get_controls_text(
 
 void game_view::play_sound_effects()
 {
-  for (const auto sound_effect: m_game.get_sound_effects())
+  for (const auto& sound_effect: get_sound_effects(m_game))
   {
     m_game_resources.play(sound_effect);
   }
-  m_game.clear_sound_effects();
+  clear_sound_effects(m_game);
 }
 
 bool game_view::process_events()
@@ -355,7 +355,7 @@ void show_debug_1(game_view& view)
     << bool_to_str(is_piece_at(game, game.get_player_1_pos(), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
-    << "Number of game actions: " << count_game_actions(game) << '\n'
+    << "Number of game actions: " << count_control_actions(game) << '\n'
     << "Number of selected units: " << count_selected_units(game, color) << '\n'
     << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
   ;
@@ -394,7 +394,7 @@ void show_debug_2(game_view& view)
     << bool_to_str(is_piece_at(game, game.get_player_2_pos(), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
-    << "Number of game actions: " << count_game_actions(game) << '\n'
+    << "Number of game actions: " << count_control_actions(game) << '\n'
     << "Number of selected units: " << count_selected_units(game, color) << '\n'
     << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
   ;
