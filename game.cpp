@@ -507,8 +507,6 @@ void test_game() //!OCLINT tests may be many
     assert(get_sound_effects(g).at(1).get_sound_effect_type() == sound_effect_type::start_move);
   }
   // Keyboard: cannot move pawn backward
-  //#define FIX_ISSUE_PAWN_CANNOT_MOVE_BACKWARDS
-  #ifdef FIX_ISSUE_PAWN_CANNOT_MOVE_BACKWARDS
   {
     game g;
     g.get_keyboard_player_pos() = get_coordinat("e2");
@@ -524,7 +522,6 @@ void test_game() //!OCLINT tests may be many
     assert(g.get_closest_piece_to(get_coordinat("e2")).get_type() == piece_type::pawn);
     assert(get_sound_effects(g).at(1).get_sound_effect_type() == sound_effect_type::cannot);
   }
-  #endif // FIX_ISSUE_PAWN_CANNOT_MOVE_BACKWARDS
 #endif // no tests in release
 }
 
