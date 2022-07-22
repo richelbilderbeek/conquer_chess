@@ -1,10 +1,10 @@
 # Files
 HEADERS += \
-    $$PWD/actions.h \
     $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
     $$PWD/control_action.h \
     $$PWD/control_action_type.h \
+    $$PWD/control_actions.h \
     $$PWD/controller_type.h \
     $$PWD/delta_t.h \
     $$PWD/game.h \
@@ -36,10 +36,10 @@ HEADERS += \
 
 
 SOURCES += \
-    $$PWD/actions.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/control_action.cpp \
     $$PWD/control_action_type.cpp \
+    $$PWD/control_actions.cpp \
     $$PWD/controller_type.cpp \
     $$PWD/delta_t.cpp \
     $$PWD/game.cpp \

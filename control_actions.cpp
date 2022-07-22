@@ -1,31 +1,31 @@
-#include "actions.h"
+#include "control_actions.h"
 
 #include "game.h"
 
 #include <cassert>
 
-actions::actions()
+control_actions::control_actions()
 {
 
 }
 
-void actions::add(const control_action& action)
+void control_actions::add(const control_action& action)
 {
   m_control_actions.push_back(action);
 }
 
-void actions::clear_sound_effects() noexcept
+void control_actions::clear_sound_effects() noexcept
 {
   m_sound_effects.clear();
   assert(m_sound_effects.empty());
 }
 
-int count_control_actions(const actions& a)
+int count_control_actions(const control_actions& a)
 {
-  return static_cast<int>(a.get_control_actions().size());
+  return static_cast<int>(a.get_actions().size());
 }
 
-void actions::do_select(
+void control_actions::do_select(
   game& g,
   const game_coordinat& coordinat,
   const chess_color player_color
@@ -99,18 +99,18 @@ void actions::do_select(
   }
 }
 
-const std::vector<sound_effect>& get_sound_effects(const actions& a) noexcept
+const std::vector<sound_effect>& get_sound_effects(const control_actions& a) noexcept
 {
   return a.get_sound_effects();
 }
 
-void actions::process(game& g, const delta_t& dt)
+void control_actions::process(game& g, const delta_t& dt)
 {
   process_control_actions(g);
   process_piece_actions(g, dt);
 }
 
-void actions::process_control_actions(game& g)
+void control_actions::process_control_actions(game& g)
 {
   for (const auto& action: m_control_actions)
   {
@@ -179,7 +179,7 @@ void actions::process_control_actions(game& g)
   m_control_actions = std::vector<control_action>();
 }
 
-void actions::process_piece_actions(game& g, const delta_t& dt)
+void control_actions::process_piece_actions(game& g, const delta_t& dt)
 {
   for (auto& p: g.get_pieces())
   {
@@ -188,7 +188,7 @@ void actions::process_piece_actions(game& g, const delta_t& dt)
 
 }
 
-void actions::start_move_unit(
+void control_actions::start_move_unit(
   game& g,
   const game_coordinat& coordinat,
   const chess_color player_color

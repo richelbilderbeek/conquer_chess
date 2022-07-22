@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "actions.h"
+#include "control_actions.h"
 #include "game_coordinat.h"
 #include "game_options.h"
 #include "game_view_layout.h"
@@ -22,10 +22,10 @@ public:
   void add_action(const control_action a);
 
   /// Get the game actions
-  const auto& get_actions() const noexcept { return m_actions; }
+  const auto& get_actions() const noexcept { return m_control_actions; }
 
   /// Get the game actions
-  auto& get_actions() noexcept { return m_actions; }
+  auto& get_actions() noexcept { return m_control_actions; }
 
   /// Get the piece that is closest to the coordinat
   const piece& get_closest_piece_to(const game_coordinat& coordinat) const;
@@ -68,7 +68,7 @@ public:
 
 private:
 
-  actions m_actions;
+  control_actions m_control_actions;
 
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;

@@ -14,14 +14,12 @@
 ///  * The control_actions are what the user wants.
 ///    These actions are immediate, processed each tick, and
 ///    possibly converted to piece_actions
-///  * The long_piece_actions are ongoing piece_actions
-///    that can have multiple sub-piece_actions,
-///    e.g. move from e2 to e4 (which has sub-piece_actions
-///    (1) to move from e2 to e3 and (2) to move from e4 to e4
-class actions
+///  * The piece_actions are ongoing piece_actions
+///    e.g. move from e2 to e3, then from e3 to e4
+class control_actions
 {
 public:
-  actions();
+  control_actions();
 
   /// Add a new user actions
   void add(const control_action& action);
@@ -30,8 +28,7 @@ public:
   /// i.e. resize to zero
   void clear_sound_effects() noexcept;
 
-  const auto& get_control_actions() const noexcept { return m_control_actions; }
-  const auto& get_piece_actions() const noexcept { return m_piece_actions; }
+  const auto& get_actions() const noexcept { return m_control_actions; }
 
   /// Get all the sound effects to be processed
   const auto& get_sound_effects() const noexcept { return m_sound_effects; };
@@ -42,7 +39,6 @@ public:
 private:
 
   std::vector<control_action> m_control_actions;
-  std::vector<piece_action> m_piece_actions;
   std::vector<sound_effect> m_sound_effects;
 
   /// Process a space or left-mouse-button
@@ -65,12 +61,12 @@ private:
 
 /// Count the total number of control actions to be done by the game,
 /// which should be zero after each tick
-int count_control_actions(const actions& a);
+int count_control_actions(const control_actions& a);
 
 /// Count the total number of piece actions to be done by the game
-int count_piece_actions(const actions& a);
+int count_piece_actions(const control_actions& a);
 
 /// Get all the sound effects to be processed
-const std::vector<sound_effect>& get_sound_effects(const actions& a) noexcept;
+const std::vector<sound_effect>& get_sound_effects(const control_actions& a) noexcept;
 
 #endif // ACTIONS_H

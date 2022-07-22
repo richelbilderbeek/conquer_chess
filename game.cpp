@@ -12,7 +12,7 @@
 game::game(
   const game_options& options
 )
-  : m_actions{},
+  : m_control_actions{},
     m_layout{options.get_screen_size(), options.get_margin_width()},
     m_player_1_pos{0.5, 4.5},
     m_player_2_pos{7.5, 4.5},
@@ -25,7 +25,7 @@ game::game(
 void game::add_action(const control_action a)
 {
   // These will be processed in 'tick'
-  m_actions.add(a);
+  m_control_actions.add(a);
 }
 
 std::vector<double> calc_distances(
@@ -302,7 +302,7 @@ bool is_piece_at(
 
 void game::tick(const delta_t& dt)
 {
-  m_actions.process(*this, dt);
+  m_control_actions.process(*this, dt);
   for (auto& p: m_pieces) p.tick(dt);
 }
 
@@ -410,19 +410,16 @@ void test_game() //!OCLINT tests may be many
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
   }
-  #ifdef FIX_ISSUE_NEW_ACTIONS
   // LMB then RMB makes a unit move
   {
-    game g;
-    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
-    g.add_action(create_press_lmb_action(black_king.get_coordinat()));
+    game g = create_king_versus_king_game();
+    g.add_action(create_press_lmb_action(get_coordinat("e8")));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    g.add_action(create_press_rmb_action(black_king.get_coordinat() + game_coordinat(-1.0, 1.0)));
+    g.add_action(create_press_rmb_action(get_coordinat("e6")));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 1);
   }
-  #endif // FIX_ISSUE_NEW_ACTIONS
   // 2x LMB then RMB makes a unit move 1 stretch (not 2)
   {
     game g;
