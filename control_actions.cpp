@@ -194,6 +194,8 @@ void control_actions::start_move_unit(
   const chess_color player_color
 )
 {
+  if (count_selected_units(g, player_color) == 0) return;
+
   for (auto& p: g.get_pieces())
   {
     if (p.is_selected() && p.get_color() == player_color)
@@ -201,20 +203,34 @@ void control_actions::start_move_unit(
       // No shift, so all current actions are void
       clear_actions(p);
 
-      p.add_action(
-        piece_action(
-          piece_action_type::move,
-          center_on_center(coordinat)
-        )
-      );
-
-      m_sound_effects.push_back(
-        sound_effect(
-          sound_effect_type::start_move,
-          p.get_color(),
-          p.get_type()
-        )
-      );
+      const auto& from{p.get_coordinat()};
+      const auto& to{coordinat};
+      if (can_move(p, from, to))
+      {
+        p.add_action(
+          piece_action(
+            piece_action_type::move,
+            center_on_center(coordinat)
+          )
+        );
+        m_sound_effects.push_back(
+          sound_effect(
+            sound_effect_type::start_move,
+            p.get_color(),
+            p.get_type()
+          )
+        );
+      }
+      else
+      {
+        m_sound_effects.push_back(
+          sound_effect(
+            sound_effect_type::cannot,
+            p.get_color(),
+            p.get_type()
+          )
+        );
+      }
     }
   }
   unselect_all_pieces(g, player_color);

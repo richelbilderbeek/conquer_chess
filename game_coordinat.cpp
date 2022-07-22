@@ -16,6 +16,35 @@ game_coordinat::game_coordinat(
 
 }
 
+bool are_on_same_diagonal(const game_coordinat& a, const game_coordinat& b) noexcept
+{
+  return std::abs(static_cast<int>(to_notation(a)[0] - to_notation(b)[0]))
+   == std::abs(static_cast<int>(to_notation(a)[1] - to_notation(b)[1]))
+  ;
+}
+
+bool are_on_same_file(const game_coordinat& a, const game_coordinat& b) noexcept
+{
+  return to_notation(a)[0] == to_notation(b)[0];
+}
+
+bool are_on_same_half_diagonal(const game_coordinat& a, const game_coordinat& b) noexcept
+{
+  const int dx{
+    std::abs(static_cast<int>(to_notation(a)[0] - to_notation(b)[0]))
+  };
+  const int dy{
+     std::abs(static_cast<int>(to_notation(a)[1] - to_notation(b)[1]))
+  };
+  return dx == dy * 2 || dy == dx * 2;
+}
+
+bool are_on_same_rank(const game_coordinat& a, const game_coordinat& b) noexcept
+{
+  return to_notation(a)[1] == to_notation(b)[1];
+
+}
+
 double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexcept
 {
   const double dx{lhs.get_x() - rhs.get_x()};
@@ -98,9 +127,37 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept
   );
 }
 
+bool is_forward(
+  const game_coordinat& from,
+  const game_coordinat& to,
+  const side player
+)
+{
+  const bool is_right{to_notation(to)[1] > to_notation(from)[1]};
+  return (player == side::rhs && !is_right)
+    || (player == side::lhs && is_right)
+  ;
+}
+
 void test_game_coordinat()
 {
   #ifndef NDEBUG
+  // are_on_same_diagonal
+  {
+    assert(are_on_same_diagonal(get_coordinat("d1"), get_coordinat("a4")));
+  }
+  // are_on_same_file
+  {
+    assert(are_on_same_file(get_coordinat("e2"), get_coordinat("e4")));
+  }
+  // are_on_same_half_diagonal
+  {
+    assert(are_on_same_half_diagonal(get_coordinat("b1"), get_coordinat("c3")));
+  }
+  // are_on_same_rank
+  {
+    assert(are_on_same_rank(get_coordinat("a1"), get_coordinat("h1")));
+  }
   // get
   {
     const double x{12.34};

@@ -92,6 +92,13 @@ private:
   piece_type m_type;
 };
 
+/// Can a piece move from 'from' to 'to'?
+bool can_move(
+  const piece& p,
+  const game_coordinat& from,
+  const game_coordinat& to
+);
+
 /// Clear all the actions
 void clear_actions(piece& p);
 

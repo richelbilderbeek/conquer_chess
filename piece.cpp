@@ -31,6 +31,41 @@ void piece::add_action(const piece_action& action)
   m_actions.push_back(action);
 }
 
+/// Can a piece move from 'from' to 'to'?
+bool can_move(
+  const piece& p,
+  const game_coordinat& from,
+  const game_coordinat& to
+)
+{
+  switch (p.get_type())
+  {
+    case piece_type::king:
+      return are_on_same_rank(from, to)
+        || are_on_same_file(from, to)
+        || are_on_same_diagonal(from, to)
+      ;
+    case piece_type::pawn:
+      return are_on_same_file(from, to)
+        && is_forward(from, to, p.get_player())
+      ;
+    case piece_type::rook:
+      return are_on_same_rank(from, to)
+        || are_on_same_file(from, to)
+      ;
+    case piece_type::queen:
+      return are_on_same_rank(from, to)
+        || are_on_same_file(from, to)
+        || are_on_same_diagonal(from, to)
+      ;
+    case piece_type::bishop:
+      return are_on_same_diagonal(from, to);
+    default:
+    case piece_type::knight:
+      return are_on_same_half_diagonal(from, to);
+  }
+}
+
 void clear_actions(piece& p)
 {
   p.get_actions().clear();
