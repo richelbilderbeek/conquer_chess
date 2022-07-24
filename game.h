@@ -148,6 +148,9 @@ game_coordinat get_keyboard_player_pos(const game& g);
 /// Get the position of the player that uses the keyboard
 game_coordinat& get_keyboard_player_pos(game& g);
 
+/// Get the color of the keyboard using player
+/// Will throw if no user uses a keyboard
+chess_color get_keyboard_user_player_color(const game& g);
 
 /// Get the position of the player that uses the mouse
 game_coordinat get_mouse_player_pos(const game& g);

@@ -185,6 +185,11 @@ game_coordinat& get_keyboard_player_pos(game& g)
   return g.get_keyboard_player_pos();
 }
 
+chess_color get_keyboard_user_player_color(const game& g)
+{
+  return get_keyboard_user_player_color(g.get_options());
+}
+
 game_coordinat& game::get_mouse_player_pos()
 {
   if (get_left_player_controller(m_options) == controller_type::mouse)
@@ -414,14 +419,37 @@ void test_game() //!OCLINT tests may be many
     const game g;
     assert(get_cursor_pos(g, chess_color::white) != get_cursor_pos(g, chess_color::black));
   }
-  // get_keyboard_player_pos and get_mouse_player_pos
+  // get_keyboard_player_pos and get_mouse_player_pos, left == keyboard
   {
-    const game g;
+    game_options options = get_default_game_options();
+    options.set_left_controller_type(controller_type::keyboard);
+    const game g(options);
     assert(get_keyboard_player_pos(g) != get_mouse_player_pos(g));
   }
-  // get_keyboard_player_pos
+  // get_keyboard_player_pos and get_mouse_player_pos, left == mouse
+  {
+    game_options options = get_default_game_options();
+    options.set_left_controller_type(controller_type::mouse);
+    const game g(options);
+    assert(get_keyboard_player_pos(g) != get_mouse_player_pos(g));
+  }
+  // get_keyboard_player_pos, non-const, white == lhs == keyboard
   {
     game g;
+    assert(get_keyboard_user_player_color(g) == chess_color::white);
+    const auto pos_before{get_keyboard_player_pos(g)};
+    auto& pos = g.get_keyboard_player_pos();
+    pos += game_coordinat(0.1, 0.1);
+    const auto pos_after{get_keyboard_player_pos(g)};
+    assert(pos_before != pos_after);
+  }
+  // get_keyboard_player_pos, non-const, black == lhs == keyboard
+  {
+    game_options options = get_default_game_options();
+    options.set_left_player_color(chess_color::black);
+    options.set_left_controller_type(controller_type::keyboard);
+    game g(options);
+    assert(get_keyboard_user_player_color(g) == chess_color::black);
     const auto pos_before{get_keyboard_player_pos(g)};
     auto& pos = g.get_keyboard_player_pos();
     pos += game_coordinat(0.1, 0.1);
@@ -436,6 +464,30 @@ void test_game() //!OCLINT tests may be many
     pos += game_coordinat(0.1, 0.1);
     const auto pos_after{get_mouse_player_pos(g)};
     assert(pos_before != pos_after);
+  }
+  // get_piece_at, const
+  {
+    const game g;
+    assert(get_piece_at(g, square("e1")).get_type() == piece_type::king);
+  }
+  // get_piece_at, non-const
+  {
+    game g;
+    auto& piece{get_piece_at(g, square("e1"))};
+    assert(piece.get_type() == piece_type::king);
+    piece.set_selected(true); // Just needs to compile
+  }
+  // get_pieces
+  {
+    const game g;
+    const auto pieces{get_pieces(g)};
+    const auto pieces_again{g.get_pieces()};
+    assert(pieces == pieces_again);
+  }
+  // is_piece_at
+  {
+    const game g;
+    assert(is_piece_at(g, square("e1")));
   }
   // toggle_left_player_color
   {
