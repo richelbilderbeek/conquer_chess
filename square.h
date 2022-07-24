@@ -1,6 +1,7 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
+#include <iosfwd>
 #include <string>
 
 #include "ccfwd.h"
@@ -12,7 +13,20 @@ public:
   square(const std::string& pos);
   square(const game_coordinat& g);
 
+  /// Get the position as a string
   const auto& get_pos() const noexcept { return m_pos; }
+
+  /// Get the x coordinat, starting from 0 for a1/b1/c1/etc.
+  /// As the board goes from a1 at top-left,
+  /// to a8 at top-right,
+  /// the x coordinat is the rank
+  int get_x() const;
+
+  /// Get the y coordinat, starting from 0 for a1/a2/a3/etc.
+  /// As the board goes from a1 at top-left,
+  /// to a8 at top-right,
+  /// the y coordinat is the file
+  int get_y() const;
 
 private:
 
@@ -57,5 +71,7 @@ std::string to_str(const square& s) noexcept;
 
 bool operator==(const square& lhs, const square& rhs) noexcept;
 bool operator!=(const square& lhs, const square& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const square& s) noexcept;
 
 #endif // SQUARE_H

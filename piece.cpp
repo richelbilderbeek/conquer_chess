@@ -18,10 +18,12 @@ piece::piece(
 )
   : m_color{color},
     m_coordinat{to_coordinat(coordinat)},
+    m_current_square{coordinat},
     m_health{::get_max_health(type)},
     m_is_selected{false},
     m_max_health{::get_max_health(type)},
     m_player{player},
+    m_target_square{},
     m_type{type}
 {
 
@@ -29,6 +31,7 @@ piece::piece(
 
 void piece::add_action(const piece_action& action)
 {
+  assert(is_atomic(action));
   m_actions.push_back(action);
 }
 
@@ -368,8 +371,8 @@ void piece::tick(const delta_t& dt)
   {
     // pawns can only move forward
     if (m_type == piece_type::pawn
-      && ( (m_player == side::lhs && first_action.get_coordinat().get_x() < m_coordinat.get_x())
-          || (m_player == side::rhs && first_action.get_coordinat().get_x() > m_coordinat.get_x())
+      && ( (m_player == side::lhs && first_action.get_to().get_x() < m_coordinat.get_x())
+          || (m_player == side::rhs && first_action.get_to().get_x() > m_coordinat.get_x())
         )
       )
     {
@@ -377,7 +380,7 @@ void piece::tick(const delta_t& dt)
       return;
     }
 
-    const auto full_delta{first_action.get_coordinat() - m_coordinat};
+    const auto full_delta{to_coordinat(first_action.get_to()) - m_coordinat};
     const double full_length{calc_length(full_delta)};
     if (full_length < dt.get())
     {

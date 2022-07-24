@@ -25,6 +25,7 @@ public:
   );
 
   /// Add an action for the piece to do
+  /// This function will split up the action in smaller atomic actions
   /// @see 'tick' processes the actions
   void add_action(const piece_action& action);
 
@@ -38,6 +39,11 @@ public:
   chess_color get_color() const noexcept { return m_color; }
 
   /// Get the coordinat at the center of the piece
+  /// This coordinat can be any coordinat between an occupied and a target square.
+  /// Hence, for example, If a knight jumps for c3 to e4,
+  /// this coordinat may be around d3 or d4.
+  /// Use 'get_current_square'/'get_occupied_square'
+  /// for the square the piece is formally on
   game_coordinat get_coordinat() const noexcept { return m_coordinat; }
 
   /// Get the health of the unit
@@ -76,6 +82,9 @@ private:
   /// The in-game coordinat
   game_coordinat m_coordinat;
 
+  /// The square the piece occupies now
+  square m_current_square;
+
   /// The health
   double m_health;
 
@@ -87,6 +96,9 @@ private:
 
   /// The side/player this piece belongs to
   side m_player;
+
+  /// The square the piece is moving to, if any
+  std::vector<square> m_target_square;
 
   /// The type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type m_type;

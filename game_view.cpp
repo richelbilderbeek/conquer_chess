@@ -732,7 +732,7 @@ void show_unit_paths(game_view& view)
       [layout](const auto& control_action)
       {
         return convert_to_screen_coordinat(
-          control_action.get_coordinat(),
+          to_coordinat(control_action.get_to()),
           layout
         );
       }

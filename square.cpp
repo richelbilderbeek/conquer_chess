@@ -3,8 +3,10 @@
 #include "game_coordinat.h"
 #include "game_rect.h"
 
+
 #include <cassert>
 #include <cmath>
+#include <iostream>
 #include <regex>
 
 square::square(const std::string& pos)
@@ -66,9 +68,43 @@ square get_rotated_square(const square& position) noexcept
   return square(s);
 }
 
+int square::get_x() const
+{
+  assert(m_pos.size() == 2);
+  const int x_int{m_pos[1] - '1'};
+  //const int y_int{m_pos[0] - 'a'};
+  return x_int;
+}
+
+int square::get_y() const
+{
+  assert(m_pos.size() == 2);
+  //const int x_int{m_pos[1] - '1'};
+  const int y_int{m_pos[0] - 'a'};
+  return y_int;
+}
+
 void test_square()
 {
 #ifndef NDEBUG
+  // square::get_pos
+  {
+    const std::string pos("a2");
+    const square s(pos);
+    assert(s.get_pos() == pos);
+  }
+  // square::get_x
+  {
+    const std::string pos("a2");
+    const square s(pos);
+    assert(s.get_x() == 1);
+  }
+  // square::get_y
+  {
+    const std::string pos("a2");
+    const square s(pos);
+    assert(s.get_y() == 0);
+  }
   // are_on_same_diagonal
   {
     assert(are_on_same_diagonal(square("d1"), square("a4")));
@@ -111,17 +147,30 @@ void test_square()
     const auto a8_expected{game_rect(game_coordinat(7.0, 0.0), game_coordinat(8.0, 1.0))};
     assert(a8_created == a8_expected);
   }
+  // operator==
+  {
+    const square a("a1");
+    const square b("a1");
+    const square c("b1");
+    assert(a == b);
+    assert(!(a == c));
+  }
+  // operator!=
+  {
+    const square a("a1");
+    const square b("a1");
+    const square c("b1");
+    assert(!(a != b));
+    assert(a != c);
+  }
 #endif // NDEBUG
 }
 
 game_coordinat to_coordinat(const square& s) noexcept
 {
-  assert(s.get_pos().size() == 2);
-  const int x_int{s.get_pos()[1] - '1'};
-  const int y_int{s.get_pos()[0] - 'a'};
   return game_coordinat(
-    0.5 + static_cast<double>(x_int),
-    0.5 + static_cast<double>(y_int)
+    0.5 + static_cast<double>(s.get_x()),
+    0.5 + static_cast<double>(s.get_y())
   );
 }
 
@@ -156,4 +205,10 @@ bool operator==(const square& lhs, const square& rhs) noexcept
 bool operator!=(const square& lhs, const square& rhs) noexcept
 {
   return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, const square& s) noexcept
+{
+  os << to_str(s);
+  return os;
 }
