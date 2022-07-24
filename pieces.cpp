@@ -327,7 +327,19 @@ void test_pieces()
     const auto pieces{get_pieces_bishop_and_knight_end_game()};
     assert(pieces.size() == 4);
   }
-
+  // get_starting_pieces
+  {
+    const auto pieces_1{get_starting_pieces(starting_position_type::standard)};
+    const auto pieces_2{get_starting_pieces(starting_position_type::kings_only)};
+    const auto pieces_3{get_starting_pieces(starting_position_type::before_scholars_mate)};
+    const auto pieces_4{get_starting_pieces(starting_position_type::bishop_and_knight_end_game)};
+    assert(pieces_1 != pieces_2);
+    assert(pieces_1 != pieces_3);
+    assert(pieces_1 != pieces_4);
+    assert(pieces_2 != pieces_3);
+    assert(pieces_2 != pieces_4);
+    assert(pieces_3 != pieces_4);
+  }
   // is_piece_at, const
   {
     const auto pieces{get_standard_starting_pieces()};
