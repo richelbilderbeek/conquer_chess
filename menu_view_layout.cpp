@@ -79,7 +79,9 @@ const screen_rect& menu_view_layout::get_selectable_rect(const menu_view_item it
     case menu_view_item::options: return m_options;
     case menu_view_item::about: return m_about;
     default:
-    case menu_view_item::quit: return m_quit;
+    case menu_view_item::quit:
+      assert(item == menu_view_item::quit);
+      return m_quit;
   }
 }
 

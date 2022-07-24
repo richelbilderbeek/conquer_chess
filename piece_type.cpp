@@ -14,7 +14,9 @@ double get_max_health(const piece_type type)
     case piece_type::pawn: return 100.0;
     case piece_type::queen: return 100.0;
     default:
-    case piece_type::rook: return 100.0;
+    case piece_type::rook:
+      assert(type == piece_type::rook);
+      return 100.0;
   }
 }
 
@@ -58,7 +60,9 @@ std::string to_str(const piece_type type) noexcept
     case piece_type::queen: return "queen";
     case piece_type::pawn: return "pawn";
     default:
-    case piece_type::rook: return "rook";
+    case piece_type::rook:
+      assert(type == piece_type::rook);
+      return "rook";
   }
 }
 

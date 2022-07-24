@@ -269,8 +269,9 @@ std::vector<piece> get_starting_pieces(
     case starting_position_type::kings_only: return get_kings_only_starting_pieces(left_player_color);
     case starting_position_type::before_scholars_mate: return get_pieces_before_scholars_mate(left_player_color);
     default:
+    case starting_position_type::bishop_and_knight_end_game:
       assert(t == starting_position_type::bishop_and_knight_end_game);
-    case starting_position_type::bishop_and_knight_end_game: return get_pieces_bishop_and_knight_end_game(left_player_color);
+      return get_pieces_bishop_and_knight_end_game(left_player_color);
   }
 }
 

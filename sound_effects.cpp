@@ -67,7 +67,10 @@ void sound_effects::play(const sound_effect& effect)
         case piece_type::pawn: m_nope_mid.play(); break;
         case piece_type::queen: m_i_cannot_high.play(); break;
         default:
-        case piece_type::rook: m_nope_low.play(); break;
+        case piece_type::rook:
+          assert(piece_type == piece_type::rook);
+          m_nope_low.play();
+          break;
       }
       break;
     }
@@ -81,7 +84,10 @@ void sound_effects::play(const sound_effect& effect)
         case piece_type::pawn: m_heu_mid.play(); break;
         case piece_type::queen: m_yes_high.play(); break;
         default:
-        case piece_type::rook: m_heu_low.play(); break;
+        case piece_type::rook:
+          assert(piece_type == piece_type::rook);
+          m_heu_low.play();
+          break;
       }
       break;
     }
@@ -95,7 +101,10 @@ void sound_effects::play(const sound_effect& effect)
         case piece_type::pawn: m_moving_forward.play(); break;
         case piece_type::queen: m_to_rule_is_to_act.play(); break;
         default:
-        case piece_type::rook: m_its_time_to_rock.play(); break;
+        case piece_type::rook:
+          assert(piece_type == piece_type::rook);
+          m_its_time_to_rock.play();
+          break;
       }
       break;
     }
@@ -109,7 +118,10 @@ void sound_effects::play(const sound_effect& effect)
         case piece_type::pawn: m_hide.play(); break;
         case piece_type::queen: m_hide.play(); break;
         default:
-        case piece_type::rook: m_hide.play(); break;
+        case piece_type::rook:
+          assert(piece_type == piece_type::rook);
+          m_hide.play();
+          break;
       }
       break;
     }

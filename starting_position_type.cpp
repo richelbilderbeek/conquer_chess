@@ -14,6 +14,7 @@ starting_position_type get_next(const starting_position_type starting_position) 
       return starting_position_type::bishop_and_knight_end_game;
     default:
     case starting_position_type::bishop_and_knight_end_game:
+      assert(starting_position == starting_position_type::bishop_and_knight_end_game);
       return starting_position_type::standard;
   }
 }
@@ -51,6 +52,7 @@ std::string to_str(const starting_position_type t) noexcept
       return "before_scholars_mate";
     default:
     case starting_position_type::bishop_and_knight_end_game:
+      assert(t == starting_position_type::bishop_and_knight_end_game);
       return "bishop_and_knight_end_game";
   }
 }

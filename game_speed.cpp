@@ -11,7 +11,9 @@ game_speed get_next(const game_speed speed) noexcept
     case game_speed::normal: return game_speed::fast;
     case game_speed::slow: return game_speed::normal;
     default:
-    case game_speed::slowest: return game_speed::slow;
+    case game_speed::slowest:
+      assert(speed == game_speed::slowest);
+      return game_speed::slow;
   }
 }
 
@@ -58,7 +60,9 @@ delta_t to_delta_t(const game_speed speed) noexcept
     case game_speed::normal: return delta_t(0.01 / 50.0);
     case game_speed::slow: return delta_t(0.001 / 50.0);
     default:
-    case game_speed::slowest: return delta_t(0.0001 / 50.0);
+    case game_speed::slowest:
+      assert(speed == game_speed::slowest);
+      return delta_t(0.0001 / 50.0);
   }
 }
 
@@ -71,6 +75,8 @@ std::string to_str(const game_speed speed) noexcept
     case game_speed::normal: return "normal";
     case game_speed::slow: return "slow";
     default:
-    case game_speed::slowest: return "slowest";
+    case game_speed::slowest:
+      assert(speed == game_speed::slowest);
+      return "slowest";
   }
 }

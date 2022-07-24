@@ -75,6 +75,7 @@ bool can_move(
       return are_on_same_diagonal(from, to);
     default:
     case piece_type::knight:
+      assert(type == piece_type::knight);
       return are_on_same_half_diagonal(from, to);
   }
 }

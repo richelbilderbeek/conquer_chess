@@ -128,7 +128,9 @@ sf::Texture& textures::get_square(const chess_color color) noexcept
   {
     case chess_color::black: return m_black_square;
     default:
-    case chess_color::white: return m_white_square;
+    case chess_color::white:
+      assert(color == chess_color::white);
+      return m_white_square;
   }
 }
 
@@ -138,7 +140,9 @@ sf::Texture& textures::get_strip(const chess_color color) noexcept
   {
     case chess_color::black: return m_dark_strip;
     default:
-    case chess_color::white: return m_light_strip;
+    case chess_color::white:
+      assert(color == chess_color::white);
+      return m_light_strip;
   }
 }
 

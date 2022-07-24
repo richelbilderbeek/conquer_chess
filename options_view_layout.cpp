@@ -119,7 +119,9 @@ const screen_rect& options_view_layout::get_selectable_rect(const options_view_i
     case options_view_item::right_color: return m_right_color_value;
     case options_view_item::left_controls: return m_left_controls_value;
     default:
-    case options_view_item::right_controls: return m_right_controls_value;
+    case options_view_item::right_controls:
+      assert(item == options_view_item::right_controls);
+      return m_right_controls_value;
   }
 }
 

@@ -28,7 +28,9 @@ std::string to_str(const piece_action_type t) noexcept
   {
     case piece_action_type::move: return "move";
     default:
-    case piece_action_type::attack: return "attack";
+    case piece_action_type::attack:
+      assert(t == piece_action_type::attack);
+      return "attack";
   }
 }
 
