@@ -163,7 +163,7 @@ void piece::set_selected(const bool is_selected) noexcept
 void test_piece()
 {
 #ifndef NDEBUG
-  // can_move
+  // can_move, on empty board
   {
     assert(can_move(piece_type::bishop, square("e4"), square("d3"), side::lhs));
     assert(!can_move(piece_type::bishop, square("e4"), square("d4"), side::lhs));

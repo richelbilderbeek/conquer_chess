@@ -107,6 +107,7 @@ private:
 };
 
 /// Can a piece move from 'from' to 'to'?
+/// This function assumes the board is empty
 bool can_move(
   const piece_type& p,
   const square& from,

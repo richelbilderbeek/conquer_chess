@@ -7,7 +7,9 @@
 enum class starting_position_type
 {
   standard,
-  kings_only
+  kings_only,
+  before_scholars_mate,
+  bishop_and_knight_end_game
 };
 
 constexpr starting_position_type get_default_starting_position() { return starting_position_type::standard; }
