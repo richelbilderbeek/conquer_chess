@@ -286,29 +286,31 @@ const std::vector<piece>& get_pieces(const game& g) noexcept
   return g.get_pieces();
 }
 
-const piece& game::get_piece_at(const square& coordinat) const
+const piece& get_piece_at(const game& g, const square& coordinat)
 {
+  const auto& pieces{g.get_pieces()};
   const auto there{
     std::find_if(
-      std::begin(m_pieces),
-      std::end(m_pieces),
+      std::begin(pieces),
+      std::end(pieces),
       [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
     )
   };
-  assert(there != m_pieces.end());
+  assert(there != pieces.end());
   return *there;
 }
 
-piece& game::get_piece_at(const square& coordinat)
+piece& get_piece_at(game& g, const square& coordinat)
 {
+  auto& pieces{g.get_pieces()};
   const auto there{
     std::find_if(
-      std::begin(m_pieces),
-      std::end(m_pieces),
+      std::begin(pieces),
+      std::end(pieces),
       [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
     )
   };
-  assert(there != m_pieces.end());
+  assert(there != pieces.end());
   return *there;
 }
 

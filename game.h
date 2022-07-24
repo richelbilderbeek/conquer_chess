@@ -39,14 +39,6 @@ public:
   /// Get the position of the player that uses the mouse
   game_coordinat& get_mouse_player_pos();
 
-  /// Get the piece that at that square,
-  /// will throw if there is no piece
-  const piece& get_piece_at(const square& coordinat) const;
-
-  /// Get the piece that at that square,
-  /// will throw if there is no piece
-  piece& get_piece_at(const square& coordinat);
-
   /// Get the in-game keyboard position
   const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
 
@@ -169,6 +161,14 @@ game_coordinat& get_mouse_player_pos(game& g);
 
 /// Get the game options
 game_options get_options(const game& g);
+
+/// Get the piece that at that square,
+/// will throw if there is no piece
+const piece& get_piece_at(const game& g, const square& coordinat);
+
+/// Get the piece that at that square,
+/// will throw if there is no piece
+piece& get_piece_at(game& g, const square& coordinat);
 
 /// Get all the selected pieces
 /// @param g a game

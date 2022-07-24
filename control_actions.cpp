@@ -119,7 +119,7 @@ void control_actions::do_select(
   {
     if (is_piece_at(g, coordinat)) {
 
-      auto& piece{g.get_piece_at(coordinat)};
+      auto& piece{get_piece_at(g, coordinat)};
       if (piece.get_color() == player_color)
       {
         if (piece.is_selected())
@@ -148,7 +148,7 @@ void control_actions::do_select(
   else
   {
     if (is_piece_at(g, coordinat)) {
-      auto& piece{g.get_piece_at(coordinat)};
+      auto& piece{get_piece_at(g, coordinat)};
       if (piece.get_color() == player_color)
       {
         if (piece.is_selected())
