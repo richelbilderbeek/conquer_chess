@@ -109,15 +109,6 @@ bool operator==(const game_rect& lhs, const game_rect& rhs) noexcept
   ;
 }
 
-game_rect& operator+=(game_rect& rect, const game_coordinat& delta) noexcept
-{
-  rect = game_rect(
-    rect.get_tl() + delta,
-    rect.get_br() + delta
-  );
-  return rect;
-}
-
 std::ostream& operator<<(std::ostream& os, const game_rect& r) noexcept
 {
   os << "(" << r.get_tl() << "-" << r.get_br() << ")";

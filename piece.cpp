@@ -268,6 +268,18 @@ void test_piece()
     const auto p{get_test_white_king()};
     assert(get_occupied_square(p) == square("e1"));
   }
+  // get_test_white_king
+  {
+    const auto p{get_test_white_king()};
+    assert(p.get_type() == piece_type::king);
+    assert(p.get_color() == chess_color::white);
+  }
+  // get_test_white_knight
+  {
+    const auto p{get_test_white_knight()};
+    assert(p.get_type() == piece_type::knight);
+    assert(p.get_color() == chess_color::white);
+  }
   // has_actions
   {
     const auto p{get_test_white_king()};

@@ -67,6 +67,11 @@ void test_game_functions()
     g.add_action(create_press_left_action()); // cursor to d8
     g.tick();
     assert(!can_player_select_piece_at_cursor_pos(g, chess_color::white));
+
+    g.add_action(create_press_left_action()); // cursor to d7
+    g.add_action(create_press_left_action()); // cursor to d6
+    g.tick();
+    assert(!can_player_select_piece_at_cursor_pos(g, chess_color::white));
   }
   // clear_sound_effects
   {
