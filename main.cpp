@@ -1,6 +1,7 @@
 /// Use LOGIC_ONLY to be able to run on GHA
 
 #include "game.h"
+#include "game_rect.h"
 #include "game_resources.h"
 #include "game_view.h"
 #include "game_view_layout.h"
@@ -29,6 +30,7 @@ void test()
   test_game();
   test_game_coordinat();
   test_game_options();
+  test_game_rect();
   test_game_speed();
   test_game_view_layout();
   test_helper();

@@ -22,7 +22,6 @@ private:
   game_coordinat m_bottom_right;
 };
 
-
 game_coordinat get_center(const game_rect& r) noexcept;
 int get_height(const game_rect& r) noexcept;
 int get_width(const game_rect& r) noexcept;
