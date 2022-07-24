@@ -117,6 +117,11 @@ game_coordinat to_coordinat(const square& s) noexcept
   );
 }
 
+game_coordinat to_coordinat(const std::string& pos) noexcept
+{
+  return to_coordinat(square(pos));
+}
+
 std::string to_str(const square& s) noexcept
 {
   return s.get_pos();

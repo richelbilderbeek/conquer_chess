@@ -44,6 +44,10 @@ void test_square();
 // b1 == (0.5, 1.5)
 game_coordinat to_coordinat(const square& s) noexcept;
 
+// a1 == (0.5, 0.5)
+// b1 == (0.5, 1.5)
+game_coordinat to_coordinat(const std::string& notation) noexcept;
+
 std::string to_str(const square& s) noexcept;
 
 bool operator==(const square& lhs, const square& rhs) noexcept;

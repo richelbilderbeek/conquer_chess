@@ -45,6 +45,14 @@ public:
   /// Get the position of the player that uses the mouse
   game_coordinat& get_mouse_player_pos();
 
+  /// Get the piece that at that square,
+  /// will throw if there is no piece
+  const piece& get_piece_at(const square& coordinat) const;
+
+  /// Get the piece that at that square,
+  /// will throw if there is no piece
+  piece& get_piece_at(const square& coordinat);
+
   /// Get the in-game keyboard position
   const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
 
@@ -186,8 +194,14 @@ bool has_selected_pieces(const game& g, const chess_color player);
 /// Determine if there is a piece at the coordinat
 bool is_piece_at(
   const game& g,
-  const square& coordinat,
+  const game_coordinat& coordinat,
   const double distance = 0.5
+);
+
+/// Determine if there is a piece at the coordinat
+bool is_piece_at(
+  const game& g,
+  const square& coordinat
 );
 
 /// Test this class and its free functions

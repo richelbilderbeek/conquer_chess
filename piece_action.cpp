@@ -12,6 +12,14 @@ piece_action::piece_action(
 
 }
 
+piece_action::piece_action(
+  const piece_action_type type,
+  const square& coordinat
+) : m_type{type}, m_coordinat{to_coordinat(coordinat)}
+{
+
+}
+
 std::string describe_action(const piece_action& p)
 {
   return to_str(p);

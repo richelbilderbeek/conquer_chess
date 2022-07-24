@@ -344,7 +344,7 @@ void test_piece()
     assert(!p.get_actions().empty());
     p.tick(delta_t(1.0));
     assert(!p.get_actions().empty());
-    assert(p.get_coordinat() == get_coordinat("e3"));
+    assert(p.get_coordinat() == square("e3"));
   }
   // A pawn for the rhs player cannot move right
   {
@@ -358,7 +358,7 @@ void test_piece()
     assert(!p.get_actions().empty());
     p.tick(delta_t(1.0));
     assert(p.get_actions().empty()); // Actions cleared
-    assert(p.get_coordinat() == get_coordinat("e7")); // Piece stays put
+    assert(p.get_coordinat() == square("e7")); // Piece stays put
   }
   // operator==
   {

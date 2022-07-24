@@ -6,6 +6,7 @@
 
 #include "piece_action_type.h"
 #include "game_coordinat.h"
+#include "square.h"
 
 /// An action to be done by a piece
 class piece_action
@@ -14,6 +15,10 @@ public:
   piece_action(
     const piece_action_type type,
     const game_coordinat& coordinat
+  );
+  piece_action(
+    const piece_action_type type,
+    const square& coordinat
   );
 
   const auto& get_coordinat() const noexcept { return m_coordinat; }

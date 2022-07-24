@@ -41,7 +41,14 @@ private:
   std::vector<control_action> m_control_actions;
   std::vector<sound_effect> m_sound_effects;
 
-  /// Process a space or left-mouse-button
+  /// Process a left-mouse-button, hence a game_coordinat as a coordinat
+  void do_select(
+    game& g,
+    const game_coordinat& coordinat,
+    const chess_color player_color
+  );
+
+  /// Process a space, hence a square as a coordinat
   void do_select(
     game& g,
     const square& coordinat,

@@ -280,6 +280,32 @@ const std::vector<piece>& get_pieces(const game& g) noexcept
   return g.get_pieces();
 }
 
+const piece& game::get_piece_at(const square& coordinat) const
+{
+  const auto there{
+    std::find_if(
+      std::begin(m_pieces),
+      std::end(m_pieces),
+      [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
+    )
+  };
+  assert(there != m_pieces.end());
+  return *there;
+}
+
+piece& game::get_piece_at(const square& coordinat)
+{
+  const auto there{
+    std::find_if(
+      std::begin(m_pieces),
+      std::end(m_pieces),
+      [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
+    )
+  };
+  assert(there != m_pieces.end());
+  return *there;
+}
+
 bool has_selected_pieces(const game& g, const chess_color player)
 {
   return !get_selected_pieces(g, player).empty();
@@ -287,7 +313,7 @@ bool has_selected_pieces(const game& g, const chess_color player)
 
 bool is_piece_at(
   const game& g,
-  const square& coordinat,
+  const game_coordinat& coordinat,
   const double distance
 ) {
   const std::vector<double> distances{
@@ -299,6 +325,19 @@ bool is_piece_at(
     [distance](const double this_distance) { return this_distance < distance; }
   );
   return iter != std::end(distances);
+}
+
+bool is_piece_at(
+  const game& g,
+  const square& coordinat
+) {
+  const auto& pieces{g.get_pieces()};
+  const auto iter = std::find_if(
+    std::begin(pieces),
+    std::end(pieces),
+    [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
+  );
+  return iter != std::end(pieces);
 }
 
 void game::tick(const delta_t& dt)
@@ -414,22 +453,22 @@ void test_game() //!OCLINT tests may be many
   // LMB then RMB makes a unit move
   {
     game g = create_king_versus_king_game();
-    g.add_action(create_press_lmb_action(square("e8")));
+    g.add_action(create_press_lmb_action(to_coordinat("e8")));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    g.add_action(create_press_rmb_action(square("e6")));
+    g.add_action(create_press_rmb_action(to_coordinat("e6")));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 1);
   }
   // 2x LMB then RMB makes a unit move 1 stretch (not 2)
   {
     game g;
-    g.add_action(create_press_lmb_action(get_coordinat("e8")));
-    g.add_action(create_press_rmb_action(get_coordinat("e7")));
+    g.add_action(create_press_lmb_action(to_coordinat("e8")));
+    g.add_action(create_press_rmb_action(to_coordinat("e7")));
     g.tick(delta_t(0.001));
     assert(count_piece_actions(g, chess_color::black) == 1);
-    g.add_action(create_press_lmb_action(get_coordinat("e8")));
-    g.add_action(create_press_rmb_action(get_coordinat("e7")));
+    g.add_action(create_press_lmb_action(to_coordinat("e8")));
+    g.add_action(create_press_rmb_action(to_coordinat("e7")));
     g.tick(delta_t(0.001));
     assert(count_piece_actions(g, chess_color::black) == 1);
   }
@@ -494,33 +533,33 @@ void test_game() //!OCLINT tests may be many
   // Keyboard: can move pawn forward
   {
     game g;
-    g.get_keyboard_player_pos() = get_coordinat("e2");
+    g.get_keyboard_player_pos() = to_coordinat("e2");
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_action(create_press_select_action());
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(get_sound_effects(g).at(0).get_sound_effect_type() == sound_effect_type::select);
-    g.get_keyboard_player_pos() = get_coordinat("e4");
+    g.get_keyboard_player_pos() = to_coordinat("e4");
     g.add_action(create_press_move_action());
     g.tick(); // Moves it to e3, unselects piece
     assert(count_selected_units(g, chess_color::white) == 0);
-    assert(g.get_closest_piece_to(get_coordinat("e3")).get_type() == piece_type::pawn);
+    assert(g.get_closest_piece_to(to_coordinat("e3")).get_type() == piece_type::pawn);
     assert(get_sound_effects(g).at(1).get_sound_effect_type() == sound_effect_type::start_move);
   }
   // Keyboard: cannot move pawn backward
   {
     game g;
-    g.get_keyboard_player_pos() = get_coordinat("e2");
+    g.get_keyboard_player_pos() = to_coordinat("e2");
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_action(create_press_select_action());
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(get_sound_effects(g).at(0).get_sound_effect_type() == sound_effect_type::select);
-    g.get_keyboard_player_pos() = get_coordinat("e1");
+    g.get_keyboard_player_pos() = to_coordinat("e1");
     g.add_action(create_press_move_action());
     g.tick(); // Ignores invalid action, adds sound effect
     assert(count_selected_units(g, chess_color::white) == 0);
-    assert(g.get_closest_piece_to(get_coordinat("e2")).get_type() == piece_type::pawn);
+    assert(g.get_closest_piece_to(to_coordinat("e2")).get_type() == piece_type::pawn);
     assert(get_sound_effects(g).at(1).get_sound_effect_type() == sound_effect_type::cannot);
   }
 #endif // no tests in release

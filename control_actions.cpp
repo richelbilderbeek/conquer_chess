@@ -28,7 +28,7 @@ int count_control_actions(const control_actions& a)
 
 void control_actions::do_select(
   game& g,
-  const square& coordinat,
+  const game_coordinat& coordinat,
   const chess_color player_color
 )
 {
@@ -43,6 +43,7 @@ void control_actions::do_select(
   if (has_selected_pieces(g, player_color))
   {
     if (is_piece_at(g, coordinat)) {
+
       auto& piece{g.get_closest_piece_to(coordinat)};
       if (piece.get_color() == player_color)
       {
@@ -73,6 +74,81 @@ void control_actions::do_select(
   {
     if (is_piece_at(g, coordinat)) {
       auto& piece{g.get_closest_piece_to(coordinat)};
+      if (piece.get_color() == player_color)
+      {
+        if (piece.is_selected())
+        {
+          assert(!"Should never happen, as there are no selected pieces at all");
+          unselect(piece); // 4
+        }
+        else
+        {
+          select(piece); // 5
+          m_sound_effects.push_back(
+            sound_effect(
+              sound_effect_type::select,
+              piece.get_color(),
+              piece.get_type()
+            )
+          );
+        }
+      }
+    }
+    else
+    {
+      // 6
+    }
+  }
+}
+
+void control_actions::do_select(
+  game& g,
+  const square& coordinat,
+  const chess_color player_color
+)
+{
+  // #|Has selected pieces? |Clicking on what?|Do what?
+  // -|---------------------|-----------------|----------------
+  // 1|Yes                  |Selected unit    |Unselect unit
+  // 2|Yes                  |Unselected unit  |Select unit
+  // 3|Yes                  |Empty square     |Unselect all units
+  // 4|No                   |Selected unit    |NA
+  // 5|No                   |Unselected unit  |Select unit
+  // 6|No                   |Empty square     |Nothing
+  if (has_selected_pieces(g, player_color))
+  {
+    if (is_piece_at(g, coordinat)) {
+
+      auto& piece{g.get_piece_at(coordinat)};
+      if (piece.get_color() == player_color)
+      {
+        if (piece.is_selected())
+        {
+          unselect(piece); // 1
+        }
+        else
+        {
+          unselect_all_pieces(g, player_color);
+          select(piece); // 2
+          m_sound_effects.push_back(
+            sound_effect(
+              sound_effect_type::select,
+              piece.get_color(),
+              piece.get_type()
+            )
+          );
+        }
+      }
+    }
+    else
+    {
+      unselect_all_pieces(g, player_color); // 3
+    }
+  }
+  else
+  {
+    if (is_piece_at(g, coordinat)) {
+      auto& piece{g.get_piece_at(coordinat)};
       if (piece.get_color() == player_color)
       {
         if (piece.is_selected())
@@ -158,7 +234,7 @@ void control_actions::process_control_actions(game& g)
     else if (action.get_type() == control_action_type::mouse_move)
     {
       auto& pos{get_mouse_player_pos(g)};
-      pos = to_coordinat(action.get_square());
+      pos = action.get_coordinat();
     }
     else if (action.get_type() == control_action_type::lmb_down)
     {
