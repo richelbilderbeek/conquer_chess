@@ -46,6 +46,8 @@ public:
   /// for the square the piece is formally on
   game_coordinat get_coordinat() const noexcept { return m_coordinat; }
 
+  const auto& get_current_square() const noexcept { return m_current_square; }
+
   /// Get the health of the unit
   double get_health() const noexcept { return m_health; }
 

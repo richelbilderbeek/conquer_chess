@@ -116,7 +116,7 @@ double get_f_health(const piece& p) noexcept
 
 square get_occupied_square(const piece& p) noexcept
 {
-  return square(p.get_coordinat());
+  return p.get_current_square();
 }
 
 piece get_test_white_king() noexcept
@@ -354,7 +354,7 @@ void test_piece()
     piece p{get_test_white_knight()};
     assert(p.get_type() == piece_type::knight);
     assert(square(p.get_coordinat()) == square("c3"));
-    p.add_action(piece_action(piece_action_type::move, square("e4")));
+    p.add_action(piece_action(piece_action_type::move, square("c3"), square("e4")));
     assert(has_actions(p));
     p.tick(delta_t(0.1));
     assert(has_actions(p));
