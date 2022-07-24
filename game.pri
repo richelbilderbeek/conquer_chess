@@ -24,6 +24,7 @@ HEADERS += \
     $$PWD/piece_action.h \
     $$PWD/piece_action_type.h \
     $$PWD/piece_type.h \
+    $$PWD/pieces.h \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
@@ -60,6 +61,7 @@ SOURCES += \
     $$PWD/piece_action.cpp \
     $$PWD/piece_action_type.cpp \
     $$PWD/piece_type.cpp \
+    $$PWD/pieces.cpp \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \

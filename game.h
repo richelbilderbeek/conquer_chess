@@ -27,12 +27,6 @@ public:
   /// Get the game actions
   auto& get_actions() noexcept { return m_control_actions; }
 
-  /// Get the piece that is closest to the coordinat
-  const piece& get_closest_piece_to(const game_coordinat& coordinat) const;
-
-  /// Get the piece that is closest to the coordinat
-  piece& get_closest_piece_to(const game_coordinat& coordinat);
-
   /// Get the position of the player that uses the keyboard
   game_coordinat& get_keyboard_player_pos();
 
@@ -140,6 +134,12 @@ std::vector<piece> find_pieces(
   const piece_type type,
   const chess_color color
 );
+
+/// Get the piece that is closest to the coordinat
+const piece& get_closest_piece_to(const game& g, const game_coordinat& coordinat);
+
+/// Get the piece that is closest to the coordinat
+piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
 
 /// Get the cursor position for a player
 game_coordinat get_cursor_pos(

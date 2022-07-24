@@ -337,7 +337,7 @@ void show_debug_1(game_view& view)
   sf::Text text;
   text.setFont(view.get_game_resources().get_font());
   const piece& closest_piece{
-    game.get_closest_piece_to(game.get_player_1_pos())
+    get_closest_piece_to(game, game.get_player_1_pos())
   };
   const auto color{get_left_player_color(game.get_options())};
   std::stringstream s;
@@ -376,7 +376,7 @@ void show_debug_2(game_view& view)
   sf::Text text;
   text.setFont(view.get_game_resources().get_font());
   const piece& closest_piece{
-    game.get_closest_piece_to(game.get_player_2_pos())
+    get_closest_piece_to(game, game.get_player_2_pos())
   };
   const auto color{get_right_player_color(game.get_options())};
   std::stringstream s;

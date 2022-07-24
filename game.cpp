@@ -66,7 +66,7 @@ bool can_player_select_piece_at_cursor_pos(
   {
     return false;
   }
-  const auto& piece{g.get_closest_piece_to(cursor_pos)};
+  const auto& piece{get_closest_piece_to(g, cursor_pos)};
   return !piece.is_selected() && piece.get_color() == player;
 }
 
@@ -153,14 +153,20 @@ std::vector<piece> find_pieces(
   return pieces;
 }
 
-const piece& game::get_closest_piece_to(const game_coordinat& coordinat) const
+const piece& get_closest_piece_to(
+  const game& g,
+  const game_coordinat& coordinat
+)
 {
-  return m_pieces[get_index_of_closest_piece_to(*this, coordinat)];
+  return g.get_pieces()[get_index_of_closest_piece_to(g, coordinat)];
 }
 
-piece& game::get_closest_piece_to(const game_coordinat& coordinat)
+piece& get_closest_piece_to(
+  game& g,
+  const game_coordinat& coordinat
+)
 {
-  return m_pieces[get_index_of_closest_piece_to(*this, coordinat)];
+  return g.get_pieces()[get_index_of_closest_piece_to(g, coordinat)];
 }
 
 game_coordinat get_cursor_pos(
@@ -543,7 +549,7 @@ void test_game() //!OCLINT tests may be many
     g.add_action(create_press_move_action());
     g.tick(); // Moves it to e3, unselects piece
     assert(count_selected_units(g, chess_color::white) == 0);
-    assert(g.get_closest_piece_to(to_coordinat("e3")).get_type() == piece_type::pawn);
+    assert(get_closest_piece_to(g, to_coordinat("e3")).get_type() == piece_type::pawn);
     assert(get_sound_effects(g).at(1).get_sound_effect_type() == sound_effect_type::start_move);
   }
   // Keyboard: cannot move pawn backward
@@ -559,7 +565,7 @@ void test_game() //!OCLINT tests may be many
     g.add_action(create_press_move_action());
     g.tick(); // Ignores invalid action, adds sound effect
     assert(count_selected_units(g, chess_color::white) == 0);
-    assert(g.get_closest_piece_to(to_coordinat("e2")).get_type() == piece_type::pawn);
+    assert(get_closest_piece_to(g, to_coordinat("e2")).get_type() == piece_type::pawn);
     assert(get_sound_effects(g).at(1).get_sound_effect_type() == sound_effect_type::cannot);
   }
 #endif // no tests in release

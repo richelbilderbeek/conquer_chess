@@ -44,7 +44,7 @@ void control_actions::do_select(
   {
     if (is_piece_at(g, coordinat)) {
 
-      auto& piece{g.get_closest_piece_to(coordinat)};
+      auto& piece{get_closest_piece_to(g, coordinat)};
       if (piece.get_color() == player_color)
       {
         if (piece.is_selected())
@@ -73,7 +73,7 @@ void control_actions::do_select(
   else
   {
     if (is_piece_at(g, coordinat)) {
-      auto& piece{g.get_closest_piece_to(coordinat)};
+      auto& piece{get_closest_piece_to(g, coordinat)};
       if (piece.get_color() == player_color)
       {
         if (piece.is_selected())
