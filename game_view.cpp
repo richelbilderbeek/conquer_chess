@@ -449,7 +449,6 @@ void game_view::show_mouse_cursor()
     cursor_pos.get_x(),
     cursor_pos.get_y()
   );
-  cursor.setRotation(0.0);
   m_window.draw(cursor);
 }
 
@@ -484,7 +483,7 @@ void show_occupied_squares(game_view& view)
     sf::RectangleShape s;
     set_rect(s, square_rect);
     s.rotate(45);
-    s.scale(0.5, 0.5);
+    s.scale(0.375, 0.375);
     s.setFillColor(to_sfml_color(piece.get_color()));
     s.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
     s.setOutlineThickness(1.0);
@@ -522,7 +521,6 @@ void show_pieces(game_view& view)
       screen_position.get_x(),
       screen_position.get_y()
     );
-    sprite.setRotation(0.0);
     view.get_window().draw(sprite);
   }
 }
@@ -681,7 +679,6 @@ void show_unit_health_bars(game_view& view)
       2.0 + black_box_pos.get_x(),
       2.0 + black_box_pos.get_y()
     );
-    black_box.setRotation(0.0);
     view.get_window().draw(black_box);
 
     // Health
@@ -704,7 +701,6 @@ void show_unit_health_bars(game_view& view)
       4.0 + health_bar_pos.get_x(),
       4.0 + health_bar_pos.get_y()
     );
-    health_bar.setRotation(0.0);
     view.get_window().draw(health_bar);
   }
 }
@@ -737,6 +733,7 @@ void show_unit_paths(game_view& view)
         );
       }
     );
+    // Draw lines between the subgoals
     sf::VertexArray lines(sf::LineStrip, coordinats.size());
     assert(coordinats.size() == actions.size() + 1);
     const int n_coordinats{static_cast<int>(coordinats.size())};
@@ -750,6 +747,28 @@ void show_unit_paths(game_view& view)
       lines[i].color = to_sfml_color(piece.get_color());
     }
     view.get_window().draw(lines);
+
+    // Draw circles at the subgoals
+    sf::CircleShape circle;
+
+
+    for (const auto coordinat: coordinats)
+    {
+      const double full_diameter{get_square_width(layout)};
+      const double diameter{0.25 * full_diameter};
+      const double radius{diameter / 2.0};
+      const double half_radius{radius/ 2.0};
+      circle.setPosition(
+        sf::Vector2f(
+          coordinat.get_x() - half_radius,
+          coordinat.get_y() - half_radius
+        )
+      );
+      circle.setFillColor(to_sfml_color(piece.get_color()));
+      circle.setRadius(radius);
+      circle.setOrigin(half_radius, half_radius);
+      view.get_window().draw(circle);
+    }
   }
 }
 
@@ -777,7 +796,6 @@ void show_unit_sprites_1(game_view& view)
       screen_position.get_x(),
       screen_position.get_y()
     );
-    sprite.setRotation(0.0);
     view.get_window().draw(sprite);
     // text
     sf::Text text;
@@ -827,7 +845,6 @@ void show_unit_sprites_2(game_view& view)
       screen_position.get_x(),
       screen_position.get_y()
     );
-    sprite.setRotation(0.0);
     view.get_window().draw(sprite);
     // text
     sf::Text text;
