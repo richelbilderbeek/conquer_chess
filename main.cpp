@@ -38,12 +38,14 @@ void test()
   test_options_view_item();
   test_options_view_layout();
   test_piece();
+  test_pieces();
   test_piece_action();
   test_piece_action_type();
   test_piece_type();
   test_screen_coordinat();
   test_screen_rect();
   test_side();
+  test_square();
   test_starting_position_type();
   test_volume();
 #ifndef LOGIC_ONLY

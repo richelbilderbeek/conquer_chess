@@ -4,28 +4,25 @@
 
 #include <cassert>
 #include <cmath>
+#include <regex>
 
 square::square(const std::string& pos)
   : m_pos{pos}
 {
-  assert(pos.size() == 2);
+  assert(m_pos.size() == 2);
+  assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
 }
 
 square::square(const game_coordinat& g)
 {
   const int x{static_cast<int>(std::trunc(g.get_x()))};
   const int y{static_cast<int>(std::trunc(g.get_y()))};
-  if (x >= 0 && x < 8 && y >= 0 && y < 8)
-  {
-    const char first = 'a' + y;
-    const char second = '1' + x;
-    m_pos += first;
-    m_pos += second;
-  }
-  else
-  {
-    m_pos = "--";
-  }
+  assert(x >= 0 && x < 8 && y >= 0 && y < 8);
+  const char first = 'a' + y;
+  const char second = '1' + x;
+  m_pos += first;
+  m_pos += second;
+  assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
 }
 
 bool are_on_same_diagonal(const square& a, const square& b) noexcept

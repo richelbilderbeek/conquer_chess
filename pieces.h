@@ -23,6 +23,11 @@ int count_selected_units(
   const chess_color player
 );
 
+/// Get a king-versus-king starting position
+std::vector<piece> get_kings_only_starting_pieces(
+  const chess_color left_player_color = chess_color::white
+) noexcept;
+
 /// Get the piece that at that square,
 /// will throw if there is no piece
 const piece& get_piece_at(
@@ -45,6 +50,17 @@ std::vector<piece> get_selected_pieces(
   const chess_color player
 );
 
+/// Get all the pieces in the starting position
+std::vector<piece> get_standard_starting_pieces(
+  const chess_color left_player_color = chess_color::white
+) noexcept;
+
+/// Get all the pieces in the starting position type
+std::vector<piece> get_starting_pieces(
+  const starting_position_type t,
+  const chess_color left_player_color = chess_color::white
+) noexcept;
+
 /// Determine if there is a piece at the coordinat
 bool is_piece_at(
   const std::vector<piece>& pieces,
@@ -57,6 +73,9 @@ bool is_piece_at(
   const std::vector<piece>& pieces,
   const square& coordinat
 );
+
+/// Test all these free functions
+void test_pieces();
 
 /// Unselect all pieces of a certain color
 void unselect_all_pieces(

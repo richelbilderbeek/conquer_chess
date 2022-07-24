@@ -113,22 +113,6 @@ std::string describe_actions(const piece& p);
 /// Get the fraction of the health, where 1.0 denotes full health
 double get_f_health(const piece& p) noexcept;
 
-/// Get a king-versus-king starting position
-std::vector<piece> get_kings_only_starting_pieces(
-  const chess_color left_player_color = chess_color::white
-) noexcept;
-
-/// Get all the pieces in the starting position
-std::vector<piece> get_standard_starting_pieces(
-  const chess_color left_player_color = chess_color::white
-) noexcept;
-
-/// Get all the pieces in the starting position type
-std::vector<piece> get_starting_pieces(
-  const starting_position_type t,
-  const chess_color left_player_color = chess_color::white
-) noexcept;
-
 /// Create a piece to be used in testing: a white king on E1
 piece get_test_piece() noexcept;
 

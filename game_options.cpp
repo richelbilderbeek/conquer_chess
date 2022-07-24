@@ -1,6 +1,7 @@
 #include "game_options.h"
 
 #include "game_view_layout.h"
+#include "pieces.h"
 #include <cassert>
 
 game_options::game_options(

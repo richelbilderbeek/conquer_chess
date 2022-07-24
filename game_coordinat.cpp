@@ -60,19 +60,6 @@ game_coordinat get_below(const game_coordinat& coordinat) noexcept
   return pos;
 }
 
-/*
-game_coordinat get_coordinat(const std::string& notation)
-{
-  assert(notation.size() == 2);
-  const int x_int{notation[1] - '1'};
-  const int y_int{notation[0] - 'a'};
-  return game_coordinat(
-    0.5 + static_cast<double>(x_int),
-    0.5 + static_cast<double>(y_int)
-  );
-}
-*/
-
 game_coordinat get_left(const game_coordinat& coordinat) noexcept
 {
   game_coordinat pos{coordinat + game_coordinat(-1.0, 0.0)};
@@ -179,6 +166,11 @@ void test_game_coordinat()
     assert(is_close(rotated.get_x(), 6.5, 0.1));
     assert(is_close(rotated.get_y(), 5.5, 0.1));
   }
+  // to_notation
+  {
+    assert(to_notation(game_coordinat(0.5, 0.5)) == "a1");
+    assert(to_notation(game_coordinat(9.5, 9.5)) == "--");
+  }
   // operator ==
   {
     const game_coordinat a(1.2345, 6.7890);
@@ -209,7 +201,15 @@ void test_game_coordinat()
 
 std::string to_notation(const game_coordinat& g)
 {
-  return to_str(square(g));
+  if (g.get_x() >= 0.0
+    && g.get_x() < 8.0
+    && g.get_y() >= 0.0
+    && g.get_y() < 8.0
+  )
+  {
+    return to_str(square(g));
+  }
+  return "--";
 }
 
 bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept

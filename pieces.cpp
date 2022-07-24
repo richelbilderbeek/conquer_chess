@@ -61,6 +61,22 @@ int count_selected_units(
   );
 }
 
+std::vector<piece> get_kings_only_starting_pieces(
+  const chess_color left_player_color
+) noexcept
+{
+  const auto all_pieces{get_standard_starting_pieces(left_player_color)};
+  std::vector<piece> pieces;
+  pieces.reserve(2);
+  std::copy_if(
+    std::begin(all_pieces),
+    std::end(all_pieces),
+    std::back_inserter(pieces),
+    [](const auto& piece) { return piece.get_type() == piece_type::king; }
+  );
+  return pieces;
+}
+
 const piece& get_piece_at(
   const std::vector<piece>& pieces,
   const square& coordinat
@@ -111,6 +127,72 @@ std::vector<piece> get_selected_pieces(
   return pieces;
 }
 
+std::vector<piece> get_standard_starting_pieces(
+  const chess_color left_player_color
+) noexcept
+{
+  const auto f{
+    left_player_color == chess_color::white
+    ? [](const square& position) { return position; }
+    : [](const square& position) { return get_rotated_square(position); }
+  };
+  const side white_side{
+    left_player_color == chess_color::white
+    ? side::lhs
+    : side::rhs
+  };
+  const side black_side{get_other_side(white_side)};
+
+  std::vector<piece> pieces{
+    piece(chess_color::white, piece_type::rook,   f(square("a1")), white_side),
+    piece(chess_color::white, piece_type::knight, f(square("b1")), white_side),
+    piece(chess_color::white, piece_type::bishop, f(square("c1")), white_side),
+    piece(chess_color::white, piece_type::queen,  f(square("d1")), white_side),
+    piece(chess_color::white, piece_type::king,   f(square("e1")), white_side),
+    piece(chess_color::white, piece_type::bishop, f(square("f1")), white_side),
+    piece(chess_color::white, piece_type::knight, f(square("g1")), white_side),
+    piece(chess_color::white, piece_type::rook,   f(square("h1")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("a2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("b2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("c2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("d2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("e2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("f2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("g2")), white_side),
+    piece(chess_color::white, piece_type::pawn,   f(square("h2")), white_side),
+    piece(chess_color::black, piece_type::rook,   f(square("a8")), black_side),
+    piece(chess_color::black, piece_type::knight, f(square("b8")), black_side),
+    piece(chess_color::black, piece_type::bishop, f(square("c8")), black_side),
+    piece(chess_color::black, piece_type::queen,  f(square("d8")), black_side),
+    piece(chess_color::black, piece_type::king,   f(square("e8")), black_side),
+    piece(chess_color::black, piece_type::bishop, f(square("f8")), black_side),
+    piece(chess_color::black, piece_type::knight, f(square("g8")), black_side),
+    piece(chess_color::black, piece_type::rook,   f(square("h8")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("a7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("b7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("c7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("d7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("e7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("f7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("g7")), black_side),
+    piece(chess_color::black, piece_type::pawn,   f(square("h7")), black_side)
+  };
+  return pieces;
+}
+
+std::vector<piece> get_starting_pieces(
+  const starting_position_type t,
+  const chess_color left_player_color
+) noexcept
+{
+  switch (t)
+  {
+    case starting_position_type::standard: return get_standard_starting_pieces(left_player_color);
+    default:
+    case starting_position_type::kings_only: return get_kings_only_starting_pieces(left_player_color);
+  }
+}
+
 bool is_piece_at(
   const std::vector<piece>& pieces,
   const game_coordinat& coordinat,
@@ -137,6 +219,28 @@ bool is_piece_at(
     [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
   );
   return iter != std::end(pieces);
+}
+
+void test_pieces()
+{
+#ifndef NDEBUG
+  // get_piece_at, const
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    assert(get_piece_at(pieces, square("d1")).get_type() == piece_type::queen);
+  }
+  // get_piece_at, non-const
+  {
+    auto pieces{get_standard_starting_pieces()};
+    auto& piece{get_piece_at(pieces, square("d1"))};
+    piece.set_selected(true); // Just needs to compile
+  }
+  // is_piece_at, const
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    assert(is_piece_at(pieces, square("d1")));
+  }
+#endif
 }
 
 void unselect_all_pieces(
