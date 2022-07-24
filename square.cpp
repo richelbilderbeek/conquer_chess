@@ -293,6 +293,16 @@ void test_square()
     const auto a8_expected{game_rect(game_coordinat(7.0, 0.0), game_coordinat(8.0, 1.0))};
     assert(a8_created == a8_expected);
   }
+  // to_str, square
+  {
+    const auto s{square("a1")};
+    assert(!to_str(s).empty());
+  }
+  // to_str, std::vector<square>
+  {
+    const std::vector<square> squares{square("a1"), square("b2")};
+    assert(!to_str(squares).empty());
+  }
   // operator==
   {
     const square a("a1");

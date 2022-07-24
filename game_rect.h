@@ -33,7 +33,6 @@ bool is_in(const game_coordinat& pos, const game_rect& r) noexcept;
 void test_game_rect();
 
 bool operator==(const game_rect& lhs, const game_rect& rhs) noexcept;
-game_rect& operator+=(game_rect& rect, const game_coordinat& delta) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const game_rect& r) noexcept;
 

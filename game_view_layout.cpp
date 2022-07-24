@@ -272,6 +272,18 @@ void test_game_view_layout()
     assert(tl_board.get_x() == layout.get_board().get_tl().get_x());
     assert(tl_board.get_y() == layout.get_board().get_tl().get_y());
   }
+  // convert_to_screen_rect
+  {
+    const game_view_layout layout;
+    const auto board_rect = convert_to_screen_rect(
+      game_rect(
+        game_coordinat(0.0, 0.0),
+        game_coordinat(8.0, 8.0)
+      ),
+      layout
+    );
+    assert(board_rect == layout.get_board());
+  }
   // in-game (8,8) must be bottom-right of screen board
   // (no piece can ever have its top-right at the bottom-right of the board)
   {

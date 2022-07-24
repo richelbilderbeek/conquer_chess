@@ -103,6 +103,13 @@ bool is_forward(
 void test_game_coordinat()
 {
   #ifndef NDEBUG
+  // center_on_center
+  {
+    const game_coordinat c(3.2, 4.7);
+    const game_coordinat expected(3.5, 4.6);
+    const game_coordinat created(center_on_center(c));
+    assert(expected == created);
+  }
   // get
   {
     const double x{12.34};

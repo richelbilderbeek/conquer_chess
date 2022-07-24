@@ -67,6 +67,8 @@ void test_piece_action()
   {
     const piece_action a(piece_action_type::attack, square("e3"));
     assert(!to_str(piece_action(a)).empty());
+    const piece_action b(piece_action_type::move, square("e2"), square("e4"));
+    assert(!to_str(piece_action(a)).empty());
   }
   // operator<<
   {

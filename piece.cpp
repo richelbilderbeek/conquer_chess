@@ -243,6 +243,11 @@ void test_piece()
     p.add_action(piece_action(piece_action_type::attack, square("a3")));
     assert(!describe_actions(p).empty());
   }
+  // piece::get_current_square
+  {
+    const auto p{get_test_white_king()};
+    assert(p.get_current_square() == square("e1"));
+  }
   // get_health
   {
     const auto p{get_test_white_king()};
@@ -257,6 +262,11 @@ void test_piece()
   {
     const auto p{get_test_white_king()};
     assert(p.get_max_health() > 0.0);
+  }
+  // get_occupied_square
+  {
+    const auto p{get_test_white_king()};
+    assert(get_occupied_square(p) == square("e1"));
   }
   // has_actions
   {

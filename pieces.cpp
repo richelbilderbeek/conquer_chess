@@ -313,6 +313,17 @@ void test_pieces()
     auto& piece{get_piece_at(pieces, square("d1"))};
     piece.set_selected(true); // Just needs to compile
   }
+  // get_pieces_before_scholars_mate
+  {
+    const auto pieces{get_pieces_before_scholars_mate()};
+    assert(pieces.size() == 32);
+  }
+  // get_pieces_bishop_and_knight_end_game
+  {
+    const auto pieces{get_pieces_bishop_and_knight_end_game()};
+    assert(pieces.size() == 4);
+  }
+
   // is_piece_at, const
   {
     const auto pieces{get_standard_starting_pieces()};
