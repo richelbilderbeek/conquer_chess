@@ -1,6 +1,7 @@
 #include "game_view_layout.h"
 
 #include "helper.h"
+#include "game_rect.h"
 
 #include <cassert>
 #include <cmath>
@@ -124,6 +125,16 @@ screen_coordinat convert_to_screen_coordinat(
     tl_board.get_x() + (square_width * coordinat.get_x()),
     tl_board.get_y() + (square_height * coordinat.get_y())
   );
+}
+
+screen_rect convert_to_screen_rect(
+  const game_rect& r,
+  const game_view_layout& layout
+)
+{
+  const auto& tl{convert_to_screen_coordinat(r.get_tl(), layout)};
+  const auto& br{convert_to_screen_coordinat(r.get_br(), layout)};
+  return screen_rect(tl, br);
 }
 
 int get_board_height(const game_view_layout& layout) noexcept

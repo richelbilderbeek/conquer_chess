@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include "test_game.h"
+
 #include <cassert>
 
 /// Test the game class
@@ -295,16 +297,6 @@ void test_game_mouse_use()
   }
 #endif // NDEBUG // no tests in release
 }
-
-
-/// Test bigger scenarios
-void test_game_scenarios()
-{
-#ifndef NDEBUG // no tests in release
-
-#endif // NDEBUG // no tests in release
-}
-
 
 void test_game() //!OCLINT tests may be many
 {

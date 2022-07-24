@@ -6,6 +6,7 @@
 #include "game.h"
 #include "game_resources.h"
 #include "game_view_layout.h"
+#include "game_rect.h"
 #include "screen_coordinat.h"
 #include "sfml_helper.h"
 
@@ -141,6 +142,21 @@ std::string get_controls_text(
 
   }
   return s.str();
+}
+
+const game_view_layout& get_layout(const game_view& v) noexcept
+{
+  return get_layout(v.get_game());
+}
+
+const game_options& get_options(const game_view& v) noexcept
+{
+  return get_options(v.get_game());
+}
+
+const std::vector<piece>& get_pieces(const game_view& v) noexcept
+{
+  return get_pieces(v.get_game());
 }
 
 void game_view::play_sound_effects()
@@ -295,6 +311,10 @@ void game_view::show()
 void show_board(game_view& view)
 {
   show_squares(view);
+  if (get_options(view).do_show_occupied())
+  {
+    show_occupied_squares(view);
+  }
   show_unit_paths(view);
   show_pieces(view);
   show_unit_health_bars(view);
@@ -448,6 +468,29 @@ void show_layout(game_view& view)
   }
 }
 
+void show_occupied_squares(game_view& view)
+{
+  assert(get_options(view).do_show_occupied());
+  const auto& pieces{get_pieces(view)};
+  for (const auto& piece: pieces)
+  {
+    const auto& square{get_occupied_square(piece)};
+    const screen_rect square_rect{
+      convert_to_screen_rect(
+        to_game_rect(square),
+        get_layout(view)
+      )
+    };
+    sf::RectangleShape s;
+    set_rect(s, square_rect);
+    s.rotate(45);
+    s.scale(0.5, 0.5);
+    s.setFillColor(to_sfml_color(piece.get_color()));
+    s.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
+    s.setOutlineThickness(1.0);
+    view.get_window().draw(s);
+  }
+}
 
 void show_pieces(game_view& view)
 {

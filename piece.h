@@ -113,6 +113,9 @@ std::string describe_actions(const piece& p);
 /// Get the fraction of the health, where 1.0 denotes full health
 double get_f_health(const piece& p) noexcept;
 
+/// Get the square that this piece occupies now
+square get_occupied_square(const piece& p) noexcept;
+
 /// Create a piece to be used in testing: a white king on E1
 piece get_test_piece() noexcept;
 

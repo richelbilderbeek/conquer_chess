@@ -190,6 +190,11 @@ chess_color get_keyboard_user_player_color(const game& g)
   return get_keyboard_user_player_color(g.get_options());
 }
 
+const game_view_layout& get_layout(const game& g) noexcept
+{
+  return g.get_layout();
+}
+
 game_coordinat& game::get_mouse_player_pos()
 {
   if (get_left_player_controller(m_options) == controller_type::mouse)
@@ -220,7 +225,7 @@ chess_color get_mouse_user_player_color(const game& g)
   return get_mouse_user_player_color(g.get_options());
 }
 
-game_options get_options(const game& g)
+const game_options& get_options(const game& g)
 {
   return g.get_options();
 }

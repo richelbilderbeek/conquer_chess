@@ -22,8 +22,11 @@ public:
     const int margin_width
   );
 
-  /// Are selected units shown on-screen?
-  auto do_show_selected() const noexcept { return false; }
+  /// Show the squares that are actually occupied by the piecs?
+  auto do_show_occupied() const noexcept { return true; }
+
+  /// Are selected units highlighted?
+  auto do_show_selected() const noexcept { return true; }
 
   /// Get the distance the mouse must be maximally in
   /// for a click to connect to a piece

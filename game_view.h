@@ -3,6 +3,7 @@
 
 #ifndef LOGIC_ONLY
 
+#include "ccfwd.h"
 #include "game.h"
 #include "game_resources.h"
 #include "game_view_layout.h"
@@ -76,6 +77,15 @@ std::string get_controls_text(
   const controller_type controller
 );
 
+/// Get the layout
+const game_view_layout& get_layout(const game_view& v) noexcept;
+
+/// Get the game options
+const game_options& get_options(const game_view& v) noexcept;
+
+/// Get the pieces
+const std::vector<piece>& get_pieces(const game_view& v) noexcept;
+
 /// Show the board: squares, unit paths, pieces, health bars
 void show_board(game_view& view);
 
@@ -93,6 +103,10 @@ void show_debug_2(game_view& view);
 
 /// Show the layout of the window: board and panels
 void show_layout(game_view& view);
+
+/// Show the squares that are occupied on-screen
+/// Throws if this option is turned off
+void show_occupied_squares(game_view& view);
 
 /// Show the pieces of the board on-screen
 void show_pieces(game_view& view);

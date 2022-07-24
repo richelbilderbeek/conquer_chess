@@ -8,6 +8,7 @@ class delta_t;
 class game_coordinat;
 class game;
 class game_options;
+class game_rect;
 class game_resources;
 class game_view;
 class game_view_layout;

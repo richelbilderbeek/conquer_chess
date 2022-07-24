@@ -10,6 +10,7 @@ HEADERS += \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
     $$PWD/game_options.h \
+    $$PWD/game_rect.h \
     $$PWD/game_resources.h \
     $$PWD/game_speed.h \
     $$PWD/game_view_layout.h \
@@ -33,6 +34,7 @@ HEADERS += \
     $$PWD/sound_effects.h \
     $$PWD/square.h \
     $$PWD/starting_position_type.h \
+    $$PWD/test_game.h \
     $$PWD/textures.h \
     $$PWD/volume.h
 
@@ -47,6 +49,7 @@ SOURCES += \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_options.cpp \
+    $$PWD/game_rect.cpp \
     $$PWD/game_resources.cpp \
     $$PWD/game_speed.cpp \
     $$PWD/game_view_layout.cpp \
@@ -71,6 +74,7 @@ SOURCES += \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \
     $$PWD/test_game.cpp \
+    $$PWD/test_game_scenarios.cpp \
     $$PWD/textures.cpp \
     $$PWD/volume.cpp
 

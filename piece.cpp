@@ -103,6 +103,11 @@ double get_f_health(const piece& p) noexcept
   return p.get_health() / p.get_max_health();
 }
 
+square get_occupied_square(const piece& p) noexcept
+{
+  return square(p.get_coordinat());
+}
+
 piece get_test_piece() noexcept
 {
   return piece(

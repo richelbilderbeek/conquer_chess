@@ -11,7 +11,7 @@
 #include "menu_view_layout.h"
 #include "options_view_layout.h"
 #include "screen_coordinat.h"
-
+#include "test_game.h"
 #include <SFML/Graphics.hpp>
 
 #include <cassert>

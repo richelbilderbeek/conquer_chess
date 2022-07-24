@@ -152,6 +152,9 @@ game_coordinat& get_keyboard_player_pos(game& g);
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game& g);
 
+/// Get the layout
+const game_view_layout& get_layout(const game& g) noexcept;
+
 /// Get the position of the player that uses the mouse
 game_coordinat get_mouse_player_pos(const game& g);
 
@@ -162,7 +165,7 @@ game_coordinat& get_mouse_player_pos(game& g);
 chess_color get_mouse_user_player_color(const game& g);
 
 /// Get the game options
-game_options get_options(const game& g);
+const game_options& get_options(const game& g);
 
 /// Get the piece that at that square,
 /// will throw if there is no piece
@@ -208,9 +211,6 @@ bool is_piece_at(
   const game& g,
   const square& coordinat
 );
-
-/// Test this class and its free functions
-void test_game();
 
 /// Toggle the color of the active player
 void toggle_left_player_color(game& g);

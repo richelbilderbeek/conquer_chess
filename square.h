@@ -48,6 +48,11 @@ game_coordinat to_coordinat(const square& s) noexcept;
 // b1 == (0.5, 1.5)
 game_coordinat to_coordinat(const std::string& notation) noexcept;
 
+/// Convert a square to a rectangle
+/// For example, a1 == ((0,0)-(1,1)) (notation is top-left, then bottom-left)
+/// For example, b1 == ((0,1)-(1,2)) (notation is top-left, then bottom-left)
+game_rect to_game_rect(const square& s) noexcept;
+
 std::string to_str(const square& s) noexcept;
 
 bool operator==(const square& lhs, const square& rhs) noexcept;

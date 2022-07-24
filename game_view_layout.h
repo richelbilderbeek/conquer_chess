@@ -1,6 +1,7 @@
 #ifndef GAME_VIEW_LAYOUT_H
 #define GAME_VIEW_LAYOUT_H
 
+#include "ccfwd.h"
 #include "screen_rect.h"
 #include "game_coordinat.h"
 #include "screen_coordinat.h"
@@ -87,6 +88,12 @@ private:
 /// Convert an in-game coordinat to an on-screen coordinat
 screen_coordinat convert_to_screen_coordinat(
   const game_coordinat& coordinat,
+  const game_view_layout& layout
+);
+
+/// Convert an in-game coordinat to an on-screen coordinat
+screen_rect convert_to_screen_rect(
+  const game_rect& coordinat,
   const game_view_layout& layout
 );
 

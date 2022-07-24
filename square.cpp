@@ -1,6 +1,7 @@
 #include "square.h"
 
 #include "game_coordinat.h"
+#include "game_rect.h"
 
 #include <cassert>
 #include <cmath>
@@ -84,7 +85,14 @@ void test_square()
   {
     assert(are_on_same_rank(square("a1"), square("h1")));
   }
-  // get_coordinat
+  // get_rotated_square
+  {
+    assert(get_rotated_square(square("a1")) == square("h8"));
+    assert(get_rotated_square(square("a8")) == square("h1"));
+    assert(get_rotated_square(square("h8")) == square("a1"));
+    assert(get_rotated_square(square("h1")) == square("a8"));
+  }
+  // to_coordinat
   {
     assert(to_coordinat(square("a1")) == game_coordinat(0.5, 0.5));
     const auto a8{to_coordinat(square("a8"))};
@@ -93,12 +101,15 @@ void test_square()
     assert(to_coordinat(square("h1")) == game_coordinat(0.5, 7.5));
     assert(to_coordinat(square("h8")) == game_coordinat(7.5, 7.5));
   }
-  // get_rotated_square
+  // to_game_rect
   {
-    assert(get_rotated_square(square("a1")) == square("h8"));
-    assert(get_rotated_square(square("a8")) == square("h1"));
-    assert(get_rotated_square(square("h8")) == square("a1"));
-    assert(get_rotated_square(square("h1")) == square("a8"));
+    const auto a1_created{to_game_rect(square("a1"))};
+    const auto a1_expected{game_rect(game_coordinat(0.0, 0.0), game_coordinat(1.0, 1.0))};
+    assert(a1_created == a1_expected);
+
+    const auto a8_created{to_game_rect(square("a8"))};
+    const auto a8_expected{game_rect(game_coordinat(7.0, 0.0), game_coordinat(8.0, 1.0))};
+    assert(a8_created == a8_expected);
   }
 #endif // NDEBUG
 }
@@ -117,6 +128,19 @@ game_coordinat to_coordinat(const square& s) noexcept
 game_coordinat to_coordinat(const std::string& pos) noexcept
 {
   return to_coordinat(square(pos));
+}
+
+game_rect to_game_rect(const square& s) noexcept
+{
+  const game_coordinat mid{to_coordinat(s)};
+  const game_coordinat tl{
+    std::trunc(mid.get_x()),
+    std::trunc(mid.get_y())
+  };
+  const game_coordinat br{
+    tl + game_coordinat(1.0, 1.0)
+  };
+  return game_rect(tl, br);
 }
 
 std::string to_str(const square& s) noexcept
