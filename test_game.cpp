@@ -83,14 +83,16 @@ void test_game_functions()
     get_pieces(g).at(0).add_action(
       piece_action(
         piece_action_type::move,
-        game_coordinat(1.0, 1.0)
+        square("e1"),
+        square("e2")
       )
     );
     assert(count_piece_actions(g, chess_color::white) == 1);
     g.get_pieces().at(0).add_action(
       piece_action(
         piece_action_type::move,
-        game_coordinat(2.0, 2.0)
+        square("e2"),
+        square("e3")
       )
     );
     assert(count_piece_actions(g, chess_color::white) == 2);

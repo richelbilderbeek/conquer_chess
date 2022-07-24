@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <string>
+#include <vector>
 
 #include "piece_action_type.h"
 #include "game_coordinat.h"
@@ -14,10 +15,13 @@
 class piece_action
 {
 public:
+
+  /// Attack a certain location
   piece_action(
     const piece_action_type type,
     const square& to
   );
+  /// Move from a square to another
   piece_action(
     const piece_action_type type,
     const square& from,
@@ -45,6 +49,9 @@ bool is_atomic(const piece_action& a) noexcept;
 
 /// Test the 'piece_action' class and its free functions
 void test_piece_action();
+
+/// Convert an action to one or more atomic actions
+std::vector<piece_action> to_atomic(const piece_action& a);
 
 std::string to_str(const piece_action& a) noexcept;
 

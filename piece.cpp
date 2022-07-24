@@ -31,8 +31,16 @@ piece::piece(
 
 void piece::add_action(const piece_action& action)
 {
-  assert(is_atomic(action));
-  m_actions.push_back(action);
+  const std::vector<piece_action> atomic_actions{
+    to_atomic(action)
+  };
+  std::copy(
+    std::begin(atomic_actions),
+    std::end(atomic_actions),
+    std::back_inserter(m_actions)
+  );
+  //assert(is_atomic(action));
+  //m_actions.push_back(action);
 }
 
 /// Can a piece move from 'from' to 'to'?
@@ -232,7 +240,7 @@ void test_piece()
   }
   {
     auto p{get_test_white_king()};
-    p.add_action(piece_action(piece_action_type::move, game_coordinat()));
+    p.add_action(piece_action(piece_action_type::attack, square("a3")));
     assert(!describe_actions(p).empty());
   }
   // get_health
@@ -277,7 +285,7 @@ void test_piece()
       square("e2"),
       side::lhs
     );
-    p.add_action(piece_action(piece_action_type::move, square("e4")));
+    p.add_action(piece_action(piece_action_type::move, square("e2"), square("e4")));
     assert(!p.get_actions().empty());
     p.tick(delta_t(1.0));
     assert(!p.get_actions().empty());
@@ -291,8 +299,9 @@ void test_piece()
       square("e7"),
       side::lhs
     );
-    p.add_action(piece_action(piece_action_type::move, square("e5")));
+    p.add_action(piece_action(piece_action_type::move, square("e7"), square("e5")));
     assert(!p.get_actions().empty());
+    p.tick(delta_t(1.0));
     p.tick(delta_t(1.0));
     assert(p.get_actions().empty()); // Actions cleared
     assert(p.get_coordinat() == square("e7")); // Piece stays put
@@ -318,7 +327,7 @@ void test_piece()
     piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
     assert(square(p.get_coordinat()) == square("e1"));
-    p.add_action(piece_action(piece_action_type::move, square("e2")));
+    p.add_action(piece_action(piece_action_type::move, square("e1"), square("e2")));
     assert(has_actions(p));
     p.tick(delta_t(0.1));
     assert(has_actions(p));
@@ -338,6 +347,7 @@ void test_piece()
     assert(has_actions(p));
     p.tick(delta_t(1.0));
   }
+  //#define FIX_KNIGHT_NEVER_OCCUPIED_INTERMEDIATE_SQUARES
   #ifdef FIX_KNIGHT_NEVER_OCCUPIED_INTERMEDIATE_SQUARES
   // A knight never occupied squares between its source and target square
   {

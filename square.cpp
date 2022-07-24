@@ -2,7 +2,7 @@
 
 #include "game_coordinat.h"
 #include "game_rect.h"
-
+#include "helper.h"
 
 #include <cassert>
 #include <cmath>
@@ -20,6 +20,16 @@ square::square(const game_coordinat& g)
 {
   const int x{static_cast<int>(std::trunc(g.get_x()))};
   const int y{static_cast<int>(std::trunc(g.get_y()))};
+  assert(x >= 0 && x < 8 && y >= 0 && y < 8);
+  const char first = 'a' + y;
+  const char second = '1' + x;
+  m_pos += first;
+  m_pos += second;
+  assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
+}
+
+square::square(const int x, const int y)
+{
   assert(x >= 0 && x < 8 && y >= 0 && y < 8);
   const char first = 'a' + y;
   const char second = '1' + x;
@@ -54,6 +64,86 @@ bool are_on_same_half_diagonal(const square& a, const square& b) noexcept
 bool are_on_same_rank(const square& a, const square& b) noexcept
 {
   return a.get_pos()[1] == b.get_pos()[1];
+}
+
+std::vector<square> get_intermediate_squares(
+  const square& from,
+  const square& to
+)
+{
+  assert(from != to);
+  std::vector<square> squares;
+  const int dx{std::abs(to.get_x() - from.get_x())};
+  const int dy{std::abs(to.get_y() - from.get_y())};
+  // Horizontal
+  if (dy == 0)
+  {
+    const int y{from.get_y()};
+    const std::vector<int> xs{
+      make_sequence(from.get_x(), to.get_x())
+    };
+    squares.reserve(xs.size());
+    std::transform(
+      std::begin(xs),
+      std::end(xs),
+      std::back_inserter(squares),
+      [y](const int x) { return square(x, y); }
+    );
+  }
+  else if (dx == 0)
+  {
+    const int x{from.get_x()};
+    const std::vector<int> ys{
+      make_sequence(from.get_y(), to.get_y())
+    };
+    squares.reserve(ys.size());
+    std::transform(
+      std::begin(ys),
+      std::end(ys),
+      std::back_inserter(squares),
+      [x](const int y) { return square(x, y); }
+    );
+
+  }
+  else if (dx == dy)
+  {
+    const std::vector<int> xs{
+      make_sequence(from.get_x(), to.get_x())
+    };
+    const std::vector<int> ys{
+      make_sequence(from.get_y(), to.get_y())
+    };
+    assert(xs.size() == ys.size());
+    const int n{static_cast<int>(xs.size())};
+    squares.reserve(ys.size());
+    for (int i{0}; i != n; ++i)
+    {
+      squares.push_back(square(xs[i], ys[i]));
+    }
+  }
+  else
+  {
+    assert(dx == 2 * dy || dy == 2 * dx);
+    const int x_inc{dx > dy ? 2 : 1};
+    const int y_inc{dx > dy ? 1 : 2};
+    const std::vector<int> xs{
+      make_sequence(from.get_x(), to.get_x(), x_inc)
+    };
+    const std::vector<int> ys{
+      make_sequence(from.get_y(), to.get_y(), y_inc)
+    };
+    assert(xs.size() == ys.size());
+    const int n{static_cast<int>(xs.size())};
+    squares.reserve(ys.size());
+    for (int i{0}; i != n; ++i)
+    {
+      squares.push_back(square(xs[i], ys[i]));
+    }
+  }
+  assert(squares.size() >= 2);
+  assert(squares.front() == from);
+  assert(squares.back() == to);
+  return squares;
 }
 
 square get_rotated_square(const square& position) noexcept
@@ -120,6 +210,62 @@ void test_square()
   // are_on_same_rank
   {
     assert(are_on_same_rank(square("a1"), square("h1")));
+  }
+  // get_intermediate_squares
+  {
+    // Horizontally
+    assert(get_intermediate_squares(square("a1"), square("a2")).size() == 2);
+    assert(get_intermediate_squares(square("b1"), square("b3")).size() == 3);
+    assert(get_intermediate_squares(square("c1"), square("c8")).size() == 8);
+    assert(get_intermediate_squares(square("d8"), square("d1")).size() == 8);
+    assert(get_intermediate_squares(square("e7"), square("e2")).size() == 6);
+
+    // Vertically
+    assert(get_intermediate_squares(square("a1"), square("b1")).size() == 2);
+    assert(get_intermediate_squares(square("a1"), square("c1")).size() == 3);
+    assert(get_intermediate_squares(square("a1"), square("h1")).size() == 8);
+    assert(get_intermediate_squares(square("h1"), square("a1")).size() == 8);
+    assert(get_intermediate_squares(square("g1"), square("b1")).size() == 6);
+
+    // Diagonally, accent grave
+    assert(get_intermediate_squares(square("a1"), square("b2")).size() == 2);
+    assert(get_intermediate_squares(square("a1"), square("c3")).size() == 3);
+    assert(get_intermediate_squares(square("a1"), square("h8")).size() == 8);
+    assert(get_intermediate_squares(square("h8"), square("a1")).size() == 8);
+    assert(get_intermediate_squares(square("g7"), square("b2")).size() == 6);
+
+    // Diagonally, accent aigu
+    assert(get_intermediate_squares(square("h1"), square("g2")).size() == 2);
+    assert(get_intermediate_squares(square("h1"), square("f3")).size() == 3);
+    assert(get_intermediate_squares(square("h1"), square("a8")).size() == 8);
+    assert(get_intermediate_squares(square("a8"), square("h1")).size() == 8);
+    assert(get_intermediate_squares(square("b7"), square("g2")).size() == 6);
+
+    // Knight jumps
+    // 1 o'clock
+    assert(get_intermediate_squares(square("h1"), square("f2")).size() == 2);
+    assert(get_intermediate_squares(square("h1"), square("d3")).size() == 3);
+    assert(get_intermediate_squares(square("h1"), square("b4")).size() == 4);
+
+    // 2 o'clock
+    assert(get_intermediate_squares(square("d1"), square("c3")).size() == 2);
+    assert(get_intermediate_squares(square("d1"), square("b5")).size() == 3);
+    assert(get_intermediate_squares(square("d1"), square("a7")).size() == 4);
+
+    // 4 o'clock
+    assert(get_intermediate_squares(square("a1"), square("b3")).size() == 2);
+    assert(get_intermediate_squares(square("a1"), square("c5")).size() == 3);
+    assert(get_intermediate_squares(square("a1"), square("d7")).size() == 4);
+
+    // 5 o'clock
+    assert(get_intermediate_squares(square("a1"), square("c2")).size() == 2);
+    assert(get_intermediate_squares(square("a1"), square("e3")).size() == 3);
+    assert(get_intermediate_squares(square("a1"), square("g4")).size() == 4);
+
+    // 7 o'clock
+    assert(get_intermediate_squares(square("f2"), square("h1")).size() == 2);
+    assert(get_intermediate_squares(square("d3"), square("h1")).size() == 3);
+    assert(get_intermediate_squares(square("b4"), square("h1")).size() == 4);
   }
   // get_rotated_square
   {
@@ -195,6 +341,22 @@ game_rect to_game_rect(const square& s) noexcept
 std::string to_str(const square& s) noexcept
 {
   return s.get_pos();
+}
+
+std::string to_str(const std::vector<square>& squares) noexcept
+{
+  if (squares.empty()) return "";
+  std::stringstream s;
+  std::transform(
+    std::begin(squares),
+    std::end(squares),
+    std::ostream_iterator<std::string>(s, ", "),
+    [](const square& sq) { return to_str(sq); }
+  );
+  std::string t = s.str();
+  t.pop_back();
+  t.pop_back();
+  return t;
 }
 
 bool operator==(const square& lhs, const square& rhs) noexcept

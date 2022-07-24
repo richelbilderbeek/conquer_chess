@@ -287,7 +287,8 @@ void control_actions::start_move_unit(
         p.add_action(
           piece_action(
             piece_action_type::move,
-            center_on_center(coordinat)
+            from,
+            to
           )
         );
         m_sound_effects.push_back(

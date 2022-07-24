@@ -3,7 +3,7 @@
 
 #include <iosfwd>
 #include <string>
-
+#include <vector>
 #include "ccfwd.h"
 
 /// A chess square, e.g. e4
@@ -12,6 +12,7 @@ class square
 public:
   square(const std::string& pos);
   square(const game_coordinat& g);
+  square(const int x, const int y);
 
   /// Get the position as a string
   const auto& get_pos() const noexcept { return m_pos; }
@@ -47,6 +48,14 @@ bool are_on_same_half_diagonal(const square& a, const square& b) noexcept;
 /// Are the squares on the same rank, e.g. a1 and a8
 bool are_on_same_rank(const square& a, const square& b) noexcept;
 
+/// Get the intermediate squares, in an inclusive way:
+/// the first square will be 'from',
+/// to last square will be 'to'
+std::vector<square> get_intermediate_squares(
+  const square& from,
+  const square& to
+);
+
 /// Rotate the (coordinator of the) square,
 /// i.e. turn the board 180 degrees
 square get_rotated_square(const square& position) noexcept;
@@ -68,6 +77,8 @@ game_coordinat to_coordinat(const std::string& notation) noexcept;
 game_rect to_game_rect(const square& s) noexcept;
 
 std::string to_str(const square& s) noexcept;
+
+std::string to_str(const std::vector<square>& s) noexcept;
 
 bool operator==(const square& lhs, const square& rhs) noexcept;
 bool operator!=(const square& lhs, const square& rhs) noexcept;
