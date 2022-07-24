@@ -29,26 +29,6 @@ void game::add_action(const control_action a)
   m_control_actions.add(a);
 }
 
-std::vector<double> calc_distances(
-  const std::vector<piece>& pieces,
-  const game_coordinat& coordinat
-) {
-  std::vector<double> distances;
-  distances.reserve(pieces.size());
-  std::transform(
-    std::begin(pieces),
-    std::end(pieces),
-    std::back_inserter(distances),
-    [coordinat](const auto& piece) {
-      return calc_distance(
-        coordinat,
-        piece.get_coordinat()
-      );
-    }
-  );
-  assert(distances.size() == pieces.size());
-  return distances;
-}
 
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
@@ -85,20 +65,7 @@ int count_piece_actions(
   const chess_color player
 )
 {
-  const auto& pieces{g.get_pieces()};
-  return std::accumulate(
-    std::begin(pieces),
-    std::end(pieces),
-    0,
-    [player](const int n, const auto& piece)
-    {
-      if (piece.get_color() == player)
-      {
-        return n + count_piece_actions(piece);
-      }
-      return n;
-    }
-  );
+  return count_piece_actions(g.get_pieces(), player);
 }
 
 int count_selected_units(

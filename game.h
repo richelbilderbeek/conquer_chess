@@ -5,7 +5,7 @@
 #include "game_coordinat.h"
 #include "game_options.h"
 #include "game_view_layout.h"
-#include "piece.h"
+#include "pieces.h"
 #include "sound_effect.h"
 #include <vector>
 
@@ -76,16 +76,11 @@ private:
   /// The game options
   game_options m_options;
 
+  /// All pieces in the game
   std::vector<piece> m_pieces;
 
   friend void test_game();
 };
-
-/// Calculate the distances that each piece has to a coordinat
-std::vector<double> calc_distances(
-  const std::vector<piece>& pieces,
-  const game_coordinat& coordinat
-);
 
 /// Can the player select a piece at the current mouse position?
 bool can_player_select_piece_at_cursor_pos(
