@@ -312,7 +312,7 @@ void test_game_mouse_use()
     assert(count_piece_actions(g, chess_color::black) == 0);
     g.add_action(create_press_rmb_action(to_coordinat("e6")));
     g.tick();
-    assert(count_piece_actions(g, chess_color::black) == 1);
+    assert(count_piece_actions(g, chess_color::black) >= 1);
   }
   // 2x LMB then RMB makes a unit move 1 stretch (not 2)
   {

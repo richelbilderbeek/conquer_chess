@@ -34,16 +34,19 @@ void piece::add_action(const piece_action& action)
   const std::vector<piece_action> atomic_actions{
     to_atomic(action)
   };
-  std::copy(
+  std::copy_if(
     std::begin(atomic_actions),
     std::end(atomic_actions),
-    std::back_inserter(m_actions)
+    std::back_inserter(m_actions),
+    [this](const piece_action& a)
+    {
+      return can_move(this->get_type(), a.get_from(), a.get_to(), this->get_player());
+    }
   );
   //assert(is_atomic(action));
   //m_actions.push_back(action);
 }
 
-/// Can a piece move from 'from' to 'to'?
 bool can_move(
   const piece_type& type,
   const square& from,
@@ -322,10 +325,11 @@ void test_piece()
       square("e7"),
       side::lhs
     );
+
     p.add_action(piece_action(piece_action_type::move, square("e7"), square("e5")));
-    assert(!p.get_actions().empty());
-    p.tick(delta_t(1.0));
-    p.tick(delta_t(1.0));
+    //assert(!p.get_actions().empty());
+    //p.tick(delta_t(1.0));
+    //p.tick(delta_t(1.0));
     assert(p.get_actions().empty()); // Actions cleared
     assert(p.get_coordinat() == square("e7")); // Piece stays put
   }
@@ -359,7 +363,9 @@ void test_piece()
       p.tick(delta_t(0.1));
     }
     assert(!has_actions(p));
-    assert(square(p.get_coordinat()) == square("e2"));
+    const auto final_square{square(p.get_coordinat())};
+    const auto expected_square{square("e2")};
+    assert(final_square == expected_square);
   }
   // A pieces can attack
   {
@@ -370,8 +376,6 @@ void test_piece()
     assert(has_actions(p));
     p.tick(delta_t(1.0));
   }
-  //#define FIX_KNIGHT_NEVER_OCCUPIED_INTERMEDIATE_SQUARES
-  #ifdef FIX_KNIGHT_NEVER_OCCUPIED_INTERMEDIATE_SQUARES
   // A knight never occupied squares between its source and target square
   {
     piece p{get_test_white_knight()};
@@ -392,7 +396,6 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e4"));
     assert(get_occupied_square(p) == square("e4"));
   }
-  #endif // FIX_KNIGHT_NEVER_OCCUPIED_INTERMEDIATE_SQUARES
 #endif // NDEBUG
 }
 
@@ -402,27 +405,41 @@ void piece::tick(const delta_t& dt)
   const auto& first_action{m_actions[0]};
   if (first_action.get_type() == piece_action_type::move)
   {
-    // pawns can only move forward
-    if (m_type == piece_type::pawn
-      && ( (m_player == side::lhs && first_action.get_to().get_x() < m_coordinat.get_x())
-          || (m_player == side::rhs && first_action.get_to().get_x() > m_coordinat.get_x())
-        )
+    const auto distance_from_start{
+      calc_length(
+        to_coordinat(first_action.get_from()) - m_coordinat)
+      };
+    const auto distance_to_target{
+      calc_length(
+        to_coordinat(first_action.get_to()) - m_coordinat
       )
+    };
+    // Occupy different square?
+    if (distance_to_target < distance_from_start)
     {
-      remove_first(m_actions);
-      return;
+      m_current_square = first_action.get_to();
     }
-
-    const auto full_delta{to_coordinat(first_action.get_to()) - m_coordinat};
-    const double full_length{calc_length(full_delta)};
-    if (full_length < dt.get())
+    if (distance_to_target < dt.get())
     {
+      // Arrive at next the square
+      m_coordinat = to_coordinat(first_action.get_to());
+
       // Done moving
       remove_first(m_actions);
-      //std::vector<decltype(m_actions)::value_type>(m_actions.begin() + 1, m_actions.end()).swap(m_actions);
     }
-    const auto delta{full_delta / (full_length / dt.get())};
-    m_coordinat += delta;
+    else
+    {
+      const auto full_length{
+        calc_length(
+          to_coordinat(first_action.get_to()) - m_coordinat
+        )
+      };
+      const auto delta{
+        (to_coordinat(first_action.get_to()) - m_coordinat)
+        / (full_length / dt.get())
+      };
+      m_coordinat += delta;
+    }
 
   }
   else
