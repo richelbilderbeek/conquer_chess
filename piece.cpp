@@ -318,6 +318,7 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(piece_action_type::attack, square("e2")));
     assert(has_actions(p));
+    p.tick(delta_t(1.0));
   }
 #endif // NDEBUG
 }

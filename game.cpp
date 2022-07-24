@@ -210,6 +210,11 @@ game_coordinat& get_mouse_player_pos(game& g)
   return g.get_mouse_player_pos();
 }
 
+chess_color get_mouse_user_player_color(const game& g)
+{
+  return get_mouse_user_player_color(g.get_options());
+}
+
 game_options get_options(const game& g)
 {
   return g.get_options();
@@ -481,6 +486,18 @@ void test_game() //!OCLINT tests may be many
     assert(count_selected_units(g, chess_color::white) == 0);
     assert(get_closest_piece_to(g, to_coordinat("e2")).get_type() == piece_type::pawn);
     assert(get_sound_effects(g).at(1).get_sound_effect_type() == sound_effect_type::cannot);
+  }
+  // can_player_select_piece_at_cursor_pos
+  {
+    game g;
+    assert(get_mouse_user_player_color(g) == chess_color::black);
+    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
+    g.add_action(control_action(control_action_type::mouse_move, black_king.get_coordinat()));
+    g.tick();
+    assert(g.get_mouse_player_pos() == black_king.get_coordinat());
+    assert(can_player_select_piece_at_cursor_pos(g, chess_color::black));
+
   }
 #endif // no tests in release
 }
