@@ -56,5 +56,6 @@ game_rect to_game_rect(const square& s) noexcept;
 std::string to_str(const square& s) noexcept;
 
 bool operator==(const square& lhs, const square& rhs) noexcept;
+bool operator!=(const square& lhs, const square& rhs) noexcept;
 
 #endif // SQUARE_H

@@ -116,8 +116,11 @@ double get_f_health(const piece& p) noexcept;
 /// Get the square that this piece occupies now
 square get_occupied_square(const piece& p) noexcept;
 
-/// Create a piece to be used in testing: a white king on E1
-piece get_test_piece() noexcept;
+/// Create a piece to be used in testing: a white king on e1
+piece get_test_white_king() noexcept;
+
+/// Create a piece to be used in testing: a white knight on c3
+piece get_test_white_knight() noexcept;
 
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;

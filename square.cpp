@@ -152,3 +152,8 @@ bool operator==(const square& lhs, const square& rhs) noexcept
 {
   return lhs.get_pos() == rhs.get_pos();
 }
+
+bool operator!=(const square& lhs, const square& rhs) noexcept
+{
+  return !(lhs == rhs);
+}

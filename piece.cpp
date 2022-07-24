@@ -108,12 +108,22 @@ square get_occupied_square(const piece& p) noexcept
   return square(p.get_coordinat());
 }
 
-piece get_test_piece() noexcept
+piece get_test_white_king() noexcept
 {
   return piece(
     chess_color::white,
     piece_type::king,
     square("e1"),
+    side::lhs
+  );
+}
+
+piece get_test_white_knight() noexcept
+{
+  return piece(
+    chess_color::white,
+    piece_type::knight,
+    square("c3"),
     side::lhs
   );
 }
@@ -209,47 +219,47 @@ void test_piece()
   }
   // count_piece_actions
   {
-    const auto p{get_test_piece()};
+    const auto p{get_test_white_king()};
     assert(count_piece_actions(p) == 0);
   }
   // describe_actions
   {
-    const auto p{get_test_piece()};
+    const auto p{get_test_white_king()};
     assert(!describe_actions(p).empty());
   }
   {
-    auto p{get_test_piece()};
+    auto p{get_test_white_king()};
     p.add_action(piece_action(piece_action_type::move, game_coordinat()));
     assert(!describe_actions(p).empty());
   }
   // get_health
   {
-    const auto p{get_test_piece()};
+    const auto p{get_test_white_king()};
     assert(p.get_health() > 0.0);
   }
   // get_f_health
   {
-    const auto p{get_test_piece()};
+    const auto p{get_test_white_king()};
     assert(get_f_health(p) == 1.0);
   }
   // get_max_health
   {
-    const auto p{get_test_piece()};
+    const auto p{get_test_white_king()};
     assert(p.get_max_health() > 0.0);
   }
   // has_actions
   {
-    const auto p{get_test_piece()};
+    const auto p{get_test_white_king()};
     assert(!has_actions(p));
   }
   // is_idle
   {
-    const auto p{get_test_piece()};
+    const auto p{get_test_white_king()};
     assert(is_idle(p));
   }
   // toggle_select
   {
-    auto p{get_test_piece()};
+    auto p{get_test_white_king()};
     assert(!p.is_selected());
     toggle_select(p);
     assert(p.is_selected());
@@ -286,23 +296,23 @@ void test_piece()
   }
   // operator==
   {
-    const auto a{get_test_piece()};
-    const auto b{get_test_piece()};
+    const auto a{get_test_white_king()};
+    const auto b{get_test_white_king()};
     const piece c{chess_color::black, piece_type::pawn, game_coordinat(), side::lhs};
     assert(a == b);
     assert(!(a == c));
   }
   // operator!=
   {
-    const auto a{get_test_piece()};
-    const auto b{get_test_piece()};
+    const auto a{get_test_white_king()};
+    const auto b{get_test_white_king()};
     const piece c{chess_color::black, piece_type::pawn, game_coordinat(), side::lhs};
     assert(!(a != b));
     assert(a != c);
   }
   // A pieces moves until it arrives
   {
-    piece p{get_test_piece()}; // A white king
+    piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(piece_action_type::move, square("e2")));
@@ -318,13 +328,35 @@ void test_piece()
   }
   // A pieces can attack
   {
-    piece p{get_test_piece()}; // A white king
+    piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(piece_action_type::attack, square("e2")));
     assert(has_actions(p));
     p.tick(delta_t(1.0));
   }
+  #ifdef FIX_KNIGHT_NEVER_OCCUPIED_INTERMEDIATE_SQUARES
+  // A knight never occupied squares between its source and target square
+  {
+    piece p{get_test_white_knight()};
+    assert(p.get_type() == piece_type::knight);
+    assert(square(p.get_coordinat()) == square("c3"));
+    p.add_action(piece_action(piece_action_type::move, square("e4")));
+    assert(has_actions(p));
+    p.tick(delta_t(0.1));
+    assert(has_actions(p));
+    assert(get_occupied_square(p) == square("c3"));
+    for (int i{0}; i != 30; ++i) // It is quite a travel
+    {
+      p.tick(delta_t(0.1));
+      assert(get_occupied_square(p) != square("d3"));
+      assert(get_occupied_square(p) != square("d4"));
+    }
+    assert(!has_actions(p));
+    assert(square(p.get_coordinat()) == square("e4"));
+    assert(get_occupied_square(p) == square("e4"));
+  }
+  #endif // FIX_KNIGHT_NEVER_OCCUPIED_INTERMEDIATE_SQUARES
 #endif // NDEBUG
 }
 

@@ -64,6 +64,16 @@ std::vector<piece> get_pieces_before_scholars_mate(
   const chess_color left_player_color = chess_color::white
 ) noexcept;
 
+/// Get the pieces from a bishop and knight end game
+///  * White king: e6
+///  * White knight: c4
+///  * White bishop: g4
+///  * Black king: d2 (note that it is in check)
+/// From https://www.thechesswebsite.com/bishop-and-knight-end-game/
+std::vector<piece> get_pieces_bishop_and_knight_end_game(
+  const chess_color left_player_color = chess_color::white
+) noexcept;
+
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(
   const starting_position_type t,

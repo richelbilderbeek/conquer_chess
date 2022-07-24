@@ -181,6 +181,30 @@ std::vector<piece> get_pieces_before_scholars_mate(
   return pieces;
 }
 
+std::vector<piece> get_pieces_bishop_and_knight_end_game(
+  const chess_color left_player_color
+) noexcept
+{
+  const auto f{
+    left_player_color == chess_color::white
+    ? [](const square& position) { return position; }
+    : [](const square& position) { return get_rotated_square(position); }
+  };
+  const side white_side{
+    left_player_color == chess_color::white
+    ? side::lhs
+    : side::rhs
+  };
+  const side black_side{get_other_side(white_side)};
+  std::vector<piece> pieces{
+    piece(chess_color::white, piece_type::knight, f(square("c4")), white_side),
+    piece(chess_color::white, piece_type::bishop, f(square("g4")), white_side),
+    piece(chess_color::white, piece_type::king,   f(square("e6")), white_side),
+    piece(chess_color::black, piece_type::king,   f(square("d2")), black_side)
+  };
+  return pieces;
+}
+
 std::vector<piece> get_standard_starting_pieces(
   const chess_color left_player_color
 ) noexcept
