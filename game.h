@@ -185,6 +185,9 @@ std::vector<piece> get_selected_pieces(
 const std::vector<sound_effect>& get_sound_effects(const game& g) noexcept;
 
 /// Get all the pieces
+std::vector<piece>& get_pieces(game& g) noexcept;
+
+/// Get all the pieces
 const std::vector<piece>& get_pieces(const game& g) noexcept;
 
 /// See if there is at least 1 piece selected

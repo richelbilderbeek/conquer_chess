@@ -9,7 +9,8 @@ game_options::game_options(
   const starting_position_type starting_position,
   const game_speed speed,
   const int margin_width
-) : m_game_speed{speed},
+) : m_click_distance{0.5},
+    m_game_speed{speed},
     m_left_controller_type{controller_type::keyboard},
     m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
@@ -18,6 +19,7 @@ game_options::game_options(
     m_starting_position{starting_position},
     m_volume{0}
 {
+  assert(m_click_distance > 0.0);
   assert(m_margin_width >= 0);
   assert(m_screen_size.get_x() > 0);
   assert(m_screen_size.get_y() > 0);

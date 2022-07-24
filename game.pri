@@ -70,6 +70,7 @@ SOURCES += \
     $$PWD/sound_effects.cpp \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \
+    $$PWD/test_game.cpp \
     $$PWD/textures.cpp \
     $$PWD/volume.cpp
 

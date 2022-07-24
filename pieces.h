@@ -55,6 +55,15 @@ std::vector<piece> get_standard_starting_pieces(
   const chess_color left_player_color = chess_color::white
 ) noexcept;
 
+/// Get the pieces before a scholar's mate
+/// 1. e4 e5
+/// 2. Qh5 Nc6
+/// 3. Bc4 Nf6??
+/// (the checkmate is done by Qxf7#)
+std::vector<piece> get_pieces_before_scholars_mate(
+  const chess_color left_player_color = chess_color::white
+) noexcept;
+
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(
   const starting_position_type t,
