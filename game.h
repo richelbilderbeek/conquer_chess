@@ -207,7 +207,7 @@ void toggle_left_player_color(game& g);
 
 /// Unselect all pieces of a certain color
 void unselect_all_pieces(
-  game & g,
+  game& g,
   const chess_color color
 );
 

@@ -29,7 +29,6 @@ void game::add_action(const control_action a)
   m_control_actions.add(a);
 }
 
-
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
   const chess_color player
@@ -73,15 +72,7 @@ int count_selected_units(
   const chess_color player
 )
 {
-  return std::count_if(
-    std::begin(g.get_pieces()),
-    std::end(g.get_pieces()),
-    [player](const auto& piece)
-    {
-      return piece.is_selected()
-        && piece.get_color() == player;
-    }
-  );
+  return count_selected_units(g.get_pieces(), player);
 }
 
 game create_king_versus_king_game()
@@ -224,23 +215,17 @@ game_options get_options(const game& g)
   return g.get_options();
 }
 
+const std::vector<piece>& get_pieces(const game& g) noexcept
+{
+  return g.get_pieces();
+}
+
 std::vector<piece> get_selected_pieces(
   const game& g,
   const chess_color player
 )
 {
-  std::vector<piece> pieces;
-  const auto& all_pieces = g.get_pieces();
-  std::copy_if(
-    std::begin(all_pieces),
-    std::end(all_pieces),
-    std::back_inserter(pieces),
-    [player](const auto& piece)
-    {
-      return piece.is_selected() && piece.get_color() == player;
-    }
-  );
-  return pieces;
+  return get_selected_pieces(g.get_pieces(), player);
 }
 
 const std::vector<sound_effect>& get_sound_effects(const game& g) noexcept
@@ -248,37 +233,14 @@ const std::vector<sound_effect>& get_sound_effects(const game& g) noexcept
   return get_sound_effects(g.get_actions());
 }
 
-const std::vector<piece>& get_pieces(const game& g) noexcept
-{
-  return g.get_pieces();
-}
-
 const piece& get_piece_at(const game& g, const square& coordinat)
 {
-  const auto& pieces{g.get_pieces()};
-  const auto there{
-    std::find_if(
-      std::begin(pieces),
-      std::end(pieces),
-      [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
-    )
-  };
-  assert(there != pieces.end());
-  return *there;
+  return get_piece_at(g.get_pieces(), coordinat);
 }
 
 piece& get_piece_at(game& g, const square& coordinat)
 {
-  auto& pieces{g.get_pieces()};
-  const auto there{
-    std::find_if(
-      std::begin(pieces),
-      std::end(pieces),
-      [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
-    )
-  };
-  assert(there != pieces.end());
-  return *there;
+  return get_piece_at(g.get_pieces(), coordinat);
 }
 
 bool has_selected_pieces(const game& g, const chess_color player)
@@ -291,28 +253,14 @@ bool is_piece_at(
   const game_coordinat& coordinat,
   const double distance
 ) {
-  const std::vector<double> distances{
-    calc_distances(g.get_pieces(), coordinat)
-  };
-  const auto iter = std::find_if(
-    std::begin(distances),
-    std::end(distances),
-    [distance](const double this_distance) { return this_distance < distance; }
-  );
-  return iter != std::end(distances);
+  return is_piece_at(g.get_pieces(), coordinat, distance);
 }
 
 bool is_piece_at(
   const game& g,
   const square& coordinat
 ) {
-  const auto& pieces{g.get_pieces()};
-  const auto iter = std::find_if(
-    std::begin(pieces),
-    std::end(pieces),
-    [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
-  );
-  return iter != std::end(pieces);
+  return is_piece_at(g.get_pieces(), coordinat);
 }
 
 void game::tick(const delta_t& dt)
@@ -322,14 +270,11 @@ void game::tick(const delta_t& dt)
 }
 
 void unselect_all_pieces(
-  game & g,
+  game& g,
   const chess_color color
 )
 {
-  for (auto& piece: g.get_pieces())
-  {
-    if (piece.get_color() == color) unselect(piece);
-  }
+  return unselect_all_pieces(g.get_pieces(), color);
 }
 
 void test_game() //!OCLINT tests may be many
