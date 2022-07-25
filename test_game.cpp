@@ -146,14 +146,15 @@ void test_game_functions()
     const auto pos_after{get_keyboard_player_pos(g)};
     assert(pos_before != pos_after);
   }
-  // get_keyboard_player_pos, non-const, black == lhs == keyboard
+  // get_keyboard_player_pos, non-const, black == lhs == mouse
   {
     game_options options = get_default_game_options();
     options.set_left_player_color(chess_color::black);
-    options.set_left_controller_type(controller_type::keyboard);
+    options.set_left_controller_type(controller_type::mouse);
     game g(options);
-    assert(get_keyboard_user_player_color(g) == chess_color::black);
+    assert(get_keyboard_user_player_color(g) == chess_color::white);
     const auto pos_before{get_keyboard_player_pos(g)};
+    assert(pos_before == g.get_player_2_pos());
     auto& pos = get_keyboard_player_pos(g);
     pos += game_coordinat(0.1, 0.1);
     const auto pos_after{get_keyboard_player_pos(g)};
