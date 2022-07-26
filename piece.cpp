@@ -20,6 +20,7 @@ piece::piece(
     m_coordinat{to_coordinat(coordinat)},
     m_current_square{coordinat},
     m_health{::get_max_health(type)},
+    m_id{create_new_id()},
     m_is_selected{false},
     m_max_health{::get_max_health(type)},
     m_player{player},

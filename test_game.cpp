@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "id.h"
 #include "test_game.h"
 
 #include <cassert>
@@ -207,6 +208,11 @@ void test_game_functions()
     assert(piece.get_type() == piece_type::king);
     piece.set_selected(true); // Just needs to compile
   }
+  // is_idle
+  {
+    game g;
+    assert(is_idle(g));
+  }
   // is_piece_at
   {
     const game g;
@@ -236,6 +242,48 @@ void test_game_functions()
     toggle_left_player_color(g);
     const auto color_after{get_left_player_color(g.get_options())};
     assert(color_after != color_before);
+  }
+  // Move e2-e6
+  {
+    game g;
+    assert(is_idle(g));
+    const auto id{get_id(g, square("e2"))};
+    assert(piece_with_id_is_at(g, id, square("e2")));
+    assert(id.get() >= 0);
+    do_select_and_move_keyboard_player_piece(g, square("e2"), square("e6"));
+    assert(!is_idle(g));
+    tick_until_idle(g);
+    assert(is_idle(g));
+    assert(piece_with_id_is_at(g, id, square("e6")));
+  }
+  // Ke1-e2 does not move king forward
+  {
+    game g;
+    assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
+    do_select_and_move_keyboard_player_piece(g, square("e1"), square("e2"));
+    tick_until_idle(g);
+#ifdef FIX_ISSUE_1
+    assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
+#endif // FIX_ISSUE_1
+  }
+  // e2-e6, then cannot move forward
+  {
+    game g;
+    assert(is_idle(g));
+    const auto id{get_id(g, square("e2"))};
+    assert(piece_with_id_is_at(g, id, square("e2")));
+    assert(id.get() >= 0);
+    do_select_and_move_keyboard_player_piece(g, square("e2"), square("e6"));
+    assert(!is_idle(g));
+    tick_until_idle(g);
+    assert(is_idle(g));
+    assert(piece_with_id_is_at(g, id, square("e6")));
+    do_select_and_move_keyboard_player_piece(g, square("e6"), square("e7"));
+    tick_until_idle(g);
+#ifdef FIX_ISSUE_1
+    assert(!piece_with_id_is_at(g, id, square("e7")));
+    assert(piece_with_id_is_at(g, id, square("e6")));
+#endif // FIX_ISSUE_1
   }
 #endif // NDEBUG // no tests in release
 }

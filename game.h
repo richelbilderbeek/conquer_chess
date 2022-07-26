@@ -96,6 +96,9 @@ void clear_sound_effects(game& g) noexcept;
 /// which should be zero after each tick
 int count_control_actions(const game& g);
 
+/// Count the total number of actions to be done by pieces of both players
+int count_piece_actions(const game& g);
+
 /// Count the total number of actions to be done by pieces of a player
 int count_piece_actions(
   const game& g,
@@ -111,6 +114,29 @@ int count_selected_units(
 /// Create a game in which it is only a king versus a king,
 /// to be used in debugging
 game create_king_versus_king_game();
+
+/// Let the keyboard player move a piece
+/// from the current selected square to a new target
+/// @see 'do_select_and_move_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
+void do_move_keyboard_player_piece(game& g, const square& s);
+
+/// Let the keyboard player select a square
+/// (assuming that a piece of the right color is there)
+/// and let it move to another square
+/// @see 'do_select_and_move_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
+void do_select_and_move_keyboard_player_piece(
+  game& g,
+  const square& from,
+  const square& to
+);
+
+/// Let the keyboard player select the square
+/// Assumes that a piece of the right color is there
+/// @see 'do_select_and_move_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
+void do_select_for_keyboard_player(game& g, const square& s);
 
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game& g) noexcept;
@@ -135,6 +161,10 @@ game_coordinat get_cursor_pos(
 );
 
 game get_default_game() noexcept;
+
+/// Get the ID of a piece at a square
+/// Will throw if there is no piece there
+id get_id(const game& g, const square& s);
 
 /// Get the index of the piece that is closest to the coordinat
 int get_index_of_closest_piece_to(
@@ -199,6 +229,9 @@ const std::vector<piece>& get_pieces(const game& g) noexcept;
 /// @see use 'get_selected_pieces' to get all the selected pieces
 bool has_selected_pieces(const game& g, const chess_color player);
 
+/// Are all pieces idle?
+bool is_idle(const game& g) noexcept;
+
 /// Determine if there is a piece at the coordinat
 bool is_piece_at(
   const game& g,
@@ -211,6 +244,22 @@ bool is_piece_at(
   const game& g,
   const square& coordinat
 );
+
+/// See if there is a piece with a certain ID at a certain square
+bool piece_with_id_is_at(
+  game& g,
+  const id& i,
+  const square& s
+);
+
+/// The the cursor of the keyboard player to the desired square
+void set_keyboard_player_pos(
+  game& g,
+  const square& s
+);
+
+/// Call game::tick until all pieces are idle
+void tick_until_idle(game& g);
 
 /// Toggle the color of the active player
 void toggle_left_player_color(game& g);

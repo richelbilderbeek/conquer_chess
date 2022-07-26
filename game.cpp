@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "id.h"
 #include "sound_effects.h"
 #include "square.h"
 
@@ -59,6 +60,13 @@ int count_control_actions(const game& g)
   return count_control_actions(g.get_actions());
 }
 
+int count_piece_actions(const game& g)
+{
+  return count_piece_actions(g, chess_color::white)
+    + count_piece_actions(g, chess_color::black)
+  ;
+}
+
 int count_piece_actions(
   const game& g,
   const chess_color player
@@ -84,6 +92,38 @@ game create_king_versus_king_game()
     get_default_margin_width()
   );
   return game(options);
+}
+
+void do_move_keyboard_player_piece(game& g, const square& s)
+{
+  assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
+  set_keyboard_player_pos(g, s);
+  assert(square(get_keyboard_player_pos(g)) == s);
+  g.add_action(create_press_move_action());
+  g.tick();
+  assert(count_control_actions(g) == 0);
+}
+
+void do_select_and_move_keyboard_player_piece(
+  game& g,
+  const square& from,
+  const square& to
+)
+{
+  do_select_for_keyboard_player(g, from);
+  do_move_keyboard_player_piece(g, to);
+}
+
+void do_select_for_keyboard_player(game& g, const square& s)
+{
+  assert(is_piece_at(g, s));
+  assert(!get_piece_at(g, s).is_selected());
+  set_keyboard_player_pos(g, s);
+  assert(square(get_keyboard_player_pos(g)) == s);
+  g.add_action(create_press_select_action());
+  g.tick();
+  assert(count_control_actions(g) == 0);
+  assert(get_piece_at(g, s).is_selected());
 }
 
 bool do_show_selected(const game& g) noexcept
@@ -145,6 +185,12 @@ game get_default_game() noexcept
   return game{
     get_default_game_options()
   };
+}
+
+id get_id(const game& g, const square& s)
+{
+  assert(is_piece_at(g, s));
+  return get_piece_at(g, s).get_id();
 }
 
 int get_index_of_closest_piece_to(
@@ -268,6 +314,11 @@ bool has_selected_pieces(const game& g, const chess_color player)
   return !get_selected_pieces(g, player).empty();
 }
 
+bool is_idle(const game& g) noexcept
+{
+  return count_piece_actions(g) == 0;
+}
+
 bool is_piece_at(
   const game& g,
   const game_coordinat& coordinat,
@@ -281,6 +332,36 @@ bool is_piece_at(
   const square& coordinat
 ) {
   return is_piece_at(g.get_pieces(), coordinat);
+}
+
+bool piece_with_id_is_at(
+  game& g,
+  const id& i,
+  const square& s
+)
+{
+  assert(is_piece_at(g, s));
+  return get_piece_at(g, s).get_id() == i;
+}
+
+void set_keyboard_player_pos(
+  game& g,
+  const square& s
+)
+{
+  const auto current_pos{get_keyboard_player_pos(g)};
+  const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
+  const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
+  for (int i{0}; i!=n_right; ++i)
+  {
+    g.add_action(create_press_right_action());
+  }
+  for (int i{0}; i!=n_down; ++i)
+  {
+    g.add_action(create_press_down_action());
+  }
+  g.tick();
+  assert(count_control_actions(g) == 0);
 }
 
 void game::tick(const delta_t& dt)
@@ -297,7 +378,16 @@ void unselect_all_pieces(
   return unselect_all_pieces(g.get_pieces(), color);
 }
 
+void tick_until_idle(game& g)
+{
+  while (!is_idle(g))
+  {
+    g.tick(delta_t(0.1));
+  }
+}
+
 void toggle_left_player_color(game& g)
 {
   toggle_left_player_color(g.get_options());
 }
+

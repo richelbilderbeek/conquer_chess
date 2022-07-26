@@ -3,6 +3,7 @@
 
 #include "delta_t.h"
 #include "chess_color.h"
+#include "id.h"
 #include "piece_type.h"
 #include "piece_action.h"
 #include "game_coordinat.h"
@@ -51,6 +52,9 @@ public:
   /// Get the health of the unit
   double get_health() const noexcept { return m_health; }
 
+  /// Get the ID of the piece
+  const auto& get_id() const noexcept { return m_id; }
+
   /// Get the maximum health of the unit
   double get_max_health() const noexcept { return m_max_health; }
 
@@ -89,6 +93,9 @@ private:
 
   /// The health
   double m_health;
+
+  /// The unique ID of this piece
+  id m_id;
 
   /// Is this piece selected?
   bool m_is_selected;
