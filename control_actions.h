@@ -26,12 +26,12 @@ public:
 
   /// Clear the sound effects to be processed,
   /// i.e. resize to zero
-  void clear_sound_effects() noexcept;
+  //void clear_sound_effects() noexcept;
 
   const auto& get_actions() const noexcept { return m_control_actions; }
 
   /// Get all the sound effects to be processed
-  const auto& get_sound_effects() const noexcept { return m_sound_effects; };
+  //const auto& get_sound_effects() const noexcept { return m_sound_effects; };
 
   /// Process all actions and apply these on the game
   void process(game& g, const delta_t& dt);
@@ -39,7 +39,7 @@ public:
 private:
 
   std::vector<control_action> m_control_actions;
-  std::vector<sound_effect> m_sound_effects;
+  //std::vector<sound_effect> m_sound_effects;
 
   /// Process a left-mouse-button, hence a game_coordinat as a coordinat
   void do_select(
@@ -74,6 +74,6 @@ int count_control_actions(const control_actions& a);
 int count_piece_actions(const control_actions& a);
 
 /// Get all the sound effects to be processed
-const std::vector<sound_effect>& get_sound_effects(const control_actions& a) noexcept;
+//const std::vector<sound_effect>& get_sound_effects(const control_actions& a) noexcept;
 
 #endif // ACTIONS_H

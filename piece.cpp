@@ -48,6 +48,11 @@ void piece::add_action(const piece_action& action)
   //m_actions.push_back(action);
 }
 
+void piece::add_sound_effect(const sound_effect& effect)
+{
+  m_sound_effects.push_back(effect);
+}
+
 bool can_move(
   const piece_type& type,
   const square& from,
@@ -88,6 +93,12 @@ void clear_actions(piece& p)
 {
   p.get_actions().clear();
   assert(count_piece_actions(p) == 0);
+}
+
+void piece::clear_sound_effects() noexcept
+{
+  m_sound_effects.clear();
+  assert(m_sound_effects.empty());
 }
 
 int count_piece_actions(const piece& p)

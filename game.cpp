@@ -52,7 +52,8 @@ bool can_player_select_piece_at_cursor_pos(
 
 void clear_sound_effects(game& g) noexcept
 {
-  g.get_actions().clear_sound_effects();
+  //g.get_actions().clear_sound_effects();
+  for (auto& p: g.get_pieces()) p.clear_sound_effects();
 }
 
 int count_control_actions(const game& g)
@@ -294,9 +295,20 @@ std::vector<piece> get_selected_pieces(
   return get_selected_pieces(g.get_pieces(), player);
 }
 
-const std::vector<sound_effect>& get_sound_effects(const game& g) noexcept
+std::vector<sound_effect> get_sound_effects(const game& g) noexcept
 {
-  return get_sound_effects(g.get_actions());
+  const auto& pieces{g.get_pieces()};
+  std::vector<sound_effect> effects;
+  for (const auto& piece: pieces)
+  {
+    const auto& es{piece.get_sound_effects()};
+    std::copy(
+      std::begin(es),
+      std::end(es),
+      std::back_inserter(effects)
+    );
+  }
+  return effects;
 }
 
 const piece& get_piece_at(const game& g, const square& coordinat)

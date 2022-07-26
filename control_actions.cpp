@@ -15,12 +15,6 @@ void control_actions::add(const control_action& action)
   m_control_actions.push_back(action);
 }
 
-void control_actions::clear_sound_effects() noexcept
-{
-  m_sound_effects.clear();
-  assert(m_sound_effects.empty());
-}
-
 int count_control_actions(const control_actions& a)
 {
   return static_cast<int>(a.get_actions().size());
@@ -55,7 +49,7 @@ void control_actions::do_select(
         {
           unselect_all_pieces(g, player_color);
           select(piece); // 2
-          m_sound_effects.push_back(
+          piece.add_sound_effect(
             sound_effect(
               sound_effect_type::select,
               piece.get_color(),
@@ -84,7 +78,7 @@ void control_actions::do_select(
         else
         {
           select(piece); // 5
-          m_sound_effects.push_back(
+          piece.add_sound_effect(
             sound_effect(
               sound_effect_type::select,
               piece.get_color(),
@@ -130,7 +124,7 @@ void control_actions::do_select(
         {
           unselect_all_pieces(g, player_color);
           select(piece); // 2
-          m_sound_effects.push_back(
+          piece.add_sound_effect(
             sound_effect(
               sound_effect_type::select,
               piece.get_color(),
@@ -159,7 +153,7 @@ void control_actions::do_select(
         else
         {
           select(piece); // 5
-          m_sound_effects.push_back(
+          piece.add_sound_effect(
             sound_effect(
               sound_effect_type::select,
               piece.get_color(),
@@ -174,11 +168,6 @@ void control_actions::do_select(
       // 6
     }
   }
-}
-
-const std::vector<sound_effect>& get_sound_effects(const control_actions& a) noexcept
-{
-  return a.get_sound_effects();
 }
 
 void control_actions::process(game& g, const delta_t& dt)
@@ -291,7 +280,7 @@ void control_actions::start_move_unit(
             to
           )
         );
-        m_sound_effects.push_back(
+        p.add_sound_effect(
           sound_effect(
             sound_effect_type::start_move,
             p.get_color(),
@@ -301,7 +290,7 @@ void control_actions::start_move_unit(
       }
       else
       {
-        m_sound_effects.push_back(
+        p.add_sound_effect(
           sound_effect(
             sound_effect_type::cannot,
             p.get_color(),

@@ -215,7 +215,7 @@ std::vector<piece> get_selected_pieces(
 );
 
 /// Get all the sound effects to be processed
-const std::vector<sound_effect>& get_sound_effects(const game& g) noexcept;
+std::vector<sound_effect> get_sound_effects(const game& g) noexcept;
 
 /// Get all the pieces
 std::vector<piece>& get_pieces(game& g) noexcept;

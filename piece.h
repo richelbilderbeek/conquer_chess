@@ -7,6 +7,7 @@
 #include "piece_type.h"
 #include "piece_action.h"
 #include "game_coordinat.h"
+#include "sound_effect.h"
 #include "sound_effect_type.h"
 #include "starting_position_type.h"
 #include "side.h"
@@ -29,6 +30,12 @@ public:
   /// This function will split up the action in smaller atomic actions
   /// @see 'tick' processes the actions
   void add_action(const piece_action& action);
+
+  /// Add a sound effect, i.e. a thing to say for this piece
+  void add_sound_effect(const sound_effect& effect);
+
+  /// Clear all the sound effects, i.e. remove all
+  void clear_sound_effects() noexcept;
 
   /// Get all the piece actions
   const auto& get_actions() const noexcept { return m_actions; }
@@ -60,6 +67,9 @@ public:
 
   /// Get the side this piece is on
   side get_player() const noexcept { return m_player; }
+
+  /// The things this piece wants to say
+  const auto& get_sound_effects() const noexcept { return m_sound_effects; }
 
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }
@@ -105,6 +115,9 @@ private:
 
   /// The side/player this piece belongs to
   side m_player;
+
+  /// The things this piece wants to say
+  std::vector<sound_effect> m_sound_effects;
 
   /// The square the piece is moving to, if any
   std::vector<square> m_target_square;
