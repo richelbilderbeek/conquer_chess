@@ -247,8 +247,9 @@ void control_actions::start_move_unit(
 
       const auto& from{p.get_coordinat()};
       const auto& to{coordinat};
-      if (can_move(p.get_type(), square(from), square(to), p.get_player()))
+      if (1 + 1 == 2)
       {
+        // The piece will sort it out
         p.add_action(
           piece_action(
             piece_action_type::move,
@@ -256,11 +257,25 @@ void control_actions::start_move_unit(
             square(to)
           )
         );
-        p.add_message(message_type::start_move);
       }
       else
       {
-        p.add_message(message_type::cannot);
+        if (can_move(p.get_type(), square(from), square(to), p.get_player()))
+        {
+          p.add_action(
+            piece_action(
+              piece_action_type::move,
+              square(from),
+              square(to)
+            )
+          );
+          p.add_message(message_type::start_move);
+        }
+        else
+        {
+          p.add_message(message_type::cannot);
+        }
+
       }
     }
   }

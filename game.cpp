@@ -309,7 +309,7 @@ std::vector<message> collect_messages(const game& g) noexcept
   std::vector<message> effects;
   for (const auto& piece: pieces)
   {
-    const auto& es{piece.get_sound_effects()};
+    const auto& es{piece.get_messages()};
     std::transform(
       std::begin(es),
       std::end(es),

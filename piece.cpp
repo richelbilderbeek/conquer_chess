@@ -3,6 +3,7 @@
 #include "helper.h"
 #include "piece_type.h"
 #include "square.h"
+#include "message.h"
 
 #include <algorithm>
 #include <cassert>
@@ -32,9 +33,31 @@ piece::piece(
 
 void piece::add_action(const piece_action& action)
 {
+  if (action.get_type() == piece_action_type::move)
+  {
+    if (
+      !can_move(
+        this->get_type(),
+        square(action.get_from()),
+        square(action.get_to()),
+        this->get_player()
+      )
+    )
+    {
+      this->add_message(message_type::cannot);
+      return;
+    }
+    else
+    {
+      this->add_message(message_type::start_move);
+    }
+  }
+
   const std::vector<piece_action> atomic_actions{
     to_atomic(action)
   };
+  // If the first atomic action is an invalid move,
+  // Only keep the actions that are valid
   std::copy_if(
     std::begin(atomic_actions),
     std::end(atomic_actions),
@@ -177,6 +200,44 @@ void piece::set_selected(const bool is_selected) noexcept
 void test_piece()
 {
 #ifndef NDEBUG
+  ////////////////////////////////////////////////////////////////////////////
+  // Member functions
+  ////////////////////////////////////////////////////////////////////////////
+  // piece::add_action
+  {
+    // start_move for a correct move results in a sound
+    {
+      auto piece{get_test_white_knight()};
+      assert(piece.get_current_square() == square("c3"));
+      assert(piece.get_messages().empty());
+      assert(is_idle(piece));
+      piece.add_action(piece_action(piece_action_type::move, square("c3"), square("d5")));
+      piece.tick(delta_t(0.1));
+      assert(!piece.get_actions().empty()); // Yep, let's start moving
+      assert(!piece.get_messages().empty());
+      assert(piece.get_messages().at(0) == message_type::start_move);
+    }
+    // start_move for an invalid move results in a sound
+    {
+      auto piece{get_test_white_knight()};
+      assert(piece.get_current_square() == square("c3"));
+      assert(piece.get_messages().empty());
+      assert(is_idle(piece));
+      piece.add_action(piece_action(piece_action_type::move, square("c3"), square("h8")));
+      piece.tick(delta_t(0.1));
+      assert(piece.get_actions().empty()); // Nope, cannot do that
+      assert(!piece.get_messages().empty());
+      assert(piece.get_messages().at(0) == message_type::cannot);
+    }
+  }
+  // piece::get_messages
+  {
+    auto piece{get_test_white_knight()};
+    assert(piece.get_messages().empty());
+  }
+  ////////////////////////////////////////////////////////////////////////////
+  // Free functions
+  ////////////////////////////////////////////////////////////////////////////
   // can_move, on empty board
   {
     assert(can_move(piece_type::bishop, square("e4"), square("d3"), side::lhs));
@@ -329,7 +390,7 @@ void test_piece()
     std::clog << p.get_current_square();
     assert(p.get_current_square() == square("e3"));
   }
-  #endif // FIX_ISSUE_X_TIMING
+  #endif // FIX_ISSUE_10_TIMING
   // A pawn for the rhs player cannot move right
   {
     piece p(
@@ -340,9 +401,6 @@ void test_piece()
     );
 
     p.add_action(piece_action(piece_action_type::move, square("e7"), square("e5")));
-    //assert(!p.get_actions().empty());
-    //p.tick(delta_t(1.0));
-    //p.tick(delta_t(1.0));
     assert(p.get_actions().empty()); // Actions cleared
     assert(p.get_current_square() == square("e7")); // Piece stays put
   }

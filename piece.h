@@ -69,7 +69,7 @@ public:
   side get_player() const noexcept { return m_player; }
 
   /// The things this piece wants to say
-  const auto& get_sound_effects() const noexcept { return m_messages; }
+  const auto& get_messages() const noexcept { return m_messages; }
 
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }
