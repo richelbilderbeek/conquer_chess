@@ -49,13 +49,7 @@ void control_actions::do_select(
         {
           unselect_all_pieces(g, player_color);
           select(piece); // 2
-          piece.add_sound_effect(
-            sound_effect(
-              message_type::select,
-              piece.get_color(),
-              piece.get_type()
-            )
-          );
+          piece.add_message(message_type::select);
         }
       }
     }
@@ -78,13 +72,7 @@ void control_actions::do_select(
         else
         {
           select(piece); // 5
-          piece.add_sound_effect(
-            sound_effect(
-              message_type::select,
-              piece.get_color(),
-              piece.get_type()
-            )
-          );
+          piece.add_message(message_type::select);
         }
       }
     }
@@ -124,13 +112,7 @@ void control_actions::do_select(
         {
           unselect_all_pieces(g, player_color);
           select(piece); // 2
-          piece.add_sound_effect(
-            sound_effect(
-              message_type::select,
-              piece.get_color(),
-              piece.get_type()
-            )
-          );
+          piece.add_message(message_type::select);
         }
       }
     }
@@ -153,13 +135,7 @@ void control_actions::do_select(
         else
         {
           select(piece); // 5
-          piece.add_sound_effect(
-            sound_effect(
-              message_type::select,
-              piece.get_color(),
-              piece.get_type()
-            )
-          );
+          piece.add_message(message_type::select);
         }
       }
     }
@@ -280,23 +256,11 @@ void control_actions::start_move_unit(
             to
           )
         );
-        p.add_sound_effect(
-          sound_effect(
-            message_type::start_move,
-            p.get_color(),
-            p.get_type()
-          )
-        );
+        p.add_message(message_type::start_move);
       }
       else
       {
-        p.add_sound_effect(
-          sound_effect(
-            message_type::cannot,
-            p.get_color(),
-            p.get_type()
-          )
-        );
+        p.add_message(message_type::cannot);
       }
     }
   }

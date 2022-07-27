@@ -31,11 +31,11 @@ public:
   /// @see 'tick' processes the actions
   void add_action(const piece_action& action);
 
-  /// Add a sound effect, i.e. a thing to say for this piece
-  void add_sound_effect(const sound_effect& effect);
+  /// Add a message, i.e. a thing to say for this piece
+  void add_message(const message_type& message);
 
   /// Clear all the sound effects, i.e. remove all
-  void clear_sound_effects() noexcept;
+  void clear_messages() noexcept;
 
   /// Get all the piece actions
   const auto& get_actions() const noexcept { return m_actions; }
@@ -69,7 +69,7 @@ public:
   side get_player() const noexcept { return m_player; }
 
   /// The things this piece wants to say
-  const auto& get_sound_effects() const noexcept { return m_sound_effects; }
+  const auto& get_sound_effects() const noexcept { return m_messages; }
 
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }
@@ -117,7 +117,7 @@ private:
   side m_player;
 
   /// The things this piece wants to say
-  std::vector<sound_effect> m_sound_effects;
+  std::vector<message_type> m_messages;
 
   /// The square the piece is moving to, if any
   std::vector<square> m_target_square;
@@ -143,7 +143,6 @@ int count_piece_actions(const piece& p);
 
 /// Describe the actions a piece have, e.g. 'idle', or 'moving to (3, 4)'
 std::string describe_actions(const piece& p);
-
 
 /// Get the fraction of the health, where 1.0 denotes full health
 double get_f_health(const piece& p) noexcept;

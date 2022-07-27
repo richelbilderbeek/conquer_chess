@@ -46,9 +46,9 @@ void piece::add_action(const piece_action& action)
   );
 }
 
-void piece::add_sound_effect(const sound_effect& effect)
+void piece::add_message(const message_type& message)
 {
-  m_sound_effects.push_back(effect);
+  m_messages.push_back(message);
 }
 
 bool can_move(
@@ -93,10 +93,10 @@ void clear_actions(piece& p)
   assert(count_piece_actions(p) == 0);
 }
 
-void piece::clear_sound_effects() noexcept
+void piece::clear_messages() noexcept
 {
-  m_sound_effects.clear();
-  assert(m_sound_effects.empty());
+  m_messages.clear();
+  assert(m_messages.empty());
 }
 
 int count_piece_actions(const piece& p)

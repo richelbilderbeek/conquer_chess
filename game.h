@@ -90,7 +90,7 @@ bool can_player_select_piece_at_cursor_pos(
 
 /// Clear the sound effects to be processed,
 /// i.e. resize to zero
-void clear_sound_effects(game& g) noexcept;
+void clear_piece_messages(game& g) noexcept;
 
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick

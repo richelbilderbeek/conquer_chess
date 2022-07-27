@@ -165,7 +165,7 @@ void game_view::play_sound_effects()
   {
     m_game_resources.play(sound_effect);
   }
-  clear_sound_effects(m_game);
+  clear_piece_messages(m_game);
 }
 
 bool game_view::process_events()

@@ -83,7 +83,7 @@ void test_game_functions()
     g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(!get_sound_effects(g).empty());
-    clear_sound_effects(g);
+    clear_piece_messages(g);
     assert(get_sound_effects(g).empty());
   }
   // count_control_actions

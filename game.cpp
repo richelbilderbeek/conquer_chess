@@ -50,10 +50,9 @@ bool can_player_select_piece_at_cursor_pos(
   return !piece.is_selected() && piece.get_color() == player;
 }
 
-void clear_sound_effects(game& g) noexcept
+void clear_piece_messages(game& g) noexcept
 {
-  //g.get_actions().clear_sound_effects();
-  for (auto& p: g.get_pieces()) p.clear_sound_effects();
+  for (auto& p: g.get_pieces()) p.clear_messages();
 }
 
 int count_control_actions(const game& g)
@@ -302,10 +301,18 @@ std::vector<sound_effect> get_sound_effects(const game& g) noexcept
   for (const auto& piece: pieces)
   {
     const auto& es{piece.get_sound_effects()};
-    std::copy(
+    std::transform(
       std::begin(es),
       std::end(es),
-      std::back_inserter(effects)
+      std::back_inserter(effects),
+      [piece](const message_type message)
+      {
+        return sound_effect(
+          message,
+          piece.get_color(),
+          piece.get_type()
+        );
+      }
     );
   }
   return effects;
