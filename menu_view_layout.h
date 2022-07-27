@@ -53,7 +53,7 @@
 class menu_view_layout
 {
 public:
-  menu_view_layout(
+  explicit menu_view_layout(
     const screen_coordinat& window_size = get_default_screen_size(),
     const int margin_width = get_default_margin_width()
   );

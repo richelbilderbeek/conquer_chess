@@ -52,9 +52,9 @@ void test_piece_action()
     const auto d1{game_coordinat(to_coordinat(square("d1")))};
     const auto d2{game_coordinat(to_coordinat(square("d2")))};
     const auto d3{game_coordinat(to_coordinat(square("d3")))};
-    assert(is_atomic(piece_action(piece_action_type::move, d1, d2)));
-    assert(is_atomic(piece_action(piece_action_type::move, d2, d3)));
-    assert(!is_atomic(piece_action(piece_action_type::move, d1, d3)));
+    assert(is_atomic(piece_action(piece_action_type::move, square(d1), square(d2))));
+    assert(is_atomic(piece_action(piece_action_type::move, square(d2), square(d3))));
+    assert(!is_atomic(piece_action(piece_action_type::move, square(d1), square(d3))));
   }
   // to_atomic
   {

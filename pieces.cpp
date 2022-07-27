@@ -86,7 +86,10 @@ const piece& get_piece_at(
     std::find_if(
       std::begin(pieces),
       std::end(pieces),
-      [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
+      [coordinat](const auto& piece)
+      {
+        return piece.get_current_square() == coordinat;
+      }
     )
   };
   assert(there != pieces.end());
@@ -102,7 +105,10 @@ piece& get_piece_at(
     std::find_if(
       std::begin(pieces),
       std::end(pieces),
-      [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
+      [coordinat](const auto& piece)
+      {
+        return piece.get_current_square() == coordinat;
+      }
     )
   };
   assert(there != pieces.end());
@@ -298,7 +304,10 @@ bool is_piece_at(
   const auto iter = std::find_if(
     std::begin(pieces),
     std::end(pieces),
-    [coordinat](const auto& piece) { return piece.get_coordinat() == coordinat; }
+    [coordinat](const auto& piece)
+    {
+      return piece.get_current_square() == coordinat;
+    }
   );
   return iter != std::end(pieces);
 }

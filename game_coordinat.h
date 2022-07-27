@@ -24,7 +24,7 @@
 class game_coordinat
 {
 public:
-  game_coordinat(const double x = 0, const double y = 0);
+  explicit game_coordinat(const double x = 0, const double y = 0);
 
   double get_x() const noexcept { return m_x; }
   double get_y() const noexcept { return m_y; }

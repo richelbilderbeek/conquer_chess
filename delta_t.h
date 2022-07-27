@@ -11,7 +11,7 @@
 class delta_t
 {
 public:
-  delta_t(const double dt);
+  explicit delta_t(const double dt);
 
   double get() const noexcept { return m_delta_t; }
 

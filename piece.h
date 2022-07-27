@@ -19,7 +19,7 @@
 class piece
 {
 public:
-  piece(
+  explicit piece(
     const chess_color color,
     const piece_type type,
     const square& coordinat,

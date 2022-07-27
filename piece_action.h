@@ -17,12 +17,12 @@ class piece_action
 public:
 
   /// Attack a certain location
-  piece_action(
+  explicit piece_action(
     const piece_action_type type,
     const square& to
   );
   /// Move from a square to another
-  piece_action(
+  explicit piece_action(
     const piece_action_type type,
     const square& from,
     const square& to

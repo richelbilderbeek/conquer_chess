@@ -10,9 +10,9 @@
 class square
 {
 public:
-  square(const std::string& pos);
-  square(const game_coordinat& g);
-  square(const int x, const int y);
+  explicit square(const std::string& pos);
+  explicit square(const game_coordinat& g);
+  explicit square(const int x, const int y);
 
   /// Get the position as a string
   const auto& get_pos() const noexcept { return m_pos; }

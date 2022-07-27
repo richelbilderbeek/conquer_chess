@@ -15,7 +15,7 @@
 class game_options
 {
 public:
-  game_options(
+  explicit game_options(
     const screen_coordinat& screen_size,
     const starting_position_type starting_position,
     const game_speed speed,

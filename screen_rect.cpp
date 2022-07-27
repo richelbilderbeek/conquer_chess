@@ -89,7 +89,7 @@ void test_screen_rect()
   {
     const screen_rect a;
     const screen_rect b;
-    const screen_rect c(1, 2);
+    const screen_rect c(screen_coordinat(1, 2), screen_coordinat(3, 4));
     assert(a == b);
     assert(!(a == c));
   }

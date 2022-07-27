@@ -10,7 +10,7 @@
 class message
 {
 public:
-  message(
+  explicit message(
     const message_type set,
     const chess_color c,
     const piece_type pc

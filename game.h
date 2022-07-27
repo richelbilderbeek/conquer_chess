@@ -14,7 +14,7 @@
 class game
 {
 public:
-  game(
+  explicit game(
     const game_options& options = get_default_game_options()
   );
 

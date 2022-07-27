@@ -89,7 +89,7 @@ void test_game_rect()
   {
     const game_rect a;
     const game_rect b;
-    const game_rect c(1, 2);
+    const game_rect c(game_coordinat(1.1, 2.2), game_coordinat(3.3, 4.4));
     assert(a == b);
     assert(!(a == c));
   }

@@ -13,7 +13,7 @@ class log
 {
 public:
   /// @param display_time_secs the time a message will be displayed
-  log(const double display_time_secs);
+  explicit log(const double display_time_secs);
 
   /// Add a message, timestamp will be added
   void add_message(const message& m) noexcept;

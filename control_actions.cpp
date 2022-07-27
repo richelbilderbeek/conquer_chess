@@ -252,8 +252,8 @@ void control_actions::start_move_unit(
         p.add_action(
           piece_action(
             piece_action_type::move,
-            from,
-            to
+            square(from),
+            square(to)
           )
         );
         p.add_message(message_type::start_move);

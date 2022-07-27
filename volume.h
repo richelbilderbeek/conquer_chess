@@ -9,7 +9,7 @@ class volume
 public:
   /// Volume in percents,
   /// i.e. 0 is 0%, 10 is 10%, 100 = 100%
-  volume(const int volume_in_percent);
+  explicit volume(const int volume_in_percent);
 
   /// Get the volume in percents,
   /// i.e. 0 is 0%, 10 is 10%, 100 = 100%

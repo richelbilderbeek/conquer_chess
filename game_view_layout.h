@@ -52,7 +52,7 @@
 class game_view_layout
 {
 public:
-  game_view_layout(
+  explicit game_view_layout(
     const screen_coordinat& window_size = get_default_screen_size(),
     const int margin_width = get_default_margin_width()
   );
