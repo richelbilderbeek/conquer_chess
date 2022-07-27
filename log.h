@@ -19,11 +19,9 @@ public:
   void add_message(const message& m) noexcept;
 
   /// Get the last messages that were emitted at most 'max_elapsed_time_secs'
-  /// seconds ago, as a (possibly) multi-line string
-  /// @param max_elapsed_time_secs the maximum elapsed time (in seconds)
-  ///   since the message was given. E.g. if this is 10 seconds,
-  ///   a message will be displayed that long
-  std::string get_last_messages() const;
+  /// seconds ago, as a (possibly) multi-line string,
+  /// for a specific color
+  std::string get_last_messages(const chess_color color) const;
 
   /// Update, so old messages are removed
   void tick();
@@ -40,5 +38,11 @@ private:
   /// the time a message will be displayed, in seconds
   double m_display_time_secs;
 };
+
+/// Get the log messages for a specific color
+std::string get_last_log_messages(
+  const log& l,
+  const chess_color color
+) noexcept;
 
 #endif // LOG_H

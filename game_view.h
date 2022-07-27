@@ -96,6 +96,12 @@ std::string get_controls_text(
 /// Get the frames per second
 int get_fps(const game_view& v) noexcept;
 
+/// Get the last log messages for a player
+std::string get_last_log_messages(
+  const game_view& v,
+  const side player
+) noexcept;
+
 /// Get the layout
 const game_view_layout& get_layout(const game_view& v) noexcept;
 

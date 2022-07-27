@@ -45,7 +45,7 @@ public:
   auto get_margin_width() const noexcept { return m_margin_width; }
 
   /// How long log messages are displayed
-  double get_message_display_time_secs() const noexcept { return 5.0; }
+  double get_message_display_time_secs() const noexcept { return 100.0; }
 
   /// Controller type of the left player
   auto get_right_controller_type() const noexcept { return m_right_controller_type; }
@@ -126,6 +126,12 @@ controller_type get_left_player_controller(const game_options& options) noexcept
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse
 chess_color get_mouse_user_player_color(const game_options& options);
+
+/// Get the color of a player
+chess_color get_player_color(
+  const game_options& options,
+  const side player
+) noexcept;
 
 /// Get the color of the right player
 chess_color get_right_player_color(const game_options& options) noexcept;

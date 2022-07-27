@@ -22,19 +22,26 @@ void log::add_message(
   );
 }
 
-std::string log::get_last_messages() const
+std::string get_last_log_messages(
+  const log& l,
+  const chess_color color
+) noexcept
+{
+  return l.get_last_messages(color);
+}
+
+std::string log::get_last_messages(const chess_color color) const
 {
   std::stringstream s;
-  std::transform(
-    std::begin(m_timed_messages),
-    std::end(m_timed_messages),
-    std::ostream_iterator<std::string>(s, "\n"),
-    [](const auto& p)
-    {
-      return to_str(p.second);
-    }
-  );
-  return s.str();
+  for (const auto m: m_timed_messages)
+  {
+    if (m.second.get_color() != color) continue;
+    s << m.second << '\n';
+  }
+  std::string t{s.str()};
+  if (t.empty()) return t;
+  t.pop_back(); // Remove newline
+  return t;
 }
 
 void log::tick()

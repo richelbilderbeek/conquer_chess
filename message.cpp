@@ -1,5 +1,6 @@
 #include "message.h"
 
+#include <iostream>
 #include <sstream>
 
 message::message(
@@ -32,4 +33,10 @@ std::string to_str(const message& m) noexcept
       break;
   }
   return s.str();
+}
+
+std::ostream& operator<<(std::ostream& os, const message& m) noexcept
+{
+  os << to_str(m);
+  return os;
 }

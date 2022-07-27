@@ -214,6 +214,12 @@ const piece& get_piece_at(const game& g, const square& coordinat);
 /// will throw if there is no piece
 piece& get_piece_at(game& g, const square& coordinat);
 
+/// Get the color of a player
+chess_color get_player_color(
+  const game& g,
+  const side player
+) noexcept;
+
 /// Get all the selected pieces
 /// @param g a game
 /// @param player the color of the player, which is white for player 1

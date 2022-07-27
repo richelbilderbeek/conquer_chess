@@ -71,6 +71,16 @@ chess_color get_mouse_user_player_color(const game_options& options)
   return get_right_player_color(options);
 }
 
+chess_color get_player_color(
+  const game_options& options,
+  const side player
+) noexcept
+{
+  if (player == side::lhs) return get_left_player_color(options);
+  assert(player == side::rhs);
+  return get_right_player_color(options);
+}
+
 chess_color get_right_player_color(const game_options& options) noexcept
 {
   return get_other_color(options.get_left_player_color());

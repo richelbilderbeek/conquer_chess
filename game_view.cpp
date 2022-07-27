@@ -156,6 +156,17 @@ int get_fps(const game_view& v) noexcept
   return v.get_fps();
 }
 
+std::string get_last_log_messages(
+  const game_view& view,
+  const side player
+) noexcept
+{
+  return get_last_log_messages(
+    view.get_log(),
+    get_player_color(view.get_game(), player)
+  );
+}
+
 const game_view_layout& get_layout(const game_view& v) noexcept
 {
   return get_layout(v.get_game());
@@ -324,17 +335,12 @@ void game_view::show()
   // Show the board: squares, unit paths, pieces, health bars
   show_board(*this);
 
-  // Show the sidebar: controls, units, debug
+  // Show the sidebars: controls (with log), units, debug
   show_sidebar_1(*this);
-
-  // Show the sidebar: controls, units, debug
   show_sidebar_2(*this);
 
   // Show the mouse cursor
   //show_mouse_cursor();
-
-  // Show the log
-  show_log(*this);
 
   // Display all shapes
   m_window.display();
@@ -358,7 +364,12 @@ void show_controls_1(game_view& view)
   sf::Text text;
   text.setFont(view.get_resources().get_font());
   std::stringstream s;
-  text.setString(get_controls_text_1(view));
+  s
+    << get_controls_text_1(view) << '\n' << '\n'
+    << get_last_log_messages(view, side::lhs)
+  ;
+  text.setString(s.str().c_str());
+
   text.setCharacterSize(20);
   text.setPosition(
     layout.get_controls_1().get_tl().get_x(),
@@ -370,10 +381,17 @@ void show_controls_1(game_view& view)
 void show_controls_2(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
+
   sf::Text text;
   text.setFont(view.get_resources().get_font());
+
   std::stringstream s;
-  text.setString(get_controls_text_2(view));
+  s
+    << get_controls_text_2(view) << '\n' << '\n'
+    << get_last_log_messages(view, side::rhs)
+  ;
+  text.setString(s.str().c_str());
+
   text.setCharacterSize(20);
   text.setPosition(
     layout.get_controls_2().get_tl().get_x(),
@@ -505,39 +523,6 @@ void show_layout(game_view& view)
     rectangle.setOutlineColor(sf::Color::White);
     view.get_window().draw(rectangle);
   }
-}
-
-void show_log(game_view& view)
-{
-  const std::string plain_text{
-    view.get_log().get_last_messages()
-  };
-  if (plain_text.empty()) return;
-
-  sf::Text text;
-  text.setString(plain_text.c_str());
-  text.setFont(get_font(view.get_resources()));
-  text.setString(view.get_log().get_last_messages().c_str());
-  text.setStyle(sf::Text::Bold);
-  text.setCharacterSize(16);
-  text.setFillColor(sf::Color::White);
-  text.setOutlineColor(sf::Color::Black);
-
-  const auto board_screen_rect{
-    view.get_game().get_layout().get_board()
-  };
-  const auto log_screen_rect{
-    screen_rect(
-      screen_coordinat(
-        board_screen_rect.get_tl().get_x(),
-        (board_screen_rect.get_tl().get_y() + board_screen_rect.get_br().get_y()) / 2
-      ),
-      board_screen_rect.get_br()
-    )
-  };
-
-  set_text_position(text, log_screen_rect);
-  view.get_window().draw(text);
 }
 
 void show_occupied_squares(game_view& view)

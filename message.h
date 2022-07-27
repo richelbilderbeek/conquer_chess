@@ -5,6 +5,8 @@
 #include "chess_color.h"
 #include "piece_type.h"
 
+#include <iosfwd>
+
 /// Representation of a sound effect
 /// Use 'MESSAGEs::play' to play it
 class message
@@ -26,5 +28,7 @@ public:
 };
 
 std::string to_str(const message& m) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const message& m) noexcept;
 
 #endif // MESSAGE_H

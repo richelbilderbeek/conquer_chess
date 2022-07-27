@@ -287,6 +287,14 @@ const std::vector<piece>& get_pieces(const game& g) noexcept
   return g.get_pieces();
 }
 
+chess_color get_player_color(
+  const game& g,
+  const side player
+) noexcept
+{
+  return get_player_color(g.get_options(), player);
+}
+
 std::vector<piece> get_selected_pieces(
   const game& g,
   const chess_color player
