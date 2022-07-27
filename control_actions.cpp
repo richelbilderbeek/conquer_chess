@@ -49,7 +49,6 @@ void control_actions::do_select(
         {
           unselect_all_pieces(g, player_color);
           select(piece); // 2
-          piece.add_message(message_type::select);
         }
       }
     }
@@ -72,7 +71,6 @@ void control_actions::do_select(
         else
         {
           select(piece); // 5
-          piece.add_message(message_type::select);
         }
       }
     }
@@ -112,7 +110,6 @@ void control_actions::do_select(
         {
           unselect_all_pieces(g, player_color);
           select(piece); // 2
-          piece.add_message(message_type::select);
         }
       }
     }
@@ -135,7 +132,6 @@ void control_actions::do_select(
         else
         {
           select(piece); // 5
-          piece.add_message(message_type::select);
         }
       }
     }
@@ -247,36 +243,13 @@ void control_actions::start_move_unit(
 
       const auto& from{p.get_coordinat()};
       const auto& to{coordinat};
-      if (1 + 1 == 2)
-      {
-        // The piece will sort it out
-        p.add_action(
-          piece_action(
-            piece_action_type::move,
-            square(from),
-            square(to)
-          )
-        );
-      }
-      else
-      {
-        if (can_move(p.get_type(), square(from), square(to), p.get_player()))
-        {
-          p.add_action(
-            piece_action(
-              piece_action_type::move,
-              square(from),
-              square(to)
-            )
-          );
-          p.add_message(message_type::start_move);
-        }
-        else
-        {
-          p.add_message(message_type::cannot);
-        }
-
-      }
+      p.add_action(
+        piece_action(
+          piece_action_type::move,
+          square(from),
+          square(to)
+        )
+      );
     }
   }
   unselect_all_pieces(g, player_color);

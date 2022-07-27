@@ -194,6 +194,10 @@ void select(piece& p) noexcept
 
 void piece::set_selected(const bool is_selected) noexcept
 {
+  if (!m_is_selected && is_selected)
+  {
+    add_message(message_type::select);
+  }
   m_is_selected = is_selected;
 }
 
