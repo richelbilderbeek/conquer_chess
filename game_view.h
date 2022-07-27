@@ -27,7 +27,10 @@ public:
 
   const auto& get_game() const noexcept { return m_game; }
 
-  auto& get_game_resources() noexcept { return m_game_resources; }
+  auto& get_resources() noexcept { return m_game_resources; }
+
+  /// Get the text log, i.e. things pieces have to say
+  const auto& get_log() const noexcept { return m_log; }
 
   auto& get_window() noexcept { return m_window; }
 
@@ -122,6 +125,9 @@ void show_debug_2(game_view& view);
 
 /// Show the layout of the window: board and panels
 void show_layout(game_view& view);
+
+/// Show the log on-screen, i.e. things the pieces say
+void show_log(game_view& view);
 
 /// Show the squares that are occupied on-screen
 /// Throws if this option is turned off

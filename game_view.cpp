@@ -20,7 +20,8 @@
 #include <sstream>
 
 game_view::game_view(const game& game)
-  : m_game{game}
+  : m_game{game},
+    m_log{game.get_options().get_message_display_time_secs()}
 {
   m_game_resources.get_ninja_gods().setVolume(
     static_cast<float>(m_game.get_options().get_volume().get_percentage())
@@ -42,7 +43,7 @@ sf::RectangleShape create_black_square(game_view& view)
 
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  black_square.setTexture(&view.get_game_resources().get_square(chess_color::black));
+  black_square.setTexture(&view.get_resources().get_square(chess_color::black));
   black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   return black_square;
 }
@@ -56,7 +57,7 @@ sf::RectangleShape create_white_square(game_view& view)
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  white_square.setTexture(&view.get_game_resources().get_square(chess_color::white));
+  white_square.setTexture(&view.get_resources().get_square(chess_color::white));
   white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   return white_square;
 }
@@ -80,6 +81,9 @@ void game_view::exec()
   {
     // Keep track of the FPS
     m_fps_clock.tick();
+
+    // Disard old messages
+    m_log.tick();
 
     // Process user input and play game until instructed to exit
     const bool must_quit{process_events()};
@@ -300,7 +304,7 @@ void game_view::process_piece_messages()
 {
   for (const auto& piece_message: collect_messages(m_game))
   {
-    m_log.add_message(m_game.get_time(), piece_message);
+    m_log.add_message(piece_message);
   }
 
   // Play the new sounds to be played
@@ -329,6 +333,9 @@ void game_view::show()
   // Show the mouse cursor
   //show_mouse_cursor();
 
+  // Show the log
+  show_log(*this);
+
   // Display all shapes
   m_window.display();
 }
@@ -349,7 +356,7 @@ void show_controls_1(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
   sf::Text text;
-  text.setFont(view.get_game_resources().get_font());
+  text.setFont(view.get_resources().get_font());
   std::stringstream s;
   text.setString(get_controls_text_1(view));
   text.setCharacterSize(20);
@@ -364,7 +371,7 @@ void show_controls_2(game_view& view)
 {
   const auto& layout = view.get_game().get_layout();
   sf::Text text;
-  text.setFont(view.get_game_resources().get_font());
+  text.setFont(view.get_resources().get_font());
   std::stringstream s;
   text.setString(get_controls_text_2(view));
   text.setCharacterSize(20);
@@ -380,7 +387,7 @@ void show_debug_1(game_view& view)
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
   sf::Text text;
-  text.setFont(view.get_game_resources().get_font());
+  text.setFont(view.get_resources().get_font());
   const piece& closest_piece{
     get_closest_piece_to(game, game.get_player_1_pos())
   };
@@ -427,7 +434,7 @@ void show_debug_2(game_view& view)
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
   sf::Text text;
-  text.setFont(view.get_game_resources().get_font());
+  text.setFont(view.get_resources().get_font());
   const piece& closest_piece{
     get_closest_piece_to(game, game.get_player_2_pos())
   };
@@ -500,6 +507,39 @@ void show_layout(game_view& view)
   }
 }
 
+void show_log(game_view& view)
+{
+  const std::string plain_text{
+    view.get_log().get_last_messages()
+  };
+  if (plain_text.empty()) return;
+
+  sf::Text text;
+  text.setString(plain_text.c_str());
+  text.setFont(get_font(view.get_resources()));
+  text.setString(view.get_log().get_last_messages().c_str());
+  text.setStyle(sf::Text::Bold);
+  text.setCharacterSize(16);
+  text.setFillColor(sf::Color::White);
+  text.setOutlineColor(sf::Color::Black);
+
+  const auto board_screen_rect{
+    view.get_game().get_layout().get_board()
+  };
+  const auto log_screen_rect{
+    screen_rect(
+      screen_coordinat(
+        board_screen_rect.get_tl().get_x(),
+        (board_screen_rect.get_tl().get_y() + board_screen_rect.get_br().get_y()) / 2
+      ),
+      board_screen_rect.get_br()
+    )
+  };
+
+  set_text_position(text, log_screen_rect);
+  view.get_window().draw(text);
+}
+
 void show_occupied_squares(game_view& view)
 {
   assert(get_options(view).do_show_occupied());
@@ -535,7 +575,7 @@ void show_pieces(game_view& view)
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(0.9 * square_width, 0.9 * square_height));
     sprite.setTexture(
-      &view.get_game_resources().get_piece(
+      &view.get_resources().get_piece(
         piece.get_color(),
         piece.get_type()
       )
@@ -819,7 +859,7 @@ void show_unit_sprites_1(game_view& view)
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(square_width, square_height));
     sprite.setTexture(
-      &view.get_game_resources().get_piece_portrait(
+      &view.get_resources().get_piece_portrait(
         piece.get_color(),
         piece.get_type()
       )
@@ -832,7 +872,7 @@ void show_unit_sprites_1(game_view& view)
     view.get_window().draw(sprite);
     // text
     sf::Text text;
-    text.setFont(view.get_game_resources().get_font());
+    text.setFont(view.get_resources().get_font());
     std::stringstream s;
 
     s << piece.get_type() << ": "
@@ -868,7 +908,7 @@ void show_unit_sprites_2(game_view& view)
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(square_width, square_height));
     sprite.setTexture(
-      &view.get_game_resources().get_piece_portrait(
+      &view.get_resources().get_piece_portrait(
         piece.get_color(),
         piece.get_type()
       )
@@ -881,7 +921,7 @@ void show_unit_sprites_2(game_view& view)
     view.get_window().draw(sprite);
     // text
     sf::Text text;
-    text.setFont(view.get_game_resources().get_font());
+    text.setFont(view.get_resources().get_font());
     std::stringstream s;
 
     s << piece.get_type() << ": "

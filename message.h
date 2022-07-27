@@ -25,4 +25,6 @@ public:
   piece_type m_piece_type;
 };
 
+std::string to_str(const message& m) noexcept;
+
 #endif // MESSAGE_H
