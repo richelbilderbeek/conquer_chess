@@ -1,10 +1,10 @@
-#include "sound_effect.h"
+#include "message.h"
 
-sound_effect::sound_effect(
+message::message(
   const message_type set,
   const chess_color c,
   const piece_type pc
-) : m_sound_effect_type{set},
+) : m_message_type{set},
     m_chess_color{c},
     m_piece_type{pc}
 {

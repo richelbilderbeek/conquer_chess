@@ -7,7 +7,7 @@
 #include "piece_type.h"
 #include "textures.h"
 #include "sound_effects.h"
-#include "sound_effect.h"
+#include "message.h"
 
 /// The raw game resources
 class game_resources
@@ -40,7 +40,7 @@ public:
 
   /// Play a sound effect
   void play(
-    const sound_effect& effect
+    const message& effect
   );
 
   textures& get_textures() noexcept { return m_textures; }

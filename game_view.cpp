@@ -78,6 +78,9 @@ void game_view::exec()
   );
   while (m_window.isOpen())
   {
+    // Keep track of the FPS
+    m_fps_clock.tick();
+
     // Process user input and play game until instructed to exit
     const bool must_quit{process_events()};
     if (must_quit) return;
@@ -85,11 +88,11 @@ void game_view::exec()
     // Do a tick
     m_game.tick(to_delta_t(m_game.get_options().get_game_speed()));
 
+    // Read the pieces' messages and play their sounds
+    process_piece_messages();
+
     // Show the new state
     show();
-
-    // Play the new sounds to be played
-    play_sound_effects();
   }
 }
 
@@ -144,6 +147,11 @@ std::string get_controls_text(
   return s.str();
 }
 
+int get_fps(const game_view& v) noexcept
+{
+  return v.get_fps();
+}
+
 const game_view_layout& get_layout(const game_view& v) noexcept
 {
   return get_layout(v.get_game());
@@ -159,13 +167,17 @@ const std::vector<piece>& get_pieces(const game_view& v) noexcept
   return get_pieces(v.get_game());
 }
 
-void game_view::play_sound_effects()
+void game_view::play_pieces_sound_effects()
 {
-  for (const auto& sound_effect: get_sound_effects(m_game))
+  for (const auto& sound_effect: collect_messages(m_game))
   {
     m_game_resources.play(sound_effect);
   }
-  clear_piece_messages(m_game);
+}
+
+const delta_t& get_time(const game_view& v) noexcept
+{
+  return get_time(v.get_game());
 }
 
 bool game_view::process_events()
@@ -284,6 +296,19 @@ bool game_view::process_events()
   return false; // if no events proceed with tick
 }
 
+void game_view::process_piece_messages()
+{
+  for (const auto& piece_message: collect_messages(m_game))
+  {
+    m_log.add_message(m_game.get_time(), piece_message);
+  }
+
+  // Play the new sounds to be played
+  play_pieces_sound_effects();
+
+  clear_piece_messages(m_game);
+}
+
 void game_view::show()
 {
   // Start drawing the new frame, by clearing the screen
@@ -379,6 +404,14 @@ void show_debug_1(game_view& view)
     << "Number of selected units: " << count_selected_units(game, color) << '\n'
     << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
   ;
+
+  // Specific things
+  s
+    << "Time: " << get_time(view) << '\n'
+    << "FPS: " << get_fps(view) << '\n'
+  ;
+
+
 
   text.setString(s.str());
   text.setCharacterSize(20);

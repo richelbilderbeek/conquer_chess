@@ -7,7 +7,7 @@
 #include "piece_type.h"
 #include "piece_action.h"
 #include "game_coordinat.h"
-#include "sound_effect.h"
+#include "message.h"
 #include "message_type.h"
 #include "starting_position_type.h"
 #include "side.h"

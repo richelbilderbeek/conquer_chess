@@ -19,7 +19,8 @@ game::game(
     m_player_1_pos{0.5, 4.5},
     m_player_2_pos{7.5, 4.5},
     m_options{options},
-    m_pieces{get_starting_pieces(options)}
+    m_pieces{get_starting_pieces(options)},
+    m_t{0.0}
 {
 
 }
@@ -294,10 +295,10 @@ std::vector<piece> get_selected_pieces(
   return get_selected_pieces(g.get_pieces(), player);
 }
 
-std::vector<sound_effect> get_sound_effects(const game& g) noexcept
+std::vector<message> collect_messages(const game& g) noexcept
 {
   const auto& pieces{g.get_pieces()};
-  std::vector<sound_effect> effects;
+  std::vector<message> effects;
   for (const auto& piece: pieces)
   {
     const auto& es{piece.get_sound_effects()};
@@ -305,10 +306,10 @@ std::vector<sound_effect> get_sound_effects(const game& g) noexcept
       std::begin(es),
       std::end(es),
       std::back_inserter(effects),
-      [piece](const message_type message)
+      [piece](const message_type type)
       {
-        return sound_effect(
-          message,
+        return message(
+          type,
           piece.get_color(),
           piece.get_type()
         );
@@ -326,6 +327,11 @@ const piece& get_piece_at(const game& g, const square& coordinat)
 piece& get_piece_at(game& g, const square& coordinat)
 {
   return get_piece_at(g.get_pieces(), coordinat);
+}
+
+const delta_t& get_time(const game& g) noexcept
+{
+  return g.get_time();
 }
 
 bool has_selected_pieces(const game& g, const chess_color player)
@@ -387,6 +393,9 @@ void game::tick(const delta_t& dt)
 {
   m_control_actions.process(*this, dt);
   for (auto& p: m_pieces) p.tick(dt);
+
+  // Keep track of the in-game time
+  m_t += dt;
 }
 
 void unselect_all_pieces(

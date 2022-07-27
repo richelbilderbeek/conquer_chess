@@ -52,10 +52,10 @@ sound_effects::sound_effects()
   }
 }
 
-void sound_effects::play(const sound_effect& effect)
+void sound_effects::play(const message& effect)
 {
   const auto piece_type{effect.get_piece_type()};
-  switch (effect.get_sound_effect_type())
+  switch (effect.get_message_type())
   {
     case message_type::cannot:
     {

@@ -7,6 +7,7 @@
 #include "game_view_layout.h"
 #include "helper.h"
 #include "id.h"
+#include "fps_clock.h"
 #include "menu_view.h"
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
@@ -27,6 +28,7 @@ void test()
   test_control_actions();
   test_controller_type();
   test_delta_t();
+  test_fps_clock();
   test_game();
   test_game_coordinat();
   test_game_options();

@@ -6,7 +6,7 @@
 #include "game_options.h"
 #include "game_view_layout.h"
 #include "pieces.h"
-#include "sound_effect.h"
+#include "message.h"
 #include <vector>
 
 /// Contains the game logic.
@@ -57,6 +57,9 @@ public:
   /// Get all the pieces
   const auto& get_pieces() const noexcept { return m_pieces; }
 
+  /// Get the in-game time
+  const auto& get_time() const noexcept { return m_t; }
+
   /// Go to the next frame
   void tick(const delta_t& dt = delta_t(1.0));
 
@@ -79,6 +82,9 @@ private:
   /// All pieces in the game
   std::vector<piece> m_pieces;
 
+  /// The time
+  delta_t m_t;
+
   friend void test_game();
 };
 
@@ -91,6 +97,9 @@ bool can_player_select_piece_at_cursor_pos(
 /// Clear the sound effects to be processed,
 /// i.e. resize to zero
 void clear_piece_messages(game& g) noexcept;
+
+/// Get all the sound effects to be processed
+std::vector<message> collect_messages(const game& g) noexcept;
 
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick
@@ -214,14 +223,14 @@ std::vector<piece> get_selected_pieces(
   const chess_color player
 );
 
-/// Get all the sound effects to be processed
-std::vector<sound_effect> get_sound_effects(const game& g) noexcept;
-
 /// Get all the pieces
 std::vector<piece>& get_pieces(game& g) noexcept;
 
 /// Get all the pieces
 const std::vector<piece>& get_pieces(const game& g) noexcept;
+
+/// Get the time in the game
+const delta_t& get_time(const game& g) noexcept;
 
 /// See if there is at least 1 piece selected
 /// @param g a game

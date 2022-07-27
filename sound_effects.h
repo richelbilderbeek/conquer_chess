@@ -6,7 +6,7 @@
 #include <SFML/Audio.hpp>
 #include "chess_color.h"
 #include "piece_type.h"
-#include "sound_effect.h"
+#include "message.h"
 
 /// Raw sound effects
 class sound_effects
@@ -15,7 +15,7 @@ public:
   sound_effects();
 
   /// Play a sound effect
-  void play(const sound_effect& effect);
+  void play(const message& effect);
 
   /// Play the 'wooosh' effect
   void play_hide() noexcept;

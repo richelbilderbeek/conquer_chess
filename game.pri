@@ -7,6 +7,7 @@ HEADERS += \
     $$PWD/control_actions.h \
     $$PWD/controller_type.h \
     $$PWD/delta_t.h \
+    $$PWD/fps_clock.h \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
     $$PWD/game_options.h \
@@ -17,8 +18,10 @@ HEADERS += \
     $$PWD/helper.h \
     $$PWD/id.h \
     $$PWD/layout.h \
+    $$PWD/log.h \
     $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
+    $$PWD/message.h \
     $$PWD/message_type.h \
     $$PWD/options_view_item.h \
     $$PWD/options_view_layout.h \
@@ -30,7 +33,6 @@ HEADERS += \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
-    $$PWD/sound_effect.h \
     $$PWD/sound_effects.h \
     $$PWD/square.h \
     $$PWD/starting_position_type.h \
@@ -46,6 +48,7 @@ SOURCES += \
     $$PWD/control_actions.cpp \
     $$PWD/controller_type.cpp \
     $$PWD/delta_t.cpp \
+    $$PWD/fps_clock.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_options.cpp \
@@ -56,8 +59,10 @@ SOURCES += \
     $$PWD/helper.cpp \
     $$PWD/id.cpp \
     $$PWD/layout.cpp \
+    $$PWD/log.cpp \
     $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \
+    $$PWD/message.cpp \
     $$PWD/message_type.cpp \
     $$PWD/options_view_item.cpp \
     $$PWD/options_view_layout.cpp \
@@ -69,7 +74,6 @@ SOURCES += \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \
-    $$PWD/sound_effect.cpp \
     $$PWD/sound_effects.cpp \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \

@@ -88,7 +88,7 @@ sf::Texture& get_title(game_resources& r) noexcept
 }
 
 void game_resources::play(
-  const sound_effect& effect
+  const message& effect
 )
 {
   m_sound_effects.play(effect);

@@ -6,7 +6,7 @@
 #include "chess_color.h"
 #include "control_action.h"
 #include "piece_action.h"
-#include "sound_effect.h"
+#include "message.h"
 
 #include <vector>
 

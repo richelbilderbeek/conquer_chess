@@ -1,28 +1,28 @@
-#ifndef SOUND_EFFECT_H
-#define SOUND_EFFECT_H
+#ifndef MESSAGE_H
+#define MESSAGE_H
 
 #include "message_type.h"
 #include "chess_color.h"
 #include "piece_type.h"
 
 /// Representation of a sound effect
-/// Use 'sound_effects::play' to play it
-class sound_effect
+/// Use 'MESSAGEs::play' to play it
+class message
 {
 public:
-  sound_effect(
+  message(
     const message_type set,
     const chess_color c,
     const piece_type pc
   );
-  auto get_sound_effect_type() const noexcept { return m_sound_effect_type; }
+  auto get_message_type() const noexcept { return m_message_type; }
   auto get_color() const noexcept { return m_chess_color; }
   auto get_piece_type() const noexcept { return m_piece_type; }
   private:
 
-  message_type m_sound_effect_type;
+  message_type m_message_type;
   chess_color m_chess_color;
   piece_type m_piece_type;
 };
 
-#endif // SOUND_EFFECT_H
+#endif // MESSAGE_H

@@ -5,6 +5,8 @@
 
 #include "ccfwd.h"
 #include "game.h"
+#include "fps_clock.h"
+#include "log.h"
 #include "game_resources.h"
 #include "game_view_layout.h"
 #include <SFML/Graphics.hpp>
@@ -14,10 +16,12 @@
 class game_view
 {
 public:
-  game_view(const game& game = get_default_game());
+  explicit game_view(const game& game = get_default_game());
 
   /// Run the game, until the user quits
   void exec();
+
+  int get_fps() const noexcept { return m_fps_clock.get_fps(); }
 
   auto& get_game() noexcept { return m_game; }
 
@@ -29,21 +33,30 @@ public:
 
 private:
 
+  /// The FPS clock
+  fps_clock m_fps_clock;
+
   /// The game logic
   game m_game;
 
   /// The resources (images, sounds, etc.) of the game
   game_resources m_game_resources;
 
+  /// The text log
+  log m_log;
+
   /// The window to draw to
   sf::RenderWindow m_window;
 
   /// Play the new sound effects
-  void play_sound_effects();
+  void play_pieces_sound_effects();
 
   /// Process all events
   /// @return if the user wants to quit
   bool process_events();
+
+  /// Read the pieces' messages and play their sounds
+  void process_piece_messages();
 
   /// Show the game on-screen
   void show();
@@ -77,6 +90,9 @@ std::string get_controls_text(
   const controller_type controller
 );
 
+/// Get the frames per second
+int get_fps(const game_view& v) noexcept;
+
 /// Get the layout
 const game_view_layout& get_layout(const game_view& v) noexcept;
 
@@ -85,6 +101,9 @@ const game_options& get_options(const game_view& v) noexcept;
 
 /// Get the pieces
 const std::vector<piece>& get_pieces(const game_view& v) noexcept;
+
+/// Get the time in the game
+const delta_t& get_time(const game_view& v) noexcept;
 
 /// Show the board: squares, unit paths, pieces, health bars
 void show_board(game_view& view);

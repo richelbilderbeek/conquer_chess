@@ -23,7 +23,7 @@ class piece;
 class screen_coordinat;
 class screen_rect;
 class square;
-class sound_effect;
+class message;
 class sound_effects;
 class textures;
 class volume;
