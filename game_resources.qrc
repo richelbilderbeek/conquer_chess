@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
+        <file>resources/attacking_high.ogg</file>
+        <file>resources/attacking_low.ogg</file>
+        <file>resources/attacking_mid.ogg</file>
         <file>resources/faring_into_battle.ogg</file>
         <file>resources/heu_high.ogg</file>
         <file>resources/heu_low.ogg</file>
