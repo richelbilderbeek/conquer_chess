@@ -412,11 +412,13 @@ void set_keyboard_player_pos(
 
 void game::tick(const delta_t& dt)
 {
-
+  // Convert control_actions to piece_actions instantaneous
   m_control_actions.process(*this);
+
+  // Do those piece_actions
   for (auto& p: m_pieces) p.tick(dt, get_occupied_squares(*this));
 
-  // Keep track of the in-game time
+  // Keep track of the time
   m_t += dt;
 }
 

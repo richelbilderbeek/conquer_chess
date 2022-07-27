@@ -16,6 +16,9 @@
 ///    possibly converted to piece_actions
 ///  * The piece_actions are ongoing piece_actions
 ///    e.g. move from e2 to e3, then from e3 to e4
+/// The control_actions processes user actions
+/// and passes the into the pieces it concerns, as 'piece_actions'.
+/// There, the pieces take over.
 class control_actions
 {
 public:
@@ -48,7 +51,6 @@ private:
   );
 
   void process_control_actions(game& g);
-  //void process_piece_actions(game& g, const delta_t& dt);
 
   /// Process an M or right-mouse-button down
   void start_move_unit(
@@ -64,8 +66,5 @@ int count_control_actions(const control_actions& a);
 
 /// Count the total number of piece actions to be done by the game
 int count_piece_actions(const control_actions& a);
-
-/// Get all the sound effects to be processed
-//const std::vector<sound_effect>& get_sound_effects(const control_actions& a) noexcept;
 
 #endif // ACTIONS_H

@@ -145,7 +145,6 @@ void control_actions::do_select(
 void control_actions::process(game& g)
 {
   process_control_actions(g);
-  //process_piece_actions(g, dt);
 }
 
 void control_actions::process_control_actions(game& g)
@@ -216,16 +215,6 @@ void control_actions::process_control_actions(game& g)
   }
   m_control_actions = std::vector<control_action>();
 }
-
-/*
-void control_actions::process_piece_actions(game& g, const delta_t& dt)
-{
-  for (auto& p: g.get_pieces())
-  {
-    p.tick(dt);
-  }
-}
-*/
 
 void control_actions::start_move_unit(
   game& g,
