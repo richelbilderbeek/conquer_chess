@@ -51,7 +51,7 @@ void control_actions::do_select(
           select(piece); // 2
           piece.add_sound_effect(
             sound_effect(
-              sound_effect_type::select,
+              message_type::select,
               piece.get_color(),
               piece.get_type()
             )
@@ -80,7 +80,7 @@ void control_actions::do_select(
           select(piece); // 5
           piece.add_sound_effect(
             sound_effect(
-              sound_effect_type::select,
+              message_type::select,
               piece.get_color(),
               piece.get_type()
             )
@@ -126,7 +126,7 @@ void control_actions::do_select(
           select(piece); // 2
           piece.add_sound_effect(
             sound_effect(
-              sound_effect_type::select,
+              message_type::select,
               piece.get_color(),
               piece.get_type()
             )
@@ -155,7 +155,7 @@ void control_actions::do_select(
           select(piece); // 5
           piece.add_sound_effect(
             sound_effect(
-              sound_effect_type::select,
+              message_type::select,
               piece.get_color(),
               piece.get_type()
             )
@@ -282,7 +282,7 @@ void control_actions::start_move_unit(
         );
         p.add_sound_effect(
           sound_effect(
-            sound_effect_type::start_move,
+            message_type::start_move,
             p.get_color(),
             p.get_type()
           )
@@ -292,7 +292,7 @@ void control_actions::start_move_unit(
       {
         p.add_sound_effect(
           sound_effect(
-            sound_effect_type::cannot,
+            message_type::cannot,
             p.get_color(),
             p.get_type()
           )

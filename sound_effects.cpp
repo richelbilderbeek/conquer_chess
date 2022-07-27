@@ -57,7 +57,7 @@ void sound_effects::play(const sound_effect& effect)
   const auto piece_type{effect.get_piece_type()};
   switch (effect.get_sound_effect_type())
   {
-    case sound_effect_type::cannot:
+    case message_type::cannot:
     {
       switch (piece_type)
       {
@@ -74,7 +74,7 @@ void sound_effects::play(const sound_effect& effect)
       }
       break;
     }
-    case sound_effect_type::select:
+    case message_type::select:
     {
       switch (piece_type)
       {
@@ -91,7 +91,7 @@ void sound_effects::play(const sound_effect& effect)
       }
       break;
     }
-    case sound_effect_type::start_move:
+    case message_type::start_move:
     {
       switch (piece_type)
       {
@@ -108,7 +108,7 @@ void sound_effects::play(const sound_effect& effect)
       }
       break;
     }
-    case sound_effect_type::start_attack:
+    case message_type::start_attack:
     {
       switch (piece_type)
       {

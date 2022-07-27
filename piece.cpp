@@ -44,8 +44,6 @@ void piece::add_action(const piece_action& action)
       return can_move(this->get_type(), a.get_from(), a.get_to(), this->get_player());
     }
   );
-  //assert(is_atomic(action));
-  //m_actions.push_back(action);
 }
 
 void piece::add_sound_effect(const sound_effect& effect)

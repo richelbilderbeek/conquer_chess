@@ -19,6 +19,7 @@ HEADERS += \
     $$PWD/layout.h \
     $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
+    $$PWD/message_type.h \
     $$PWD/options_view_item.h \
     $$PWD/options_view_layout.h \
     $$PWD/piece.h \
@@ -30,7 +31,6 @@ HEADERS += \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
     $$PWD/sound_effect.h \
-    $$PWD/sound_effect_type.h \
     $$PWD/sound_effects.h \
     $$PWD/square.h \
     $$PWD/starting_position_type.h \
@@ -58,6 +58,7 @@ SOURCES += \
     $$PWD/layout.cpp \
     $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \
+    $$PWD/message_type.cpp \
     $$PWD/options_view_item.cpp \
     $$PWD/options_view_layout.cpp \
     $$PWD/piece.cpp \
@@ -69,7 +70,6 @@ SOURCES += \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \
     $$PWD/sound_effect.cpp \
-    $$PWD/sound_effect_type.cpp \
     $$PWD/sound_effects.cpp \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \

@@ -1,7 +1,7 @@
 #ifndef SOUND_EFFECT_H
 #define SOUND_EFFECT_H
 
-#include "sound_effect_type.h"
+#include "message_type.h"
 #include "chess_color.h"
 #include "piece_type.h"
 
@@ -11,7 +11,7 @@ class sound_effect
 {
 public:
   sound_effect(
-    const sound_effect_type set,
+    const message_type set,
     const chess_color c,
     const piece_type pc
   );
@@ -20,7 +20,7 @@ public:
   auto get_piece_type() const noexcept { return m_piece_type; }
   private:
 
-  sound_effect_type m_sound_effect_type;
+  message_type m_sound_effect_type;
   chess_color m_chess_color;
   piece_type m_piece_type;
 };

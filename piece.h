@@ -8,7 +8,7 @@
 #include "piece_action.h"
 #include "game_coordinat.h"
 #include "sound_effect.h"
-#include "sound_effect_type.h"
+#include "message_type.h"
 #include "starting_position_type.h"
 #include "side.h"
 
