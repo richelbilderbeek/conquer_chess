@@ -17,6 +17,8 @@ See [FAQ](FAQ.md)
 
 ## Screenshots
 
+![](screenshots/20220727_1.png)
+
 ![](screenshots/20220724_2.png)
 
 ![](screenshots/20220724_1.png)
