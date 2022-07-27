@@ -8,6 +8,9 @@
 sound_effects::sound_effects()
 {
   const std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> v = {
+    std::make_tuple(std::ref(m_attacking_high), std::ref(m_attacking_high_buffer), "attacking_high.ogg"),
+    std::make_tuple(std::ref(m_attacking_low), std::ref(m_attacking_low_buffer), "attacking_low.ogg"),
+    std::make_tuple(std::ref(m_attacking_mid), std::ref(m_attacking_mid_buffer), "attacking_mid.ogg"),
     std::make_tuple(std::ref(m_faring_into_battle), std::ref(m_faring_into_battle_buffer), "faring_into_battle.ogg"),
     std::make_tuple(std::ref(m_heu_high), std::ref(m_heu_high_buffer), "heu_high.ogg"),
     std::make_tuple(std::ref(m_heu_low), std::ref(m_heu_low_buffer), "heu_low.ogg"),
@@ -112,15 +115,15 @@ void sound_effects::play(const message& effect)
     {
       switch (piece_type)
       {
-        case piece_type::bishop: m_hide.play(); break;
-        case piece_type::king: m_hide.play(); break;
-        case piece_type::knight: m_hide.play(); break;
-        case piece_type::pawn: m_hide.play(); break;
-        case piece_type::queen: m_hide.play(); break;
+        case piece_type::bishop: m_attacking_high.play(); break;
+        case piece_type::king: m_attacking_mid.play(); break;
+        case piece_type::knight: m_attacking_mid.play(); break;
+        case piece_type::pawn: m_attacking_low.play(); break;
+        case piece_type::queen: m_attacking_high.play(); break;
         default:
         case piece_type::rook:
           assert(piece_type == piece_type::rook);
-          m_hide.play();
+          m_attacking_low.play();
           break;
       }
       break;

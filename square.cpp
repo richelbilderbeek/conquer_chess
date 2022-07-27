@@ -38,6 +38,13 @@ square::square(const int x, const int y)
   assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
 }
 
+bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept
+{
+  return are_on_same_diagonal(a, b)
+    && std::abs(static_cast<int>(a.get_pos()[0] - b.get_pos()[0])) == 1
+  ;
+}
+
 bool are_on_same_diagonal(const square& a, const square& b) noexcept
 {
   return std::abs(static_cast<int>(a.get_pos()[0] - b.get_pos()[0]))

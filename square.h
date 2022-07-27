@@ -34,6 +34,9 @@ private:
   std::string m_pos;
 };
 
+/// Are the squares adjacent on the same diagonal, e.g. d1 and e2
+bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept;
+
 /// Are the squares on the same diagonal, e.g. d1 and a4
 bool are_on_same_diagonal(const square& a, const square& b) noexcept;
 

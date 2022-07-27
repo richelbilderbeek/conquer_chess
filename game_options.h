@@ -45,7 +45,7 @@ public:
   auto get_margin_width() const noexcept { return m_margin_width; }
 
   /// How long log messages are displayed
-  double get_message_display_time_secs() const noexcept { return 100.0; }
+  double get_message_display_time_secs() const noexcept { return 5.0; }
 
   /// Controller type of the left player
   auto get_right_controller_type() const noexcept { return m_right_controller_type; }

@@ -6,19 +6,11 @@
 
 piece_action::piece_action(
   const piece_action_type type,
-  const square& to
-) : m_from{to}, m_type{type}, m_to{to}
-{
-  assert(type == piece_action_type::attack);
-}
-
-piece_action::piece_action(
-  const piece_action_type type,
   const square& from,
   const square& to
 ) : m_from{from}, m_type{type}, m_to{to}
 {
-  assert(type == piece_action_type::move);
+  // m_from can be m_to if a piece needs to move back
 }
 
 std::string describe_action(const piece_action& p)
@@ -44,7 +36,7 @@ void test_piece_action()
 #ifndef NDEBUG
   // describe_action
   {
-    const piece_action a(piece_action_type::attack, square("a1"));
+    const piece_action a(piece_action_type::attack, square("d1"), square("d8"));
     assert(!describe_action(piece_action(a)).empty());
   }
   // is_atomic
@@ -61,18 +53,18 @@ void test_piece_action()
     assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e3"))).size() == 1);
     assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e4"))).size() == 2);
     assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e5"))).size() == 3);
-    assert(to_atomic(piece_action(piece_action_type::attack, square("e7"))).size() == 1);
+    assert(to_atomic(piece_action(piece_action_type::attack, square("e7"), square("e6"))).size() == 1);
   }
   // to_str
   {
-    const piece_action a(piece_action_type::attack, square("e3"));
+    const piece_action a(piece_action_type::attack, square("e2"), square("e3"));
     assert(!to_str(piece_action(a)).empty());
     const piece_action b(piece_action_type::move, square("e2"), square("e4"));
     assert(!to_str(piece_action(b)).empty());
   }
   // operator<<
   {
-    const piece_action a(piece_action_type::attack, square("a1"));
+    const piece_action a(piece_action_type::attack, square("a1"), square("a8"));
     std::stringstream s;
     s << a;
     assert(!s.str().empty());
@@ -80,9 +72,9 @@ void test_piece_action()
   // operator==
   {
     // Attack
-    const piece_action a(piece_action_type::attack, square("a1"));
-    const piece_action b(piece_action_type::attack, square("a1"));
-    const piece_action c(piece_action_type::attack, square("a2"));
+    const piece_action a(piece_action_type::attack, square("a1"), square("a3"));
+    const piece_action b(piece_action_type::attack, square("a1"), square("a3"));
+    const piece_action c(piece_action_type::attack, square("a2"), square("a3"));
     assert(a == b);
     assert(!(a == c));
     // Move
@@ -97,36 +89,37 @@ void test_piece_action()
 
 std::vector<piece_action> to_atomic(const piece_action& a)
 {
+  assert(a.get_type() == piece_action_type::move
+    || a.get_type() == piece_action_type::attack
+  );
   std::vector<piece_action> atomic_actions;
-  if (a.get_type() == piece_action_type::attack)
+  const std::vector<square> squares{
+    get_intermediate_squares(
+      a.get_from(),
+      a.get_to()
+    )
+  };
+  const int n_squares{static_cast<int>(squares.size())};
+  assert(n_squares >= 2);
+  atomic_actions.reserve(n_squares - 1);
+  for (int i{1}; i != n_squares; ++i)
   {
-    atomic_actions.push_back(a);
-  }
-  else
-  {
-    assert(a.get_type() == piece_action_type::move);
-    const std::vector<square> squares{
-      get_intermediate_squares(
-        a.get_from(),
-        a.get_to()
+    assert(i - 1 >= 0);
+    assert(i < static_cast<int>(squares.size()));
+    atomic_actions.push_back(
+      piece_action(
+        piece_action_type::move,
+        squares[i - 1],
+        squares[i]
       )
-    };
-    const int n_squares{static_cast<int>(squares.size())};
-    assert(n_squares >= 2);
-    atomic_actions.reserve(n_squares - 1);
-    for (int i{1}; i != n_squares; ++i)
-    {
-      assert(i - 1 >= 0);
-      assert(i < static_cast<int>(squares.size()));
-      atomic_actions.push_back(
-        piece_action(
-          piece_action_type::move,
-          squares[i - 1],
-          squares[i]
-        )
-      );
-    }
+    );
   }
+  // The move type could have been an attack
+  atomic_actions.back() = piece_action(
+    a.get_type(),
+    atomic_actions.back().get_from(),
+    atomic_actions.back().get_to()
+  );
   return atomic_actions;
 }
 

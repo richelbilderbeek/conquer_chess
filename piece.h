@@ -130,6 +130,15 @@ private:
   piece_type m_type;
 };
 
+/// Can a piece attack from 'from' to 'to'?
+/// This function assumes the board is empty
+bool can_attack(
+  const piece_type& p,
+  const square& from,
+  const square& to,
+  const side player
+);
+
 /// Can a piece move from 'from' to 'to'?
 /// This function assumes the board is empty
 bool can_move(

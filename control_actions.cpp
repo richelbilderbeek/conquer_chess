@@ -153,7 +153,11 @@ void control_actions::process_control_actions(game& g)
   {
     if (action.get_type() == control_action_type::press_attack)
     {
-      // TODO
+      start_attack(
+        g,
+        get_keyboard_player_pos(g),
+        get_keyboard_user_player_color(get_options(g))
+      );
     }
     else if (action.get_type() == control_action_type::press_down)
     {
@@ -214,6 +218,38 @@ void control_actions::process_control_actions(game& g)
     }
   }
   m_control_actions = std::vector<control_action>();
+}
+
+void control_actions::start_attack(
+  game& g,
+  const game_coordinat& coordinat,
+  const chess_color player_color
+)
+{
+  if (count_selected_units(g, player_color) == 0) return;
+
+  for (auto& p: g.get_pieces())
+  {
+    if (p.is_selected() && p.get_color() == player_color)
+    {
+      const auto& from{p.get_coordinat()};
+      const auto& to{coordinat};
+      if (from != to)
+      {
+        // No shift, so all current actions are void
+        clear_actions(p);
+
+        p.add_action(
+          piece_action(
+            piece_action_type::attack,
+            square(from),
+            square(to)
+          )
+        );
+      }
+    }
+  }
+  unselect_all_pieces(g, player_color);
 }
 
 void control_actions::start_move_unit(

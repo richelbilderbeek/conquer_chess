@@ -52,6 +52,26 @@ void piece::add_action(const piece_action& action)
       this->add_message(message_type::start_move);
     }
   }
+  else
+  {
+    assert(action.get_type() == piece_action_type::attack);
+    if (
+      !can_attack(
+        this->get_type(),
+        square(action.get_from()),
+        square(action.get_to()),
+        this->get_player()
+      )
+    )
+    {
+      this->add_message(message_type::cannot);
+      return;
+    }
+    else
+    {
+      this->add_message(message_type::start_attack);
+    }
+  }
 
   const std::vector<piece_action> atomic_actions{
     to_atomic(action)
@@ -64,7 +84,15 @@ void piece::add_action(const piece_action& action)
     std::back_inserter(m_actions),
     [this](const piece_action& a)
     {
-      return can_move(this->get_type(), a.get_from(), a.get_to(), this->get_player());
+      if (a.get_type() == piece_action_type::move)
+      {
+        return can_move(this->get_type(), a.get_from(), a.get_to(), this->get_player());
+      }
+      else
+      {
+        assert(a.get_type() == piece_action_type::attack);
+        return can_attack(this->get_type(), a.get_from(), a.get_to(), this->get_player());
+      }
     }
   );
 }
@@ -72,6 +100,34 @@ void piece::add_action(const piece_action& action)
 void piece::add_message(const message_type& message)
 {
   m_messages.push_back(message);
+}
+
+bool can_attack(
+  const piece_type& type,
+  const square& from,
+  const square& to,
+  const side player
+)
+{
+  switch (type)
+  {
+    case piece_type::king:
+      return can_move(type, from, to, player);
+    case piece_type::pawn:
+      return are_on_adjacent_diagonal(from, to)
+        && is_forward(from, to, player)
+      ;
+    case piece_type::rook:
+      return can_move(type, from, to, player);
+    case piece_type::queen:
+      return can_move(type, from, to, player);
+    case piece_type::bishop:
+      return can_move(type, from, to, player);
+    default:
+    case piece_type::knight:
+      assert(type == piece_type::knight);
+      return can_move(type, from, to, player);
+  }
 }
 
 bool can_move(
@@ -319,7 +375,7 @@ void test_piece()
   }
   {
     auto p{get_test_white_king()};
-    p.add_action(piece_action(piece_action_type::attack, square("a3")));
+    p.add_action(piece_action(piece_action_type::attack, square("a3"), square("a4")));
     assert(!describe_actions(p).empty());
   }
   // piece::get_current_square
@@ -447,7 +503,7 @@ void test_piece()
     piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
     assert(square(p.get_coordinat()) == square("e1"));
-    p.add_action(piece_action(piece_action_type::attack, square("e2")));
+    p.add_action(piece_action(piece_action_type::attack, square("e2"), square("e3")));
     assert(has_actions(p));
     p.tick(delta_t(1.0), {});
   }

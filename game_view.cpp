@@ -86,7 +86,9 @@ void game_view::exec()
     m_log.tick();
 
     // Process user input and play game until instructed to exit
-    const bool must_quit{process_events()};
+    const bool must_quit{
+      process_events() // main game loop
+    };
     if (must_quit) return;
 
     // Do a tick
@@ -132,7 +134,8 @@ std::string get_controls_text(
       s << "SPACE: select a unit";
     } else {
       s << "SPACE: select a unit\n"
-        << "M: move selected unit to square"
+        << "M: move selected unit to square\n"
+        << "A: attack unit at square"
       ;
     }
   }

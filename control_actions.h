@@ -52,6 +52,13 @@ private:
 
   void process_control_actions(game& g);
 
+  /// Process an A or right-mouse-button down
+  void start_attack(
+    game& g,
+    const game_coordinat& coordinat,
+    const chess_color player_color
+  );
+
   /// Process an M or right-mouse-button down
   void start_move_unit(
     game& g,

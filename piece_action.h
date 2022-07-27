@@ -16,12 +16,7 @@ class piece_action
 {
 public:
 
-  /// Attack a certain location
-  explicit piece_action(
-    const piece_action_type type,
-    const square& to
-  );
-  /// Move from a square to another
+  /// Move of move from a square to another
   explicit piece_action(
     const piece_action_type type,
     const square& from,

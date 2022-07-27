@@ -21,17 +21,14 @@ public:
   void play_hide() noexcept;
 
 private:
+  sf::Sound m_attacking_high;
+  sf::Sound m_attacking_low;
+  sf::Sound m_attacking_mid;
   sf::Sound m_faring_into_battle;
-  sf::Sound m_hide;
-  sf::Sound m_its_time_to_rock;
-  sf::Sound m_jumping_into_battle;
-  sf::Sound m_lets_rule;
-  sf::Sound m_moving_forward;
-  sf::Sound m_to_rule_is_to_act;
-
   sf::Sound m_heu_high;
   sf::Sound m_heu_low;
   sf::Sound m_heu_mid;
+  sf::Sound m_hide;
   sf::Sound m_hmm_high;
   sf::Sound m_hmm_low;
   sf::Sound m_hmm_mid;
@@ -41,16 +38,24 @@ private:
   sf::Sound m_i_cant_high;
   sf::Sound m_i_cant_low;
   sf::Sound m_i_cant_mid;
+  sf::Sound m_its_time_to_rock;
+  sf::Sound m_jumping_into_battle;
+  sf::Sound m_lets_rule;
+  sf::Sound m_moving_forward;
   sf::Sound m_no_high;
   sf::Sound m_no_low;
   sf::Sound m_no_mid;
   sf::Sound m_nope_high;
   sf::Sound m_nope_low;
   sf::Sound m_nope_mid;
+  sf::Sound m_to_rule_is_to_act;
   sf::Sound m_yes_high;
   sf::Sound m_yes_low;
   sf::Sound m_yes_mid;
 
+  sf::SoundBuffer m_attacking_high_buffer;
+  sf::SoundBuffer m_attacking_low_buffer;
+  sf::SoundBuffer m_attacking_mid_buffer;
   sf::SoundBuffer m_faring_into_battle_buffer;
   sf::SoundBuffer m_heu_high_buffer;
   sf::SoundBuffer m_heu_low_buffer;

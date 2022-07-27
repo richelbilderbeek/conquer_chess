@@ -62,8 +62,11 @@ game_coordinat get_right(const game_coordinat& coordinat) noexcept;
 /// i.e. turn the board 180 degrees
 game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept;
 
-/// Is the 'to' coordinat forward, i.e. can a pawn move/attack
-/// in that direction?
+/// Is the 'to' coordinat forward,
+/// i.e. at a rank forward,
+/// i.e. can a pawn move/attack in that direction?
+/// Note that, e.g., for white h8 and a8 are forward of a2,
+/// i.e. the file is ignored
 bool is_forward(
   const square& from,
   const square& to,
