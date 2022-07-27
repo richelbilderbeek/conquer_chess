@@ -88,7 +88,7 @@ public:
   /// @see use 'add_action' to add an action to be processed
   void tick(
     const delta_t& dt,
-    const std::vector<square>& occupied_squares = {}
+    const std::vector<square>& occupied_squares
   );
 
 private:

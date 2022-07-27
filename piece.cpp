@@ -216,7 +216,7 @@ void test_piece()
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(piece_action_type::move, square("c3"), square("d5")));
-      piece.tick(delta_t(0.1));
+      piece.tick(delta_t(0.1), {});
       assert(!piece.get_actions().empty()); // Yep, let's start moving
       assert(!piece.get_messages().empty());
       assert(piece.get_messages().at(0) == message_type::start_move);
@@ -228,7 +228,7 @@ void test_piece()
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(piece_action_type::move, square("c3"), square("h8")));
-      piece.tick(delta_t(0.1));
+      piece.tick(delta_t(0.1), {});
       assert(piece.get_actions().empty()); // Nope, cannot do that
       assert(!piece.get_messages().empty());
       assert(piece.get_messages().at(0) == message_type::cannot);
@@ -431,11 +431,11 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(piece_action_type::move, square("e1"), square("e2")));
     assert(has_actions(p));
-    p.tick(delta_t(0.1));
+    p.tick(delta_t(0.1), {});
     assert(has_actions(p));
     for (int i{0}; i != 10; ++i)
     {
-      p.tick(delta_t(0.1));
+      p.tick(delta_t(0.1), {});
     }
     assert(!has_actions(p));
     const auto final_square{square(p.get_coordinat())};
@@ -449,7 +449,7 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(piece_action_type::attack, square("e2")));
     assert(has_actions(p));
-    p.tick(delta_t(1.0));
+    p.tick(delta_t(1.0), {});
   }
   // A knight never occupied squares between its source and target square
   {
@@ -458,12 +458,12 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("c3"));
     p.add_action(piece_action(piece_action_type::move, square("c3"), square("e4")));
     assert(has_actions(p));
-    p.tick(delta_t(0.1));
+    p.tick(delta_t(0.1), {});
     assert(has_actions(p));
     assert(get_occupied_square(p) == square("c3"));
     for (int i{0}; i != 30; ++i) // It is quite a travel
     {
-      p.tick(delta_t(0.1));
+      p.tick(delta_t(0.1), {});
       assert(get_occupied_square(p) != square("d3"));
       assert(get_occupied_square(p) != square("d4"));
     }

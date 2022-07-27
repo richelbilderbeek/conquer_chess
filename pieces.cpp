@@ -104,6 +104,13 @@ std::vector<square> get_occupied_squares(const std::vector<piece>& pieces) noexc
   {
     squares.push_back(p.get_current_square());
   }
+  #ifndef NDEBUG
+  std::sort(std::begin(squares), std::end(squares));
+  assert(
+    std::unique(std::begin(squares), std::end(squares))
+    == std::end(squares)
+  );
+  #endif
   return squares;
 }
 

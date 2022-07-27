@@ -24,22 +24,14 @@ public:
   /// Add a new user actions
   void add(const control_action& action);
 
-  /// Clear the sound effects to be processed,
-  /// i.e. resize to zero
-  //void clear_sound_effects() noexcept;
-
   const auto& get_actions() const noexcept { return m_control_actions; }
 
-  /// Get all the sound effects to be processed
-  //const auto& get_sound_effects() const noexcept { return m_sound_effects; };
-
   /// Process all actions and apply these on the game
-  void process(game& g, const delta_t& dt);
+  void process(game& g);
 
 private:
 
   std::vector<control_action> m_control_actions;
-  //std::vector<sound_effect> m_sound_effects;
 
   /// Process a left-mouse-button, hence a game_coordinat as a coordinat
   void do_select(
@@ -56,7 +48,7 @@ private:
   );
 
   void process_control_actions(game& g);
-  void process_piece_actions(game& g, const delta_t& dt);
+  //void process_piece_actions(game& g, const delta_t& dt);
 
   /// Process an M or right-mouse-button down
   void start_move_unit(

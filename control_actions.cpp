@@ -142,10 +142,10 @@ void control_actions::do_select(
   }
 }
 
-void control_actions::process(game& g, const delta_t& dt)
+void control_actions::process(game& g)
 {
   process_control_actions(g);
-  process_piece_actions(g, dt);
+  //process_piece_actions(g, dt);
 }
 
 void control_actions::process_control_actions(game& g)
@@ -217,14 +217,15 @@ void control_actions::process_control_actions(game& g)
   m_control_actions = std::vector<control_action>();
 }
 
+/*
 void control_actions::process_piece_actions(game& g, const delta_t& dt)
 {
   for (auto& p: g.get_pieces())
   {
     p.tick(dt);
   }
-
 }
+*/
 
 void control_actions::start_move_unit(
   game& g,
@@ -238,18 +239,21 @@ void control_actions::start_move_unit(
   {
     if (p.is_selected() && p.get_color() == player_color)
     {
-      // No shift, so all current actions are void
-      clear_actions(p);
-
       const auto& from{p.get_coordinat()};
       const auto& to{coordinat};
-      p.add_action(
-        piece_action(
-          piece_action_type::move,
-          square(from),
-          square(to)
-        )
-      );
+      if (from != to)
+      {
+        // No shift, so all current actions are void
+        clear_actions(p);
+
+        p.add_action(
+          piece_action(
+            piece_action_type::move,
+            square(from),
+            square(to)
+          )
+        );
+      }
     }
   }
   unselect_all_pieces(g, player_color);

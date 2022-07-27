@@ -391,6 +391,13 @@ bool operator!=(const square& lhs, const square& rhs) noexcept
   return !(lhs == rhs);
 }
 
+bool operator<(const square& lhs, const square& rhs) noexcept
+{
+  if (lhs.get_x() < rhs.get_x()) return true;
+  if (lhs.get_x() > rhs.get_x()) return false;
+  return lhs.get_y() < rhs.get_y();
+}
+
 std::ostream& operator<<(std::ostream& os, const square& s) noexcept
 {
   os << to_str(s);

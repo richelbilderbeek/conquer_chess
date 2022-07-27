@@ -88,6 +88,7 @@ std::string to_str(const std::vector<square>& s) noexcept;
 
 bool operator==(const square& lhs, const square& rhs) noexcept;
 bool operator!=(const square& lhs, const square& rhs) noexcept;
+bool operator<(const square& lhs, const square& rhs) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const square& s) noexcept;
 
