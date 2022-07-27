@@ -474,7 +474,10 @@ void test_piece()
 #endif // NDEBUG
 }
 
-void piece::tick(const delta_t& dt)
+void piece::tick(
+  const delta_t& dt,
+  const std::vector<square>& occupied_squares
+)
 {
   if (m_actions.empty()) return;
   const auto& first_action{m_actions[0]};
@@ -492,7 +495,32 @@ void piece::tick(const delta_t& dt)
     // Occupy different square?
     if (distance_to_target < distance_from_start)
     {
-      m_current_square = first_action.get_to();
+      // Taking over
+      if (is_occupied(first_action.get_to(), occupied_squares))
+      {
+        if (get_current_square() != first_action.get_to())
+        {
+          m_actions.clear();
+          m_actions.push_back(
+            piece_action(
+              piece_action_type::move,
+              first_action.get_from(),
+              first_action.get_from()
+            )
+          );
+          m_messages.push_back(message_type::cannot);
+        }
+        else
+        {
+          // Taken by me
+        }
+      }
+      else
+      {
+        // Occupy the next square
+        assert(!is_occupied(first_action.get_to(), occupied_squares));
+        m_current_square = first_action.get_to();
+      }
     }
     if (distance_to_target < dt.get())
     {

@@ -152,6 +152,14 @@ std::vector<piece> find_pieces(
   return pieces;
 }
 
+piece find_piece_with_id(
+  const game& g,
+  const id& i
+)
+{
+  return find_piece_with_id(g.get_pieces(), i);
+}
+
 const piece& get_closest_piece_to(
   const game& g,
   const game_coordinat& coordinat
@@ -270,6 +278,11 @@ game_coordinat& get_mouse_player_pos(game& g)
 chess_color get_mouse_user_player_color(const game& g)
 {
   return get_mouse_user_player_color(g.get_options());
+}
+
+std::vector<square> get_occupied_squares(const game& g) noexcept
+{
+  return get_occupied_squares(get_pieces(g));
 }
 
 const game_options& get_options(const game& g)
@@ -400,7 +413,7 @@ void set_keyboard_player_pos(
 void game::tick(const delta_t& dt)
 {
   m_control_actions.process(*this, dt);
-  for (auto& p: m_pieces) p.tick(dt);
+  for (auto& p: m_pieces) p.tick(dt, get_occupied_squares(*this));
 
   // Keep track of the in-game time
   m_t += dt;

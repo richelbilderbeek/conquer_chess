@@ -4,6 +4,7 @@
 #include "test_game.h"
 
 #include <cassert>
+#include <iostream>
 
 /// Test the game class
 void test_game_class()
@@ -196,6 +197,11 @@ void test_game_functions()
     assert(get_mouse_player_pos(g) == g.get_player_1_pos());
     get_mouse_player_pos(g) += game_coordinat(0.1, 0.1); // Only needs to compile
   }
+  // get_occupied_squares
+  {
+    const game g;
+    assert(get_occupied_squares(g).size() == 32);
+  }
   // get_piece_at, const
   {
     const game g;
@@ -254,6 +260,7 @@ void test_game_functions()
     assert(!is_idle(g));
     tick_until_idle(g);
     assert(is_idle(g));
+    const auto piece{find_piece_with_id(g, id)};
     assert(piece_with_id_is_at(g, id, square("e6")));
   }
   // Ke1-e2 does not move king forward
@@ -262,9 +269,8 @@ void test_game_functions()
     assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
     do_select_and_move_keyboard_player_piece(g, square("e1"), square("e2"));
     tick_until_idle(g);
-#ifdef FIX_ISSUE_1
+    assert(find_pieces(g, piece_type::king, chess_color::white).at(0).get_messages().back() == message_type::cannot);
     assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
-#endif // FIX_ISSUE_1
   }
   // e2-e6, then cannot move forward
   {
@@ -280,10 +286,8 @@ void test_game_functions()
     assert(piece_with_id_is_at(g, id, square("e6")));
     do_select_and_move_keyboard_player_piece(g, square("e6"), square("e7"));
     tick_until_idle(g);
-#ifdef FIX_ISSUE_1
     assert(!piece_with_id_is_at(g, id, square("e7")));
     assert(piece_with_id_is_at(g, id, square("e6")));
-#endif // FIX_ISSUE_1
   }
 #endif // NDEBUG // no tests in release
 }

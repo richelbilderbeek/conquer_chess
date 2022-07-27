@@ -174,6 +174,18 @@ int square::get_y() const
   return y_int;
 }
 
+bool is_occupied(
+  const square& s,
+  const std::vector<square>& occupied_squares
+) noexcept
+{
+  return std::find(
+    std::begin(occupied_squares),
+    std::end(occupied_squares),
+    s
+  ) != std::end(occupied_squares);
+}
+
 void test_square()
 {
 #ifndef NDEBUG

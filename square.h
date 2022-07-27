@@ -60,6 +60,12 @@ std::vector<square> get_intermediate_squares(
 /// i.e. turn the board 180 degrees
 square get_rotated_square(const square& position) noexcept;
 
+/// Is the square 's' occupied?
+bool is_occupied(
+  const square& s,
+  const std::vector<square>& occupied_squares
+) noexcept;
+
 /// Test this class and its free functions
 void test_square();
 

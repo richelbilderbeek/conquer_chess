@@ -23,10 +23,20 @@ int count_selected_units(
   const chess_color player
 );
 
+/// Find a piece with a certain ID
+/// Will throw if there is no piece with that ID
+piece find_piece_with_id(
+  const std::vector<piece>& pieces,
+  const id& i
+);
+
 /// Get a king-versus-king starting position
 std::vector<piece> get_kings_only_starting_pieces(
   const chess_color left_player_color = chess_color::white
 ) noexcept;
+
+/// Get all the squares that are occupied
+std::vector<square> get_occupied_squares(const std::vector<piece>& pieces) noexcept;
 
 /// Get the piece that at that square,
 /// will throw if there is no piece

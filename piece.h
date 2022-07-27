@@ -84,8 +84,12 @@ public:
   /// @param delta_t the fraction of a full move that is done, where
   ///   0.01 means that only 1% of the full move is done and
   ///   1.0 denotes doing a full move.
+  /// @param occupied_squares the squares that are occupied
   /// @see use 'add_action' to add an action to be processed
-  void tick(const delta_t& dt);
+  void tick(
+    const delta_t& dt,
+    const std::vector<square>& occupied_squares = {}
+  );
 
 private:
 
