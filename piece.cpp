@@ -328,6 +328,74 @@ void test_piece()
   ////////////////////////////////////////////////////////////////////////////
   // Free functions
   ////////////////////////////////////////////////////////////////////////////
+  // can_attack, on empty board
+  {
+    assert(can_attack(piece_type::bishop, square("e4"), square("d3"), side::lhs));
+    assert(!can_attack(piece_type::bishop, square("e4"), square("d4"), side::lhs));
+    assert(can_attack(piece_type::bishop, square("e4"), square("d5"), side::lhs));
+    assert(!can_attack(piece_type::bishop, square("e4"), square("e3"), side::lhs));
+    assert(!can_attack(piece_type::bishop, square("e4"), square("e5"), side::lhs));
+    assert(can_attack(piece_type::bishop, square("e4"), square("f3"), side::lhs));
+    assert(!can_attack(piece_type::bishop, square("e4"), square("f4"), side::lhs));
+    assert(can_attack(piece_type::bishop, square("e4"), square("f5"), side::lhs));
+    assert(!can_attack(piece_type::bishop, square("e4"), square("f6"), side::lhs));
+
+    assert(can_attack(piece_type::king, square("e4"), square("d3"), side::lhs));
+    assert(can_attack(piece_type::king, square("e4"), square("d4"), side::lhs));
+    assert(can_attack(piece_type::king, square("e4"), square("d5"), side::lhs));
+    assert(can_attack(piece_type::king, square("e4"), square("e3"), side::lhs));
+    assert(can_attack(piece_type::king, square("e4"), square("e5"), side::lhs));
+    assert(can_attack(piece_type::king, square("e4"), square("f3"), side::lhs));
+    assert(can_attack(piece_type::king, square("e4"), square("f4"), side::lhs));
+    assert(can_attack(piece_type::king, square("e4"), square("f5"), side::lhs));
+    assert(!can_attack(piece_type::king, square("e4"), square("f6"), side::lhs));
+
+    assert(!can_attack(piece_type::knight, square("e4"), square("d3"), side::lhs));
+    assert(!can_attack(piece_type::knight, square("e4"), square("d4"), side::lhs));
+    assert(!can_attack(piece_type::knight, square("e4"), square("d5"), side::lhs));
+    assert(!can_attack(piece_type::knight, square("e4"), square("e3"), side::lhs));
+    assert(!can_attack(piece_type::knight, square("e4"), square("e5"), side::lhs));
+    assert(!can_attack(piece_type::knight, square("e4"), square("f3"), side::lhs));
+    assert(!can_attack(piece_type::knight, square("e4"), square("f4"), side::lhs));
+    assert(!can_attack(piece_type::knight, square("e4"), square("f5"), side::lhs));
+    assert(can_attack(piece_type::knight, square("e4"), square("f6"), side::lhs));
+
+    assert(!can_attack(piece_type::pawn, square("e4"), square("d3"), side::lhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("d4"), side::lhs));
+    assert(can_attack(piece_type::pawn, square("e4"), square("d5"), side::lhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("e3"), side::lhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("e5"), side::lhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("f3"), side::lhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("f4"), side::lhs));
+    assert(can_attack(piece_type::pawn, square("e4"), square("f5"), side::lhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("f6"), side::lhs));
+
+    assert(!can_attack(piece_type::pawn, square("e4"), square("e5"), side::rhs));
+    assert(can_attack(piece_type::pawn, square("e4"), square("d3"), side::rhs));
+    assert(can_attack(piece_type::pawn, square("e4"), square("f3"), side::rhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("f4"), side::rhs));
+    assert(!can_attack(piece_type::pawn, square("e4"), square("f5"), side::rhs));
+
+    assert(can_attack(piece_type::queen, square("e4"), square("d3"), side::lhs));
+    assert(can_attack(piece_type::queen, square("e4"), square("d4"), side::lhs));
+    assert(can_attack(piece_type::queen, square("e4"), square("d5"), side::lhs));
+    assert(can_attack(piece_type::queen, square("e4"), square("e3"), side::lhs));
+    assert(can_attack(piece_type::queen, square("e4"), square("e5"), side::lhs));
+    assert(can_attack(piece_type::queen, square("e4"), square("f3"), side::lhs));
+    assert(can_attack(piece_type::queen, square("e4"), square("f4"), side::lhs));
+    assert(can_attack(piece_type::queen, square("e4"), square("f5"), side::lhs));
+    assert(!can_attack(piece_type::queen, square("e4"), square("f6"), side::lhs));
+
+    assert(!can_attack(piece_type::rook, square("e4"), square("d3"), side::lhs));
+    assert(can_attack(piece_type::rook, square("e4"), square("d4"), side::lhs));
+    assert(!can_attack(piece_type::rook, square("e4"), square("d5"), side::lhs));
+    assert(can_attack(piece_type::rook, square("e4"), square("e3"), side::lhs));
+    assert(can_attack(piece_type::rook, square("e4"), square("e5"), side::lhs));
+    assert(!can_attack(piece_type::rook, square("e4"), square("f3"), side::lhs));
+    assert(can_attack(piece_type::rook, square("e4"), square("f4"), side::lhs));
+    assert(!can_attack(piece_type::rook, square("e4"), square("f5"), side::lhs));
+    assert(!can_attack(piece_type::rook, square("e4"), square("f6"), side::lhs));
+  }
   // can_move, on empty board
   {
     assert(can_move(piece_type::bishop, square("e4"), square("d3"), side::lhs));
