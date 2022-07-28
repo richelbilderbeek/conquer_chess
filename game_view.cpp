@@ -744,8 +744,13 @@ void show_unit_health_bars(game_view& view)
 
     // Health
     sf::RectangleShape health_bar;
-    health_bar.setSize(sf::Vector2f(get_square_width(layout) - 8.0, 16.0 - 8.0));
-    //health_bar.setScale(1.0, 1.0);
+    const double max_width{get_square_width(layout) - 8.0}; // with full health
+    health_bar.setSize(
+      sf::Vector2f(
+      max_width * get_f_health(piece),
+      16.0 - 8.0)
+    );
+
     health_bar.setFillColor(
       sf::Color(
         static_cast<sf::Uint8>(get_f_health(piece) * 255.0),
