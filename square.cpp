@@ -13,29 +13,15 @@ square::square(const std::string& pos)
 {
   assert(pos.size() == 2);
   assert(std::regex_match(pos, std::regex("^[a-h][1-8]$")));
-  const int y{pos[0] - 'a'};
-  const int x{pos[1] - '1'};
-  std::clog << pos << '\n';
-  assert(x >= 0 && x < 8 && y >= 0 && y < 8);
-  m_x = x;
-  m_y = y;
+  m_y = pos[0] - 'a';
+  m_x = pos[1] - '1';
   assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
 }
 
 square::square(const game_coordinat& g)
+  : m_x{static_cast<int>(std::trunc(g.get_x()))},
+    m_y{static_cast<int>(std::trunc(g.get_y()))}
 {
-  const int x{static_cast<int>(std::trunc(g.get_x()))};
-  const int y{static_cast<int>(std::trunc(g.get_y()))};
-  assert(x >= 0 && x < 8 && y >= 0 && y < 8);
-  m_x = x;
-  m_y = y;
-  /*
-  const char first = 'a' + y;
-  const char second = '1' + x;
-  m_pos += first;
-  m_pos += second;
-  assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
-  */
   assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
 }
 
@@ -43,13 +29,6 @@ square::square(const int x, const int y)
   : m_x{x}, m_y{y}
 {
   assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
-  /*
-  const char first = 'a' + y;
-  const char second = '1' + x;
-  m_pos += first;
-  m_pos += second;
-  assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
-  */
 }
 
 bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept
@@ -169,38 +148,6 @@ square get_rotated_square(const square& position) noexcept
     7 - position.get_x(),
     7 - position.get_y()
   );
-  /*
-  const char first_char{position.get_pos()[0]};
-  const char second_char{position.get_pos()[1]};
-  const char first_new_char = 'h' - (first_char - 'a');
-  const char second_new_char = '8' - (second_char - '1');
-  std::string s;
-  s += first_new_char;
-  s += second_new_char;
-  return square(s);
-  */
-}
-
-int square::get_x() const
-{
-  return m_x;
-  /*
-  assert(m_pos.size() == 2);
-  const int x_int{m_pos[1] - '1'};
-  //const int y_int{m_pos[0] - 'a'};
-  return x_int;
-  */
-}
-
-int square::get_y() const
-{
-  return m_y;
-  /*
-  assert(m_pos.size() == 2);
-  //const int x_int{m_pos[1] - '1'};
-  const int y_int{m_pos[0] - 'a'};
-  return y_int;
-  */
 }
 
 bool is_occupied(

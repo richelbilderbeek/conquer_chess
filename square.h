@@ -18,13 +18,13 @@ public:
   /// As the board goes from a1 at top-left,
   /// to a8 at top-right,
   /// the x coordinat is the rank
-  int get_x() const;
+  int get_x() const noexcept { return m_x; }
 
   /// Get the y coordinat, starting from 0 for a1/a2/a3/etc.
   /// As the board goes from a1 at top-left,
   /// to a8 at top-right,
   /// the y coordinat is the file
-  int get_y() const;
+  int get_y() const noexcept { return m_y; }
 
 private:
 
