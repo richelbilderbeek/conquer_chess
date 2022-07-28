@@ -243,6 +243,12 @@ bool is_idle(const piece& p) noexcept
   return !has_actions(p);
 }
 
+void piece::receive_damage(const double damage)
+{
+  assert(damage > 0.0);
+  m_health -= damage;
+}
+
 void select(piece& p) noexcept
 {
   p.set_selected(true);
@@ -297,6 +303,14 @@ void test_piece()
   {
     auto piece{get_test_white_knight()};
     assert(piece.get_messages().empty());
+  }
+  // piece::receive_damage
+  {
+    auto piece{get_test_white_knight()};
+    const auto health_before{piece.get_health()};
+    piece.receive_damage(0.1);
+    const auto health_after{piece.get_health()};
+    assert(health_after < health_before);
   }
   ////////////////////////////////////////////////////////////////////////////
   // Free functions
@@ -635,6 +649,9 @@ void piece::tick(
   else
   {
     assert(first_action.get_type() == piece_action_type::attack);
+    assert(is_piece_at(g, first_action.get_to()));
+    piece& target{get_piece_at(g, first_action.get_to())};
+    target.receive_damage(g.get_options().get_dps() * dt.get());
   }
 }
 

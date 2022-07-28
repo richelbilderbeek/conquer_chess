@@ -77,6 +77,10 @@ public:
   /// Is the piece selected?
   bool is_selected() const noexcept { return m_is_selected; }
 
+  /// Receive damage
+  /// @param damage a positive value
+  void receive_damage(const double damage);
+
   /// Set the selectedness of the piece
   void set_selected(bool is_selected) noexcept;
 

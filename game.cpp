@@ -367,6 +367,7 @@ const piece& get_piece_at(const game& g, const square& coordinat)
 
 piece& get_piece_at(game& g, const square& coordinat)
 {
+  assert(is_piece_at(g, coordinat));
   return get_piece_at(g.get_pieces(), coordinat);
 }
 

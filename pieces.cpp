@@ -138,6 +138,7 @@ piece& get_piece_at(
   const square& coordinat
 )
 {
+  assert(is_piece_at(pieces, coordinat));
   const auto there{
     std::find_if(
       std::begin(pieces),

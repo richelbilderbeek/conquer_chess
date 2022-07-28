@@ -32,6 +32,9 @@ public:
   /// for a click to connect to a piece
   auto get_click_distance() const noexcept { return m_click_distance; }
 
+  /// Get the damage per second all pieces deal
+  auto get_dps() const noexcept { return 10.0; }
+
   /// Get the game speed
   auto get_game_speed() const noexcept { return m_game_speed; }
 

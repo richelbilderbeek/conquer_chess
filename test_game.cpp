@@ -49,8 +49,6 @@ void test_game_class()
   }
   // game::tick
   {
-    //#define FIX_ISSUE_12
-    #ifdef FIX_ISSUE_12
     // A piece under attack must have decreasing health
     {
       game_options options{get_default_game_options()};
@@ -67,7 +65,6 @@ void test_game_class()
       const double health_after{get_piece_at(g, square("d2")).get_health()};
       assert(health_after < health_before);
     }
-    #endif // FIX_ISSUE_12
   }
 #endif // NDEBUG // no tests in release
 }
