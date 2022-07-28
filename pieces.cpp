@@ -25,6 +25,20 @@ std::vector<double> calc_distances(
   return distances;
 }
 
+int count_dead_pieces(
+  const std::vector<piece>& pieces
+)
+{
+  return std::count_if(
+    std::begin(pieces),
+    std::end(pieces),
+    [](const auto& piece)
+    {
+      return is_dead(piece);
+    }
+  );
+}
+
 int count_piece_actions(
   const std::vector<piece>& pieces,
   const chess_color player
@@ -353,6 +367,20 @@ bool is_piece_at(
 void test_pieces()
 {
 #ifndef NDEBUG
+  // count_dead_pieces
+  {
+    // No dead pieces at the start
+    {
+      const auto pieces{get_standard_starting_pieces()};
+      assert(count_dead_pieces(pieces) == 0);
+    }
+    // One dead piece if it is killed
+    {
+      auto pieces{get_standard_starting_pieces()};
+      pieces.back().receive_damage(1000000.0);
+      assert(count_dead_pieces(pieces) == 1);
+    }
+  }
   // get_piece_at, const
   {
     const auto pieces{get_standard_starting_pieces()};

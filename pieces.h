@@ -11,6 +11,11 @@ std::vector<double> calc_distances(
   const game_coordinat& coordinat
 );
 
+/// Count the total number of dead pieces
+int count_dead_pieces(
+  const std::vector<piece>& pieces
+);
+
 /// Count the total number of actions to be done by pieces of a player
 int count_piece_actions(
   const std::vector<piece>& pieces,

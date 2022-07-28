@@ -176,6 +176,9 @@ piece get_test_white_knight() noexcept;
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;
 
+/// Is the unit dead?
+bool is_dead(const piece& p) noexcept;
+
 /// Is the unit idle?
 bool is_idle(const piece& p) noexcept;
 

@@ -436,8 +436,21 @@ void game::tick(const delta_t& dt)
   // Convert control_actions to piece_actions instantaneous
   m_control_actions.process(*this);
 
+  assert(count_dead_pieces(m_pieces) == 0);
+
   // Do those piece_actions
   for (auto& p: m_pieces) p.tick(dt, *this);
+
+  // Remove dead pieces
+  m_pieces.erase(
+    std::remove_if(
+      std::begin(m_pieces),
+      std::end(m_pieces),
+      [](const auto& p) { return is_dead(p); }
+    ),
+    std::end(m_pieces)
+  );
+  assert(count_dead_pieces(m_pieces) == 0);
 
   // Keep track of the time
   m_t += dt;

@@ -243,6 +243,11 @@ bool has_actions(const piece& p) noexcept
   return count_piece_actions(p) != 0;
 }
 
+bool is_dead(const piece& p) noexcept
+{
+  return p.get_health() <= 0.0;
+}
+
 bool is_idle(const piece& p) noexcept
 {
   return !has_actions(p);
