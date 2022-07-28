@@ -746,6 +746,20 @@ void piece::tick(
     assert(is_piece_at(g, first_action.get_to()));
     piece& target{get_piece_at(g, first_action.get_to())};
     target.receive_damage(g.get_options().get_dps() * dt.get());
+    // Capture the piece if destroyed
+    if (is_dead(target))
+    {
+      m_actions.clear();
+      this->add_action(
+        piece_action(
+          first_action.get_player(),
+          first_action.get_piece_type(),
+          piece_action_type::move,
+          first_action.get_from(),
+          first_action.get_to()
+        )
+      );
+    }
   }
 }
 

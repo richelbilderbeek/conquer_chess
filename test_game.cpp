@@ -70,6 +70,30 @@ void test_game_class()
       const double health_after{get_piece_at(g, square("d2")).get_health()};
       assert(health_after < health_before);
     }
+    #define FIX_ISSUE_15
+    #ifdef FIX_ISSUE_15
+    // When a piece is killed, the attacker moves to that square
+    {
+      game_options options{get_default_game_options()};
+      options.set_starting_position(starting_position_type::before_scholars_mate);
+      game g(options);
+      do_select_and_start_attack_keyboard_player_piece(
+        g,
+        square("h5"),
+        square("f7")
+      );
+      while (is_piece_at(g, square("f7")))
+      {
+        g.tick(delta_t(0.1));
+      }
+      // Start moving to capture
+      g.tick(delta_t(0.1));
+      const auto killer_queen{
+        find_pieces(g, piece_type::queen, chess_color::white).at(0)
+      };
+      assert(killer_queen.get_actions().front().get_action_type() == piece_action_type::move);
+    }
+    #endif
   }
 #endif // NDEBUG // no tests in release
 }
