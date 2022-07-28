@@ -177,6 +177,15 @@ void test_square()
     const square s(pos);
     assert(s.get_y() == 0);
   }
+  // are_on_adjacent_diagonal
+  {
+    assert(are_on_adjacent_diagonal(square("d1"), square("c2")));
+    assert(are_on_adjacent_diagonal(square("c2"), square("b1")));
+    assert(are_on_adjacent_diagonal(square("c2"), square("b3")));
+    assert(are_on_adjacent_diagonal(square("c2"), square("d1")));
+    assert(are_on_adjacent_diagonal(square("c2"), square("d3")));
+    assert(!are_on_adjacent_diagonal(square("d1"), square("a4")));
+  }
   // are_on_same_diagonal
   {
     assert(are_on_same_diagonal(square("d1"), square("a4")));
