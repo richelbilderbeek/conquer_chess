@@ -139,6 +139,8 @@ void test_game_options()
     assert(get_mouse_user_player_color(options) == chess_color::black);
     assert(options.do_show_selected() || !options.do_show_selected());
     assert(options.get_click_distance() > 0.0);
+    assert(get_player_color(options, side::lhs) == chess_color::white);
+    assert(get_player_color(options, side::rhs) == chess_color::black);
   }
   // game_options with left/keyboard player being black
   {
@@ -148,6 +150,8 @@ void test_game_options()
     assert(get_right_player_color(options) == chess_color::white);
     assert(get_keyboard_user_player_color(options) == chess_color::black);
     assert(get_mouse_user_player_color(options) == chess_color::white);
+    assert(get_player_color(options, side::lhs) == chess_color::black);
+    assert(get_player_color(options, side::rhs) == chess_color::white);
   }
   // game_options with left player using mouse (instead of keyboard)
   {
