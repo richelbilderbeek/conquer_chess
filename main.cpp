@@ -8,6 +8,7 @@
 #include "helper.h"
 #include "id.h"
 #include "fps_clock.h"
+#include "log.h"
 #include "menu_view.h"
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
@@ -37,6 +38,7 @@ void test()
   test_game_view_layout();
   test_helper();
   test_id();
+  test_log();
   test_menu_view_item();
   test_menu_view_layout();
   test_options_view_item();

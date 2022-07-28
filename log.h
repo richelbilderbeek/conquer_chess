@@ -45,4 +45,7 @@ std::string get_last_log_messages(
   const chess_color color
 ) noexcept;
 
+/// Test this class and its free function
+void test_log();
+
 #endif // LOG_H

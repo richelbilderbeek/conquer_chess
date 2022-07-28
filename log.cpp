@@ -1,5 +1,7 @@
 #include "log.h"
 
+#include "message.h"
+
 #include <algorithm>
 #include <cassert>
 #include <sstream>
@@ -42,6 +44,41 @@ std::string log::get_last_messages(const chess_color color) const
   if (t.empty()) return t;
   t.pop_back(); // Remove newline
   return t;
+}
+
+void test_log()
+{
+#ifndef NDEBUG
+  // log::log
+  {
+    const log l(0.00001);
+    assert(l.get_last_messages(chess_color::black) == "");
+    assert(l.get_last_messages(chess_color::white) == "");
+  }
+  // log::add_message
+  {
+    log l(0.001);
+    l.add_message(message(message_type::select, chess_color::white, piece_type::pawn));
+    assert(l.get_last_messages(chess_color::black) == "");
+    assert(l.get_last_messages(chess_color::white) != "");
+  }
+  // log::get_last_messages: messages expire
+  {
+    log l(0.001);
+    l.add_message(message(message_type::select, chess_color::white, piece_type::pawn));
+    assert(l.get_last_messages(chess_color::black) == "");
+    assert(l.get_last_messages(chess_color::white) != "");
+    sf::sleep(sf::milliseconds(2));
+    l.tick();
+    assert(l.get_last_messages(chess_color::white) == "");
+  }
+  // get_last_log_messages
+  {
+    const log l(0.001);
+    assert(get_last_log_messages(l, chess_color::black) == "");
+    assert(get_last_log_messages(l, chess_color::white) == "");
+  }
+#endif // NDEBUG
 }
 
 void log::tick()
