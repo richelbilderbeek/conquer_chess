@@ -34,6 +34,9 @@ piece::piece(
 
 void piece::add_action(const piece_action& action)
 {
+  assert(action.get_piece_type() == m_type);
+  assert(action.get_player() == m_player);
+
   if (action.get_action_type() == piece_action_type::move)
   {
     if (
