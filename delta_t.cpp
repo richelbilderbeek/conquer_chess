@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 delta_t::delta_t(const double dt)
   : m_delta_t{dt}
@@ -43,6 +44,12 @@ void test_delta_t()
     const delta_t low{0.0001};
     const delta_t high{0.11};
     assert(high > low);
+  }
+  // operator<<
+  {
+    std::stringstream s;
+    s << delta_t(0.123);
+    assert(!s.str().empty());
   }
 #endif // DEBUG
 }
