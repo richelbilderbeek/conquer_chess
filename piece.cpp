@@ -155,6 +155,9 @@ bool can_move(
   const side player
 )
 {
+  // A piece can always move home
+  if (from == to) return true;
+
   switch (type)
   {
     case piece_type::king:
