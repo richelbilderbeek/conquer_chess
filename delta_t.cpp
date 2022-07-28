@@ -21,6 +21,14 @@ void test_delta_t()
     const delta_t t{dt};
     assert(t.get() == dt);
   }
+  // operator==
+  {
+    const delta_t a(0.1);
+    const delta_t b(0.1);
+    const delta_t c(0.9876);
+    assert(a == b);
+    assert(!(a == c));
+  }
   // operator+
   {
     const double t1{0.1};
@@ -52,6 +60,11 @@ void test_delta_t()
     assert(!s.str().empty());
   }
 #endif // DEBUG
+}
+
+bool operator==(const delta_t& lhs, const delta_t& rhs) noexcept
+{
+  return lhs.get() == rhs.get();
 }
 
 delta_t& operator+=(delta_t& lhs, const delta_t& rhs) noexcept
