@@ -27,6 +27,9 @@ public:
   piece_type m_piece_type;
 };
 
+/// Test this class and its free functions
+void test_message();
+
 std::string to_str(const message& m) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const message& m) noexcept;

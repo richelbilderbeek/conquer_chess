@@ -41,6 +41,7 @@ void test()
   test_log();
   test_menu_view_item();
   test_menu_view_layout();
+  test_message();
   test_options_view_item();
   test_options_view_layout();
   test_piece();

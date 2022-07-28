@@ -1,5 +1,6 @@
 #include "message.h"
 
+#include <cassert>
 #include <iostream>
 #include <sstream>
 
@@ -12,6 +13,22 @@ message::message(
     m_piece_type{pc}
 {
 
+}
+
+void test_message()
+{
+#ifndef NDEBUG
+  // message::message and message::get_x
+  {
+    const message_type mt{message_type::start_attack};
+    const chess_color c{chess_color::black};
+    const piece_type pt{piece_type::bishop};
+    const message m(mt, c, pt);
+    assert(m.get_color() == c);
+    assert(m.get_piece_type() == pt);
+    assert(m.get_message_type() == mt);
+  }
+#endif // NDEBUG
 }
 
 std::string to_str(const message& m) noexcept
