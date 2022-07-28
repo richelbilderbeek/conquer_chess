@@ -4,6 +4,7 @@
 #include "piece_type.h"
 #include "square.h"
 #include "message.h"
+#include "game.h"
 
 #include <algorithm>
 #include <cassert>
@@ -272,7 +273,8 @@ void test_piece()
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(piece_action_type::move, square("c3"), square("d5")));
-      piece.tick(delta_t(0.1), {});
+      game g{create_king_versus_king_game()};
+      piece.tick(delta_t(0.1), g);
       assert(!piece.get_actions().empty()); // Yep, let's start moving
       assert(!piece.get_messages().empty());
       assert(piece.get_messages().at(0) == message_type::start_move);
@@ -284,7 +286,8 @@ void test_piece()
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(piece_action_type::move, square("c3"), square("h8")));
-      piece.tick(delta_t(0.1), {});
+      game g{create_king_versus_king_game()};
+      piece.tick(delta_t(0.1), g);
       assert(piece.get_actions().empty()); // Nope, cannot do that
       assert(!piece.get_messages().empty());
       assert(piece.get_messages().at(0) == message_type::cannot);
@@ -507,11 +510,12 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(piece_action_type::move, square("e1"), square("e2")));
     assert(has_actions(p));
-    p.tick(delta_t(0.1), {});
+    game g{create_king_versus_king_game()};
+    p.tick(delta_t(0.1), g);
     assert(has_actions(p));
     for (int i{0}; i != 10; ++i)
     {
-      p.tick(delta_t(0.1), {});
+      p.tick(delta_t(0.1), g);
     }
     assert(!has_actions(p));
     const auto final_square{square(p.get_coordinat())};
@@ -525,7 +529,8 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(piece_action_type::attack, square("e2"), square("e3")));
     assert(has_actions(p));
-    p.tick(delta_t(1.0), {});
+    game g{create_king_versus_king_game()};
+    p.tick(delta_t(1.0), g);
   }
   // A knight never occupied squares between its source and target square
   {
@@ -534,12 +539,13 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("c3"));
     p.add_action(piece_action(piece_action_type::move, square("c3"), square("e4")));
     assert(has_actions(p));
-    p.tick(delta_t(0.1), {});
+    game g{create_king_versus_king_game()};
+    p.tick(delta_t(0.1), g);
     assert(has_actions(p));
     assert(get_occupied_square(p) == square("c3"));
     for (int i{0}; i != 30; ++i) // It is quite a travel
     {
-      p.tick(delta_t(0.1), {});
+      p.tick(delta_t(0.1), g);
       assert(get_occupied_square(p) != square("d3"));
       assert(get_occupied_square(p) != square("d4"));
     }
@@ -552,10 +558,14 @@ void test_piece()
 
 void piece::tick(
   const delta_t& dt,
-  const std::vector<square>& occupied_squares
+  game& g
 )
 {
   if (m_actions.empty()) return;
+
+  const auto occupied_squares{
+    get_occupied_squares(g)
+  };
 
   const auto& first_action{m_actions[0]};
   if (first_action.get_type() == piece_action_type::move)
