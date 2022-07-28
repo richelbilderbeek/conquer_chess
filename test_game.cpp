@@ -123,6 +123,8 @@ void test_game_functions()
     game g = create_king_versus_king_game();
     get_pieces(g).at(0).add_action(
       piece_action(
+        side::lhs,
+        piece_type::king,
         piece_action_type::move,
         square("e1"),
         square("e2")
@@ -132,6 +134,8 @@ void test_game_functions()
     assert(count_piece_actions(g, chess_color::white) == 2);
     g.get_pieces().at(0).add_action(
       piece_action(
+        side::lhs,
+        piece_type::king,
         piece_action_type::move,
         square("e2"),
         square("e3")

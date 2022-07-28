@@ -31,6 +31,13 @@ square::square(const int x, const int y)
   assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
 }
 
+bool are_adjacent(const square& a, const square& b) noexcept
+{
+  return std::abs(static_cast<int>(a.get_x() - b.get_x())) <= 1
+    && std::abs(static_cast<int>(a.get_y() - b.get_y())) <= 1
+  ;
+}
+
 bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept
 {
   return are_on_same_diagonal(a, b)

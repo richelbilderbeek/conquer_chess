@@ -34,7 +34,7 @@ piece::piece(
 
 void piece::add_action(const piece_action& action)
 {
-  if (action.get_type() == piece_action_type::move)
+  if (action.get_action_type() == piece_action_type::move)
   {
     if (
       !can_move(
@@ -55,7 +55,7 @@ void piece::add_action(const piece_action& action)
   }
   else
   {
-    assert(action.get_type() == piece_action_type::attack);
+    assert(action.get_action_type() == piece_action_type::attack);
     if (
       !can_attack(
         this->get_type(),
@@ -85,13 +85,13 @@ void piece::add_action(const piece_action& action)
     std::back_inserter(m_actions),
     [this](const piece_action& a)
     {
-      if (a.get_type() == piece_action_type::move)
+      if (a.get_action_type() == piece_action_type::move)
       {
         return can_move(this->get_type(), a.get_from(), a.get_to(), this->get_player());
       }
       else
       {
-        assert(a.get_type() == piece_action_type::attack);
+        assert(a.get_action_type() == piece_action_type::attack);
         return can_attack(this->get_type(), a.get_from(), a.get_to(), this->get_player());
       }
     }
@@ -113,7 +113,9 @@ bool can_attack(
   switch (type)
   {
     case piece_type::king:
-      return can_move(type, from, to, player);
+      return can_move(type, from, to, player)
+        && are_adjacent(from, to)
+      ;
     case piece_type::pawn:
       return are_on_adjacent_diagonal(from, to)
         && is_forward(from, to, player)
@@ -278,7 +280,7 @@ void test_piece()
       assert(piece.get_current_square() == square("c3"));
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
-      piece.add_action(piece_action(piece_action_type::move, square("c3"), square("d5")));
+      piece.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::move, square("c3"), square("d5")));
       game g{create_king_versus_king_game()};
       piece.tick(delta_t(0.1), g);
       assert(!piece.get_actions().empty()); // Yep, let's start moving
@@ -291,7 +293,7 @@ void test_piece()
       assert(piece.get_current_square() == square("c3"));
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
-      piece.add_action(piece_action(piece_action_type::move, square("c3"), square("h8")));
+      piece.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::move, square("c3"), square("h8")));
       game g{create_king_versus_king_game()};
       piece.tick(delta_t(0.1), g);
       assert(piece.get_actions().empty()); // Nope, cannot do that
@@ -304,7 +306,7 @@ void test_piece()
       assert(piece.get_current_square() == square("c3"));
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
-      piece.add_action(piece_action(piece_action_type::attack, square("c3"), square("d4")));
+      piece.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::attack, square("c3"), square("d4")));
       game g{create_king_versus_king_game()};
       piece.tick(delta_t(0.1), g);
       assert(piece.get_actions().empty()); // Nope, cannot do that
@@ -473,7 +475,7 @@ void test_piece()
   }
   {
     auto p{get_test_white_king()};
-    p.add_action(piece_action(piece_action_type::attack, square("a3"), square("a4")));
+    p.add_action(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a3"), square("a4")));
     assert(!describe_actions(p).empty());
   }
   // piece::get_current_square
@@ -578,7 +580,7 @@ void test_piece()
       side::lhs
     );
 
-    p.add_action(piece_action(piece_action_type::move, square("e7"), square("e5")));
+    p.add_action(piece_action(side::lhs, piece_type::pawn, piece_action_type::move, square("e7"), square("e5")));
     assert(p.get_actions().empty()); // Actions cleared
     assert(p.get_current_square() == square("e7")); // Piece stays put
   }
@@ -603,7 +605,7 @@ void test_piece()
     piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
     assert(square(p.get_coordinat()) == square("e1"));
-    p.add_action(piece_action(piece_action_type::move, square("e1"), square("e2")));
+    p.add_action(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e1"), square("e2")));
     assert(has_actions(p));
     game g{create_king_versus_king_game()};
     p.tick(delta_t(0.1), g);
@@ -622,7 +624,7 @@ void test_piece()
     piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
     assert(square(p.get_coordinat()) == square("e1"));
-    p.add_action(piece_action(piece_action_type::attack, square("e2"), square("e3")));
+    p.add_action(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("e2"), square("e3")));
     assert(has_actions(p));
     game g{create_king_versus_king_game()};
     p.tick(delta_t(1.0), g);
@@ -632,7 +634,7 @@ void test_piece()
     piece p{get_test_white_knight()};
     assert(p.get_type() == piece_type::knight);
     assert(square(p.get_coordinat()) == square("c3"));
-    p.add_action(piece_action(piece_action_type::move, square("c3"), square("e4")));
+    p.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::move, square("c3"), square("e4")));
     assert(has_actions(p));
     game g{create_king_versus_king_game()};
     p.tick(delta_t(0.1), g);
@@ -663,7 +665,7 @@ void piece::tick(
   };
 
   const auto& first_action{m_actions[0]};
-  if (first_action.get_type() == piece_action_type::move)
+  if (first_action.get_action_type() == piece_action_type::move)
   {
     const auto distance_from_start{
       calc_length(
@@ -682,9 +684,12 @@ void piece::tick(
       {
         if (get_current_square() != first_action.get_to())
         {
+          // Too bad, moving back
           m_actions.clear();
           m_actions.push_back(
             piece_action(
+              get_piece_at(g, first_action.get_from()).get_player(),
+              get_piece_at(g, first_action.get_from()).get_type(),
               piece_action_type::move,
               first_action.get_from(),
               first_action.get_from()
@@ -729,7 +734,7 @@ void piece::tick(
   }
   else
   {
-    assert(first_action.get_type() == piece_action_type::attack);
+    assert(first_action.get_action_type() == piece_action_type::attack);
     assert(is_piece_at(g, first_action.get_to()));
     piece& target{get_piece_at(g, first_action.get_to())};
     target.receive_damage(g.get_options().get_dps() * dt.get());

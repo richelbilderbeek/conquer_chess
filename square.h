@@ -32,6 +32,9 @@ private:
   int m_y;
 };
 
+/// Are the squares adjacent
+bool are_adjacent(const square& a, const square& b) noexcept;
+
 /// Are the squares adjacent on the same diagonal, e.g. d1 and e2
 bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept;
 

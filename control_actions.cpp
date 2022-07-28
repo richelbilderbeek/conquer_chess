@@ -241,6 +241,8 @@ void control_actions::start_attack(
 
         p.add_action(
           piece_action(
+            p.get_player(),
+            p.get_type(),
             piece_action_type::attack,
             square(from),
             square(to)
@@ -273,6 +275,8 @@ void control_actions::start_move_unit(
 
         p.add_action(
           piece_action(
+            p.get_player(),
+            p.get_type(),
             piece_action_type::move,
             square(from),
             square(to)
