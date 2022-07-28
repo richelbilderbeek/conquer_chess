@@ -47,6 +47,11 @@ void test_game_class()
     assert(g.get_player_2_pos().get_x() >= 0.0);
     assert(g.get_player_2_pos().get_y() >= 0.0);
   }
+  // game::get_time
+  {
+    const auto g{create_king_versus_king_game()};
+    assert(g.get_time() == delta_t(0.0));
+  }
   // game::tick
   {
     // A piece under attack must have decreasing health
