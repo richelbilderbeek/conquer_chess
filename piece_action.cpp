@@ -50,10 +50,10 @@ void test_piece_action()
   }
   // to_atomic
   {
-    assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e3"))).size() >= 1);
-    assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e4"))).size() >= 2);
-    assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e5"))).size() >= 3);
-    assert(to_atomic(piece_action(piece_action_type::attack, square("e7"), square("e6"))).size() >= 1);
+    assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e3"))).size() == 2);
+    assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e4"))).size() == 3);
+    assert(to_atomic(piece_action(piece_action_type::move, square("e2"), square("e5"))).size() == 4);
+    assert(to_atomic(piece_action(piece_action_type::attack, square("e7"), square("e6"))).size() == 2);
   }
   // to_str
   {
