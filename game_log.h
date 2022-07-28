@@ -9,11 +9,12 @@
 #include "message.h"
 
 /// The text log in the game
-class log
+/// Cannot use 'log' due to conflicts with 'std::log'
+class game_log
 {
 public:
   /// @param display_time_secs the time a message will be displayed
-  explicit log(const double display_time_secs);
+  explicit game_log(const double display_time_secs);
 
   /// Add a message, timestamp will be added
   void add_message(const message& m) noexcept;
@@ -41,7 +42,7 @@ private:
 
 /// Get the log messages for a specific color
 std::string get_last_log_messages(
-  const log& l,
+  const game_log& l,
   const chess_color color
 ) noexcept;
 

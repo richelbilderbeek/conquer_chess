@@ -10,6 +10,7 @@ HEADERS += \
     $$PWD/fps_clock.h \
     $$PWD/game.h \
     $$PWD/game_coordinat.h \
+    $$PWD/game_log.h \
     $$PWD/game_options.h \
     $$PWD/game_rect.h \
     $$PWD/game_resources.h \
@@ -18,7 +19,6 @@ HEADERS += \
     $$PWD/helper.h \
     $$PWD/id.h \
     $$PWD/layout.h \
-    $$PWD/log.h \
     $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
     $$PWD/message.h \
@@ -51,6 +51,7 @@ SOURCES += \
     $$PWD/fps_clock.cpp \
     $$PWD/game.cpp \
     $$PWD/game_coordinat.cpp \
+    $$PWD/game_log.cpp \
     $$PWD/game_options.cpp \
     $$PWD/game_rect.cpp \
     $$PWD/game_resources.cpp \
@@ -59,7 +60,6 @@ SOURCES += \
     $$PWD/helper.cpp \
     $$PWD/id.cpp \
     $$PWD/layout.cpp \
-    $$PWD/log.cpp \
     $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \
     $$PWD/message.cpp \

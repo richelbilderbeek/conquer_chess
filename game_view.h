@@ -6,7 +6,7 @@
 #include "ccfwd.h"
 #include "game.h"
 #include "fps_clock.h"
-#include "log.h"
+#include "game_log.h"
 #include "game_resources.h"
 #include "game_view_layout.h"
 #include <SFML/Graphics.hpp>
@@ -46,7 +46,7 @@ private:
   game_resources m_game_resources;
 
   /// The text log
-  log m_log;
+  game_log m_log;
 
   /// The window to draw to
   sf::RenderWindow m_window;

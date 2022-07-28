@@ -8,7 +8,7 @@
 #include "helper.h"
 #include "id.h"
 #include "fps_clock.h"
-#include "log.h"
+#include "game_log.h"
 #include "menu_view.h"
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
