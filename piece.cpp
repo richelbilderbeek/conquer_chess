@@ -285,13 +285,26 @@ void test_piece()
       assert(!piece.get_messages().empty());
       assert(piece.get_messages().at(0) == message_type::start_move);
     }
-    // start_move for an invalid move results in a sound
+    // move for an invalid move results in a sound
     {
       auto piece{get_test_white_knight()};
       assert(piece.get_current_square() == square("c3"));
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(piece_action_type::move, square("c3"), square("h8")));
+      game g{create_king_versus_king_game()};
+      piece.tick(delta_t(0.1), g);
+      assert(piece.get_actions().empty()); // Nope, cannot do that
+      assert(!piece.get_messages().empty());
+      assert(piece.get_messages().at(0) == message_type::cannot);
+    }
+    // attack for an invalid attack results in a sound
+    {
+      auto piece{get_test_white_knight()};
+      assert(piece.get_current_square() == square("c3"));
+      assert(piece.get_messages().empty());
+      assert(is_idle(piece));
+      piece.add_action(piece_action(piece_action_type::attack, square("c3"), square("d4")));
       game g{create_king_versus_king_game()};
       piece.tick(delta_t(0.1), g);
       assert(piece.get_actions().empty()); // Nope, cannot do that
