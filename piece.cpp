@@ -556,6 +556,7 @@ void piece::tick(
 )
 {
   if (m_actions.empty()) return;
+
   const auto& first_action{m_actions[0]};
   if (first_action.get_type() == piece_action_type::move)
   {

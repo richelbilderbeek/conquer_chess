@@ -115,6 +115,16 @@ void do_select_and_move_keyboard_player_piece(
   do_move_keyboard_player_piece(g, to);
 }
 
+void do_select_and_start_attack_keyboard_player_piece(
+  game& g,
+  const square& from,
+  const square& to
+)
+{
+  do_select_for_keyboard_player(g, from);
+  do_start_attack_keyboard_player_piece(g, to);
+}
+
 void do_select_for_keyboard_player(game& g, const square& s)
 {
   assert(is_piece_at(g, s));
@@ -130,6 +140,16 @@ void do_select_for_keyboard_player(game& g, const square& s)
 bool do_show_selected(const game& g) noexcept
 {
   return do_show_selected(g.get_options());
+}
+
+void do_start_attack_keyboard_player_piece(game& g, const square& s)
+{
+  assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
+  set_keyboard_player_pos(g, s);
+  assert(square(get_keyboard_player_pos(g)) == s);
+  g.add_action(create_press_attack_action());
+  g.tick();
+  assert(count_control_actions(g) == 0);
 }
 
 std::vector<piece> find_pieces(

@@ -141,6 +141,18 @@ void do_select_and_move_keyboard_player_piece(
   const square& to
 );
 
+
+/// Let the keyboard player select a square
+/// (assuming that a piece of the right color is there)
+/// and let it start an attack on another square
+/// @see 'do_select_and_start_attack_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_start_attack_keyboard_player_piece'
+void do_select_and_start_attack_keyboard_player_piece(
+  game& g,
+  const square& from,
+  const square& to
+);
+
 /// Let the keyboard player select the square
 /// Assumes that a piece of the right color is there
 /// @see 'do_select_and_move_keyboard_player_piece' does both
@@ -149,6 +161,12 @@ void do_select_for_keyboard_player(game& g, const square& s);
 
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game& g) noexcept;
+
+/// Let the keyboard player attack a piece
+/// from the current selected square to a new target
+/// @see 'do_select_and_start_attack_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_start_attack_keyboard_player_piece'
+void do_start_attack_keyboard_player_piece(game& g, const square& s);
 
 /// Find zero, one or more chess pieces of the specified type and color
 std::vector<piece> find_pieces(

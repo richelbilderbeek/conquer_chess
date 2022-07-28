@@ -47,6 +47,28 @@ void test_game_class()
     assert(g.get_player_2_pos().get_x() >= 0.0);
     assert(g.get_player_2_pos().get_y() >= 0.0);
   }
+  // game::tick
+  {
+    #define FIX_ISSUE_12
+    #ifdef FIX_ISSUE_12
+    // A piece under attack must have decreasing health
+    {
+      game_options options{get_default_game_options()};
+      options.set_starting_position(starting_position_type::bishop_and_knight_end_game);
+      game g(options);
+      const double health_before{get_piece_at(g, square("d2")).get_health()};
+      // Let the white knight at c4 attack the black king at d2
+      do_select_and_start_attack_keyboard_player_piece(
+        g,
+        square("c4"),
+        square("d2")
+      );
+      g.tick(delta_t(0.1));
+      const double health_after{get_piece_at(g, square("d2")).get_health()};
+      assert(health_after < health_before);
+    }
+    #endif // FIX_ISSUE_12
+  }
 #endif // NDEBUG // no tests in release
 }
 
@@ -249,46 +271,6 @@ void test_game_functions()
     toggle_left_player_color(g);
     const auto color_after{get_left_player_color(g.get_options())};
     assert(color_after != color_before);
-  }
-  // Move e2-e6
-  {
-    game g;
-    assert(is_idle(g));
-    const auto id{get_id(g, square("e2"))};
-    assert(piece_with_id_is_at(g, id, square("e2")));
-    assert(id.get() >= 0);
-    do_select_and_move_keyboard_player_piece(g, square("e2"), square("e6"));
-    assert(!is_idle(g));
-    tick_until_idle(g);
-    assert(is_idle(g));
-    const auto piece{find_piece_with_id(g, id)};
-    assert(piece_with_id_is_at(g, id, square("e6")));
-  }
-  // Ke1-e2 does not move king forward
-  {
-    game g;
-    assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
-    do_select_and_move_keyboard_player_piece(g, square("e1"), square("e2"));
-    tick_until_idle(g);
-    assert(find_pieces(g, piece_type::king, chess_color::white).at(0).get_messages().back() == message_type::cannot);
-    assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
-  }
-  // e2-e6, then cannot move forward
-  {
-    game g;
-    assert(is_idle(g));
-    const auto id{get_id(g, square("e2"))};
-    assert(piece_with_id_is_at(g, id, square("e2")));
-    assert(id.get() >= 0);
-    do_select_and_move_keyboard_player_piece(g, square("e2"), square("e6"));
-    assert(!is_idle(g));
-    tick_until_idle(g);
-    assert(is_idle(g));
-    assert(piece_with_id_is_at(g, id, square("e6")));
-    do_select_and_move_keyboard_player_piece(g, square("e6"), square("e7"));
-    tick_until_idle(g);
-    assert(!piece_with_id_is_at(g, id, square("e7")));
-    assert(piece_with_id_is_at(g, id, square("e6")));
   }
 #endif // NDEBUG // no tests in release
 }

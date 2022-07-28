@@ -111,6 +111,7 @@ private:
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& options) noexcept;
 
+/// Get the default game options
 game_options get_default_game_options();
 
 /// Get the color of the keyboard using player
