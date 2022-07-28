@@ -136,6 +136,18 @@ bool can_attack(
   }
 }
 
+/// Can a piece capture from 'from' to 'to'?
+/// This function assumes the board is empty
+bool can_capture(
+  const piece_type& p,
+  const square& from,
+  const square& to,
+  const side player
+)
+{
+  return can_attack(p, from, to, player);
+}
+
 bool can_move(
   const piece_type& type,
   const square& from,
@@ -411,6 +423,11 @@ void test_piece()
     assert(!can_attack(piece_type::rook, square("e4"), square("f5"), side::lhs));
     assert(!can_attack(piece_type::rook, square("e4"), square("f6"), side::lhs));
   }
+  // can_capture
+  {
+    // The same as can_attack
+    assert(can_capture(piece_type::king, square("e4"), square("d3"), side::lhs));
+  }
   // can_move, on empty board
   {
     assert(can_move(piece_type::bishop, square("e4"), square("d3"), side::lhs));
@@ -548,8 +565,6 @@ void test_piece()
     assert(!p.is_selected());
   }
   // A pawn for the lhs player can move right
-  //#define FIX_ISSUE_10_TIMING
-  #ifdef FIX_ISSUE_10_TIMING
   {
     piece p(
       chess_color::white,
@@ -567,24 +582,14 @@ void test_piece()
       ++n_ticks;
       assert(n_ticks < 10000);
     }
-    std::clog << "n: " << n_ticks << '\n'; // 6
     while (p.get_current_square() == square("e3"))
     {
       p.tick(delta_t(0.1), g);
       ++n_ticks;
       assert(n_ticks < 10000);
     }
-    std::clog << "n: " << n_ticks << '\n'; // 16
-    while (p.get_current_square() == square("e4"))
-    {
-      p.tick(delta_t(0.1), g);
-      ++n_ticks;
-      assert(n_ticks < 10000);
-    }
-    std::clog << "n: " << n_ticks << '\n';
-    assert(1==2);
+    assert(p.get_current_square() == square("e4"));
   }
-  #endif // FIX_ISSUE_10_TIMING
   // A pawn for the rhs player cannot move right
   {
     piece p(
@@ -692,7 +697,7 @@ void tick_attack(
   assert(!p.get_actions().empty());
   const auto& first_action{p.get_actions()[0]};
   assert(first_action.get_action_type() == piece_action_type::attack);
-  // Done if piece moved aways
+  // Done if piece moved away
   if (!is_piece_at(g, first_action.get_to()))
   {
     remove_first(p.get_actions());

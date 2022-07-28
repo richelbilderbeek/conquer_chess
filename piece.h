@@ -161,6 +161,15 @@ bool can_attack(
   const side player
 );
 
+/// Can a piece capture from 'from' to 'to'?
+/// This function assumes the board is empty
+bool can_capture(
+  const piece_type& p,
+  const square& from,
+  const square& to,
+  const side player
+);
+
 /// Can a piece move from 'from' to 'to'?
 /// This function assumes the board is empty
 bool can_move(
