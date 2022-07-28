@@ -70,3 +70,10 @@ these are the differences:
    but the king will take more damage when attacked
  * A pawn can attack by en-passant, for a limited amount of time
 
+## Game settings
+
+### What is the game speed?
+
+Under normal game speed, a piece moves one square (Euclidean distance)
+per second.
+

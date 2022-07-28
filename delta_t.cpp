@@ -38,6 +38,15 @@ void test_delta_t()
     const delta_t d3{d1 + d2};
     assert(d3.get() == t1 + t2);
   }
+  // operator*
+  {
+    const double t1{0.1};
+    const double t2{0.2};
+    const delta_t d1{t1};
+    const delta_t d2{t2};
+    const delta_t d3{d1 * d2};
+    assert(d3.get() == t1 * t2);
+  }
   // operator+=
   {
     const double t1{0.1};
@@ -76,6 +85,11 @@ delta_t& operator+=(delta_t& lhs, const delta_t& rhs) noexcept
 delta_t operator+(const delta_t& lhs, const delta_t& rhs) noexcept
 {
   return delta_t(lhs.get() + rhs.get());
+}
+
+delta_t operator*(const delta_t& lhs, const delta_t& rhs) noexcept
+{
+  return delta_t(lhs.get() * rhs.get());
 }
 
 bool operator>(const delta_t& lhs, const delta_t& rhs) noexcept

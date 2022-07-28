@@ -91,8 +91,11 @@ void game_view::exec()
     };
     if (must_quit) return;
 
-    // Do a tick
-    m_game.tick(to_delta_t(m_game.get_options().get_game_speed()));
+    // Do a tick, so that one delta_t equals one second under normal game speed
+    m_game.tick(
+      delta_t(1.0 / m_fps_clock.get_fps())
+      * to_delta_t(m_game.get_options().get_game_speed())
+    );
 
     // Read the pieces' messages and play their sounds
     process_piece_messages();
