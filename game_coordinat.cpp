@@ -94,7 +94,7 @@ bool is_forward(
   const side player
 )
 {
-  const bool is_right{to.get_pos()[1] > from.get_pos()[1]};
+  const bool is_right{to.get_x() > from.get_x()};
   return (player == side::rhs && !is_right)
     || (player == side::lhs && is_right)
   ;

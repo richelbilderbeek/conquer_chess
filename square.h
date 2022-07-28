@@ -14,9 +14,6 @@ public:
   explicit square(const game_coordinat& g);
   explicit square(const int x, const int y);
 
-  /// Get the position as a string
-  const auto& get_pos() const noexcept { return m_pos; }
-
   /// Get the x coordinat, starting from 0 for a1/b1/c1/etc.
   /// As the board goes from a1 at top-left,
   /// to a8 at top-right,
@@ -31,7 +28,8 @@ public:
 
 private:
 
-  std::string m_pos;
+  int m_x;
+  int m_y;
 };
 
 /// Are the squares adjacent on the same diagonal, e.g. d1 and e2

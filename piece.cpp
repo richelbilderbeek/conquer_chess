@@ -435,6 +435,7 @@ void test_piece()
     assert(!p.is_selected());
   }
   // A pawn for the lhs player can move right
+  //#define FIX_ISSUE_10_TIMING
   #ifdef FIX_ISSUE_10_TIMING
   {
     piece p(
@@ -445,10 +446,29 @@ void test_piece()
     );
     p.add_action(piece_action(piece_action_type::move, square("e2"), square("e4")));
     assert(!p.get_actions().empty());
-    p.tick(delta_t(1.0));
-    assert(!p.get_actions().empty());
-    std::clog << p.get_current_square();
-    assert(p.get_current_square() == square("e3"));
+    int n_ticks{0};
+    while (p.get_current_square() == square("e2"))
+    {
+      p.tick(delta_t(0.1), {});
+      ++n_ticks;
+      assert(n_ticks < 10000);
+    }
+    std::clog << "n: " << n_ticks << '\n'; // 6
+    while (p.get_current_square() == square("e3"))
+    {
+      p.tick(delta_t(0.1), {});
+      ++n_ticks;
+      assert(n_ticks < 10000);
+    }
+    std::clog << "n: " << n_ticks << '\n'; // 16
+    while (p.get_current_square() == square("e4"))
+    {
+      p.tick(delta_t(0.1), {});
+      ++n_ticks;
+      assert(n_ticks < 10000);
+    }
+    std::clog << "n: " << n_ticks << '\n';
+    assert(1==2);
   }
   #endif // FIX_ISSUE_10_TIMING
   // A pawn for the rhs player cannot move right

@@ -10,10 +10,16 @@
 #include <regex>
 
 square::square(const std::string& pos)
-  : m_pos{pos}
 {
-  assert(m_pos.size() == 2);
-  assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
+  assert(pos.size() == 2);
+  assert(std::regex_match(pos, std::regex("^[a-h][1-8]$")));
+  const int y{pos[0] - 'a'};
+  const int x{pos[1] - '1'};
+  std::clog << pos << '\n';
+  assert(x >= 0 && x < 8 && y >= 0 && y < 8);
+  m_x = x;
+  m_y = y;
+  assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
 }
 
 square::square(const game_coordinat& g)
@@ -21,56 +27,60 @@ square::square(const game_coordinat& g)
   const int x{static_cast<int>(std::trunc(g.get_x()))};
   const int y{static_cast<int>(std::trunc(g.get_y()))};
   assert(x >= 0 && x < 8 && y >= 0 && y < 8);
+  m_x = x;
+  m_y = y;
+  /*
   const char first = 'a' + y;
   const char second = '1' + x;
   m_pos += first;
   m_pos += second;
   assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
+  */
+  assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
 }
 
 square::square(const int x, const int y)
+  : m_x{x}, m_y{y}
 {
-  assert(x >= 0 && x < 8 && y >= 0 && y < 8);
+  assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
+  /*
   const char first = 'a' + y;
   const char second = '1' + x;
   m_pos += first;
   m_pos += second;
   assert(std::regex_match(m_pos, std::regex("^[a-h][1-8]$")));
+  */
 }
 
 bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept
 {
   return are_on_same_diagonal(a, b)
-    && std::abs(static_cast<int>(a.get_pos()[0] - b.get_pos()[0])) == 1
+    && std::abs(static_cast<int>(a.get_x() - b.get_x())) == 1
   ;
 }
 
 bool are_on_same_diagonal(const square& a, const square& b) noexcept
 {
-  return std::abs(static_cast<int>(a.get_pos()[0] - b.get_pos()[0]))
-   == std::abs(static_cast<int>(a.get_pos()[1] - b.get_pos()[1]))
+  return std::abs(a.get_x() - b.get_x())
+   == std::abs(a.get_y() - b.get_y())
   ;
 }
 
 bool are_on_same_file(const square& a, const square& b) noexcept
 {
-  return a.get_pos()[0] == b.get_pos()[0];
+  return a.get_y() == b.get_y();
 }
 
 bool are_on_same_half_diagonal(const square& a, const square& b) noexcept
 {
-  const int dx{
-    std::abs(static_cast<int>(a.get_pos()[0] - b.get_pos()[0]))
-  };
-  const int dy{
-     std::abs(static_cast<int>(a.get_pos()[1] - b.get_pos()[1]))
-  };
+  const int dx{std::abs(a.get_x() - b.get_x())};
+  const int dy{std::abs(a.get_y() - b.get_y())};
   return dx == dy * 2 || dy == dx * 2;
 }
 
 bool are_on_same_rank(const square& a, const square& b) noexcept
 {
-  return a.get_pos()[1] == b.get_pos()[1];
+  return a.get_x() == b.get_x();
 }
 
 std::vector<square> get_intermediate_squares(
@@ -155,6 +165,11 @@ std::vector<square> get_intermediate_squares(
 
 square get_rotated_square(const square& position) noexcept
 {
+  return square(
+    7 - position.get_x(),
+    7 - position.get_y()
+  );
+  /*
   const char first_char{position.get_pos()[0]};
   const char second_char{position.get_pos()[1]};
   const char first_new_char = 'h' - (first_char - 'a');
@@ -163,22 +178,29 @@ square get_rotated_square(const square& position) noexcept
   s += first_new_char;
   s += second_new_char;
   return square(s);
+  */
 }
 
 int square::get_x() const
 {
+  return m_x;
+  /*
   assert(m_pos.size() == 2);
   const int x_int{m_pos[1] - '1'};
   //const int y_int{m_pos[0] - 'a'};
   return x_int;
+  */
 }
 
 int square::get_y() const
 {
+  return m_y;
+  /*
   assert(m_pos.size() == 2);
   //const int x_int{m_pos[1] - '1'};
   const int y_int{m_pos[0] - 'a'};
   return y_int;
+  */
 }
 
 bool is_occupied(
@@ -196,12 +218,6 @@ bool is_occupied(
 void test_square()
 {
 #ifndef NDEBUG
-  // square::get_pos
-  {
-    const std::string pos("a2");
-    const square s(pos);
-    assert(s.get_pos() == pos);
-  }
   // square::get_x
   {
     const std::string pos("a2");
@@ -312,10 +328,11 @@ void test_square()
     const auto a8_expected{game_rect(game_coordinat(7.0, 0.0), game_coordinat(8.0, 1.0))};
     assert(a8_created == a8_expected);
   }
-  // to_str, square
+  // to_str, one square
   {
-    const auto s{square("a1")};
-    assert(!to_str(s).empty());
+    const std::string pos("a2");
+    const square s(pos);
+    assert(to_str(s) == pos);
   }
   // to_str, std::vector<square>
   {
@@ -369,7 +386,12 @@ game_rect to_game_rect(const square& s) noexcept
 
 std::string to_str(const square& s) noexcept
 {
-  return s.get_pos();
+  std::stringstream st;
+  const char c1 = 'a' + s.get_y();
+  const char c2 = '1' + static_cast<char>(s.get_x());
+  st << c1 << c2;
+  return st.str();
+
 }
 
 std::string to_str(const std::vector<square>& squares) noexcept
@@ -390,7 +412,9 @@ std::string to_str(const std::vector<square>& squares) noexcept
 
 bool operator==(const square& lhs, const square& rhs) noexcept
 {
-  return lhs.get_pos() == rhs.get_pos();
+  return lhs.get_x() == rhs.get_x()
+    && lhs.get_y() == rhs.get_y()
+  ;
 }
 
 bool operator!=(const square& lhs, const square& rhs) noexcept
