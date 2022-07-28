@@ -239,6 +239,12 @@ void test_game_functions()
     assert(piece.get_type() == piece_type::king);
     piece.set_selected(true); // Just needs to compile
   }
+  // get_player_color
+  {
+    const game g;
+    assert(get_player_color(g, side::lhs) == chess_color::white);
+    assert(get_player_color(g, side::rhs) == chess_color::black);
+  }
   // is_idle
   {
     game g;
