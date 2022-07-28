@@ -743,6 +743,12 @@ void piece::tick(
   else
   {
     assert(first_action.get_action_type() == piece_action_type::attack);
+    // Done if piece moved aways
+    if (!is_piece_at(g, first_action.get_to()))
+    {
+      remove_first(m_actions);
+      return;
+    }
     assert(is_piece_at(g, first_action.get_to()));
     piece& target{get_piece_at(g, first_action.get_to())};
     target.receive_damage(g.get_options().get_dps() * dt.get());
