@@ -89,6 +89,13 @@ std::vector<piece> get_pieces_bishop_and_knight_end_game(
   const chess_color left_player_color = chess_color::white
 ) noexcept;
 
+/// Get the pieces from a standard game, with all pawns moved two
+/// squares forward
+std::vector<piece> get_pieces_pawn_all_out_assault(
+  const chess_color left_player_color = chess_color::white
+) noexcept;
+
+
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(
   const starting_position_type t,
