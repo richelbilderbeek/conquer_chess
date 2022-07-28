@@ -24,6 +24,7 @@ piece::piece(
     m_health{::get_max_health(type)},
     m_id{create_new_id()},
     m_is_selected{false},
+    m_kill_count{0},
     m_max_health{::get_max_health(type)},
     m_player{player},
     m_target_square{},
@@ -76,7 +77,6 @@ void piece::add_action(const piece_action& action)
       this->add_message(message_type::start_attack);
     }
   }
-
   const std::vector<piece_action> atomic_actions{
     to_atomic(action)
   };
@@ -322,6 +322,11 @@ void test_piece()
       assert(piece.get_messages().at(0) == message_type::cannot);
     }
   }
+  // piece::get_kill_count
+  {
+    const auto piece{get_test_white_knight()};
+    assert(piece.get_kill_count() == 0);
+  }
   // piece::get_messages
   {
     auto piece{get_test_white_knight()};
@@ -552,26 +557,27 @@ void test_piece()
       square("e2"),
       side::lhs
     );
-    p.add_action(piece_action(piece_action_type::move, square("e2"), square("e4")));
+    p.add_action(piece_action(side::lhs, piece_type::pawn, piece_action_type::move, square("e2"), square("e4")));
     assert(!p.get_actions().empty());
     int n_ticks{0};
+    game g;
     while (p.get_current_square() == square("e2"))
     {
-      p.tick(delta_t(0.1), {});
+      p.tick(delta_t(0.1), g);
       ++n_ticks;
       assert(n_ticks < 10000);
     }
     std::clog << "n: " << n_ticks << '\n'; // 6
     while (p.get_current_square() == square("e3"))
     {
-      p.tick(delta_t(0.1), {});
+      p.tick(delta_t(0.1), g);
       ++n_ticks;
       assert(n_ticks < 10000);
     }
     std::clog << "n: " << n_ticks << '\n'; // 16
     while (p.get_current_square() == square("e4"))
     {
-      p.tick(delta_t(0.1), {});
+      p.tick(delta_t(0.1), g);
       ++n_ticks;
       assert(n_ticks < 10000);
     }
@@ -667,105 +673,132 @@ void piece::tick(
 )
 {
   if (m_actions.empty()) return;
+  switch(m_actions[0].get_action_type())
+  {
+    case piece_action_type::move: return tick_move(*this, dt, g);
+    default:
+    case piece_action_type::attack:
+      assert(m_actions[0].get_action_type() == piece_action_type::attack);
+      return tick_attack(*this, dt, g);
+  }
+}
+
+void tick_attack(
+  piece& p,
+  const delta_t& dt,
+  game& g
+)
+{
+  assert(!p.get_actions().empty());
+  const auto& first_action{p.get_actions()[0]};
+  assert(first_action.get_action_type() == piece_action_type::attack);
+  // Done if piece moved aways
+  if (!is_piece_at(g, first_action.get_to()))
+  {
+    remove_first(p.get_actions());
+    return;
+  }
+  assert(is_piece_at(g, first_action.get_to()));
+  piece& target{get_piece_at(g, first_action.get_to())};
+  target.receive_damage(g.get_options().get_dps() * dt.get());
+  // Capture the piece if destroyed
+  if (is_dead(target))
+  {
+    p.increase_kill_count();
+    p.get_actions().clear();
+    p.add_action(
+      piece_action(
+        first_action.get_player(),
+        first_action.get_piece_type(),
+        piece_action_type::move,
+        first_action.get_from(),
+        first_action.get_to()
+      )
+    );
+  }
+}
+
+void tick_move(
+  piece& p,
+  const delta_t& dt,
+  game& g
+)
+{
+  assert(!p.get_actions().empty());
+  const auto& first_action{p.get_actions()[0]};
+  assert(first_action.get_action_type() == piece_action_type::move);
 
   const auto occupied_squares{
     get_occupied_squares(g)
   };
 
-  const auto& first_action{m_actions[0]};
-  if (first_action.get_action_type() == piece_action_type::move)
-  {
-    const auto distance_from_start{
-      calc_length(
-        to_coordinat(first_action.get_from()) - m_coordinat)
-      };
-    const auto distance_to_target{
-      calc_length(
-        to_coordinat(first_action.get_to()) - m_coordinat
-      )
+  const auto distance_from_start{
+    calc_length(
+      to_coordinat(first_action.get_from()) - p.get_coordinat())
     };
-    // Occupy different square?
-    if (distance_to_target < distance_from_start)
+  const auto distance_to_target{
+    calc_length(
+      to_coordinat(first_action.get_to()) - p.get_coordinat()
+    )
+  };
+  // Occupy different square?
+  if (distance_to_target < distance_from_start)
+  {
+    // Taking over
+    if (is_occupied(first_action.get_to(), occupied_squares))
     {
-      // Taking over
-      if (is_occupied(first_action.get_to(), occupied_squares))
+      if (p.get_current_square() != first_action.get_to())
       {
-        if (get_current_square() != first_action.get_to())
-        {
-          // Too bad, moving back
-          m_actions.clear();
-          m_actions.push_back(
-            piece_action(
-              get_piece_at(g, first_action.get_from()).get_player(),
-              get_piece_at(g, first_action.get_from()).get_type(),
-              piece_action_type::move,
-              first_action.get_from(),
-              first_action.get_from()
-            )
-          );
-          m_messages.push_back(message_type::cannot);
-        }
-        else
-        {
-          // Taken by me
-        }
+        // Too bad, moving back
+        p.get_actions().clear();
+        p.add_action(
+          piece_action(
+            get_piece_at(g, first_action.get_from()).get_player(),
+            get_piece_at(g, first_action.get_from()).get_type(),
+            piece_action_type::move,
+            first_action.get_from(),
+            first_action.get_from()
+          )
+        );
+        p.add_message(message_type::cannot);
+        return;
       }
       else
       {
-        // Occupy the next square
-        assert(!is_occupied(first_action.get_to(), occupied_squares));
-        m_current_square = first_action.get_to();
+        // Taken by me
       }
-    }
-    if (distance_to_target < dt.get())
-    {
-      // Arrive at next the square
-      m_coordinat = to_coordinat(first_action.get_to());
-
-      // Done moving
-      remove_first(m_actions);
     }
     else
     {
-      const auto full_length{
-        calc_length(
-          to_coordinat(first_action.get_to()) - m_coordinat
-        )
-      };
-      const auto delta{
-        (to_coordinat(first_action.get_to()) - m_coordinat)
-        / (full_length / dt.get())
-      };
-      m_coordinat += delta;
+      // Occupy the next square
+      assert(!is_occupied(first_action.get_to(), occupied_squares));
+      p.set_current_square(first_action.get_to());
+      //m_current_square = first_action.get_to();
     }
+  }
+  if (distance_to_target < dt.get())
+  {
+    // Arrive at next the square
+    p.set_coordinat(to_coordinat(first_action.get_to()));
+    //m_coordinat = to_coordinat(first_action.get_to());
+    p.set_current_square(first_action.get_to());
 
+    // Done moving
+    assert(!p.get_actions().empty());
+    remove_first(p.get_actions());
   }
   else
   {
-    assert(first_action.get_action_type() == piece_action_type::attack);
-    // Done if piece moved aways
-    if (!is_piece_at(g, first_action.get_to()))
-    {
-      remove_first(m_actions);
-      return;
-    }
-    assert(is_piece_at(g, first_action.get_to()));
-    piece& target{get_piece_at(g, first_action.get_to())};
-    target.receive_damage(g.get_options().get_dps() * dt.get());
-    // Capture the piece if destroyed
-    if (is_dead(target))
-    {
-      m_actions.clear();
-      this->add_action(
-        piece_action(
-          first_action.get_player(),
-          first_action.get_piece_type(),
-          piece_action_type::move,
-          first_action.get_from(),
-          first_action.get_to()
-        )
-      );
-    }
+    const auto full_length{
+      calc_length(
+        to_coordinat(first_action.get_to()) - p.get_coordinat()
+      )
+    };
+    const auto delta{
+      (to_coordinat(first_action.get_to()) - p.get_coordinat())
+      / (full_length / dt.get())
+    };
+    p.get_coordinat() += delta;
   }
 }
 

@@ -75,25 +75,6 @@ int count_selected_units(
   );
 }
 
-piece find_piece_with_id(
-  const std::vector<piece>& pieces,
-  const id& i
-)
-{
-  const auto there{
-    std::find_if(
-      std::begin(pieces),
-      std::end(pieces),
-      [i](const auto& p)
-      {
-        return p.get_id() == i;
-      }
-    )
-  };
-  assert(there != std::end(pieces));
-  return *there;
-}
-
 std::vector<piece> get_kings_only_starting_pieces(
   const chess_color left_player_color
 ) noexcept
@@ -164,6 +145,25 @@ piece& get_piece_at(
     )
   };
   assert(there != pieces.end());
+  return *there;
+}
+
+piece get_piece_with_id(
+  const std::vector<piece>& pieces,
+  const id& i
+)
+{
+  const auto there{
+    std::find_if(
+      std::begin(pieces),
+      std::end(pieces),
+      [i](const auto& p)
+      {
+        return p.get_id() == i;
+      }
+    )
+  };
+  assert(there != std::end(pieces));
   return *there;
 }
 

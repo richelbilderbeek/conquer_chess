@@ -52,7 +52,10 @@ public:
   /// this coordinat may be around d3 or d4.
   /// Use 'get_current_square'/'get_occupied_square'
   /// for the square the piece is formally on
-  game_coordinat get_coordinat() const noexcept { return m_coordinat; }
+  const game_coordinat& get_coordinat() const noexcept { return m_coordinat; }
+
+  /// Get the coordinat at the center of the piece
+  game_coordinat& get_coordinat() noexcept { return m_coordinat; }
 
   const auto& get_current_square() const noexcept { return m_current_square; }
 
@@ -61,6 +64,9 @@ public:
 
   /// Get the ID of the piece
   const auto& get_id() const noexcept { return m_id; }
+
+  /// Get the number of pieces this piece has killd
+  int get_kill_count() const noexcept { return m_kill_count; }
 
   /// Get the maximum health of the unit
   double get_max_health() const noexcept { return m_max_health; }
@@ -74,12 +80,21 @@ public:
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }
 
+  /// Increase the kill count by one
+  void increase_kill_count() noexcept { ++m_kill_count; }
+
   /// Is the piece selected?
   bool is_selected() const noexcept { return m_is_selected; }
 
   /// Receive damage
   /// @param damage a positive value
   void receive_damage(const double damage);
+
+  /// Set the current/occupied square
+  void set_current_square(const square& s) noexcept { m_current_square = s; }
+
+  /// Set the current coordinat
+  void set_coordinat(const game_coordinat& coordinat) noexcept { m_coordinat = coordinat; }
 
   /// Set the selectedness of the piece
   void set_selected(bool is_selected) noexcept;
@@ -117,6 +132,9 @@ private:
 
   /// Is this piece selected?
   bool m_is_selected;
+
+  /// The number of pieces killed by this one
+  int m_kill_count;
 
   /// The maximum health
   double m_max_health;
@@ -187,6 +205,20 @@ void select(piece& p) noexcept;
 
 /// Test this class and its free functions
 void test_piece();
+
+/// Process a tick, when the current action is an attack
+void tick_attack(
+  piece& p,
+  const delta_t& dt,
+  game& g
+);
+
+/// Process a tick, when the current action is a move
+void tick_move(
+  piece& p,
+  const delta_t& dt,
+  game& g
+);
 
 /// Select the piece
 void toggle_select(piece& p) noexcept;

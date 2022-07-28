@@ -70,9 +70,7 @@ void test_game_class()
       const double health_after{get_piece_at(g, square("d2")).get_health()};
       assert(health_after < health_before);
     }
-    #define FIX_ISSUE_15
-    #ifdef FIX_ISSUE_15
-    // When a piece is killed, the attacker moves to that square
+    // When a piece is killed, the queen attacker moves to that square
     {
       game_options options{get_default_game_options()};
       options.set_starting_position(starting_position_type::before_scholars_mate);
@@ -93,7 +91,6 @@ void test_game_class()
       };
       assert(killer_queen.get_actions().front().get_action_type() == piece_action_type::move);
     }
-    #endif
   }
 #endif // NDEBUG // no tests in release
 }

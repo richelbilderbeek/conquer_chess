@@ -143,16 +143,6 @@ std::vector<piece_action> to_atomic(const piece_action& a)
     || a.get_action_type() == piece_action_type::attack
   );
   std::vector<piece_action> atomic_actions;
-
-  const std::vector<square> squares{
-    get_intermediate_squares(
-      a.get_from(),
-      a.get_to()
-    )
-  };
-  const int n_squares{static_cast<int>(squares.size())};
-  assert(n_squares >= 2);
-  atomic_actions.reserve(n_squares);
   // First action is always: go home
   atomic_actions.push_back(
     piece_action(
@@ -163,6 +153,17 @@ std::vector<piece_action> to_atomic(const piece_action& a)
       a.get_from()
     )
   );
+  if (a.get_from() == a.get_to()) return atomic_actions;
+
+  const std::vector<square> squares{
+    get_intermediate_squares(
+      a.get_from(),
+      a.get_to()
+    )
+  };
+  const int n_squares{static_cast<int>(squares.size())};
+  assert(n_squares >= 2);
+  atomic_actions.reserve(n_squares);
 
 
   for (int i{1}; i != n_squares; ++i)

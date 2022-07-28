@@ -175,13 +175,6 @@ std::vector<piece> find_pieces(
   const chess_color color
 );
 
-/// Find a piece with a certain ID
-/// Will throw if there is no piece with that ID
-piece find_piece_with_id(
-  const game& g,
-  const id& i
-);
-
 /// Get the piece that is closest to the coordinat
 const piece& get_closest_piece_to(const game& g, const game_coordinat& coordinat);
 
@@ -241,6 +234,13 @@ const piece& get_piece_at(const game& g, const square& coordinat);
 /// Get the piece that at that square,
 /// will throw if there is no piece
 piece& get_piece_at(game& g, const square& coordinat);
+
+/// Find a piece with a certain ID
+/// Will throw if there is no piece with that ID
+piece get_piece_with_id(
+  const game& g,
+  const id& i
+);
 
 /// Get the color of a player
 chess_color get_player_color(

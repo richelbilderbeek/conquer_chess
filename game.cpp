@@ -172,14 +172,6 @@ std::vector<piece> find_pieces(
   return pieces;
 }
 
-piece find_piece_with_id(
-  const game& g,
-  const id& i
-)
-{
-  return find_piece_with_id(g.get_pieces(), i);
-}
-
 const piece& get_closest_piece_to(
   const game& g,
   const game_coordinat& coordinat
@@ -318,6 +310,14 @@ std::vector<piece>& get_pieces(game& g) noexcept
 const std::vector<piece>& get_pieces(const game& g) noexcept
 {
   return g.get_pieces();
+}
+
+piece get_piece_with_id(
+  const game& g,
+  const id& i
+)
+{
+  return get_piece_with_id(g.get_pieces(), i);
 }
 
 chess_color get_player_color(
