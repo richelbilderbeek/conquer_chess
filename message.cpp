@@ -28,6 +28,19 @@ void test_message()
     assert(m.get_piece_type() == pt);
     assert(m.get_message_type() == mt);
   }
+  // to_str
+  {
+    assert(!to_str(message(message_type::cannot, chess_color::white, piece_type::king)).empty());
+    assert(!to_str(message(message_type::select, chess_color::white, piece_type::king)).empty());
+    assert(!to_str(message(message_type::start_move, chess_color::white, piece_type::king)).empty());
+    assert(!to_str(message(message_type::start_attack, chess_color::white, piece_type::king)).empty());
+  }
+  // operator<<
+  {
+    std::stringstream s;
+    s << message(message_type::cannot, chess_color::white, piece_type::king);
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
