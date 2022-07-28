@@ -1,41 +1,62 @@
 #include "starting_position_type.h"
 
+#include <algorithm>
 #include <cassert>
+
+std::vector<starting_position_type> get_all_starting_position_types() noexcept
+{
+  return
+  {
+    starting_position_type::standard,
+    starting_position_type::kings_only,
+    starting_position_type::before_scholars_mate,
+    starting_position_type::bishop_and_knight_end_game,
+    starting_position_type::pawn_all_out_assault
+  };
+}
 
 starting_position_type get_next(const starting_position_type starting_position) noexcept
 {
-  switch (starting_position)
-  {
-    case starting_position_type::standard:
-      return starting_position_type::kings_only;
-    case starting_position_type::kings_only:
-      return starting_position_type::before_scholars_mate;
-    case starting_position_type::before_scholars_mate:
-      return starting_position_type::bishop_and_knight_end_game;
-    default:
-    case starting_position_type::bishop_and_knight_end_game:
-      assert(starting_position == starting_position_type::bishop_and_knight_end_game);
-      return starting_position_type::standard;
-  }
+  const auto v{get_all_starting_position_types()};
+  auto there{std::find(std::begin(v), std::end(v), starting_position)};
+  if (there == std::end(v)) return v.front();
+  return *(++there);
 }
 
 
 void test_starting_position_type()
 {
 #ifndef NDEBUG
-  // to_str
+  // to_str, manual
   {
     assert(to_str(starting_position_type::standard) == "standard");
     assert(to_str(starting_position_type::kings_only) == "kings_only");
     assert(to_str(starting_position_type::before_scholars_mate) == "before_scholars_mate");
     assert(to_str(starting_position_type::bishop_and_knight_end_game) == "bishop_and_knight_end_game");
+    assert(to_str(starting_position_type::pawn_all_out_assault) == "pawn_all_out_assault");
+  }
+  // to_str, from collection
+  {
+    for (const auto spt: get_all_starting_position_types())
+    {
+      assert(!to_str(spt).empty());
+    }
   }
   // get_next
   {
     assert(get_next(starting_position_type::standard) == starting_position_type::kings_only);
     assert(get_next(starting_position_type::kings_only) == starting_position_type::before_scholars_mate);
     assert(get_next(starting_position_type::before_scholars_mate) == starting_position_type::bishop_and_knight_end_game);
-    assert(get_next(starting_position_type::bishop_and_knight_end_game) == starting_position_type::standard);
+    assert(get_next(starting_position_type::bishop_and_knight_end_game) == starting_position_type::pawn_all_out_assault);
+    assert(get_next(starting_position_type::pawn_all_out_assault) == starting_position_type::standard);
+  }
+  // get_next, from collection
+  {
+    for (const auto spt: get_all_starting_position_types())
+    {
+      const auto next{get_next(spt)};
+      assert(next != spt);
+    }
   }
 #endif // DEBUG
 }
@@ -50,9 +71,11 @@ std::string to_str(const starting_position_type t) noexcept
       return "kings_only";
     case starting_position_type::before_scholars_mate:
       return "before_scholars_mate";
-    default:
     case starting_position_type::bishop_and_knight_end_game:
-      assert(t == starting_position_type::bishop_and_knight_end_game);
       return "bishop_and_knight_end_game";
+    case starting_position_type::pawn_all_out_assault:
+    default:
+      assert(t == starting_position_type::pawn_all_out_assault);
+      return "pawn_all_out_assault";
   }
 }
