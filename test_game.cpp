@@ -49,7 +49,7 @@ void test_game_class()
   }
   // game::tick
   {
-    #define FIX_ISSUE_12
+    //#define FIX_ISSUE_12
     #ifdef FIX_ISSUE_12
     // A piece under attack must have decreasing health
     {
