@@ -56,14 +56,10 @@ these are the differences:
  * When a piece is moving and halfway to its target square, 
    it can be attacked at its target square
  * Multiple pieces can attack the same opponents piece
- * When a piece is destroyed, an attacker will automatically occupy the square.
-   If there are multiple attackers, the attacker with the lowest value
-   will occupy the square.
-   If there are multiple attackers with the same value,
-   the attacker with the lowest health will occupy the square.
-   If there are multiple attackers with the same value and health,
-   the attacker with the lowest initial file (e.g. the a file)
-   will occupy the square
+ * When a piece is destroyed, 
+   all its attacker will automatically try to capture the square.
+   Note that the closest piece will be successfull, 
+   the others will move back to the square they occupied before the attack
  * Castling can only be done when (1) the king has not moved,
    (2) the desired rook has not moved, (3) there are no pieces
    in the way. Castling can take place through check and to check,
