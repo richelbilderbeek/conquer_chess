@@ -5,6 +5,23 @@
 #include <cassert>
 #include <cmath>
 
+sf::Color f_health_to_color(const double f)
+{
+  assert(f >= 0.0);
+  assert(f <= 1.0);
+  if (f < 0.25) return sf::Color::Red;
+  if (f < 0.50) return sf::Color(255, 128, 0);
+  if (f < 0.75) return sf::Color::Yellow;
+  return sf::Color::Green;
+  /*
+  sf::Color(
+    static_cast<sf::Uint8>(f * 255.0),
+    static_cast<sf::Uint8>(f * 255.0),
+    static_cast<sf::Uint8>(f * 255.0)
+  )
+  */
+}
+
 void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect)
 {
   rectangle.setOrigin(

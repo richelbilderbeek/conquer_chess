@@ -751,13 +751,7 @@ void show_unit_health_bars(game_view& view)
       16.0 - 8.0)
     );
 
-    health_bar.setFillColor(
-      sf::Color(
-        static_cast<sf::Uint8>(get_f_health(piece) * 255.0),
-        static_cast<sf::Uint8>(get_f_health(piece) * 255.0),
-        static_cast<sf::Uint8>(get_f_health(piece) * 255.0)
-      )
-    );
+    health_bar.setFillColor(f_health_to_color(get_f_health(piece)));
     health_bar.setOrigin(0.0, 0.0);
     const auto health_bar_pos = convert_to_screen_coordinat(
       piece.get_coordinat() + game_coordinat(-0.5, -0.5),

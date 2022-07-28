@@ -10,6 +10,9 @@
 
 #include <SFML/Graphics.hpp>
 
+/// Convert a fraction of health (i.e. a value e [0.0, 1.0] to a color
+sf::Color f_health_to_color(const double f);
+
 /// Make 'rectangle' have the same size and position as the 'screen_rect'
 void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect);
 
