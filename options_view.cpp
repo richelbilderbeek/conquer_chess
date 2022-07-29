@@ -115,7 +115,7 @@ bool options_view::process_events()
           break;
           case options_view_item::starting_position:
             assert(!to_str(get_starting_position(*this)).empty());
-            m_options.set_starting_position(get_next(m_options.get_starting_position()));
+            m_options.set_starting_position(get_next(get_starting_position(m_options)));
             assert(!to_str(get_starting_position(*this)).empty());
           break;
           case options_view_item::left_color:

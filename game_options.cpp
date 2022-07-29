@@ -119,8 +119,8 @@ std::vector<piece> get_starting_pieces(
 ) noexcept
 {
   return get_starting_pieces(
-    options.get_starting_position(),
-    options.get_left_player_color()
+    get_starting_position(options),
+    get_left_player_color(options)
   );
 }
 
@@ -132,6 +132,11 @@ starting_position_type get_starting_position(const game_options& options) noexce
 void test_game_options()
 {
 #ifndef NDEBUG
+  // get_starting_position and game::get_starting_position
+  {
+    const auto options{get_default_game_options()};
+    assert(options.get_starting_position() == get_starting_position(options));
+  }
   // default game_options
   {
     const auto options{get_default_game_options()};
