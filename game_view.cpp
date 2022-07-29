@@ -359,6 +359,8 @@ void show_board(game_view& view)
   {
     show_occupied_squares(view);
   }
+  show_square_under_cursor(view, side::lhs);
+  show_square_under_cursor(view, side::rhs);
   show_unit_paths(view);
   show_pieces(view);
   show_unit_health_bars(view);
@@ -413,22 +415,22 @@ void show_debug_1(game_view& view)
   sf::Text text;
   text.setFont(view.get_resources().get_font());
   const piece& closest_piece{
-    get_closest_piece_to(game, game.get_player_1_pos())
+    get_closest_piece_to(game, get_player_pos(game, side::lhs))
   };
   const auto color{get_left_player_color(game.get_options())};
   std::stringstream s;
   s << "Color: " << color << '\n'
     << "Controller: " << get_left_player_controller(view.get_game().get_options()) << '\n'
     << "Game position: "
-    << to_notation(game.get_player_1_pos())
+    << to_notation(get_player_pos(game, side::lhs))
     << " "
-    << game.get_player_1_pos()
+    << get_player_pos(game, side::lhs)
     << '\n'
     << "Screen position: "
-    << convert_to_screen_coordinat(game.get_player_1_pos(), layout)
+    << convert_to_screen_coordinat(get_player_pos(game, side::lhs), layout)
     << '\n'
     << "Is there a piece here: "
-    << bool_to_str(is_piece_at(game, game.get_player_1_pos(), 0.5))
+    << bool_to_str(is_piece_at(game, get_player_pos(game, side::lhs), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_control_actions(game) << '\n'
@@ -460,22 +462,22 @@ void show_debug_2(game_view& view)
   sf::Text text;
   text.setFont(view.get_resources().get_font());
   const piece& closest_piece{
-    get_closest_piece_to(game, game.get_player_2_pos())
+    get_closest_piece_to(game, get_player_pos(game, side::rhs))
   };
   const auto color{get_right_player_color(game.get_options())};
   std::stringstream s;
   s << "Color: " << color << '\n'
     << "Controller: " << get_right_player_controller(game.get_options()) << '\n'
     << "Game position: "
-    << to_notation(game.get_player_2_pos())
+    << to_notation(get_player_pos(game, side::rhs))
     << " "
-    << game.get_player_2_pos()
+    << get_player_pos(game, side::rhs)
     << '\n'
     << "Screen position: "
-    << convert_to_screen_coordinat(game.get_player_2_pos(), layout)
+    << convert_to_screen_coordinat(get_player_pos(game, side::rhs), layout)
     << '\n'
     << "Is there a piece here: "
-    << bool_to_str(is_piece_at(game, game.get_player_2_pos(), 0.5))
+    << bool_to_str(is_piece_at(game, get_player_pos(game, side::rhs), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
     << "Number of game actions: " << count_control_actions(game) << '\n'
@@ -640,100 +642,55 @@ void show_squares(game_view& view)
       view.get_window().draw(s);
     }
   }
-  show_square_under_cursor_1(view);
-  show_square_under_cursor_2(view);
 }
 
-void show_square_under_cursor_1(game_view& view)
+void show_square_under_cursor(
+  game_view& view,
+  const side player)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
-  const int x{static_cast<int>(std::trunc(game.get_player_1_pos().get_x()))};
-  const int y{static_cast<int>(std::trunc(game.get_player_1_pos().get_y()))};
+  const int x{static_cast<int>(std::trunc(get_player_pos(game, player).get_x()))};
+  if (x < 0 || x >= 8) return;
+  const int y{static_cast<int>(std::trunc(get_player_pos(game, player).get_y()))};
+  if (y < 0 || y >= 8) return;
 
-  if (x >= 0 && x < 8 && y >= 0 && y < 8)
+  assert(x >= 0 && x < 8 && y >= 0 && y < 8);
+  sf::RectangleShape s;
+  const double square_width{get_square_width(layout)};
+  const double square_height{get_square_height(layout)};
+  s.setSize(sf::Vector2f(square_width + 1, square_height + 1));
+  s.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
+  const screen_coordinat square_pos{
+    convert_to_screen_coordinat(
+      game_coordinat(x + 0.5, y + 0.5),
+      layout
+    )
+  };
+  s.setPosition(square_pos.get_x(), square_pos.get_y());
+  const auto old_fill_color = s.getFillColor();
+  const auto old_outline_color = s.getOutlineColor();
+  const auto old_thickness = s.getOutlineThickness();
+  const auto player_color{get_player_color(game.get_options(), player)};
+  s.setOutlineColor(to_sfml_color(player_color));
+  s.setFillColor(sf::Color::Transparent);
+  if (1 == 2) // Show if a piece can be interacted with
   {
-    sf::RectangleShape s{
-      (x + y) % 2 == 0
-      ? create_black_square(view)
-      : create_white_square(view)
-    };
-    const screen_coordinat square_pos{
-      convert_to_screen_coordinat(
-        game_coordinat(x + 0.5, y + 0.5),
-        layout
-      )
-    };
-    s.setPosition(square_pos.get_x(), square_pos.get_y());
-    const auto old_fill_color = s.getFillColor();
-    const auto old_outline_color = s.getOutlineColor();
-    const auto old_thickness = s.getOutlineThickness();
-    const auto player_color{get_left_player_color(game.get_options())};
-    s.setOutlineColor(to_sfml_color(player_color));
-    if (1 == 2) // Show if a piece can be interacted with
+    const bool valid{would_be_valid(view, player_color)};
+    if (valid)
     {
-      const bool valid{would_be_valid(view, player_color)};
-      if (valid)
-      {
-        s.setFillColor(to_sfml_color(player_color));
-      }
-      else
-      {
-        s.setFillColor(sf::Color(255, 128, 128));
-      }
+      s.setFillColor(to_sfml_color(player_color));
     }
-    s.setOutlineThickness(4);
-    view.get_window().draw(s);
-    s.setFillColor(old_fill_color);
-    s.setOutlineColor(old_outline_color);
-    s.setOutlineThickness(old_thickness);
-  }
-}
-
-void show_square_under_cursor_2(game_view& view)
-{
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
-  const int x{static_cast<int>(std::trunc(game.get_player_2_pos().get_x()))};
-  const int y{static_cast<int>(std::trunc(game.get_player_2_pos().get_y()))};
-
-  if (x >= 0 && x < 8 && y >= 0 && y < 8)
-  {
-    sf::RectangleShape s{
-      (x + y) % 2 == 0
-      ? create_black_square(view)
-      : create_white_square(view)
-    };
-    const screen_coordinat square_pos{
-      convert_to_screen_coordinat(
-        game_coordinat(x + 0.5, y + 0.5),
-        layout
-      )
-    };
-    s.setPosition(square_pos.get_x(), square_pos.get_y());
-    const auto old_fill_color = s.getFillColor();
-    const auto old_outline_color = s.getOutlineColor();
-    const auto old_thickness = s.getOutlineThickness();
-    const auto player_color{get_right_player_color(game.get_options())};
-    s.setOutlineColor(to_sfml_color(player_color));
-    if (1 == 2) // Show if a piece can be interacted with
+    else
     {
-      const bool valid{would_be_valid(view, player_color)};
-      if (valid)
-      {
-        s.setFillColor(to_sfml_color(player_color));
-      }
-      else
-      {
-        s.setFillColor(sf::Color(255, 128, 128));
-      }
+      s.setFillColor(sf::Color(255, 128, 128));
     }
-    s.setOutlineThickness(4);
-    view.get_window().draw(s);
-    s.setFillColor(old_fill_color);
-    s.setOutlineColor(old_outline_color);
-    s.setOutlineThickness(old_thickness);
   }
+  s.setOutlineThickness(4);
+  view.get_window().draw(s);
+  s.setFillColor(old_fill_color);
+  s.setOutlineColor(old_outline_color);
+  s.setOutlineThickness(old_thickness);
 }
 
 void show_unit_health_bars(game_view& view)

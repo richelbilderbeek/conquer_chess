@@ -62,7 +62,7 @@ control_action create_press_up_action()
   return control_action(control_action_type::press_up, game_coordinat());
 }
 
-void test_control_actions()
+void test_control_action()
 {
 #ifndef NDEBUG
   {

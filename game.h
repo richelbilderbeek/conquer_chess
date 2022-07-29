@@ -39,11 +39,14 @@ public:
   /// Get the position of the player that uses the mouse
   game_coordinat& get_mouse_player_pos();
 
+  /// Get the player position
+  const game_coordinat& get_player_pos(const side player) const noexcept;
+
   /// Get the in-game keyboard position
-  const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
+  //const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
 
   /// Get the in-game mouse position
-  const auto& get_player_2_pos() const noexcept { return m_player_2_pos; }
+  //const auto& get_player_2_pos() const noexcept { return m_player_2_pos; }
 
   /// Get the game options
   auto& get_options() noexcept { return m_options; }
@@ -269,6 +272,9 @@ std::vector<piece>& get_pieces(game& g) noexcept;
 
 /// Get all the pieces
 const std::vector<piece>& get_pieces(const game& g) noexcept;
+
+/// Get the player position
+const game_coordinat& get_player_pos(const game& g, const side player) noexcept;
 
 /// Get the time in the game
 const delta_t& get_time(const game& g) noexcept;

@@ -74,4 +74,7 @@ int count_control_actions(const control_actions& a);
 /// Count the total number of piece actions to be done by the game
 int count_piece_actions(const control_actions& a);
 
+/// Test this class and its free functions
+void test_control_actions();
+
 #endif // ACTIONS_H

@@ -194,10 +194,10 @@ game_coordinat get_cursor_pos(
 {
   if (c == get_keyboard_user_player_color(g.get_options()))
   {
-    return g.get_player_1_pos();
+    return get_player_pos(g, side::lhs);
   }
   assert(c == get_mouse_user_player_color(g.get_options()));
-  return g.get_player_2_pos();
+  return get_player_pos(g, side::rhs);
 }
 
 game get_default_game() noexcept
@@ -251,10 +251,10 @@ game_coordinat get_keyboard_player_pos(const game& g)
 {
   if (get_left_player_controller(g.get_options()) == controller_type::keyboard)
   {
-    return g.get_player_1_pos();
+    return get_player_pos(g, side::lhs);
   }
   assert(get_right_player_controller(g.get_options()) == controller_type::keyboard);
-  return g.get_player_2_pos();
+  return get_player_pos(g, side::rhs);
 }
 
 game_coordinat& get_keyboard_player_pos(game& g)
@@ -291,10 +291,10 @@ game_coordinat get_mouse_player_pos(const game& g)
 {
   if (get_left_player_controller(g.get_options()) == controller_type::mouse)
   {
-    return g.get_player_1_pos();
+    return get_player_pos(g, side::lhs);
   }
   assert(get_right_player_controller(g.get_options()) == controller_type::mouse);
-  return g.get_player_2_pos();
+  return get_player_pos(g, side::rhs);
 }
 
 game_coordinat& get_mouse_player_pos(game& g)
@@ -341,6 +341,18 @@ chess_color get_player_color(
 ) noexcept
 {
   return get_player_color(g.get_options(), player);
+}
+
+const game_coordinat& game::get_player_pos(const side player) const noexcept
+{
+  if (player == side::lhs) return m_player_1_pos;
+  assert(player == side::rhs);
+  return m_player_2_pos;
+}
+
+const game_coordinat& get_player_pos(const game& g, const side player) noexcept
+{
+  return g.get_player_pos(player);
 }
 
 std::vector<piece> get_selected_pieces(

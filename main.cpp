@@ -27,6 +27,7 @@ void test()
 #ifndef NDEBUG
 
   test_chess_color();
+  test_control_action();
   test_control_actions();
   test_controller_type();
   test_delta_t();

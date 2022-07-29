@@ -35,6 +35,7 @@ void test_game_class()
     toggle_left_player_color(options);
     assert(g.get_options().get_left_player_color() == chess_color::black);
   }
+  /*
   // game::get_player_1_pos
   {
     const auto g{get_kings_only_game()};
@@ -47,6 +48,7 @@ void test_game_class()
     assert(g.get_player_2_pos().get_x() >= 0.0);
     assert(g.get_player_2_pos().get_y() >= 0.0);
   }
+  */
   // game::get_time
   {
     const auto g{get_kings_only_game()};
@@ -193,14 +195,14 @@ void test_game_functions()
     game_options options = get_default_game_options();
     options.set_left_controller_type(controller_type::keyboard);
     const game g(options);
-    assert(get_keyboard_player_pos(g) == g.get_player_1_pos());
+    assert(get_keyboard_player_pos(g) == get_player_pos(g, side::lhs));
   }
   // get_keyboard_player_pos, const, left == mouse
   {
     game_options options = get_default_game_options();
     options.set_left_controller_type(controller_type::mouse);
     const game g(options);
-    assert(get_keyboard_player_pos(g) == g.get_player_2_pos());
+    assert(get_keyboard_player_pos(g) == get_player_pos(g, side::rhs));
   }
   // get_keyboard_player_pos, non-const, white == lhs == keyboard
   {
@@ -220,7 +222,7 @@ void test_game_functions()
     game g(options);
     assert(get_keyboard_user_player_color(g) == chess_color::white);
     const auto pos_before{get_keyboard_player_pos(g)};
-    assert(pos_before == g.get_player_2_pos());
+    assert(pos_before == get_player_pos(g, side::rhs));
     auto& pos = get_keyboard_player_pos(g);
     pos += game_coordinat(0.1, 0.1);
     const auto pos_after{get_keyboard_player_pos(g)};
@@ -236,21 +238,21 @@ void test_game_functions()
     game_options options = get_default_game_options();
     options.set_left_controller_type(controller_type::keyboard);
     const game g(options);
-    assert(get_mouse_player_pos(g) == g.get_player_2_pos());
+    assert(get_mouse_player_pos(g) == get_player_pos(g, side::rhs));
   }
   // get_mouse_player_pos, const, left == mouse
   {
     game_options options = get_default_game_options();
     options.set_left_controller_type(controller_type::mouse);
     const game g(options);
-    assert(get_mouse_player_pos(g) == g.get_player_1_pos());
+    assert(get_mouse_player_pos(g) == get_player_pos(g, side::lhs));
   }
   // get_mouse_player_pos, non-const, left == keyboard
   {
     game_options options = get_default_game_options();
     options.set_left_controller_type(controller_type::keyboard);
     game g(options);
-    assert(get_mouse_player_pos(g) == g.get_player_2_pos());
+    assert(get_mouse_player_pos(g) == get_player_pos(g, side::rhs));
     get_mouse_player_pos(g) += game_coordinat(0.1, 0.1); // Only needs to compile
   }
   // get_mouse_player_pos, non-const, left == mouse
@@ -258,7 +260,7 @@ void test_game_functions()
     game_options options = get_default_game_options();
     options.set_left_controller_type(controller_type::mouse);
     game g(options);
-    assert(get_mouse_player_pos(g) == g.get_player_1_pos());
+    assert(get_mouse_player_pos(g) == get_player_pos(g, side::lhs));
     get_mouse_player_pos(g) += game_coordinat(0.1, 0.1); // Only needs to compile
   }
   // get_occupied_squares

@@ -291,3 +291,12 @@ void control_actions::start_move_unit(
   }
   unselect_all_pieces(g, player_color);
 }
+
+void test_control_actions()
+{
+#ifndef NDEBUG
+  {
+
+  }
+#endif // DEBUG
+}
