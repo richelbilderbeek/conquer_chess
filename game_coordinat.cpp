@@ -106,7 +106,7 @@ void test_game_coordinat()
   // center_on_center
   {
     const game_coordinat c(3.2, 4.7);
-    const game_coordinat expected(3.5, 4.6);
+    const game_coordinat expected(3.5, 4.5);
     const game_coordinat created(center_on_center(c));
     assert(expected == created);
   }

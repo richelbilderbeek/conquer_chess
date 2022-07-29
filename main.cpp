@@ -25,7 +25,6 @@
 void test()
 {
 #ifndef NDEBUG
-  test_screen_coordinat();
 
   test_chess_color();
   test_control_actions();
@@ -47,10 +46,10 @@ void test()
   test_options_view_item();
   test_options_view_layout();
   test_piece();
-  test_pieces();
   test_piece_action();
   test_piece_action_type();
   test_piece_type();
+  test_pieces();
   test_screen_coordinat();
   test_screen_rect();
   test_side();

@@ -80,8 +80,6 @@ void test_game_scenarios()
     assert(is_idle(g));
     assert(piece_with_id_is_at(g, id, square("d4")));
   }
-  #define FIX_QUEEN_CANNOT_MOVE_UP_AND_DOWN
-  #ifdef FIX_QUEEN_CANNOT_MOVE_UP_AND_DOWN
   // before scholars mate, then queen can move from
   {
     std::clog << "---------------------------------------------------\n";
@@ -96,9 +94,7 @@ void test_game_scenarios()
     tick_until_idle(g);
     assert(is_idle(g));
     assert(piece_with_id_is_at(g, id, square("b1")));
-    assert(1==2);
   }
-  #endif // FIX_QUEEN_CANNOT_MOVE_UP_AND_DOWN
   #ifdef FIX_ISSUE_17
   // e2-e6, then can attack and capture d7
   {
