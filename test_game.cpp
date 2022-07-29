@@ -302,6 +302,12 @@ void test_game_functions()
     const auto pieces_again{g.get_pieces()};
     assert(pieces == pieces_again);
   }
+  // get_time
+  {
+    const game g;
+    const auto t{get_time(g)};
+    assert(t.get() == 0.0);
+  }
   // get_mouse_player_pos
   {
     game g;
