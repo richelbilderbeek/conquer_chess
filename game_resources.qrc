@@ -39,13 +39,17 @@
         <file>resources/bb_portrait.png</file>
         <file>resources/bw.png</file>
         <file>resources/bw_portrait.png</file>
+        <file>resources/d_black.png</file>
         <file>resources/d.png</file>
+        <file>resources/d_white.png</file>
         <file>resources/dark_strip.png</file>
         <file>resources/kb.png</file>
         <file>resources/kb_portrait.png</file>
         <file>resources/kw.png</file>
         <file>resources/kw_portrait.png</file>
+        <file>resources/l_black.png</file>
         <file>resources/l.png</file>
+        <file>resources/l_white.png</file>
         <file>resources/light_strip.png</file>
         <file>resources/nb.png</file>
         <file>resources/nb_portrait.png</file>

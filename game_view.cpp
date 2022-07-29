@@ -546,11 +546,25 @@ void show_occupied_squares(game_view& view)
     };
     sf::RectangleShape s;
     set_rect(s, square_rect);
-    s.rotate(45);
-    s.scale(0.375, 0.375);
-    s.setFillColor(to_sfml_color(piece.get_color()));
-    s.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
-    s.setOutlineThickness(1.0);
+    if (1 + 1 == 2)
+    {
+      s.setTexture(
+        &view.get_resources().get_textures().get_occupied_square(
+          to_color(square),
+          piece.get_color()
+        )
+      );
+
+
+    }
+    else
+    {
+      s.rotate(45);
+      s.scale(0.375, 0.375);
+      s.setFillColor(to_sfml_color(piece.get_color()));
+      s.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
+      s.setOutlineThickness(1.0);
+    }
     view.get_window().draw(s);
   }
 }

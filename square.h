@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "ccfwd.h"
+#include "chess_color.h"
 
 /// A chess square, e.g. e4
 class square
@@ -72,6 +73,9 @@ bool is_occupied(
 
 /// Test this class and its free functions
 void test_square();
+
+/// What is the color of this square?
+chess_color to_color(const square& s) noexcept;
 
 // a1 == (0.5, 0.5)
 // b1 == (0.5, 1.5)

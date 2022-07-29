@@ -272,6 +272,12 @@ void test_square()
     assert(get_rotated_square(square("h8")) == square("a1"));
     assert(get_rotated_square(square("h1")) == square("a8"));
   }
+  // to_color
+  {
+    assert(to_color(square("a1")) == chess_color::black);
+    assert(to_color(square("d1")) == chess_color::white);
+    assert(to_color(square("d8")) == chess_color::black);
+  }
   // to_coordinat
   {
     assert(to_coordinat(square("a1")) == game_coordinat(0.5, 0.5));
@@ -319,6 +325,12 @@ void test_square()
     assert(a != c);
   }
 #endif // NDEBUG
+}
+
+chess_color to_color(const square& s) noexcept
+{
+  if ((s.get_x() + s.get_y()) % 2 == 0) return chess_color::black;
+  return chess_color::white;
 }
 
 game_coordinat to_coordinat(const square& s) noexcept

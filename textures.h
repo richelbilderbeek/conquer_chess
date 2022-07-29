@@ -14,6 +14,12 @@ class textures
 public:
   textures();
 
+  /// Get an occupied chess board square
+  sf::Texture& get_occupied_square(
+    const chess_color square_color,
+    const chess_color occupant_color
+  ) noexcept;
+
   /// Get texture of a piece
   sf::Texture& get_piece(
     const chess_color color,
@@ -52,8 +58,13 @@ private:
   sf::Texture m_black_queen_portrait;
   sf::Texture m_black_rook;
   sf::Texture m_black_rook_portrait;
-  sf::Texture m_black_square;
+  sf::Texture m_dark_black_square;
+  sf::Texture m_dark_square;
+  sf::Texture m_dark_white_square;
   sf::Texture m_dark_strip;
+  sf::Texture m_light_black_square;
+  sf::Texture m_light_square;
+  sf::Texture m_light_white_square;
   sf::Texture m_light_strip;
   sf::Texture m_subtitle;
   sf::Texture m_title;
@@ -69,7 +80,6 @@ private:
   sf::Texture m_white_queen_portrait;
   sf::Texture m_white_rook;
   sf::Texture m_white_rook_portrait;
-  sf::Texture m_white_square;
 };
 
 /// Get a picture of a black/dark square

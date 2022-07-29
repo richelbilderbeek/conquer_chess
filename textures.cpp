@@ -23,7 +23,9 @@ textures::textures()
     std::make_pair(std::ref(m_black_queen_portrait), "qb_portrait.png"),
     std::make_pair(std::ref(m_black_rook), "rb.png"),
     std::make_pair(std::ref(m_black_rook_portrait), "rb_portrait_2.png"),
-    std::make_pair(std::ref(m_black_square), "d.png"),
+    std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
+    std::make_pair(std::ref(m_dark_square), "d.png"),
+    std::make_pair(std::ref(m_dark_white_square), "d_white.png"),
     std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
@@ -39,7 +41,9 @@ textures::textures()
     std::make_pair(std::ref(m_white_queen), "qw.png"),
     std::make_pair(std::ref(m_white_queen_portrait), "qw_portrait.png"),
     std::make_pair(std::ref(m_white_rook), "rw.png"),
-    std::make_pair(std::ref(m_white_square), "l.png"),
+    std::make_pair(std::ref(m_light_black_square), "l_black.png"),
+    std::make_pair(std::ref(m_light_square), "l.png"),
+    std::make_pair(std::ref(m_light_white_square), "l_white.png"),
     std::make_pair(std::ref(m_white_rook_portrait), "rw_portrait.png")
   };
   for (const auto& p: v)
@@ -58,6 +62,29 @@ textures::textures()
 sf::Texture& get_black_square(textures& t) noexcept
 {
   return t.get_square(chess_color::black);
+}
+
+sf::Texture& textures::get_occupied_square(
+  const chess_color square_color,
+  const chess_color occupant_color
+) noexcept
+{
+  if (square_color == chess_color::white)
+  {
+    if (occupant_color == chess_color::white)
+    {
+      return m_light_white_square;
+    }
+    assert(occupant_color == chess_color::black);
+    return m_light_black_square;
+  }
+  assert(square_color == chess_color::black);
+  if (occupant_color == chess_color::white)
+  {
+    return m_dark_white_square;
+  }
+  assert(occupant_color == chess_color::black);
+  return m_dark_black_square;
 }
 
 sf::Texture& textures::get_piece(
@@ -85,7 +112,7 @@ sf::Texture& textures::get_piece(
   }
 
   assert(!"Should not get here");
-  return m_white_square;
+  return m_light_square;
 }
 
 sf::Texture& textures::get_piece_portrait(
@@ -113,7 +140,7 @@ sf::Texture& textures::get_piece_portrait(
   }
 
   assert(!"Should not get here");
-  return m_white_square;
+  return m_light_square;
 }
 
 
@@ -126,11 +153,11 @@ sf::Texture& textures::get_square(const chess_color color) noexcept
 {
   switch (color)
   {
-    case chess_color::black: return m_black_square;
+    case chess_color::black: return m_dark_square;
     default:
     case chess_color::white:
       assert(color == chess_color::white);
-      return m_white_square;
+      return m_light_square;
   }
 }
 
