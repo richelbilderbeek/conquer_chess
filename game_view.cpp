@@ -674,19 +674,15 @@ void show_square_under_cursor(
   const auto player_color{get_player_color(game.get_options(), player)};
   s.setOutlineColor(to_sfml_color(player_color));
   s.setFillColor(sf::Color::Transparent);
-  if (1 == 2) // Show if a piece can be interacted with
+  const bool valid{would_be_valid(view, player_color)};
+  if (valid)
   {
-    const bool valid{would_be_valid(view, player_color)};
-    if (valid)
-    {
-      s.setFillColor(to_sfml_color(player_color));
-    }
-    else
-    {
-      s.setFillColor(sf::Color(255, 128, 128));
-    }
+    s.setOutlineThickness(4);
   }
-  s.setOutlineThickness(4);
+  else
+  {
+    s.setOutlineThickness(2);
+  }
   view.get_window().draw(s);
   s.setFillColor(old_fill_color);
   s.setOutlineColor(old_outline_color);
