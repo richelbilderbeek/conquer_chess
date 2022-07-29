@@ -175,6 +175,28 @@ piece get_piece_with_id(
   return *there;
 }
 
+std::vector<square> get_possible_bishop_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+)
+{
+  assert(!pieces.empty());
+  assert(has_piece_with_id(pieces, focal_piece.get_id()));
+  assert(focal_piece.get_type() == piece_type::bishop);
+  const int x{focal_piece.get_current_square().get_x()};
+  const int y{focal_piece.get_current_square().get_y()};
+
+  std::vector<square> moves;
+  // North-east
+  for (int delta{1}; delta != 8; ++delta)
+  {
+    const int new_x{x + delta};
+    const int new_y{y - delta};
+    if (!is_valid_square_xy(new_x, new_y)) break;
+  }
+  return {};
+}
+
 std::vector<square> get_possible_king_moves(
   const std::vector<piece>& pieces,
   const piece& focal_piece
@@ -195,33 +217,7 @@ std::vector<square> get_possible_king_moves(
     std::make_pair(x - 1, y + 0),
     std::make_pair(x - 1, y - 2)
   };
-  const auto new_end{
-    std::remove_if(
-      std::begin(xys),
-      std::end(xys),
-      [](const auto& p)
-      {
-        return p.first < 0
-          || p.first > 7
-          || p.second < 0
-          || p.second > 7
-        ;
-      }
-    )
-  };
-  xys.erase(new_end, std::end(xys));
-  std::vector<square> squares;
-  squares.reserve(xys.size());
-  std::transform(
-    std::begin(xys),
-    std::end(xys),
-    std::back_inserter(squares),
-    [](const auto& p)
-    {
-      return square(p.first, p.second);
-    }
-  );
-  return squares;
+  return to_squares(xys);
 }
 
 std::vector<square> get_possible_knight_moves(
@@ -244,33 +240,7 @@ std::vector<square> get_possible_knight_moves(
     std::make_pair(x - 2, y - 1), // 10 o'clock
     std::make_pair(x - 1, y - 2)  // 11 o'clock
   };
-  const auto new_end{
-    std::remove_if(
-      std::begin(xys),
-      std::end(xys),
-      [](const auto& p)
-      {
-        return p.first < 0
-          || p.first > 7
-          || p.second < 0
-          || p.second > 7
-        ;
-      }
-    )
-  };
-  xys.erase(new_end, std::end(xys));
-  std::vector<square> squares;
-  squares.reserve(xys.size());
-  std::transform(
-    std::begin(xys),
-    std::end(xys),
-    std::back_inserter(squares),
-    [](const auto& p)
-    {
-      return square(p.first, p.second);
-    }
-  );
-  return squares;
+  return to_squares(xys);
 }
 
 std::vector<square> get_possible_moves(
@@ -292,6 +262,78 @@ std::vector<square> get_possible_moves(
       assert(focal_piece.get_type() == piece_type::knight);
       return get_possible_knight_moves(pieces, focal_piece);
   }
+}
+
+std::vector<square> get_possible_pawn_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+)
+{
+  assert(!pieces.empty());
+  assert(has_piece_with_id(pieces, focal_piece.get_id()));
+  assert(focal_piece.get_type() == piece_type::pawn);
+  const int x{focal_piece.get_current_square().get_x()};
+  const int y{focal_piece.get_current_square().get_y()};
+
+  // Can attack to where?
+  const int dx{focal_piece.get_player() == side::lhs ? 1 : -1};
+  const std::vector<std::pair<int, int>> attack_xys{
+    std::make_pair(x + dx, y - 1),
+    std::make_pair(x + dx, y + 1)
+  };
+  const auto attack_squares{to_squares(attack_xys)};
+  std::vector<square> valid_attack_squares;
+  std::copy_if(
+    std::begin(attack_squares),
+    std::end(attack_squares),
+    std::back_inserter(valid_attack_squares),
+    [pieces, focal_piece](const auto& square)
+    {
+      return is_piece_at(pieces, square)
+        && get_piece_at(pieces, square).get_color() != focal_piece.get_color();
+    }
+  );
+
+  // Move forward
+
+
+  return valid_attack_squares;
+}
+
+std::vector<square> get_possible_queen_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+)
+{
+  assert(!pieces.empty());
+  assert(has_piece_with_id(pieces, focal_piece.get_id()));
+  assert(focal_piece.get_type() == piece_type::queen);
+  // Get the bishop and rook moves
+  return {};
+}
+
+std::vector<square> get_possible_rook_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+)
+{
+  assert(!pieces.empty());
+  assert(has_piece_with_id(pieces, focal_piece.get_id()));
+  assert(focal_piece.get_type() == piece_type::rook);
+  const int x{focal_piece.get_current_square().get_x()};
+  const int y{focal_piece.get_current_square().get_y()};
+
+  std::vector<square> moves;
+  // North
+  for (int delta{1}; delta != 8; ++delta)
+  {
+    const int new_x{x};
+    const int new_y{y - delta};
+    if (!is_valid_square_xy(new_x, new_y)) break;
+  }
+
+
+  return {};
 }
 
 
@@ -638,6 +680,33 @@ void test_pieces()
     const auto pieces{get_pieces_bishop_and_knight_end_game()};
     assert(pieces.size() == 4);
   }
+  #ifdef FIX_ISSUE_8
+  // get_possible_moves
+  {
+    // At the start, only knights can move
+    {
+      const auto pieces{get_standard_starting_pieces(chess_color::white)};
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("a1"))).size() == 0);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("b1"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("c1"))).size() == 0);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d1"))).size() == 0);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e1"))).size() == 0);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("f1"))).size() == 0);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("g1"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("h1"))).size() == 0);
+      // pawns can move forward as much as they can
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("a2"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("b2"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("c2"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d2"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e2"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("f2"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("g2"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("h2"))).size() == 4);
+    }
+    // Other setups
+  }
+  #endif // FIX_ISSUE_8
   // get_standard_starting_pieces
   {
     const auto pieces_1{get_standard_starting_pieces(chess_color::white)};

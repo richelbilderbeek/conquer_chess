@@ -361,7 +361,9 @@ void show_board(game_view& view)
   }
   show_square_under_cursor(view, side::lhs);
   show_square_under_cursor(view, side::rhs);
+  #ifdef FIX_ISSUE_8
   show_possible_moves(view, side::lhs);
+  #endif // FIX_ISSUE_8
   show_unit_paths(view);
   show_pieces(view);
   show_unit_health_bars(view);

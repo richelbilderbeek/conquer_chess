@@ -15,20 +15,20 @@ square::square(const std::string& pos)
   assert(std::regex_match(pos, std::regex("^[a-h][1-8]$")));
   m_y = pos[0] - 'a';
   m_x = pos[1] - '1';
-  assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
+  assert(is_valid_square_xy(m_x, m_y));
 }
 
 square::square(const game_coordinat& g)
   : m_x{static_cast<int>(std::trunc(g.get_x()))},
     m_y{static_cast<int>(std::trunc(g.get_y()))}
 {
-  assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
+  assert(is_valid_square_xy(m_x, m_y));
 }
 
 square::square(const int x, const int y)
   : m_x{x}, m_y{y}
 {
-  assert(m_x >= 0 && m_x < 8 && m_y >= 0 && m_y < 8);
+  assert(is_valid_square_xy(m_x, m_y));
 }
 
 bool are_adjacent(const square& a, const square& b) noexcept
@@ -177,6 +177,20 @@ bool is_occupied(
     std::end(occupied_squares),
     s
   ) != std::end(occupied_squares);
+}
+
+bool is_valid_square_xy(const int x, const int y) noexcept
+{
+  return x >= 0 && x < 8 && y >= 0 && y < 8;
+}
+
+bool is_invalid_square_xy(const int x, const int y) noexcept
+{
+  return x < 0
+    || x > 7
+    || y < 0
+    || y > 7
+  ;
 }
 
 void test_square()
@@ -367,6 +381,33 @@ game_rect to_game_rect(const square& s) noexcept
     tl + game_coordinat(1.0, 1.0)
   };
   return game_rect(tl, br);
+}
+
+std::vector<square> to_squares(std::vector<std::pair<int, int>> xys)
+{
+  const auto new_end{
+    std::remove_if(
+      std::begin(xys),
+      std::end(xys),
+      [](const auto& p)
+      {
+        return is_invalid_square_xy(p.first, p.second);
+      }
+    )
+  };
+  xys.erase(new_end, std::end(xys));
+  std::vector<square> squares;
+  squares.reserve(xys.size());
+  std::transform(
+    std::begin(xys),
+    std::end(xys),
+    std::back_inserter(squares),
+    [](const auto& p)
+    {
+      return square(p.first, p.second);
+    }
+  );
+  return squares;
 }
 
 std::string to_str(const square& s) noexcept

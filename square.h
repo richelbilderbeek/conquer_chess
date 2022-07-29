@@ -74,6 +74,12 @@ bool is_occupied(
   const std::vector<square>& occupied_squares
 ) noexcept;
 
+/// Can the x and y be used to create a valid square?
+bool is_valid_square_xy(const int x, const int y) noexcept;
+
+/// Can the x and y not be used to create a valid square?
+bool is_invalid_square_xy(const int x, const int y) noexcept;
+
 /// Test this class and its free functions
 void test_square();
 
@@ -88,10 +94,14 @@ game_coordinat to_coordinat(const square& s) noexcept;
 // b1 == (0.5, 1.5)
 game_coordinat to_coordinat(const std::string& notation) noexcept;
 
+
 /// Convert a square to a rectangle
 /// For example, a1 == ((0,0)-(1,1)) (notation is top-left, then bottom-left)
 /// For example, b1 == ((0,1)-(1,2)) (notation is top-left, then bottom-left)
 game_rect to_game_rect(const square& s) noexcept;
+
+/// Convert the pairs of x-y-coordinats to valid squares.
+std::vector<square> to_squares(std::vector<std::pair<int, int>> xys);
 
 std::string to_str(const square& s) noexcept;
 

@@ -62,6 +62,13 @@ piece get_piece_with_id(
   const id& i
 );
 
+/// Get the possible moves for a focal piece that is a bishop.
+/// This can both be a move or an attack
+std::vector<square> get_possible_bishop_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+);
+
 /// Get the possible moves for a focal piece that is a king.
 /// This can both be a move or an attack
 std::vector<square> get_possible_king_moves(
@@ -79,6 +86,27 @@ std::vector<square> get_possible_knight_moves(
 /// Get the possible moves for a focal piece.
 /// This can both be a move or an attack
 std::vector<square> get_possible_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+);
+
+/// Get the possible moves for a focal piece that is a pawn.
+/// This can both be a move or an attack
+std::vector<square> get_possible_pawn_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+);
+
+/// Get the possible moves for a focal piece that is a queen.
+/// This can both be a move or an attack
+std::vector<square> get_possible_queen_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+);
+
+/// Get the possible moves for a focal piece that is a rook.
+/// This can both be a move or an attack
+std::vector<square> get_possible_rook_moves(
   const std::vector<piece>& pieces,
   const piece& focal_piece
 );
