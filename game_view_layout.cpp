@@ -328,5 +328,15 @@ void test_game_view_layout()
     assert(br_board.get_x() == 8.0);
     assert(is_close(br_board.get_y(), 8.0, 0.03));
   }
+  // convert_to_screen_rect
+  {
+    const game_view_layout layout;
+    const square a1("a1");
+    const square h8("h8");
+    const screen_rect a1_rect{convert_to_screen_rect(a1, layout)};
+    const screen_rect h8_rect{convert_to_screen_rect(h8, layout)};
+    assert(a1_rect.get_tl() == layout.get_board().get_tl());
+    assert(h8_rect.get_br() == layout.get_board().get_br());
+  }
   #endif
 }
