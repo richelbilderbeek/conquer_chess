@@ -532,7 +532,10 @@ void test_pieces()
   {
     for (const auto t: get_all_starting_position_types())
     {
-      assert(!get_starting_pieces(t).empty());
+      for (const auto c: get_all_chess_colors())
+      {
+        assert(!get_starting_pieces(t, c).empty());
+      }
     }
   }
   // is_piece_at, const
