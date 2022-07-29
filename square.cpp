@@ -8,6 +8,7 @@
 #include <cmath>
 #include <iostream>
 #include <regex>
+#include <sstream>
 
 square::square(const std::string& pos)
 {
@@ -365,6 +366,22 @@ void test_square()
     const square c("b1");
     assert(!(a != b));
     assert(a != c);
+  }
+  // operator<< on square
+  {
+    const square a1("a1");
+    std::stringstream s;
+    s << a1;
+    assert(!s.str().empty());
+  }
+  // operator<< on std::vector<square>
+  {
+    const std::vector<square> squares{
+      square("a1"), square("a2")
+    };
+    std::stringstream s;
+    s << squares;
+    assert(!s.str().empty());
   }
 #endif // NDEBUG
 }
