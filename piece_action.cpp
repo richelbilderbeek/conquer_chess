@@ -65,8 +65,6 @@ void test_piece_action()
     // Attacking
     assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("e7"), square("e6"))).size() == 2);
     assert(to_atomic(piece_action(side::lhs, piece_type::queen, piece_action_type::attack, square("a1"), square("h8"))).size() == 2);
-    //const auto v{to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("h8")))};
-    //std::clog << v << '\n';
     assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("h8"))).size() > 5);
   }
   // to_str

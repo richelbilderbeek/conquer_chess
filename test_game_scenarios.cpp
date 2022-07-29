@@ -82,7 +82,6 @@ void test_game_scenarios()
   }
   // before scholars mate, then queen can move from
   {
-    std::clog << "---------------------------------------------------\n";
     game g = get_game_with_starting_position(starting_position_type::queen_end_game);
     assert(is_idle(g));
     const auto id{get_id(g, square("d1"))};

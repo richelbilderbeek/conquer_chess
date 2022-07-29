@@ -805,7 +805,6 @@ void tick_move(
   assert(!p.get_actions().empty());
   const auto& first_action{p.get_actions()[0]};
   assert(first_action.get_action_type() == piece_action_type::move);
-  std::clog << "Doing action " << first_action << '\n';
 
   const auto occupied_squares{
     get_occupied_squares(g)
@@ -884,7 +883,6 @@ void tick_move(
       (to_coordinat(first_action.get_to()) - p.get_coordinat())
       / (full_length / dt.get())
     };
-    std::clog << "Moving from " << p.get_coordinat() << " by " << delta << '\n';
     p.get_coordinat() += delta;
   }
 }

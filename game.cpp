@@ -98,7 +98,6 @@ void do_move_keyboard_player_piece(game& g, const square& s)
   assert(square(get_keyboard_player_pos(g)) == s);
   g.add_action(create_press_move_action());
   assert(count_control_actions(g) == 1);
-  std::clog << "game::tick" << '\n';
   g.tick(delta_t(0.1));
   assert(count_control_actions(g) == 0);
 }
@@ -111,7 +110,6 @@ void do_select_and_move_keyboard_player_piece(
 {
   do_select_for_keyboard_player(g, from);
   assert(count_selected_units(g) > 0);
-  std::clog << "do_move_keyboard_player_piece to " << to << '\n';
   do_move_keyboard_player_piece(g, to);
 }
 
@@ -450,12 +448,8 @@ void set_keyboard_player_pos(
 
 void game::tick(const delta_t& dt)
 {
-  std::clog << "Number of piece actions before: " << count_piece_actions(*this, get_keyboard_user_player_color(*this)) << '\n';
-
   // Convert control_actions to piece_actions instantaneous
   m_control_actions.process(*this);
-
-  std::clog << "Number of piece actions after: " << count_piece_actions(*this, get_keyboard_user_player_color(*this)) << '\n';
 
   assert(count_dead_pieces(m_pieces) == 0);
 
