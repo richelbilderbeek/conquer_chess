@@ -48,16 +48,22 @@ private:
 
   sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;
+  sf::Texture m_black_bishop_with_contour;
   sf::Texture m_black_king;
   sf::Texture m_black_king_portrait;
+  sf::Texture m_black_king_with_contour;
   sf::Texture m_black_knight;
   sf::Texture m_black_knight_portrait;
+  sf::Texture m_black_knight_with_contour;
   sf::Texture m_black_pawn;
   sf::Texture m_black_pawn_portrait;
+  sf::Texture m_black_pawn_with_contour;
   sf::Texture m_black_queen;
   sf::Texture m_black_queen_portrait;
+  sf::Texture m_black_queen_with_contour;
   sf::Texture m_black_rook;
   sf::Texture m_black_rook_portrait;
+  sf::Texture m_black_rook_with_contour;
   sf::Texture m_dark_black_square;
   sf::Texture m_dark_square;
   sf::Texture m_dark_white_square;

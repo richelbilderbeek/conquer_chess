@@ -37,6 +37,7 @@
         <file>resources/yes_mid.ogg</file>
         <file>resources/bb.png</file>
         <file>resources/bb_portrait.png</file>
+        <file>resources/bb_with_contour.png</file>
         <file>resources/bw.png</file>
         <file>resources/bw_portrait.png</file>
         <file>resources/d_black.png</file>
@@ -45,6 +46,7 @@
         <file>resources/dark_strip.png</file>
         <file>resources/kb.png</file>
         <file>resources/kb_portrait.png</file>
+        <file>resources/kb_with_contour.png</file>
         <file>resources/kw.png</file>
         <file>resources/kw_portrait.png</file>
         <file>resources/l_black.png</file>
@@ -53,14 +55,17 @@
         <file>resources/light_strip.png</file>
         <file>resources/nb.png</file>
         <file>resources/nb_portrait.png</file>
+        <file>resources/nb_with_contour.png</file>
         <file>resources/nw.png</file>
         <file>resources/nw_portrait.png</file>
         <file>resources/pb.png</file>
         <file>resources/pb_portrait.png</file>
+        <file>resources/pb_with_contour.png</file>
         <file>resources/pw.png</file>
         <file>resources/pw_portrait.png</file>
         <file>resources/qb.png</file>
         <file>resources/qb_portrait.png</file>
+        <file>resources/qb_with_contour.png</file>
         <file>resources/qm.png</file>
         <file>resources/quit.png</file>
         <file>resources/qw.png</file>
@@ -68,6 +73,7 @@
         <file>resources/rb.png</file>
         <file>resources/rb_portrait_1.png</file>
         <file>resources/rb_portrait_2.png</file>
+        <file>resources/rb_with_contour.png</file>
         <file>resources/rw.png</file>
         <file>resources/rw_portrait.png</file>
         <file>resources/subtitle.png</file>

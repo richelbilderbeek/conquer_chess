@@ -13,16 +13,22 @@ textures::textures()
   const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
     std::make_pair(std::ref(m_black_bishop), "bb.png"),
     std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
+    std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),
     std::make_pair(std::ref(m_black_king), "kb.png"),
     std::make_pair(std::ref(m_black_king_portrait), "kb_portrait.png"),
+    std::make_pair(std::ref(m_black_king_with_contour), "kb_with_contour.png"),
     std::make_pair(std::ref(m_black_knight), "nb.png"),
     std::make_pair(std::ref(m_black_knight_portrait), "nb_portrait.png"),
+    std::make_pair(std::ref(m_black_knight_with_contour), "nb_with_contour.png"),
     std::make_pair(std::ref(m_black_pawn), "pb.png"),
     std::make_pair(std::ref(m_black_pawn_portrait), "pb_portrait.png"),
+    std::make_pair(std::ref(m_black_pawn_with_contour), "pb_with_contour.png"),
     std::make_pair(std::ref(m_black_queen), "qb.png"),
     std::make_pair(std::ref(m_black_queen_portrait), "qb_portrait.png"),
+    std::make_pair(std::ref(m_black_queen_with_contour), "qb_with_contour.png"),
     std::make_pair(std::ref(m_black_rook), "rb.png"),
     std::make_pair(std::ref(m_black_rook_portrait), "rb_portrait_2.png"),
+    std::make_pair(std::ref(m_black_rook_with_contour), "rb_with_contour.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
     std::make_pair(std::ref(m_dark_white_square), "d_white.png"),
@@ -94,12 +100,12 @@ sf::Texture& textures::get_piece(
 {
   if (color == chess_color::black)
   {
-    if (type == piece_type::bishop) return m_black_bishop;
-    if (type == piece_type::king) return m_black_king;
-    if (type == piece_type::knight) return m_black_knight;
-    if (type == piece_type::pawn) return m_black_pawn;
-    if (type == piece_type::queen) return m_black_queen;
-    if (type == piece_type::rook) return m_black_rook;
+    if (type == piece_type::bishop) return m_black_bishop_with_contour;
+    if (type == piece_type::king) return m_black_king_with_contour;
+    if (type == piece_type::knight) return m_black_knight_with_contour;
+    if (type == piece_type::pawn) return m_black_pawn_with_contour;
+    if (type == piece_type::queen) return m_black_queen_with_contour;
+    if (type == piece_type::rook) return m_black_rook_with_contour;
   }
   else
   {
