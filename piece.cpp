@@ -133,7 +133,9 @@ bool can_attack(
     default:
     case piece_type::knight:
       assert(type == piece_type::knight);
-      return can_move(type, from, to, player);
+      return can_move(type, from, to, player)
+        && are_adjacent_for_knight(from, to)
+      ;
   }
 }
 
@@ -398,6 +400,9 @@ void test_piece()
     assert(!can_attack(piece_type::knight, square("e4"), square("f4"), side::lhs));
     assert(!can_attack(piece_type::knight, square("e4"), square("f5"), side::lhs));
     assert(can_attack(piece_type::knight, square("e4"), square("f6"), side::lhs));
+
+    // Knights cannot attack over distance
+    assert(!can_attack(piece_type::knight, square("e4"), square("g8"), side::lhs));
 
     assert(!can_attack(piece_type::pawn, square("e4"), square("d3"), side::lhs));
     assert(!can_attack(piece_type::pawn, square("e4"), square("d4"), side::lhs));

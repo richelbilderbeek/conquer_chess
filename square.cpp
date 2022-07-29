@@ -37,6 +37,12 @@ bool are_adjacent(const square& a, const square& b) noexcept
     && std::abs(static_cast<int>(a.get_y() - b.get_y())) <= 1
   ;
 }
+bool are_adjacent_for_knight(const square& a, const square& b) noexcept
+{
+  const int dx{std::abs(static_cast<int>(a.get_x() - b.get_x()))};
+  const int dy{std::abs(static_cast<int>(a.get_y() - b.get_y()))};
+  return (dx == 2 && dy == 1) || (dx == 1 && dy == 2);
+}
 
 bool are_all_unique(std::vector<square> squares)
 {

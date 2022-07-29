@@ -33,8 +33,15 @@ private:
   int m_y;
 };
 
-/// Are the squares adjacent
+/// Are the squares adjacent (i.e. for a king, not a knight)
+/// @see are_adjacent_for_knight to determine if squares are adjacent
+///   for a knight
 bool are_adjacent(const square& a, const square& b) noexcept;
+
+/// Are the squares adjacent for a knight
+/// @see are_adjacent to determine if squares are adjacent
+///   for a king
+bool are_adjacent_for_knight(const square& a, const square& b) noexcept;
 
 /// Are all the squares unique?
 bool are_all_unique(std::vector<square> squares);
