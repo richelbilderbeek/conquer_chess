@@ -74,6 +74,17 @@ void test_piece_action()
     const piece_action b(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e4"));
     assert(!to_str(piece_action(b)).empty());
   }
+  // to_str on std::vector<piece_action>
+  {
+    std::vector<piece_action> v;
+    assert(to_str(v).empty());
+    const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("e2"), square("e3"));
+    v.push_back(a);
+    assert(!to_str(v).empty());
+    const piece_action b(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e4"));
+    v.push_back(b);
+    assert(!to_str(v).empty());
+  }
   // operator<<
   {
     const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a8"));
@@ -197,14 +208,6 @@ std::vector<piece_action> to_atomic(const piece_action& a)
       );
     }
   }
-  // The move type could have been an attack
-  /*atomic_actions.back() = piece_action(
-    a.get_piece_type(),
-    a.get_action_type(),
-    atomic_actions.back().get_from(),
-    atomic_actions.back().get_to()
-  );
-  */
   return atomic_actions;
 }
 
