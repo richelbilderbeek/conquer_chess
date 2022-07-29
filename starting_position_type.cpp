@@ -10,6 +10,7 @@ std::vector<starting_position_type> get_all_starting_position_types() noexcept
     starting_position_type::standard,
     starting_position_type::kings_only,
     starting_position_type::before_scholars_mate,
+    starting_position_type::queen_end_game,
     starting_position_type::bishop_and_knight_end_game,
     starting_position_type::pawn_all_out_assault
   };
@@ -52,7 +53,8 @@ void test_starting_position_type()
   {
     assert(get_next(starting_position_type::standard) == starting_position_type::kings_only);
     assert(get_next(starting_position_type::kings_only) == starting_position_type::before_scholars_mate);
-    assert(get_next(starting_position_type::before_scholars_mate) == starting_position_type::bishop_and_knight_end_game);
+    assert(get_next(starting_position_type::before_scholars_mate) == starting_position_type::queen_end_game);
+    assert(get_next(starting_position_type::queen_end_game) == starting_position_type::bishop_and_knight_end_game);
     assert(get_next(starting_position_type::bishop_and_knight_end_game) == starting_position_type::pawn_all_out_assault);
     assert(get_next(starting_position_type::pawn_all_out_assault) == starting_position_type::standard);
   }
@@ -77,6 +79,8 @@ std::string to_str(const starting_position_type t) noexcept
       return "kings_only";
     case starting_position_type::before_scholars_mate:
       return "before_scholars_mate";
+    case starting_position_type::queen_end_game:
+      return "queen_end_game";
     case starting_position_type::bishop_and_knight_end_game:
       return "bishop_and_knight_end_game";
     case starting_position_type::pawn_all_out_assault:

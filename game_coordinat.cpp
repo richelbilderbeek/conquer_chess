@@ -186,6 +186,14 @@ void test_game_coordinat()
     assert(a == b);
     assert(!(a == c));
   }
+  // operator ==
+  {
+    const game_coordinat a(1.1, 2.2);
+    const game_coordinat b(1.1, 3.3);
+    const game_coordinat c(4.4, 2.2);
+    assert(!(a == b));
+    assert(!(a == c));
+  }
   // operator !=
   {
     const game_coordinat a(1.2345, 6.7890);
@@ -222,7 +230,7 @@ std::string to_notation(const game_coordinat& g)
 bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept
 {
   return lhs.get_x() == rhs.get_x()
-    && rhs.get_y() == rhs.get_y()
+    && lhs.get_y() == rhs.get_y()
   ;
 }
 

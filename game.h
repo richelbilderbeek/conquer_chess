@@ -114,15 +114,14 @@ int count_piece_actions(
   const chess_color player
 );
 
+/// Count the number of selected units in total
+int count_selected_units(const game& g);
+
 /// Count the number of selected units of a player
 int count_selected_units(
   const game& g,
   const chess_color player
 );
-
-/// Create a game in which it is only a king versus a king,
-/// to be used in debugging
-game create_king_versus_king_game();
 
 /// Let the keyboard player move a piece
 /// from the current selected square to a new target
@@ -189,6 +188,10 @@ game_coordinat get_cursor_pos(
 
 game get_default_game() noexcept;
 
+/// Create a game with all default settings
+/// and s specific starting position
+game get_game_with_starting_position(starting_position_type t) noexcept;
+
 /// Get the ID of a piece at a square
 /// Will throw if there is no piece there
 id get_id(const game& g, const square& s);
@@ -208,6 +211,10 @@ game_coordinat& get_keyboard_player_pos(game& g);
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game& g);
+
+/// Create a game in which it is only a king versus a king,
+/// to be used in debugging
+game get_kings_only_game() noexcept;
 
 /// Get the layout
 const game_view_layout& get_layout(const game& g) noexcept;

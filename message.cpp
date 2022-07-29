@@ -15,6 +15,27 @@ message::message(
 
 }
 
+std::vector<message> get_all_messages() noexcept
+{
+  std::vector<message> v;
+
+  const auto mts{get_all_message_types()};
+  const std::vector<chess_color> cs{get_all_chess_colors()};
+  const std::vector<piece_type> pts{get_all_piece_types()};
+  v.reserve(mts.size() * cs.size() * pts.size());
+  for (const auto mt: mts)
+  {
+    for (const auto c: cs)
+    {
+      for (const auto pt: pts)
+      {
+        v.push_back(message(mt, c, pt));
+      }
+    }
+  }
+  return v;
+}
+
 void test_message()
 {
 #ifndef NDEBUG
@@ -35,6 +56,13 @@ void test_message()
     assert(!to_str(message(message_type::start_move, chess_color::white, piece_type::king)).empty());
     assert(!to_str(message(message_type::start_attack, chess_color::white, piece_type::king)).empty());
   }
+  // to_str, all
+  {
+    for (const auto& message: get_all_messages())
+    {
+      assert(!to_str(message).empty());
+    }
+  }
   // operator<<
   {
     std::stringstream s;
@@ -52,13 +80,18 @@ std::string to_str(const message& m) noexcept
     case message_type::cannot:
       s << m.get_color() << " " << m.get_piece_type() << " cannot do that";
       break;
+    case message_type::done:
+      s << m.get_color() << " " << m.get_piece_type() << " is done";
+      break;
     case message_type::select:
       s << m.get_color() << " " << m.get_piece_type() << " selected";
       break;
     case message_type::start_move:
       s << m.get_color() << " " << m.get_piece_type() << " starts moving";
       break;
+    default:
     case message_type::start_attack:
+      assert(m.get_message_type() == message_type::start_attack);
       s << m.get_color() << " " << m.get_piece_type() << " starts attacking";
       break;
   }

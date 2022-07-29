@@ -20,6 +20,19 @@ double get_max_health(const piece_type type)
   }
 }
 
+std::vector<piece_type> get_all_piece_types() noexcept
+{
+  return
+  {
+    piece_type::bishop,
+    piece_type::king,
+    piece_type::knight,
+    piece_type::pawn,
+    piece_type::queen,
+    piece_type::rook
+  };
+}
+
 void test_piece_type()
 {
 #ifndef NDEBUG
@@ -32,6 +45,13 @@ void test_piece_type()
     assert(to_str(piece_type::bishop) == "bishop");
     assert(to_str(piece_type::knight) == "knight");
   }
+  // to_str, all
+  {
+    for (const auto t: get_all_piece_types())
+    {
+      assert(!to_str(t).empty());
+    }
+  }
   // get_max_health
   {
     assert(get_max_health(piece_type::king) > 0.0);
@@ -40,6 +60,13 @@ void test_piece_type()
     assert(get_max_health(piece_type::queen) > 0.0);
     assert(get_max_health(piece_type::bishop) > 0.0);
     assert(get_max_health(piece_type::knight) > 0.0);
+  }
+  // get_max_health, all
+  {
+    for (const auto t: get_all_piece_types())
+    {
+      assert(get_max_health(t) > 0.0);
+    }
   }
   // operator<<
   {

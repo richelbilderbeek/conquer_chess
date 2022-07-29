@@ -234,6 +234,14 @@ square get_occupied_square(const piece& p) noexcept
   return p.get_current_square();
 }
 
+piece get_rotated_piece(const piece& p) noexcept
+{
+  piece q = p;
+  q.set_current_square(get_rotated_square(p.get_current_square()));
+  q.set_coordinat(get_rotated_coordinat(p.get_coordinat()));
+  return q;
+}
+
 piece get_test_white_king() noexcept
 {
   return piece(
@@ -305,7 +313,7 @@ void test_piece()
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::move, square("c3"), square("d5")));
-      game g{create_king_versus_king_game()};
+      game g{get_kings_only_game()};
       piece.tick(delta_t(0.1), g);
       assert(!piece.get_actions().empty()); // Yep, let's start moving
       assert(!piece.get_messages().empty());
@@ -318,7 +326,7 @@ void test_piece()
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::move, square("c3"), square("h8")));
-      game g{create_king_versus_king_game()};
+      game g{get_kings_only_game()};
       piece.tick(delta_t(0.1), g);
       assert(piece.get_actions().empty()); // Nope, cannot do that
       assert(!piece.get_messages().empty());
@@ -331,7 +339,7 @@ void test_piece()
       assert(piece.get_messages().empty());
       assert(is_idle(piece));
       piece.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::attack, square("c3"), square("d4")));
-      game g{create_king_versus_king_game()};
+      game g{get_kings_only_game()};
       piece.tick(delta_t(0.1), g);
       assert(piece.get_actions().empty()); // Nope, cannot do that
       assert(!piece.get_messages().empty());
@@ -485,6 +493,25 @@ void test_piece()
     assert(can_move(piece_type::queen, square("e4"), square("f3"), side::lhs));
     assert(can_move(piece_type::queen, square("e4"), square("f4"), side::lhs));
     assert(can_move(piece_type::queen, square("e4"), square("f5"), side::lhs));
+
+    assert(can_move(piece_type::queen, square("e4"), square("e1"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e2"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e3"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e4"), side::lhs)); // Can move home
+    assert(can_move(piece_type::queen, square("e4"), square("e5"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e6"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e7"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e8"), side::lhs));
+
+    assert(can_move(piece_type::queen, square("e4"), square("a4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("b4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("c4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("d4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("e4"), side::lhs)); // Can move home
+    assert(can_move(piece_type::queen, square("e4"), square("f4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("g4"), side::lhs));
+    assert(can_move(piece_type::queen, square("e4"), square("h4"), side::lhs));
+
     assert(!can_move(piece_type::queen, square("e4"), square("f6"), side::lhs));
 
     assert(!can_move(piece_type::rook, square("e4"), square("d3"), side::lhs));
@@ -536,6 +563,13 @@ void test_piece()
   {
     const auto p{get_test_white_king()};
     assert(get_occupied_square(p) == square("e1"));
+  }
+  // get_rotated_piece
+  {
+    const auto p{get_test_white_king()};
+    assert(get_occupied_square(p) == square("e1"));
+    const auto q{get_rotated_piece(p)};
+    assert(get_occupied_square(q) == square("d8"));
   }
   // get_test_white_king
   {
@@ -607,6 +641,30 @@ void test_piece()
     assert(p.get_actions().empty()); // Actions cleared
     assert(p.get_current_square() == square("e7")); // Piece stays put
   }
+  // A queen for the lhs player can move up
+  {
+    piece p(
+      chess_color::white,
+      piece_type::queen,
+      square("h5"),
+      side::lhs
+    );
+    p.add_action(piece_action(side::lhs, piece_type::queen, piece_action_type::move, square("h5"), square("g5")));
+    assert(!p.get_actions().empty());
+    int n_ticks{0};
+    game g = get_game_with_starting_position(starting_position_type::before_scholars_mate);
+    assert(count_piece_actions(p) == 2);
+    p.tick(delta_t(0.1), g);
+    assert(count_piece_actions(p) == 1);
+    while (p.get_current_square() == square("h5"))
+    {
+      p.tick(delta_t(0.1), g);
+      assert(count_piece_actions(p) == 1);
+      ++n_ticks;
+      assert(n_ticks < 100);
+    }
+    assert(p.get_current_square() == square("g5"));
+  }
   // operator==
   {
     const auto a{get_test_white_king()};
@@ -630,7 +688,7 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e1"), square("e2")));
     assert(has_actions(p));
-    game g{create_king_versus_king_game()};
+    game g{get_kings_only_game()};
     p.tick(delta_t(0.1), g);
     assert(has_actions(p));
     for (int i{0}; i != 10; ++i)
@@ -649,7 +707,7 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("e1"));
     p.add_action(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("e2"), square("e3")));
     assert(has_actions(p));
-    game g{create_king_versus_king_game()};
+    game g{get_kings_only_game()};
     p.tick(delta_t(1.0), g);
   }
   // A knight never occupied squares between its source and target square
@@ -659,7 +717,7 @@ void test_piece()
     assert(square(p.get_coordinat()) == square("c3"));
     p.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::move, square("c3"), square("e4")));
     assert(has_actions(p));
-    game g{create_king_versus_king_game()};
+    game g{get_kings_only_game()};
     p.tick(delta_t(0.1), g);
     assert(has_actions(p));
     assert(get_occupied_square(p) == square("c3"));
@@ -684,7 +742,8 @@ void piece::tick(
   if (m_actions.empty()) return;
   switch(m_actions[0].get_action_type())
   {
-    case piece_action_type::move: return tick_move(*this, dt, g);
+    case piece_action_type::move:
+      return tick_move(*this, dt, g);
     default:
     case piece_action_type::attack:
       assert(m_actions[0].get_action_type() == piece_action_type::attack);
@@ -746,6 +805,7 @@ void tick_move(
   assert(!p.get_actions().empty());
   const auto& first_action{p.get_actions()[0]};
   assert(first_action.get_action_type() == piece_action_type::move);
+  std::clog << "Doing action " << first_action << '\n';
 
   const auto occupied_squares{
     get_occupied_squares(g)
@@ -799,12 +859,19 @@ void tick_move(
   {
     // Arrive at next the square
     p.set_coordinat(to_coordinat(first_action.get_to()));
-    //m_coordinat = to_coordinat(first_action.get_to());
     p.set_current_square(first_action.get_to());
 
     // Done moving
     assert(!p.get_actions().empty());
     remove_first(p.get_actions());
+
+    // Only say 'done' when (1) having done all actions, and (2) not homing
+    if (first_action.get_from() != first_action.get_to()
+      && p.get_actions().size() == 1
+    )
+    {
+      p.add_message(message_type::done);
+    }
   }
   else
   {
@@ -817,6 +884,7 @@ void tick_move(
       (to_coordinat(first_action.get_to()) - p.get_coordinat())
       / (full_length / dt.get())
     };
+    std::clog << "Moving from " << p.get_coordinat() << " by " << delta << '\n';
     p.get_coordinat() += delta;
   }
 }

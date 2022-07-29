@@ -29,7 +29,7 @@ void test_game_class()
   }
   // game::get_options, non-const
   {
-    auto g{create_king_versus_king_game()};
+    auto g{get_kings_only_game()};
     auto& options = g.get_options();
     assert(g.get_options().get_left_player_color() == chess_color::white);
     toggle_left_player_color(options);
@@ -37,19 +37,19 @@ void test_game_class()
   }
   // game::get_player_1_pos
   {
-    const auto g{create_king_versus_king_game()};
+    const auto g{get_kings_only_game()};
     assert(g.get_player_1_pos().get_x() >= 0.0);
     assert(g.get_player_1_pos().get_y() >= 0.0);
   }
   // game::get_player_2_pos
   {
-    const auto g{create_king_versus_king_game()};
+    const auto g{get_kings_only_game()};
     assert(g.get_player_2_pos().get_x() >= 0.0);
     assert(g.get_player_2_pos().get_y() >= 0.0);
   }
   // game::get_time
   {
-    const auto g{create_king_versus_king_game()};
+    const auto g{get_kings_only_game()};
     assert(g.get_time() == delta_t(0.0));
   }
   // game::tick
@@ -148,14 +148,14 @@ void test_game_functions()
   }
   // count_control_actions
   {
-    const auto g{create_king_versus_king_game()};
+    const auto g{get_kings_only_game()};
     // No game actions at start
     assert(count_control_actions(g) == 0);
     // TODO: add action
   }
   // count_piece_actions: actions in pieces accumulate
   {
-    game g = create_king_versus_king_game();
+    game g = get_kings_only_game();
     get_pieces(g).at(0).add_action(
       piece_action(
         side::lhs,
@@ -180,7 +180,7 @@ void test_game_functions()
   }
   // do_show_selected
   {
-    const auto g{create_king_versus_king_game()};
+    const auto g{get_kings_only_game()};
     assert(do_show_selected(g) || !do_show_selected(g));
   }
   // get_cursor_pos
@@ -410,7 +410,7 @@ void test_game_mouse_use()
   }
   // LMB then RMB makes a unit move
   {
-    game g = create_king_versus_king_game();
+    game g = get_kings_only_game();
     g.add_action(create_press_lmb_action(to_coordinat("e8")));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);

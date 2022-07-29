@@ -24,6 +24,9 @@ private:
   sf::Sound m_attacking_high;
   sf::Sound m_attacking_low;
   sf::Sound m_attacking_mid;
+  sf::Sound m_done_high;
+  sf::Sound m_done_low;
+  sf::Sound m_done_mid;
   sf::Sound m_faring_into_battle;
   sf::Sound m_heu_high;
   sf::Sound m_heu_low;
@@ -56,6 +59,9 @@ private:
   sf::SoundBuffer m_attacking_high_buffer;
   sf::SoundBuffer m_attacking_low_buffer;
   sf::SoundBuffer m_attacking_mid_buffer;
+  sf::SoundBuffer m_done_high_buffer;
+  sf::SoundBuffer m_done_low_buffer;
+  sf::SoundBuffer m_done_mid_buffer;
   sf::SoundBuffer m_faring_into_battle_buffer;
   sf::SoundBuffer m_heu_high_buffer;
   sf::SoundBuffer m_heu_low_buffer;
@@ -85,6 +91,9 @@ private:
   sf::SoundBuffer m_yes_low_buffer;
   sf::SoundBuffer m_yes_mid_buffer;
 };
+
+/// Test this class and its free functions
+void test_sound_effects();
 
 #endif // LOGIC_ONLY
 

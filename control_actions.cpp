@@ -4,6 +4,7 @@
 #include "square.h"
 
 #include <cassert>
+#include <iostream>
 
 control_actions::control_actions()
 {
@@ -172,6 +173,8 @@ void control_actions::process_control_actions(game& g)
     }
     else if (action.get_type() == control_action_type::press_move)
     {
+
+      std::clog << get_keyboard_user_player_color(get_options(g)) << " player starts moving to " << get_keyboard_player_pos(g) << '\n';
       start_move_unit(
         g,
         get_keyboard_player_pos(g),
@@ -261,20 +264,22 @@ void control_actions::start_move_unit(
   const chess_color player_color
 )
 {
+  std::clog << "start_move_unit for " << count_selected_units(g, player_color) << " selected units" << '\n';
   if (count_selected_units(g, player_color) == 0) return;
 
   for (auto& p: g.get_pieces())
   {
     if (p.is_selected() && p.get_color() == player_color)
     {
+
       const auto& from{p.get_coordinat()};
       const auto& to{coordinat};
+      std::clog << p.get_type() << " moves from " << from << " to " << to << '\n';
       if (from != to)
       {
         // No shift, so all current actions are void
         clear_actions(p);
-
-        p.add_action(
+        const auto action{
           piece_action(
             p.get_player(),
             p.get_type(),
@@ -282,7 +287,9 @@ void control_actions::start_move_unit(
             square(from),
             square(to)
           )
-        );
+        };
+        std::clog << "Piece has new action: " << action << '\n';
+        p.add_action(action);
       }
     }
   }

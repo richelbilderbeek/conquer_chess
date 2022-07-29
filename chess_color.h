@@ -3,11 +3,14 @@
 
 #include <iosfwd>
 #include <string>
+#include <vector>
 
 enum class chess_color
 {
   black, white
 };
+
+std::vector<chess_color> get_all_chess_colors() noexcept;
 
 /// Get the other color
 chess_color get_other_color(const chess_color c) noexcept;

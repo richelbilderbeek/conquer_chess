@@ -77,22 +77,18 @@ int count_piece_actions(
 }
 
 int count_selected_units(
+  const game& g
+)
+{
+  return count_selected_units(g.get_pieces());
+}
+
+int count_selected_units(
   const game& g,
   const chess_color player
 )
 {
   return count_selected_units(g.get_pieces(), player);
-}
-
-game create_king_versus_king_game()
-{
-  const game_options options(
-    get_default_screen_size(),
-    starting_position_type::kings_only,
-    game_speed::normal,
-    get_default_margin_width()
-  );
-  return game(options);
 }
 
 void do_move_keyboard_player_piece(game& g, const square& s)
@@ -101,7 +97,9 @@ void do_move_keyboard_player_piece(game& g, const square& s)
   set_keyboard_player_pos(g, s);
   assert(square(get_keyboard_player_pos(g)) == s);
   g.add_action(create_press_move_action());
-  g.tick();
+  assert(count_control_actions(g) == 1);
+  std::clog << "game::tick" << '\n';
+  g.tick(delta_t(0.1));
   assert(count_control_actions(g) == 0);
 }
 
@@ -112,6 +110,8 @@ void do_select_and_move_keyboard_player_piece(
 )
 {
   do_select_for_keyboard_player(g, from);
+  assert(count_selected_units(g) > 0);
+  std::clog << "do_move_keyboard_player_piece to " << to << '\n';
   do_move_keyboard_player_piece(g, to);
 }
 
@@ -209,6 +209,17 @@ game get_default_game() noexcept
   };
 }
 
+game get_game_with_starting_position(starting_position_type t) noexcept
+{
+  const game_options options(
+    get_default_screen_size(),
+    t,
+    get_default_game_speed(),
+    get_default_margin_width()
+  );
+  return game(options);
+}
+
 id get_id(const game& g, const square& s)
 {
   assert(is_piece_at(g, s));
@@ -256,6 +267,11 @@ game_coordinat& get_keyboard_player_pos(game& g)
 chess_color get_keyboard_user_player_color(const game& g)
 {
   return get_keyboard_user_player_color(g.get_options());
+}
+
+game get_kings_only_game() noexcept
+{
+  return get_game_with_starting_position(starting_position_type::kings_only);
 }
 
 const game_view_layout& get_layout(const game& g) noexcept
@@ -434,8 +450,12 @@ void set_keyboard_player_pos(
 
 void game::tick(const delta_t& dt)
 {
+  std::clog << "Number of piece actions before: " << count_piece_actions(*this, get_keyboard_user_player_color(*this)) << '\n';
+
   // Convert control_actions to piece_actions instantaneous
   m_control_actions.process(*this);
+
+  std::clog << "Number of piece actions after: " << count_piece_actions(*this, get_keyboard_user_player_color(*this)) << '\n';
 
   assert(count_dead_pieces(m_pieces) == 0);
 

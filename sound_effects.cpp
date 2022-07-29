@@ -11,6 +11,9 @@ sound_effects::sound_effects()
     std::make_tuple(std::ref(m_attacking_high), std::ref(m_attacking_high_buffer), "attacking_high.ogg"),
     std::make_tuple(std::ref(m_attacking_low), std::ref(m_attacking_low_buffer), "attacking_low.ogg"),
     std::make_tuple(std::ref(m_attacking_mid), std::ref(m_attacking_mid_buffer), "attacking_mid.ogg"),
+    std::make_tuple(std::ref(m_done_high), std::ref(m_done_high_buffer), "done_high.ogg"),
+    std::make_tuple(std::ref(m_done_low), std::ref(m_done_low_buffer), "done_low.ogg"),
+    std::make_tuple(std::ref(m_done_mid), std::ref(m_done_mid_buffer), "done_mid.ogg"),
     std::make_tuple(std::ref(m_faring_into_battle), std::ref(m_faring_into_battle_buffer), "faring_into_battle.ogg"),
     std::make_tuple(std::ref(m_heu_high), std::ref(m_heu_high_buffer), "heu_high.ogg"),
     std::make_tuple(std::ref(m_heu_low), std::ref(m_heu_low_buffer), "heu_low.ogg"),
@@ -77,6 +80,23 @@ void sound_effects::play(const message& effect)
       }
       break;
     }
+    case message_type::done:
+    {
+      switch (piece_type)
+      {
+        case piece_type::bishop: m_done_high.play(); break;
+        case piece_type::king: m_done_mid.play(); break;
+        case piece_type::knight: m_done_mid.play(); break;
+        case piece_type::pawn: m_done_mid.play(); break;
+        case piece_type::queen: m_done_high.play(); break;
+        default:
+        case piece_type::rook:
+          assert(piece_type == piece_type::rook);
+          m_done_low.play();
+          break;
+      }
+      break;
+    }
     case message_type::select:
     {
       switch (piece_type)
@@ -111,8 +131,10 @@ void sound_effects::play(const message& effect)
       }
       break;
     }
+    default:
     case message_type::start_attack:
     {
+      assert(effect.get_message_type() == message_type::start_attack);
       switch (piece_type)
       {
         case piece_type::bishop: m_attacking_high.play(); break;
@@ -134,6 +156,13 @@ void sound_effects::play(const message& effect)
 void sound_effects::play_hide() noexcept
 {
   m_hide.play();
+}
+
+void test_sound_effects()
+{
+#ifndef NDEBUG
+
+#endif
 }
 
 #endif // LOGIC_ONLY

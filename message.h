@@ -6,6 +6,7 @@
 #include "piece_type.h"
 
 #include <iosfwd>
+#include <vector>
 
 /// Representation of a sound effect
 /// Use 'MESSAGEs::play' to play it
@@ -26,6 +27,9 @@ public:
   chess_color m_chess_color;
   piece_type m_piece_type;
 };
+
+/// Create all possible messages
+std::vector<message> get_all_messages() noexcept;
 
 /// Test this class and its free functions
 void test_message();

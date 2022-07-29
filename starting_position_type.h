@@ -10,6 +10,7 @@ enum class starting_position_type
   standard,
   kings_only,
   before_scholars_mate,
+  queen_end_game,
   bishop_and_knight_end_game,
   pawn_all_out_assault
 };

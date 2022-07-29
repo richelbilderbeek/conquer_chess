@@ -4,6 +4,15 @@
 #include <iostream>
 #include <sstream>
 
+std::vector<chess_color> get_all_chess_colors() noexcept
+{
+  return
+  {
+    chess_color::black,
+    chess_color::white
+  };
+}
+
 chess_color get_other_color(const chess_color c) noexcept
 {
   if (c == chess_color::white) return chess_color::black;
@@ -14,10 +23,17 @@ chess_color get_other_color(const chess_color c) noexcept
 void test_chess_color()
 {
 #ifndef NDEBUG
-  // to_str
+  // to_str, manual
   {
     assert(to_str(chess_color::white) == "white");
     assert(to_str(chess_color::black) == "black");
+  }
+  // to_str, all
+  {
+    for (const auto c: get_all_chess_colors())
+    {
+      assert(!to_str(c).empty());
+    }
   }
   // get_other_color
   {

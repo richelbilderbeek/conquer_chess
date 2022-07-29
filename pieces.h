@@ -22,6 +22,11 @@ int count_piece_actions(
   const chess_color player
 );
 
+/// Count the number of selected units for both players
+int count_selected_units(
+  const std::vector<piece>& pieces
+);
+
 /// Count the number of selected units of a player
 int count_selected_units(
   const std::vector<piece>& pieces,
@@ -56,6 +61,10 @@ piece get_piece_with_id(
   const std::vector<piece>& pieces,
   const id& i
 );
+
+/// Rotate the coordinator of the pieces,
+/// i.e. turn the board 180 degrees
+std::vector<piece> get_rotated_pieces(const std::vector<piece>& piece) noexcept;
 
 /// Get all the selected pieces
 /// @param player the color of the player, which is white for player 1

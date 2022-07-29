@@ -2,6 +2,7 @@
 #define PIECE_TYPE_H
 
 #include <iosfwd>
+#include <vector>
 
 enum class piece_type
 {
@@ -12,6 +13,9 @@ enum class piece_type
   queen,
   rook
 };
+
+/// Get all the piece types
+std::vector<piece_type> get_all_piece_types() noexcept;
 
 /// Get the maximum health for a piece
 double get_max_health(const piece_type type);

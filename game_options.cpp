@@ -36,7 +36,7 @@ game_options get_default_game_options()
   return game_options(
     get_default_screen_size(),
     get_default_starting_position(),
-    game_speed::normal,
+    get_default_game_speed(),
     get_default_margin_width()
   );
 }
@@ -114,7 +114,6 @@ void game_options::set_right_controller_type(const controller_type t) noexcept
   }
 }
 
-/// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(
   const game_options& options
 ) noexcept

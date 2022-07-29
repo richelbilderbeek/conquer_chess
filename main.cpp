@@ -58,6 +58,7 @@ void test()
 #ifndef LOGIC_ONLY
   test_game_resources();
   test_game_view();
+  test_sound_effects();
 #endif // LOGIC_ONLY
 #endif
 }
