@@ -472,3 +472,9 @@ std::ostream& operator<<(std::ostream& os, const square& s) noexcept
   os << to_str(s);
   return os;
 }
+
+std::ostream& operator<<(std::ostream& os, const std::vector<square>& s) noexcept
+{
+  os << to_str(s);
+  return os;
+}

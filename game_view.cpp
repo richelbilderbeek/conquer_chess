@@ -361,10 +361,8 @@ void show_board(game_view& view)
   }
   show_square_under_cursor(view, side::lhs);
   show_square_under_cursor(view, side::rhs);
-  #define FIX_ISSUE_8
-  #ifdef FIX_ISSUE_8
   show_possible_moves(view, side::lhs);
-  #endif // FIX_ISSUE_8
+  show_possible_moves(view, side::rhs);
   show_unit_paths(view);
   show_pieces(view);
   show_unit_health_bars(view);
@@ -633,7 +631,7 @@ void show_possible_moves(game_view& view, const side player)
     rectangle.setOutlineThickness(3);
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setScale(0.5, 0.5);
-    rectangle.setRotation(30);
+    rectangle.setRotation(player == side::lhs ? 30 : -30);
     view.get_window().draw(rectangle);
   }
 }

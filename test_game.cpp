@@ -294,15 +294,19 @@ void test_game_functions()
       assert(get_possible_moves(g, side::lhs).empty());
       assert(get_possible_moves(g, side::rhs).empty());
     }
-    // Knight at b1 has two  moves when selected
+    #ifdef FIX_ISSUE_8
+    // Knight at b1 has four moves when selected (two regular, and two moves beyond)
     {
       game g;
       const std::vector<square> moves{get_possible_moves(g, side::lhs)};
       assert(moves.empty());
       auto& piece{get_piece_at(g, square("b1"))};
+      assert(piece.get_type() == piece_type::knight);
       piece.set_selected(true);
-      assert(get_possible_moves(g, side::lhs).size() == 2);
+      std::clog << get_possible_moves(g, side::lhs) << '\n';
+      assert(get_possible_moves(g, side::lhs).size() == 4);
     }
+    #endif // FIX_ISSUE_8
     // Pawn at e2 has four moves when selected
     {
       game g;
