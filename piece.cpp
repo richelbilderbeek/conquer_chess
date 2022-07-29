@@ -715,6 +715,23 @@ void test_piece()
     game g{get_kings_only_game()};
     p.tick(delta_t(1.0), g);
   }
+  // A piece stops attacking when the attacked piece moves away
+  {
+    game g{get_game_with_starting_position(starting_position_type::queen_end_game)};
+    piece& white_queen{get_piece_at(g, square("d1"))};
+    piece& black_queen{get_piece_at(g, square("d8"))};
+    white_queen.add_action(piece_action(side::lhs, piece_type::queen, piece_action_type::attack, square("d1"), square("d8")));
+    assert(has_actions(white_queen));
+    black_queen.add_action(piece_action(side::rhs, piece_type::queen, piece_action_type::move, square("d8"), square("a8")));
+    assert(has_actions(white_queen));
+    for (int i{0}; i != 10; ++i)
+    {
+      white_queen.tick(delta_t(0.1), g);
+      black_queen.tick(delta_t(0.1), g);
+    }
+    // Black queen is shot, but survives
+    assert(get_f_health(black_queen) < 1.0);
+  }
   // A knight never occupied squares between its source and target square
   {
     piece p{get_test_white_knight()};
