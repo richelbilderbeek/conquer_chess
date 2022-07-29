@@ -295,8 +295,50 @@ void control_actions::start_move_unit(
 void test_control_actions()
 {
 #ifndef NDEBUG
+  // Empty on construction
   {
-
+    const control_actions c;
+    assert(c.get_actions().empty());
   }
-#endif // DEBUG
+  // Move up does something
+  {
+    game g;
+    const game_coordinat before{get_keyboard_player_pos(g)};
+    control_actions c;
+    c.add(create_press_up_action());
+    c.process(g);
+    const game_coordinat after{get_keyboard_player_pos(g)};
+    assert(before != after);
+  }
+  // Move right does something
+  {
+    game g;
+    const game_coordinat before{get_keyboard_player_pos(g)};
+    control_actions c;
+    c.add(create_press_right_action());
+    c.process(g);
+    const game_coordinat after{get_keyboard_player_pos(g)};
+    assert(before != after);
+  }
+  // Move down does something
+  {
+    game g;
+    const game_coordinat before{get_keyboard_player_pos(g)};
+    control_actions c;
+    c.add(create_press_down_action());
+    c.process(g);
+    const game_coordinat after{get_keyboard_player_pos(g)};
+    assert(before != after);
+  }
+  // Move left does something
+  {
+    game g;
+    const game_coordinat before{get_keyboard_player_pos(g)};
+    control_actions c;
+    c.add(create_press_left_action());
+    c.process(g);
+    const game_coordinat after{get_keyboard_player_pos(g)};
+    assert(before != after);
+  }
+#endif // NDEBUG
 }
