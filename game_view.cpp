@@ -361,6 +361,7 @@ void show_board(game_view& view)
   }
   show_square_under_cursor(view, side::lhs);
   show_square_under_cursor(view, side::rhs);
+  #define FIX_ISSUE_8
   #ifdef FIX_ISSUE_8
   show_possible_moves(view, side::lhs);
   #endif // FIX_ISSUE_8
@@ -611,14 +612,30 @@ void show_pieces(game_view& view)
 void show_possible_moves(game_view& view, const side player)
 {
   const auto& g{view.get_game()};
+  const auto&layout{g.get_layout()};
   const auto color{get_player_color(g, player)};
   if (count_selected_units(g, color) == 0) return;
 
   const std::vector<square> possible_moves{
     get_possible_moves(g, player)
   };
+  if (possible_moves.empty()) return;
+
   assert(are_all_unique(possible_moves));
-  assert(1==2);
+  for (const auto& square: possible_moves)
+  {
+    sf::RectangleShape rectangle;
+    set_rect(
+      rectangle,
+      convert_to_screen_rect(square, layout)
+    );
+    rectangle.setOutlineColor(to_sfml_color(color));
+    rectangle.setOutlineThickness(3);
+    rectangle.setFillColor(sf::Color::Transparent);
+    rectangle.setScale(0.5, 0.5);
+    rectangle.setRotation(30);
+    view.get_window().draw(rectangle);
+  }
 }
 
 void show_sidebar_1(game_view& view)

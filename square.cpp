@@ -79,6 +79,18 @@ bool are_on_same_rank(const square& a, const square& b) noexcept
   return a.get_x() == b.get_x();
 }
 
+std::vector<square> concatenate(
+  const std::vector<square>& a,
+  const std::vector<square>& b
+)
+{
+  std::vector<square> c = a;
+  c.reserve(a.size() + b.size());
+  std::copy(std::begin(b), std::end(b), std::back_inserter(c));
+  assert(c.size() == a.size() + b.size());
+  return c;
+}
+
 std::vector<square> get_intermediate_squares(
   const square& from,
   const square& to

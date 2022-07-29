@@ -56,6 +56,12 @@ bool are_on_same_half_diagonal(const square& a, const square& b) noexcept;
 /// Are the squares on the same rank, e.g. a1 and a8
 bool are_on_same_rank(const square& a, const square& b) noexcept;
 
+/// Concatenate the vectors
+std::vector<square> concatenate(
+  const std::vector<square>& a,
+  const std::vector<square>& b
+);
+
 /// Get the intermediate squares, in an inclusive way:
 /// the first square will be 'from',
 /// to last square will be 'to'

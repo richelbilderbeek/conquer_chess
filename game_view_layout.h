@@ -97,6 +97,12 @@ screen_rect convert_to_screen_rect(
   const game_view_layout& layout
 );
 
+/// Convert an in-game square to an on-screen screen rectange
+screen_rect convert_to_screen_rect(
+  const square& s,
+  const game_view_layout& layout
+);
+
 /// Convert an on-screen coordinat to an in-game coordinat
 game_coordinat convert_to_game_coordinat(
   const screen_coordinat& coordinat,

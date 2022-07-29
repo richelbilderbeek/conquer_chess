@@ -187,14 +187,30 @@ std::vector<square> get_possible_bishop_moves(
   const int y{focal_piece.get_current_square().get_y()};
 
   std::vector<square> moves;
-  // North-east
-  for (int delta{1}; delta != 8; ++delta)
+  std::vector<std::pair<int, int>> delta_pairs{
+    std::make_pair( 1, -1), // NE
+    std::make_pair( 1,  1), // SE
+    std::make_pair(-1,  1), // SW
+    std::make_pair(-1, -1)  // NW
+  };
+  for (const auto delta_pair: delta_pairs)
   {
-    const int new_x{x + delta};
-    const int new_y{y - delta};
-    if (!is_valid_square_xy(new_x, new_y)) break;
+    for (int distance{1}; distance != 8; ++distance)
+    {
+      const int new_x{x + (delta_pair.first * distance)};
+      const int new_y{y + (delta_pair.second * distance)};
+      if (!is_valid_square_xy(new_x, new_y)) break;
+      const square there(new_x, new_y);
+      if (is_piece_at(pieces, there)
+        && get_piece_at(pieces, there).get_color() == focal_piece.get_color()
+      )
+      {
+        break;
+      }
+      moves.push_back(there);
+    }
   }
-  return {};
+  return moves;
 }
 
 std::vector<square> get_possible_king_moves(
@@ -207,6 +223,7 @@ std::vector<square> get_possible_king_moves(
   assert(focal_piece.get_type() == piece_type::king);
   const int x{focal_piece.get_current_square().get_x()};
   const int y{focal_piece.get_current_square().get_y()};
+  const auto enemy_color{get_other_color(focal_piece.get_color())};
   std::vector<std::pair<int, int>> xys{
     std::make_pair(x + 0, y - 1),
     std::make_pair(x + 1, y - 1),
@@ -217,7 +234,20 @@ std::vector<square> get_possible_king_moves(
     std::make_pair(x - 1, y + 0),
     std::make_pair(x - 1, y - 2)
   };
-  return to_squares(xys);
+  const auto squares_on_board{to_squares(xys)};
+  std::vector<square> squares;
+  std::copy_if(
+    std::begin(squares_on_board),
+    std::end(squares_on_board),
+    std::back_inserter(squares),
+    [pieces, enemy_color](const auto& square)
+    {
+      return !is_piece_at(pieces, square)
+        || get_piece_at(pieces, square).get_color() == enemy_color
+      ;
+    }
+  );
+  return squares;
 }
 
 std::vector<square> get_possible_knight_moves(
@@ -230,6 +260,7 @@ std::vector<square> get_possible_knight_moves(
   assert(focal_piece.get_type() == piece_type::knight);
   const int x{focal_piece.get_current_square().get_x()};
   const int y{focal_piece.get_current_square().get_y()};
+  const auto enemy_color{get_other_color(focal_piece.get_color())};
   std::vector<std::pair<int, int>> xys{
     std::make_pair(x + 1, y - 2), // 1 o'clock
     std::make_pair(x + 2, y - 1), // 2 o'clock
@@ -240,7 +271,20 @@ std::vector<square> get_possible_knight_moves(
     std::make_pair(x - 2, y - 1), // 10 o'clock
     std::make_pair(x - 1, y - 2)  // 11 o'clock
   };
-  return to_squares(xys);
+  const auto squares_on_board{to_squares(xys)};
+  std::vector<square> squares;
+  std::copy_if(
+    std::begin(squares_on_board),
+    std::end(squares_on_board),
+    std::back_inserter(squares),
+    [pieces, enemy_color](const auto& square)
+    {
+      return !is_piece_at(pieces, square)
+        || get_piece_at(pieces, square).get_color() == enemy_color
+      ;
+    }
+  );
+  return squares;
 }
 
 std::vector<square> get_possible_moves(
@@ -295,9 +339,26 @@ std::vector<square> get_possible_pawn_moves(
   );
 
   // Move forward
+  const std::vector<std::pair<int, int>> move_xys{
+    std::make_pair(x + (1 * dx), y),
+    std::make_pair(x + (2 * dx), y),
+    std::make_pair(x + (3 * dx), y),
+    std::make_pair(x + (4 * dx), y),
+    std::make_pair(x + (5 * dx), y),
+    std::make_pair(x + (6 * dx), y),
+    std::make_pair(x + (7 * dx), y)
+  };
+  const auto move_squares{to_squares(move_xys)};
+  std::vector<square> valid_move_squares;
+  for (const auto s: move_squares)
+  {
+    // Move until a piece
+    if (is_piece_at(pieces, s)) break;
+    valid_move_squares.push_back(s) ;
+  }
 
-
-  return valid_attack_squares;
+  // Concatenate the vectors
+  return concatenate(valid_attack_squares, valid_move_squares);
 }
 
 std::vector<square> get_possible_queen_moves(
@@ -308,8 +369,39 @@ std::vector<square> get_possible_queen_moves(
   assert(!pieces.empty());
   assert(has_piece_with_id(pieces, focal_piece.get_id()));
   assert(focal_piece.get_type() == piece_type::queen);
-  // Get the bishop and rook moves
-  return {};
+  const int x{focal_piece.get_current_square().get_x()};
+  const int y{focal_piece.get_current_square().get_y()};
+
+  std::vector<square> moves;
+  std::vector<std::pair<int, int>> delta_pairs{
+    std::make_pair( 0, -1), // N
+    std::make_pair( 1, -1), // NE
+    std::make_pair( 1,  0), // E
+    std::make_pair( 1,  1), // SE
+    std::make_pair( 0,  1), // S
+    std::make_pair(-1,  1), // SW
+    std::make_pair(-1,  0), // W
+    std::make_pair(-1, -1)  // SE
+  };
+  for (const auto delta_pair: delta_pairs)
+  {
+    for (int distance{1}; distance != 8; ++distance)
+    {
+      const int new_x{x + (delta_pair.first * distance)};
+      const int new_y{y + (delta_pair.second * distance)};
+      if (!is_valid_square_xy(new_x, new_y)) break;
+      const square there(new_x, new_y);
+      if (is_piece_at(pieces, there)
+        && get_piece_at(pieces, there).get_color() == focal_piece.get_color()
+      )
+      {
+        break;
+      }
+      moves.push_back(there);
+    }
+  }
+  return moves;
+
 }
 
 std::vector<square> get_possible_rook_moves(
@@ -324,16 +416,30 @@ std::vector<square> get_possible_rook_moves(
   const int y{focal_piece.get_current_square().get_y()};
 
   std::vector<square> moves;
-  // North
-  for (int delta{1}; delta != 8; ++delta)
+  std::vector<std::pair<int, int>> delta_pairs{
+    std::make_pair( 0, -1), // N
+    std::make_pair( 1,  0), // E
+    std::make_pair( 0,  1), // S
+    std::make_pair(-1,  0)  // W
+  };
+  for (const auto delta_pair: delta_pairs)
   {
-    const int new_x{x};
-    const int new_y{y - delta};
-    if (!is_valid_square_xy(new_x, new_y)) break;
+    for (int distance{1}; distance != 8; ++distance)
+    {
+      const int new_x{x + (delta_pair.first * distance)};
+      const int new_y{y + (delta_pair.second * distance)};
+      if (!is_valid_square_xy(new_x, new_y)) break;
+      const square there(new_x, new_y);
+      if (is_piece_at(pieces, there)
+        && get_piece_at(pieces, there).get_color() == focal_piece.get_color()
+      )
+      {
+        break;
+      }
+      moves.push_back(there);
+    }
   }
-
-
-  return {};
+  return moves;
 }
 
 
@@ -680,7 +786,6 @@ void test_pieces()
     const auto pieces{get_pieces_bishop_and_knight_end_game()};
     assert(pieces.size() == 4);
   }
-  #ifdef FIX_ISSUE_8
   // get_possible_moves
   {
     // At the start, only knights can move
@@ -704,9 +809,65 @@ void test_pieces()
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("g2"))).size() == 4);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("h2"))).size() == 4);
     }
-    // Other setups
+    // King-versus_king
+    {
+      const auto pieces{get_starting_pieces(starting_position_type::kings_only, chess_color::white)};
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e1"))).size() == 5);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e8"))).size() == 5);
+    }
+    // pawn_all_out_assault
+    {
+      const auto pieces{get_starting_pieces(starting_position_type::pawn_all_out_assault, chess_color::white)};
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("a1"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("b1"))).size() == 3);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("c1"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d1"))).size() == 6);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e1"))).size() == 3);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("f1"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("g1"))).size() == 3);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("h1"))).size() == 2);
+
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("a4"))).size() == 1);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("b4"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("c4"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d4"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e4"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("f4"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("g4"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("h4"))).size() == 1);
+
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("a5"))).size() == 1);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("b5"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("c5"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d5"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e5"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("f5"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("g5"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("h5"))).size() == 1);
+
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("a8"))).size() == 2);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("b8"))).size() == 3);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("c8"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d8"))).size() == 6);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e8"))).size() == 3);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("f8"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("g8"))).size() == 3);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("h8"))).size() == 2);
+    }
+    // queen_end_game
+    {
+      const auto pieces{get_starting_pieces(starting_position_type::queen_end_game, chess_color::white)};
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d1"))).size() == 17);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e1"))).size() == 4);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("d8"))).size() == 17);
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("e8"))).size() == 4);
+    }
+    // bishop_and_knight_end_game
+    {
+      const auto pieces{get_starting_pieces(starting_position_type::bishop_and_knight_end_game, chess_color::white)};
+      assert(get_possible_moves(pieces, get_piece_at(pieces, square("g4"))).size() == 6);
+    }
   }
-  #endif // FIX_ISSUE_8
   // get_standard_starting_pieces
   {
     const auto pieces_1{get_standard_starting_pieces(chess_color::white)};

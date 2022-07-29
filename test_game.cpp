@@ -294,18 +294,24 @@ void test_game_functions()
       assert(get_possible_moves(g, side::lhs).empty());
       assert(get_possible_moves(g, side::rhs).empty());
     }
-    #ifdef FIX_ISSUE_8
-    // Pawn at e2 has two moves when selected
+    // Knight at b1 has two  moves when selected
+    {
+      game g;
+      const std::vector<square> moves{get_possible_moves(g, side::lhs)};
+      assert(moves.empty());
+      auto& piece{get_piece_at(g, square("b1"))};
+      piece.set_selected(true);
+      assert(get_possible_moves(g, side::lhs).size() == 2);
+    }
+    // Pawn at e2 has four moves when selected
     {
       game g;
       const std::vector<square> moves{get_possible_moves(g, side::lhs)};
       assert(moves.empty());
       auto& piece{get_piece_at(g, square("e2"))};
       piece.set_selected(true);
-      assert(get_possible_moves(g, side::lhs).size() == 2);
-      assert(1==2);
+      assert(get_possible_moves(g, side::lhs).size() == 4);
     }
-    #endif // FIX_ISSUE_8
   }
   // is_idle
   {
