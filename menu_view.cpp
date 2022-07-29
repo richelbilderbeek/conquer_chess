@@ -7,6 +7,7 @@
 #include "options_view.h"
 
 #include "sfml_helper.h"
+#include <cassert>
 #include <cmath>
 #include <iostream>
 
@@ -47,7 +48,9 @@ void menu_view::exec_game()
 void menu_view::exec_options()
 {
   options_view view(m_options);
+  assert(!to_str(get_starting_position(view)).empty());
   view.exec();
+  assert(!to_str(get_starting_position(view)).empty());
   m_options = view.get_options();
 }
 

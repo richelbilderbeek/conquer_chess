@@ -153,6 +153,7 @@ void control_actions::process_control_actions(game& g)
   {
     if (action.get_type() == control_action_type::press_attack)
     {
+
       start_attack(
         g,
         get_keyboard_player_pos(g),

@@ -46,6 +46,24 @@ void test_game_scenarios()
     assert(!piece_with_id_is_at(g, id, square("e7")));
     assert(piece_with_id_is_at(g, id, square("e6")));
   }
+  // d2-d3, then queen does not attack attack d3
+  {
+    game g;
+    assert(is_idle(g));
+    const auto id{get_id(g, square("d2"))};
+    assert(piece_with_id_is_at(g, id, square("d2")));
+    assert(id.get() >= 0);
+    do_select_and_move_keyboard_player_piece(g, square("d2"), square("d3"));
+    assert(!is_idle(g));
+    tick_until_idle(g);
+    assert(is_idle(g));
+    assert(piece_with_id_is_at(g, id, square("d3")));
+    assert(get_f_health(get_piece_with_id(g, id)) == 1.0);
+    do_select_and_start_attack_keyboard_player_piece(
+      g, square("d1"), square("d3"));
+    tick_until_idle(g);
+    assert(get_f_health(get_piece_with_id(g, id)) == 1.0);
+  }
   #ifdef FIX_ISSUE_17
   // e2-e6, then can attack and capture d7
   {

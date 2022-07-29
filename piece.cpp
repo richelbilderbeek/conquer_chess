@@ -113,6 +113,7 @@ bool can_attack(
   const side player
 )
 {
+  if (from == to) return false;
   switch (type)
   {
     case piece_type::king:
@@ -703,11 +704,21 @@ void tick_attack(
   // Done if piece moved away
   if (!is_piece_at(g, first_action.get_to()))
   {
+    p.add_message(message_type::cannot);
     remove_first(p.get_actions());
     return;
   }
   assert(is_piece_at(g, first_action.get_to()));
   piece& target{get_piece_at(g, first_action.get_to())};
+
+  // Done if target is of own color
+  if (p.get_color() == target.get_color())
+  {
+    p.add_message(message_type::cannot);
+    remove_first(p.get_actions());
+    return;
+  }
+  assert(p.get_color() != target.get_color());
   target.receive_damage(g.get_options().get_dps() * dt.get());
   // Capture the piece if destroyed
   if (is_dead(target))

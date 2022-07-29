@@ -125,6 +125,11 @@ std::vector<piece> get_starting_pieces(
   );
 }
 
+starting_position_type get_starting_position(const game_options& options) noexcept
+{
+  return options.get_starting_position();
+}
+
 void test_game_options()
 {
 #ifndef NDEBUG

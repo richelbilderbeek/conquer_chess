@@ -147,6 +147,7 @@ void do_start_attack_keyboard_player_piece(game& g, const square& s)
   assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
   set_keyboard_player_pos(g, s);
   assert(square(get_keyboard_player_pos(g)) == s);
+
   g.add_action(create_press_attack_action());
   g.tick();
   assert(count_control_actions(g) == 0);

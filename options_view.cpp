@@ -8,6 +8,7 @@
 #include "game_view.h"
 #include "sfml_helper.h"
 
+#include <cassert>
 #include <iostream>
 #include <sstream>
 
@@ -35,9 +36,18 @@ void options_view::exec()
     if (must_quit) return;
 
     // Show the current options on-screen
+    assert(!to_str(get_starting_position(*this)).empty());
     show();
+    assert(!to_str(get_starting_position(*this)).empty());
   }
 }
+
+starting_position_type get_starting_position(const options_view& v) noexcept
+{
+  return get_starting_position(v.get_options());
+}
+
+
 
 bool options_view::process_events()
 {
@@ -104,7 +114,9 @@ bool options_view::process_events()
             m_options.set_volume(get_next(m_options.get_volume()));
           break;
           case options_view_item::starting_position:
+            assert(!to_str(get_starting_position(*this)).empty());
             m_options.set_starting_position(get_next(m_options.get_starting_position()));
+            assert(!to_str(get_starting_position(*this)).empty());
           break;
           case options_view_item::left_color:
           case options_view_item::right_color:
@@ -143,13 +155,18 @@ void options_view::show()
   m_window.clear();
 
   show_panels(*this);
+
+  assert(!to_str(get_starting_position(*this)).empty());
   show_top(*this);
+  assert(!to_str(get_starting_position(*this)).empty());
+
   show_bottom(*this);
   show_selected_panel(*this);
 
   // Display all shapes
   m_window.display();
 
+  assert(!to_str(get_starting_position(*this)).empty());
 }
 
 void show_bottom(options_view& v)
@@ -379,7 +396,7 @@ void show_starting_position(options_view& v)
 
     sf::Text text;
     v.set_text_style(text);
-    text.setString(to_str(v.get_options().get_starting_position()));
+    text.setString(to_str(get_starting_position(v)));
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
@@ -389,9 +406,13 @@ void show_starting_position(options_view& v)
 
 void show_top(options_view& v)
 {
+  assert(!to_str(get_starting_position(v)).empty());
+
   show_game_speed(v);
   show_music_volume(v);
   show_starting_position(v);
+
+  assert(!to_str(get_starting_position(v)).empty());
 }
 
 

@@ -13,7 +13,7 @@
 class options_view
 {
 public:
-  options_view(const game_options& options);
+  explicit options_view(const game_options& options);
 
   /// Run the menu, until the user quits
   void exec();
@@ -56,6 +56,8 @@ private:
   void show();
 };
 
+/// Get the starting position
+starting_position_type get_starting_position(const options_view& v) noexcept;
 
 /// Show the bottom part
 void show_bottom(options_view& v);

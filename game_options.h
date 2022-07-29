@@ -57,7 +57,7 @@ public:
   const auto& get_screen_size() const noexcept { return m_screen_size; }
 
   /// Get the starting position
-  auto get_starting_position() const noexcept { return m_starting_position; }
+  starting_position_type get_starting_position() const noexcept { return m_starting_position; }
 
   /// Get the volume, as a percentage
   auto get_volume() const noexcept { return m_volume; }
@@ -147,6 +147,9 @@ controller_type get_right_player_controller(const game_options& options) noexcep
 std::vector<piece> get_starting_pieces(
   const game_options& options
 ) noexcept;
+
+/// Get the starting position
+starting_position_type get_starting_position(const game_options& options) noexcept;
 
 /// Test this class and its free functions
 void test_game_options();

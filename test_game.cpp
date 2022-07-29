@@ -70,6 +70,20 @@ void test_game_class()
       const double health_after{get_piece_at(g, square("d2")).get_health()};
       assert(health_after < health_before);
     }
+    // Cannot attack a piece of one's own color
+    {
+      game g;
+      const double health_before{get_piece_at(g, square("e1")).get_health()};
+      // Let the white queen at d1 attack the white king at e1
+      do_select_and_start_attack_keyboard_player_piece(
+        g,
+        square("d1"),
+        square("e1")
+      );
+      g.tick(delta_t(0.1));
+      const double health_after{get_piece_at(g, square("d2")).get_health()};
+      assert(health_after == health_before);
+    }
     // When a piece is killed, the queen attacker moves to that square
     {
       game_options options{get_default_game_options()};

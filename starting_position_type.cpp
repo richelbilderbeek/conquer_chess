@@ -19,7 +19,12 @@ starting_position_type get_next(const starting_position_type starting_position) 
 {
   const auto v{get_all_starting_position_types()};
   auto there{std::find(std::begin(v), std::end(v), starting_position)};
-  if (there == std::end(v)) return v.front();
+  if (there == std::end(v) - 1)
+  {
+    assert(!v.empty());
+    const starting_position_type t{v.front()};
+    return t;
+  }
   return *(++there);
 }
 
