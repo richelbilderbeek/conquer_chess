@@ -233,7 +233,7 @@ std::vector<square> get_possible_king_moves(
     std::make_pair(x - 0, y + 1),
     std::make_pair(x - 1, y + 1),
     std::make_pair(x - 1, y + 0),
-    std::make_pair(x - 1, y - 2)
+    std::make_pair(x - 1, y - 1)
   };
   const auto squares_on_board{to_squares(xys)};
   std::vector<square> squares;
