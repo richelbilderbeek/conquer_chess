@@ -355,12 +355,35 @@ const game_coordinat& get_player_pos(const game& g, const side player) noexcept
   return g.get_player_pos(player);
 }
 
+std::vector<square> get_possible_moves(
+  const game& g,
+  const side player
+)
+{
+  const auto selected_pieces{get_selected_pieces(g, player)};
+  if (selected_pieces.empty()) return {};
+  assert(selected_pieces.size() == 1);
+  const auto& selected_piece{selected_pieces[0]};
+  return get_possible_moves(
+    get_pieces(g),
+    selected_piece
+  );
+}
+
 std::vector<piece> get_selected_pieces(
   const game& g,
   const chess_color player
 )
 {
   return get_selected_pieces(g.get_pieces(), player);
+}
+
+std::vector<piece> get_selected_pieces(
+  const game& g,
+  const side player
+)
+{
+  return get_selected_pieces(g.get_pieces(), get_player_color(g, player));
 }
 
 std::vector<message> collect_messages(const game& g) noexcept

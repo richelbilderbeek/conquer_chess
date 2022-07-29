@@ -361,6 +361,7 @@ void show_board(game_view& view)
   }
   show_square_under_cursor(view, side::lhs);
   show_square_under_cursor(view, side::rhs);
+  show_possible_moves(view, side::lhs);
   show_unit_paths(view);
   show_pieces(view);
   show_unit_health_bars(view);
@@ -603,6 +604,19 @@ void show_pieces(game_view& view)
     );
     view.get_window().draw(sprite);
   }
+}
+
+void show_possible_moves(game_view& view, const side player)
+{
+  const auto& g{view.get_game()};
+  const auto color{get_player_color(g, player)};
+  if (count_selected_units(g, color) == 0) return;
+
+  const std::vector<square> possible_moves{
+    get_possible_moves(g, player)
+  };
+  assert(are_all_unique(possible_moves));
+  assert(1==2);
 }
 
 void show_sidebar_1(game_view& view)

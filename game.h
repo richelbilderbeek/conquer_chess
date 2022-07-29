@@ -42,12 +42,6 @@ public:
   /// Get the player position
   const game_coordinat& get_player_pos(const side player) const noexcept;
 
-  /// Get the in-game keyboard position
-  //const auto& get_player_1_pos() const noexcept { return m_player_1_pos; }
-
-  /// Get the in-game mouse position
-  //const auto& get_player_2_pos() const noexcept { return m_player_2_pos; }
-
   /// Get the game options
   auto& get_options() noexcept { return m_options; }
 
@@ -258,6 +252,13 @@ chess_color get_player_color(
   const side player
 ) noexcept;
 
+/// Get the possible moves for a player's selected pieces
+/// Will be empty if no pieces are selected
+std::vector<square> get_possible_moves(
+  const game& g,
+  const side player
+);
+
 /// Get all the selected pieces
 /// @param g a game
 /// @param player the color of the player, which is white for player 1
@@ -265,6 +266,15 @@ chess_color get_player_color(
 std::vector<piece> get_selected_pieces(
   const game& g,
   const chess_color player
+);
+
+/// Get all the selected pieces
+/// @param g a game
+/// @param side the side of the player, which is white for player 1
+/// @see use 'has_selected_piece' to see if there is at least 1 piece selected
+std::vector<piece> get_selected_pieces(
+  const game& g,
+  const side player
 );
 
 /// Get all the pieces

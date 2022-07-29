@@ -286,6 +286,25 @@ void test_game_functions()
     assert(get_player_color(g, side::lhs) == chess_color::white);
     assert(get_player_color(g, side::rhs) == chess_color::black);
   }
+  // get_possible_moves
+  {
+    // No moves when nothing selected
+    {
+      const game g;
+      assert(get_possible_moves(g, side::lhs).empty());
+      assert(get_possible_moves(g, side::rhs).empty());
+    }
+    // Pawn at e2 has two moves when selected
+    {
+      game g;
+      const std::vector<square> moves{get_possible_moves(g, side::lhs)};
+      assert(moves.empty());
+      auto& piece{get_piece_at(g, square("e2"))};
+      piece.set_selected(true);
+      assert(get_possible_moves(g, side::lhs).size() == 2);
+      assert(1==2);
+    }
+  }
   // is_idle
   {
     game g;

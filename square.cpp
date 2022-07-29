@@ -38,6 +38,16 @@ bool are_adjacent(const square& a, const square& b) noexcept
   ;
 }
 
+bool are_all_unique(std::vector<square> squares)
+{
+  assert(!squares.empty());
+  if (squares.size() == 1) return true;
+  std::sort(std::begin(squares), std::end(squares));
+  return std::unique(std::begin(squares), std::end(squares))
+    == std::end(squares)
+  ;
+}
+
 bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept
 {
   return are_on_same_diagonal(a, b)

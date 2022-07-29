@@ -36,6 +36,9 @@ private:
 /// Are the squares adjacent
 bool are_adjacent(const square& a, const square& b) noexcept;
 
+/// Are all the squares unique?
+bool are_all_unique(std::vector<square> squares);
+
 /// Are the squares adjacent on the same diagonal, e.g. d1 and e2
 bool are_on_adjacent_diagonal(const square& a, const square& b) noexcept;
 

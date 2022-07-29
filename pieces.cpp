@@ -113,13 +113,7 @@ std::vector<square> get_occupied_squares(const std::vector<piece>& pieces) noexc
   {
     squares.push_back(p.get_current_square());
   }
-  #ifndef NDEBUG
-  std::sort(std::begin(squares), std::end(squares));
-  assert(
-    std::unique(std::begin(squares), std::end(squares))
-    == std::end(squares)
-  );
-  #endif
+  assert(are_all_unique(squares));
   return squares;
 }
 
@@ -180,6 +174,126 @@ piece get_piece_with_id(
   assert(there != std::end(pieces));
   return *there;
 }
+
+std::vector<square> get_possible_king_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+)
+{
+  assert(!pieces.empty());
+  assert(has_piece_with_id(pieces, focal_piece.get_id()));
+  assert(focal_piece.get_type() == piece_type::king);
+  const int x{focal_piece.get_current_square().get_x()};
+  const int y{focal_piece.get_current_square().get_y()};
+  std::vector<std::pair<int, int>> xys{
+    std::make_pair(x + 0, y - 1),
+    std::make_pair(x + 1, y - 1),
+    std::make_pair(x + 1, y - 0),
+    std::make_pair(x + 1, y + 1),
+    std::make_pair(x - 0, y + 1),
+    std::make_pair(x - 1, y + 1),
+    std::make_pair(x - 1, y + 0),
+    std::make_pair(x - 1, y - 2)
+  };
+  const auto new_end{
+    std::remove_if(
+      std::begin(xys),
+      std::end(xys),
+      [](const auto& p)
+      {
+        return p.first < 0
+          || p.first > 7
+          || p.second < 0
+          || p.second > 7
+        ;
+      }
+    )
+  };
+  xys.erase(new_end, std::end(xys));
+  std::vector<square> squares;
+  squares.reserve(xys.size());
+  std::transform(
+    std::begin(xys),
+    std::end(xys),
+    std::back_inserter(squares),
+    [](const auto& p)
+    {
+      return square(p.first, p.second);
+    }
+  );
+  return squares;
+}
+
+std::vector<square> get_possible_knight_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+)
+{
+  assert(!pieces.empty());
+  assert(has_piece_with_id(pieces, focal_piece.get_id()));
+  assert(focal_piece.get_type() == piece_type::knight);
+  const int x{focal_piece.get_current_square().get_x()};
+  const int y{focal_piece.get_current_square().get_y()};
+  std::vector<std::pair<int, int>> xys{
+    std::make_pair(x + 1, y - 2), // 1 o'clock
+    std::make_pair(x + 2, y - 1), // 2 o'clock
+    std::make_pair(x + 2, y + 1), // 4 o'clock
+    std::make_pair(x + 1, y + 2), // 5 o'clock
+    std::make_pair(x - 1, y + 2), // 7 o'clock
+    std::make_pair(x - 2, y + 1), // 8 o'clock
+    std::make_pair(x - 2, y - 1), // 10 o'clock
+    std::make_pair(x - 1, y - 2)  // 11 o'clock
+  };
+  const auto new_end{
+    std::remove_if(
+      std::begin(xys),
+      std::end(xys),
+      [](const auto& p)
+      {
+        return p.first < 0
+          || p.first > 7
+          || p.second < 0
+          || p.second > 7
+        ;
+      }
+    )
+  };
+  xys.erase(new_end, std::end(xys));
+  std::vector<square> squares;
+  squares.reserve(xys.size());
+  std::transform(
+    std::begin(xys),
+    std::end(xys),
+    std::back_inserter(squares),
+    [](const auto& p)
+    {
+      return square(p.first, p.second);
+    }
+  );
+  return squares;
+}
+
+std::vector<square> get_possible_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+)
+{
+  assert(!pieces.empty());
+  assert(has_piece_with_id(pieces, focal_piece.get_id()));
+  switch (focal_piece.get_type())
+  {
+    case piece_type::king: return get_possible_king_moves(pieces, focal_piece);
+    case piece_type::pawn: return get_possible_pawn_moves(pieces, focal_piece);
+    case piece_type::rook: return get_possible_rook_moves(pieces, focal_piece);
+    case piece_type::queen: return get_possible_queen_moves(pieces, focal_piece);
+    case piece_type::bishop: return get_possible_bishop_moves(pieces, focal_piece);
+    default:
+    case piece_type::knight:
+      assert(focal_piece.get_type() == piece_type::knight);
+      return get_possible_knight_moves(pieces, focal_piece);
+  }
+}
+
 
 std::vector<piece> get_selected_pieces(
   const std::vector<piece>& all_pieces,
@@ -439,6 +553,22 @@ std::vector<piece> get_starting_pieces(
   }
 }
 
+bool has_piece_with_id(
+  const std::vector<piece>& pieces,
+  const id& i
+)
+{
+  assert(!pieces.empty());
+  const auto there{
+    std::find_if(
+      std::begin(pieces),
+      std::end(pieces),
+      [i](const auto& piece) { return piece.get_id() == i; }
+    )
+  };
+  return there != std::end(pieces);
+}
+
 bool is_piece_at(
   const std::vector<piece>& pieces,
   const game_coordinat& coordinat,
@@ -537,6 +667,11 @@ void test_pieces()
         assert(!get_starting_pieces(t, c).empty());
       }
     }
+  }
+  // has_piece_with_id
+  {
+    const auto pieces{get_starting_pieces(starting_position_type::kings_only)};
+    //has_piece_with_id(pieces, )
   }
   // is_piece_at, const
   {

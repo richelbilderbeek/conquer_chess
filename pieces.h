@@ -27,7 +27,7 @@ int count_selected_units(
   const std::vector<piece>& pieces
 );
 
-/// Count the number of selected units of a player
+/// Count the number of selected units of a color
 int count_selected_units(
   const std::vector<piece>& pieces,
   const chess_color player
@@ -61,6 +61,28 @@ piece get_piece_with_id(
   const std::vector<piece>& pieces,
   const id& i
 );
+
+/// Get the possible moves for a focal piece that is a king.
+/// This can both be a move or an attack
+std::vector<square> get_possible_king_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+);
+
+/// Get the possible moves for a focal piece that is a knight.
+/// This can both be a move or an attack
+std::vector<square> get_possible_knight_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+);
+
+/// Get the possible moves for a focal piece.
+/// This can both be a move or an attack
+std::vector<square> get_possible_moves(
+  const std::vector<piece>& pieces,
+  const piece& focal_piece
+);
+
 
 /// Rotate the coordinator of the pieces,
 /// i.e. turn the board 180 degrees
@@ -110,6 +132,12 @@ std::vector<piece> get_starting_pieces(
   const starting_position_type t,
   const chess_color left_player_color = chess_color::white
 ) noexcept;
+
+/// Is there a piece with the ID among the pieces?
+bool has_piece_with_id(
+  const std::vector<piece>& pieces,
+  const id& i
+);
 
 /// Determine if there is a piece at the coordinat
 bool is_piece_at(
