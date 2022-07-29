@@ -66,8 +66,12 @@ void test_screen_coordinat()
     const screen_coordinat a(1, 2);
     const screen_coordinat b(1, 2);
     const screen_coordinat c(3, 4);
+    const screen_coordinat d(1, 3);
+    const screen_coordinat e(4, 2);
     assert(a == b);
     assert(!(a == c));
+    assert(!(a == d));
+    assert(!(a == e));
   }
   #endif
 }

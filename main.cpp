@@ -25,6 +25,8 @@
 void test()
 {
 #ifndef NDEBUG
+  test_screen_coordinat();
+
   test_chess_color();
   test_control_actions();
   test_controller_type();
