@@ -14,6 +14,7 @@ game_options::game_options(
     m_left_controller_type{controller_type::keyboard},
     m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
+    m_replayer(replay("")),
     m_right_controller_type{controller_type::mouse},
     m_screen_size{screen_size},
     m_starting_position{starting_position},

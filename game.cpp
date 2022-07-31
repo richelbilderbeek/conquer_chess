@@ -20,7 +20,7 @@ game::game(
     m_player_2_pos{7.5, 4.5},
     m_options{options},
     m_pieces{get_starting_pieces(options)},
-    m_replayer{},
+    m_replayer{options.get_replayer()},
     m_t{0.0}
 {
 

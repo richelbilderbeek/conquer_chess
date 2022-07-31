@@ -15,6 +15,9 @@ menu_view::menu_view()
   : m_options{get_default_game_options()},
     m_selected{menu_view_item::start}
 {
+#ifdef DEMO_REPLAYER_ISSUE_22
+  m_options.set_replayer(replayer(replay(get_scholars_mate_as_pgn_str())));
+#endif // DEMO_REPLAYER_ISSUE_22
 }
 
 void menu_view::exec()

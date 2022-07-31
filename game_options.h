@@ -9,6 +9,7 @@
 #include "screen_coordinat.h"
 #include "starting_position_type.h"
 #include "volume.h"
+#include "replayer.h"
 #include "game_speed.h"
 
 /// Options for the game, such as speed
@@ -50,6 +51,9 @@ public:
   /// How long log messages are displayed
   double get_message_display_time_secs() const noexcept { return 5.0; }
 
+  /// Get the replay of a match
+  const auto& get_replayer() const noexcept { return m_replayer; }
+
   /// Controller type of the left player
   auto get_right_controller_type() const noexcept { return m_right_controller_type; }
 
@@ -73,6 +77,9 @@ public:
 
   /// Set the controller type for the left player
   void set_left_controller_type(const controller_type t) noexcept;
+
+  /// Set the replayer
+  void set_replayer(const replayer& r) noexcept { m_replayer = r; }
 
   /// Set the controller type for the right player
   void set_right_controller_type(const controller_type t) noexcept;
@@ -100,6 +107,9 @@ private:
 
   /// The width of the margin in pixels
   int m_margin_width;
+
+  /// Replay a match
+  replayer m_replayer;
 
   /// Controller type of the right player
   controller_type m_right_controller_type;
