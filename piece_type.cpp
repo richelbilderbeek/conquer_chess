@@ -68,6 +68,15 @@ void test_piece_type()
       assert(get_max_health(t) > 0.0);
     }
   }
+  // to_piece_type
+  {
+    assert(to_piece_type('B') == piece_type::bishop);
+    assert(to_piece_type('K') == piece_type::king);
+    assert(to_piece_type('N') == piece_type::knight);
+    assert(to_piece_type('Q') == piece_type::queen);
+    assert(to_piece_type('R') == piece_type::rook);
+    assert(to_piece_type(' ') == piece_type::pawn);
+  }
   // operator<<
   {
     std::stringstream s;
@@ -75,6 +84,22 @@ void test_piece_type()
     assert(!s.str().empty());
   }
 #endif // DEBUG
+}
+
+piece_type to_piece_type(const char c)
+{
+  switch (c)
+  {
+    case 'B': return piece_type::bishop;
+    case 'K': return piece_type::king;
+    case 'N': return piece_type::knight;
+    case 'Q': return piece_type::queen;
+    case 'R': return piece_type::rook;
+    default:
+    case ' ':
+      assert(c == ' ');
+      return piece_type::pawn;
+  }
 }
 
 std::string to_str(const piece_type type) noexcept

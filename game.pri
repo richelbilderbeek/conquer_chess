@@ -2,6 +2,7 @@
 HEADERS += \
     $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
+    $$PWD/chess_move.h \
     $$PWD/control_action.h \
     $$PWD/control_action_type.h \
     $$PWD/control_actions.h \
@@ -44,6 +45,7 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/chess_color.cpp \
+    $$PWD/chess_move.cpp \
     $$PWD/control_action.cpp \
     $$PWD/control_action_type.cpp \
     $$PWD/control_actions.cpp \

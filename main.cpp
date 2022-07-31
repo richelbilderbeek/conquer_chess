@@ -12,7 +12,9 @@
 #include "menu_view.h"
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
+#include "chess_move.h"
 #include "options_view_layout.h"
+#include "replay.h"
 #include "screen_coordinat.h"
 #include "test_game.h"
 #include <SFML/Graphics.hpp>
@@ -25,8 +27,11 @@
 void test()
 {
 #ifndef NDEBUG
+  test_chess_move();
+  test_replay();
 
   test_chess_color();
+  test_chess_move();
   test_control_action();
   test_control_actions();
   test_controller_type();
@@ -51,6 +56,7 @@ void test()
   test_piece_action_type();
   test_piece_type();
   test_pieces();
+  test_replay();
   test_screen_coordinat();
   test_screen_rect();
   test_side();
