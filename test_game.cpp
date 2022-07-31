@@ -35,20 +35,6 @@ void test_game_class()
     toggle_left_player_color(options);
     assert(g.get_options().get_left_player_color() == chess_color::black);
   }
-  /*
-  // game::get_player_1_pos
-  {
-    const auto g{get_kings_only_game()};
-    assert(g.get_player_1_pos().get_x() >= 0.0);
-    assert(g.get_player_1_pos().get_y() >= 0.0);
-  }
-  // game::get_player_2_pos
-  {
-    const auto g{get_kings_only_game()};
-    assert(g.get_player_2_pos().get_x() >= 0.0);
-    assert(g.get_player_2_pos().get_y() >= 0.0);
-  }
-  */
   // game::get_time
   {
     const auto g{get_kings_only_game()};

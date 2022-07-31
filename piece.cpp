@@ -805,20 +805,8 @@ void tick_attack(
   if (is_dead(target))
   {
     p.increase_kill_count();
-    //p.get_actions().clear();
     p.set_current_square(first_action.get_to()); // Capture
     remove_first(p.get_actions());
-    /*
-    p.add_action(
-      piece_action(
-        first_action.get_player(),
-        first_action.get_piece_type(),
-        piece_action_type::move,
-        first_action.get_from(),
-        first_action.get_to()
-      )
-    );
-    */
   }
 }
 
