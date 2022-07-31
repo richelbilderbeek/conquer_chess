@@ -54,10 +54,9 @@ public:
   /// this coordinat may be around d3 or d4.
   /// Use 'get_current_square'/'get_occupied_square'
   /// for the square the piece is formally on
-  const game_coordinat& get_coordinat() const noexcept { return m_coordinat; }
+  game_coordinat get_coordinat() const noexcept;
 
-  /// Get the coordinat at the center of the piece
-  game_coordinat& get_coordinat() noexcept { return m_coordinat; }
+  const auto& get_current_action_time() const noexcept { return m_current_action_time; }
 
   const auto& get_current_square() const noexcept { return m_current_square; }
 
@@ -92,11 +91,11 @@ public:
   /// @param damage a positive value
   void receive_damage(const double damage);
 
+  /// Set the current time an action has passed
+  void set_current_action_time(const delta_t& t) noexcept;
+
   /// Set the current/occupied square
   void set_current_square(const square& s) noexcept { m_current_square = s; }
-
-  /// Set the current coordinat
-  void set_coordinat(const game_coordinat& coordinat) noexcept { m_coordinat = coordinat; }
 
   /// Set the selectedness of the piece
   void set_selected(bool is_selected) noexcept;
@@ -114,14 +113,15 @@ public:
 
 private:
 
+
   /// The actions the piece is doing, or about to do
   std::vector<piece_action> m_actions;
 
   /// The color of the piece, i.e. white or black
   chess_color m_color;
 
-  /// The in-game coordinat
-  game_coordinat m_coordinat;
+  /// Time that the current action is taking
+  delta_t m_current_action_time;
 
   /// The square the piece occupies now
   square m_current_square;

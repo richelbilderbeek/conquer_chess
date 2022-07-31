@@ -163,8 +163,8 @@ void do_start_attack_keyboard_player_piece(game& g, const square& s)
   assert(square(get_keyboard_player_pos(g)) == s);
 
   g.add_action(create_press_attack_action());
-  g.tick();
-  assert(count_control_actions(g) == 0);
+  //g.tick(delta_t(0.0)); // Process the actions
+  //assert(count_control_actions(g) == 0);
 }
 
 std::vector<piece> find_pieces(
@@ -575,9 +575,12 @@ void unselect_all_pieces(
 
 void tick_until_idle(game& g)
 {
+  int cnt{0};
   while (!is_idle(g))
   {
     g.tick(delta_t(0.1));
+    ++cnt;
+    assert(cnt < 1000);
   }
 }
 

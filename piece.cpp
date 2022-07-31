@@ -19,7 +19,8 @@ piece::piece(
   const side player
 )
   : m_color{color},
-    m_coordinat{to_coordinat(coordinat)},
+    //m_coordinat{to_coordinat(coordinat)},
+    m_current_action_time{delta_t(0.0)},
     m_current_square{coordinat},
     m_health{::get_max_health(type)},
     m_id{create_new_id()},
@@ -224,6 +225,23 @@ std::string describe_actions(const piece& p)
   return t;
 }
 
+game_coordinat piece::get_coordinat() const noexcept
+{
+  if (m_actions.empty()) return to_coordinat(m_current_square);
+  const auto first_action{m_actions[0]};
+  if (first_action.get_action_type() == piece_action_type::attack)
+  {
+    return to_coordinat(m_current_square);
+  }
+  assert(first_action.get_action_type() == piece_action_type::move);
+  const auto from{to_coordinat(m_current_square)};
+  const auto to{to_coordinat(first_action.get_to())};
+  const auto full_delta{to - from};
+  const auto delta{full_delta * get_current_action_time().get()};
+  return from + delta;
+
+
+}
 
 double get_f_health(const piece& p) noexcept
 {
@@ -240,7 +258,7 @@ piece get_rotated_piece(const piece& p) noexcept
 {
   piece q = p;
   q.set_current_square(get_rotated_square(p.get_current_square()));
-  q.set_coordinat(get_rotated_coordinat(p.get_coordinat()));
+  //q.set_coordinat(get_rotated_coordinat(p.get_coordinat()));
   return q;
 }
 
@@ -269,6 +287,7 @@ bool has_actions(const piece& p) noexcept
   return count_piece_actions(p) != 0;
 }
 
+
 bool is_dead(const piece& p) noexcept
 {
   return p.get_health() <= 0.0;
@@ -290,6 +309,10 @@ void select(piece& p) noexcept
   p.set_selected(true);
 }
 
+void piece::set_current_action_time(const delta_t& t) noexcept
+{
+  m_current_action_time = t;
+}
 
 void piece::set_selected(const bool is_selected) noexcept
 {
@@ -623,13 +646,13 @@ void test_piece()
     {
       p.tick(delta_t(0.1), g);
       ++n_ticks;
-      assert(n_ticks < 10000);
+      assert(n_ticks < 1000);
     }
     while (p.get_current_square() == square("e3"))
     {
       p.tick(delta_t(0.1), g);
       ++n_ticks;
-      assert(n_ticks < 10000);
+      assert(n_ticks < 1000);
     }
     assert(p.get_current_square() == square("e4"));
   }
@@ -658,7 +681,7 @@ void test_piece()
     assert(!p.get_actions().empty());
     int n_ticks{0};
     game g = get_game_with_starting_position(starting_position_type::before_scholars_mate);
-    assert(count_piece_actions(p) == 2);
+    assert(count_piece_actions(p) == 1);
     p.tick(delta_t(0.1), g);
     assert(count_piece_actions(p) == 1);
     while (p.get_current_square() == square("h5"))
@@ -762,12 +785,15 @@ void piece::tick(
 )
 {
   if (m_actions.empty()) return;
-  switch(m_actions[0].get_action_type())
+  const auto action_type{m_actions[0].get_action_type()};
+  std::clog << get_color() << " " << get_type() << " going to " << action_type << '\n';
+
+  switch(action_type)
   {
     case piece_action_type::move:
       return tick_move(*this, dt, g);
-    default:
     case piece_action_type::attack:
+    default:
       assert(m_actions[0].get_action_type() == piece_action_type::attack);
       return tick_attack(*this, dt, g);
   }
@@ -800,7 +826,8 @@ void tick_attack(
     return;
   }
   assert(p.get_color() != target.get_color());
-  target.receive_damage(g.get_options().get_damage_per_chess_move() * dt.get());
+  const auto damage{g.get_options().get_damage_per_chess_move() * dt.get()};
+  target.receive_damage(damage);
   // Capture the piece if destroyed
   if (is_dead(target))
   {
@@ -820,84 +847,71 @@ void tick_move(
   const auto& first_action{p.get_actions()[0]};
   assert(first_action.get_action_type() == piece_action_type::move);
 
-  const auto occupied_squares{
-    get_occupied_squares(g)
-  };
+  // Increase the progress of the action
+  p.set_current_action_time(p.get_current_action_time() + dt);
+  const double f_too_much{p.get_current_action_time().get()};
+  assert(f_too_much >= 0.0);
 
-  const auto distance_from_start{
-    calc_length(
-      to_coordinat(first_action.get_from()) - p.get_coordinat())
-    };
-  const auto distance_to_target{
-    calc_length(
-      to_coordinat(first_action.get_to()) - p.get_coordinat()
-    )
-  };
-  // Occupy different square?
-  if (distance_to_target < distance_from_start)
+  // Are we done with the action?
+  if (f_too_much >= 1.0)
   {
-    // Taking over
-    if (is_occupied(first_action.get_to(), occupied_squares))
+    // The whole goal of the operation
+    assert(p.get_current_square() == first_action.get_to());
+    p.set_current_action_time(delta_t(0.0));
+    remove_first(p.get_actions());
+    if (p.get_actions().empty())
     {
-      if (p.get_current_square() != first_action.get_to())
-      {
-        // Too bad, moving back
-        p.get_actions().clear();
-        p.add_action(
-          piece_action(
-            get_piece_at(g, first_action.get_from()).get_player(),
-            get_piece_at(g, first_action.get_from()).get_type(),
-            piece_action_type::move,
-            first_action.get_from(),
-            first_action.get_from()
-          )
-        );
-        p.add_message(message_type::cannot);
-        return;
-      }
-      else
-      {
-        // Taken by me
-      }
+      p.add_message(message_type::done);
+    }
+    return;
+  }
+
+  const double f{std::min(1.0, f_too_much)}; // The fraction of the action done
+  assert(f >= 0.0);
+  assert(f <= 1.0);
+
+  const auto occupied_squares{get_occupied_squares(g)};
+  const bool is_target_occupied{is_occupied(first_action.get_to(), occupied_squares)};
+  const bool is_focal_piece_at_target{p.get_current_square() == first_action.get_to()};
+
+  if (is_target_occupied)
+  {
+    if (is_focal_piece_at_target)
+    {
+      // Moving the last half
+      std::clog << "Piece not halfway (" << f << "), still occupies " << p.get_current_square() << '\n';
     }
     else
     {
-      // Occupy the next square
-      assert(!is_occupied(first_action.get_to(), occupied_squares));
-      p.set_current_square(first_action.get_to());
-      //m_current_square = first_action.get_to();
-    }
-  }
-  if (distance_to_target < dt.get())
-  {
-    // Arrive at next the square
-    p.set_coordinat(to_coordinat(first_action.get_to()));
-    p.set_current_square(first_action.get_to());
-
-    // Done moving
-    assert(!p.get_actions().empty());
-    remove_first(p.get_actions());
-
-    // Only say 'done' when (1) having done all actions, and (2) not homing
-    if (first_action.get_from() != first_action.get_to()
-      && p.get_actions().size() == 1
-    )
-    {
-      p.add_message(message_type::done);
+      // Too bad, need to go back
+      p.get_actions().clear();
+      p.add_action(
+        piece_action(
+          get_piece_at(g, first_action.get_from()).get_player(),
+          get_piece_at(g, first_action.get_from()).get_type(),
+          piece_action_type::move,
+          first_action.get_to(), // Reverse
+          first_action.get_from()
+        )
+      );
+      p.set_current_action_time(delta_t(1.0) - p.get_current_action_time()); // Keep progress
+      p.add_message(message_type::cannot);
+      std::clog << "I cannot" << '\n';
+      return;
     }
   }
   else
   {
-    const auto full_length{
-      calc_length(
-        to_coordinat(first_action.get_to()) - p.get_coordinat()
-      )
-    };
-    const auto delta{
-      (to_coordinat(first_action.get_to()) - p.get_coordinat())
-      / (full_length / dt.get())
-    };
-    p.get_coordinat() += delta;
+    assert(!is_target_occupied);
+    if (f >= 0.5)
+    {
+      // If over halfway, occupy target
+      assert(!is_occupied(first_action.get_to(), get_occupied_squares(g)));
+      p.set_current_square(first_action.get_to());
+      std::clog << "Piece over halfway (" << f << "), now occupies " << p.get_current_square() << '\n';
+      // Maybe cannot check, as p is not fully updated in game?
+      // assert(is_occupied(first_action.get_to(), get_occupied_squares(g)));
+    }
   }
 }
 

@@ -59,13 +59,13 @@ void test_piece_action()
   // to_atomic
   {
     // Moving
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e3"))).size() == 2);
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e4"))).size() == 3);
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e5"))).size() == 4);
+    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e3"))).size() == 1);
+    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e4"))).size() == 2);
+    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e5"))).size() == 3);
     // Attacking
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("e7"), square("e6"))).size() == 2);
-    assert(to_atomic(piece_action(side::lhs, piece_type::queen, piece_action_type::attack, square("a1"), square("h8"))).size() == 2);
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("h8"))).size() > 5);
+    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("e7"), square("e6"))).size() == 1);
+    assert(to_atomic(piece_action(side::lhs, piece_type::queen, piece_action_type::attack, square("a1"), square("h8"))).size() == 1);
+    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("h8"))).size() > 4);
   }
   // to_str
   {
@@ -162,6 +162,7 @@ std::vector<piece_action> to_atomic(const piece_action& a)
   );
   std::vector<piece_action> atomic_actions;
   // First action is always: go home
+  /*
   atomic_actions.push_back(
     piece_action(
       a.get_player(),
@@ -171,6 +172,7 @@ std::vector<piece_action> to_atomic(const piece_action& a)
       a.get_from()
     )
   );
+  */
   if (a.get_from() == a.get_to()) return atomic_actions;
 
   const std::vector<square> squares{

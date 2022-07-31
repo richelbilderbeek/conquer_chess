@@ -278,3 +278,10 @@ game_coordinat operator/(const game_coordinat& coordinat, const double factor) n
 
 }
 
+game_coordinat operator*(const game_coordinat& c, const double x) noexcept
+{
+  return game_coordinat(
+    c.get_x() * x,
+    c.get_y() * x
+  );
+}

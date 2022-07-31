@@ -90,6 +90,7 @@ bool operator==(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 bool operator!=(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator-(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator+(const game_coordinat& lhs, const game_coordinat& rhs) noexcept;
+game_coordinat operator*(const game_coordinat& c, const double x) noexcept;
 game_coordinat& operator+=(game_coordinat& lhs, const game_coordinat& rhs) noexcept;
 game_coordinat operator/(const game_coordinat& coordinat, const double factor) noexcept;
 
