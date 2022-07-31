@@ -800,12 +800,15 @@ void tick_attack(
     return;
   }
   assert(p.get_color() != target.get_color());
-  target.receive_damage(g.get_options().get_dps() * dt.get());
+  target.receive_damage(g.get_options().get_damage_per_chess_move() * dt.get());
   // Capture the piece if destroyed
   if (is_dead(target))
   {
     p.increase_kill_count();
-    p.get_actions().clear();
+    //p.get_actions().clear();
+    p.set_current_square(first_action.get_to()); // Capture
+    remove_first(p.get_actions());
+    /*
     p.add_action(
       piece_action(
         first_action.get_player(),
@@ -815,6 +818,7 @@ void tick_attack(
         first_action.get_to()
       )
     );
+    */
   }
 }
 

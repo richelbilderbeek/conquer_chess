@@ -96,16 +96,17 @@ void test_game_class()
         square("h5"),
         square("f7")
       );
-      while (is_piece_at(g, square("f7")))
+      int cnt{0};
+      while (is_piece_at(g, square("f7"))
+        && get_piece_at(g, square("f7")).get_color() == chess_color::black
+      )
       {
         g.tick(delta_t(0.1));
+        ++cnt;
+        assert(cnt < 1000);
       }
-      // Start moving to capture
-      g.tick(delta_t(0.1));
-      const auto killer_queen{
-        find_pieces(g, piece_type::queen, chess_color::white).at(0)
-      };
-      assert(killer_queen.get_actions().front().get_action_type() == piece_action_type::move);
+      // Must be captured
+      assert(get_piece_at(g, square("f7")).get_color() == chess_color::white);
     }
   }
 #endif // NDEBUG // no tests in release

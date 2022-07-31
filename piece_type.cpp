@@ -8,15 +8,15 @@ double get_max_health(const piece_type type)
 {
   switch (type)
   {
-    case piece_type::bishop: return 100.0;
-    case piece_type::king: return 100.0;
-    case piece_type::knight: return 100.0;
-    case piece_type::pawn: return 100.0;
-    case piece_type::queen: return 100.0;
+    case piece_type::bishop: return 1.0;
+    case piece_type::king: return 1.0;
+    case piece_type::knight: return 1.0;
+    case piece_type::pawn: return 1.0;
+    case piece_type::queen: return 1.0;
     default:
     case piece_type::rook:
       assert(type == piece_type::rook);
-      return 100.0;
+      return 1.0;
   }
 }
 
