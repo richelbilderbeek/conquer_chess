@@ -31,20 +31,26 @@ Conquer Chess is the result of those thoughts.
 
 ### What are the rules of Conquer Chess compared to chess?
 
-Conquer Chess tries to follow as much rules of chess as possible.
-All pieces move and attack in the same way as regular chess.
+Conquer Chess follows the rules of chess
+in such a way that regular games can be played with it.
+
+All pieces move and attack in the same way as regular chess
+and a regular game can 
 
 However, due to the real-time nature of Conquer Chess, 
 these are the differences:
 
 :construction: the exact rules are still under construction :construction:
 
- * Goal is to destroy the opponent's king
+ * Goal is to mate the opponent's king
  * All pieces have health
- * All pieces have an equal amount of health 
+ * All pieces have an equal amount of health, except the king, which has
+   infinite health
  * All pieces move in the same directions as regular chess.
    For example, pawns move forward, bishops move diagonally and rooks move horizontally
- * All pieces move equally fast
+ * All pieces move equally fast **per move**.
+   This means that a queen can move from d1 to d8 
+   in the time one move takes.
  * Pieces cannot move to occupied squares
    Squares occupied by the opponent's pieces must be attacked first
  * All pieces attack in the same directions and with the same distance as regular chess.
@@ -57,14 +63,17 @@ these are the differences:
    it can be attacked at its target square
  * Multiple pieces can attack the same opponents piece
  * When a piece is destroyed, 
-   all its attacker will automatically try to capture the square.
-   Note that the closest piece will be successfull, 
-   the others will move back to the square they occupied before the attack
+   the piece that killed it will instantaneous go to that square
  * Castling can only be done when (1) the king has not moved,
    (2) the desired rook has not moved, (3) there are no pieces
-   in the way. Castling can take place through check and to check,
-   but the king will take more damage when attacked
+   in the way. Castling cannnot take place through check and into check
  * A pawn can attack by en-passant, for a limited amount of time
+
+### Where did you get you example games from?
+
+From [https://database.lichess.org/](https://database.lichess.org/).
+There I took the earliest games played in january 2013
+from [https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.bz2](https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.bz2)
 
 ## Game settings
 
