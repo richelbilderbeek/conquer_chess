@@ -17,6 +17,8 @@ See [FAQ](FAQ.md)
 
 ## Screenshots
 
+ * Video 2022-07-31: [Download (.ogv)](https://richelbilderbeek.nl/conquer_chess_20220731.ogv) [YouTube](https://youtu.be/Y2m_hyusuPc)
+
 ![](screenshots/20220729_2.png)
 
 ![](screenshots/20220729_1.png)
