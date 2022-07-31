@@ -442,7 +442,7 @@ void show_debug_1(game_view& view)
     << "Is there a piece here: "
     << bool_to_str(is_piece_at(game, get_player_pos(game, side::lhs), 0.5))
     << '\n'
-    << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
+    << "Closest piece: " << closest_piece.get_type() << ": " << to_coordinat(closest_piece.get_current_square()) << '\n'
     << "Number of game actions: " << count_control_actions(game) << '\n'
     << "Number of selected units: " << count_selected_units(game, color) << '\n'
     << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
@@ -490,7 +490,9 @@ void show_debug_2(game_view& view)
     << "Is there a piece here: "
     << bool_to_str(is_piece_at(game, get_player_pos(game, side::rhs), 0.5))
     << '\n'
-    << "Closest piece: " << closest_piece.get_type() << ": " << closest_piece.get_coordinat() << '\n'
+    << "Closest piece: "
+      << closest_piece.get_type() << ": "
+      << to_coordinat(closest_piece.get_current_square()) << '\n'
     << "Number of game actions: " << count_control_actions(game) << '\n'
     << "Number of selected units: " << count_selected_units(game, color) << '\n'
     << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
@@ -605,7 +607,7 @@ void show_pieces(game_view& view)
     }
     sprite.setOrigin(sf::Vector2f(0.45 * square_width, 0.45 * square_height));
     const auto screen_position = convert_to_screen_coordinat(
-      piece.get_coordinat() + game_coordinat(0.0, 0.1),
+      to_coordinat(piece.get_current_square()) + game_coordinat(0.0, 0.1),
       layout
     );
     sprite.setPosition(
@@ -743,7 +745,7 @@ void show_unit_health_bars(game_view& view)
     black_box.setFillColor(sf::Color(0, 0, 0));
     black_box.setOrigin(0.0, 0.0);
     const auto black_box_pos = convert_to_screen_coordinat(
-      piece.get_coordinat() + game_coordinat(-0.5, -0.5),
+      to_coordinat(piece.get_current_square()) + game_coordinat(-0.5, -0.5),
       layout
     );
     black_box.setPosition(
@@ -764,7 +766,7 @@ void show_unit_health_bars(game_view& view)
     health_bar.setFillColor(f_health_to_color(get_f_health(piece)));
     health_bar.setOrigin(0.0, 0.0);
     const auto health_bar_pos = convert_to_screen_coordinat(
-      piece.get_coordinat() + game_coordinat(-0.5, -0.5),
+      to_coordinat(piece.get_current_square()) + game_coordinat(-0.5, -0.5),
       layout
     );
     health_bar.setPosition(
@@ -786,7 +788,7 @@ void show_unit_paths(game_view& view)
     coordinats.reserve(piece.get_actions().size() + 1); // +1 for current position
     coordinats.push_back(
       convert_to_screen_coordinat(
-        piece.get_coordinat(),
+        to_coordinat(piece.get_current_square()),
         layout
       )
     );
@@ -875,7 +877,7 @@ void show_unit_sprites_1(game_view& view)
     s << piece.get_type() << ": "
       << piece.get_health() << "/"
       << piece.get_max_health() << '\n'
-      << piece.get_coordinat() << '\n'
+      << piece.get_current_square() << '\n'
       << describe_actions(piece)
     ;
     text.setString(s.str());
@@ -924,7 +926,7 @@ void show_unit_sprites_2(game_view& view)
     s << piece.get_type() << ": "
       << piece.get_health() << "/"
       << piece.get_max_health() << '\n'
-      << piece.get_coordinat() << '\n'
+      << piece.get_current_square() << '\n'
       << describe_actions(piece)
     ;
     text.setString(s.str());

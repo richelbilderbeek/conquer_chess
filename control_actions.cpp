@@ -235,8 +235,8 @@ void control_actions::start_attack(
   {
     if (p.is_selected() && p.get_color() == player_color)
     {
-      const auto& from{p.get_coordinat()};
-      const auto& to{coordinat};
+      const auto& from{p.get_current_square()};
+      const auto& to{square(coordinat)};
       if (from != to)
       {
         // No shift, so all current actions are void
@@ -270,8 +270,8 @@ void control_actions::start_move_unit(
     if (p.is_selected() && p.get_color() == player_color)
     {
 
-      const auto& from{p.get_coordinat()};
-      const auto& to{coordinat};
+      const auto& from{p.get_current_square()};
+      const auto& to{square(coordinat)};
       if (from != to)
       {
         // No shift, so all current actions are void

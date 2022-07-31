@@ -27,12 +27,12 @@ void test_game_scenarios()
   // Ke1-e2 does not move king forward
   {
     game g;
-    assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
+    assert(find_pieces(g, piece_type::king, chess_color::white).at(0).get_current_square() == square("e1"));
     do_select_and_move_keyboard_player_piece(g, square("e1"), square("e2"));
     tick_until_idle(g);
     const auto messages{find_pieces(g, piece_type::king, chess_color::white).at(0).get_messages()};
     assert(std::count(std::begin(messages), std::end(messages), message_type::cannot) == 1);
-    assert(square(find_pieces(g, piece_type::king, chess_color::white).at(0).get_coordinat()) == square("e1"));
+    assert(find_pieces(g, piece_type::king, chess_color::white).at(0).get_current_square() == square("e1"));
   }
   #ifdef FIX_ISSUE_NEW_MOVEMENT_SYSTEM
   // e2-e6, then cannot move forward

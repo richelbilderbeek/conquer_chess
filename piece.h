@@ -54,7 +54,7 @@ public:
   /// this coordinat may be around d3 or d4.
   /// Use 'get_current_square'/'get_occupied_square'
   /// for the square the piece is formally on
-  game_coordinat get_coordinat() const noexcept;
+  //game_coordinat get_coordinat() const noexcept;
 
   const auto& get_current_action_time() const noexcept { return m_current_action_time; }
 

@@ -225,6 +225,7 @@ std::string describe_actions(const piece& p)
   return t;
 }
 
+/*
 game_coordinat piece::get_coordinat() const noexcept
 {
   if (m_actions.empty()) return to_coordinat(m_current_square);
@@ -239,9 +240,8 @@ game_coordinat piece::get_coordinat() const noexcept
   const auto full_delta{to - from};
   const auto delta{full_delta * get_current_action_time().get()};
   return from + delta;
-
-
 }
+*/
 
 double get_f_health(const piece& p) noexcept
 {
@@ -713,7 +713,7 @@ void test_piece()
   {
     piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
-    assert(square(p.get_coordinat()) == square("e1"));
+    assert(p.get_current_square() == square("e1"));
     p.add_action(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e1"), square("e2")));
     assert(has_actions(p));
     game g{get_kings_only_game()};
@@ -724,7 +724,7 @@ void test_piece()
       p.tick(delta_t(0.1), g);
     }
     assert(!has_actions(p));
-    const auto final_square{square(p.get_coordinat())};
+    const auto final_square{p.get_current_square()};
     const auto expected_square{square("e2")};
     assert(final_square == expected_square);
   }
@@ -732,7 +732,7 @@ void test_piece()
   {
     piece p{get_test_white_king()}; // A white king
     assert(p.get_type() == piece_type::king);
-    assert(square(p.get_coordinat()) == square("e1"));
+    assert(p.get_current_square() == square("e1"));
     p.add_action(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("e2"), square("e3")));
     assert(has_actions(p));
     game g{get_kings_only_game()};
@@ -759,7 +759,7 @@ void test_piece()
   {
     piece p{get_test_white_knight()};
     assert(p.get_type() == piece_type::knight);
-    assert(square(p.get_coordinat()) == square("c3"));
+    assert(p.get_current_square() == square("c3"));
     p.add_action(piece_action(side::lhs, piece_type::knight, piece_action_type::move, square("c3"), square("e4")));
     assert(has_actions(p));
     game g{get_kings_only_game()};
@@ -773,7 +773,7 @@ void test_piece()
       assert(get_occupied_square(p) != square("d4"));
     }
     assert(!has_actions(p));
-    assert(square(p.get_coordinat()) == square("e4"));
+    assert(p.get_current_square() == square("e4"));
     assert(get_occupied_square(p) == square("e4"));
   }
 #endif // NDEBUG
@@ -932,7 +932,7 @@ bool operator==(const piece& lhs, const piece& rhs) noexcept
     && lhs.get_health() == rhs.get_health()
     && lhs.get_actions() == rhs.get_actions()
     && lhs.is_selected() == rhs.is_selected()
-    && lhs.get_coordinat() == rhs.get_coordinat()
+    && lhs.get_current_square() == rhs.get_current_square()
     && lhs.get_max_health() == rhs.get_max_health()
     && lhs.get_player() == rhs.get_player()
   ;
@@ -948,7 +948,6 @@ std::ostream& operator<<(std::ostream& os, const piece& p) noexcept
   os
     << to_str(p.get_actions())
     << p.get_color()
-    << p.get_coordinat()
     << p.get_current_square()
     << p.get_health()
     << p.get_id()

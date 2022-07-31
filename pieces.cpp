@@ -18,7 +18,7 @@ std::vector<double> calc_distances(
     [coordinat](const auto& piece) {
       return calc_distance(
         coordinat,
-        piece.get_coordinat()
+        to_coordinat(piece.get_current_square())
       );
     }
   );
