@@ -132,7 +132,5 @@ void test_chess_move()
     assert(m.get_winner().at(0) == chess_color::white);
     assert(!m.is_capture());
   }
-
-  //assert(2==3);
 #endif // NDEBUG
 }

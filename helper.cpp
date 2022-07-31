@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <cmath>
+#include <sstream>
 #include <vector>
 
 std::vector<int> make_sequence(
@@ -29,6 +30,23 @@ std::vector<int> make_sequence(
     }
   }
   v.push_back(to);
+  return v;
+}
+
+std::vector<std::string> split_str(
+  const std::string& s,
+  const char seperator
+)
+{
+  std::istringstream is(s);
+  std::vector<std::string> v;
+  for (
+    std::string sub;
+    std::getline(is, sub, seperator);
+    v.push_back(sub))
+  {
+    //Empty for loop
+  }
   return v;
 }
 
