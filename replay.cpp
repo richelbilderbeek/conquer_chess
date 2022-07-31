@@ -27,6 +27,6 @@ void test_replay()
   {
     const replay r(get_scholars_mate_png_str());
   }
-  assert(1 == 2);
+  //assert(1 == 2);
 #endif // NDEBUG
 }

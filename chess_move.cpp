@@ -133,6 +133,6 @@ void test_chess_move()
     assert(!m.is_capture());
   }
 
-  assert(2==3);
+  //assert(2==3);
 #endif // NDEBUG
 }
