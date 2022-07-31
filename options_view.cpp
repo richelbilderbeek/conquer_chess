@@ -111,7 +111,7 @@ bool options_view::process_events()
             m_options.set_game_speed(get_next(m_options.get_game_speed()));
           break;
           case options_view_item::music_volume:
-            m_options.set_volume(get_next(m_options.get_volume()));
+            m_options.set_volume(get_next(m_options.get_music_volume()));
           break;
           case options_view_item::starting_position:
             assert(!to_str(get_starting_position(*this)).empty());
@@ -459,7 +459,7 @@ void show_music_volume(options_view& v)
     sf::Text text;
     v.set_text_style(text);
     std::stringstream s;
-    s << v.get_options().get_volume() << " %";
+    s << get_music_volume(v.get_options()) << " %";
     text.setString(s.str());
     set_text_position(text, screen_rect);
     v.get_window().draw(text);

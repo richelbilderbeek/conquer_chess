@@ -2,10 +2,31 @@
 
 #include <functional>
 #include <QFile>
+#include "volume.h"
 
 #ifndef LOGIC_ONLY
 
 sound_effects::sound_effects()
+{
+  const std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> v = get_table();
+
+  for (const auto& p: v)
+  {
+    const QString filename{std::get<2>(p).c_str()};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!std::get<1>(p).get().loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find sound file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+    // Connect sound with its buffer
+    std::get<0>(p).get().setBuffer(std::get<1>(p).get());
+
+  }
+}
+
+std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> sound_effects::get_table() noexcept
 {
   const std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> v = {
     std::make_tuple(std::ref(m_attacking_high), std::ref(m_attacking_high_buffer), "attacking_high.ogg"),
@@ -43,19 +64,7 @@ sound_effects::sound_effects()
     std::make_tuple(std::ref(m_yes_low), std::ref(m_yes_low_buffer), "yes_low.ogg"),
     std::make_tuple(std::ref(m_yes_mid), std::ref(m_yes_mid_buffer), "yes_mid.ogg"),
   };
-
-  for (const auto& p: v)
-  {
-    const QString filename{std::get<2>(p).c_str()};
-    QFile f(":/resources/" + filename);
-    f.copy(filename);
-    if (!std::get<1>(p).get().loadFromFile(filename.toStdString()))
-    {
-      QString msg{"Cannot find sound file '" + filename + "'"};
-      throw std::runtime_error(msg.toStdString());
-    }
-    std::get<0>(p).get().setBuffer(std::get<1>(p).get());
-  }
+  return v;
 }
 
 void sound_effects::play(const message& effect)
@@ -156,6 +165,14 @@ void sound_effects::play(const message& effect)
 void sound_effects::play_hide() noexcept
 {
   m_hide.play();
+}
+
+void sound_effects::set_master_volume(const volume& v)
+{
+  for (auto& row: get_table())
+  {
+    std::get<0>(row).get().setVolume(v.get_percentage());
+  }
 }
 
 void test_sound_effects()

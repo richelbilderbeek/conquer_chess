@@ -225,6 +225,9 @@ game_coordinat& get_mouse_player_pos(game& g);
 /// Get the color of the mouse user
 chess_color get_mouse_user_player_color(const game& g);
 
+/// Get the music volume as a percentage
+double get_music_volume_as_percentage(const game& g) noexcept;
+
 /// Get all the squares that are occupied
 std::vector<square> get_occupied_squares(const game& g) noexcept;
 

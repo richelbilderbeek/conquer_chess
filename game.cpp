@@ -307,6 +307,11 @@ chess_color get_mouse_user_player_color(const game& g)
   return get_mouse_user_player_color(g.get_options());
 }
 
+double get_music_volume_as_percentage(const game& g) noexcept
+{
+  return get_music_volume_as_percentage(g.get_options());
+}
+
 std::vector<square> get_occupied_squares(const game& g) noexcept
 {
   return get_occupied_squares(get_pieces(g));

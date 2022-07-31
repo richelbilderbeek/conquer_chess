@@ -4,6 +4,8 @@
 #ifndef LOGIC_ONLY
 
 #include <SFML/Audio.hpp>
+
+#include "ccfwd.h"
 #include "chess_color.h"
 #include "piece_type.h"
 #include "message.h"
@@ -19,6 +21,9 @@ public:
 
   /// Play the 'wooosh' effect
   void play_hide() noexcept;
+
+  /// Set the master volume for all sounds
+  void set_master_volume(const volume& v);
 
 private:
   sf::Sound m_attacking_high;
@@ -90,6 +95,9 @@ private:
   sf::SoundBuffer m_yes_high_buffer;
   sf::SoundBuffer m_yes_low_buffer;
   sf::SoundBuffer m_yes_mid_buffer;
+
+  /// Get the table that connects the sound and buffer and filename
+  std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> get_table() noexcept;
 };
 
 /// Test this class and its free functions

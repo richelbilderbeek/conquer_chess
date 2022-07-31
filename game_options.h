@@ -59,8 +59,11 @@ public:
   /// Get the starting position
   starting_position_type get_starting_position() const noexcept { return m_starting_position; }
 
-  /// Get the volume, as a percentage
-  auto get_volume() const noexcept { return m_volume; }
+  /// Get the music volume, as a percentage
+  const auto& get_music_volume() const noexcept { return m_music_volume; }
+
+  /// Get the sound effects volume
+  volume get_sound_effects_volume() const noexcept { return volume(0.0); }
 
   /// Set the game speed
   void set_game_speed(const game_speed speed) noexcept { m_game_speed = speed; }
@@ -78,7 +81,7 @@ public:
   void set_starting_position(const starting_position_type starting_position) noexcept { m_starting_position = starting_position; }
 
   /// Set the volume, as a percentage
-  void set_volume(const volume& v) noexcept { m_volume = v; }
+  void set_volume(const volume& v) noexcept { m_music_volume = v; }
 
 private:
 
@@ -108,7 +111,7 @@ private:
   starting_position_type m_starting_position;
 
   /// Volume in percent: 0 is silent, 100 is loudest
-  volume m_volume;
+  volume m_music_volume;
 };
 
 /// Are selected squares shown on-screen?
@@ -130,6 +133,12 @@ controller_type get_left_player_controller(const game_options& options) noexcept
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse
 chess_color get_mouse_user_player_color(const game_options& options);
+
+/// Get the music volume
+const volume& get_music_volume(const game_options& options) noexcept;
+
+/// Get the music volume as a percentage
+double get_music_volume_as_percentage(const game_options& options) noexcept;
 
 /// Get the color of a player
 chess_color get_player_color(

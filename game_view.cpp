@@ -24,9 +24,12 @@ game_view::game_view(const game& game)
     m_log{game.get_options().get_message_display_time_secs()}
 {
   m_game_resources.get_ninja_gods().setVolume(
-    static_cast<float>(m_game.get_options().get_volume().get_percentage())
+    get_music_volume_as_percentage(m_game)
   );
   m_game_resources.get_ninja_gods().play();
+  m_game_resources.get_sound_effects().set_master_volume(
+    m_game.get_options().get_sound_effects_volume()
+  );
 }
 
 std::string bool_to_str(const bool b) noexcept

@@ -17,7 +17,7 @@ game_options::game_options(
     m_right_controller_type{controller_type::mouse},
     m_screen_size{screen_size},
     m_starting_position{starting_position},
-    m_volume{0}
+    m_music_volume{0}
 {
   assert(m_click_distance > 0.0);
   assert(m_margin_width >= 0);
@@ -69,6 +69,16 @@ chess_color get_mouse_user_player_color(const game_options& options)
   }
   assert(options.get_right_controller_type() == controller_type::mouse);
   return get_right_player_color(options);
+}
+
+const volume& get_music_volume(const game_options& options) noexcept
+{
+  return options.get_music_volume();
+}
+
+double get_music_volume_as_percentage(const game_options& options) noexcept
+{
+  return get_music_volume(options).get_percentage();
 }
 
 chess_color get_player_color(
