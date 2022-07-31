@@ -157,6 +157,11 @@ std::string get_controls_text(
   return s.str();
 }
 
+double game_view::get_elapsed_time_secs() const noexcept
+{
+  return m_clock.getElapsedTime().asSeconds();
+}
+
 int get_fps(const game_view& v) noexcept
 {
   return v.get_fps();
@@ -442,7 +447,8 @@ void show_debug_1(game_view& view)
 
   // Specific things
   s
-    << "Time: " << get_time(view) << '\n'
+    << "Wall-clock time: " << view.get_elapsed_time_secs() << " (seconds)" << '\n'
+    << "Game time: " << get_time(view) << " (chess moves)" << '\n'
     << "FPS: " << get_fps(view) << '\n'
   ;
 

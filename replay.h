@@ -22,9 +22,9 @@ private:
 
 };
 
-std::string get_replay_str_1() noexcept;
+std::string get_replay_1_as_pgn_str() noexcept;
 
-std::string get_scholars_mate_png_str() noexcept;
+std::string get_scholars_mate_as_pgn_str() noexcept;
 
 replay get_replay_1() noexcept;
 

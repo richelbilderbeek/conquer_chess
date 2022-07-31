@@ -21,6 +21,9 @@ public:
   /// Run the game, until the user quits
   void exec();
 
+  /// The the elapsed time in seconds
+  double get_elapsed_time_secs() const noexcept;
+
   int get_fps() const noexcept { return m_fps_clock.get_fps(); }
 
   auto& get_game() noexcept { return m_game; }
@@ -35,6 +38,9 @@ public:
   auto& get_window() noexcept { return m_window; }
 
 private:
+
+  /// The game clock, to measure the elapsed time
+  sf::Clock m_clock;
 
   /// The FPS clock
   fps_clock m_fps_clock;
