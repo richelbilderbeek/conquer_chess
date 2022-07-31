@@ -1,6 +1,8 @@
 #include "id.h"
 
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 int id::sm_next_value{0};
 
@@ -25,6 +27,13 @@ void test_id()
     assert(!(a == b));
     assert(a != b);
   }
+  // operator<<
+  {
+    const id i = create_new_id();
+    std::stringstream s;
+    s << i;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
@@ -36,4 +45,10 @@ bool operator==(const id& lhs, const id& rhs) noexcept
 bool operator!=(const id& lhs, const id& rhs) noexcept
 {
   return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, const id& i) noexcept
+{
+  os << i.get();
+  return os;
 }

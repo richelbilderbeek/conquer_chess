@@ -1,5 +1,6 @@
 # Files
 HEADERS += \
+    $$PWD/castling_type.h \
     $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
     $$PWD/chess_move.h \
@@ -32,6 +33,7 @@ HEADERS += \
     $$PWD/piece_type.h \
     $$PWD/pieces.h \
     $$PWD/replay.h \
+    $$PWD/replayer.h \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
@@ -44,6 +46,7 @@ HEADERS += \
 
 
 SOURCES += \
+    $$PWD/castling_type.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/chess_move.cpp \
     $$PWD/control_action.cpp \
@@ -75,6 +78,7 @@ SOURCES += \
     $$PWD/piece_type.cpp \
     $$PWD/pieces.cpp \
     $$PWD/replay.cpp \
+    $$PWD/replayer.cpp \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \

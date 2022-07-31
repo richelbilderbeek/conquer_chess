@@ -7,6 +7,8 @@
 
 replay::replay(const std::string& pgn_str)
 {
+  if (pgn_str.empty()) return;
+
   assert(!pgn_str.empty());
   assert(std::count(std::begin(pgn_str), std::end(pgn_str), '\n') == 0);
   const std::vector<std::string> pgn_moves{
@@ -14,15 +16,17 @@ replay::replay(const std::string& pgn_str)
   };
 
   m_moves.reserve(pgn_moves.size());
-  std::transform(
-    std::begin(pgn_moves),
-    std::end(pgn_moves),
-    std::back_inserter(m_moves),
-    [](const std::string& s)
-    {
-      return chess_move(s);
-    }
-  );
+  chess_color color{chess_color::white};
+  for (const auto& pgn_move: pgn_moves)
+  {
+    m_moves.push_back(chess_move(pgn_move, color));
+    color = get_other_color(color);
+  }
+}
+
+int get_n_moves(const replay& r) noexcept
+{
+  return static_cast<int>(r.get_moves().size());
 }
 
 
@@ -63,15 +67,20 @@ void test_replay()
   {
     assert(split_pgn_str("1. e4").size() == 1);
   }
+  // replay::replay from empty string is OK
+  {
+    const replay r("");
+    assert(get_n_moves(r) == 0);
+  }
   // replay::replay from get_scholars_mate_as_pgn_str
   {
     const replay r(get_scholars_mate_as_pgn_str());
-    assert(r.get_moves().size() == 8);
+    assert(get_n_moves(r) == 8);
   }
   // replay::replay from get_replay_1_as_pgn_str
   {
     const replay r(get_replay_1_as_pgn_str());
-    assert(r.get_moves().size() > 8);
+    assert(get_n_moves(r) > 8);
   }
 #endif // NDEBUG
 }

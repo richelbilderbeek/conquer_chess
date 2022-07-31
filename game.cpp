@@ -20,6 +20,7 @@ game::game(
     m_player_2_pos{7.5, 4.5},
     m_options{options},
     m_pieces{get_starting_pieces(options)},
+    m_replayer{},
     m_t{0.0}
 {
 
@@ -89,6 +90,21 @@ int count_selected_units(
 )
 {
   return count_selected_units(g.get_pieces(), player);
+}
+
+void game::do_move(const chess_move& m)
+{
+  if (is_simple_move(m))
+  {
+    piece& piece{get_piece_that_moves(*this, m)};
+    assert(!m.get_to().empty());
+    piece.set_current_square(m.get_to()[0]);
+  }
+  else
+  {
+    // Do castling, etc.
+    assert(!"TODO");
+  }
 }
 
 void do_move_keyboard_player_piece(game& g, const square& s)
@@ -332,6 +348,34 @@ const std::vector<piece>& get_pieces(const game& g) noexcept
   return g.get_pieces();
 }
 
+piece& get_piece_that_moves(game& g, const chess_move& move)
+{
+  assert(is_simple_move(move));
+  assert(!g.get_pieces().empty());
+  const auto& pieces{g.get_pieces()};
+  const int n_pieces{static_cast<int>(pieces.size())};
+  for (int i{0}; i!=n_pieces; ++i)
+  {
+    auto& ps{g.get_pieces()};
+    auto& piece{ps[i]};
+    if (piece.get_color() != move.get_color()) continue;
+    const auto& color{piece.get_color()};
+    assert(move.get_type().size() == 1);
+    if (piece.get_type() != move.get_type()[0]) continue;
+    const auto& piece_type{piece.get_type()};
+    const auto& from{piece.get_current_square()};
+    assert(move.get_to().size() == 1);
+    const auto& to{move.get_to()[0]};
+    const side& player{get_player_side(g, color)};
+    if (can_move(piece_type, from, to, player))
+    {
+      return piece;
+    }
+  }
+  assert(!"Should not het here");
+}
+
+
 piece get_piece_with_id(
   const game& g,
   const id& i
@@ -346,6 +390,13 @@ chess_color get_player_color(
 ) noexcept
 {
   return get_player_color(g.get_options(), player);
+}
+
+side get_player_side(const game& g, const chess_color& color) noexcept
+{
+  if (get_player_color(g, side::lhs) == color) return side::lhs;
+  assert(get_player_color(g, side::rhs) == color);
+  return side::rhs;
 }
 
 const game_coordinat& game::get_player_pos(const side player) const noexcept
@@ -488,6 +539,9 @@ void set_keyboard_player_pos(
 
 void game::tick(const delta_t& dt)
 {
+  // Let the replayer do its move
+  m_replayer.do_move(*this);
+
   // Convert control_actions to piece_actions instantaneous
   m_control_actions.process(*this);
 

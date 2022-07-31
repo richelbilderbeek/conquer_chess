@@ -7,9 +7,7 @@
 delta_t::delta_t(const double dt)
   : m_delta_t{dt}
 {
-  // The game uses delta_t as the time passed.
-  // This can be zero (including zero) to infinite
-  assert(m_delta_t >= 0.0);
+
 }
 
 void test_delta_t()
@@ -29,6 +27,12 @@ void test_delta_t()
     assert(a == b);
     assert(!(a == c));
   }
+  // operator<
+  {
+    const delta_t a(0.1);
+    const delta_t b(0.2);
+    assert(a < b);
+  }
   // operator+
   {
     const double t1{0.1};
@@ -37,6 +41,15 @@ void test_delta_t()
     const delta_t d2{t2};
     const delta_t d3{d1 + d2};
     assert(d3.get() == t1 + t2);
+  }
+  // operator-
+  {
+    const double t1{0.5};
+    const double t2{0.3};
+    const delta_t d1{t1};
+    const delta_t d2{t2};
+    const delta_t d3{d1 - d2};
+    assert(d3.get() == t1 - t2);
   }
   // operator*
   {
@@ -76,6 +89,11 @@ bool operator==(const delta_t& lhs, const delta_t& rhs) noexcept
   return lhs.get() == rhs.get();
 }
 
+bool operator<(const delta_t& lhs, const delta_t& rhs) noexcept
+{
+  return lhs.get() < rhs.get();
+}
+
 delta_t& operator+=(delta_t& lhs, const delta_t& rhs) noexcept
 {
   lhs = lhs + rhs;
@@ -85,6 +103,11 @@ delta_t& operator+=(delta_t& lhs, const delta_t& rhs) noexcept
 delta_t operator+(const delta_t& lhs, const delta_t& rhs) noexcept
 {
   return delta_t(lhs.get() + rhs.get());
+}
+
+delta_t operator-(const delta_t& lhs, const delta_t& rhs) noexcept
+{
+  return delta_t(lhs.get() - rhs.get());
 }
 
 delta_t operator*(const delta_t& lhs, const delta_t& rhs) noexcept

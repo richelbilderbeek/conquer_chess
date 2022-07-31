@@ -1,6 +1,8 @@
 #ifndef ID_H
 #define ID_H
 
+#include <iosfwd>
+
 /// An ID, each one being unique
 class id
 {
@@ -24,5 +26,7 @@ void test_id();
 
 bool operator==(const id& lhs, const id& rhs) noexcept;
 bool operator!=(const id& lhs, const id& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const id& i) noexcept;
 
 #endif // ID_H

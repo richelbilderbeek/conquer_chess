@@ -2,6 +2,7 @@
 #define CCFWD_H
 
 /// Conquer Chess forward declarations
+class chess_move;
 class control_actions;
 class control_action;
 class delta_t;
@@ -20,6 +21,8 @@ class options_view;
 class options_view_layout;
 class piece_action;
 class piece;
+class replay;
+class replayer;
 class screen_coordinat;
 class screen_rect;
 class square;

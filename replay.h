@@ -22,6 +22,9 @@ private:
 
 };
 
+/// Get the number of moves in the replay
+int get_n_moves(const replay& r) noexcept;
+
 std::string get_replay_1_as_pgn_str() noexcept;
 
 std::string get_scholars_mate_as_pgn_str() noexcept;

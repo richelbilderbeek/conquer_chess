@@ -1,12 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "ccfwd.h"
 #include "control_actions.h"
 #include "game_coordinat.h"
 #include "game_options.h"
 #include "game_view_layout.h"
 #include "pieces.h"
 #include "message.h"
+#include "replayer.h"
 #include <vector>
 
 /// Contains the game logic.
@@ -20,6 +22,9 @@ public:
 
   /// Add an action. These will be processed in 'tick'
   void add_action(const control_action a);
+
+  /// Do a chess move instantaneously
+  void do_move(const chess_move& m);
 
   /// Get the game actions
   const auto& get_actions() const noexcept { return m_control_actions; }
@@ -78,6 +83,9 @@ private:
 
   /// All pieces in the game
   std::vector<piece> m_pieces;
+
+  /// Replay a match. Can be an empty match
+  replayer m_replayer;
 
   /// The time
   delta_t m_t;
@@ -242,6 +250,9 @@ const piece& get_piece_at(const game& g, const square& coordinat);
 /// will throw if there is no piece
 piece& get_piece_at(game& g, const square& coordinat);
 
+/// Get the piece that moves
+piece& get_piece_that_moves(game& g, const chess_move& move);
+
 /// Find a piece with a certain ID
 /// Will throw if there is no piece with that ID
 piece get_piece_with_id(
@@ -254,6 +265,9 @@ chess_color get_player_color(
   const game& g,
   const side player
 ) noexcept;
+
+/// Get the side of a player
+side get_player_side(const game& g, const chess_color& color) noexcept;
 
 /// Get the possible moves for a player's selected pieces
 /// Will be empty if no pieces are selected

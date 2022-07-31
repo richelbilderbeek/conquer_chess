@@ -936,3 +936,23 @@ bool operator!=(const piece& lhs, const piece& rhs) noexcept
 {
   return !(lhs == rhs);
 }
+
+std::ostream& operator<<(std::ostream& os, const piece& p) noexcept
+{
+  os
+    << to_str(p.get_actions())
+    << p.get_color()
+    << p.get_coordinat()
+    << p.get_current_square()
+    << p.get_health()
+    << p.get_id()
+    << p.is_selected()
+    << p.get_kill_count()
+    << p.get_max_health()
+    << p.get_player()
+    << to_str(p.get_messages())
+    << p.get_type()
+  ;
+  std::vector<square> m_target_square;
+  return os;
+}

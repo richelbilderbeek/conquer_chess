@@ -29,6 +29,7 @@ void test()
 #ifndef NDEBUG
   test_chess_move();
   test_replay();
+  test_replayer();
 
   test_chess_color();
   test_chess_move();
@@ -49,6 +50,7 @@ void test()
   test_menu_view_item();
   test_menu_view_layout();
   test_message();
+  test_message_type();
   test_options_view_item();
   test_options_view_layout();
   test_piece();
@@ -57,6 +59,7 @@ void test()
   test_piece_type();
   test_pieces();
   test_replay();
+  test_replayer();
   test_screen_coordinat();
   test_screen_rect();
   test_side();

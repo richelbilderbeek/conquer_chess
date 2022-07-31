@@ -1,6 +1,8 @@
 #ifndef SIDE_H
 #define SIDE_H
 
+#include <iosfwd>
+#include <string>
 #include <vector>
 
 /// The side the player/piece is on
@@ -17,5 +19,9 @@ side get_other_side(const side s) noexcept;
 
 /// Test this class and its free functions
 void test_side();
+
+std::string to_str(const side& s) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const side s) noexcept;
 
 #endif // SIDE_H

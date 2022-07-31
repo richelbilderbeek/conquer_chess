@@ -1,6 +1,8 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#include <iosfwd>
+
 #include "delta_t.h"
 #include "chess_color.h"
 #include "id.h"
@@ -241,5 +243,7 @@ void unselect(piece& p) noexcept;
 
 bool operator==(const piece& lhs, const piece& rhs) noexcept;
 bool operator!=(const piece& lhs, const piece& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const piece& p) noexcept;
 
 #endif // PIECE_H
