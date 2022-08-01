@@ -202,6 +202,22 @@ void test_game_coordinat()
     assert(!(a != b));
     assert(a != c);
   }
+  // operator*
+  {
+    const game_coordinat a(1.2345, 6.7890);
+    const double factor{1.23};
+    const auto b{a * factor};
+    assert(b.get_x() == a.get_x() * factor);
+    assert(b.get_y() == a.get_y() * factor);
+  }
+  // operator/
+  {
+    const game_coordinat a(1.2345, 6.7890);
+    const double factor{2.34};
+    const auto b{a / factor};
+    assert(b.get_x() == a.get_x() / factor);
+    assert(b.get_y() == a.get_y() / factor);
+  }
   // operator<<
   {
     std::stringstream s;
@@ -278,10 +294,10 @@ game_coordinat operator/(const game_coordinat& coordinat, const double factor) n
 
 }
 
-game_coordinat operator*(const game_coordinat& c, const double x) noexcept
+game_coordinat operator*(const game_coordinat& c, const double factor) noexcept
 {
   return game_coordinat(
-    c.get_x() * x,
-    c.get_y() * x
+    c.get_x() * factor,
+    c.get_y() * factor
   );
 }
