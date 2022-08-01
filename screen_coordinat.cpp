@@ -114,6 +114,17 @@ void test_screen_coordinat()
     const screen_coordinat d(3, 4);
     assert(calc_distance(c, d) == 5.0);
   }
+  // get_default_main_menu_screen_size
+  {
+    assert(get_default_main_menu_screen_size().get_x() > 0);
+    assert(get_default_main_menu_screen_size().get_y() > 0);
+  }
+  // get_default_screen_size
+  {
+    assert(get_default_screen_size().get_x() > 0);
+    assert(get_default_screen_size().get_y() > 0);
+  }
+
   // operator+
   {
     const screen_coordinat c_1(1, 2);
