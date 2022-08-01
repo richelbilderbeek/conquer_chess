@@ -97,6 +97,23 @@ bool operator==(const screen_coordinat& lhs, const screen_coordinat& rhs) noexce
 void test_screen_coordinat()
 {
   #ifndef NDEBUG
+  // calc_angle_degrees, one screen_coordinat
+  {
+    const screen_coordinat c(1, 0);
+    assert(calc_angle_degrees(c) == 0.0);
+  }
+  // calc_angle_degrees, two screen_coordinat
+  {
+    const screen_coordinat c(0, 0);
+    const screen_coordinat d(1, 0);
+    assert(calc_angle_degrees(c, d) == 0.0);
+  }
+  // calc_distance
+  {
+    const screen_coordinat c(0, 0);
+    const screen_coordinat d(3, 4);
+    assert(calc_distance(c, d) == 5.0);
+  }
   // operator+
   {
     const screen_coordinat c_1(1, 2);
@@ -120,6 +137,14 @@ void test_screen_coordinat()
     const screen_coordinat c_2{c_1 * f};
     assert(c_1.get_x() * f == c_2.get_x());
     assert(c_1.get_y() * f == c_2.get_y());
+  }
+  // operator/
+  {
+    const screen_coordinat c_1(100, 200);
+    const double f{1.2};
+    const screen_coordinat c_2{c_1 / f};
+    assert(c_1.get_x() / f == c_2.get_x());
+    assert(c_1.get_y() / f == c_2.get_y());
   }
   // operator+=
   {
