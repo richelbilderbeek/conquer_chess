@@ -27,7 +27,7 @@ public:
   auto do_show_occupied() const noexcept { return true; }
 
   /// Are selected units highlighted?
-  auto do_show_selected() const noexcept { return true; }
+  auto do_show_selected() const noexcept { return false; }
 
   /// Get the distance the mouse must be maximally in
   /// for a click to connect to a piece

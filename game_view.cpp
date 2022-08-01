@@ -606,6 +606,27 @@ void show_pieces(game_view& view)
         piece.get_type()
       )
     );
+    // Transparency effect when moving
+    if (!piece.get_actions().empty()
+      && piece.get_actions()[0].get_action_type() == piece_action_type::move
+    )
+    {
+      const double f{piece.get_current_action_time().get()};
+      int alpha{0};
+      if (f < 0.5)
+      {
+        alpha = 255 - static_cast<int>(f * 255.0);
+      }
+      else
+      {
+        alpha = static_cast<int>(f * 255.0);
+      }
+      sprite.setFillColor(sf::Color(255, 255, 255, alpha));
+    }
+    else
+    {
+      //sprite.setFillColor(sf::Color(0, 0, 0, 255));
+    }
     if (do_show_selected(view) && piece.is_selected())
     {
       sprite.setOutlineColor(sf::Color(255, 0, 0));
