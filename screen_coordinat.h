@@ -31,6 +31,8 @@ std::ostream& operator<<(std::ostream& os, const screen_coordinat& coordinat);
 bool operator==(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 
 screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
+screen_coordinat operator-(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
+screen_coordinat operator*(const screen_coordinat& lhs, const double& factor) noexcept;
 
 screen_coordinat& operator+=(screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 

@@ -792,6 +792,8 @@ void show_unit_paths(game_view& view)
   for (const auto& piece: get_pieces(game))
   {
     if (is_idle(piece)) continue;
+
+    // Collect all the coordinats for the path
     std::vector<screen_coordinat> coordinats;
     coordinats.reserve(piece.get_actions().size() + 1); // +1 for current position
     coordinats.push_back(
@@ -830,8 +832,6 @@ void show_unit_paths(game_view& view)
 
     // Draw circles at the subgoals
     sf::CircleShape circle;
-
-
     for (const auto coordinat: coordinats)
     {
       const double full_diameter{get_square_width(layout)};
@@ -842,6 +842,45 @@ void show_unit_paths(game_view& view)
         sf::Vector2f(
           coordinat.get_x() - half_radius,
           coordinat.get_y() - half_radius
+        )
+      );
+      circle.setFillColor(to_sfml_color(piece.get_color()));
+      circle.setRadius(radius);
+      circle.setOrigin(half_radius, half_radius);
+      view.get_window().draw(circle);
+    }
+
+    // Draw circle at current in-progress movement
+    assert(!actions.empty());
+    const auto& first_action{actions[0]};
+    if (first_action.get_action_type() == piece_action_type::move)
+    {
+      const auto from_pixel{
+        convert_to_screen_coordinat(
+          to_coordinat(piece.get_current_square()),
+          layout
+        )
+      };
+      const auto to_pixel{
+        convert_to_screen_coordinat(
+          to_coordinat(first_action.get_to()),
+          layout
+        )
+      };
+      const auto f{piece.get_current_action_time().get()};
+      assert(f >= 0.0);
+      assert(f <= 1.0);
+      const auto delta_pixel{to_pixel - from_pixel};
+      const auto now_pixel{from_pixel + (delta_pixel * f)};
+
+      const double full_diameter{get_square_width(layout)};
+      const double diameter{0.25 * full_diameter};
+      const double radius{diameter / 2.0};
+      const double half_radius{radius/ 2.0};
+      circle.setPosition(
+        sf::Vector2f(
+          now_pixel.get_x() - half_radius,
+          now_pixel.get_y() - half_radius
         )
       );
       circle.setFillColor(to_sfml_color(piece.get_color()));
