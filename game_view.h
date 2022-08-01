@@ -86,17 +86,12 @@ sf::RectangleShape create_white_square(game_view& view);
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_view& view);
 
-/// Get the controls text for the left player
-std::string get_controls_text_1(const game_view& view);
-
-/// Get the controls text for the right player
-std::string get_controls_text_2(const game_view& view);
-
 /// Get the controls text for a player with a controller
 std::string get_controls_text(
   const game_view& view,
   const chess_color player,
-  const controller_type controller
+  const controller_type controller,
+  const int key
 );
 
 /// Get the frames per second

@@ -49,6 +49,7 @@ public:
 
   const auto& get_board() const noexcept { return m_board; }
   const screen_rect& get_controls(const side player) const noexcept;
+  const screen_rect& get_controls_key(const side player, const int key) const noexcept;
   const auto& get_debug_1() const noexcept { return m_debug_1; }
   const auto& get_debug_2() const noexcept { return m_debug_2; }
   const screen_rect& get_log(const side player) const noexcept;
@@ -64,8 +65,16 @@ private:
 
 
   screen_rect m_board;
-  screen_rect m_controls_1;
-  screen_rect m_controls_2;
+  screen_rect m_controls_lhs;
+  screen_rect m_controls_lhs_key_1;
+  screen_rect m_controls_lhs_key_2;
+  screen_rect m_controls_lhs_key_3;
+  screen_rect m_controls_lhs_key_4;
+  screen_rect m_controls_rhs;
+  screen_rect m_controls_rhs_key_1;
+  screen_rect m_controls_rhs_key_2;
+  screen_rect m_controls_rhs_key_3;
+  screen_rect m_controls_rhs_key_4;
   screen_rect m_debug_1;
   screen_rect m_debug_2;
   screen_rect m_log_1;

@@ -14,7 +14,7 @@ game_view_layout::game_view_layout(
 ) : m_window_size{window_size}
 {
   const int unit_panel_height{100};
-  const int control_panel_height{100};
+  const int control_panel_height{75};
   const int log_panel_height{
     (
       window_size.get_y()
@@ -54,7 +54,7 @@ game_view_layout::game_view_layout(
     screen_coordinat(x1, y1),
     screen_coordinat(x2, y2)
   );
-  m_controls_1 = screen_rect(
+  m_controls_lhs = screen_rect(
     screen_coordinat(x1, y2),
     screen_coordinat(x2, y3)
   );
@@ -86,7 +86,7 @@ game_view_layout::game_view_layout(
     screen_coordinat(x5, y1),
     screen_coordinat(x6, y2)
   );
-  m_controls_2 = screen_rect(
+  m_controls_rhs = screen_rect(
     screen_coordinat(x5, y2),
     screen_coordinat(x6, y3)
   );
@@ -101,6 +101,43 @@ game_view_layout::game_view_layout(
 
   assert(get_board_width(*this) == get_board_height(*this));
   assert(get_square_width(*this) == get_square_height(*this));
+
+  {
+    const int sz{75};
+    m_controls_lhs_key_1 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(0 * sz, 0 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(1 * sz, 1 * sz)
+    );
+    m_controls_lhs_key_2 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(1 * sz, 0 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(2 * sz, 1 * sz)
+    );
+    m_controls_lhs_key_3 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(2 * sz, 0 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(3 * sz, 1 * sz)
+    );
+    m_controls_lhs_key_4 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(3 * sz, 0 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(4 * sz, 1 * sz)
+    );
+
+    m_controls_rhs_key_1 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(0 * sz, 0 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(1 * sz, 1 * sz)
+    );
+    m_controls_rhs_key_2 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(1 * sz, 0 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(2 * sz, 1 * sz)
+    );
+    m_controls_rhs_key_3 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(2 * sz, 0 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(3 * sz, 1 * sz)
+    );
+    m_controls_rhs_key_4 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(3 * sz, 0 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(4 * sz, 1 * sz)
+    );
+  }
 }
 
 game_coordinat convert_to_game_coordinat(
@@ -182,10 +219,45 @@ int get_board_width(const game_view_layout& layout) noexcept
 
 const screen_rect& game_view_layout::get_controls(const side player) const noexcept
 {
-  if (player == side::lhs) return m_controls_1;
+  if (player == side::lhs) return m_controls_lhs;
   assert(player == side::rhs);
-  return m_controls_2;
+  return m_controls_rhs;
 }
+
+const screen_rect& game_view_layout::get_controls_key(
+  const side player,
+  const int key
+) const noexcept
+{
+  assert(key >= 1); // Human based counting
+  assert(key <= 4); // Human based counting
+  if (player == side::lhs)
+  {
+    switch (key)
+    {
+      case 1: return m_controls_lhs_key_1;
+      case 2: return m_controls_lhs_key_2;
+      case 3: return m_controls_lhs_key_3;
+      case 4:
+        default:
+        assert(key == 4);
+        return m_controls_lhs_key_4;
+    }
+  }
+  assert(player == side::rhs);
+  switch (key)
+  {
+    case 1: return m_controls_rhs_key_1;
+    case 2: return m_controls_rhs_key_2;
+    case 3: return m_controls_rhs_key_3;
+    case 4:
+      default:
+      assert(key == 4);
+      return m_controls_rhs_key_4;
+  }
+}
+
+
 
 const screen_rect& game_view_layout::get_log(const side player) const noexcept
 {
@@ -254,6 +326,17 @@ void test_game_view_layout()
     assert(get_square_height(layout) > 0.0);
     assert(get_board_width(layout) == get_board_height(layout));
     assert(get_square_width(layout) == get_square_height(layout));
+  }
+  // get_controls_key
+  {
+    const game_view_layout layout;
+    for (const auto player: get_all_sides())
+    {
+      for (int key{1}; key<=4; ++key)
+      {
+        assert(layout.get_controls_key(player, key).get_br().get_x() >= 0);
+      }
+    }
   }
   //--------------------------------------------------------------------------
   // game -> screen

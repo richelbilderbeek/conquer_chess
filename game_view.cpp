@@ -109,56 +109,46 @@ void game_view::exec()
   }
 }
 
-std::string get_controls_text_1(const game_view& view)
-{
-  return get_controls_text(
-    view,
-    get_left_player_color(view.get_game().get_options()),
-    get_left_player_controller(view.get_game().get_options())
-  );
-}
-
-std::string get_controls_text_2(const game_view& view)
-{
-  return get_controls_text(
-    view,
-    get_right_player_color(view.get_game().get_options()),
-    get_right_player_controller(view.get_game().get_options())
-  );
-}
-
 std::string get_controls_text(
   const game_view& view,
   const chess_color player,
-  const controller_type controller
+  const controller_type controller,
+  const int key
 )
 {
+  assert(key >= 1); // Human based counting
+  assert(key <= 4); // Human based counting
   const auto& selected_units = get_selected_pieces(view.get_game(), player);
   std::stringstream s;
   if (controller == controller_type::keyboard)
   {
-    if (selected_units.empty()) {
-      s << "SPACE: select a unit";
-    } else {
-      s << "SPACE: select a unit\n"
-        << "M: move selected unit to square\n"
-        << "A: attack unit at square"
-      ;
+    if (selected_units.empty()) return "Spacebar\nSelect";
+    switch (key)
+    {
+      case 1: return "M\nMove";
+      case 2: return "A\nAttack";
+      case 3: return ".";
+      case 4:
+        default:
+        assert(key == 4);
+        return ".";
     }
   }
   else
   {
     assert(controller == controller_type::mouse);
-    if (selected_units.empty()) {
-      s << "LMB: select a unit";
-    } else {
-      s << "LMB: select a unit\n"
-        << "RMB: move selected unit to square"
-      ;
+    if (selected_units.empty()) return "LMB\nSelect";
+    switch (key)
+    {
+      case 1: return "Move";
+      case 2: return "Attack";
+      case 3: return ".";
+      case 4:
+        default:
+        assert(key == 4);
+        return ".";
     }
-
   }
-  return s.str();
 }
 
 double game_view::get_elapsed_time_secs() const noexcept
@@ -382,22 +372,42 @@ void show_controls(game_view& view, const side player)
   const auto& layout = view.get_game().get_layout();
   sf::Text text;
   text.setFont(view.get_resources().get_font());
+  text.setCharacterSize(16);
 
-  std::stringstream s;
-  s
-    << get_controls_text(
-      view,
-      get_player_color(view.get_game(), player),
-      get_player_controller(get_options(view), player)
+  const std::vector<sf::Color> colors{
+    sf::Color(255,  0,  0),
+    sf::Color(255,128,  0),
+    sf::Color(255,255,  0),
+    sf::Color(128,255,  0)
+  };
+
+  for (int key{1}; key<=4; ++key) // Human based counting
+  {
+    // Rect
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, layout.get_controls_key(player, key));
+    rectangle.setFillColor(colors[key -1]);
+    rectangle.setOutlineThickness(1);
+    rectangle.setOutlineColor(sf::Color::White);
+    view.get_window().draw(rectangle);
+
+    // Text
+    const std::string s{
+      get_controls_text(
+        view,
+        get_player_color(view.get_game(), player),
+        get_player_controller(get_options(view), player),
+        key
+      )
+    };
+    text.setString(s.c_str());
+    text.setPosition(
+      layout.get_controls_key(player, key).get_tl().get_x(),
+      layout.get_controls_key(player, key).get_tl().get_y()
     );
-  ;
-  text.setString(s.str().c_str());
-  text.setCharacterSize(20);
-  text.setPosition(
-    layout.get_controls(player).get_tl().get_x(),
-    layout.get_controls(player).get_tl().get_y()
-  );
-  view.get_window().draw(text);
+    view.get_window().draw(text);
+  }
+
 }
 
 void show_debug_1(game_view& view)
