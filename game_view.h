@@ -123,11 +123,8 @@ const delta_t& get_time(const game_view& v) noexcept;
 /// Show the board: squares, unit paths, pieces, health bars
 void show_board(game_view& view);
 
-/// Show the controls (e.g. for a unit) on-screen for player 2
-void show_controls_1(game_view& view);
-
-/// Show the controls (e.g. for a unit) on-screen for player 2
-void show_controls_2(game_view& view);
+/// Show the controls (e.g. for a unit) on-screen for a player
+void show_controls(game_view& view, const side player);
 
 /// Show debug info on-screen for player 1
 void show_debug_1(game_view& view);
@@ -139,7 +136,7 @@ void show_debug_2(game_view& view);
 void show_layout(game_view& view);
 
 /// Show the log on-screen, i.e. things the pieces say
-void show_log(game_view& view);
+void show_log(game_view& view, const side player);
 
 /// Show the squares that are occupied on-screen
 /// Throws if this option is turned off

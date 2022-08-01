@@ -48,12 +48,12 @@ public:
   );
 
   const auto& get_board() const noexcept { return m_board; }
-  const auto& get_units_1() const noexcept { return m_units_1; }
-  const auto& get_controls_1() const noexcept { return m_controls_1; }
+  const screen_rect& get_controls(const side player) const noexcept;
   const auto& get_debug_1() const noexcept { return m_debug_1; }
-  const auto& get_units_2() const noexcept { return m_units_2; }
-  const auto& get_controls_2() const noexcept { return m_controls_2; }
   const auto& get_debug_2() const noexcept { return m_debug_2; }
+  const screen_rect& get_log(const side player) const noexcept;
+  const auto& get_units_1() const noexcept { return m_units_1; }
+  const auto& get_units_2() const noexcept { return m_units_2; }
 
   int get_panel_width() const noexcept;
   int get_panel_height() const noexcept;
@@ -62,14 +62,16 @@ public:
 
 private:
 
-  screen_rect m_board;
-  screen_rect m_units_1;
-  screen_rect m_controls_1;
-  screen_rect m_debug_1;
 
-  screen_rect m_units_2;
+  screen_rect m_board;
+  screen_rect m_controls_1;
   screen_rect m_controls_2;
+  screen_rect m_debug_1;
   screen_rect m_debug_2;
+  screen_rect m_log_1;
+  screen_rect m_log_2;
+  screen_rect m_units_1;
+  screen_rect m_units_2;
 
   /// The size of the window
   screen_coordinat m_window_size;

@@ -13,7 +13,18 @@ game_view_layout::game_view_layout(
   const int margin_width
 ) : m_window_size{window_size}
 {
-  const int panel_height = static_cast<int>(static_cast<double>(window_size.get_y() - (4 * margin_width)) / 3.0);
+  const int unit_panel_height{100};
+  const int control_panel_height{100};
+  const int log_panel_height{
+    (
+      window_size.get_y()
+      - (4 * margin_width)
+      - unit_panel_height
+      - control_panel_height
+    )
+    / 2
+  };
+  const int debug_panel_height{log_panel_height};
   const int panel_width = 300;
 
   const int max_board_width = m_window_size.get_x() - (2 * panel_width) - (4 * margin_width);
@@ -30,11 +41,12 @@ game_view_layout::game_view_layout(
   const int x6{x5 + panel_width};
 
   const int y1{margin_width};
-  const int y2{y1 + panel_height};
-  const int y3{y2 + margin_width};
-  const int y4{y3 + panel_height};
-  const int y5{y4 + margin_width};
-  const int y6{y5 + panel_height};
+  const int y2{y1 + unit_panel_height};
+  const int y3{y2 + control_panel_height};
+  const int y4{y3 + margin_width};
+  const int y5{y4 + log_panel_height};
+  const int y6{y5 + margin_width};
+  const int y7{y6 + debug_panel_height};
 
 
   // Panel 1
@@ -43,12 +55,16 @@ game_view_layout::game_view_layout(
     screen_coordinat(x2, y2)
   );
   m_controls_1 = screen_rect(
-    screen_coordinat(x1, y3),
-    screen_coordinat(x2, y4)
+    screen_coordinat(x1, y2),
+    screen_coordinat(x2, y3)
+  );
+  m_log_1 = screen_rect(
+    screen_coordinat(x1, y4),
+    screen_coordinat(x2, y5)
   );
   m_debug_1 = screen_rect(
-    screen_coordinat(x1, y5),
-    screen_coordinat(x2, y6)
+    screen_coordinat(x1, y6),
+    screen_coordinat(x2, y7)
   );
 
   // Board
@@ -71,12 +87,16 @@ game_view_layout::game_view_layout(
     screen_coordinat(x6, y2)
   );
   m_controls_2 = screen_rect(
-    screen_coordinat(x5, y3),
-    screen_coordinat(x6, y4)
+    screen_coordinat(x5, y2),
+    screen_coordinat(x6, y3)
+  );
+  m_log_2 = screen_rect(
+    screen_coordinat(x5, y4),
+    screen_coordinat(x6, y5)
   );
   m_debug_2 = screen_rect(
-    screen_coordinat(x5, y5),
-    screen_coordinat(x6, y6)
+    screen_coordinat(x5, y6),
+    screen_coordinat(x6, y7)
   );
 
   assert(get_board_width(*this) == get_board_height(*this));
@@ -159,17 +179,34 @@ int get_board_width(const game_view_layout& layout) noexcept
   return get_width(layout.get_board());
 }
 
+
+const screen_rect& game_view_layout::get_controls(const side player) const noexcept
+{
+  if (player == side::lhs) return m_controls_1;
+  assert(player == side::rhs);
+  return m_controls_2;
+}
+
+const screen_rect& game_view_layout::get_log(const side player) const noexcept
+{
+  if (player == side::lhs) return m_log_1;
+  assert(player == side::rhs);
+  return m_log_2;
+}
+
 std::vector<screen_rect> get_panels(const game_view_layout& layout)
 {
   return
   {
     layout.get_board(),
-    layout.get_units_1(),
-    layout.get_controls_1(),
+    layout.get_controls(side::lhs),
+    layout.get_controls(side::rhs),
     layout.get_debug_1(),
-    layout.get_units_2(),
-    layout.get_controls_2(),
-    layout.get_debug_2()
+    layout.get_debug_2(),
+    layout.get_log(side::lhs),
+    layout.get_log(side::rhs),
+    layout.get_units_1(),
+    layout.get_units_2()
   };
 }
 
@@ -217,59 +254,6 @@ void test_game_view_layout()
     assert(get_square_height(layout) > 0.0);
     assert(get_board_width(layout) == get_board_height(layout));
     assert(get_square_width(layout) == get_square_height(layout));
-  }
-  // Coordinats of default size
-  {
-    const int margin_width = 10;
-    const game_view_layout layout{screen_coordinat(1024, 576), margin_width};
-    const int x1{margin_width};
-    const int x2{x1 + layout.get_panel_width()};
-    const int x3{x2 + margin_width};
-    const int x4{x3 + get_board_width(layout)};
-    const int x5{x4 + margin_width};
-    const int x6{x5 + layout.get_panel_width()};
-
-    const int y1{margin_width};
-    const int y2{y1 + layout.get_panel_height()};
-    const int y3{y2 + margin_width};
-    const int y4{y3 + layout.get_panel_height()};
-    const int y5{y4 + margin_width};
-    const int y6{y5 + layout.get_panel_height()};
-
-    assert(layout.get_units_1().get_tl().get_x() == x1);
-    assert(layout.get_units_1().get_tl().get_y() == y1);
-    assert(layout.get_units_1().get_br().get_x() == x2);
-    assert(layout.get_units_1().get_br().get_y() == y2);
-
-    assert(layout.get_controls_1().get_tl().get_x() == x1);
-    assert(layout.get_controls_1().get_tl().get_y() == y3);
-    assert(layout.get_controls_1().get_br().get_x() == x2);
-    assert(layout.get_controls_1().get_br().get_y() == y4);
-
-    assert(layout.get_debug_1().get_tl().get_x() == x1);
-    assert(layout.get_debug_1().get_tl().get_y() == y5);
-    assert(layout.get_debug_1().get_br().get_x() == x2);
-    assert(layout.get_debug_1().get_br().get_y() == y6);
-
-    assert(layout.get_board().get_tl().get_x() == x3);
-    assert(layout.get_board().get_tl().get_y() >= y1);
-    assert(layout.get_board().get_br().get_x() == x4);
-    assert(layout.get_board().get_br().get_y() <= y6);
-
-    assert(layout.get_units_2().get_tl().get_x() == x5);
-    assert(layout.get_units_2().get_tl().get_y() == y1);
-    assert(layout.get_units_2().get_br().get_x() == x6);
-    assert(layout.get_units_2().get_br().get_y() == y2);
-
-    assert(layout.get_controls_2().get_tl().get_x() == x5);
-    assert(layout.get_controls_2().get_tl().get_y() == y3);
-    assert(layout.get_controls_2().get_br().get_x() == x6);
-    assert(layout.get_controls_2().get_br().get_y() == y4);
-
-    assert(layout.get_debug_2().get_tl().get_x() == x5);
-    assert(layout.get_debug_2().get_tl().get_y() == y5);
-    assert(layout.get_debug_2().get_br().get_x() == x6);
-    assert(layout.get_debug_2().get_br().get_y() == y6);
   }
   //--------------------------------------------------------------------------
   // game -> screen

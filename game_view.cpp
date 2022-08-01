@@ -8,6 +8,7 @@
 #include "game_view_layout.h"
 #include "game_rect.h"
 #include "screen_coordinat.h"
+#include "screen_rect.h"
 #include "sfml_helper.h"
 
 #include <SFML/Graphics.hpp>
@@ -376,44 +377,25 @@ void show_board(game_view& view)
   show_unit_health_bars(view);
 }
 
-void show_controls_1(game_view& view)
+void show_controls(game_view& view, const side player)
 {
   const auto& layout = view.get_game().get_layout();
-  sf::Text text;
-  text.setFont(view.get_resources().get_font());
-  std::stringstream s;
-  s
-    << get_controls_text_1(view) << '\n' << '\n'
-    << get_last_log_messages(view, side::lhs)
-  ;
-  text.setString(s.str().c_str());
-
-  text.setCharacterSize(20);
-  text.setPosition(
-    layout.get_controls_1().get_tl().get_x(),
-    layout.get_controls_1().get_tl().get_y()
-  );
-  view.get_window().draw(text);
-}
-
-void show_controls_2(game_view& view)
-{
-  const auto& layout = view.get_game().get_layout();
-
   sf::Text text;
   text.setFont(view.get_resources().get_font());
 
   std::stringstream s;
   s
-    << get_controls_text_2(view) << '\n' << '\n'
-    << get_last_log_messages(view, side::rhs)
+    << get_controls_text(
+      view,
+      get_player_color(view.get_game(), player),
+      get_player_controller(get_options(view), player)
+    );
   ;
   text.setString(s.str().c_str());
-
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_controls_2().get_tl().get_x(),
-    layout.get_controls_2().get_tl().get_y()
+    layout.get_controls(player).get_tl().get_x(),
+    layout.get_controls(player).get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -544,6 +526,22 @@ void show_layout(game_view& view)
   }
 }
 
+void show_log(game_view& view, const side player)
+{
+  const auto& layout = view.get_game().get_layout();
+  sf::Text text;
+  text.setFont(view.get_resources().get_font());
+  std::stringstream s;
+  s << get_last_log_messages(view, player);
+  text.setString(s.str().c_str());
+  text.setCharacterSize(20);
+  text.setPosition(
+    layout.get_log(player).get_tl().get_x(),
+    layout.get_log(player).get_tl().get_y()
+  );
+  view.get_window().draw(text);
+}
+
 void show_occupied_squares(game_view& view)
 {
   assert(get_options(view).do_show_occupied());
@@ -647,15 +645,17 @@ void show_possible_moves(game_view& view, const side player)
 
 void show_sidebar_1(game_view& view)
 {
-  show_controls_1(view);
   show_unit_sprites_1(view);
+  show_controls(view, side::lhs);
+  show_log(view, side::lhs);
   show_debug_1(view);
 }
 
 void show_sidebar_2(game_view& view)
 {
-  show_controls_2(view);
   show_unit_sprites_2(view);
+  show_controls(view, side::rhs);
+  show_log(view, side::rhs);
   show_debug_2(view);
 }
 

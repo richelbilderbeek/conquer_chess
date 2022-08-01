@@ -156,6 +156,13 @@ chess_color get_player_color(
   const side player
 ) noexcept;
 
+/// Get the controller of a player
+controller_type get_player_controller(
+  const game_options& options,
+  const side player
+) noexcept;
+
+
 /// Get the color of the right player
 chess_color get_right_player_color(const game_options& options) noexcept;
 
