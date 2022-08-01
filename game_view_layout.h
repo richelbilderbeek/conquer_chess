@@ -56,9 +56,6 @@ public:
   const auto& get_units_1() const noexcept { return m_units_1; }
   const auto& get_units_2() const noexcept { return m_units_2; }
 
-  int get_panel_width() const noexcept;
-  int get_panel_height() const noexcept;
-
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
 private:

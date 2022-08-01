@@ -104,6 +104,11 @@ bool is_forward(
 void test_game_coordinat()
 {
   #ifndef NDEBUG
+  // calc_length
+  {
+    const game_coordinat c(3.0, 4.0);
+    assert(is_close(calc_length(c), 5.0, 0.01));
+  }
   // center_on_center
   {
     const game_coordinat c(3.2, 4.7);
@@ -187,13 +192,21 @@ void test_game_coordinat()
     assert(a == b);
     assert(!(a == c));
   }
-  // operator ==
+  // operator+
   {
     const game_coordinat a(1.1, 2.2);
-    const game_coordinat b(1.1, 3.3);
-    const game_coordinat c(4.4, 2.2);
-    assert(!(a == b));
-    assert(!(a == c));
+    const game_coordinat b(3.3, 4.4);
+    const game_coordinat c{a + b};
+    assert(c.get_x() == a.get_x() + b.get_x());
+    assert(c.get_y() == a.get_y() + b.get_y());
+  }
+  // operator-
+  {
+    const game_coordinat a(1.23, 4.56);
+    const game_coordinat b(7.89, 0.12);
+    const game_coordinat c{a - b};
+    assert(c.get_x() == a.get_x() - b.get_x());
+    assert(c.get_y() == a.get_y() - b.get_y());
   }
   // operator !=
   {

@@ -68,6 +68,34 @@ std::vector<std::string> split_str(
 void test_helper()
 {
 #ifndef NDEBUG
+  // calc_angle_degreees
+  {
+    const double tolerance{0.1};
+    {
+      // 3 o'clock
+      const double expected{0.0};
+      const double created{calc_angle_degrees( 1.0,  0.0)};
+      assert(is_close(expected, created, tolerance));
+    }
+    {
+      // 6 o'clock
+      const double expected{-90.0};
+      const double created{calc_angle_degrees( 0.0,  1.0)};
+      assert(is_close(expected, created, tolerance));
+    }
+    {
+      // 9 o'clock
+      const double expected{-180.0};
+      const double created{calc_angle_degrees(-1.0,  0.0)};
+      assert(is_close(expected, created, tolerance));
+    }
+    {
+      // 12 o'clock
+      const double expected{90.0};
+      const double created{calc_angle_degrees( 0.0, -1.0)};
+      assert(is_close(expected, created, tolerance));
+    }
+  }
   // calc_angle_radians
   {
     const double tolerance{0.1};
@@ -90,7 +118,7 @@ void test_helper()
       assert(is_close(expected, created, tolerance));
     }
     {
-      // 9 o'clock
+      // 12 o'clock
       const double expected{(0.5 * M_PI) + (0.0 * M_PI)};
       const double created{calc_angle_radians( 0.0, -1.0)};
       assert(is_close(expected, created, tolerance));

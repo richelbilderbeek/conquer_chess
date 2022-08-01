@@ -282,16 +282,6 @@ std::vector<screen_rect> get_panels(const game_view_layout& layout)
   };
 }
 
-int game_view_layout::get_panel_height() const noexcept
-{
-  return get_height(m_units_1);
-}
-
-int game_view_layout::get_panel_width() const noexcept
-{
-  return get_width(m_units_1);
-}
-
 double get_square_height(const game_view_layout& layout) noexcept
 {
   return static_cast<double>(get_board_height(layout)) / 8.0;
