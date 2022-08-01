@@ -776,6 +776,12 @@ void test_piece()
     assert(p.get_current_square() == square("e4"));
     assert(get_occupied_square(p) == square("e4"));
   }
+  // operator<<
+  {
+    std::stringstream s;
+    s << get_test_white_king();
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 

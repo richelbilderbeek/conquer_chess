@@ -263,6 +263,13 @@ void test_chess_move()
     assert(m.get_winner().at(0) == chess_color::white);
     assert(!m.is_capture());
   }
+  // operator<<
+  {
+    const chess_move m("Qxf7#", chess_color::white);
+    std::stringstream s;
+    s << m;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
