@@ -27,12 +27,15 @@ void test_message_type()
     assert(to_str(message_type::start_attack) == "start_attack");
     assert(to_str(message_type::start_move) == "start_move");
   }
-  // to_str, from collection
+  // to_str on std::vector
   {
-    for (const auto t: get_all_message_types())
-    {
-      assert(!to_str(t).empty());
-    }
+    assert(!to_str(get_all_message_types()).empty());
+  }
+  // operator<<
+  {
+    std::stringstream s;
+    s << message_type::cannot;
+    assert(!s.str().empty());
   }
 #endif // NDEBUG
 }
