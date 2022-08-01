@@ -65,7 +65,6 @@ void test_game_scenarios()
     tick_until_idle(g);
     assert(is_idle(g));
     const auto piece{get_piece_with_id(g, id)};
-    std::clog << piece.get_current_square() << '\n';
     assert(piece.get_current_square() == square("d3"));
     assert(piece_with_id_is_at(g, id, square("d3")));
     assert(piece_with_id_is_at(g, id, square("d3")));
