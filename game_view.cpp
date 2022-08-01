@@ -883,6 +883,8 @@ void show_unit_paths(game_view& view)
           now_pixel.get_y() - half_radius
         )
       );
+      circle.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
+      circle.setOutlineThickness(std::max(2.0, radius / 10.0));
       circle.setFillColor(to_sfml_color(piece.get_color()));
       circle.setRadius(radius);
       circle.setOrigin(half_radius, half_radius);
