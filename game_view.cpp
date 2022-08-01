@@ -450,12 +450,10 @@ void show_debug_1(game_view& view)
 
   // Specific things
   s
-    << "Wall-clock time: " << view.get_elapsed_time_secs() << " (seconds)" << '\n'
-    << "Game time: " << get_time(view) << " (chess moves)" << '\n'
+    << "Wall-clock time: " << view.get_elapsed_time_secs() << " (secs)" << '\n'
+    << "Game time: " << get_time(view) << " (moves)" << '\n'
     << "FPS: " << get_fps(view) << '\n'
   ;
-
-
 
   text.setString(s.str());
   text.setCharacterSize(20);

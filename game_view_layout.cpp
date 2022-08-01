@@ -13,15 +13,14 @@ game_view_layout::game_view_layout(
   const int margin_width
 ) : m_window_size{window_size}
 {
-  // board
-  const int max_board_width = (m_window_size.get_x() - (4 * margin_width)) / 3;
+  const int panel_height = static_cast<int>(static_cast<double>(window_size.get_y() - (4 * margin_width)) / 3.0);
+  const int panel_width = 300;
+
+  const int max_board_width = m_window_size.get_x() - (2 * panel_width) - (4 * margin_width);
   const int max_board_height = m_window_size.get_y() - (2 * margin_width);
   const int board_width = std::min(max_board_height, max_board_width);
   const int board_height = board_width;
   assert(board_width == board_height);
-
-  const int panel_height = static_cast<int>(static_cast<double>(window_size.get_y() - (4 * margin_width)) / 3.0);
-  const int panel_width = static_cast<int>(static_cast<double>(window_size.get_x() - board_width - (4 * margin_width))) / 2;
 
   const int x1{margin_width};
   const int x2{x1 + panel_width};
