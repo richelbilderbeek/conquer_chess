@@ -869,6 +869,7 @@ void tick_move(
     {
       p.add_message(message_type::done);
     }
+    std::clog << "DONE\n";
     return;
   }
 
@@ -885,7 +886,8 @@ void tick_move(
     if (is_focal_piece_at_target)
     {
       // Moving the last half
-      std::clog << "Piece not halfway (" << f << "), still occupies " << p.get_current_square() << '\n';
+      assert(f > 0.5);
+      std::clog << "Piece over halfway (" << f << "), already occupies " << p.get_current_square() << '\n';
     }
     else
     {
@@ -908,6 +910,7 @@ void tick_move(
   }
   else
   {
+    std::clog << "Piece not yet halfway (" << f << "), still occupied " << p.get_current_square() << '\n';
     assert(!is_target_occupied);
     if (f >= 0.5)
     {

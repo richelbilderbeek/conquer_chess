@@ -850,25 +850,6 @@ void show_unit_paths(game_view& view)
       }
     );
 
-    if (1 == 2 && "I like those thin lines")
-    {
-      // Draw lines between the subgoals
-      sf::VertexArray lines(sf::LineStrip, coordinats.size());
-      assert(coordinats.size() == actions.size() + 1);
-      const int n_coordinats{static_cast<int>(coordinats.size())};
-      for (int i = 0; i != n_coordinats; ++i)
-      {
-        assert(i < static_cast<int>(coordinats.size()));
-        lines[i].position = sf::Vector2f(
-          coordinats[i].get_x(),
-          coordinats[i].get_y()
-        );
-        lines[i].color = to_sfml_color(piece.get_color());
-      }
-      view.get_window().draw(lines);
-    }
-
-
     // Draw circles at the subgoals
     sf::CircleShape circle;
     for (const auto coordinat: coordinats)
@@ -896,7 +877,7 @@ void show_unit_paths(game_view& view)
     {
       const auto from_pixel{
         convert_to_screen_coordinat(
-          to_coordinat(piece.get_current_square()),
+          to_coordinat(first_action.get_from()),
           layout
         )
       };
