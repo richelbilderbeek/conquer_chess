@@ -163,6 +163,11 @@ void test_game_options()
     const auto options{get_default_game_options()};
     assert(options.get_music_volume().get_percentage() >= 0.0);
   }
+  // game_options::get_music_volume
+  {
+    const auto options{get_default_game_options()};
+    assert(get_music_volume_as_percentage(options) >= 0.0);
+  }
   // game_options::get_sound_effects_volume
   {
     const auto options{get_default_game_options()};

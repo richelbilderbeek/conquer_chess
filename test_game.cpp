@@ -262,6 +262,11 @@ void test_game_functions()
     assert(get_mouse_player_pos(g) == get_player_pos(g, side::lhs));
     get_mouse_player_pos(g) += game_coordinat(0.1, 0.1); // Only needs to compile
   }
+  // get_music_volume_as_percentage
+  {
+    const game g;
+    assert(get_music_volume_as_percentage(g) >= 0.0);
+  }
   // get_occupied_squares
   {
     const game g;
@@ -284,6 +289,22 @@ void test_game_functions()
     const game g;
     assert(get_player_color(g, side::lhs) == chess_color::white);
     assert(get_player_color(g, side::rhs) == chess_color::black);
+    game_options options{get_default_game_options()};
+    options.set_left_player_color(chess_color::black);
+    const game h(options);
+    assert(get_player_color(h, side::lhs) == chess_color::black);
+    assert(get_player_color(h, side::rhs) == chess_color::white);
+  }
+  // get_player_side
+  {
+    const game g;
+    assert(get_player_side(g, chess_color::white) == side::lhs);
+    assert(get_player_side(g, chess_color::black) == side::rhs);
+    game_options options{get_default_game_options()};
+    options.set_left_player_color(chess_color::black);
+    const game h(options);
+    assert(get_player_side(h, chess_color::white) == side::rhs);
+    assert(get_player_side(h, chess_color::black) == side::lhs);
   }
   // get_possible_moves
   {
