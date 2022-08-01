@@ -869,7 +869,6 @@ void tick_move(
     {
       p.add_message(message_type::done);
     }
-    std::clog << "DONE\n";
     return;
   }
 
