@@ -19,8 +19,12 @@ private:
   int m_y;
 };
 
+/// Get the default main menu screen size, where x is the width and y is the height
+screen_coordinat get_default_main_menu_screen_size() noexcept;
+
 /// Get the default screen size, where x is the width and y is the height
 screen_coordinat get_default_screen_size() noexcept;
+
 
 std::ostream& operator<<(std::ostream& os, const screen_coordinat& coordinat);
 

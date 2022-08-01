@@ -25,11 +25,21 @@ void menu_view::exec()
   // Open window
   m_window.create(
     sf::VideoMode(
-      get_default_screen_size().get_x(),
-      get_default_screen_size().get_y()
+      get_default_main_menu_screen_size().get_x(),
+      get_default_main_menu_screen_size().get_y()
     ),
     "Conquer Chess: main menu"
   );
+
+  // Center
+  auto desktop = sf::VideoMode::getDesktopMode();
+  m_window.setPosition(
+    sf::Vector2i(
+      (desktop.width / 2) - (m_window.getSize().x /2),
+      (desktop.height/ 2) - (m_window.getSize().y /2)
+    )
+  );
+
   while (m_window.isOpen())
   {
     // Process user input and play game until instructed to exit
@@ -66,11 +76,22 @@ bool menu_view::process_events()
     if (event.type == sf::Event::Resized)
     {
       // From https://www.sfml-dev.org/tutorials/2.2/graphics-view.php#showing-more-when-the-window-is-resized
-      const sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-      m_window.setView(sf::View(visibleArea));
+      const sf::FloatRect visible_area(0, 0, event.size.width, event.size.height);
+      m_window.setView(sf::View(visible_area));
+
+      // From https://stackoverflow.com/a/38486530
+      if (1 == 2 && "centering would really work")
+      {
+        m_window.setView(
+          sf::View(
+            m_window.getView().getCenter(),
+            sf::Vector2f(event.size.width, event.size.height)
+          )
+        );
+      }
 
       m_layout = menu_view_layout(
-        screen_coordinat(visibleArea.width, visibleArea.height),
+        screen_coordinat(event.size.width, event.size.height),
         get_default_margin_width()
       );
     }
