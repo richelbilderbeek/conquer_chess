@@ -14,10 +14,15 @@ See [FAQ](FAQ.md)
 ## Acknowledgments
 
  * Selecting the portraits for the pieces: Johanna Söderström
+ * Bug report: Leonid Rutkowski
+
+## Videos
+
+ * 2022-07-31: [watch on YouTube](https://youtu.be/Y2m_hyusuPc) or [download (.ogv)](https://richelbilderbeek.nl/conquer_chess_20220731.ogv) 
 
 ## Screenshots
 
- * Video 2022-07-31: [Download (.ogv)](https://richelbilderbeek.nl/conquer_chess_20220731.ogv) [YouTube](https://youtu.be/Y2m_hyusuPc)
+![](screenshots/20220801_1.png)
 
 ![](screenshots/20220729_2.png)
 
