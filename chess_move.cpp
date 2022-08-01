@@ -122,6 +122,18 @@ bool is_win(const chess_move& move) noexcept
 void test_chess_move()
 {
 #ifndef NDEBUG
+  // Constructor
+  {
+    const std::string pgn_str{"e4"};
+    const chess_move m{pgn_str, chess_color::white};
+    assert(pgn_str == m.get_pgn_str());
+  }
+  // chess_move::get_pgn_str
+  {
+    const std::string pgn_str{"Qd4"};
+    const chess_move m{pgn_str, chess_color::white};
+    assert(pgn_str == m.get_pgn_str());
+  }
   // Individual functions
   // get_winner
   {

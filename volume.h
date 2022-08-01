@@ -28,6 +28,8 @@ volume get_next(const volume& v) noexcept;
 /// Test this class and its free functions
 void test_volume();
 
+bool operator==(const volume& lhs, const volume& rhs) noexcept;
+
 std::ostream& operator<<(std::ostream& os, const volume& v) noexcept;
 
 #endif // VOLUME_H

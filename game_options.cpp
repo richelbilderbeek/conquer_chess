@@ -158,6 +158,28 @@ void test_game_options()
     const auto options{get_default_game_options()};
     assert(options.get_starting_position() == get_starting_position(options));
   }
+  // game_options::get_music_volume
+  {
+    const auto options{get_default_game_options()};
+    assert(options.get_music_volume().get_percentage() >= 0.0);
+  }
+  // game_options::get_sound_effects_volume
+  {
+    const auto options{get_default_game_options()};
+    assert(options.get_sound_effects_volume().get_percentage() >= 0.0);
+  }
+  // game_options::get_starting_position
+  {
+    const auto options{get_default_game_options()};
+    assert(options.get_starting_position() == get_starting_position(options));
+  }
+  // game_options::set_music_volume
+  {
+    auto options{get_default_game_options()};
+    const volume v(31);
+    options.set_volume(v);
+    assert(options.get_music_volume() == v);
+  }
   // default game_options
   {
     const auto options{get_default_game_options()};
