@@ -34,23 +34,29 @@ textures::textures()
     std::make_pair(std::ref(m_dark_white_square), "d_white.png"),
     std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
+    std::make_pair(std::ref(m_light_black_square), "l_black.png"),
+    std::make_pair(std::ref(m_light_square), "l.png"),
+    std::make_pair(std::ref(m_light_white_square), "l_white.png"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
     std::make_pair(std::ref(m_title), "title.png"),
     std::make_pair(std::ref(m_white_bishop), "bw.png"),
     std::make_pair(std::ref(m_white_bishop_portrait), "bw_portrait.png"),
+    std::make_pair(std::ref(m_white_bishop_with_contour), "bw_with_contour.png"),
     std::make_pair(std::ref(m_white_king), "kw.png"),
     std::make_pair(std::ref(m_white_king_portrait), "kw_portrait.png"),
+    std::make_pair(std::ref(m_white_king_with_contour), "kw_with_contour.png"),
     std::make_pair(std::ref(m_white_knight), "nw.png"),
     std::make_pair(std::ref(m_white_knight_portrait), "nw_portrait.png"),
+    std::make_pair(std::ref(m_white_knight_with_contour), "nw_with_contour.png"),
     std::make_pair(std::ref(m_white_pawn), "pw.png"),
     std::make_pair(std::ref(m_white_pawn_portrait), "pw_portrait.png"),
+    std::make_pair(std::ref(m_white_pawn_with_contour), "pw_with_contour.png"),
     std::make_pair(std::ref(m_white_queen), "qw.png"),
     std::make_pair(std::ref(m_white_queen_portrait), "qw_portrait.png"),
+    std::make_pair(std::ref(m_white_queen_with_contour), "qw_with_contour.png"),
     std::make_pair(std::ref(m_white_rook), "rw.png"),
-    std::make_pair(std::ref(m_light_black_square), "l_black.png"),
-    std::make_pair(std::ref(m_light_square), "l.png"),
-    std::make_pair(std::ref(m_light_white_square), "l_white.png"),
-    std::make_pair(std::ref(m_white_rook_portrait), "rw_portrait.png")
+    std::make_pair(std::ref(m_white_rook_portrait), "rw_portrait.png"),
+    std::make_pair(std::ref(m_white_rook_with_contour), "rw_with_contour.png")
   };
   for (const auto& p: v)
   {
@@ -105,20 +111,20 @@ sf::Texture& textures::get_piece(
     if (type == piece_type::knight) return m_black_knight_with_contour;
     if (type == piece_type::pawn) return m_black_pawn_with_contour;
     if (type == piece_type::queen) return m_black_queen_with_contour;
-    if (type == piece_type::rook) return m_black_rook_with_contour;
+    assert(type == piece_type::rook);
+    return m_black_rook_with_contour;
   }
   else
   {
-    if (type == piece_type::bishop) return m_white_bishop;
-    if (type == piece_type::king) return m_white_king;
-    if (type == piece_type::knight) return m_white_knight;
-    if (type == piece_type::pawn) return m_white_pawn;
-    if (type == piece_type::queen) return m_white_queen;
-    if (type == piece_type::rook) return m_white_rook;
+    assert(color == chess_color::white);
+    if (type == piece_type::bishop) return m_white_bishop_with_contour;
+    if (type == piece_type::king) return m_white_king_with_contour;
+    if (type == piece_type::knight) return m_white_knight_with_contour;
+    if (type == piece_type::pawn) return m_white_pawn_with_contour;
+    if (type == piece_type::queen) return m_white_queen_with_contour;
+    assert(type == piece_type::rook);
+    return m_white_rook_with_contour;
   }
-
-  assert(!"Should not get here");
-  return m_light_square;
 }
 
 sf::Texture& textures::get_piece_portrait(

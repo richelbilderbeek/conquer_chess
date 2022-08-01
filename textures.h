@@ -76,16 +76,22 @@ private:
   sf::Texture m_title;
   sf::Texture m_white_bishop;
   sf::Texture m_white_bishop_portrait;
+  sf::Texture m_white_bishop_with_contour;
   sf::Texture m_white_king;
   sf::Texture m_white_king_portrait;
+  sf::Texture m_white_king_with_contour;
   sf::Texture m_white_knight;
   sf::Texture m_white_knight_portrait;
+  sf::Texture m_white_knight_with_contour;
   sf::Texture m_white_pawn;
   sf::Texture m_white_pawn_portrait;
+  sf::Texture m_white_pawn_with_contour;
   sf::Texture m_white_queen;
   sf::Texture m_white_queen_portrait;
+  sf::Texture m_white_queen_with_contour;
   sf::Texture m_white_rook;
   sf::Texture m_white_rook_portrait;
+  sf::Texture m_white_rook_with_contour;
 };
 
 /// Get a picture of a black/dark square
