@@ -17,11 +17,12 @@ game_coordinat::game_coordinat(
 
 }
 
+
 double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexcept
 {
   const double dx{lhs.get_x() - rhs.get_x()};
   const double dy{lhs.get_y() - rhs.get_y()};
-  return std::sqrt((dx * dx) + (dy * dy));
+  return calc_distance(dx, dy);
 }
 
 double calc_length(const game_coordinat& coordinat) noexcept

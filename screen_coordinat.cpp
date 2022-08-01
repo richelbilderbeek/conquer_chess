@@ -1,5 +1,6 @@
 #include "screen_coordinat.h"
 
+#include "helper.h"
 #include <cassert>
 #include <iostream>
 
@@ -7,6 +8,26 @@ screen_coordinat::screen_coordinat(const int x, const int y)
   : m_x{x}, m_y{y}
 {
 
+}
+
+double calc_angle_degrees(const screen_coordinat& from, const screen_coordinat& to)
+{
+  return calc_angle_degrees(to - from);
+}
+
+double calc_angle_degrees(const screen_coordinat& delta)
+{
+  return calc_angle_degrees(
+    delta.get_x(),
+    delta.get_y()
+  );
+}
+
+
+double calc_distance(const screen_coordinat& a, const screen_coordinat& b) noexcept
+{
+  const auto delta{b - a};
+  return calc_distance(delta.get_x(), delta.get_y());
 }
 
 screen_coordinat get_default_screen_size() noexcept
@@ -48,6 +69,15 @@ screen_coordinat operator*(const screen_coordinat& lhs, const double& factor) no
   return screen_coordinat(
     static_cast<double>(lhs.get_x()) * factor,
     static_cast<double>(lhs.get_y()) * factor
+  );
+}
+
+screen_coordinat operator/(const screen_coordinat& lhs, const double& factor)
+{
+  assert(factor != 0.0);
+  return screen_coordinat(
+    static_cast<double>(lhs.get_x()) / factor,
+    static_cast<double>(lhs.get_y()) / factor
   );
 }
 

@@ -792,6 +792,41 @@ void show_unit_paths(game_view& view)
   for (const auto& piece: get_pieces(game))
   {
     if (is_idle(piece)) continue;
+    const auto& actions{piece.get_actions()};
+    for (const auto& action: actions)
+    {
+      const auto from_pixel{
+        convert_to_screen_coordinat(
+          to_coordinat(action.get_from()),
+          layout
+        )
+      };
+      const auto to_pixel{
+        convert_to_screen_coordinat(
+          to_coordinat(action.get_to()),
+          layout
+        )
+      };
+      const auto center_pixel{(to_pixel + from_pixel) / 2.0};
+      const double length{calc_distance(from_pixel, to_pixel)};
+      const double angle_degrees{calc_angle_degrees(center_pixel, to_pixel)};
+      sf::RectangleShape rect;
+      const double max_square_height{get_square_width(layout)};
+      const double height{std::max(2.0, max_square_height * 0.05)};
+      rect.setSize(sf::Vector2f(length, height));
+      rect.setOrigin(length / 2, height / 2);
+      rect.setPosition(
+        center_pixel.get_x(),
+        center_pixel.get_y()
+      );
+      rect.rotate(-angle_degrees);
+      rect.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
+      rect.setOutlineThickness(2);
+      rect.setFillColor(to_sfml_color(piece.get_color()));
+      view.get_window().draw(rect);
+    }
+
+
 
     // Collect all the coordinats for the path
     std::vector<screen_coordinat> coordinats;
@@ -802,7 +837,6 @@ void show_unit_paths(game_view& view)
         layout
       )
     );
-    const auto& actions{piece.get_actions()};
     std::transform(
       std::begin(actions),
       std::end(actions),
@@ -815,20 +849,25 @@ void show_unit_paths(game_view& view)
         );
       }
     );
-    // Draw lines between the subgoals
-    sf::VertexArray lines(sf::LineStrip, coordinats.size());
-    assert(coordinats.size() == actions.size() + 1);
-    const int n_coordinats{static_cast<int>(coordinats.size())};
-    for (int i = 0; i != n_coordinats; ++i)
+
+    if (1 == 2 && "I like those thin lines")
     {
-      assert(i < static_cast<int>(coordinats.size()));
-      lines[i].position = sf::Vector2f(
-        coordinats[i].get_x(),
-        coordinats[i].get_y()
-      );
-      lines[i].color = to_sfml_color(piece.get_color());
+      // Draw lines between the subgoals
+      sf::VertexArray lines(sf::LineStrip, coordinats.size());
+      assert(coordinats.size() == actions.size() + 1);
+      const int n_coordinats{static_cast<int>(coordinats.size())};
+      for (int i = 0; i != n_coordinats; ++i)
+      {
+        assert(i < static_cast<int>(coordinats.size()));
+        lines[i].position = sf::Vector2f(
+          coordinats[i].get_x(),
+          coordinats[i].get_y()
+        );
+        lines[i].color = to_sfml_color(piece.get_color());
+      }
+      view.get_window().draw(lines);
     }
-    view.get_window().draw(lines);
+
 
     // Draw circles at the subgoals
     sf::CircleShape circle;

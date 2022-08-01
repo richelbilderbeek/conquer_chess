@@ -27,9 +27,7 @@
 void test()
 {
 #ifndef NDEBUG
-  test_chess_move();
-  test_replay();
-  test_replayer();
+  test_helper();
 
   test_chess_color();
   test_chess_move();

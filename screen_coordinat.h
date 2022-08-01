@@ -19,6 +19,27 @@ private:
   int m_y;
 };
 
+/// Calculate the angle in degrees
+/// dx | dy | o'clock | degrees
+/// ---|----|---------|--------
+///  1 |  0 |       3 | 0
+///  0 |  1 |       6 | 270
+/// -1 |  0 |       9 | 180
+///  0 | -1 |      12 | 90
+double calc_angle_degrees(const screen_coordinat& from, const screen_coordinat& to);
+
+/// Calculate the angle in degrees
+/// dx | dy | o'clock | degrees
+/// ---|----|---------|--------
+///  1 |  0 |       3 | 0
+///  0 |  1 |       6 | 270
+/// -1 |  0 |       9 | 180
+///  0 | -1 |      12 | 90
+double calc_angle_degrees(const screen_coordinat& delta);
+
+/// Calculate the Euclidean distance
+double calc_distance(const screen_coordinat& a, const screen_coordinat& b) noexcept;
+
 /// Get the default main menu screen size, where x is the width and y is the height
 screen_coordinat get_default_main_menu_screen_size() noexcept;
 
@@ -33,6 +54,7 @@ bool operator==(const screen_coordinat& lhs, const screen_coordinat& rhs) noexce
 screen_coordinat operator+(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 screen_coordinat operator-(const screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 screen_coordinat operator*(const screen_coordinat& lhs, const double& factor) noexcept;
+screen_coordinat operator/(const screen_coordinat& lhs, const double& factor);
 
 screen_coordinat& operator+=(screen_coordinat& lhs, const screen_coordinat& rhs) noexcept;
 

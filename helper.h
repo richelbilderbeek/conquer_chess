@@ -6,6 +6,27 @@
 #include <string>
 #include <vector>
 
+/// Calculate the angle in degrees
+/// dx | dy | o'clock | degrees
+/// ---|----|---------|--------
+///  1 |  0 |       3 | 0
+///  0 |  1 |       6 | 270
+/// -1 |  0 |       9 | 180
+///  0 | -1 |      12 | 90
+double calc_angle_degrees(const double dx, const double dy);
+
+/// Calculate the angle in radians
+/// dx | dy | o'clock | radians
+/// ---|----|---------|---------
+///  1 |  0 |       3 | 0.0 * pi
+///  0 |  1 |       6 | 1.5 * pi
+/// -1 |  0 |       9 | 1.0 * pi
+///  0 | -1 |      12 | 0.5 * pi
+double calc_angle_radians(const double dx, const double dy);
+
+/// Calculate the Euclidean distance between two points
+double calc_distance(const double dx, const double dy) noexcept;
+
 template <class T> bool is_close(const T& lhs, const T& rhs, const T& max)
 {
   return std::abs(lhs - rhs) < max;
