@@ -143,8 +143,10 @@ void test_screen_coordinat()
     const screen_coordinat c_1(100, 200);
     const double f{1.2};
     const screen_coordinat c_2{c_1 / f};
-    assert(c_1.get_x() / f == c_2.get_x());
-    assert(c_1.get_y() / f == c_2.get_y());
+    const int expected_x{static_cast<int>(static_cast<double>(c_1.get_x()) / f)};
+    const int expected_y{static_cast<int>(static_cast<double>(c_1.get_y()) / f)};
+    assert(expected_x == c_2.get_x());
+    assert(expected_y == c_2.get_y());
   }
   // operator+=
   {
