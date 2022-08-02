@@ -20,6 +20,9 @@ void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect);
 /// Assumes the text already has a font
 void set_text_position(sf::Text& text, const screen_rect& screen_rect);
 
+/// Convert an SFML key to a string
+std::string to_str(const sf::Keyboard::Key k);
+
 sf::Color to_sfml_color(const chess_color color) noexcept;
 
 #endif // LOGIC_ONLY

@@ -13,11 +13,17 @@
 class controller
 {
 public:
-  controller(const controller_type type);
+  explicit controller(
+    const controller_type type,
+    const side player
+  );
 
 
   /// Key binding, only used when the type is a keyboard
   const auto& get_key_bindings() const noexcept { return m_key_bindings; }
+
+  /// Get the side this controller is on
+  side get_player() const noexcept { return m_player; }
 
   const auto& get_type() const noexcept { return m_type; }
 
@@ -32,6 +38,8 @@ private:
 
   /// Key binding, only used when the type is a keyboard
   key_bindings m_key_bindings;
+
+  side m_player;
 
   controller_type m_type;
 
@@ -56,6 +64,15 @@ private:
 /// Create an sf::Event with type sf::Event::KeyPressed
 sf::Event create_key_pressed_event(const sf::Keyboard::Key k);
 
+/// Get the text for action 1, 2, 3 or 4, e.g.
+/// 'Q\nSelect' for a keyboard player that has nothing selected
+/// 'E\nAttack' for a keyboard player that has a piece select
+/// 'LMB\nSelect' for a mouse player that has nothing selected'
+std::string get_text_for_action(
+  const controller& c,
+  const bool has_selected_units,
+  const int action_key_number
+) noexcept;
 
 /// Test this class and its free functions
 void test_controller();

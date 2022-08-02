@@ -37,38 +37,11 @@ CONFIG(debug, debug|release) {
 }
 
 # Qt5
-QT += core gui \
-  widgets
+QT += core gui widgets
 
-# GNU/Linux
-unix:!macx {
-  LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
-}
+LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-macx {
-  INCLUDEPATH += /Users/johti53/SFML/include
-  LIBS += -L/Users/johti53/SFML/lib \
-      -lsfml-system \
-      -lsfml-window \
-      -lsfml-graphics \
-      -lsfml-audio \
-      -lsfml-network
-}
-
-win32{
-  INCLUDEPATH += C:/Qt/sfml/include
-  INCLUDEPATH += D:/Qt/sfml/include
-  INCLUDEPATH += C:/DEV/SFML-2.5.1/include
-  LIBS += -LC:/Qt/sfml/lib
-  LIBS += -LD:/Qt/sfml/lib
-  LIBS += -LC:/DEV/SFML-2.5.1/lib
-  CONFIG(debug, debug|release) {
-    LIBS += -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
-  }
-  CONFIG(release, debug|release) {
-    LIBS += -lsfml-audio-d -lsfml-graphics-d -lsfml-window-d -lsfml-system-d
-  }
-  LIBS += -lopengl32
-  LIBS += -lgdi32
-  LIBS += -lwinmm
-}
+#INCLUDEPATH += ../magic_enum
+#INCLUDEPATH += ../Thor/include
+#INCLUDEPATH += ../Aurora/include
+#LIBS += -L../Thor/build/src -lthor

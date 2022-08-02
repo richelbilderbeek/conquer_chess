@@ -3,6 +3,7 @@
 #ifndef LOGIC_ONLY
 
 #include "controller.h"
+#include "controllers.h"
 #include "control_action_type.h"
 #include "game.h"
 #include "game_resources.h"
@@ -22,7 +23,7 @@
 #include <sstream>
 
 game_view::game_view(const game& game)
-  : m_controllers{controller(controller_type::keyboard), controller(controller_type::mouse) },
+  : m_controllers{get_default_controllers()},
     m_game{game},
     m_log{game.get_options().get_message_display_time_secs()}
 {
@@ -111,46 +112,30 @@ void game_view::exec()
   }
 }
 
+const auto& game_view::get_controller(const side player) const noexcept
+{
+  if (player == side::lhs)
+  {
+    assert(m_controllers.size() >= 1);
+    assert(m_controllers[0].get_player() == player);
+    return m_controllers[0];
+  }
+  assert(player == side::rhs);
+  assert(m_controllers.size() >= 2);
+  assert(m_controllers[1].get_player() == player);
+  return m_controllers[1];
+}
+
 std::string get_controls_text(
   const game_view& view,
-  const chess_color player,
-  const controller_type controller,
+  const chess_color /* player */,
+  const controller& c,
   const int key
 )
 {
   assert(key >= 1); // Human based counting
   assert(key <= 4); // Human based counting
-  const auto& selected_units = get_selected_pieces(view.get_game(), player);
-  std::stringstream s;
-  if (controller == controller_type::keyboard)
-  {
-    if (selected_units.empty()) return "Spacebar\nSelect";
-    switch (key)
-    {
-      case 1: return "M\nMove";
-      case 2: return "A\nAttack";
-      case 3: return ".";
-      case 4:
-        default:
-        assert(key == 4);
-        return ".";
-    }
-  }
-  else
-  {
-    assert(controller == controller_type::mouse);
-    if (selected_units.empty()) return "LMB\nSelect";
-    switch (key)
-    {
-      case 1: return "Move";
-      case 2: return "Attack";
-      case 3: return ".";
-      case 4:
-        default:
-        assert(key == 4);
-        return ".";
-    }
-  }
+  return get_text_for_action(view, c, key);
 }
 
 double game_view::get_elapsed_time_secs() const noexcept
@@ -197,6 +182,29 @@ void game_view::play_pieces_sound_effects()
   }
 }
 
+chess_color get_player_color(
+  const game_view& v,
+  const side player
+) noexcept
+{
+  return get_player_color(v.get_game(), player);
+}
+
+std::string get_text_for_action(
+  const game_view& view,
+  const controller& c,
+  const int key
+)
+{
+  const chess_color player{
+    get_player_color(view, c.get_player())
+  };
+  const bool has_selected_units{
+    !get_selected_pieces(view.get_game(), player).empty()
+  };
+  return get_text_for_action(c, has_selected_units, key);
+}
+
 const delta_t& get_time(const game_view& v) noexcept
 {
   return get_time(v.get_game());
@@ -238,8 +246,10 @@ bool game_view::process_events()
     }
     for (const auto& controller: m_controllers)
     {
-       const auto actions{controller.process_input(event, m_game)};
-       for (const auto a: actions) m_game.add_action(a);
+       for (const auto a: controller.process_input(event, m_game))
+       {
+         m_game.add_action(a);
+       }
     }
   }
   return false; // if no events proceed with tick
@@ -325,7 +335,7 @@ void show_controls(game_view& view, const side player)
       get_controls_text(
         view,
         get_player_color(view.get_game(), player),
-        get_player_controller(get_options(view), player),
+        view.get_controller(player),
         key
       )
     };

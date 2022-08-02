@@ -19,6 +19,9 @@ class game_view
 public:
   explicit game_view(const game& game = get_default_game());
 
+  /// Get the controller for a player
+  const auto& get_controller(const side player) const noexcept;
+
   /// Run the game, until the user quits
   void exec();
 
@@ -94,7 +97,7 @@ bool do_show_selected(const game_view& view);
 std::string get_controls_text(
   const game_view& view,
   const chess_color player,
-  const controller_type controller,
+  const controller& c,
   const int key
 );
 
@@ -115,6 +118,22 @@ const game_options& get_options(const game_view& v) noexcept;
 
 /// Get the pieces
 const std::vector<piece>& get_pieces(const game_view& v) noexcept;
+
+/// Get the color of the player
+chess_color get_player_color(
+  const game_view& v,
+  const side player
+) noexcept;
+
+/// Get the text for an action, e.g.
+/// 'Q\nSelect' for a keyboard player that has nothing selected
+/// 'E\nAttack' for a keyboard player that has a piece select
+/// 'LMB\nSelect' for a mouse player that has nothing selected'
+std::string get_text_for_action(
+  const game_view& view,
+  const controller& c,
+  const int key
+);
 
 /// Get the time in the game
 const delta_t& get_time(const game_view& v) noexcept;
