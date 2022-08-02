@@ -5,6 +5,7 @@
 class chess_move;
 class control_actions;
 class control_action;
+class controller;
 class delta_t;
 class game_coordinat;
 class game;
@@ -14,6 +15,7 @@ class game_resources;
 class game_view;
 class game_view_layout;
 class id;
+class key_bindings;
 class layout;
 class menu_view;
 class menu_view_layout;

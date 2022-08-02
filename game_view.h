@@ -4,6 +4,7 @@
 #ifndef LOGIC_ONLY
 
 #include "ccfwd.h"
+#include "controller.h"
 #include "game.h"
 #include "fps_clock.h"
 #include "game_log.h"
@@ -41,6 +42,9 @@ private:
 
   /// The game clock, to measure the elapsed time
   sf::Clock m_clock;
+
+  /// The controllers, e.g. a keyboard and a mouse player
+  std::vector<controller> m_controllers;
 
   /// The FPS clock
   fps_clock m_fps_clock;
