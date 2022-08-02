@@ -57,14 +57,24 @@ private:
   void show();
 };
 
+void draw_panel(
+  controls_view& v,
+  const screen_rect& panel_position,
+  const std::string panel_text,
+  const chess_color color
+);
+
+
 std::string get_key_str_for_action_1(const controls_view& v);
 std::string get_key_str_for_action_2(const controls_view& v);
 std::string get_key_str_for_action_3(const controls_view& v);
 std::string get_key_str_for_action_4(const controls_view& v);
+std::string get_key_str_for_do(const controls_view& v);
 std::string get_key_str_for_move_down(const controls_view& v);
 std::string get_key_str_for_move_left(const controls_view& v);
 std::string get_key_str_for_move_right(const controls_view& v);
 std::string get_key_str_for_move_up(const controls_view& v);
+std::string get_key_str_for_next(const controls_view& v);
 
 void show_keyboard_panel(controls_view& v);
 

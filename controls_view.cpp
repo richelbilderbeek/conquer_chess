@@ -18,6 +18,27 @@ controls_view::controls_view(controller c)
 
 }
 
+void draw_panel(
+  controls_view& v,
+  const screen_rect& panel_position,
+  const std::string panel_text,
+  const chess_color color
+)
+{
+  sf::RectangleShape rectangle;
+  set_rect(rectangle, panel_position);
+  rectangle.setTexture(
+    &get_strip(v.get_resources(), color)
+  );
+  v.get_window().draw(rectangle);
+
+  sf::Text text;
+  v.set_text_style(text);
+  text.setString(panel_text);
+  set_text_position(text, panel_position);
+  v.get_window().draw(text);
+}
+
 void controls_view::exec()
 {
   // Open window
@@ -70,10 +91,16 @@ std::string get_key_str_for_action_4(const controls_view& v)
   return to_str(v.get_controller().get_key_bindings().get_key_for_action(4));
 }
 
+std::string get_key_str_for_do(const controls_view& /* v */)
+{
+  return "LMB";
+}
+
 std::string get_key_str_for_move_down(const controls_view& v)
 {
   return to_str(v.get_controller().get_key_bindings().get_key_for_move_down());
 }
+
 std::string get_key_str_for_move_left(const controls_view& v)
 {
   return to_str(v.get_controller().get_key_bindings().get_key_for_move_left());
@@ -85,6 +112,11 @@ std::string get_key_str_for_move_right(const controls_view& v)
 std::string get_key_str_for_move_up(const controls_view& v)
 {
   return to_str(v.get_controller().get_key_bindings().get_key_for_move_up());
+}
+
+std::string get_key_str_for_next(const controls_view& /* v */)
+{
+  return "RMB";
 }
 
 bool controls_view::process_events()
@@ -198,7 +230,7 @@ void controls_view::show()
 
   show_type_panel(*this);
   show_keyboard_panel(*this);
-  //show_mouse_panel(*this);
+  show_mouse_panel(*this);
   show_selected_panel(*this);
 
   // Display all shapes
@@ -223,20 +255,7 @@ void show_keyboard_panel(controls_view& v)
   chess_color color{chess_color::black};
   for (const auto& p: labels)
   {
-    const auto& screen_rect = p.first;
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), color)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString(p.second);
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-
+    draw_panel(v, p.first, p.second, color);
     color = get_other_color(color);
   }
 
@@ -254,25 +273,38 @@ void show_keyboard_panel(controls_view& v)
   color = get_other_color(color);
   for (const auto& p: values)
   {
-    const auto& screen_rect = p.first;
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), color)
-    );
-    v.get_window().draw(rectangle);
+    draw_panel(v, p.first, p.second, color);
+    color = get_other_color(color);
+  }
+}
 
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString(p.second);
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-
+void show_mouse_panel(controls_view& v)
+{
+  const auto& layout = v.get_layout();
+  std::vector<std::pair<screen_rect, std::string>> labels =
+  {
+    std::make_pair(layout.get_do_label(), "do"),
+    std::make_pair(layout.get_next_label(), "next")
+  };
+  chess_color color{chess_color::black};
+  for (const auto& p: labels)
+  {
+    draw_panel(v, p.first, p.second, color);
     color = get_other_color(color);
   }
 
+  std::vector<std::pair<screen_rect, std::string>> values =
+  {
+    std::make_pair(layout.get_do_value(), get_key_str_for_do(v)),
+    std::make_pair(layout.get_next_value(), get_key_str_for_next(v)),
+  };
+  color = get_other_color(color);
+  for (const auto& p: values)
+  {
+    draw_panel(v, p.first, p.second, color);
+    color = get_other_color(color);
+  }
 }
-
 
 void show_panels(controls_view& v)
 {
@@ -306,40 +338,18 @@ void show_selected_panel(controls_view& v)
 
 void show_type_panel(controls_view& v)
 {
-  const auto& layout = v.get_layout();
-  // game speed label
-  {
-    const auto& screen_rect = layout.get_controller_type_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Controller");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  // game speed value
-  {
-    const auto& screen_rect = layout.get_controller_type_value();
-    sf::RectangleShape rectangle;
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    set_rect(rectangle, screen_rect);
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-
-    text.setString(to_str(v.get_controller().get_type()));
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
+  draw_panel(
+    v,
+    v.get_layout().get_controller_type_label(),
+    "Controller",
+    chess_color::white
+  );
+  draw_panel(
+    v,
+    v.get_layout().get_controller_type_value(),
+    to_str(v.get_controller().get_type()),
+    chess_color::black
+  );
 }
 
 #endif // LOGIC_ONLY
