@@ -26,6 +26,23 @@ public:
 private:
 
   controller_type m_type;
+
+  /// Process a key press from a keyboard
+  std::vector<control_action> process_key_press(
+    const sf::Event& event
+  ) const;
+
+  /// Process the input from a mouse button press
+  std::vector<control_action> process_mouse_pressed(
+    const sf::Event& event,
+    const game& g
+  ) const;
+
+  /// Process the input from a mouse movement
+  std::vector<control_action> process_mouse_moved(
+    const sf::Event& event,
+    const game& g
+  ) const;
 };
 
 /// Test this class and its free functions

@@ -15,123 +15,119 @@ std::vector<control_action> controller::process_input(
   const game& g
 ) const
 {
-  // Must be handled someplace else
-  if (event.type == sf::Event::Resized)
+  if (m_type == controller_type::keyboard)
   {
-    assert(!"Should be handled by game_view");
-    return {};
-  }
-  if (event.type == sf::Event::Closed)
-  {
-    assert(!"Should be handled by game_view");
-    return {};
-  }
-  /*
-
-    else if (event.type == sf::Event::KeyPressed)
+    if (event.type == sf::Event::KeyPressed)
     {
-      sf::Keyboard::Key key_pressed = event.key.code;
-      if (key_pressed == sf::Keyboard::Key::Escape)
-      {
-        m_window.close();
-        return true;
-      }
-      else if (key_pressed == sf::Keyboard::Key::Up)
-      {
-        m_game.add_action(create_press_up_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::Right)
-      {
-        m_game.add_action(create_press_right_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::Down)
-      {
-        m_game.add_action(create_press_down_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::Left)
-      {
-        m_game.add_action(create_press_left_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::Space)
-      {
-        m_game.add_action(create_press_select_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::M)
-      {
-        m_game.add_action(create_press_move_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::A)
-      {
-        m_game.add_action(create_press_attack_action());
-      }
-      else if (key_pressed == sf::Keyboard::Key::F3)
-      {
-        // debug
-        std::clog << "Debug";
-      }
+      return process_key_press(event);
     }
+  }
+  else
+  {
+    assert(m_type == controller_type::mouse);
     if (event.type == sf::Event::MouseMoved)
     {
-      const auto mouse_screen_pos{
-        screen_coordinat(event.mouseMove.x, event.mouseMove.y)
-      };
-      const auto mouse_game_pos{
+      return process_mouse_moved(event, g);
+    }
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+      return process_mouse_pressed(event, g);
+    }
+  }
+  // Ignore the rest
+  return {};
+}
+
+std::vector<control_action> controller::process_key_press(
+  const sf::Event& event
+) const
+{
+  assert(event.type == sf::Event::KeyPressed);
+
+  sf::Keyboard::Key key_pressed = event.key.code;
+  if (key_pressed == sf::Keyboard::Key::Escape)
+  {
+    // There is no 'quit' action, this must be handled by 'game_view'
+    return {};
+  }
+  else if (key_pressed == sf::Keyboard::Key::Up)
+  {
+    return { create_press_up_action() };
+  }
+  else if (key_pressed == sf::Keyboard::Key::Right)
+  {
+    return { create_press_right_action() };
+  }
+  else if (key_pressed == sf::Keyboard::Key::Down)
+  {
+    return { create_press_down_action() };
+  }
+  else if (key_pressed == sf::Keyboard::Key::Left)
+  {
+    return { create_press_left_action() };
+  }
+  else if (key_pressed == sf::Keyboard::Key::Space)
+  {
+    return { create_press_select_action() };
+  }
+  else if (key_pressed == sf::Keyboard::Key::M)
+  {
+    return { create_press_move_action() };
+  }
+  else if (key_pressed == sf::Keyboard::Key::A)
+  {
+    return { create_press_attack_action() };
+  }
+  return {};
+}
+
+std::vector<control_action> controller::process_mouse_pressed(
+  const sf::Event& event,
+  const game& g
+) const
+{
+  assert(event.type == sf::Event::MouseButtonPressed);
+  const auto mouse_screen_pos{
+    screen_coordinat(event.mouseButton.x, event.mouseButton.y)
+  };
+  if (event.mouseButton.button == sf::Mouse::Left)
+  {
+    return {
+      create_press_lmb_action(
         convert_to_game_coordinat(
           mouse_screen_pos,
-          m_game.get_layout()
+          g.get_layout()
         )
-      };
-      m_game.add_action(create_mouse_move_action(mouse_game_pos));
-    }
-    else if (event.type == sf::Event::MouseButtonPressed)
-    {
-      const auto mouse_screen_pos{
-        screen_coordinat(event.mouseButton.x, event.mouseButton.y)
-      };
-      if (event.mouseButton.button == sf::Mouse::Left)
-      {
-        m_game.add_action(
-          create_press_lmb_action(
-            convert_to_game_coordinat(
-              mouse_screen_pos,
-              m_game.get_layout()
-            )
-          )
-        );
-      }
-      else if (event.mouseButton.button == sf::Mouse::Right)
-      {
-        m_game.add_action(
-          create_press_rmb_action(
-            convert_to_game_coordinat(
-              mouse_screen_pos,
-              m_game.get_layout()
-            )
-          )
-        );
-      }
-    }
-    else if (event.type == sf::Event::KeyReleased)
-    {
-      // Maybe a player input?
-      // Nothing yet
-    }
-
-  */
-  if (event.type == sf::Event::MouseMoved)
-  {
-    const auto mouse_screen_pos{
-      screen_coordinat(event.mouseMove.x, event.mouseMove.y)
+      )
     };
-    const auto mouse_game_pos{
+  }
+  assert(event.mouseButton.button == sf::Mouse::Right);
+  return {
+    create_press_rmb_action(
       convert_to_game_coordinat(
         mouse_screen_pos,
         g.get_layout()
       )
-    };
-    return { create_mouse_move_action(mouse_game_pos) };
-  }
-  return {};
+    )
+  };
+}
+
+std::vector<control_action> controller::process_mouse_moved(
+  const sf::Event& event,
+  const game& g
+) const
+{
+  assert(event.type == sf::Event::MouseMoved);
+  const auto mouse_screen_pos{
+    screen_coordinat(event.mouseMove.x, event.mouseMove.y)
+  };
+  const auto mouse_game_pos{
+    convert_to_game_coordinat(
+      mouse_screen_pos,
+      g.get_layout()
+    )
+  };
+  return { create_mouse_move_action(mouse_game_pos) };
 }
 
 void test_controller()
