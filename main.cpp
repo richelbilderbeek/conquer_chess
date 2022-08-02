@@ -1,6 +1,7 @@
 /// Use LOGIC_ONLY to be able to run on GHA
 
 #include "chess_move.h"
+#include "controls_view.h"
 #include "controller.h"
 #include "fps_clock.h"
 #include "game.h"
@@ -97,7 +98,7 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   else
   {
     #ifndef LOGIC_ONLY
-    game_view v;
+    controls_view v;
     v.exec();
     #endif // LOGIC_ONLY
   }

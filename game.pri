@@ -10,6 +10,8 @@ HEADERS += \
     $$PWD/controller.h \
     $$PWD/controller_type.h \
     $$PWD/controllers.h \
+    $$PWD/controls_view_item.h \
+    $$PWD/controls_view_layout.h \
     $$PWD/delta_t.h \
     $$PWD/fps_clock.h \
     $$PWD/game.h \
@@ -58,6 +60,8 @@ SOURCES += \
     $$PWD/controller.cpp \
     $$PWD/controller_type.cpp \
     $$PWD/controllers.cpp \
+    $$PWD/controls_view_item.cpp \
+    $$PWD/controls_view_layout.cpp \
     $$PWD/delta_t.cpp \
     $$PWD/fps_clock.cpp \
     $$PWD/game.cpp \
