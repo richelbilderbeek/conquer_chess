@@ -10,6 +10,14 @@ controller::controller(const controller_type type)
 
 }
 
+sf::Event create_key_pressed_event(const sf::Keyboard::Key k)
+{
+  sf::Event e;
+  e.type = sf::Event::KeyPressed;
+  e.key.code = k;
+  return e;
+}
+
 std::vector<control_action> controller::process_input(
   const sf::Event& event,
   const game& g
@@ -45,38 +53,37 @@ std::vector<control_action> controller::process_key_press(
   assert(event.type == sf::Event::KeyPressed);
 
   sf::Keyboard::Key key_pressed = event.key.code;
-  if (key_pressed == sf::Keyboard::Key::Escape)
-  {
-    // There is no 'quit' action, this must be handled by 'game_view'
-    return {};
-  }
-  else if (key_pressed == sf::Keyboard::Key::Up)
+  if (key_pressed == m_key_bindings.get_key_for_move_up())
   {
     return { create_press_up_action() };
   }
-  else if (key_pressed == sf::Keyboard::Key::Right)
+  else if (key_pressed == m_key_bindings.get_key_for_move_right())
   {
     return { create_press_right_action() };
   }
-  else if (key_pressed == sf::Keyboard::Key::Down)
+  else if (key_pressed == m_key_bindings.get_key_for_move_down())
   {
     return { create_press_down_action() };
   }
-  else if (key_pressed == sf::Keyboard::Key::Left)
+  else if (key_pressed == m_key_bindings.get_key_for_move_left())
   {
     return { create_press_left_action() };
   }
-  else if (key_pressed == sf::Keyboard::Key::Space)
+  else if (key_pressed == m_key_bindings.get_key_for_action(1))
   {
     return { create_press_select_action() };
   }
-  else if (key_pressed == sf::Keyboard::Key::M)
+  else if (key_pressed == m_key_bindings.get_key_for_action(2))
   {
     return { create_press_move_action() };
   }
-  else if (key_pressed == sf::Keyboard::Key::A)
+  else if (key_pressed == m_key_bindings.get_key_for_action(3))
   {
     return { create_press_attack_action() };
+  }
+  else if (key_pressed == m_key_bindings.get_key_for_action(4))
+  {
+    // Nothing yet
   }
   return {};
 }
@@ -137,8 +144,118 @@ void test_controller()
   {
     const controller c(controller_type::mouse);
     assert(c.get_type() == controller_type::mouse);
+    const controller d(controller_type::keyboard);
+    assert(d.get_type() == controller_type::keyboard);
   }
-  //
+  // press up does nothing with a mouse
+  {
+    const game g;
+    const controller c(controller_type::mouse);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_move_up()
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(actions.empty());
+  }
+  // press up works with a keyboard
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_move_up()
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(!actions.empty());
+  }
+  // press right works with a keyboard
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_move_right()
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(!actions.empty());
+  }
+  // press down works with a keyboard
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_move_down()
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(!actions.empty());
+  }
+  // press left works with a keyboard
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_move_left()
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(!actions.empty());
+  }
+  // press action 1 works with a keyboard
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_action(1)
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(!actions.empty());
+  }
+  // press action 2 works with a keyboard
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_action(2)
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(!actions.empty());
+  }
+  // press action 3 works with a keyboard
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_action(3)
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(!actions.empty());
+  }
+  // press action 4 does nothing yet
+  {
+    const game g;
+    const controller c(controller_type::keyboard);
+    const auto event{
+      create_key_pressed_event(
+        c.get_key_bindings().get_key_for_action(4)
+      )
+    };
+    const auto actions{c.process_input(event, g)};
+    assert(actions.empty());
+  }
+
   {
     const game g;
     const controller c(controller_type::mouse);
@@ -147,7 +264,5 @@ void test_controller()
     assert(c.get_type() == controller_type::mouse);
     assert(c.process_input(e, g).empty());
   }
-
-
 #endif
 }

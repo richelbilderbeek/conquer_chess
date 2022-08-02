@@ -1,6 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
+#include "key_bindings.h"
 #include "control_action.h"
 #include "controller_type.h"
 
@@ -14,6 +15,10 @@ class controller
 public:
   controller(const controller_type type);
 
+
+  /// Key binding, only used when the type is a keyboard
+  const auto& get_key_bindings() const noexcept { return m_key_bindings; }
+
   const auto& get_type() const noexcept { return m_type; }
 
   /// Process the input for this controller.
@@ -24,6 +29,9 @@ public:
  ) const;
 
 private:
+
+  /// Key binding, only used when the type is a keyboard
+  key_bindings m_key_bindings;
 
   controller_type m_type;
 
@@ -44,6 +52,10 @@ private:
     const game& g
   ) const;
 };
+
+/// Create an sf::Event with type sf::Event::KeyPressed
+sf::Event create_key_pressed_event(const sf::Keyboard::Key k);
+
 
 /// Test this class and its free functions
 void test_controller();

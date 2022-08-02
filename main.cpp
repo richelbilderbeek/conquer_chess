@@ -1,23 +1,25 @@
 /// Use LOGIC_ONLY to be able to run on GHA
 
+#include "chess_move.h"
 #include "controller.h"
+#include "fps_clock.h"
 #include "game.h"
+#include "game_log.h"
 #include "game_rect.h"
 #include "game_resources.h"
 #include "game_view.h"
 #include "game_view_layout.h"
 #include "helper.h"
 #include "id.h"
-#include "fps_clock.h"
-#include "game_log.h"
+#include "key_bindings.h"
 #include "menu_view.h"
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
-#include "chess_move.h"
 #include "options_view_layout.h"
 #include "replay.h"
 #include "screen_coordinat.h"
 #include "test_game.h"
+
 #include <SFML/Graphics.hpp>
 
 #include <cassert>
@@ -28,7 +30,6 @@
 void test()
 {
 #ifndef NDEBUG
-  test_helper();
 
   test_chess_color();
   test_chess_move();
@@ -46,6 +47,7 @@ void test()
   test_game_view_layout();
   test_helper();
   test_id();
+  test_key_bindings();
   test_log();
   test_menu_view_item();
   test_menu_view_layout();
