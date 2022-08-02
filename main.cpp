@@ -1,5 +1,6 @@
 /// Use LOGIC_ONLY to be able to run on GHA
 
+#include "controller.h"
 #include "game.h"
 #include "game_rect.h"
 #include "game_resources.h"
@@ -33,6 +34,7 @@ void test()
   test_chess_move();
   test_control_action();
   test_control_actions();
+  test_controller();
   test_controller_type();
   test_delta_t();
   test_fps_clock();

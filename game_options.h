@@ -24,7 +24,7 @@ public:
   );
 
   /// Show the squares that are actually occupied by the piecs?
-  auto do_show_occupied() const noexcept { return true; }
+  auto do_show_occupied() const noexcept { return false; }
 
   /// Are selected units highlighted?
   auto do_show_selected() const noexcept { return false; }
@@ -67,7 +67,7 @@ public:
   const auto& get_music_volume() const noexcept { return m_music_volume; }
 
   /// Get the sound effects volume
-  volume get_sound_effects_volume() const noexcept { return volume(0.0); }
+  volume get_sound_effects_volume() const noexcept { return volume(50.0); }
 
   /// Set the game speed
   void set_game_speed(const game_speed speed) noexcept { m_game_speed = speed; }
