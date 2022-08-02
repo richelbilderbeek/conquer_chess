@@ -7,48 +7,36 @@
 
 #include <vector>
 
-/// The layout of the menu view
-///   x          x
-///   1          2
+/// The layout of the options view
 ///
-/// +--------------+
-/// |              |
-/// | +----------+ | y1
-/// | |          | |
-/// | | title    | |
-/// | |          | |
-/// | +----------+ | y2
-/// |              |
-/// | +----------+ | y3
-/// | | subtitle | |
-/// | +----------+ | y4
-/// |              |
-/// | +----------+ |
-/// | | empty    | |
-/// | +----------+ |
-/// |              |
-/// | +----------+ | y5
-/// | | start    | |
-/// | +----------+ | y6
-/// |              |
-/// | +----------+ | y7
-/// | | options  | |
-/// | +----------+ | y8
-/// |              |
-/// | +----------+ | y9
-/// | | about    | |
-/// | +----------+ | y10
-/// |              |
-/// | +----------+ | y11
-/// | | quit     | |
-/// | +----------+ | y12
-/// |              |
-/// +--------------+
+///   x       x        x     x       x        x
+///   1       2        3     4       5        6
 ///
-///   ^          ^
-///   |          |
-///   +----------+
-///    panel_width
+/// +-------------------------------------------+
+/// |                                           |
+/// | +-------+--------+     +................+ | y1
+/// | | type  | keybrd |     .       .        . |
+/// | +-------+--------+     +................+ | y2
+/// |                                           |
+/// | +-------+--------+     +-------+--------+ | y3
+/// | | up    | W      |     | do    | LMB    | |
+/// | +-------+--------+     +-------+--------+ | y4
+/// | | right | D      |     | next  | RMS    | |
+/// | +-------+--------+     +-------+--------+ | y5
+/// | | down  | S      |                        |
+/// | +-------+--------+                        | y6
+/// | | left  | A      |                        |
+/// | +-------+--------+                        | y7
+/// | | 1     | Q      |                        |
+/// | +-------+--------+                        | y8
+/// | | 2     | E      |                        |
+/// | +-------+--------+                        | y9
+/// | | 3     | Z      |                        |
+/// | +-------+--------+                        | y10
+/// | | 4     | C      |                        |
+/// | +-------+--------+                        | y11
+/// |                                           |
+/// +-------------------------------------------+
 ///
 class controls_view_layout
 {
@@ -61,23 +49,55 @@ public:
   /// Get a screen rect
   const screen_rect& get_selectable_rect(const controls_view_item item) const noexcept;
 
-  const auto& get_title() const noexcept { return m_title; }
-  const auto& get_subtitle() const noexcept { return m_subtitle; }
-  const auto& get_start() const noexcept { return m_start; }
-  const auto& get_about() const noexcept { return m_about; }
-  const auto& get_options() const noexcept { return m_options; }
-  const auto& get_quit() const noexcept { return m_quit; }
-
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
+
+  const screen_rect& get_action_1_label() const noexcept { return m_action_1_label; }
+  const screen_rect& get_action_1_value() const noexcept { return m_action_1_value; }
+  const screen_rect& get_action_2_label() const noexcept { return m_action_2_label; }
+  const screen_rect& get_action_2_value() const noexcept { return m_action_2_value; }
+  const screen_rect& get_action_3_label() const noexcept { return m_action_3_label; }
+  const screen_rect& get_action_3_value() const noexcept { return m_action_3_value; }
+  const screen_rect& get_action_4_label() const noexcept { return m_action_4_label; }
+  const screen_rect& get_action_4_value() const noexcept { return m_action_4_value; }
+  const screen_rect& get_controller_type_label() const noexcept { return m_controller_type_label; }
+  const screen_rect& get_controller_type_value() const noexcept { return m_controller_type_value; }
+  const screen_rect& get_do_label() const noexcept { return m_do_label; }
+  const screen_rect& get_do_value() const noexcept { return m_do_value; }
+  const screen_rect& get_down_label() const noexcept { return m_down_label; }
+  const screen_rect& get_down_value() const noexcept { return m_down_value; }
+  const screen_rect& get_left_label() const noexcept { return m_left_label; }
+  const screen_rect& get_left_value() const noexcept { return m_left_value; }
+  const screen_rect& get_next_label() const noexcept { return m_next_label; }
+  const screen_rect& get_next_value() const noexcept { return m_next_value; }
+  const screen_rect& get_right_label() const noexcept { return m_right_label; }
+  const screen_rect& get_right_value() const noexcept { return m_right_value; }
+  const screen_rect& get_up_label() const noexcept { return m_up_label; }
+  const screen_rect& get_up_value() const noexcept { return m_up_value; }
 
 private:
 
-  screen_rect m_title;
-  screen_rect m_subtitle;
-  screen_rect m_start;
-  screen_rect m_options;
-  screen_rect m_about;
-  screen_rect m_quit;
+  screen_rect m_action_1_label;
+  screen_rect m_action_1_value;
+  screen_rect m_action_2_label;
+  screen_rect m_action_2_value;
+  screen_rect m_action_3_label;
+  screen_rect m_action_3_value;
+  screen_rect m_action_4_label;
+  screen_rect m_action_4_value;
+  screen_rect m_controller_type_label;
+  screen_rect m_controller_type_value;
+  screen_rect m_do_label;
+  screen_rect m_do_value;
+  screen_rect m_down_label;
+  screen_rect m_down_value;
+  screen_rect m_left_label;
+  screen_rect m_left_value;
+  screen_rect m_next_label;
+  screen_rect m_next_value;
+  screen_rect m_right_label;
+  screen_rect m_right_value;
+  screen_rect m_up_label;
+  screen_rect m_up_value;
 
   /// The size of the window
   screen_coordinat m_window_size;

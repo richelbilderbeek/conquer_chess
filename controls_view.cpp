@@ -13,7 +13,7 @@
 
 controls_view::controls_view(controller c)
   : m_controller(c),
-    m_selected{controls_view_item::start}
+    m_selected{controls_view_item::type}
 {
 
 }

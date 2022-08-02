@@ -1,23 +1,46 @@
 #include "controls_view_item.h"
 
+#include <algorithm>
 #include <cassert>
 
-controls_view_item get_next(const controls_view_item there)
+#include "../magic_enum/include/magic_enum.hpp"
+
+std::vector<controls_view_item> get_all_controls_view_items() noexcept
 {
-  if (there == controls_view_item::start) return controls_view_item::options;
-  if (there == controls_view_item::options) return controls_view_item::about;
-  if (there == controls_view_item::about) return controls_view_item::quit;
-  assert(there == controls_view_item::quit);
-  return controls_view_item::start;
+  const auto a{magic_enum::enum_values<controls_view_item>()};
+  std::vector<controls_view_item> v;
+  v.reserve(a.size());
+  std::copy(std::begin(a), std::end(a), std::back_inserter(v));
+  assert(a.size() == v.size());
+  return v;
 }
 
-controls_view_item get_previous(const controls_view_item& there)
+controls_view_item get_next(const controls_view_item item) noexcept
 {
-  if (there == controls_view_item::start) return controls_view_item::quit;
-  if (there == controls_view_item::options) return controls_view_item::start;
-  if (there == controls_view_item::about) return controls_view_item::options;
-  assert(there == controls_view_item::quit);
-  return controls_view_item::about;
+  const auto v{get_all_controls_view_items()};
+  auto there{std::find(std::begin(v), std::end(v), item)};
+  assert(there != std::end(v));
+  if (there == std::end(v) - 1)
+  {
+    assert(!v.empty());
+    const auto t{v.front()};
+    return t;
+  }
+  return *(++there);
+}
+
+controls_view_item get_previous(const controls_view_item item) noexcept
+{
+  const auto v{get_all_controls_view_items()};
+  auto there{std::find(std::begin(v), std::end(v), item)};
+  assert(there != std::end(v));
+  if (there == std::begin(v))
+  {
+    assert(!v.empty());
+    const auto t{v.back()};
+    return t;
+  }
+  return *(--there);
 }
 
 void test_controls_view_item()
@@ -25,17 +48,26 @@ void test_controls_view_item()
   #ifndef NDEBUG
   // Get next
   {
-    assert(get_next(controls_view_item::start) == controls_view_item::options);
-    assert(get_next(controls_view_item::options) == controls_view_item::about);
-    assert(get_next(controls_view_item::about) == controls_view_item::quit);
-    assert(get_next(controls_view_item::quit) == controls_view_item::start);
+    for (const auto i: get_all_controls_view_items())
+    {
+      assert(get_next(i) != i);
+    }
   }
   // Get previous
   {
-    assert(get_previous(controls_view_item::start) == controls_view_item::quit);
-    assert(get_previous(controls_view_item::options) == controls_view_item::start);
-    assert(get_previous(controls_view_item::about) == controls_view_item::options);
-    assert(get_previous(controls_view_item::quit) == controls_view_item::about);
+    for (const auto i: get_all_controls_view_items())
+    {
+      assert(get_previous(i) != i);
+      assert(get_previous(i) != get_next(i));
+    }
+  }
+  // Get previous and get_next are symmetrical
+  {
+    for (const auto i: get_all_controls_view_items())
+    {
+      assert(get_next(get_previous(i)) == i);
+      assert(get_previous(get_next(i)) == i);
+    }
   }
   #endif
 }
