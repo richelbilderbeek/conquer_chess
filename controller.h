@@ -18,7 +18,6 @@ public:
     const side player
   );
 
-
   /// Key binding, only used when the type is a keyboard
   const auto& get_key_bindings() const noexcept { return m_key_bindings; }
 
@@ -33,6 +32,9 @@ public:
    const sf::Event& event,
    const game& g
  ) const;
+
+  void set_type(const controller_type t) noexcept { m_type = t; }
+
 
 private:
 

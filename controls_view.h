@@ -28,6 +28,9 @@ public:
 
   auto& get_window() noexcept { return m_window; }
 
+  /// Set a uniform text style
+  void set_text_style(sf::Text& text);
+
 private:
 
   /// The layout of this window
@@ -49,12 +52,31 @@ private:
   /// @return if the user wants to quit
   bool process_events();
 
+
   /// Show the menu on-screen
   void show();
 };
 
+std::string get_key_str_for_action_1(const controls_view& v);
+std::string get_key_str_for_action_2(const controls_view& v);
+std::string get_key_str_for_action_3(const controls_view& v);
+std::string get_key_str_for_action_4(const controls_view& v);
+std::string get_key_str_for_move_down(const controls_view& v);
+std::string get_key_str_for_move_left(const controls_view& v);
+std::string get_key_str_for_move_right(const controls_view& v);
+std::string get_key_str_for_move_up(const controls_view& v);
+
+void show_keyboard_panel(controls_view& v);
+
+void show_mouse_panel(controls_view& v);
+
 /// Show where the panels will be drawn
 void show_panels(controls_view& v);
+
+void show_selected_panel(controls_view& v);
+
+void show_type_panel(controls_view& v);
+
 
 #endif // LOGIC_ONLY
 
