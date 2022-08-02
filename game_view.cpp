@@ -218,6 +218,7 @@ bool game_view::process_events()
         ),
         get_default_margin_width()
       );
+      return false;
     }
     else if (event.type == sf::Event::Closed)
     {
@@ -232,6 +233,9 @@ bool game_view::process_events()
         m_window.close();
         return true;
       }
+    }
+
+    /*
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
         m_game.add_action(create_press_up_action());
@@ -312,6 +316,7 @@ bool game_view::process_events()
       // Maybe a player input?
       // Nothing yet
     }
+    */
   }
   return false; // if no events proceed with tick
 }
