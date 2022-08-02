@@ -2,8 +2,12 @@
 
 #ifndef LOGIC_ONLY
 
+#include "controller.h"
+#include "controllers.h"
+#include "controller_type.h"
 #include "options_view.h"
 
+#include "controls_view.h"
 #include "screen_coordinat.h"
 #include "game_view.h"
 #include "sfml_helper.h"
@@ -17,6 +21,27 @@ options_view::options_view(const game_options& options)
     m_selected{options_view_item::game_speed}
 {
 
+}
+
+void draw_panel(
+  options_view& v,
+  const screen_rect& panel_position,
+  const std::string panel_text,
+  const chess_color color
+)
+{
+  sf::RectangleShape rectangle;
+  set_rect(rectangle, panel_position);
+  rectangle.setTexture(
+    &get_strip(v.get_resources(), color)
+  );
+  v.get_window().draw(rectangle);
+
+  sf::Text text;
+  v.set_text_style(text);
+  text.setString(panel_text);
+  set_text_position(text, panel_position);
+  v.get_window().draw(text);
 }
 
 void options_view::exec()
@@ -40,6 +65,11 @@ void options_view::exec()
     show();
     assert(!to_str(get_starting_position(*this)).empty());
   }
+}
+
+controller_type get_controller_type(const options_view& v, const side player)
+{
+  return v.get_options().get_controller(player).get_type();
 }
 
 starting_position_type get_starting_position(const options_view& v) noexcept
@@ -123,10 +153,20 @@ bool options_view::process_events()
             m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
           break;
           case options_view_item::left_controls:
-            m_options.set_left_controller_type(get_next(m_options.get_left_controller_type()));
+          {
+            const side player{side::lhs};
+            controls_view v(m_options.get_controller(player));
+            v.exec();
+            m_options.set_controller(v.get_controller(), player);
+          }
           break;
           case options_view_item::right_controls:
-            m_options.set_right_controller_type(get_next(m_options.get_right_controller_type()));
+          {
+            const side player{side::rhs};
+            controls_view v(m_options.get_controller(player));
+            v.exec();
+            m_options.set_controller(v.get_controller(), player);
+          }
           break;
         }
 
@@ -230,49 +270,17 @@ void show_bottom_left(options_view& v)
 {
   const auto& layout = v.get_layout();
   {
-    const auto& screen_rect = layout.get_left_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Left");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
+    draw_panel(v, layout.get_left_label(), "Left", chess_color::black);
   }
   {
-    const auto& screen_rect = layout.get_left_color_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString(to_str(get_left_player_color(v.get_options())));
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
+    draw_panel(v, layout.get_left_color_value(), to_str(get_left_player_color(v.get_options())), chess_color::white);
   }
   {
-    const auto& screen_rect = layout.get_left_controls_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
+    draw_panel(
+      v,
+      layout.get_left_controls_value(),
+      to_str(get_controller_type(v, side::lhs)), chess_color::black
     );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString(to_str(v.get_options().get_left_controller_type()));
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
   }
 }
 
@@ -295,34 +303,19 @@ void show_bottom_right(options_view& v)
     v.get_window().draw(text);
   }
   {
-    const auto& screen_rect = layout.get_right_color_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
+    draw_panel(
+      v,
+      layout.get_right_controls_value(),
+      to_str(get_right_player_color(v.get_options())),
+      chess_color::black
     );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString(to_str(get_right_player_color(v.get_options())));
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
   }
   {
-    const auto& screen_rect = layout.get_right_controls_value();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
+    draw_panel(
+      v,
+      layout.get_right_controls_value(),
+      to_str(get_controller_type(v, side::rhs)), chess_color::white
     );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString(to_str(v.get_options().get_right_controller_type()));
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
   }
 }
 

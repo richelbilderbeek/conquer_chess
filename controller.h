@@ -24,7 +24,7 @@ public:
   /// Get the side this controller is on
   side get_player() const noexcept { return m_player; }
 
-  const auto& get_type() const noexcept { return m_type; }
+  const controller_type& get_type() const noexcept { return m_type; }
 
   /// Process the input for this controller.
   /// Returns an an empty vector if this controller is uneffected by the event

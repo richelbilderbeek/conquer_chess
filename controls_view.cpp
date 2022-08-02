@@ -243,10 +243,10 @@ void show_keyboard_panel(controls_view& v)
   const auto& layout = v.get_layout();
   std::vector<std::pair<screen_rect, std::string>> labels =
   {
-    std::make_pair(layout.get_up_label(), "up"),
-    std::make_pair(layout.get_right_label(), "right"),
-    std::make_pair(layout.get_down_label(), "down"),
-    std::make_pair(layout.get_left_label(), "left"),
+    std::make_pair(layout.get_up_label(), "Up"),
+    std::make_pair(layout.get_right_label(), "Right"),
+    std::make_pair(layout.get_down_label(), "Down"),
+    std::make_pair(layout.get_left_label(), "Left"),
     std::make_pair(layout.get_action_1_label(), "1"),
     std::make_pair(layout.get_action_2_label(), "2"),
     std::make_pair(layout.get_action_3_label(), "3"),

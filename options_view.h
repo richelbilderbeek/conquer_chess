@@ -56,6 +56,15 @@ private:
   void show();
 };
 
+void draw_panel(
+  options_view& v,
+  const screen_rect& panel_position,
+  const std::string panel_text,
+  const chess_color color
+);
+
+controller_type get_controller_type(const options_view& v, const side player);
+
 /// Get the starting position
 starting_position_type get_starting_position(const options_view& v) noexcept;
 

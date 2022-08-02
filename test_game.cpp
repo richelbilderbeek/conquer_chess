@@ -189,6 +189,7 @@ void test_game_functions()
     const game g;
     assert(get_cursor_pos(g, chess_color::white) != get_cursor_pos(g, chess_color::black));
   }
+  /*
   // get_keyboard_player_pos, const, left == keyboard
   {
     game_options options = get_default_game_options();
@@ -203,6 +204,7 @@ void test_game_functions()
     const game g(options);
     assert(get_keyboard_player_pos(g) == get_player_pos(g, side::rhs));
   }
+  */
   // get_keyboard_player_pos, non-const, white == lhs == keyboard
   {
     game g;
@@ -213,6 +215,7 @@ void test_game_functions()
     const auto pos_after{get_keyboard_player_pos(g)};
     assert(pos_before != pos_after);
   }
+  /*
   // get_keyboard_player_pos, non-const, black == lhs == mouse
   {
     game_options options = get_default_game_options();
@@ -227,11 +230,13 @@ void test_game_functions()
     const auto pos_after{get_keyboard_player_pos(g)};
     assert(pos_before != pos_after);
   }
+  */
   // get_layout
   {
     const auto g{get_default_game()};
     assert(get_width(get_layout(g).get_board()) > 0);
   }
+  /*
   // get_mouse_player_pos, const, left == keyboard
   {
     game_options options = get_default_game_options();
@@ -262,6 +267,7 @@ void test_game_functions()
     assert(get_mouse_player_pos(g) == get_player_pos(g, side::lhs));
     get_mouse_player_pos(g) += game_coordinat(0.1, 0.1); // Only needs to compile
   }
+  */
   // get_music_volume_as_percentage
   {
     const game g;
