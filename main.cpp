@@ -2,6 +2,8 @@
 
 #include "chess_move.h"
 #include "controls_view.h"
+#include "controls_view_item.h"
+#include "controls_view_layout.h"
 #include "controller.h"
 #include "controllers.h"
 #include "fps_clock.h"
