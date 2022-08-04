@@ -42,6 +42,3 @@ QT += core gui widgets
 LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 #INCLUDEPATH += ../magic_enum
-#INCLUDEPATH += ../Thor/include
-#INCLUDEPATH += ../Aurora/include
-#LIBS += -L../Thor/build/src -lthor
