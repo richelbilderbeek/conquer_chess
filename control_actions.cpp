@@ -312,41 +312,41 @@ void test_control_actions()
   // Move up does something
   {
     game g;
-    const game_coordinat before{get_keyboard_player_pos(g)};
+    const game_coordinat before{get_player_pos(g, side::lhs)};
     control_actions c;
     c.add(create_press_up_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_keyboard_player_pos(g)};
+    const game_coordinat after{get_player_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move right does something
   {
     game g;
-    const game_coordinat before{get_keyboard_player_pos(g)};
+    const game_coordinat before{get_player_pos(g, side::lhs)};
     control_actions c;
     c.add(create_press_right_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_keyboard_player_pos(g)};
+    const game_coordinat after{get_player_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move down does something
   {
     game g;
-    const game_coordinat before{get_keyboard_player_pos(g)};
+    const game_coordinat before{get_player_pos(g, side::lhs)};
     control_actions c;
     c.add(create_press_down_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_keyboard_player_pos(g)};
+    const game_coordinat after{get_player_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move left does something
   {
     game g;
-    const game_coordinat before{get_keyboard_player_pos(g)};
+    const game_coordinat before{get_player_pos(g, side::lhs)};
     control_actions c;
     c.add(create_press_left_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_keyboard_player_pos(g)};
+    const game_coordinat after{get_player_pos(g, side::lhs)};
     assert(before != after);
   }
 #endif // NDEBUG

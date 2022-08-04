@@ -113,7 +113,7 @@ void do_move_keyboard_player_piece(game& g, const square& s)
   assert(has_keyboard_controller(g.get_options()));
   assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
   set_keyboard_player_pos(g, s);
-  assert(square(get_keyboard_player_pos(g)) == s);
+  assert(square(get_player_pos(g, side::lhs)) == s);
 
   g.add_action(create_press_move_action(get_keyboard_user_player_side(g)));
   assert(count_control_actions(g) == 1);
@@ -148,7 +148,7 @@ void do_select_for_keyboard_player(game& g, const square& s)
   assert(is_piece_at(g, s));
   assert(!get_piece_at(g, s).is_selected());
   set_keyboard_player_pos(g, s);
-  assert(square(get_keyboard_player_pos(g)) == s);
+  assert(square(get_player_pos(g, side::lhs)) == s);
   g.add_action(create_press_select_action(get_keyboard_user_player_side(g)));
   g.tick();
   assert(count_control_actions(g) == 0);
@@ -165,7 +165,7 @@ void do_start_attack_keyboard_player_piece(game& g, const square& s)
   assert(has_keyboard_controller(g.get_options()));
   assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
   set_keyboard_player_pos(g, s);
-  assert(square(get_keyboard_player_pos(g)) == s);
+  assert(square(get_player_pos(g, side::lhs)) == s);
 
   g.add_action(create_press_attack_action(get_keyboard_user_player_side(g)));
   //g.tick(delta_t(0.0)); // Process the actions
@@ -259,6 +259,7 @@ int get_index_of_closest_piece_to(
   return index;
 }
 
+/*
 game_coordinat& game::get_keyboard_player_pos()
 {
   if (get_left_player_controller(m_options) == controller_type::keyboard)
@@ -268,7 +269,9 @@ game_coordinat& game::get_keyboard_player_pos()
   assert(get_right_player_controller(m_options) == controller_type::keyboard);
   return m_player_2_pos;
 }
+*/
 
+/*
 game_coordinat get_keyboard_player_pos(const game& g)
 {
   if (get_left_player_controller(g.get_options()) == controller_type::keyboard)
@@ -278,12 +281,15 @@ game_coordinat get_keyboard_player_pos(const game& g)
   assert(get_right_player_controller(g.get_options()) == controller_type::keyboard);
   return get_player_pos(g, side::rhs);
 }
+*/
 
+/*
 game_coordinat& get_keyboard_player_pos(game& g)
 {
   assert(has_keyboard_controller(g.get_options()));
   return g.get_keyboard_player_pos();
 }
+*/
 
 chess_color get_keyboard_user_player_color(const game& g)
 {
@@ -532,7 +538,7 @@ void set_keyboard_player_pos(
 )
 {
   assert(has_keyboard_controller(g.get_options()));
-  const auto current_pos{get_keyboard_player_pos(g)};
+  const auto current_pos{get_player_pos(g, side::lhs)};
   const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
   const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
   for (int i{0}; i!=n_right; ++i)

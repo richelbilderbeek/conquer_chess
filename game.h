@@ -34,17 +34,11 @@ public:
   /// Get the game actions
   auto& get_actions() noexcept { return m_control_actions; }
 
-  /// Get the position of the player that uses the keyboard
-  game_coordinat& get_keyboard_player_pos();
-
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
   /// Get the layout of the screen
   auto& get_layout() noexcept { return m_layout; }
-
-  /// Get the position of the player that uses the mouse
-  //game_coordinat& get_mouse_player_pos();
 
   /// Get the player position
   const game_coordinat& get_player_pos(const side player) const noexcept;
@@ -213,10 +207,10 @@ int get_index_of_closest_piece_to(
 );
 
 /// Get the position of the player that uses the keyboard
-game_coordinat get_keyboard_player_pos(const game& g);
+//game_coordinat get_keyboard_player_pos(const game& g);
 
 /// Get the position of the player that uses the keyboard
-game_coordinat& get_keyboard_player_pos(game& g);
+//game_coordinat& get_keyboard_player_pos(game& g);
 
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
