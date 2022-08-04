@@ -116,6 +116,11 @@ void test_key_bindings()
     assert(k.get_key_for_move_up() != k.get_key_for_move_down());
     assert(k.get_key_for_move_left() != k.get_key_for_move_right());
   }
+  // A key that is not in the bindings results in no actions
+  {
+    const key_bindings k = create_left_keyboard_key_bindings();
+    assert(k.create_actions(sf::Keyboard::X).empty());
+  }
   {
     const auto a{create_left_keyboard_key_bindings()};
     const auto b{create_left_keyboard_key_bindings()};

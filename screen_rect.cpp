@@ -73,6 +73,11 @@ void test_screen_rect()
     assert(c.get_x() == 6);
     assert(c.get_y() == 3);
   }
+  // get_default_controls_screen_size
+  {
+    const auto r{get_default_controls_screen_size()};
+    assert(r.get_x() > 0);
+  }
   // is_in
   {
     const screen_rect r(
