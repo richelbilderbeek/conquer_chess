@@ -610,7 +610,7 @@ void show_possible_moves(game_view& view, const side player)
       convert_to_screen_rect(square, layout)
     );
     rectangle.setOutlineColor(to_sfml_color(color));
-    rectangle.setOutlineThickness(3);
+    rectangle.setOutlineThickness(get_square_width(layout) / 10.0);
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setScale(0.5, 0.5);
     rectangle.setRotation(player == side::lhs ? 30 : -30);
