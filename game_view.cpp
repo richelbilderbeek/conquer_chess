@@ -23,7 +23,7 @@
 #include <sstream>
 
 game_view::game_view(const game& game)
-  : m_controllers{get_default_controllers()},
+  : m_controllers{create_default_controllers()},
     m_game{game},
     m_log{game.get_options().get_message_display_time_secs()}
 {

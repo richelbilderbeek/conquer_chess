@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "controllers.h"
 #include "id.h"
 #include "sound_effects.h"
 #include "square.h"
@@ -212,14 +213,14 @@ game_coordinat get_cursor_pos(
   {
     return get_player_pos(g, side::lhs);
   }
-  assert(c == get_mouse_user_player_color(g.get_options()));
+  //assert(c == get_mouse_user_player_color(g.get_options()));
   return get_player_pos(g, side::rhs);
 }
 
 game get_default_game() noexcept
 {
   return game{
-    get_default_game_options()
+    create_default_game_options()
   };
 }
 
@@ -227,6 +228,7 @@ game get_game_with_starting_position(starting_position_type t) noexcept
 {
   const game_options options(
     get_default_screen_size(),
+    create_default_controllers(),
     t,
     get_default_game_speed(),
     get_default_margin_width()
@@ -283,6 +285,13 @@ chess_color get_keyboard_user_player_color(const game& g)
   return get_keyboard_user_player_color(g.get_options());
 }
 
+sf::Keyboard::Key get_key_for_action(const game& g, const side player, const int action)
+{
+  assert(action >= 1);
+  assert(action <= 4);
+  return get_key_for_action(g.get_options(), player, action);
+}
+
 game get_kings_only_game() noexcept
 {
   return get_game_with_starting_position(starting_position_type::kings_only);
@@ -295,6 +304,7 @@ const game_view_layout& get_layout(const game& g) noexcept
 
 game_coordinat& game::get_mouse_player_pos()
 {
+  assert(has_mouse_controller(m_options));
   if (get_left_player_controller(m_options) == controller_type::mouse)
   {
     return m_player_1_pos;
@@ -315,6 +325,7 @@ game_coordinat get_mouse_player_pos(const game& g)
 
 game_coordinat& get_mouse_player_pos(game& g)
 {
+  assert(has_mouse_controller(g.get_options()));
   return g.get_mouse_player_pos();
 }
 

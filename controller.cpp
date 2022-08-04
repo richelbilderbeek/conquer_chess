@@ -7,12 +7,28 @@
 
 controller::controller(
   const controller_type type,
-  const side player
+  const side player,
+  const key_bindings& ks
 )
-  : m_player{player},
+  : m_key_bindings{ks},
+    m_player{player},
     m_type{type}
 {
 
+}
+
+controller create_default_keyboard_controller(const side player) noexcept
+{
+  return create_left_keyboard_controller(player);
+}
+
+controller create_default_mouse_controller(const side player) noexcept
+{
+  return controller(
+    controller_type::mouse,
+    player,
+    create_right_keyboard_key_bindings()
+  );
 }
 
 sf::Event create_key_pressed_event(const sf::Keyboard::Key k)
@@ -21,6 +37,31 @@ sf::Event create_key_pressed_event(const sf::Keyboard::Key k)
   e.type = sf::Event::KeyPressed;
   e.key.code = k;
   return e;
+}
+
+controller create_left_keyboard_controller(const side player) noexcept
+{
+  return controller(
+    controller_type::keyboard,
+    player,
+    create_left_keyboard_key_bindings()
+  );
+}
+
+controller create_right_keyboard_controller(const side player) noexcept
+{
+  return controller(
+    controller_type::keyboard,
+    player,
+    create_right_keyboard_key_bindings()
+  );
+}
+
+sf::Keyboard::Key get_key_for_action(const controller& c, const int action)
+{
+  assert(action >= 1);
+  assert(action <= 4);
+  return get_key_for_action(c.get_key_bindings(), action);
 }
 
 std::string get_text_for_action(
@@ -220,22 +261,42 @@ void test_controller()
 #ifndef NDEBUG
   // controller::get_player
   {
-    const controller c(controller_type::mouse, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     assert(c.get_player() == side::lhs);
-    const controller d(controller_type::keyboard, side::rhs);
+    const controller d{create_left_keyboard_controller(side::rhs)};
     assert(d.get_player() == side::rhs);
   }
   // controller::get_type
   {
-    const controller c(controller_type::mouse, side::lhs);
+    const controller c{create_default_mouse_controller(side::lhs)};
     assert(c.get_type() == controller_type::mouse);
-    const controller d(controller_type::keyboard, side::lhs);
+    const controller d{create_left_keyboard_controller(side::lhs)};
     assert(d.get_type() == controller_type::keyboard);
+    const controller e{create_right_keyboard_controller(side::lhs)};
+    assert(e.get_type() == controller_type::keyboard);
+  }
+  // create_left_keyboard_controller
+  {
+    const auto c{create_left_keyboard_controller(side::lhs)};
+    assert(c.get_type() == controller_type::keyboard);
+    assert(c.get_player() == side::lhs);
+    const auto d{create_left_keyboard_controller(side::rhs)};
+    assert(d.get_type() == controller_type::keyboard);
+    assert(d.get_player() == side::rhs);
+  }
+  // create_right_keyboard_controller
+  {
+    const auto c{create_right_keyboard_controller(side::lhs)};
+    assert(c.get_type() == controller_type::keyboard);
+    assert(c.get_player() == side::lhs);
+    const auto d{create_right_keyboard_controller(side::rhs)};
+    assert(d.get_type() == controller_type::keyboard);
+    assert(d.get_player() == side::rhs);
   }
   // press up does nothing with a mouse
   {
     const game g;
-    const controller c(controller_type::mouse, side::lhs);
+    const controller c{create_default_mouse_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_up()
@@ -247,7 +308,7 @@ void test_controller()
   // press up works with a keyboard
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_up()
@@ -259,7 +320,7 @@ void test_controller()
   // press right works with a keyboard
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_right()
@@ -271,7 +332,7 @@ void test_controller()
   // press down works with a keyboard
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_down()
@@ -283,7 +344,7 @@ void test_controller()
   // press left works with a keyboard
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_left()
@@ -295,7 +356,7 @@ void test_controller()
   // press action 1 works with a keyboard
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(1)
@@ -307,7 +368,7 @@ void test_controller()
   // press action 2 works with a keyboard
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(2)
@@ -319,7 +380,7 @@ void test_controller()
   // press action 3 works with a keyboard
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(3)
@@ -331,23 +392,40 @@ void test_controller()
   // press action 4 does nothing yet
   {
     const game g;
-    const controller c(controller_type::keyboard, side::lhs);
+
+    const controller c{create_left_keyboard_controller(side::lhs)};
     const auto event{
       create_key_pressed_event(
-        c.get_key_bindings().get_key_for_action(4)
+        get_key_for_action(g, side::lhs, 4)
       )
     };
     const auto actions{c.process_input(event, g)};
     assert(actions.empty());
   }
-
+  //
   {
     const game g;
-    const controller c(controller_type::mouse, side::lhs);
+    const controller c{create_default_mouse_controller(side::lhs)};
     sf::Event e;
     e.type = sf::Event::KeyPressed;
     assert(c.get_type() == controller_type::mouse);
     assert(c.process_input(e, g).empty());
   }
+  // operator==
+  {
+    const controller a{create_left_keyboard_controller(side::lhs)};
+    const controller b{create_left_keyboard_controller(side::lhs)};
+    const controller c{create_right_keyboard_controller(side::lhs)};
+    assert(a == b);
+    assert(!(a == c));
+  }
 #endif
+}
+
+bool operator==(const controller& lhs, const controller& rhs) noexcept
+{
+  return lhs.get_key_bindings() == rhs.get_key_bindings()
+    && lhs.get_player() == rhs.get_player()
+    && lhs.get_type() == rhs.get_type()
+  ;
 }

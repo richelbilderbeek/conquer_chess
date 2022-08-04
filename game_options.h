@@ -19,6 +19,7 @@ class game_options
 public:
   explicit game_options(
     const screen_coordinat& screen_size,
+    const std::vector<controller>& controllers,
     const starting_position_type starting_position,
     const game_speed speed,
     const int margin_width
@@ -134,15 +135,23 @@ private:
   volume m_music_volume;
 };
 
+/// Create the default game options
+game_options create_default_game_options() noexcept;
+
+/// Create the default game options, yet for different controllers
+game_options create_default_game_options_with_controllers(
+  const std::vector<controller>& controllers
+);
+
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& options) noexcept;
-
-/// Get the default game options
-game_options get_default_game_options();
 
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game_options& options);
+
+/// Get the key for a action 1, 2, 3 or 4 for a player
+sf::Keyboard::Key get_key_for_action(const game_options& options, const side player, const int action);
 
 /// Get the color of the left player
 chess_color get_left_player_color(const game_options& options) noexcept;
@@ -186,6 +195,9 @@ std::vector<piece> get_starting_pieces(
 
 /// Get the starting position
 starting_position_type get_starting_position(const game_options& options) noexcept;
+
+/// Is there at least one controller with the mouse?
+bool has_mouse_controller(const game_options& options) noexcept;
 
 /// Test this class and its free functions
 void test_game_options();

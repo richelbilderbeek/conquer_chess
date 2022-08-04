@@ -11,8 +11,8 @@
 #include <cmath>
 #include <iostream>
 
-menu_view::menu_view()
-  : m_options{get_default_game_options()},
+menu_view::menu_view(const game_options& options)
+  : m_options{options},
     m_selected{menu_view_item::start}
 {
 #ifdef DEMO_REPLAYER_ISSUE_22

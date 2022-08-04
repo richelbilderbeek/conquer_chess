@@ -44,7 +44,7 @@ void test_game_class()
   {
     // A piece under attack must have decreasing health
     {
-      game_options options{get_default_game_options()};
+      game_options options{create_default_game_options()};
       options.set_starting_position(starting_position_type::bishop_and_knight_end_game);
       game g(options);
       const double health_before{get_piece_at(g, square("d2")).get_health()};
@@ -77,7 +77,7 @@ void test_game_class()
     }
     // When a piece is killed, the queen attacker moves to that square
     {
-      game_options options{get_default_game_options()};
+      game_options options{create_default_game_options()};
       options.set_starting_position(starting_position_type::before_scholars_mate);
       game g(options);
       do_select_and_start_attack_keyboard_player_piece(
@@ -295,7 +295,7 @@ void test_game_functions()
     const game g;
     assert(get_player_color(g, side::lhs) == chess_color::white);
     assert(get_player_color(g, side::rhs) == chess_color::black);
-    game_options options{get_default_game_options()};
+    game_options options{create_default_game_options()};
     options.set_left_player_color(chess_color::black);
     const game h(options);
     assert(get_player_color(h, side::lhs) == chess_color::black);
@@ -306,7 +306,7 @@ void test_game_functions()
     const game g;
     assert(get_player_side(g, chess_color::white) == side::lhs);
     assert(get_player_side(g, chess_color::black) == side::rhs);
-    game_options options{get_default_game_options()};
+    game_options options{create_default_game_options()};
     options.set_left_player_color(chess_color::black);
     const game h(options);
     assert(get_player_side(h, chess_color::white) == side::rhs);

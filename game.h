@@ -17,7 +17,7 @@ class game
 {
 public:
   explicit game(
-    const game_options& options = get_default_game_options()
+    const game_options& options = create_default_game_options()
   );
 
   /// Add an action. These will be processed in 'tick'
@@ -216,6 +216,9 @@ game_coordinat& get_keyboard_player_pos(game& g);
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game& g);
+
+/// Get the key for action 1, 2, 3 or 4 for a player
+sf::Keyboard::Key get_key_for_action(const game& g, const side player, const int action);
 
 /// Create a game in which it is only a king versus a king,
 /// to be used in debugging

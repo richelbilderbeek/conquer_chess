@@ -3,6 +3,7 @@
 #include "chess_move.h"
 #include "controls_view.h"
 #include "controller.h"
+#include "controllers.h"
 #include "fps_clock.h"
 #include "game.h"
 #include "game_log.h"
@@ -91,14 +92,22 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   if (args.size() == 1)
   {
     #ifndef LOGIC_ONLY
-    menu_view v;
+    /*
+    const auto options{
+      create_default_game_options_with_controllers(
+        create_two_keyboard_controllers()
+      )
+    };
+    */
+    const auto options{create_default_game_options()};
+    menu_view v(options);
     v.exec();
     #endif // LOGIC_ONLY
   }
   else
   {
     #ifndef LOGIC_ONLY
-    controls_view v;
+    controls_view v(create_left_keyboard_controller(side::lhs));
     v.exec();
     #endif // LOGIC_ONLY
   }

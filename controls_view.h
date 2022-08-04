@@ -12,7 +12,7 @@
 class controls_view
 {
 public:
-  controls_view(controller c = controller(controller_type::keyboard, side::lhs));
+  controls_view(const controller& c);
 
   /// Run the menu, until the user quits
   void exec();

@@ -200,24 +200,33 @@ void control_actions::process_control_actions(game& g)
     }
     else if (action.get_type() == control_action_type::mouse_move)
     {
-      auto& pos{get_mouse_player_pos(g)};
-      pos = action.get_coordinat();
+      if (has_mouse_controller(g.get_options()))
+      {
+        auto& pos{get_mouse_player_pos(g)};
+        pos = action.get_coordinat();
+      }
     }
     else if (action.get_type() == control_action_type::lmb_down)
     {
-      do_select(
-        g,
-        action.get_coordinat(),
-        get_mouse_user_player_color(get_options(g))
-      );
+      if (has_mouse_controller(g.get_options()))
+      {
+        do_select(
+          g,
+          action.get_coordinat(),
+          get_mouse_user_player_color(get_options(g))
+        );
+      }
     }
     else if (action.get_type() == control_action_type::rmb_down)
     {
-      start_move_unit(
-        g,
-        action.get_coordinat(),
-        get_mouse_user_player_color(get_options(g))
-      );
+      if (has_mouse_controller(g.get_options()))
+      {
+        start_move_unit(
+          g,
+          action.get_coordinat(),
+          get_mouse_user_player_color(get_options(g))
+        );
+      }
     }
   }
   m_control_actions = std::vector<control_action>();

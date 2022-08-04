@@ -12,7 +12,7 @@
 class menu_view
 {
 public:
-  menu_view();
+  menu_view(const game_options& options);
 
   /// Run the menu, until the user quits
   void exec();

@@ -11,7 +11,7 @@
 #include <cmath>
 #include <iostream>
 
-controls_view::controls_view(controller c)
+controls_view::controls_view(const controller& c)
   : m_controller(c),
     m_selected{controls_view_item::type}
 {
