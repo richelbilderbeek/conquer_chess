@@ -72,67 +72,42 @@ std::string get_text_for_action(
 {
   assert(action_key_number >= 1); // Human based counting
   assert(action_key_number <= 4); // Human based counting
+
+  std::string key_str; // Can be QEZC (keyboard) or 1234 (mouse)
   if (c.get_type() == controller_type::keyboard)
   {
-    const std::string key_str{
-      to_str(c.get_key_bindings().get_key_for_action(action_key_number))
-    };
-    if (has_selected_units)
-    {
-      switch (action_key_number)
-      {
-        case 1: return key_str + "\nMove";
-        case 2: return key_str + "\nAttack";
-        case 3: return key_str;
-        case 4:
-          default:
-          assert(action_key_number == 4);
-          return key_str;
-      }
-    }
-    else
-    {
-      switch (action_key_number)
-      {
-        case 1: return key_str + "\nSelect";
-        case 2: return key_str;
-        case 3: return key_str;
-        case 4:
-          default:
-          assert(action_key_number== 4);
-          return key_str;
-      }
-    }
+    key_str = to_str(c.get_key_bindings().get_key_for_action(action_key_number));
   }
   else
   {
     assert(c.get_type() == controller_type::mouse);
-    const std::string key_str{std::to_string(action_key_number)};
-    if (has_selected_units)
+    key_str = std::to_string(action_key_number);
+  }
+
+  if (has_selected_units)
+  {
+    switch (action_key_number)
     {
-      switch (action_key_number)
-      {
-        case 1: return key_str + "\nMove";
-        case 2: return key_str + "\nAttack";
-        case 3: return key_str;
-        case 4:
-          default:
-          assert(action_key_number == 4);
-          return key_str;
-      }
+      case 1: return key_str + "\nMove";
+      case 2: return key_str + "\nAttack";
+      case 3: return key_str;
+      case 4:
+        default:
+        assert(action_key_number == 4);
+        return key_str;
     }
-    else
+  }
+  else
+  {
+    switch (action_key_number)
     {
-      switch (action_key_number)
-      {
-        case 1: return key_str + "\nSelect";
-        case 2: return key_str;
-        case 3: return key_str;
-        case 4:
-          default:
-          assert(action_key_number== 4);
-          return key_str;
-      }
+      case 1: return key_str + "\nSelect";
+      case 2: return key_str;
+      case 3: return key_str;
+      case 4:
+        default:
+        assert(action_key_number== 4);
+        return key_str;
     }
   }
 }
@@ -234,6 +209,14 @@ std::vector<control_action> controller::process_mouse_moved(
 void test_controller()
 {
 #ifndef NDEBUG
+  // create_default_keyboard_controller
+  {
+    const controller c{create_default_keyboard_controller(side::lhs)};
+    assert(c.get_player() == side::lhs);
+    const controller d{create_default_keyboard_controller(side::rhs)};
+    assert(d.get_player() == side::rhs);
+    assert(c != d);
+  }
   // controller::get_player
   {
     const controller c{create_left_keyboard_controller(side::lhs)};
@@ -267,6 +250,26 @@ void test_controller()
     const auto d{create_right_keyboard_controller(side::rhs)};
     assert(d.get_type() == controller_type::keyboard);
     assert(d.get_player() == side::rhs);
+  }
+  // get_text_for_action
+  {
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 1) == "Q\nSelect");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 2) == "E");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 3) == "Z");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 4) == "C");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 1) == "Q\nMove");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 2) == "E\nAttack");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 3) == "Z");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 4) == "C");
+
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 1) == "1\nSelect");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 2) == "2");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 3) == "3");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 4) == "4");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 1) == "1\nMove");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 2) == "2\nAttack");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 3) == "3");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 4) == "4");
   }
   // press up does nothing with a mouse
   {
@@ -403,4 +406,9 @@ bool operator==(const controller& lhs, const controller& rhs) noexcept
     && lhs.get_player() == rhs.get_player()
     && lhs.get_type() == rhs.get_type()
   ;
+}
+
+bool operator!=(const controller& lhs, const controller& rhs) noexcept
+{
+  return !(lhs == rhs);
 }

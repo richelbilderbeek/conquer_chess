@@ -98,5 +98,6 @@ std::string get_text_for_action(
 void test_controller();
 
 bool operator==(const controller& lhs, const controller& rhs) noexcept;
+bool operator!=(const controller& lhs, const controller& rhs) noexcept;
 
 #endif // CONTROLLER_H
