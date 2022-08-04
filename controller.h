@@ -101,6 +101,9 @@ sf::Keyboard::Key get_key_for_action(const controller& c, const int action);
 std::string get_text_for_action(
   const controller& c,
   const bool has_selected_units,
+  const bool is_promoting_pawn,
+  const bool is_king_that_may_castle_kingside,
+  const bool is_king_that_may_castle_queenside,
   const int action_key_number
 ) noexcept;
 

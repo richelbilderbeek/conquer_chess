@@ -201,7 +201,23 @@ std::string get_text_for_action(
   const bool has_selected_units{
     !get_selected_pieces(view.get_game(), player).empty()
   };
-  return get_text_for_action(c, has_selected_units, key);
+  const bool is_promoting_pawn{
+    false // STUB
+  };
+  const bool is_king_that_may_castle_kingside{
+    false // STUB
+  };
+  const bool is_king_that_may_castle_queenside{
+    false // STUB
+  };
+  return get_text_for_action(
+    c,
+    has_selected_units,
+    is_promoting_pawn,
+    is_king_that_may_castle_kingside,
+    is_king_that_may_castle_queenside,
+    key
+  );
 }
 
 const delta_t& get_time(const game_view& v) noexcept

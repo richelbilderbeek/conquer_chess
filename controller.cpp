@@ -89,6 +89,9 @@ sf::Keyboard::Key get_key_for_action(const controller& c, const int action)
 std::string get_text_for_action(
   const controller& c,
   const bool has_selected_units,
+  const bool is_promoting_pawn,
+  const bool is_king_that_may_castle_kingside,
+  const bool is_king_that_may_castle_queenside,
   const int action_key_number
 ) noexcept
 {
@@ -105,18 +108,43 @@ std::string get_text_for_action(
     assert(c.get_type() == controller_type::mouse);
     key_str = std::to_string(action_key_number);
   }
-
   if (has_selected_units)
   {
+    if (is_promoting_pawn)
+    {
+      switch (action_key_number)
+      {
+        case 1: return key_str + "\nPromote\nto\nqueen";
+        case 2: return key_str + "\nPromote\nto\nrook";
+        case 3: return key_str + "\nPromote\nto\nbishop";
+        case 4:
+          default:
+          assert(action_key_number == 4);
+          return key_str + "\nPromote\nto\nknight";
+      }
+    }
     switch (action_key_number)
     {
       case 1: return key_str + "\nMove";
       case 2: return key_str + "\nAttack";
-      case 3: return key_str;
+      case 3:
+      {
+        if (is_king_that_may_castle_kingside)
+        {
+          return key_str + "\nCastle\nkingside";
+        }
+        return key_str;
+      }
       case 4:
         default:
         assert(action_key_number == 4);
-        return key_str;
+        {
+          if (is_king_that_may_castle_queenside)
+          {
+            return key_str + "\nCastle\nqueenside";
+          }
+          return key_str;
+        }
     }
   }
   else
@@ -311,23 +339,34 @@ void test_controller()
   }
   // get_text_for_action
   {
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 1) == "Q\nSelect");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 2) == "E");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 3) == "Z");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, 4) == "C");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 1) == "Q\nMove");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 2) == "E\nAttack");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 3) == "Z");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, 4) == "C");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, 1) == "Q\nSelect");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, 2) == "E");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, 3) == "Z");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, 4) == "C");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, 1) == "Q\nMove");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, 2) == "E\nAttack");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, 3) == "Z");
+    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, 4) == "C");
 
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 1) == "1\nSelect");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 2) == "2");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 3) == "3");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, 4) == "4");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 1) == "1\nMove");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 2) == "2\nAttack");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 3) == "3");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, 4) == "4");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, 1) == "1\nSelect");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, 2) == "2");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, 3) == "3");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, 4) == "4");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, 1) == "1\nMove");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, 2) == "2\nAttack");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, 3) == "3");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, 4) == "4");
+
+    // Castling
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, true, false, 3) == "3\nCastle\nkingside");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, true, 4) == "4\nCastle\nqueenside");
+
+    // Promotion
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, 1) == "1\nPromote\nto\nqueen");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, 2) == "2\nPromote\nto\nrook");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, 3) == "3\nPromote\nto\nbishop");
+    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, 4) == "4\nPromote\nto\nknight");
+
   }
   // press up does nothing with a mouse
   {
