@@ -73,3 +73,10 @@ void test_replayer()
   }
 #endif // NDEBUG
 }
+
+bool operator==(const replayer& lhs, const replayer& rhs) noexcept
+{
+  return lhs.get_replay() == rhs.get_replay()
+    && lhs.get_last_time() == rhs.get_last_time()
+  ;
+}

@@ -232,6 +232,13 @@ void test_game_options()
     const auto options{create_default_game_options()};
     assert(options.get_starting_position() == get_starting_position(options));
   }
+  // game_options::get_sontroller
+  {
+    auto options{create_default_game_options()};
+    // TODO: this is double
+    options.set_controller(create_right_keyboard_controller(side::lhs), side::lhs);
+    options.set_controller(create_left_keyboard_controller(side::rhs), side::rhs);
+  }
   // game_options::set_music_volume
   {
     auto options{create_default_game_options()};
@@ -289,4 +296,23 @@ void toggle_left_player_color(game_options& options)
   options.set_left_player_color(
     get_other_color(options.get_left_player_color())
   );
+}
+
+bool operator==(const game_options& lhs, const game_options& rhs) noexcept
+{
+  return lhs.do_show_occupied() == rhs.do_show_occupied()
+    && lhs.do_show_selected() == rhs.do_show_selected()
+    && lhs.get_click_distance() == rhs.get_click_distance()
+    && lhs.get_controllers() == rhs.get_controllers()
+    && lhs.get_damage_per_chess_move() == rhs.get_damage_per_chess_move()
+    && lhs.get_game_speed() == rhs.get_game_speed()
+    && lhs.get_left_player_color() == rhs.get_left_player_color()
+    && lhs.get_margin_width() == rhs.get_margin_width()
+    && lhs.get_message_display_time_secs() == rhs.get_message_display_time_secs()
+    && lhs.get_replayer() == rhs.get_replayer()
+    && lhs.get_screen_size() == rhs.get_screen_size()
+    && lhs.get_starting_position() == rhs.get_starting_position()
+    && lhs.get_music_volume() == rhs.get_music_volume()
+    && lhs.get_sound_effects_volume() == rhs.get_sound_effects_volume()
+  ;
 }

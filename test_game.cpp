@@ -208,6 +208,11 @@ void test_game_functions()
     const game g;
     assert(get_occupied_squares(g).size() == 32);
   }
+  // get_options
+  {
+    const game g;
+    assert(get_options(g) == g.get_options());
+  }
   // get_piece_at, const
   {
     const game g;

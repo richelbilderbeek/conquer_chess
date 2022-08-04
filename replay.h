@@ -12,7 +12,7 @@ class replay
 public:
   /// @param pgn_str a string of PGN notation in one line,
   /// e.g.
-  replay(const std::string& pgn_str);
+  explicit replay(const std::string& pgn_str);
 
   const auto& get_moves() const noexcept { return m_moves; }
 
@@ -38,5 +38,6 @@ std::vector<std::string> split_pgn_str(const std::string pgn_str);
 /// Test this class and its free functions
 void test_replay();
 
+bool operator==(const replay& lhs, const replay& rhs) noexcept;
 
 #endif // REPLAY_H

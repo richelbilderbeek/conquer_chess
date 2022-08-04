@@ -45,9 +45,6 @@ public:
   /// Get the game speed
   auto get_game_speed() const noexcept { return m_game_speed; }
 
-  /// Controller type of the left player
-  //auto get_left_controller_type() const noexcept { return m_left_controller_type; }
-
   /// Color of the left player
   auto get_left_player_color() const noexcept { return m_left_player_color; }
 
@@ -59,9 +56,6 @@ public:
 
   /// Get the replay of a match
   const auto& get_replayer() const noexcept { return m_replayer; }
-
-  /// Controller type of the left player
-  //auto get_right_controller_type() const noexcept { return m_right_controller_type; }
 
   /// Get the size of the screen in pixels
   const auto& get_screen_size() const noexcept { return m_screen_size; }
@@ -84,14 +78,8 @@ public:
   /// Set the color of the player
   void set_left_player_color(const chess_color c) noexcept;
 
-  /// Set the controller type for the left player
-  //void set_left_controller_type(const controller_type t) noexcept;
-
   /// Set the replayer
   void set_replayer(const replayer& r) noexcept { m_replayer = r; }
-
-  /// Set the controller type for the right player
-  //void set_right_controller_type(const controller_type t) noexcept;
 
   /// Set the starting position
   void set_starting_position(const starting_position_type starting_position) noexcept { m_starting_position = starting_position; }
@@ -110,9 +98,6 @@ private:
   /// The game speed
   game_speed m_game_speed;
 
-  /// Controller type of the left player
-  //controller_type m_left_controller_type;
-
   /// Color of the left player
   chess_color m_left_player_color;
 
@@ -121,9 +106,6 @@ private:
 
   /// Replay a match
   replayer m_replayer;
-
-  /// Controller type of the right player
-  //controller_type m_right_controller_type;
 
   /// The size of the screen in pixels
   screen_coordinat m_screen_size;
@@ -211,5 +193,7 @@ void test_game_options();
 
 /// Toggle the color of the active player
 void toggle_left_player_color(game_options& options);
+
+bool operator==(const game_options& lhs, const game_options& rhs) noexcept;
 
 #endif // GAME_OPTIONS_H

@@ -9,7 +9,7 @@
 class replayer
 {
 public:
-  replayer(const replay& r = replay(""));
+  explicit replayer(const replay& r = replay(""));
 
   /// Do a move or do nothing
   void do_move(game& g);
@@ -35,5 +35,6 @@ int get_n_moves(const replayer& r) noexcept;
 /// Test this class and its free functions
 void test_replayer();
 
+bool operator==(const replayer& lhs, const replayer& rhs) noexcept;
 
 #endif // REPLAYER_H

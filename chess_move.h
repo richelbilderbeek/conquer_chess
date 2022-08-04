@@ -115,6 +115,8 @@ bool is_win(const chess_move& move) noexcept;
 /// Test this class and its free functions
 void test_chess_move();
 
+bool operator==(const chess_move& lhs, const chess_move& rhs) noexcept;
+
 std::ostream& operator<<(std::ostream& os, const chess_move& m) noexcept;
 
 #endif // CHESS_MOVE_H

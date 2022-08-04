@@ -84,3 +84,8 @@ void test_replay()
   }
 #endif // NDEBUG
 }
+
+bool operator==(const replay& lhs, const replay& rhs) noexcept
+{
+  return lhs.get_moves() == rhs.get_moves();
+}

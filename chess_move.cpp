@@ -273,6 +273,13 @@ void test_chess_move()
 #endif // NDEBUG
 }
 
+bool operator==(const chess_move& lhs, const chess_move& rhs) noexcept
+{
+  return lhs.get_pgn_str() == rhs.get_pgn_str()
+    && lhs.get_color() == rhs.get_color()
+  ;
+}
+
 std::ostream& operator<<(std::ostream& os, const chess_move& m) noexcept
 {
   os << m.get_pgn_str();

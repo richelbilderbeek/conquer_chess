@@ -190,6 +190,22 @@ void test_controls_view_layout()
   {
     const controls_view_layout layout;
     assert(!get_panels(layout).empty());
+
+  }
+  // get_selectable_rect
+  {
+    const controls_view_layout layout;
+    assert(get_width(layout.get_selectable_rect(controls_view_item::type)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::up)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::right)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::down)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::left)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::action_1)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::action_2)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::action_3)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::action_4)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::do_action)) > 0);
+    assert(get_width(layout.get_selectable_rect(controls_view_item::next_action)) > 0);
   }
   #endif
 }

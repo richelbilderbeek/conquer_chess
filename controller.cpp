@@ -48,6 +48,28 @@ controller create_left_keyboard_controller(const side player) noexcept
   );
 }
 
+sf::Event create_mouse_button_pressed_event(
+  const screen_coordinat& cursor_pos,
+  const sf::Mouse::Button mouse_button
+)
+{
+  sf::Event e;
+  e.type = sf::Event::MouseButtonPressed;
+  e.mouseMove.x = cursor_pos.get_x();
+  e.mouseMove.y = cursor_pos.get_y();
+  e.mouseButton.button = mouse_button;
+  return e;
+}
+
+sf::Event create_mouse_moved_event(const screen_coordinat& cursor_pos)
+{
+  sf::Event e;
+  e.type = sf::Event::MouseMoved;
+  e.mouseMove.x = cursor_pos.get_x();
+  e.mouseMove.y = cursor_pos.get_y();
+  return e;
+}
+
 controller create_right_keyboard_controller(const side player) noexcept
 {
   return controller(
@@ -232,6 +254,42 @@ void test_controller()
     assert(d.get_type() == controller_type::keyboard);
     const controller e{create_right_keyboard_controller(side::lhs)};
     assert(e.get_type() == controller_type::keyboard);
+  }
+  // controller::process_input, mouse moved
+  {
+    game g;
+    const controller c{create_default_mouse_controller(side::lhs)};
+    std::vector<control_action> actions{
+      c.process_input(
+        create_mouse_moved_event(screen_coordinat()),
+        g
+      )
+    };
+    assert(!actions.empty());
+  }
+  // controller::process_input, LMB mouse pressed
+  {
+    game g;
+    const controller c{create_default_mouse_controller(side::lhs)};
+    std::vector<control_action> actions{
+      c.process_input(
+        create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Left),
+        g
+      )
+    };
+    assert(!actions.empty());
+  }
+  // controller::process_input, RMB mouse pressed
+  {
+    game g;
+    const controller c{create_default_mouse_controller(side::lhs)};
+    std::vector<control_action> actions{
+      c.process_input(
+        create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Right),
+        g
+      )
+    };
+    assert(!actions.empty());
   }
   // create_left_keyboard_controller
   {

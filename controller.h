@@ -77,6 +77,16 @@ sf::Event create_key_pressed_event(const sf::Keyboard::Key k);
 /// for a user at the left side of the keyboard
 controller create_left_keyboard_controller(const side player) noexcept;
 
+/// Create an sf::Event with type sf::Event::MouseButtonPressed
+sf::Event create_mouse_button_pressed_event(
+  const screen_coordinat& cursor_pos,
+  const sf::Mouse::Button mouse_button
+);
+
+/// Create an sf::Event with type sf::Event::MouseMoved
+sf::Event create_mouse_moved_event(const screen_coordinat& cursor_pos);
+
+
 /// Create a keyboard controller
 /// for a user at the right side of the keyboard
 controller create_right_keyboard_controller(const side player) noexcept;
