@@ -7,7 +7,7 @@
 
 //#include "../magic_enum/include/magic_enum.hpp"
 
-#ifndef LOGIC_ONLY
+//#ifndef LOGIC_ONLY
 
 #include <cassert>
 #include <cmath>
@@ -179,4 +179,4 @@ std::string to_str(const sf::Keyboard::Key k)
   #endif
 }
 
-#endif // LOGIC_ONLY
+//#endif // LOGIC_ONLY
