@@ -161,18 +161,6 @@ std::vector<piece_action> to_atomic(const piece_action& a)
     || a.get_action_type() == piece_action_type::attack
   );
   std::vector<piece_action> atomic_actions;
-  // First action is always: go home
-  /*
-  atomic_actions.push_back(
-    piece_action(
-      a.get_player(),
-      a.get_piece_type(),
-      piece_action_type::move,
-      a.get_from(),
-      a.get_from()
-    )
-  );
-  */
   if (a.get_from() == a.get_to()) return atomic_actions;
 
   const std::vector<square> squares{

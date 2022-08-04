@@ -314,39 +314,6 @@ const game_view_layout& get_layout(const game& g) noexcept
   return g.get_layout();
 }
 
-/*
-game_coordinat& game::get_mouse_player_pos()
-{
-  assert(has_mouse_controller(m_options));
-  if (get_left_player_controller(m_options) == controller_type::mouse)
-  {
-    return m_player_1_pos;
-  }
-  assert(get_right_player_controller(m_options) == controller_type::mouse);
-  return m_player_2_pos;
-}
-*/
-
-/*
-game_coordinat get_mouse_player_pos(const game& g)
-{
-  if (get_left_player_controller(g.get_options()) == controller_type::mouse)
-  {
-    return get_player_pos(g, side::lhs);
-  }
-  assert(get_right_player_controller(g.get_options()) == controller_type::mouse);
-  return get_player_pos(g, side::rhs);
-}
-*/
-
-/*
-game_coordinat& get_mouse_player_pos(game& g)
-{
-  assert(has_mouse_controller(g.get_options()));
-  return g.get_mouse_player_pos();
-}
-*/
-
 chess_color get_mouse_user_player_color(const game& g)
 {
   return get_mouse_user_player_color(g.get_options());
@@ -635,6 +602,7 @@ void toggle_left_player_color(game& g)
 std::ostream& operator<<(std::ostream& os, const game& g) noexcept
 {
   os << g.get_time();
+  assert(!"TODO");
   /*
 
   1  2  3  4  5  6  7  8

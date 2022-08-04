@@ -128,7 +128,6 @@ const auto& game_view::get_controller(const side player) const noexcept
 
 std::string get_controls_text(
   const game_view& view,
-  const chess_color /* player */,
   const controller& c,
   const int key
 )
@@ -339,7 +338,6 @@ void show_controls(game_view& view, const side player)
     const std::string s{
       get_controls_text(
         view,
-        get_player_color(view.get_game(), player),
         view.get_controller(player),
         key
       )

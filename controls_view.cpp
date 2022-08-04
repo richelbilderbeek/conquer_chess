@@ -192,24 +192,6 @@ bool controls_view::process_events()
         std::clog << "Debug";
       }
     }
-    /*
-    if (event.type == sf::Event::MouseButtonPressed)
-    {
-      if (event.mouseButton.button == sf::Mouse::Left)
-      {
-        const auto mouse_screen_pos{
-          screen_coordinat(event.mouseButton.x, event.mouseButton.y)
-        };
-        if (is_in(mouse_screen_pos, m_layout.get_start())) exec_game();
-        else if (is_in(mouse_screen_pos, m_layout.get_options())) exec_options();
-        else if (is_in(mouse_screen_pos, m_layout.get_quit()))
-        {
-          m_window.close();
-          return true;
-        }
-      }
-    }
-    */
   }
   return false; // Do not close the window :-)
 }

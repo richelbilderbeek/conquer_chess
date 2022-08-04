@@ -96,7 +96,6 @@ bool do_show_selected(const game_view& view);
 /// Get the controls text for a player with a controller
 std::string get_controls_text(
   const game_view& view,
-  const chess_color player,
   const controller& c,
   const int key
 );

@@ -225,27 +225,8 @@ std::string describe_actions(const piece& p)
   return t;
 }
 
-/*
-game_coordinat piece::get_coordinat() const noexcept
-{
-  if (m_actions.empty()) return to_coordinat(m_current_square);
-  const auto first_action{m_actions[0]};
-  if (first_action.get_action_type() == piece_action_type::attack)
-  {
-    return to_coordinat(m_current_square);
-  }
-  assert(first_action.get_action_type() == piece_action_type::move);
-  const auto from{to_coordinat(m_current_square)};
-  const auto to{to_coordinat(first_action.get_to())};
-  const auto full_delta{to - from};
-  const auto delta{full_delta * get_current_action_time().get()};
-  return from + delta;
-}
-*/
-
 double get_f_health(const piece& p) noexcept
 {
-
   return p.get_health() / p.get_max_health();
 }
 
