@@ -28,6 +28,7 @@ public:
 
   /// Process the input for this controller.
   /// Returns an an empty vector if this controller is uneffected by the event
+
   std::vector<control_action> process_input(
    const sf::Event& event,
    const game& g

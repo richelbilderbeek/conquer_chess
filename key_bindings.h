@@ -23,10 +23,10 @@ public:
     const sf::Keyboard::Key action_4
   );
 
-  /// From an event, create zero or one actions
-  std::vector<control_action> create_actions(
-    const sf::Event& event,
-    const side player
+  /// From an event, create zero or one action_types
+  /// Return the 'control_action_type' corresponding to an event
+  std::vector<control_action_type> create_actions(
+    const sf::Keyboard::Key k
   ) const noexcept;
 
   /// Get the key for action 1, 2, 3 or 4.
@@ -50,7 +50,7 @@ private:
   sf::Keyboard::Key m_down;
   sf::Keyboard::Key m_left;
   sf::Keyboard::Key m_right;
-  sf::Keyboard::Key m_up;
+  sf::Keyboard::Key m_up;  
 };
 
 /// Create the key bindings for a player at the left side of a keyboard

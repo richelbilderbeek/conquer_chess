@@ -137,6 +137,7 @@ std::string get_text_for_action(
   }
 }
 
+
 std::vector<control_action> controller::process_input(
   const sf::Event& event,
   const game& g
@@ -170,7 +171,13 @@ std::vector<control_action> controller::process_key_press(
 ) const
 {
   assert(event.type == sf::Event::KeyPressed);
-  return m_key_bindings.create_actions(event, m_player);
+  std::vector<control_action> v;
+  const auto actions_types{m_key_bindings.create_actions(event.key.code)};
+  for (const auto t: actions_types)
+  {
+     v.push_back(control_action(t, m_player, game_coordinat()));
+  }
+  return v;
 }
 
 std::vector<control_action> controller::process_mouse_pressed(
