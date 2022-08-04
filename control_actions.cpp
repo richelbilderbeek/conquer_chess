@@ -157,18 +157,18 @@ void control_actions::process_control_actions(game& g)
 
       start_attack(
         g,
-        get_keyboard_player_pos(g),
-        get_keyboard_user_player_color(get_options(g))
+        get_player_pos(g, action.get_player()),
+        get_player_color(g, action.get_player())
       );
     }
     else if (action.get_type() == control_action_type::press_down)
     {
-      auto& pos{get_keyboard_player_pos(g)};
+      auto& pos{get_player_pos(g, action.get_player())};
       pos = get_below(pos);
     }
     else if (action.get_type() == control_action_type::press_left)
     {
-      auto& pos{get_keyboard_player_pos(g)};
+      auto& pos{get_player_pos(g, action.get_player())};
       pos = get_left(pos);
     }
     else if (action.get_type() == control_action_type::press_move)
@@ -176,33 +176,33 @@ void control_actions::process_control_actions(game& g)
 
       start_move_unit(
         g,
-        get_keyboard_player_pos(g),
-        get_keyboard_user_player_color(get_options(g))
+        get_player_pos(g, action.get_player()),
+        get_player_color(g, action.get_player())
       );
     }
     else if (action.get_type() == control_action_type::press_right)
     {
-      auto& pos{get_keyboard_player_pos(g)};
+      auto& pos{get_player_pos(g, action.get_player())};
       pos = get_right(pos);
     }
     else if (action.get_type() == control_action_type::press_select)
     {
       do_select(
         g,
-        get_keyboard_player_pos(g),
-        get_keyboard_user_player_color(get_options(g))
+        get_player_pos(g, action.get_player()),
+        get_player_color(g, action.get_player())
       );
     }
     else if (action.get_type() == control_action_type::press_up)
     {
-      auto& pos{get_keyboard_player_pos(g)};
+      auto& pos{get_player_pos(g, action.get_player())};
       pos = get_above(pos);
     }
     else if (action.get_type() == control_action_type::mouse_move)
     {
       if (has_mouse_controller(g.get_options()))
       {
-        auto& pos{get_mouse_player_pos(g)};
+        auto& pos{get_player_pos(g, action.get_player())};
         pos = action.get_coordinat();
       }
     }
@@ -213,7 +213,7 @@ void control_actions::process_control_actions(game& g)
         do_select(
           g,
           action.get_coordinat(),
-          get_mouse_user_player_color(get_options(g))
+          get_player_color(g, action.get_player())
         );
       }
     }
@@ -224,7 +224,7 @@ void control_actions::process_control_actions(game& g)
         start_move_unit(
           g,
           action.get_coordinat(),
-          get_mouse_user_player_color(get_options(g))
+          get_player_color(g, action.get_player())
         );
       }
     }

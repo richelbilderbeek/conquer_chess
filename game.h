@@ -9,6 +9,8 @@
 #include "pieces.h"
 #include "message.h"
 #include "replayer.h"
+
+#include <iosfwd>
 #include <vector>
 
 /// Contains the game logic.
@@ -42,10 +44,13 @@ public:
   auto& get_layout() noexcept { return m_layout; }
 
   /// Get the position of the player that uses the mouse
-  game_coordinat& get_mouse_player_pos();
+  //game_coordinat& get_mouse_player_pos();
 
   /// Get the player position
   const game_coordinat& get_player_pos(const side player) const noexcept;
+
+  /// Get the player position
+  game_coordinat& get_player_pos(const side player) noexcept;
 
   /// Get the game options
   auto& get_options() noexcept { return m_options; }
@@ -232,13 +237,13 @@ game get_kings_only_game() noexcept;
 const game_view_layout& get_layout(const game& g) noexcept;
 
 /// Get the position of the player that uses the mouse
-game_coordinat get_mouse_player_pos(const game& g);
+//game_coordinat get_mouse_player_pos(const game& g);
 
 /// Get the position of the player that uses the mouse
-game_coordinat& get_mouse_player_pos(game& g);
+//game_coordinat& get_mouse_player_pos(game& g);
 
 /// Get the color of the mouse user
-chess_color get_mouse_user_player_color(const game& g);
+//chess_color get_mouse_user_player_color(const game& g);
 
 /// Get the music volume as a percentage
 double get_music_volume_as_percentage(const game& g) noexcept;
@@ -310,6 +315,9 @@ const std::vector<piece>& get_pieces(const game& g) noexcept;
 /// Get the player position
 const game_coordinat& get_player_pos(const game& g, const side player) noexcept;
 
+/// Get the player position
+game_coordinat& get_player_pos(game& g, const side player) noexcept;
+
 /// Get the time in the game
 const delta_t& get_time(const game& g) noexcept;
 
@@ -359,5 +367,7 @@ void unselect_all_pieces(
   game& g,
   const chess_color color
 );
+
+std::ostream& operator<<(std::ostream& os, const game& g) noexcept;
 
 #endif // GAME_H

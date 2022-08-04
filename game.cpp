@@ -314,6 +314,7 @@ const game_view_layout& get_layout(const game& g) noexcept
   return g.get_layout();
 }
 
+/*
 game_coordinat& game::get_mouse_player_pos()
 {
   assert(has_mouse_controller(m_options));
@@ -324,7 +325,9 @@ game_coordinat& game::get_mouse_player_pos()
   assert(get_right_player_controller(m_options) == controller_type::mouse);
   return m_player_2_pos;
 }
+*/
 
+/*
 game_coordinat get_mouse_player_pos(const game& g)
 {
   if (get_left_player_controller(g.get_options()) == controller_type::mouse)
@@ -334,17 +337,21 @@ game_coordinat get_mouse_player_pos(const game& g)
   assert(get_right_player_controller(g.get_options()) == controller_type::mouse);
   return get_player_pos(g, side::rhs);
 }
+*/
 
+/*
 game_coordinat& get_mouse_player_pos(game& g)
 {
   assert(has_mouse_controller(g.get_options()));
   return g.get_mouse_player_pos();
 }
+*/
 
 chess_color get_mouse_user_player_color(const game& g)
 {
   return get_mouse_user_player_color(g.get_options());
 }
+
 
 double get_music_volume_as_percentage(const game& g) noexcept
 {
@@ -429,7 +436,19 @@ const game_coordinat& game::get_player_pos(const side player) const noexcept
   return m_player_2_pos;
 }
 
+game_coordinat& game::get_player_pos(const side player) noexcept
+{
+  if (player == side::lhs) return m_player_1_pos;
+  assert(player == side::rhs);
+  return m_player_2_pos;
+}
+
 const game_coordinat& get_player_pos(const game& g, const side player) noexcept
+{
+  return g.get_player_pos(player);
+}
+
+game_coordinat& get_player_pos(game& g, const side player) noexcept
 {
   return g.get_player_pos(player);
 }
@@ -611,5 +630,23 @@ void tick_until_idle(game& g)
 void toggle_left_player_color(game& g)
 {
   toggle_left_player_color(g.get_options());
+}
+
+std::ostream& operator<<(std::ostream& os, const game& g) noexcept
+{
+  os << g.get_time();
+  /*
+
+  1  2  3  4  5  6  7  8
+a wr wp  .  .  .  . bp br
+b wb
+c wn
+d wq
+e wk
+f wb
+g wn
+h wr
+  */
+  return os;
 }
 

@@ -454,7 +454,7 @@ void game_view::show_mouse_cursor()
   cursor.setOrigin(16.0, 16.0);
   const screen_coordinat cursor_pos{
     convert_to_screen_coordinat(
-      get_mouse_player_pos(m_game),
+      get_player_pos(m_game, side::rhs),
       layout
     )
   };
