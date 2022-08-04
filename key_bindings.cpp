@@ -44,19 +44,19 @@ std::vector<control_action> key_bindings::create_actions(
   }
   else if (key_pressed == get_key_for_action(1))
   {
-    return { create_press_select_action(player) };
+    return { create_press_action_1(player) };
   }
   else if (key_pressed == get_key_for_action(2))
   {
-    return { create_press_move_action(player) };
+    return { create_press_action_2(player) };
   }
   else if (key_pressed == get_key_for_action(3))
   {
-    return { create_press_attack_action(player) };
+    return { create_press_action_3(player) };
   }
   else if (key_pressed == get_key_for_action(4))
   {
-    // Nothing yet
+    return { create_press_action_4(player) };
   }
   return {};
 }

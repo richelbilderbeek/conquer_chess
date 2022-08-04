@@ -321,6 +321,9 @@ const delta_t& get_time(const game& g) noexcept;
 /// @see use 'get_selected_pieces' to get all the selected pieces
 bool has_selected_pieces(const game& g, const chess_color player);
 
+/// See if there is at least 1 piece selected
+bool has_selected_pieces(const game& g, const side player);
+
 /// Are all pieces idle?
 bool is_idle(const game& g) noexcept;
 

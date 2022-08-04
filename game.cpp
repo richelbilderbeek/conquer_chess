@@ -115,7 +115,7 @@ void do_move_keyboard_player_piece(game& g, const square& s)
   set_keyboard_player_pos(g, s);
   assert(square(get_player_pos(g, side::lhs)) == s);
 
-  g.add_action(create_press_move_action(get_keyboard_user_player_side(g)));
+  g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
   assert(count_control_actions(g) == 1);
   g.tick(delta_t(0.1));
   assert(count_control_actions(g) == 0);
@@ -149,7 +149,7 @@ void do_select_for_keyboard_player(game& g, const square& s)
   assert(!get_piece_at(g, s).is_selected());
   set_keyboard_player_pos(g, s);
   assert(square(get_player_pos(g, side::lhs)) == s);
-  g.add_action(create_press_select_action(get_keyboard_user_player_side(g)));
+  g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
   g.tick();
   assert(count_control_actions(g) == 0);
   assert(get_piece_at(g, s).is_selected());
@@ -167,7 +167,7 @@ void do_start_attack_keyboard_player_piece(game& g, const square& s)
   set_keyboard_player_pos(g, s);
   assert(square(get_player_pos(g, side::lhs)) == s);
 
-  g.add_action(create_press_attack_action(get_keyboard_user_player_side(g)));
+  g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
   //g.tick(delta_t(0.0)); // Process the actions
   //assert(count_control_actions(g) == 0);
 }
@@ -498,6 +498,11 @@ const delta_t& get_time(const game& g) noexcept
 }
 
 bool has_selected_pieces(const game& g, const chess_color player)
+{
+  return !get_selected_pieces(g, player).empty();
+}
+
+bool has_selected_pieces(const game& g, const side player)
 {
   return !get_selected_pieces(g, player).empty();
 }

@@ -5,12 +5,16 @@
 /// such as keyboard, mouse and joystick actions
 enum class control_action_type
 {
-  press_attack,
+  press_action_1,
+  press_action_2,
+  press_action_3,
+  press_action_4,
+  //press_attack,
   press_down,
   press_left,
-  press_move,
+  //press_move,
   press_right,
-  press_select,
+  //press_select,
   press_up,
   lmb_down,
   rmb_down,

@@ -152,14 +152,38 @@ void control_actions::process_control_actions(game& g)
 {
   for (const auto& action: m_control_actions)
   {
-    if (action.get_type() == control_action_type::press_attack)
+    if (action.get_type() == control_action_type::press_action_1)
     {
-
-      start_attack(
-        g,
-        get_player_pos(g, action.get_player()),
-        get_player_color(g, action.get_player())
-      );
+      if (has_selected_pieces(g, action.get_player()))
+      {
+        // 'start_move_unit' will check for piece, color, etc.
+        start_move_unit(
+          g,
+          get_player_pos(g, action.get_player()),
+          get_player_color(g, action.get_player())
+        );
+      }
+      else
+      {
+        assert(!has_selected_pieces(g, action.get_player()));
+        // 'do_select' will check for a piece, it being selected, etc.
+        do_select( // Or unselect
+          g,
+          get_player_pos(g, action.get_player()),
+          get_player_color(g, action.get_player())
+        );
+      }
+    }
+    if (action.get_type() == control_action_type::press_action_2)
+    {
+      if (has_selected_pieces(g, action.get_player()))
+      {
+        start_attack(
+          g,
+          get_player_pos(g, action.get_player()),
+          get_player_color(g, action.get_player())
+        );
+      }
     }
     else if (action.get_type() == control_action_type::press_down)
     {
@@ -171,27 +195,10 @@ void control_actions::process_control_actions(game& g)
       auto& pos{get_player_pos(g, action.get_player())};
       pos = get_left(pos);
     }
-    else if (action.get_type() == control_action_type::press_move)
-    {
-
-      start_move_unit(
-        g,
-        get_player_pos(g, action.get_player()),
-        get_player_color(g, action.get_player())
-      );
-    }
     else if (action.get_type() == control_action_type::press_right)
     {
       auto& pos{get_player_pos(g, action.get_player())};
       pos = get_right(pos);
-    }
-    else if (action.get_type() == control_action_type::press_select)
-    {
-      do_select(
-        g,
-        get_player_pos(g, action.get_player()),
-        get_player_color(g, action.get_player())
-      );
     }
     else if (action.get_type() == control_action_type::press_up)
     {

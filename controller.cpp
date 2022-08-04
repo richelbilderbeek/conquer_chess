@@ -171,42 +171,6 @@ std::vector<control_action> controller::process_key_press(
 {
   assert(event.type == sf::Event::KeyPressed);
   return m_key_bindings.create_actions(event, m_player);
-  /*
-  sf::Keyboard::Key key_pressed = event.key.code;
-  if (key_pressed == m_key_bindings.get_key_for_move_up())
-  {
-    return { create_press_up_action(m_player) };
-  }
-  else if (key_pressed == m_key_bindings.get_key_for_move_right())
-  {
-    return { create_press_right_action(m_player) };
-  }
-  else if (key_pressed == m_key_bindings.get_key_for_move_down())
-  {
-    return { create_press_down_action(m_player) };
-  }
-  else if (key_pressed == m_key_bindings.get_key_for_move_left())
-  {
-    return { create_press_left_action(m_player) };
-  }
-  else if (key_pressed == m_key_bindings.get_key_for_action(1))
-  {
-    return { create_press_select_action(m_player) };
-  }
-  else if (key_pressed == m_key_bindings.get_key_for_action(2))
-  {
-    return { create_press_move_action(m_player) };
-  }
-  else if (key_pressed == m_key_bindings.get_key_for_action(3))
-  {
-    return { create_press_attack_action(m_player) };
-  }
-  else if (key_pressed == m_key_bindings.get_key_for_action(4))
-  {
-    // Nothing yet
-  }
-  return {};
-  */
 }
 
 std::vector<control_action> controller::process_mouse_pressed(
@@ -393,7 +357,7 @@ void test_controller()
     const auto actions{c.process_input(event, g)};
     assert(!actions.empty());
   }
-  // press action 4 does nothing yet
+  // press action 4 works
   {
     const game g;
 
@@ -404,7 +368,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(actions.empty());
+    assert(!actions.empty());
   }
   //
   {

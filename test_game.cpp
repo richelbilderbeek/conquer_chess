@@ -135,7 +135,7 @@ void test_game_functions()
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(collect_messages(g).empty());
     // Add a sound by selecting a piece
-    g.add_action(create_press_select_action(side::rhs));
+    g.add_action(create_press_action_1(side::rhs));
     //g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(!collect_messages(g).empty());
@@ -327,7 +327,7 @@ void test_game_keyboard_use()
     const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
     g.get_player_pos(side::lhs) = to_coordinat(white_king.get_current_square());
     assert(count_selected_units(g, chess_color::white) == 0);
-    g.add_action(create_press_select_action(side::lhs));
+    g.add_action(create_press_action_1(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
@@ -336,12 +336,12 @@ void test_game_keyboard_use()
     game g;
     g.get_player_pos(side::lhs) = to_coordinat("e2");
     assert(count_selected_units(g, chess_color::white) == 0);
-    g.add_action(create_press_select_action(side::lhs));
+    g.add_action(create_press_action_1(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
     g.get_player_pos(side::lhs) = to_coordinat("e4");
-    g.add_action(create_press_move_action(side::lhs));
+    g.add_action(create_press_action_1(side::lhs));
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
@@ -355,12 +355,12 @@ void test_game_keyboard_use()
     game g;
     g.get_player_pos(side::lhs) = to_coordinat("e2");
     assert(count_selected_units(g, chess_color::white) == 0);
-    g.add_action(create_press_select_action(side::lhs));
+    g.add_action(create_press_action_1(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
     g.get_player_pos(side::lhs) = to_coordinat("e1");
-    g.add_action(create_press_move_action(side::lhs));
+    g.add_action(create_press_action_1(side::lhs));
     g.tick(); // Ignores invalid action, adds sound effect
     assert(count_selected_units(g, chess_color::white) == 0);
     assert(get_closest_piece_to(g, to_coordinat("e2")).get_type() == piece_type::pawn);
