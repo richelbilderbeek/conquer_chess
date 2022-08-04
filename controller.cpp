@@ -174,31 +174,31 @@ std::vector<control_action> controller::process_key_press(
   sf::Keyboard::Key key_pressed = event.key.code;
   if (key_pressed == m_key_bindings.get_key_for_move_up())
   {
-    return { create_press_up_action() };
+    return { create_press_up_action(m_player) };
   }
   else if (key_pressed == m_key_bindings.get_key_for_move_right())
   {
-    return { create_press_right_action() };
+    return { create_press_right_action(m_player) };
   }
   else if (key_pressed == m_key_bindings.get_key_for_move_down())
   {
-    return { create_press_down_action() };
+    return { create_press_down_action(m_player) };
   }
   else if (key_pressed == m_key_bindings.get_key_for_move_left())
   {
-    return { create_press_left_action() };
+    return { create_press_left_action(m_player) };
   }
   else if (key_pressed == m_key_bindings.get_key_for_action(1))
   {
-    return { create_press_select_action() };
+    return { create_press_select_action(m_player) };
   }
   else if (key_pressed == m_key_bindings.get_key_for_action(2))
   {
-    return { create_press_move_action() };
+    return { create_press_move_action(m_player) };
   }
   else if (key_pressed == m_key_bindings.get_key_for_action(3))
   {
-    return { create_press_attack_action() };
+    return { create_press_attack_action(m_player) };
   }
   else if (key_pressed == m_key_bindings.get_key_for_action(4))
   {
@@ -223,7 +223,8 @@ std::vector<control_action> controller::process_mouse_pressed(
         convert_to_game_coordinat(
           mouse_screen_pos,
           g.get_layout()
-        )
+        ),
+        m_player
       )
     };
   }
@@ -233,7 +234,8 @@ std::vector<control_action> controller::process_mouse_pressed(
       convert_to_game_coordinat(
         mouse_screen_pos,
         g.get_layout()
-      )
+      ),
+      m_player
     )
   };
 }
@@ -253,7 +255,7 @@ std::vector<control_action> controller::process_mouse_moved(
       g.get_layout()
     )
   };
-  return { create_mouse_move_action(mouse_game_pos) };
+  return { create_mouse_move_action(mouse_game_pos, m_player) };
 }
 
 void test_controller()

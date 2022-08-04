@@ -87,6 +87,11 @@ chess_color get_keyboard_user_player_color(const game_options& options)
   */
 }
 
+side get_keyboard_user_player_side(const game_options& options)
+{
+  return get_keyboard_user_player_side(options.get_controllers());
+}
+
 sf::Keyboard::Key get_key_for_action(const game_options& options, const side player, const int action)
 {
   assert(action >= 1);
@@ -163,6 +168,11 @@ controller_type get_right_player_controller(const game_options& options) noexcep
   assert(options.get_controllers().size() >= 2);
   assert(options.get_controllers()[1].get_player() == side::rhs);
   return options.get_controllers()[1].get_type();
+}
+
+bool has_keyboard_controller(const game_options& options) noexcept
+{
+  return has_keyboard_controller(options.get_controllers());
 }
 
 bool has_mouse_controller(const game_options& options) noexcept

@@ -28,7 +28,7 @@ side get_keyboard_user_player_side(const std::vector<controller>& controllers);
 side get_mouse_user_player_side(const std::vector<controller>& controllers);
 
 /// Determine if there is at least one controller that use the keyboard
-bool has_keyboard_controllers(const std::vector<controller>& controllers) noexcept;
+bool has_keyboard_controller(const std::vector<controller>& controllers) noexcept;
 
 /// Determine if there is at least one controller that use the mouse
 bool has_mouse_controller(const std::vector<controller>& controllers) noexcept;

@@ -9,7 +9,8 @@
 
 /// A controller is a class that takes input from
 /// a mouse/keyboard/AI and converts these into
-/// the right 'control_action'
+/// the right 'control_action'.
+/// sf::Event -> controllers -> control_action
 class controller
 {
 public:

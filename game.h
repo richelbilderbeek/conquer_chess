@@ -217,6 +217,10 @@ game_coordinat& get_keyboard_player_pos(game& g);
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game& g);
 
+/// Get the side of the controller that uses the keyboard.
+/// Assumes there is one controller that uses the keyboard
+side get_keyboard_user_player_side(const game& g);
+
 /// Get the key for action 1, 2, 3 or 4 for a player
 sf::Keyboard::Key get_key_for_action(const game& g, const side player, const int action);
 

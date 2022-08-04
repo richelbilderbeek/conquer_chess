@@ -150,6 +150,10 @@ bool do_show_selected(const game_options& options) noexcept;
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game_options& options);
 
+/// Get the side of the controller that uses the keyboard.
+/// Assumes there is one controller that uses the keyboard
+side get_keyboard_user_player_side(const game_options& options);
+
 /// Get the key for a action 1, 2, 3 or 4 for a player
 sf::Keyboard::Key get_key_for_action(const game_options& options, const side player, const int action);
 
@@ -195,6 +199,9 @@ std::vector<piece> get_starting_pieces(
 
 /// Get the starting position
 starting_position_type get_starting_position(const game_options& options) noexcept;
+
+/// Determine if there is at least one controller that use the keyboard
+bool has_keyboard_controller(const game_options& options) noexcept;
 
 /// Is there at least one controller with the mouse?
 bool has_mouse_controller(const game_options& options) noexcept;

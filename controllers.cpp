@@ -48,7 +48,7 @@ std::vector<controller> create_two_keyboard_controllers() noexcept
 
 side get_keyboard_user_player_side(const std::vector<controller>& controllers)
 {
-  assert(has_keyboard_controllers(controllers));
+  assert(has_keyboard_controller(controllers));
   const auto i{
     std::find_if(
       std::begin(controllers),
@@ -80,7 +80,7 @@ side get_mouse_user_player_side(const std::vector<controller>& controllers)
   return (*i).get_player();
 }
 
-bool has_keyboard_controllers(const std::vector<controller>& controllers) noexcept
+bool has_keyboard_controller(const std::vector<controller>& controllers) noexcept
 {
   return count_keyboard_controllers(controllers);
 }
@@ -123,8 +123,8 @@ void test_controllers()
   }
   // has_keyboard_controllers
   {
-    assert(has_keyboard_controllers(create_default_controllers()));
-    assert(has_keyboard_controllers(create_two_keyboard_controllers()));
+    assert(has_keyboard_controller(create_default_controllers()));
+    assert(has_keyboard_controller(create_two_keyboard_controllers()));
   }
   // has_mouse_controller
   {

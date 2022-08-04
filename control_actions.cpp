@@ -314,7 +314,7 @@ void test_control_actions()
     game g;
     const game_coordinat before{get_keyboard_player_pos(g)};
     control_actions c;
-    c.add(create_press_up_action());
+    c.add(create_press_up_action(side::lhs));
     c.process(g);
     const game_coordinat after{get_keyboard_player_pos(g)};
     assert(before != after);
@@ -324,7 +324,7 @@ void test_control_actions()
     game g;
     const game_coordinat before{get_keyboard_player_pos(g)};
     control_actions c;
-    c.add(create_press_right_action());
+    c.add(create_press_right_action(side::lhs));
     c.process(g);
     const game_coordinat after{get_keyboard_player_pos(g)};
     assert(before != after);
@@ -334,7 +334,7 @@ void test_control_actions()
     game g;
     const game_coordinat before{get_keyboard_player_pos(g)};
     control_actions c;
-    c.add(create_press_down_action());
+    c.add(create_press_down_action(side::lhs));
     c.process(g);
     const game_coordinat after{get_keyboard_player_pos(g)};
     assert(before != after);
@@ -344,7 +344,7 @@ void test_control_actions()
     game g;
     const game_coordinat before{get_keyboard_player_pos(g)};
     control_actions c;
-    c.add(create_press_left_action());
+    c.add(create_press_left_action(side::lhs));
     c.process(g);
     const game_coordinat after{get_keyboard_player_pos(g)};
     assert(before != after);

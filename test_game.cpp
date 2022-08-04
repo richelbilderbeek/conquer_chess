@@ -114,6 +114,7 @@ void test_game_functions()
     g.add_action(
       control_action(
         control_action_type::mouse_move,
+        side::rhs,
         to_coordinat(black_king.get_current_square())
       )
     );
@@ -122,12 +123,12 @@ void test_game_functions()
     assert(can_player_select_piece_at_cursor_pos(g, chess_color::black));
 
     assert(can_player_select_piece_at_cursor_pos(g, chess_color::white));
-    g.add_action(create_press_left_action()); // cursor to d8
+    g.add_action(create_press_left_action(side::rhs)); // cursor to d8
     g.tick();
     assert(!can_player_select_piece_at_cursor_pos(g, chess_color::white));
 
-    g.add_action(create_press_left_action()); // cursor to d7
-    g.add_action(create_press_left_action()); // cursor to d6
+    g.add_action(create_press_left_action(side::rhs)); // cursor to d7
+    g.add_action(create_press_left_action(side::rhs)); // cursor to d6
     g.tick();
     assert(!can_player_select_piece_at_cursor_pos(g, chess_color::white));
   }
@@ -137,7 +138,7 @@ void test_game_functions()
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(collect_messages(g).empty());
     // Add a sound by selecting a piece
-    g.add_action(create_press_select_action());
+    g.add_action(create_press_select_action(side::rhs));
     //g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(!collect_messages(g).empty());
@@ -397,7 +398,7 @@ void test_game_keyboard_use()
     const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
     g.get_keyboard_player_pos() = to_coordinat(white_king.get_current_square());
     assert(count_selected_units(g, chess_color::white) == 0);
-    g.add_action(create_press_select_action());
+    g.add_action(create_press_select_action(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
@@ -406,12 +407,12 @@ void test_game_keyboard_use()
     game g;
     g.get_keyboard_player_pos() = to_coordinat("e2");
     assert(count_selected_units(g, chess_color::white) == 0);
-    g.add_action(create_press_select_action());
+    g.add_action(create_press_select_action(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
     g.get_keyboard_player_pos() = to_coordinat("e4");
-    g.add_action(create_press_move_action());
+    g.add_action(create_press_move_action(side::lhs));
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
@@ -425,12 +426,12 @@ void test_game_keyboard_use()
     game g;
     g.get_keyboard_player_pos() = to_coordinat("e2");
     assert(count_selected_units(g, chess_color::white) == 0);
-    g.add_action(create_press_select_action());
+    g.add_action(create_press_select_action(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
     g.get_keyboard_player_pos() = to_coordinat("e1");
-    g.add_action(create_press_move_action());
+    g.add_action(create_press_move_action(side::lhs));
     g.tick(); // Ignores invalid action, adds sound effect
     assert(count_selected_units(g, chess_color::white) == 0);
     assert(get_closest_piece_to(g, to_coordinat("e2")).get_type() == piece_type::pawn);
@@ -448,7 +449,7 @@ void test_game_mouse_use()
     game g;
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(count_selected_units(g, chess_color::black) == 0);
-    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square())));
+    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square()), side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
   }
@@ -457,9 +458,13 @@ void test_game_mouse_use()
     game g;
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(count_selected_units(g, chess_color::black) == 0);
-    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square())));
+    g.add_action(
+      create_press_lmb_action(
+        to_coordinat(black_king.get_current_square()), side::rhs
+      )
+    );
     g.tick();
-    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square())));
+    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square()), side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 0);
   }
@@ -469,20 +474,20 @@ void test_game_mouse_use()
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     const auto black_queen{find_pieces(g, piece_type::queen, chess_color::black).at(0)};
     assert(count_selected_units(g, chess_color::black) == 0);
-    g.add_action(create_press_lmb_action(to_coordinat(black_queen.get_current_square())));
+    g.add_action(create_press_lmb_action(to_coordinat(black_queen.get_current_square()), side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
-    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square())));
+    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square()), side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
   }
   // LMB then RMB makes a unit move
   {
     game g = get_kings_only_game();
-    g.add_action(create_press_lmb_action(to_coordinat("e8")));
+    g.add_action(create_press_lmb_action(to_coordinat("e8"), side::rhs));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    g.add_action(create_press_rmb_action(to_coordinat("e6")));
+    g.add_action(create_press_rmb_action(to_coordinat("e6"), side::rhs));
     g.tick(delta_t(0.25));
     g.tick(delta_t(0.25));
     g.tick(delta_t(0.25));

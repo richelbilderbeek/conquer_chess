@@ -140,6 +140,7 @@ const delta_t& get_time(const game_view& v) noexcept;
 
 /// Process the event, by letting the controllers
 /// add actions to the game
+/// sf::Event -> controllers -> control_action
 void process_event(game& g, const sf::Event& event);
 
 /// Show the board: squares, unit paths, pieces, health bars

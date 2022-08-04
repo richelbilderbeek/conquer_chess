@@ -6,76 +6,85 @@
 
 control_action::control_action(
   const control_action_type type,
+  const side player,
   const game_coordinat& coordinat
-) : m_coordinat{coordinat}, m_type{type}
+) : m_coordinat{coordinat},
+    m_player{player},
+    m_type{type}
 {
 
 }
 
-control_action create_mouse_move_action(const game_coordinat& coordinat)
+control_action create_mouse_move_action(
+  const game_coordinat& coordinat,
+  const side player
+)
 {
-  return control_action(control_action_type::mouse_move, coordinat);
+  return control_action(control_action_type::mouse_move, player, coordinat);
 }
 
-control_action create_press_attack_action()
+control_action create_press_attack_action(const side player)
 {
-  return control_action(control_action_type::press_attack, game_coordinat());
+  return control_action(control_action_type::press_attack, player, game_coordinat());
 }
 
-control_action create_press_down_action()
+control_action create_press_down_action(const side player)
 {
-  return control_action(control_action_type::press_down, game_coordinat());
+  return control_action(control_action_type::press_down, player, game_coordinat());
 }
 
-control_action create_press_left_action()
+control_action create_press_left_action(const side player)
 {
-  return control_action(control_action_type::press_left, game_coordinat());
+  return control_action(control_action_type::press_left, player, game_coordinat());
 }
 
-control_action create_press_lmb_action(const game_coordinat& coordinat)
+control_action create_press_lmb_action(
+  const game_coordinat& coordinat,
+  const side player
+)
 {
-  return control_action(control_action_type::lmb_down, coordinat);
+  return control_action(control_action_type::lmb_down, player, coordinat);
 }
 
-control_action create_press_move_action()
+control_action create_press_move_action(const side player)
 {
-  return control_action(control_action_type::press_move, game_coordinat());
+  return control_action(control_action_type::press_move, player, game_coordinat());
 }
 
-control_action create_press_right_action()
+control_action create_press_right_action(const side player)
 {
-  return control_action(control_action_type::press_right, game_coordinat());
+  return control_action(control_action_type::press_right, player, game_coordinat());
 }
 
-control_action create_press_rmb_action(const game_coordinat& coordinat)
+control_action create_press_rmb_action(const game_coordinat& coordinat, const side player)
 {
-  return control_action(control_action_type::rmb_down, coordinat);
+  return control_action(control_action_type::rmb_down, player, coordinat);
 }
 
-control_action create_press_select_action()
+control_action create_press_select_action(const side player)
 {
-  return control_action(control_action_type::press_select, game_coordinat());
+  return control_action(control_action_type::press_select, player, game_coordinat());
 }
 
-control_action create_press_up_action()
+control_action create_press_up_action(const side player)
 {
-  return control_action(control_action_type::press_up, game_coordinat());
+  return control_action(control_action_type::press_up, player, game_coordinat());
 }
 
 void test_control_action()
 {
 #ifndef NDEBUG
   {
-    assert(create_mouse_move_action(game_coordinat()).get_type() == control_action_type::mouse_move);
-    assert(create_press_attack_action().get_type() == control_action_type::press_attack);
-    assert(create_press_down_action().get_type() == control_action_type::press_down);
-    assert(create_press_left_action().get_type() == control_action_type::press_left);
-    assert(create_press_lmb_action(game_coordinat()).get_type() == control_action_type::lmb_down);
-    assert(create_press_move_action().get_type() == control_action_type::press_move);
-    assert(create_press_right_action().get_type() == control_action_type::press_right);
-    assert(create_press_rmb_action(game_coordinat()).get_type() == control_action_type::rmb_down);
-    assert(create_press_select_action().get_type() == control_action_type::press_select);
-    assert(create_press_up_action().get_type() == control_action_type::press_up);
+    assert(create_mouse_move_action(game_coordinat(), side::lhs).get_type() == control_action_type::mouse_move);
+    assert(create_press_attack_action(side::lhs).get_type() == control_action_type::press_attack);
+    assert(create_press_down_action(side::lhs).get_type() == control_action_type::press_down);
+    assert(create_press_left_action(side::lhs).get_type() == control_action_type::press_left);
+    assert(create_press_lmb_action(game_coordinat(), side::lhs).get_type() == control_action_type::lmb_down);
+    assert(create_press_move_action(side::lhs).get_type() == control_action_type::press_move);
+    assert(create_press_right_action(side::lhs).get_type() == control_action_type::press_right);
+    assert(create_press_rmb_action(game_coordinat(), side::lhs).get_type() == control_action_type::rmb_down);
+    assert(create_press_select_action(side::lhs).get_type() == control_action_type::press_select);
+    assert(create_press_up_action(side::lhs).get_type() == control_action_type::press_up);
   }
 #endif // DEBUG
 }
