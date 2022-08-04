@@ -1,7 +1,7 @@
 #ifndef SFML_HELPER_H
 #define SFML_HELPER_H
 
-#ifndef LOGIC_ONLY
+//#ifndef LOGIC_ONLY
 
 /// SFML helper functions
 
@@ -25,6 +25,6 @@ std::string to_str(const sf::Keyboard::Key k);
 
 sf::Color to_sfml_color(const chess_color color) noexcept;
 
-#endif // LOGIC_ONLY
+//#endif // LOGIC_ONLY
 
 #endif // SFML_HELPER_H
