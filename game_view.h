@@ -138,6 +138,10 @@ std::string get_text_for_action(
 /// Get the time in the game
 const delta_t& get_time(const game_view& v) noexcept;
 
+/// Process the event, by letting the controllers
+/// add actions to the game
+void process_event(game& g, const sf::Event& event);
+
 /// Show the board: squares, unit paths, pieces, health bars
 void show_board(game_view& view);
 

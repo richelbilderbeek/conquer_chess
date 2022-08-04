@@ -10,7 +10,10 @@
 class control_action
 {
 public:
-  explicit control_action(const control_action_type type, const game_coordinat& coordinat);
+  explicit control_action(
+    const control_action_type type,
+    const game_coordinat& coordinat
+  );
   auto& get_coordinat() const noexcept { return m_coordinat; }
   auto get_type() const noexcept { return m_type; }
 

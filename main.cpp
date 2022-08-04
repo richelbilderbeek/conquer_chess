@@ -92,14 +92,17 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   if (args.size() == 1)
   {
     #ifndef LOGIC_ONLY
-    /*
+
+    #define USE_TWO_KEYBOARDS
+    #ifdef USE_TWO_KEYBOARDS
     const auto options{
       create_default_game_options_with_controllers(
         create_two_keyboard_controllers()
       )
     };
-    */
+    #else
     const auto options{create_default_game_options()};
+    #endif
     menu_view v(options);
     v.exec();
     #endif // LOGIC_ONLY

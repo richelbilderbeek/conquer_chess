@@ -244,15 +244,20 @@ bool game_view::process_events()
         return true;
       }
     }
-    for (const auto& controller: m_controllers)
-    {
-       for (const auto a: controller.process_input(event, m_game))
-       {
-         m_game.add_action(a);
-       }
-    }
+    process_event(m_game, event);
   }
   return false; // if no events proceed with tick
+}
+
+void process_event(game& g, const sf::Event& event)
+{
+  for (const auto& controller: g.get_options().get_controllers())
+  {
+     for (const auto a: controller.process_input(event, g))
+     {
+       g.add_action(a);
+     }
+  }
 }
 
 void game_view::process_piece_messages()
