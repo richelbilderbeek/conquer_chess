@@ -1,13 +1,6 @@
 #include "sfml_helper.h"
 
-//#define HAS_THOR
-#ifdef HAS_THOR
-#include <Thor/Input/InputNames.hpp>
-#endif
-
-//#include "../magic_enum/include/magic_enum.hpp"
-
-//#ifndef LOGIC_ONLY
+#include <SFML/Graphics/RectangleShape.hpp>
 
 #include <cassert>
 #include <cmath>
@@ -55,6 +48,154 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
   );
 }
 
+void test_sfml_helper()
+{
+#ifndef NDEBUG
+  // f_health_to_color
+  {
+    const sf::Color lowest{f_health_to_color(1.0 * 0.125)};
+    const sf::Color low{f_health_to_color(3.0 * 0.125)};
+    const sf::Color mid{f_health_to_color(5.0 * 0.125)};
+    const sf::Color high{f_health_to_color(7.0 * 0.125)};
+    assert(lowest != low);
+    assert(lowest != mid);
+    assert(lowest != high);
+    assert(low != mid);
+    assert(low != high);
+    assert(mid != high);
+  }
+  // set_rect
+  {
+    sf::RectangleShape r;
+    const screen_rect screen_size{get_default_screen_size()};
+    set_rect(r, screen_size);
+    assert(r.getSize().x == get_width(screen_size));
+    assert(r.getSize().y == get_height(screen_size));
+  }
+  // set_text_position
+  {
+    sf::Text t;
+    t.setString("X");
+    const screen_rect screen_size{get_default_screen_size()};
+    set_text_position(t, screen_size);
+    assert(!t.getString().isEmpty()); // Does not test set_text_poistion at all
+  }
+  // to_str
+  {
+    assert(to_str(sf::Keyboard::Key::A) == "A");
+    assert(to_str(sf::Keyboard::Key::Add) == "Add");
+    assert(to_str(sf::Keyboard::Key::B) == "B");
+    assert(to_str(sf::Keyboard::Key::Backslash) == "Backslash");
+    assert(to_str(sf::Keyboard::Key::Backspace) == "Backspace");
+    assert(to_str(sf::Keyboard::Key::C) == "C");
+    assert(to_str(sf::Keyboard::Key::Comma) == "Comma");
+    assert(to_str(sf::Keyboard::Key::D) == "D");
+    assert(to_str(sf::Keyboard::Key::Delete) == "Delete");
+    assert(to_str(sf::Keyboard::Key::Divide) == "Divide");
+    assert(to_str(sf::Keyboard::Key::Down) == "Down");
+    assert(to_str(sf::Keyboard::Key::E) == "E");
+    assert(to_str(sf::Keyboard::Key::End) == "End");
+    assert(to_str(sf::Keyboard::Key::Enter) == "Enter");
+    assert(to_str(sf::Keyboard::Key::Equal) == "Equal");
+    assert(to_str(sf::Keyboard::Key::Escape) == "Escape");
+    assert(to_str(sf::Keyboard::Key::F10) == "F10");
+    assert(to_str(sf::Keyboard::Key::F11) == "F11");
+    assert(to_str(sf::Keyboard::Key::F12) == "F12");
+    assert(to_str(sf::Keyboard::Key::F13) == "F13");
+    assert(to_str(sf::Keyboard::Key::F14) == "F14");
+    assert(to_str(sf::Keyboard::Key::F15) == "F15");
+    assert(to_str(sf::Keyboard::Key::F1) == "F1");
+    assert(to_str(sf::Keyboard::Key::F2) == "F2");
+    assert(to_str(sf::Keyboard::Key::F3) == "F3");
+    assert(to_str(sf::Keyboard::Key::F4) == "F4");
+    assert(to_str(sf::Keyboard::Key::F5) == "F5");
+    assert(to_str(sf::Keyboard::Key::F6) == "F6");
+    assert(to_str(sf::Keyboard::Key::F7) == "F7");
+    assert(to_str(sf::Keyboard::Key::F8) == "F8");
+    assert(to_str(sf::Keyboard::Key::F9) == "F9");
+    assert(to_str(sf::Keyboard::Key::F) == "F");
+    assert(to_str(sf::Keyboard::Key::G) == "G");
+    assert(to_str(sf::Keyboard::Key::H) == "H");
+    assert(to_str(sf::Keyboard::Key::Home) == "Home");
+    assert(to_str(sf::Keyboard::Key::Hyphen) == "Hyphen");
+    assert(to_str(sf::Keyboard::Key::I) == "I");
+    assert(to_str(sf::Keyboard::Key::Insert) == "Insert");
+    assert(to_str(sf::Keyboard::Key::J) == "J");
+    assert(to_str(sf::Keyboard::Key::K) == "K");
+    assert(to_str(sf::Keyboard::Key::KeyCount) == "KeyCount");
+    assert(to_str(sf::Keyboard::Key::L) == "L");
+    assert(to_str(sf::Keyboard::Key::LAlt) == "LAlt");
+    assert(to_str(sf::Keyboard::Key::LBracket) == "LBracket");
+    assert(to_str(sf::Keyboard::Key::LControl) == "LControl");
+    assert(to_str(sf::Keyboard::Key::LShift) == "LShift");
+    assert(to_str(sf::Keyboard::Key::LSystem) == "LSystem");
+    assert(to_str(sf::Keyboard::Key::Left) == "Left");
+    assert(to_str(sf::Keyboard::Key::M) == "M");
+    assert(to_str(sf::Keyboard::Key::Menu) == "Menu");
+    assert(to_str(sf::Keyboard::Key::Multiply) == "Multiply");
+    assert(to_str(sf::Keyboard::Key::N) == "N");
+    assert(to_str(sf::Keyboard::Key::Num0) == "Num0");
+    assert(to_str(sf::Keyboard::Key::Num1) == "Num1");
+    assert(to_str(sf::Keyboard::Key::Num2) == "Num2");
+    assert(to_str(sf::Keyboard::Key::Num3) == "Num3");
+    assert(to_str(sf::Keyboard::Key::Num4) == "Num4");
+    assert(to_str(sf::Keyboard::Key::Num5) == "Num5");
+    assert(to_str(sf::Keyboard::Key::Num6) == "Num6");
+    assert(to_str(sf::Keyboard::Key::Num7) == "Num7");
+    assert(to_str(sf::Keyboard::Key::Num8) == "Num8");
+    assert(to_str(sf::Keyboard::Key::Num9) == "Num9");
+    assert(to_str(sf::Keyboard::Key::Numpad0) == "Numpad0");
+    assert(to_str(sf::Keyboard::Key::Numpad1) == "Numpad1");
+    assert(to_str(sf::Keyboard::Key::Numpad2) == "Numpad2");
+    assert(to_str(sf::Keyboard::Key::Numpad3) == "Numpad3");
+    assert(to_str(sf::Keyboard::Key::Numpad4) == "Numpad4");
+    assert(to_str(sf::Keyboard::Key::Numpad5) == "Numpad5");
+    assert(to_str(sf::Keyboard::Key::Numpad6) == "Numpad6");
+    assert(to_str(sf::Keyboard::Key::Numpad7) == "Numpad7");
+    assert(to_str(sf::Keyboard::Key::Numpad8) == "Numpad8");
+    assert(to_str(sf::Keyboard::Key::Numpad9) == "Numpad9");
+    assert(to_str(sf::Keyboard::Key::O) == "O");
+    assert(to_str(sf::Keyboard::Key::P) == "P");
+    assert(to_str(sf::Keyboard::Key::PageDown) == "PageDown");
+    assert(to_str(sf::Keyboard::Key::PageUp) == "PageUp");
+    assert(to_str(sf::Keyboard::Key::Pause) == "Pause");
+    assert(to_str(sf::Keyboard::Key::Period) == "Period");
+    assert(to_str(sf::Keyboard::Key::Q) == "Q");
+    assert(to_str(sf::Keyboard::Key::Quote) == "Quote");
+    assert(to_str(sf::Keyboard::Key::R) == "R");
+    assert(to_str(sf::Keyboard::Key::RAlt) == "RAlt");
+    assert(to_str(sf::Keyboard::Key::RBracket) == "RBracket");
+    assert(to_str(sf::Keyboard::Key::RControl) == "RControl");
+    assert(to_str(sf::Keyboard::Key::RShift) == "RShift");
+    assert(to_str(sf::Keyboard::Key::RSystem) == "RSystem");
+    assert(to_str(sf::Keyboard::Key::Right) == "Right");
+    assert(to_str(sf::Keyboard::Key::S) == "S");
+    assert(to_str(sf::Keyboard::Key::Semicolon) == "Semicolon");
+    assert(to_str(sf::Keyboard::Key::Slash) == "Slash");
+    assert(to_str(sf::Keyboard::Key::Space) == "Space");
+    assert(to_str(sf::Keyboard::Key::Subtract) == "Subtract");
+    assert(to_str(sf::Keyboard::Key::T) == "T");
+    assert(to_str(sf::Keyboard::Key::Tab) == "Tab");
+    assert(to_str(sf::Keyboard::Key::Tilde) == "Tilde");
+    assert(to_str(sf::Keyboard::Key::U) == "U");
+    assert(to_str(sf::Keyboard::Key::Unknown) == "Unknown");
+    assert(to_str(sf::Keyboard::Key::Up) == "Up");
+    assert(to_str(sf::Keyboard::Key::V) == "V");
+    assert(to_str(sf::Keyboard::Key::W) == "W");
+    assert(to_str(sf::Keyboard::Key::X) == "X");
+    assert(to_str(sf::Keyboard::Key::Y) == "Y");
+    assert(to_str(sf::Keyboard::Key::Z) == "Z");
+
+  }
+  // to_sfml_color
+  {
+    const sf::Color b{to_sfml_color(chess_color::black)};
+    const sf::Color w{to_sfml_color(chess_color::white)};
+    assert(b != w);
+  }
+#endif
+}
+
 sf::Color to_sfml_color(const chess_color color) noexcept
 {
   if (color == chess_color::white) return sf::Color::White;
@@ -64,9 +205,6 @@ sf::Color to_sfml_color(const chess_color color) noexcept
 
 std::string to_str(const sf::Keyboard::Key k)
 {
-  #ifdef HAS_THOR
-  return thor::toString(k);
-  #else
   switch (k)
   {
     case sf::Keyboard::Key::A: return "A";
@@ -176,7 +314,4 @@ std::string to_str(const sf::Keyboard::Key k)
       assert(k == sf::Keyboard::Key::Z);
       return "Z";
   }
-  #endif
 }
-
-//#endif // LOGIC_ONLY

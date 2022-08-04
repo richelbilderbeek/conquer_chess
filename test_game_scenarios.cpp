@@ -102,6 +102,7 @@ void test_game_scenarios()
     assert(is_idle(g));
     assert(piece_with_id_is_at(g, id, square("b1")));
   }
+  //#define FIX_ISSUE_17
   #ifdef FIX_ISSUE_17
   // e2-e6, then can attack and capture d7
   {

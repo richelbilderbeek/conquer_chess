@@ -18,6 +18,7 @@
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
 #include "options_view_layout.h"
+#include "sfml_helper.h"
 #include "replay.h"
 #include "screen_coordinat.h"
 #include "test_game.h"
@@ -39,6 +40,8 @@ void test()
   test_control_actions();
   test_controller();
   test_controller_type();
+  test_controls_view_layout();
+  test_controls_view_item();
   test_delta_t();
   test_fps_clock();
   test_game();
@@ -67,6 +70,7 @@ void test()
   test_screen_coordinat();
   test_screen_rect();
   test_side();
+  test_sfml_helper();
   test_square();
   test_starting_position_type();
   test_volume();
