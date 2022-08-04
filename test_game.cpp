@@ -105,30 +105,6 @@ void test_game_class()
 void test_game_functions()
 {
 #ifndef NDEBUG // no tests in release
-  // can_player_select_piece_at_cursor_pos
-  #ifdef FIX_CONTROLLERS_ISSUE
-  {
-    game g;
-    assert(get_player_color(g, side::rhs) == chess_color::black);
-    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
-    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
-    g.add_action(
-      control_action(
-        control_action_type::mouse_move,
-        side::rhs,
-        to_coordinat(black_king.get_current_square())
-      )
-    );
-    g.tick();
-    assert(g.get_player_pos(side::rhs) == to_coordinat(black_king.get_current_square()));
-    assert(can_player_select_piece_at_cursor_pos(g, chess_color::black));
-    g.add_action(create_press_left_action(side::rhs)); // cursor to d8
-    g.tick();
-    assert(!can_player_select_piece_at_cursor_pos(g, chess_color::black));
-    assert(!can_player_select_piece_at_cursor_pos(g, chess_color::white));
-
-  }
-  #endif // FIX_CONTROLLERS_ISSUE
   // clear_sound_effects
   {
     game g;
@@ -255,7 +231,6 @@ void test_game_functions()
       assert(get_possible_moves(g, side::lhs).empty());
       assert(get_possible_moves(g, side::rhs).empty());
     }
-    #ifdef FIX_ISSUE_8
     // Knight at b1 has four moves when selected (two regular, and two moves beyond)
     {
       game g;
@@ -267,7 +242,6 @@ void test_game_functions()
       std::clog << get_possible_moves(g, side::lhs) << '\n';
       assert(get_possible_moves(g, side::lhs).size() == 4);
     }
-    #endif // FIX_ISSUE_8
     // Pawn at e2 has four moves when selected
     {
       game g;
@@ -428,22 +402,6 @@ void test_game_mouse_use()
     g.tick(delta_t(0.25));
     assert(count_piece_actions(g, chess_color::black) >= 1);
   }
-  #ifdef FIX_ISSUE_NEW_MOVEMENT_SYSTEM
-  // 2x LMB then RMB makes a unit move 1 stretch (not 2)
-  {
-    game g;
-    g.add_action(create_press_lmb_action(to_coordinat("e8")));
-    g.add_action(create_press_rmb_action(to_coordinat("e7")));
-    g.tick(delta_t(0.001));
-    assert(count_piece_actions(g, chess_color::black) == 1);
-    g.add_action(create_press_lmb_action(to_coordinat("e8")));
-    g.add_action(create_press_rmb_action(to_coordinat("e7")));
-    g.tick(delta_t(0.001));
-    const int n_actions{count_piece_actions(g, chess_color::black)};
-    assert(n_actions == 1);
-    assert(count_piece_actions(g, chess_color::black) == 1);
-  }
-  #endif // FIX_ISSUE_NEW_MOVEMENT_SYSTEM
 #endif // NDEBUG // no tests in release
 }
 

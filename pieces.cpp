@@ -793,8 +793,6 @@ void test_pieces()
   }
   // get_possible_moves
   {
-    #define FIX_ISSUE_8
-    #ifdef FIX_ISSUE_8
     // At the start, only knights can move, but they can move far
     {
       const auto pieces{get_standard_starting_pieces(chess_color::white)};
@@ -874,7 +872,6 @@ void test_pieces()
       const auto pieces{get_starting_pieces(starting_position_type::bishop_and_knight_end_game, chess_color::white)};
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("g4"))).size() == 6);
     }
-    #endif // FIX_ISSUE_8
   }
   // get_standard_starting_pieces
   {
