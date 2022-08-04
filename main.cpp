@@ -40,8 +40,9 @@ void test()
   test_control_actions();
   test_controller();
   test_controller_type();
-  test_controls_view_layout();
+  test_controllers();
   test_controls_view_item();
+  test_controls_view_layout();
   test_delta_t();
   test_fps_clock();
   test_game();

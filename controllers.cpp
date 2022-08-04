@@ -131,6 +131,5 @@ void test_controllers()
     assert(has_mouse_controller(create_default_controllers()));
     assert(!has_mouse_controller(create_two_keyboard_controllers()));
   }
-  assert(12==23);
 #endif // NDEBUG
 }

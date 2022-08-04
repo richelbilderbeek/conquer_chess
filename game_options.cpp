@@ -205,6 +205,13 @@ void test_game_options()
     const auto options{create_default_game_options()};
     assert(options.get_starting_position() == get_starting_position(options));
   }
+  // game_options::get_controller
+  {
+    const auto options{create_default_game_options()};
+    const auto left_controller{options.get_controller(side::lhs)};
+    const auto right_controller{options.get_controller(side::rhs)};
+    assert(left_controller != right_controller);
+  }
   // game_options::get_music_volume
   {
     const auto options{create_default_game_options()};

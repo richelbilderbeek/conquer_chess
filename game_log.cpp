@@ -68,7 +68,7 @@ void test_log()
     l.add_message(message(message_type::select, chess_color::white, piece_type::pawn));
     assert(l.get_last_messages(chess_color::black) == "");
     assert(l.get_last_messages(chess_color::white) != "");
-    sf::sleep(sf::milliseconds(2));
+    sf::sleep(sf::milliseconds(3));
     l.tick();
     assert(l.get_last_messages(chess_color::white) == "");
   }
