@@ -1,9 +1,12 @@
 #ifndef KEY_BINDINGS_H
 #define KEY_BINDINGS_H
 
+#include "control_action.h"
+
 #include <vector>
 
 #include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/Event.hpp>
 
 /// Which key does which action
 class key_bindings
@@ -19,6 +22,12 @@ public:
     const sf::Keyboard::Key action_3,
     const sf::Keyboard::Key action_4
   );
+
+  /// From an event, create zero or one actions
+  std::vector<control_action> create_actions(
+    const sf::Event& event,
+    const side player
+  ) const noexcept;
 
   /// Get the key for action 1, 2, 3 or 4.
   sf::Keyboard::Key get_key_for_action(const int action) const noexcept;

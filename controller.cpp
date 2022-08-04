@@ -170,7 +170,8 @@ std::vector<control_action> controller::process_key_press(
 ) const
 {
   assert(event.type == sf::Event::KeyPressed);
-
+  return m_key_bindings.create_actions(event, m_player);
+  /*
   sf::Keyboard::Key key_pressed = event.key.code;
   if (key_pressed == m_key_bindings.get_key_for_move_up())
   {
@@ -205,6 +206,7 @@ std::vector<control_action> controller::process_key_press(
     // Nothing yet
   }
   return {};
+  */
 }
 
 std::vector<control_action> controller::process_mouse_pressed(

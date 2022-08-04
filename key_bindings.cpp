@@ -20,6 +20,47 @@ key_bindings::key_bindings(
 
 }
 
+std::vector<control_action> key_bindings::create_actions(
+  const sf::Event& event,
+  const side player
+) const noexcept
+{
+  sf::Keyboard::Key key_pressed = event.key.code;
+  if (key_pressed == get_key_for_move_up())
+  {
+    return { create_press_up_action(player) };
+  }
+  else if (key_pressed == get_key_for_move_right())
+  {
+    return { create_press_right_action(player) };
+  }
+  else if (key_pressed == get_key_for_move_down())
+  {
+    return { create_press_down_action(player) };
+  }
+  else if (key_pressed == get_key_for_move_left())
+  {
+    return { create_press_left_action(player) };
+  }
+  else if (key_pressed == get_key_for_action(1))
+  {
+    return { create_press_select_action(player) };
+  }
+  else if (key_pressed == get_key_for_action(2))
+  {
+    return { create_press_move_action(player) };
+  }
+  else if (key_pressed == get_key_for_action(3))
+  {
+    return { create_press_attack_action(player) };
+  }
+  else if (key_pressed == get_key_for_action(4))
+  {
+    // Nothing yet
+  }
+  return {};
+}
+
 key_bindings create_left_keyboard_key_bindings() noexcept
 {
   return key_bindings(

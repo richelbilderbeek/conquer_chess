@@ -5,8 +5,6 @@
 #include "control_action.h"
 #include "controller_type.h"
 
-#include <SFML/Window/Event.hpp>
-
 /// A controller is a class that takes input from
 /// a mouse/keyboard/AI and converts these into
 /// the right 'control_action'.

@@ -6,6 +6,8 @@
 #include "control_action_type.h"
 #include "game_coordinat.h"
 
+#include <SFML/Window/Event.hpp>
+
 /// An action
 class control_action
 {
