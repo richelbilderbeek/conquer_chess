@@ -5,6 +5,7 @@
 
 #include "control_action_type.h"
 #include "game_coordinat.h"
+#include "side.h"
 
 #include <SFML/Window/Event.hpp>
 

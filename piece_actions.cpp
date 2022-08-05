@@ -16,7 +16,7 @@ void test_piece_actions()
   // operator<<
   {
     const std::vector<piece_action> v{
-      piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a8"))
+      piece_action(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a8"))
     };
     std::stringstream s;
     s << v;

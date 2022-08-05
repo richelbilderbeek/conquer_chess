@@ -260,7 +260,7 @@ void control_actions::start_attack(
 
         p.add_action(
           piece_action(
-            p.get_player(),
+            p.get_color(),
             p.get_type(),
             piece_action_type::attack,
             square(from),
@@ -294,7 +294,7 @@ void control_actions::start_move_unit(
         clear_actions(p);
         const auto action{
           piece_action(
-            p.get_player(),
+            p.get_color(),
             p.get_type(),
             piece_action_type::move,
             square(from),

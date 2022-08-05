@@ -4,7 +4,8 @@
 #include <iosfwd>
 
 #include "ccfwd.h"
-#include "side.h"
+#include "chess_color.h"
+//#include "side.h"
 
 /// Coordinat on the board
 /// @see use screen_coordinat for a coordinat on the screen
@@ -68,9 +69,9 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept;
 /// Note that, e.g., for white h8 and a8 are forward of a2,
 /// i.e. the file is ignored
 bool is_forward(
+  const chess_color color,
   const square& from,
-  const square& to,
-  const side player
+  const square& to
 );
 
 /// Test this class and its free function

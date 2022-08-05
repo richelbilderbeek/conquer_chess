@@ -24,8 +24,7 @@ public:
   explicit piece(
     const chess_color color,
     const piece_type type,
-    const square& coordinat,
-    const side player = side::lhs // irrelevant
+    const square& coordinat
   );
 
   /// Add an action for the piece to do
@@ -48,14 +47,6 @@ public:
   /// Get the color of the piece, i.e. white or black
   chess_color get_color() const noexcept { return m_color; }
 
-  /// Get the coordinat at the center of the piece
-  /// This coordinat can be any coordinat between an occupied and a target square.
-  /// Hence, for example, If a knight jumps for c3 to e4,
-  /// this coordinat may be around d3 or d4.
-  /// Use 'get_current_square'/'get_occupied_square'
-  /// for the square the piece is formally on
-  //game_coordinat get_coordinat() const noexcept;
-
   const auto& get_current_action_time() const noexcept { return m_current_action_time; }
 
   const auto& get_current_square() const noexcept { return m_current_square; }
@@ -71,9 +62,6 @@ public:
 
   /// Get the maximum health of the unit
   double get_max_health() const noexcept { return m_max_health; }
-
-  /// Get the side this piece is on
-  side get_player() const noexcept { return m_player; }
 
   /// The things this piece wants to say
   const auto& get_messages() const noexcept { return m_messages; }
@@ -141,9 +129,6 @@ private:
   /// The maximum health
   double m_max_health;
 
-  /// The side/player this piece belongs to
-  side m_player;
-
   /// The things this piece wants to say
   std::vector<message_type> m_messages;
 
@@ -157,10 +142,10 @@ private:
 /// Can a piece attack from 'from' to 'to'?
 /// This function assumes the board is empty
 bool can_attack(
+  const chess_color color,
   const piece_type& p,
   const square& from,
-  const square& to,
-  const side player
+  const square& to
 );
 
 /// Can a piece capture from 'from' to 'to'?
@@ -169,16 +154,16 @@ bool can_capture(
   const piece_type& p,
   const square& from,
   const square& to,
-  const side player
+  const chess_color color
 );
 
 /// Can a piece move from 'from' to 'to'?
 /// This function assumes the board is empty
 bool can_move(
+  const chess_color color,
   const piece_type& p,
   const square& from,
-  const square& to,
-  const side player
+  const square& to
 );
 
 /// Clear all the actions

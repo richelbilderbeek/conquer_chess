@@ -6,6 +6,7 @@
 #include "game_coordinat.h"
 #include "screen_coordinat.h"
 #include "layout.h"
+#include "side.h"
 
 #include <vector>
 

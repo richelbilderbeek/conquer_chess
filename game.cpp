@@ -442,8 +442,7 @@ piece& get_piece_that_moves(game& g, const chess_move& move)
     const auto& from{piece.get_current_square()};
     assert(move.get_to().size() == 1);
     const auto& to{move.get_to()[0]};
-    const side& player{get_player_side(g, color)};
-    if (can_move(piece_type, from, to, player))
+    if (can_move(color, piece_type, from, to))
     {
       return piece;
     }

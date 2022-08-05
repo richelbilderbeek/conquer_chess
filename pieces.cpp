@@ -325,7 +325,7 @@ std::vector<square> get_possible_pawn_moves(
   const int y{focal_piece.get_current_square().get_y()};
 
   // Can attack to where?
-  const int dx{focal_piece.get_player() == side::lhs ? 1 : -1};
+  const int dx{focal_piece.get_color() == chess_color::white ? 1 : -1};
   const std::vector<std::pair<int, int>> attack_xys{
     std::make_pair(x + dx, y - 1),
     std::make_pair(x + dx, y + 1)

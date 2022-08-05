@@ -90,14 +90,14 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept
 }
 
 bool is_forward(
+  const chess_color color,
   const square& from,
-  const square& to,
-  const side player
+  const square& to
 )
 {
   const bool is_right{to.get_x() > from.get_x()};
-  return (player == side::rhs && !is_right)
-    || (player == side::lhs && is_right)
+  return (color == chess_color::white && !is_right)
+    || (color == chess_color::black && is_right)
   ;
 }
 

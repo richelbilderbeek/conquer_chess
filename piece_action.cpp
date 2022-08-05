@@ -7,15 +7,15 @@
 #include <sstream>
 
 piece_action::piece_action(
-  const side player,
+    const chess_color color,
   const piece_type pt,
   const piece_action_type at,
   const square& from,
   const square& to
 ) : m_action_type{at},
+    m_color{color},
     m_from{from},
     m_piece_type{pt},
-    m_player{player},
     m_to{to}
 {
   // m_from can be m_to if a piece needs to move back
@@ -44,7 +44,7 @@ void test_piece_action()
 #ifndef NDEBUG
   // describe_action
   {
-    const piece_action a(side::lhs, piece_type::rook, piece_action_type::attack, square("d1"), square("d8"));
+    const piece_action a(chess_color::white, piece_type::rook, piece_action_type::attack, square("d1"), square("d8"));
     assert(!describe_action(piece_action(a)).empty());
   }
   // is_atomic
@@ -52,93 +52,93 @@ void test_piece_action()
     const auto d1{game_coordinat(to_coordinat(square("d1")))};
     const auto d2{game_coordinat(to_coordinat(square("d2")))};
     const auto d3{game_coordinat(to_coordinat(square("d3")))};
-    assert(is_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square(d1), square(d2))));
-    assert(is_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square(d2), square(d3))));
-    assert(!is_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square(d1), square(d3))));
+    assert(is_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square(d1), square(d2))));
+    assert(is_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square(d2), square(d3))));
+    assert(!is_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square(d1), square(d3))));
   }
   // to_atomic
   {
     // Moving
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e3"))).size() == 1);
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e4"))).size() == 2);
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e5"))).size() == 3);
+    assert(to_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e3"))).size() == 1);
+    assert(to_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e4"))).size() == 2);
+    assert(to_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e5"))).size() == 3);
     // Attacking
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("e7"), square("e6"))).size() == 1);
-    assert(to_atomic(piece_action(side::lhs, piece_type::queen, piece_action_type::attack, square("a1"), square("h8"))).size() == 1);
-    assert(to_atomic(piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("h8"))).size() > 4);
+    assert(to_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::attack, square("e7"), square("e6"))).size() == 1);
+    assert(to_atomic(piece_action(chess_color::white, piece_type::queen, piece_action_type::attack, square("a1"), square("h8"))).size() == 1);
+    assert(to_atomic(piece_action(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("h8"))).size() > 4);
   }
   // to_str
   {
-    const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("e2"), square("e3"));
+    const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("e2"), square("e3"));
     assert(!to_str(piece_action(a)).empty());
-    const piece_action b(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e4"));
+    const piece_action b(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e4"));
     assert(!to_str(piece_action(b)).empty());
   }
   // to_str on std::vector<piece_action>
   {
     std::vector<piece_action> v;
     assert(to_str(v).empty());
-    const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("e2"), square("e3"));
+    const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("e2"), square("e3"));
     v.push_back(a);
     assert(!to_str(v).empty());
-    const piece_action b(side::lhs, piece_type::king, piece_action_type::move, square("e2"), square("e4"));
+    const piece_action b(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e4"));
     v.push_back(b);
     assert(!to_str(v).empty());
   }
   // operator<<
   {
-    const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a8"));
+    const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a8"));
     std::stringstream s;
     s << a;
     assert(!s.str().empty());
   }
   // operator==
   {
-    // Different side
+    // Different color
     {
-      const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action b(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action c(side::rhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action b(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action c(chess_color::black, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
       assert(a == b);
       assert(!(a == c));
 
     }
     // Different piece
     {
-      const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action b(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action c(side::lhs, piece_type::queen, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action b(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action c(chess_color::white, piece_type::queen, piece_action_type::attack, square("a1"), square("a3"));
       assert(a == b);
       assert(!(a == c));
     }
     // Different action typ
     {
       // Attack
-      const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action b(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action c(side::lhs, piece_type::king, piece_action_type::attack, square("a2"), square("a3"));
+      const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action b(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action c(chess_color::white, piece_type::king, piece_action_type::attack, square("a2"), square("a3"));
       assert(a == b);
       assert(!(a == c));
       // Move
-      const piece_action d(side::lhs, piece_type::king, piece_action_type::move, square("a1"), square("a3"));
-      const piece_action e(side::lhs, piece_type::king, piece_action_type::move, square("a1"), square("a3"));
-      const piece_action f(side::lhs, piece_type::king, piece_action_type::move, square("a2"), square("a3"));
+      const piece_action d(chess_color::white, piece_type::king, piece_action_type::move, square("a1"), square("a3"));
+      const piece_action e(chess_color::white, piece_type::king, piece_action_type::move, square("a1"), square("a3"));
+      const piece_action f(chess_color::white, piece_type::king, piece_action_type::move, square("a2"), square("a3"));
       assert(d == e);
       assert(!(d == f));
     }
     // Different from
     {
-      const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action b(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action c(side::lhs, piece_type::king, piece_action_type::attack, square("a2"), square("a3"));
+      const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action b(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action c(chess_color::white, piece_type::king, piece_action_type::attack, square("a2"), square("a3"));
       assert(a == b);
       assert(!(a == c));
     }
     // Different to
     {
-      const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action b(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
-      const piece_action c(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a4"));
+      const piece_action a(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action b(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"));
+      const piece_action c(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a4"));
       assert(a == b);
       assert(!(a == c));
     }
@@ -172,11 +172,11 @@ std::vector<piece_action> to_atomic(const piece_action& a)
     const auto& from{squares[i - 1]};
     const auto& to{squares[i]};
     if (a.get_action_type() == piece_action_type::attack
-      && can_attack(a.get_piece_type(), from, a.get_to(), a.get_player()))
+      && can_attack(a.get_color(), a.get_piece_type(), from, a.get_to()))
     {
       atomic_actions.push_back(
         piece_action(
-          a.get_player(),
+          a.get_color(),
           a.get_piece_type(),
           piece_action_type::attack,
           from,
@@ -189,7 +189,7 @@ std::vector<piece_action> to_atomic(const piece_action& a)
     {
       atomic_actions.push_back(
         piece_action(
-          a.get_player(),
+          a.get_color(),
           a.get_piece_type(),
           piece_action_type::move,
           from,
@@ -232,7 +232,7 @@ std::string to_str(const std::vector<piece_action>& actions) noexcept
 bool operator==(const piece_action& lhs, const piece_action& rhs) noexcept
 {
   return
-       lhs.get_player() == rhs.get_player()
+       lhs.get_color() == rhs.get_color()
     && lhs.get_piece_type() == rhs.get_piece_type()
     && lhs.get_action_type() == rhs.get_action_type()
     && lhs.get_from() == rhs.get_from()

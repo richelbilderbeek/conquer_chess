@@ -19,7 +19,7 @@ public:
 
   /// Move of move from a square to another
   explicit piece_action(
-    const side player,
+    const chess_color color,
     const piece_type pt,
     const piece_action_type at,
     const square& from,
@@ -29,15 +29,15 @@ public:
   auto get_action_type() const noexcept { return m_action_type; }
   const auto& get_from() const noexcept { return m_from; }
   auto get_piece_type() const noexcept { return m_piece_type; }
-  auto get_player() const noexcept { return m_player; }
+  auto get_color() const noexcept { return m_color; }
   const auto& get_to() const noexcept { return m_to; }
 
 private:
 
   piece_action_type m_action_type;
+  chess_color m_color;
   square m_from;
   piece_type m_piece_type;
-  side m_player;
   square m_to;
 };
 
