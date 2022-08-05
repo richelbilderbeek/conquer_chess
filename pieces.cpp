@@ -90,11 +90,9 @@ int count_selected_units(
   );
 }
 
-std::vector<piece> get_kings_only_starting_pieces(
-  const chess_color left_player_color
-) noexcept
+std::vector<piece> get_kings_only_starting_pieces() noexcept
 {
-  const auto all_pieces{get_standard_starting_pieces(left_player_color)};
+  const auto all_pieces{get_standard_starting_pieces()};
   std::vector<piece> pieces;
   pieces.reserve(2);
   std::copy_if(
@@ -466,9 +464,7 @@ std::vector<piece> get_selected_pieces(
   return pieces;
 }
 
-std::vector<piece> get_pieces_pawn_all_out_assault(
-  const chess_color /* left_player_color */
-) noexcept
+std::vector<piece> get_pieces_pawn_all_out_assault() noexcept
 {
   return
   {
@@ -507,9 +503,7 @@ std::vector<piece> get_pieces_pawn_all_out_assault(
   };
 }
 
-std::vector<piece> get_pieces_before_scholars_mate(
-  const chess_color /* left_player_color */
-) noexcept
+std::vector<piece> get_pieces_before_scholars_mate() noexcept
 {
   return
   {
@@ -548,9 +542,7 @@ std::vector<piece> get_pieces_before_scholars_mate(
   };
 }
 
-std::vector<piece> get_pieces_bishop_and_knight_end_game(
-  const chess_color /* left_player_color */
-) noexcept
+std::vector<piece> get_pieces_bishop_and_knight_end_game() noexcept
 {
   return
   {
@@ -561,9 +553,7 @@ std::vector<piece> get_pieces_bishop_and_knight_end_game(
   };
 }
 
-std::vector<piece> get_pieces_queen_endgame(
-  const chess_color /* left_player_color */
-) noexcept
+std::vector<piece> get_pieces_queen_endgame() noexcept
 {
   return
   {
@@ -592,9 +582,7 @@ std::vector<piece> get_rotated_pieces(const std::vector<piece>& pieces) noexcept
 }
 */
 
-std::vector<piece> get_standard_starting_pieces(
-  const chess_color /* left_player_color */
-) noexcept
+std::vector<piece> get_standard_starting_pieces() noexcept
 {
   return
   {
@@ -633,23 +621,20 @@ std::vector<piece> get_standard_starting_pieces(
   };
 }
 
-std::vector<piece> get_starting_pieces(
-  const starting_position_type t,
-  const chess_color left_player_color
-) noexcept
+std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
 {
   switch (t)
   {
-    case starting_position_type::standard: return get_standard_starting_pieces(left_player_color);
-    case starting_position_type::kings_only: return get_kings_only_starting_pieces(left_player_color);
-    case starting_position_type::before_scholars_mate: return get_pieces_before_scholars_mate(left_player_color);
-    case starting_position_type::queen_end_game: return get_pieces_queen_endgame(left_player_color);
+    case starting_position_type::standard: return get_standard_starting_pieces();
+    case starting_position_type::kings_only: return get_kings_only_starting_pieces();
+    case starting_position_type::before_scholars_mate: return get_pieces_before_scholars_mate();
+    case starting_position_type::queen_end_game: return get_pieces_queen_endgame();
     case starting_position_type::bishop_and_knight_end_game:
-      return get_pieces_bishop_and_knight_end_game(left_player_color);
+      return get_pieces_bishop_and_knight_end_game();
     default:
     case starting_position_type::pawn_all_out_assault:
       assert(t == starting_position_type::pawn_all_out_assault);
-      return get_pieces_pawn_all_out_assault(left_player_color);
+      return get_pieces_pawn_all_out_assault();
   }
 }
 
@@ -742,7 +727,7 @@ void test_pieces()
   {
     // At the start, only knights can move, but they can move far
     {
-      const auto pieces{get_standard_starting_pieces(chess_color::white)};
+      const auto pieces{get_standard_starting_pieces()};
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("a1"))).size() == 0);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("b1"))).size() == 4);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("c1"))).size() == 0);
@@ -763,13 +748,13 @@ void test_pieces()
     }
     // King-versus_king
     {
-      const auto pieces{get_starting_pieces(starting_position_type::kings_only, chess_color::white)};
+      const auto pieces{get_starting_pieces(starting_position_type::kings_only)};
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("e1"))).size() == 5);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("e8"))).size() == 5);
     }
     // pawn_all_out_assault
     {
-      const auto pieces{get_starting_pieces(starting_position_type::pawn_all_out_assault, chess_color::white)};
+      const auto pieces{get_starting_pieces(starting_position_type::pawn_all_out_assault)};
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("a1"))).size() == 2);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("b1"))).size() == 6);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("c1"))).size() == 4);
@@ -808,7 +793,7 @@ void test_pieces()
     }
     // queen_end_game
     {
-      const auto pieces{get_starting_pieces(starting_position_type::queen_end_game, chess_color::white)};
+      const auto pieces{get_starting_pieces(starting_position_type::queen_end_game)};
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("d1"))).size() == 17);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("e1"))).size() == 4);
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("d8"))).size() == 17);
@@ -816,16 +801,14 @@ void test_pieces()
     }
     // bishop_and_knight_end_game
     {
-      const auto pieces{get_starting_pieces(starting_position_type::bishop_and_knight_end_game, chess_color::white)};
+      const auto pieces{get_starting_pieces(starting_position_type::bishop_and_knight_end_game)};
       assert(get_possible_moves(pieces, get_piece_at(pieces, square("g4"))).size() == 6);
     }
   }
   // get_standard_starting_pieces
   {
-    const auto pieces_1{get_standard_starting_pieces(chess_color::white)};
+    const auto pieces_1{get_standard_starting_pieces()};
     assert(pieces_1.size() == 32);
-    const auto pieces_2{get_standard_starting_pieces(chess_color::black)};
-    assert(pieces_1 != pieces_2);
   }
   // get_starting_pieces, manual
   {
@@ -844,10 +827,7 @@ void test_pieces()
   {
     for (const auto t: get_all_starting_position_types())
     {
-      for (const auto c: get_all_chess_colors())
-      {
-        assert(!get_starting_pieces(t, c).empty());
-      }
+      assert(!get_starting_pieces(t).empty());
     }
   }
   // has_piece_with_id

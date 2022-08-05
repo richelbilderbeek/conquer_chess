@@ -173,8 +173,7 @@ std::vector<piece> get_starting_pieces(
 ) noexcept
 {
   return get_starting_pieces(
-    get_starting_position(options),
-    get_left_player_color(options)
+    get_starting_position(options)
   );
 }
 

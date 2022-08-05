@@ -34,9 +34,7 @@ int count_selected_units(
 );
 
 /// Get a king-versus-king starting position
-std::vector<piece> get_kings_only_starting_pieces(
-  const chess_color left_player_color = chess_color::white
-) noexcept;
+std::vector<piece> get_kings_only_starting_pieces() noexcept;
 
 /// Get all the squares that are occupied
 std::vector<square> get_occupied_squares(const std::vector<piece>& pieces) noexcept;
@@ -111,13 +109,6 @@ std::vector<square> get_possible_rook_moves(
   const piece& focal_piece
 );
 
-
-/*
-/// Rotate the coordinator of the pieces,
-/// i.e. turn the board 180 degrees
-std::vector<piece> get_rotated_pieces(const std::vector<piece>& piece) noexcept;
-*/
-
 /// Get all the selected pieces
 /// @param player the color of the player, which is white for player 1
 /// @see use 'has_selected_piece' to see if there is at least 1 piece selected
@@ -127,18 +118,14 @@ std::vector<piece> get_selected_pieces(
 );
 
 /// Get all the pieces in the starting position
-std::vector<piece> get_standard_starting_pieces(
-  const chess_color left_player_color = chess_color::white
-) noexcept;
+std::vector<piece> get_standard_starting_pieces() noexcept;
 
 /// Get the pieces before a scholar's mate
 /// 1. e4 e5
 /// 2. Qh5 Nc6
 /// 3. Bc4 Nf6??
 /// (the checkmate is done by Qxf7#)
-std::vector<piece> get_pieces_before_scholars_mate(
-  const chess_color left_player_color = chess_color::white
-) noexcept;
+std::vector<piece> get_pieces_before_scholars_mate() noexcept;
 
 /// Get the pieces from a bishop and knight end game
 ///  * White king: e6
@@ -146,21 +133,20 @@ std::vector<piece> get_pieces_before_scholars_mate(
 ///  * White bishop: g4
 ///  * Black king: d2 (note that it is in check)
 /// From https://www.thechesswebsite.com/bishop-and-knight-end-game/
-std::vector<piece> get_pieces_bishop_and_knight_end_game(
-  const chess_color left_player_color = chess_color::white
-) noexcept;
+std::vector<piece> get_pieces_bishop_and_knight_end_game() noexcept;
 
 /// Get the pieces from a standard game, with all pawns moved two
 /// squares forward
-std::vector<piece> get_pieces_pawn_all_out_assault(
-  const chess_color left_player_color = chess_color::white
-) noexcept;
+std::vector<piece> get_pieces_pawn_all_out_assault() noexcept;
 
+/// Get the pieces for a queen endgame,
+/// which are having only the kings and queens left
+/// from a default setup
+std::vector<piece> get_pieces_queen_endgame() noexcept;
 
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(
-  const starting_position_type t,
-  const chess_color left_player_color = chess_color::white
+  const starting_position_type t
 ) noexcept;
 
 /// Is there a piece with the ID among the pieces?

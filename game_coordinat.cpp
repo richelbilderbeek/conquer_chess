@@ -96,8 +96,8 @@ bool is_forward(
 )
 {
   const bool is_right{to.get_x() > from.get_x()};
-  return (color == chess_color::white && !is_right)
-    || (color == chess_color::black && is_right)
+  return (color == chess_color::white && is_right)
+    || (color == chess_color::black && !is_right)
   ;
 }
 

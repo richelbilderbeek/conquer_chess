@@ -22,7 +22,6 @@ void test_piece_actions()
     s << v;
     assert(!s.str().empty());
   }
-  assert(1==2);
 #endif // NDEBUG
 }
 
