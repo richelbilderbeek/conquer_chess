@@ -94,41 +94,111 @@ std::vector<piece_action> collect_all_pawn_actions(
   const piece& p
 )
 {
-  assert(p.get_type() == piece_type::pawn);
+  std::vector<piece_action> actions;
+  const auto type{p.get_type()};
+  assert(type == piece_type::pawn);
   assert(g.get_time() >= delta_t(0.0)); // Always true
-  assert(1 == 2);
-  return {};
-  /*
   const auto& s{p.get_current_square()};
   const auto x{s.get_x()};
   const auto y{s.get_y()};
-  if (p.get_color() == chess_color::black)
+  const auto color{p.get_color()};
+  const auto& from{p.get_current_square()};
+  if (color == chess_color::black)
   {
     assert(get_rank(s) != 8);
     if (get_rank(s) == 7)
     {
+      // Two forward
       if (is_empty(g, square(5, y)) && is_empty(g, square(6, y)))
       {
-        piece_action a()
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, square(5, y)
+          )
+        );
+      }
+      // One forward
+      if (is_empty(g, square(6, y)))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, square(6, y)
+          )
+        );
       }
     }
     else if (get_rank(s) == 1)
     {
-
+      #ifdef FIX_ISSUE_4
+      actions.push_back(
+        piece_action(
+          color, type, piece_action_type::promotion, from, from
+        )
+      );
+      #endif // FIX_ISSUE_4
     }
     else
     {
-
+      assert(x - 1 >= 0);
+      if (is_empty(g, square(x - 1, y)))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, square(x - 1, y)
+          )
+        );
+      }
     }
-
-
   }
   else
   {
-    assert(p.get_color() == chess_color::white);
-    assert(get_rank(p.get_current_square()) != 1);
+    assert(color == chess_color::white);
+    assert(get_rank(s) != 1);
+    if (get_rank(s) == 2)
+    {
+      // Two forward
+      if (is_empty(g, square(3, y)) && is_empty(g, square(4, y)))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, square(4, y)
+          )
+        );
+      }
+      // One forward
+      if (is_empty(g, square(3, y)))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, square(3, y)
+          )
+        );
+      }
+    }
+    else if (get_rank(s) == 1)
+    {
+      #ifdef FIX_ISSUE_4
+      actions.push_back(
+        piece_action(
+          color, type, piece_action_type::promotion, from, from
+        )
+      );
+      #endif // FIX_ISSUE_4
+    }
+    else
+    {
+      assert(x + 1 < 8);
+      if (is_empty(g, square(x + 1, y)))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, square(x + 1, y)
+          )
+        );
+      }
+    }
   }
-  */
+  return actions;
 }
 
 int count_control_actions(const game& g)
@@ -290,7 +360,6 @@ game_coordinat get_cursor_pos(
   {
     return get_player_pos(g, side::lhs);
   }
-  //assert(c == get_mouse_user_player_color(g.get_options()));
   return get_player_pos(g, side::rhs);
 }
 
@@ -332,38 +401,6 @@ int get_index_of_closest_piece_to(
   return index;
 }
 
-/*
-game_coordinat& game::get_keyboard_player_pos()
-{
-  if (get_left_player_controller(m_options) == controller_type::keyboard)
-  {
-    return m_player_1_pos;
-  }
-  assert(get_right_player_controller(m_options) == controller_type::keyboard);
-  return m_player_2_pos;
-}
-*/
-
-/*
-game_coordinat get_keyboard_player_pos(const game& g)
-{
-  if (get_left_player_controller(g.get_options()) == controller_type::keyboard)
-  {
-    return get_player_pos(g, side::lhs);
-  }
-  assert(get_right_player_controller(g.get_options()) == controller_type::keyboard);
-  return get_player_pos(g, side::rhs);
-}
-*/
-
-/*
-game_coordinat& get_keyboard_player_pos(game& g)
-{
-  assert(has_keyboard_controller(g.get_options()));
-  return g.get_keyboard_player_pos();
-}
-*/
-
 chess_color get_keyboard_user_player_color(const game& g)
 {
   return get_keyboard_user_player_color(g.get_options());
@@ -392,12 +429,6 @@ const game_view_layout& get_layout(const game& g) noexcept
 {
   return g.get_layout();
 }
-
-chess_color get_mouse_user_player_color(const game& g)
-{
-  return get_mouse_user_player_color(g.get_options());
-}
-
 
 double get_music_volume_as_percentage(const game& g) noexcept
 {
@@ -577,6 +608,11 @@ bool has_selected_pieces(const game& g, const chess_color player)
 bool has_selected_pieces(const game& g, const side player)
 {
   return !get_selected_pieces(g, player).empty();
+}
+
+bool is_empty(const game& g, const square& s) noexcept
+{
+  return !is_piece_at(g, s);
 }
 
 bool is_idle(const game& g) noexcept

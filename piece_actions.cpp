@@ -13,6 +13,16 @@ bool is_in(const piece_action& action, const std::vector<piece_action>& actions)
 void test_piece_actions()
 {
 #ifndef NDEBUG
+  // is_in
+  {
+    const auto action{
+      piece_action(chess_color::white, piece_type::king, piece_action_type::move, square("e1"), square("e2"))
+    };
+    std::vector<piece_action> actions;
+    assert(!is_in(action, actions));
+    actions.push_back(action);
+    assert(is_in(action, actions));
+  }
   // operator<<
   {
     const std::vector<piece_action> v{

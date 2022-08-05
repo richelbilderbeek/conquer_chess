@@ -268,6 +268,12 @@ void test_game_functions()
       assert(get_possible_moves(g, side::lhs).size() == 4);
     }
   }
+  // is_empty
+  {
+    const game g;
+    assert(is_empty(g, square("e4")));
+    assert(!is_empty(g, square("d1")));
+  }
   // is_idle
   {
     game g;

@@ -564,24 +564,6 @@ std::vector<piece> get_pieces_queen_endgame() noexcept
   };
 }
 
-/*
-std::vector<piece> get_rotated_pieces(const std::vector<piece>& pieces) noexcept
-{
-  std::vector<piece> rps;
-  rps.reserve(pieces.size());
-  std::transform(
-    std::begin(pieces),
-    std::end(pieces),
-    std::back_inserter(rps),
-    [](const auto& p)
-    {
-      return get_rotated_piece(p);
-    }
-  );
-  return rps;
-}
-*/
-
 std::vector<piece> get_standard_starting_pieces() noexcept
 {
   return

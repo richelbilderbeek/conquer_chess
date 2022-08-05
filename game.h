@@ -248,15 +248,6 @@ game get_kings_only_game() noexcept;
 /// Get the layout
 const game_view_layout& get_layout(const game& g) noexcept;
 
-/// Get the position of the player that uses the mouse
-//game_coordinat get_mouse_player_pos(const game& g);
-
-/// Get the position of the player that uses the mouse
-//game_coordinat& get_mouse_player_pos(game& g);
-
-/// Get the color of the mouse user
-//chess_color get_mouse_user_player_color(const game& g);
-
 /// Get the music volume as a percentage
 double get_music_volume_as_percentage(const game& g) noexcept;
 
@@ -341,6 +332,9 @@ bool has_selected_pieces(const game& g, const chess_color player);
 
 /// See if there is at least 1 piece selected
 bool has_selected_pieces(const game& g, const side player);
+
+/// Is the square empty?
+bool is_empty(const game& g, const square& s) noexcept;
 
 /// Are all pieces idle?
 bool is_idle(const game& g) noexcept;

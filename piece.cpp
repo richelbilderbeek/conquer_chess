@@ -570,15 +570,6 @@ void test_piece()
     const auto p{get_test_white_king()};
     assert(get_occupied_square(p) == square("e1"));
   }
-  /*
-  // get_rotated_piece
-  {
-    const auto p{get_test_white_king()};
-    assert(get_occupied_square(p) == square("e1"));
-    const auto q{get_rotated_piece(p)};
-    assert(get_occupied_square(q) == square("d8"));
-  }
-  */
   // get_test_white_king
   {
     const auto p{get_test_white_king()};
