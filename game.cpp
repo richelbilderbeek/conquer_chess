@@ -58,6 +58,79 @@ void clear_piece_messages(game& g) noexcept
   for (auto& p: g.get_pieces()) p.clear_messages();
 }
 
+std::vector<piece_action> collect_all_actions(const game& g)
+{
+  std::vector<piece_action> actions;
+  for (const auto& p: g.get_pieces())
+  {
+    const auto piece_actions{
+      collect_all_actions(g, p)
+    };
+    std::copy(
+      std::begin(piece_actions),
+      std::end(piece_actions),
+      std::back_inserter(actions)
+    );
+  }
+  return actions;
+}
+
+std::vector<piece_action> collect_all_actions(
+  const game& g,
+  const piece& p
+)
+{
+  switch (p.get_type())
+  {
+    case piece_type::pawn: return collect_all_pawn_actions(g, p);
+    default:
+      std::clog << "TODO\n";
+      return {};
+  }
+}
+
+std::vector<piece_action> collect_all_pawn_actions(
+  const game& g,
+  const piece& p
+)
+{
+  assert(p.get_type() == piece_type::pawn);
+  assert(g.get_time() >= delta_t(0.0)); // Always true
+  assert(1 == 2);
+  return {};
+  /*
+  const auto& s{p.get_current_square()};
+  const auto x{s.get_x()};
+  const auto y{s.get_y()};
+  if (p.get_color() == chess_color::black)
+  {
+    assert(get_rank(s) != 8);
+    if (get_rank(s) == 7)
+    {
+      if (is_empty(g, square(5, y)) && is_empty(g, square(6, y)))
+      {
+        piece_action a()
+      }
+    }
+    else if (get_rank(s) == 1)
+    {
+
+    }
+    else
+    {
+
+    }
+
+
+  }
+  else
+  {
+    assert(p.get_color() == chess_color::white);
+    assert(get_rank(p.get_current_square()) != 1);
+  }
+  */
+}
+
 int count_control_actions(const game& g)
 {
   return count_control_actions(g.get_actions());

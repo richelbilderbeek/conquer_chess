@@ -112,9 +112,11 @@ std::vector<square> get_possible_rook_moves(
 );
 
 
+/*
 /// Rotate the coordinator of the pieces,
 /// i.e. turn the board 180 degrees
 std::vector<piece> get_rotated_pieces(const std::vector<piece>& piece) noexcept;
+*/
 
 /// Get all the selected pieces
 /// @param player the color of the player, which is white for player 1

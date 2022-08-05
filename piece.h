@@ -25,7 +25,7 @@ public:
     const chess_color color,
     const piece_type type,
     const square& coordinat,
-    const side player
+    const side player = side::lhs // irrelevant
   );
 
   /// Add an action for the piece to do
@@ -196,9 +196,11 @@ double get_f_health(const piece& p) noexcept;
 /// Get the square that this piece occupies now
 square get_occupied_square(const piece& p) noexcept;
 
+/*
 /// Rotate the coordinator of the piece,
 /// i.e. turn the board 180 degrees
 piece get_rotated_piece(const piece& piece) noexcept;
+*/
 
 /// Create a piece to be used in testing: a white king on e1
 piece get_test_white_king() noexcept;

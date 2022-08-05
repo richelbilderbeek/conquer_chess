@@ -102,6 +102,24 @@ bool can_player_select_piece_at_cursor_pos(
 /// i.e. resize to zero
 void clear_piece_messages(game& g) noexcept;
 
+/// Collect all valid moves and attackes at a board
+/// for all pieces
+std::vector<piece_action> collect_all_actions(const game& g);
+
+/// Collect all valid moves and attackes at a board
+/// for a focal piece
+std::vector<piece_action> collect_all_actions(
+  const game& g,
+  const piece& p
+);
+
+/// Collect all valid moves and attackes at a board
+/// for a focal pawn
+std::vector<piece_action> collect_all_pawn_actions(
+  const game& g,
+  const piece& p
+);
+
 /// Get all the sound effects to be processed
 std::vector<message> collect_messages(const game& g) noexcept;
 

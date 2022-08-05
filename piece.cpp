@@ -235,13 +235,14 @@ square get_occupied_square(const piece& p) noexcept
   return p.get_current_square();
 }
 
+/*
 piece get_rotated_piece(const piece& p) noexcept
 {
   piece q = p;
   q.set_current_square(get_rotated_square(p.get_current_square()));
-  //q.set_coordinat(get_rotated_coordinat(p.get_coordinat()));
   return q;
 }
+*/
 
 piece get_test_white_king() noexcept
 {
@@ -573,6 +574,7 @@ void test_piece()
     const auto p{get_test_white_king()};
     assert(get_occupied_square(p) == square("e1"));
   }
+  /*
   // get_rotated_piece
   {
     const auto p{get_test_white_king()};
@@ -580,6 +582,7 @@ void test_piece()
     const auto q{get_rotated_piece(p)};
     assert(get_occupied_square(q) == square("d8"));
   }
+  */
   // get_test_white_king
   {
     const auto p{get_test_white_king()};

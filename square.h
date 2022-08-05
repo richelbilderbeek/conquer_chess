@@ -69,6 +69,9 @@ std::vector<square> concatenate(
   const std::vector<square>& b
 );
 
+/// Get the file of a square, e.g. 'd' from 'd4'
+char get_file(const square& s) noexcept;
+
 /// Get the intermediate squares, in an inclusive way:
 /// the first square will be 'from',
 /// to last square will be 'to'
@@ -77,9 +80,12 @@ std::vector<square> get_intermediate_squares(
   const square& to
 );
 
+/// Get the rank of a square, e.g. '3' from 'e3'
+int get_rank(const square& s) noexcept;
+
 /// Rotate the (coordinator of the) square,
 /// i.e. turn the board 180 degrees
-square get_rotated_square(const square& position) noexcept;
+//1square get_rotated_square(const square& position) noexcept;
 
 /// Is the square 's' occupied?
 bool is_occupied(

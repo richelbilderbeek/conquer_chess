@@ -30,6 +30,7 @@ delta_t operator+(const delta_t& lhs, const delta_t& rhs) noexcept;
 delta_t operator-(const delta_t& lhs, const delta_t& rhs) noexcept;
 delta_t operator*(const delta_t& lhs, const delta_t& rhs) noexcept;
 bool operator>(const delta_t& lhs, const delta_t& rhs) noexcept;
+bool operator>=(const delta_t& lhs, const delta_t& rhs) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const delta_t& dt) noexcept;
 

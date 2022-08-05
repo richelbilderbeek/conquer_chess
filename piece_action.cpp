@@ -85,20 +85,11 @@ void test_piece_action()
     v.push_back(b);
     assert(!to_str(v).empty());
   }
-  // operator<< on piece_action
+  // operator<<
   {
     const piece_action a(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a8"));
     std::stringstream s;
     s << a;
-    assert(!s.str().empty());
-  }
-  // operator<< on std::vector<piece_action>
-  {
-    const std::vector<piece_action> v{
-      piece_action(side::lhs, piece_type::king, piece_action_type::attack, square("a1"), square("a8"))
-    };
-    std::stringstream s;
-    s << v;
     assert(!s.str().empty());
   }
   // operator==
@@ -252,11 +243,5 @@ bool operator==(const piece_action& lhs, const piece_action& rhs) noexcept
 std::ostream& operator<<(std::ostream& os, const piece_action& a) noexcept
 {
   os << to_str(a);
-  return os;
-}
-
-std::ostream& operator<<(std::ostream& os, const std::vector<piece_action>& p) noexcept
-{
-  os << to_str(p);
   return os;
 }

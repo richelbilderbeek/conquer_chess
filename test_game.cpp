@@ -2,6 +2,7 @@
 
 #include "id.h"
 #include "test_game.h"
+#include "piece_actions.h"
 
 #include <cassert>
 #include <iostream>
@@ -118,6 +119,21 @@ void test_game_functions()
     clear_piece_messages(g);
     assert(collect_messages(g).empty());
   }
+  #ifdef FIX_COLLECT_ALL_ACTIONS
+  // collect_all_actions
+  {
+    const game g;
+    const auto actions{collect_all_actions(g)};
+    const piece_action e2e4(
+      side::lhs,
+      piece_type::pawn,
+      piece_action_type::move,
+      square("e2"),
+      square("e3")
+    );
+    assert(is_in(e2e4, actions));
+  }
+  #endif
   // count_control_actions
   {
     const auto g{get_kings_only_game()};

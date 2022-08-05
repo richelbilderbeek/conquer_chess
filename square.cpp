@@ -98,6 +98,11 @@ std::vector<square> concatenate(
   return c;
 }
 
+char get_file(const square& s) noexcept
+{
+  return 'a' + s.get_y();
+}
+
 std::vector<square> get_intermediate_squares(
   const square& from,
   const square& to
@@ -178,6 +183,11 @@ std::vector<square> get_intermediate_squares(
   return squares;
 }
 
+int get_rank(const square& s) noexcept
+{
+  return 1 + s.get_x();
+}
+
 square get_rotated_square(const square& position) noexcept
 {
   return square(
@@ -252,6 +262,13 @@ void test_square()
   {
     assert(are_on_same_rank(square("a1"), square("h1")));
   }
+  // get_file
+  {
+    assert(get_file(square("a1")) == 'a');
+    assert(get_file(square("b2")) == 'b');
+    assert(get_file(square("g3")) == 'g');
+    assert(get_file(square("h4")) == 'h');
+  }
   // get_intermediate_squares
   {
     // Horizontally
@@ -314,6 +331,13 @@ void test_square()
     assert(get_rotated_square(square("a8")) == square("h1"));
     assert(get_rotated_square(square("h8")) == square("a1"));
     assert(get_rotated_square(square("h1")) == square("a8"));
+  }
+  // get_rank
+  {
+    assert(get_rank(square("a1")) == 1);
+    assert(get_rank(square("b2")) == 2);
+    assert(get_rank(square("g7")) == 7);
+    assert(get_rank(square("h8")) == 8);
   }
   // to_color
   {

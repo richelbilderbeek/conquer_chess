@@ -75,6 +75,12 @@ void test_delta_t()
     const delta_t high{0.11};
     assert(high > low);
   }
+  // operator>=
+  {
+    const delta_t low{0.0001};
+    const delta_t high{0.11};
+    assert(high >= low);
+  }
   // operator<<
   {
     std::stringstream s;
@@ -118,6 +124,11 @@ delta_t operator*(const delta_t& lhs, const delta_t& rhs) noexcept
 bool operator>(const delta_t& lhs, const delta_t& rhs) noexcept
 {
   return lhs.get() > rhs.get();
+}
+
+bool operator>=(const delta_t& lhs, const delta_t& rhs) noexcept
+{
+  return lhs.get() >= rhs.get();
 }
 
 std::ostream& operator<<(std::ostream& os, const delta_t& dt) noexcept

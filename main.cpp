@@ -20,6 +20,7 @@
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
 #include "options_view_layout.h"
+#include "piece_actions.h"
 #include "sfml_helper.h"
 #include "replay.h"
 #include "screen_coordinat.h"
@@ -65,6 +66,7 @@ void test()
   test_options_view_layout();
   test_piece();
   test_piece_action();
+  test_piece_actions();
   test_piece_action_type();
   test_piece_type();
   test_pieces();
