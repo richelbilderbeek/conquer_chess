@@ -146,37 +146,50 @@ void do_select(
 void process_press_action_1(game& g, const control_action& action)
 {
   assert(action.get_type() == control_action_type::press_action_1);
+  // press_action_1 can be
+  //  1. select (when cursor is pointed to a square with a piece of own color)
+  //  2. move (when a piece is selected and cursor points to empty square
+  //  3. promote to queen (for a pawn at the final file)
+
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  if (has_selected_pieces(g, player_side))
+  const square to{square(get_player_pos(g, player_side))};
+
+  if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
-    const square to{square(get_player_pos(g, action.get_player()))};
-    if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
+    if (can_promote(get_piece_at(g, to)))
     {
-      // switch selectness to new piece
+      //  3. promote to queen (for a pawn at the final file)
       unselect_all_pieces(g, player_color);
-      get_piece_at(g, to).set_selected(true);
+      #ifdef FIX_ISSUE_4
+      get_piece_at(g, to).add_action(
+        piece_action(
+          player_color,
+          piece_type::queen,
+          piece_action_type::promote,
+          to,
+          to
+        )
+      )
+      //promote_to(piece_type::queen);
+      #endif
+      return;
     }
-    else
-    {
-      // 'start_move_unit' will check for piece, color, etc.
-      start_move_unit(
-        g,
-        get_player_pos(g, action.get_player()),
-        get_player_color(g, action.get_player())
-      );
-    }
+    //  1. select (when cursor is pointed to a square with a piece of own color)
+    unselect_all_pieces(g, player_color);
+    get_piece_at(g, to).set_selected(true);
+    return;
   }
-  else
-  {
-    assert(!has_selected_pieces(g, action.get_player()));
-    // 'do_select' will check for a piece, it being selected, etc.
-    do_select( // Or unselect
-      g,
-      get_player_pos(g, action.get_player()),
-      get_player_color(g, action.get_player())
-    );
-  }
+
+  //  2. move (when a piece is selected and cursor points to empty square
+  if (!has_selected_pieces(g, player_side)) return;
+
+  // 'start_move_unit' will check for piece, color, etc.
+  start_move_unit(
+    g,
+    get_player_pos(g, action.get_player()),
+    get_player_color(g, action.get_player())
+  );
 }
 
 void control_actions::process(game& g)
@@ -187,7 +200,7 @@ void control_actions::process(game& g)
     {
       process_press_action_1(g, action);
     }
-    if (action.get_type() == control_action_type::press_action_2)
+    else if (action.get_type() == control_action_type::press_action_2)
     {
       if (has_selected_pieces(g, action.get_player()))
       {

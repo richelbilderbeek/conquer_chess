@@ -189,6 +189,27 @@ bool can_move(
   }
 }
 
+bool can_promote(
+  const chess_color color,
+  const piece_type& type,
+  const square& s
+) noexcept
+{
+  if (type != piece_type::pawn) return false;
+  if (color == chess_color::white) return s.get_x() == 7;
+  assert(color == chess_color::black);
+  return s.get_x() == 0;
+}
+
+bool can_promote(const piece& p) noexcept
+{
+  return can_promote(
+    p.get_color(),
+    p.get_type(),
+    p.get_current_square()
+  );
+}
+
 void clear_actions(piece& p)
 {
   p.get_actions().clear();
@@ -529,6 +550,15 @@ void test_piece()
     assert(can_move(chess_color::white, piece_type::rook, square("e4"), square("f4")));
     assert(!can_move(chess_color::white, piece_type::rook, square("e4"), square("f5")));
     assert(!can_move(chess_color::white, piece_type::rook, square("e4"), square("f6")));
+  }
+  // can_promote
+  {
+    assert(can_promote(chess_color::white, piece_type::pawn, square("e8")));
+    assert(!can_promote(chess_color::white, piece_type::pawn, square("e1"))); // Impossible in practice
+    assert(can_promote(chess_color::black, piece_type::pawn, square("e1")));
+    assert(!can_promote(chess_color::black, piece_type::pawn, square("e8"))); // Impossible in practice
+    assert(!can_promote(chess_color::white, piece_type::queen, square("e8")));
+    assert(!can_promote(chess_color::black, piece_type::queen, square("e1")));
   }
   // count_piece_actions
   {

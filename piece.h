@@ -166,6 +166,16 @@ bool can_move(
   const square& to
 );
 
+/// Can this piece promote?
+bool can_promote(
+  const chess_color color,
+  const piece_type& p,
+  const square& s
+) noexcept;
+
+/// Can this piece promote?
+bool can_promote(const piece& p) noexcept;
+
 /// Clear all the actions
 void clear_actions(piece& p);
 
