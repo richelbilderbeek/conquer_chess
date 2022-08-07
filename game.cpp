@@ -82,14 +82,58 @@ std::vector<piece_action> collect_all_actions(
 {
   switch (p.get_type())
   {
+    case piece_type::king:
+      return collect_all_king_actions(g, p);
     case piece_type::knight:
       return collect_all_knight_actions(g, p);
     case piece_type::pawn:
       return collect_all_pawn_actions(g, p);
+    case piece_type::queen:
+      return collect_all_queen_actions(g, p);
     default:
       std::clog << "TODO\n";
       return {};
   }
+}
+
+std::vector<piece_action> collect_all_king_actions(
+  const game& g,
+  const piece& p
+)
+{
+  std::vector<piece_action> actions;
+  const auto type{p.get_type()};
+  assert(type == piece_type::king);
+  const auto color{p.get_color()};
+  const auto& from{p.get_current_square()};
+  const std::vector<square> targets{
+    collect_all_king_target_squares(from)
+  };
+  for (const square& to: targets)
+  {
+    if (is_empty(g, to))
+    {
+      actions.push_back(
+        piece_action(
+          color, type, piece_action_type::move, from, to
+        )
+      );
+    }
+    else
+    {
+      const auto enemy_color{get_other_color(color)};
+      assert(is_piece_at(g, to));
+      if (get_piece_at(g, to).get_color() == enemy_color)
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::attack, from, to
+          )
+        );
+      }
+    }
+  }
+  return actions;
 }
 
 std::vector<piece_action> collect_all_knight_actions(
@@ -100,10 +144,6 @@ std::vector<piece_action> collect_all_knight_actions(
   std::vector<piece_action> actions;
   const auto type{p.get_type()};
   assert(type == piece_type::knight);
-  assert(g.get_time() >= delta_t(0.0)); // Always true
-  //const auto& s{p.get_current_square()};
-  //const auto x{s.get_x()};
-  //const auto y{s.get_y()};
   const auto color{p.get_color()};
   const auto& from{p.get_current_square()};
   const std::vector<square> targets{
@@ -144,7 +184,6 @@ std::vector<piece_action> collect_all_pawn_actions(
   std::vector<piece_action> actions;
   const auto type{p.get_type()};
   assert(type == piece_type::pawn);
-  assert(g.get_time() >= delta_t(0.0)); // Always true
   const auto& s{p.get_current_square()};
   const auto x{s.get_x()};
   const auto y{s.get_y()};
@@ -242,6 +281,52 @@ std::vector<piece_action> collect_all_pawn_actions(
             color, type, piece_action_type::move, from, square(x + 1, y)
           )
         );
+      }
+    }
+  }
+  return actions;
+}
+
+std::vector<piece_action> collect_all_queen_actions(
+  const game& g,
+  const piece& p
+)
+{
+  std::vector<piece_action> actions;
+  const auto type{p.get_type()};
+  assert(type == piece_type::queen);
+  const auto color{p.get_color()};
+  const auto& from{p.get_current_square()};
+  const auto enemy_color{get_other_color(color)};
+  const std::vector<std::vector<square>> targetses{
+    collect_all_queen_target_squares(from)
+  };
+  for (const std::vector<square>& targets: targetses)
+  {
+    for (const square& to: targets)
+    {
+      if (is_empty(g, to))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, to
+          )
+        );
+      }
+      else if (get_piece_at(g, to).get_color() == enemy_color)
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::attack, from, to
+          )
+        );
+        // Nothing to be done behind an enemy piece
+        break;
+      }
+      else
+      {
+        // Cannot capture own piece
+        break;
       }
     }
   }

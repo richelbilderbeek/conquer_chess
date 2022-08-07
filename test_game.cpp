@@ -123,33 +123,92 @@ void test_game_functions()
   #ifdef FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // collect_all_actions
   {
-    const game g;
-    const auto actions{collect_all_actions(g)};
-    assert(!actions.empty());
-    const piece_action e2e3(
-      chess_color::white,
-      piece_type::pawn,
-      piece_action_type::move,
-      square("e2"),
-      square("e3")
-    );
-    assert(is_in(e2e3, actions));
-    const piece_action e2e4(
-      chess_color::white,
-      piece_type::pawn,
-      piece_action_type::move,
-      square("e2"),
-      square("e4")
-    );
-    assert(is_in(e2e4, actions));
-    const piece_action nb1c3(
-      chess_color::white,
-      piece_type::knight,
-      piece_action_type::move,
-      square("b1"),
-      square("c3")
-    );
-    assert(is_in(nb1c3, actions));
+    // default start
+    {
+      const game g;
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action e2e3(
+        chess_color::white,
+        piece_type::pawn,
+        piece_action_type::move,
+        square("e2"),
+        square("e3")
+      );
+      assert(is_in(e2e3, actions));
+      const piece_action e2e4(
+        chess_color::white,
+        piece_type::pawn,
+        piece_action_type::move,
+        square("e2"),
+        square("e4")
+      );
+      assert(is_in(e2e4, actions));
+      const piece_action nb1c3(
+        chess_color::white,
+        piece_type::knight,
+        piece_action_type::move,
+        square("b1"),
+        square("c3")
+      );
+      assert(is_in(nb1c3, actions));
+      const piece_action nb8c6(
+        chess_color::black,
+        piece_type::knight,
+        piece_action_type::move,
+        square("b8"),
+        square("c6")
+      );
+      assert(is_in(nb8c6, actions));
+    }
+    // kings only
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::kings_only)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action ke1e2(
+        chess_color::white,
+        piece_type::king,
+        piece_action_type::move,
+        square("e1"),
+        square("e2")
+      );
+      assert(is_in(ke1e2, actions));
+      const piece_action ke8d7(
+        chess_color::black,
+        piece_type::king,
+        piece_action_type::move,
+        square("e8"),
+        square("d7")
+      );
+      assert(is_in(ke8d7, actions));
+    }
+    // kings and queens only
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::queen_end_game)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action qd1d5(
+        chess_color::white,
+        piece_type::queen,
+        piece_action_type::move,
+        square("d1"),
+        square("d5")
+      );
+      assert(is_in(qd1d5, actions));
+      const piece_action qd8a5(
+        chess_color::black,
+        piece_type::queen,
+        piece_action_type::move,
+        square("d8"),
+        square("a5")
+      );
+      assert(is_in(qd8a5, actions));
+    }
   }
   #endif // FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // count_control_actions
