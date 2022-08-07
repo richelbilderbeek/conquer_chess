@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "../magic_enum/include/magic_enum.hpp"
+
 void test_piece_action_type()
 {
 #ifndef NDEBUG
@@ -24,14 +26,7 @@ void test_piece_action_type()
 
 std::string to_str(const piece_action_type t) noexcept
 {
-  switch (t)
-  {
-    case piece_action_type::move: return "move";
-    default:
-    case piece_action_type::attack:
-      assert(t == piece_action_type::attack);
-      return "attack";
-  }
+  return std::string(magic_enum::enum_name(t));
 }
 
 std::ostream& operator<<(std::ostream& os, const piece_action_type& p) noexcept

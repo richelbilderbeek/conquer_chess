@@ -503,6 +503,17 @@ std::vector<piece> get_pieces_pawn_all_out_assault() noexcept
   };
 }
 
+std::vector<piece> get_pieces_pawns_near_promotion() noexcept
+{
+  return
+  {
+    piece(chess_color::white, piece_type::king,   square("e1")),
+    piece(chess_color::white, piece_type::pawn,   square("a7")),
+    piece(chess_color::black, piece_type::king,   square("e8")),
+    piece(chess_color::black, piece_type::pawn,   square("h2"))
+  };
+}
+
 std::vector<piece> get_pieces_before_scholars_mate() noexcept
 {
   return
@@ -613,10 +624,12 @@ std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
     case starting_position_type::queen_end_game: return get_pieces_queen_endgame();
     case starting_position_type::bishop_and_knight_end_game:
       return get_pieces_bishop_and_knight_end_game();
-    default:
     case starting_position_type::pawn_all_out_assault:
-      assert(t == starting_position_type::pawn_all_out_assault);
       return get_pieces_pawn_all_out_assault();
+    case starting_position_type::pawns_near_promotion:
+    default:
+      assert(t == starting_position_type::pawns_near_promotion);
+      return get_pieces_pawns_near_promotion();
   }
 }
 

@@ -161,6 +161,7 @@ void process_press_action_1(game& g, const control_action& action)
     {
       //  3. promote to queen (for a pawn at the final file)
       unselect_all_pieces(g, player_color);
+      #define FIX_ISSUE_4
       #ifdef FIX_ISSUE_4
       get_piece_at(g, to).add_action(
         piece_action(
@@ -170,8 +171,7 @@ void process_press_action_1(game& g, const control_action& action)
           to,
           to
         )
-      )
-      //promote_to(piece_type::queen);
+      );
       #endif
       return;
     }

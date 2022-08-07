@@ -223,7 +223,7 @@ sf::Color to_sfml_color(
 {
   if (color == chess_color::white)
   {
-    if (t == piece_action_type::move)
+    if (t == piece_action_type::move || t == piece_action_type::promote)
     {
       return sf::Color(255 - 64, 255 - 0, 255 - 64);
     }
@@ -231,7 +231,7 @@ sf::Color to_sfml_color(
     return sf::Color(255 - 0, 255 - 64, 255 - 64);
   }
   assert(color == chess_color::black);
-  if (t == piece_action_type::move)
+  if (t == piece_action_type::move || t == piece_action_type::promote)
   {
     return sf::Color(128 - 64, 128 - 0, 128 - 64);
   }

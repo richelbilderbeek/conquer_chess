@@ -139,6 +139,13 @@ std::vector<piece> get_pieces_bishop_and_knight_end_game() noexcept;
 /// squares forward
 std::vector<piece> get_pieces_pawn_all_out_assault() noexcept;
 
+/// Get the pieces where pawns are near promotion
+///  * White king: e1
+///  * White pawn: a7
+///  * Black king: e8
+///  * Black pawn: h2
+std::vector<piece> get_pieces_pawns_near_promotion() noexcept;
+
 /// Get the pieces for a queen endgame,
 /// which are having only the kings and queens left
 /// from a default setup

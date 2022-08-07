@@ -264,10 +264,11 @@ std::vector<piece_action> collect_all_pawn_actions(
     }
     else if (get_rank(s) == 1)
     {
+      #define FIX_ISSUE_4
       #ifdef FIX_ISSUE_4
       actions.push_back(
         piece_action(
-          color, type, piece_action_type::promotion, from, from
+          color, type, piece_action_type::promote, from, square(0, y)
         )
       );
       #endif // FIX_ISSUE_4
@@ -310,12 +311,13 @@ std::vector<piece_action> collect_all_pawn_actions(
         );
       }
     }
-    else if (get_rank(s) == 1)
+    else if (get_rank(s) == 8)
     {
+      #define FIX_ISSUE_4
       #ifdef FIX_ISSUE_4
       actions.push_back(
         piece_action(
-          color, type, piece_action_type::promotion, from, from
+          color, type, piece_action_type::promote, from, square(7, y)
         )
       );
       #endif // FIX_ISSUE_4

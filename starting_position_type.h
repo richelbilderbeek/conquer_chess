@@ -12,7 +12,8 @@ enum class starting_position_type
   before_scholars_mate,
   queen_end_game,
   bishop_and_knight_end_game,
-  pawn_all_out_assault
+  pawn_all_out_assault,
+  pawns_near_promotion
 };
 
 /// Get all the starting position types

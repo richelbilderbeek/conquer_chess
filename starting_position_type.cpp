@@ -3,8 +3,17 @@
 #include <algorithm>
 #include <cassert>
 
+#include "../magic_enum/include/magic_enum.hpp"
+
 std::vector<starting_position_type> get_all_starting_position_types() noexcept
 {
+  const auto a{magic_enum::enum_values<starting_position_type>()};
+  std::vector<starting_position_type> v;
+  v.reserve(a.size());
+  std::copy(std::begin(a), std::end(a), std::back_inserter(v));
+  assert(a.size() == v.size());
+  return v;
+  /*
   return
   {
     starting_position_type::standard,
@@ -14,6 +23,7 @@ std::vector<starting_position_type> get_all_starting_position_types() noexcept
     starting_position_type::bishop_and_knight_end_game,
     starting_position_type::pawn_all_out_assault
   };
+  */
 }
 
 starting_position_type get_next(const starting_position_type starting_position) noexcept
@@ -56,7 +66,6 @@ void test_starting_position_type()
     assert(get_next(starting_position_type::before_scholars_mate) == starting_position_type::queen_end_game);
     assert(get_next(starting_position_type::queen_end_game) == starting_position_type::bishop_and_knight_end_game);
     assert(get_next(starting_position_type::bishop_and_knight_end_game) == starting_position_type::pawn_all_out_assault);
-    assert(get_next(starting_position_type::pawn_all_out_assault) == starting_position_type::standard);
   }
   // get_next, from collection
   {
@@ -71,6 +80,8 @@ void test_starting_position_type()
 
 std::string to_str(const starting_position_type t) noexcept
 {
+  return std::string(magic_enum::enum_name(t));
+  /*
   switch(t)
   {
     case starting_position_type::standard:
@@ -88,4 +99,5 @@ std::string to_str(const starting_position_type t) noexcept
       assert(t == starting_position_type::pawn_all_out_assault);
       return "pawn_all_out_assault";
   }
+  */
 }

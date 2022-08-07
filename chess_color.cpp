@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "../magic_enum/include/magic_enum.hpp"
+
 std::vector<chess_color> get_all_chess_colors() noexcept
 {
   return
@@ -51,9 +53,12 @@ void test_chess_color()
 
 std::string to_str(const chess_color c) noexcept
 {
+  return std::string(magic_enum::enum_name(c));
+  /*
   if (c == chess_color::white) return "white";
   assert(c == chess_color::black);
   return "black";
+  */
 }
 
 std::ostream& operator<<(std::ostream& os, const chess_color c) noexcept

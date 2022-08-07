@@ -34,7 +34,7 @@ piece::piece(
 
 void piece::add_action(const piece_action& action)
 {
-  assert(action.get_piece_type() == m_type);
+  assert(action.get_piece_type() == m_type || m_type == piece_type::pawn);
   assert(action.get_color() == m_color);
 
   if (action.get_action_type() == piece_action_type::move)
@@ -56,9 +56,8 @@ void piece::add_action(const piece_action& action)
       this->add_message(message_type::start_move);
     }
   }
-  else
+  else if (action.get_action_type() == piece_action_type::attack)
   {
-    assert(action.get_action_type() == piece_action_type::attack);
     if (
       !can_attack(
         m_color,
@@ -75,6 +74,13 @@ void piece::add_action(const piece_action& action)
     {
       this->add_message(message_type::start_attack);
     }
+  }
+  else
+  {
+    assert(action.get_action_type() == piece_action_type::promote);
+    assert(can_promote(m_color, m_type, m_current_square));
+    m_actions.push_back(action);
+    return;
   }
   const std::vector<piece_action> atomic_actions{
     to_atomic(action)
@@ -691,6 +697,20 @@ void test_piece()
     }
     assert(p.get_current_square() == square("g5"));
   }
+  // a pawn can promote
+  {
+    piece p(
+      chess_color::white,
+      piece_type::pawn,
+      square("a8")
+    );
+    p.add_action(piece_action(chess_color::white, piece_type::queen, piece_action_type::promote, square("a8"), square("a8")));
+    assert(!p.get_actions().empty());
+    game g;
+    assert(count_piece_actions(p) == 1);
+    p.tick(delta_t(0.1), g);
+    assert(p.get_type() == piece_type::queen);
+  }
   // operator==
   {
     const auto a{get_test_white_king()};
@@ -797,9 +817,17 @@ void piece::tick(
     case piece_action_type::move:
       return tick_move(*this, dt, g);
     case piece_action_type::attack:
-    default:
-      assert(m_actions[0].get_action_type() == piece_action_type::attack);
       return tick_attack(*this, dt, g);
+    case piece_action_type::promote:
+    default:
+    {
+      const auto first_action{m_actions[0]};
+      assert(first_action.get_action_type() == piece_action_type::promote);
+      assert(m_type == piece_type::pawn);
+      add_message(message_type::done);
+      m_type = first_action.get_piece_type();
+      remove_first(m_actions);
+    }
   }
 }
 
@@ -920,6 +948,7 @@ void tick_move(
     }
   }
 }
+
 
 void toggle_select(piece& p) noexcept
 {
