@@ -21,7 +21,7 @@ int count_control_actions(const control_actions& a)
   return static_cast<int>(a.get_actions().size());
 }
 
-void control_actions::do_select(
+void do_select(
   game& g,
   const game_coordinat& coordinat,
   const chess_color player_color
@@ -82,7 +82,7 @@ void control_actions::do_select(
   }
 }
 
-void control_actions::do_select(
+void do_select(
   game& g,
   const square& coordinat,
   const chess_color player_color
@@ -143,48 +143,49 @@ void control_actions::do_select(
   }
 }
 
-void control_actions::process(game& g)
+void process_press_action_1(game& g, const control_action& action)
 {
-  process_control_actions(g);
+  assert(action.get_type() == control_action_type::press_action_1);
+  const side player_side{action.get_player()};
+  const chess_color player_color{get_player_color(g, player_side)};
+  if (has_selected_pieces(g, player_side))
+  {
+    const square to{square(get_player_pos(g, action.get_player()))};
+    if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
+    {
+      // switch selectness to new piece
+      unselect_all_pieces(g, player_color);
+      get_piece_at(g, to).set_selected(true);
+    }
+    else
+    {
+      // 'start_move_unit' will check for piece, color, etc.
+      start_move_unit(
+        g,
+        get_player_pos(g, action.get_player()),
+        get_player_color(g, action.get_player())
+      );
+    }
+  }
+  else
+  {
+    assert(!has_selected_pieces(g, action.get_player()));
+    // 'do_select' will check for a piece, it being selected, etc.
+    do_select( // Or unselect
+      g,
+      get_player_pos(g, action.get_player()),
+      get_player_color(g, action.get_player())
+    );
+  }
 }
 
-void control_actions::process_control_actions(game& g)
+void control_actions::process(game& g)
 {
   for (const auto& action: m_control_actions)
   {
-    const side player_side{action.get_player()};
-    const chess_color player_color{get_player_color(g, player_side)};
     if (action.get_type() == control_action_type::press_action_1)
     {
-      if (has_selected_pieces(g, player_side))
-      {
-        const square to{square(get_player_pos(g, action.get_player()))};
-        if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
-        {
-          // switch selectness to new piece
-          unselect_all_pieces(g, player_color);
-          get_piece_at(g, to).set_selected(true);
-        }
-        else
-        {
-          // 'start_move_unit' will check for piece, color, etc.
-          start_move_unit(
-            g,
-            get_player_pos(g, action.get_player()),
-            get_player_color(g, action.get_player())
-          );
-        }
-      }
-      else
-      {
-        assert(!has_selected_pieces(g, action.get_player()));
-        // 'do_select' will check for a piece, it being selected, etc.
-        do_select( // Or unselect
-          g,
-          get_player_pos(g, action.get_player()),
-          get_player_color(g, action.get_player())
-        );
-      }
+      process_press_action_1(g, action);
     }
     if (action.get_type() == control_action_type::press_action_2)
     {
@@ -251,7 +252,7 @@ void control_actions::process_control_actions(game& g)
   m_control_actions = std::vector<control_action>();
 }
 
-void control_actions::start_attack(
+void start_attack(
   game& g,
   const game_coordinat& coordinat,
   const chess_color player_color
@@ -285,7 +286,7 @@ void control_actions::start_attack(
   unselect_all_pieces(g, player_color);
 }
 
-void control_actions::start_move_unit(
+void start_move_unit(
   game& g,
   const game_coordinat& coordinat,
   const chess_color player_color

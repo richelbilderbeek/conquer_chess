@@ -445,8 +445,6 @@ void test_game_keyboard_use()
     g.get_player_pos(side::lhs) = to_coordinat(square("d1"));
     g.add_action(create_press_action_1(side::lhs));
     g.tick(delta_t(0.01));
-    const int n{count_selected_units(g, chess_color::white)};
-    assert(n == 1); // Selectedness is transferred
     assert(count_selected_units(g, chess_color::white) == 1); // Selectedness is transferred
   }
   // Keyboard: can move pawn forward

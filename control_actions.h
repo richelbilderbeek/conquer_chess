@@ -35,36 +35,6 @@ public:
 private:
 
   std::vector<control_action> m_control_actions;
-
-  /// Process a left-mouse-button, hence a game_coordinat as a coordinat
-  void do_select(
-    game& g,
-    const game_coordinat& coordinat,
-    const chess_color player_color
-  );
-
-  /// Process a space, hence a square as a coordinat
-  void do_select(
-    game& g,
-    const square& coordinat,
-    const chess_color player_color
-  );
-
-  void process_control_actions(game& g);
-
-  /// Process an A or right-mouse-button down
-  void start_attack(
-    game& g,
-    const game_coordinat& coordinat,
-    const chess_color player_color
-  );
-
-  /// Process an M or right-mouse-button down
-  void start_move_unit(
-    game& g,
-    const game_coordinat& coordinat,
-    const chess_color player_color
-  );
 };
 
 /// Count the total number of control actions to be done by the game,
@@ -73,6 +43,36 @@ int count_control_actions(const control_actions& a);
 
 /// Count the total number of piece actions to be done by the game
 int count_piece_actions(const control_actions& a);
+
+/// Process a left-mouse-button, hence a game_coordinat as a coordinat
+void do_select(
+  game& g,
+  const game_coordinat& coordinat,
+  const chess_color player_color
+);
+
+void process_press_action_1(game& g, const control_action& action);
+
+
+/// Process a space, hence a square as a coordinat
+void do_select(
+  game& g,
+  const square& coordinat,
+  const chess_color player_color
+);
+/// Process an A or right-mouse-button down
+void start_attack(
+  game& g,
+  const game_coordinat& coordinat,
+  const chess_color player_color
+);
+
+/// Process an M or right-mouse-button down
+void start_move_unit(
+  game& g,
+  const game_coordinat& coordinat,
+  const chess_color player_color
+);
 
 /// Test this class and its free functions
 void test_control_actions();
