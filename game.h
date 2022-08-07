@@ -114,6 +114,13 @@ std::vector<piece_action> collect_all_actions(
 );
 
 /// Collect all valid moves and attacks at a board
+/// for a focal bishop
+std::vector<piece_action> collect_all_bishop_actions(
+  const game& g,
+  const piece& p
+);
+
+/// Collect all valid moves and attacks at a board
 /// for a focal king
 std::vector<piece_action> collect_all_king_actions(
   const game& g,
@@ -137,6 +144,13 @@ std::vector<piece_action> collect_all_pawn_actions(
 /// Collect all valid moves and attacks at a board
 /// for a focal queen
 std::vector<piece_action> collect_all_queen_actions(
+  const game& g,
+  const piece& p
+);
+
+/// Collect all valid moves and attacks at a board
+/// for a focal rook
+std::vector<piece_action> collect_all_rook_actions(
   const game& g,
   const piece& p
 );

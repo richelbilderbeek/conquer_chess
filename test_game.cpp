@@ -209,6 +209,30 @@ void test_game_functions()
       );
       assert(is_in(qd8a5, actions));
     }
+    // pawn all-out assault
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::pawn_all_out_assault)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action ra1a3(
+        chess_color::white,
+        piece_type::rook,
+        piece_action_type::move,
+        square("a1"),
+        square("a3")
+      );
+      assert(is_in(ra1a3, actions));
+      const piece_action rh8h6(
+        chess_color::black,
+        piece_type::rook,
+        piece_action_type::move,
+        square("h8"),
+        square("h6")
+      );
+      assert(is_in(rh8h6, actions));
+    }
   }
   #endif // FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // count_control_actions

@@ -82,6 +82,8 @@ std::vector<piece_action> collect_all_actions(
 {
   switch (p.get_type())
   {
+    case piece_type::bishop:
+      return collect_all_bishop_actions(g, p);
     case piece_type::king:
       return collect_all_king_actions(g, p);
     case piece_type::knight:
@@ -90,10 +92,57 @@ std::vector<piece_action> collect_all_actions(
       return collect_all_pawn_actions(g, p);
     case piece_type::queen:
       return collect_all_queen_actions(g, p);
+    case piece_type::rook:
     default:
-      std::clog << "TODO\n";
-      return {};
+      assert(p.get_type() == piece_type::rook);
+      return collect_all_rook_actions(g, p);
   }
+}
+
+std::vector<piece_action> collect_all_bishop_actions(
+  const game& g,
+  const piece& p
+)
+{
+  std::vector<piece_action> actions;
+  const auto type{p.get_type()};
+  assert(type == piece_type::bishop);
+  const auto color{p.get_color()};
+  const auto& from{p.get_current_square()};
+  const auto enemy_color{get_other_color(color)};
+  const std::vector<std::vector<square>> targetses{
+    collect_all_bishop_target_squares(from)
+  };
+  for (const std::vector<square>& targets: targetses)
+  {
+    for (const square& to: targets)
+    {
+      if (is_empty(g, to))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, to
+          )
+        );
+      }
+      else if (get_piece_at(g, to).get_color() == enemy_color)
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::attack, from, to
+          )
+        );
+        // Nothing to be done behind an enemy piece
+        break;
+      }
+      else
+      {
+        // Cannot capture own piece
+        break;
+      }
+    }
+  }
+  return actions;
 }
 
 std::vector<piece_action> collect_all_king_actions(
@@ -300,6 +349,52 @@ std::vector<piece_action> collect_all_queen_actions(
   const auto enemy_color{get_other_color(color)};
   const std::vector<std::vector<square>> targetses{
     collect_all_queen_target_squares(from)
+  };
+  for (const std::vector<square>& targets: targetses)
+  {
+    for (const square& to: targets)
+    {
+      if (is_empty(g, to))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, to
+          )
+        );
+      }
+      else if (get_piece_at(g, to).get_color() == enemy_color)
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::attack, from, to
+          )
+        );
+        // Nothing to be done behind an enemy piece
+        break;
+      }
+      else
+      {
+        // Cannot capture own piece
+        break;
+      }
+    }
+  }
+  return actions;
+}
+
+std::vector<piece_action> collect_all_rook_actions(
+  const game& g,
+  const piece& p
+)
+{
+  std::vector<piece_action> actions;
+  const auto type{p.get_type()};
+  assert(type == piece_type::rook);
+  const auto color{p.get_color()};
+  const auto& from{p.get_current_square()};
+  const auto enemy_color{get_other_color(color)};
+  const std::vector<std::vector<square>> targetses{
+    collect_all_rook_target_squares(from)
   };
   for (const std::vector<square>& targets: targetses)
   {

@@ -86,6 +86,42 @@ bool are_on_same_rank(const square& a, const square& b) noexcept
   return a.get_x() == b.get_x();
 }
 
+std::vector<std::pair<int, int>> collect_all_bishop_delta_pairs() noexcept
+{
+  return {
+    std::make_pair( 1, -1), // NE
+    std::make_pair( 1,  1), // SE
+    std::make_pair(-1,  1), // SW
+    std::make_pair(-1, -1)  // SE
+  };
+}
+
+std::vector<std::vector<square>> collect_all_bishop_target_squares(const square& s) noexcept
+{
+  std::vector<std::vector<square>> targetses; // Reduplicated plural
+  const auto x{s.get_x()};
+  const auto y{s.get_y()};
+
+  const std::vector<std::pair<int, int>> delta_pairs{
+    collect_all_bishop_delta_pairs()
+  };
+  for (const auto delta_pair: delta_pairs)
+  {
+    std::vector<square> targets;
+    for (int distance{1}; distance != 8; ++distance)
+    {
+      const int new_x{x + (delta_pair.first * distance)};
+      const int new_y{y + (delta_pair.second * distance)};
+      if (is_valid_square_xy(new_x, new_y))
+      {
+        targets.push_back(square(new_x, new_y));
+      }
+    }
+    targetses.push_back(targets);
+  }
+  return targetses;
+}
+
 std::vector<square> collect_all_king_target_squares(const square& s) noexcept
 {
   std::vector<square> targets;
@@ -112,10 +148,9 @@ std::vector<square> collect_all_king_target_squares(const square& s) noexcept
   return targets;
 }
 
-std::vector<square> collect_all_knight_target_squares(const square& s) noexcept
+std::vector<std::pair<int, int>> collect_all_knight_delta_pairs() noexcept
 {
-  std::vector<square> targets;
-  std::vector<std::pair<int, int>> delta_pairs{
+  return {
     std::make_pair( 1, -2), // 1 o'clock
     std::make_pair( 2, -1), // 2 o'clock
     std::make_pair( 2,  1), // 4 o'clock
@@ -124,6 +159,15 @@ std::vector<square> collect_all_knight_target_squares(const square& s) noexcept
     std::make_pair(-2,  1), // 8 o'clock
     std::make_pair(-2, -1), // 10 o'clock
     std::make_pair(-1, -2)  // 11 o'clock
+  };
+}
+
+
+std::vector<square> collect_all_knight_target_squares(const square& s) noexcept
+{
+  std::vector<square> targets;
+  const std::vector<std::pair<int, int>> delta_pairs{
+    collect_all_knight_delta_pairs()
   };
   for (const auto delta_pair: delta_pairs)
   {
@@ -138,12 +182,9 @@ std::vector<square> collect_all_knight_target_squares(const square& s) noexcept
   return targets;
 }
 
-std::vector<std::vector<square>> collect_all_queen_target_squares(const square& s) noexcept
+std::vector<std::pair<int, int>> collect_all_queen_delta_pairs() noexcept
 {
-  std::vector<std::vector<square>> targetses; // Reduplicated plural
-  const auto x{s.get_x()};
-  const auto y{s.get_y()};
-  std::vector<std::pair<int, int>> delta_pairs{
+  return {
     std::make_pair( 0, -1), // N
     std::make_pair( 1, -1), // NE
     std::make_pair( 1,  0), // E
@@ -152,6 +193,53 @@ std::vector<std::vector<square>> collect_all_queen_target_squares(const square& 
     std::make_pair(-1,  1), // SW
     std::make_pair(-1,  0), // W
     std::make_pair(-1, -1)  // SE
+  };
+}
+
+std::vector<std::vector<square>> collect_all_queen_target_squares(const square& s) noexcept
+{
+  std::vector<std::vector<square>> targetses; // Reduplicated plural
+  const auto x{s.get_x()};
+  const auto y{s.get_y()};
+
+  const std::vector<std::pair<int, int>> delta_pairs{
+    collect_all_queen_delta_pairs()
+  };
+  for (const auto delta_pair: delta_pairs)
+  {
+    std::vector<square> targets;
+    for (int distance{1}; distance != 8; ++distance)
+    {
+      const int new_x{x + (delta_pair.first * distance)};
+      const int new_y{y + (delta_pair.second * distance)};
+      if (is_valid_square_xy(new_x, new_y))
+      {
+        targets.push_back(square(new_x, new_y));
+      }
+    }
+    targetses.push_back(targets);
+  }
+  return targetses;
+}
+
+std::vector<std::pair<int, int>> collect_all_rook_delta_pairs() noexcept
+{
+  return {
+    std::make_pair( 0, -1), // N
+    std::make_pair( 1,  0), // E
+    std::make_pair( 0,  1), // S
+    std::make_pair(-1,  0)  // W
+  };
+}
+
+std::vector<std::vector<square>> collect_all_rook_target_squares(const square& s) noexcept
+{
+  std::vector<std::vector<square>> targetses; // Reduplicated plural
+  const auto x{s.get_x()};
+  const auto y{s.get_y()};
+
+  const std::vector<std::pair<int, int>> delta_pairs{
+    collect_all_rook_delta_pairs()
   };
   for (const auto delta_pair: delta_pairs)
   {
