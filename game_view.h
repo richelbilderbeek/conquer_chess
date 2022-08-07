@@ -170,7 +170,7 @@ void show_pieces(game_view& view);
 /// Show the possible moves for the selected pieces.
 /// e.g. put crosses on squares that can be attacked.
 /// Does nothing if no pieces are selected
-void show_possible_moves(game_view& view, const side player);
+void show_possible_moves(game_view& view);
 
 /// Show the info on the side-bar on-screen for player 1
 void show_sidebar_1(game_view& view);

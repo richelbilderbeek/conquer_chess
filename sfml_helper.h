@@ -5,6 +5,7 @@
 
 #include "chess_color.h"
 #include "screen_rect.h"
+#include "piece_action_type.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -24,7 +25,13 @@ void test_sfml_helper();
 /// Convert an SFML key to a string
 std::string to_str(const sf::Keyboard::Key k);
 
+/// Convert chess_color to sf::Color
 sf::Color to_sfml_color(const chess_color color) noexcept;
 
+/// Convert chess_color to sf::Color
+sf::Color to_sfml_color(
+  const chess_color color,
+  const piece_action_type t
+) noexcept;
 
 #endif // SFML_HELPER_H

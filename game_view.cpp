@@ -319,8 +319,7 @@ void show_board(game_view& view)
   }
   show_square_under_cursor(view, side::lhs);
   show_square_under_cursor(view, side::rhs);
-  show_possible_moves(view, side::lhs);
-  show_possible_moves(view, side::rhs);
+  show_possible_moves(view);
   show_unit_paths(view);
   show_pieces(view);
   show_unit_health_bars(view);
@@ -603,31 +602,29 @@ void show_pieces(game_view& view)
   }
 }
 
-void show_possible_moves(game_view& view, const side player)
+void show_possible_moves(game_view& view)
 {
   const auto& g{view.get_game()};
-  const auto&layout{g.get_layout()};
-  const auto color{get_player_color(g, player)};
-  if (count_selected_units(g, color) == 0) return;
-
-  const std::vector<square> possible_moves{
-    get_possible_moves(g, player)
-  };
-  if (possible_moves.empty()) return;
-
-  assert(are_all_unique(possible_moves));
-  for (const auto& square: possible_moves)
+  const auto& layout{g.get_layout()};
+  const auto actions{collect_all_actions(g)};
+  for (const auto& action: actions)
   {
+    if (!get_piece_at(g, action.get_from()).is_selected()) continue;
     sf::RectangleShape rectangle;
     set_rect(
       rectangle,
-      convert_to_screen_rect(square, layout)
+      convert_to_screen_rect(action.get_to(), layout)
     );
-    rectangle.setOutlineColor(to_sfml_color(color));
+    rectangle.setOutlineColor(
+      to_sfml_color(
+        action.get_color(),
+        action.get_action_type()
+      )
+    );
     rectangle.setOutlineThickness(get_square_width(layout) / 10.0);
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setScale(0.5, 0.5);
-    rectangle.setRotation(player == side::lhs ? 30 : -30);
+    rectangle.setRotation(action.get_color() == chess_color::white ? 30 : -30);
     view.get_window().draw(rectangle);
   }
 }
