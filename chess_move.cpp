@@ -263,6 +263,25 @@ void test_chess_move()
     assert(m.get_winner().at(0) == chess_color::white);
     assert(!m.is_capture());
   }
+  // operator==
+  {
+    // On string
+    {
+      const chess_move a("e2", chess_color::white);
+      const chess_move b("e2", chess_color::white);
+      const chess_move c("e3", chess_color::white);
+      assert(a == b);
+      assert(!(a == c));
+    }
+    // On color
+    {
+      const chess_move a("Qxf7#", chess_color::white);
+      const chess_move b("Qxf7#", chess_color::white);
+      const chess_move c("Qxf7#", chess_color::black);
+      assert(a == b);
+      assert(!(a == c));
+    }
+  }
   // operator<<
   {
     const chess_move m("Qxf7#", chess_color::white);

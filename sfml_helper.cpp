@@ -193,6 +193,19 @@ void test_sfml_helper()
     const sf::Color w{to_sfml_color(chess_color::white)};
     assert(b != w);
   }
+  // to_sfml_color
+  {
+    const sf::Color ba{to_sfml_color(chess_color::black, piece_action_type::attack)};
+    const sf::Color bm{to_sfml_color(chess_color::black, piece_action_type::move)};
+    const sf::Color wa{to_sfml_color(chess_color::white, piece_action_type::attack)};
+    const sf::Color wm{to_sfml_color(chess_color::white, piece_action_type::move)};
+    assert(ba != bm);
+    assert(ba != wa);
+    assert(ba != wm);
+    assert(bm != wa);
+    assert(bm != wm);
+    assert(wa != wm);
+  }
 #endif
 }
 

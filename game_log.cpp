@@ -18,7 +18,7 @@ void game_log::add_message(
 {
   m_timed_messages.push_back(
     std::make_pair(
-      m_clock.getElapsedTime().asSeconds(),
+      m_clock.getElapsedTime().asMilliseconds(),
       m
     )
   );
@@ -83,14 +83,16 @@ void test_log()
 
 void game_log::tick()
 {
-  const double now_secs{m_clock.getElapsedTime().asSeconds()};
+  const double now_secs{
+    0.001 * m_clock.getElapsedTime().asMilliseconds()
+  };
   m_timed_messages.erase(
     std::remove_if(
       std::begin(m_timed_messages),
       std::end(m_timed_messages),
       [this, now_secs](const auto& p)
       {
-        return now_secs - p.first > m_display_time_secs;
+        return now_secs - (0.001 * p.first) > m_display_time_secs;
       }
     ),
     std::end(m_timed_messages)
