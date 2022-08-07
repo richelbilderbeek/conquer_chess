@@ -22,14 +22,14 @@ void test_game_scenarios()
     const auto piece{get_piece_with_id(g, id)};
     assert(piece_with_id_is_at(g, id, square("e6")));
   }
-  // Ke1-e2 does not move king forward
+  // Ke1-e2 does not move king forward, it shifts selectedness
   {
     game g;
     assert(find_pieces(g, piece_type::king, chess_color::white).at(0).get_current_square() == square("e1"));
     do_select_and_move_keyboard_player_piece(g, square("e1"), square("e2"));
     tick_until_idle(g);
     const auto messages{find_pieces(g, piece_type::king, chess_color::white).at(0).get_messages()};
-    assert(std::count(std::begin(messages), std::end(messages), message_type::cannot) == 1);
+    assert(std::count(std::begin(messages), std::end(messages), message_type::select) == 1);
     assert(find_pieces(g, piece_type::king, chess_color::white).at(0).get_current_square() == square("e1"));
   }
   // e2-e6, then cannot move forward

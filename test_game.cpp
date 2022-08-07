@@ -433,6 +433,22 @@ void test_game_keyboard_use()
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
+  // Keyboard: select on white king selects king,
+  // the select on white queen selects white queen
+  {
+    game g;
+    g.get_player_pos(side::lhs) = to_coordinat(square("e1"));
+    assert(count_selected_units(g, chess_color::white) == 0);
+    g.add_action(create_press_action_1(side::lhs));
+    g.tick(delta_t(0.01));
+    assert(count_selected_units(g, chess_color::white) == 1);
+    g.get_player_pos(side::lhs) = to_coordinat(square("d1"));
+    g.add_action(create_press_action_1(side::lhs));
+    g.tick(delta_t(0.01));
+    const int n{count_selected_units(g, chess_color::white)};
+    assert(n == 1); // Selectedness is transferred
+    assert(count_selected_units(g, chess_color::white) == 1); // Selectedness is transferred
+  }
   // Keyboard: can move pawn forward
   {
     game g;
@@ -456,18 +472,18 @@ void test_game_keyboard_use()
   }
   // Keyboard: cannot move pawn backward
   {
-    game g;
-    g.get_player_pos(side::lhs) = to_coordinat("e2");
+    game g = get_game_with_starting_position(starting_position_type::pawn_all_out_assault);
+    g.get_player_pos(side::lhs) = to_coordinat("e4");
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_action(create_press_action_1(side::lhs));
-    g.tick();
+    g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
-    g.get_player_pos(side::lhs) = to_coordinat("e1");
+    g.get_player_pos(side::lhs) = to_coordinat("e3");
     g.add_action(create_press_action_1(side::lhs));
-    g.tick(); // Ignores invalid action, adds sound effect
+    g.tick(delta_t(0.01)); // Ignores invalid action, adds sound effect
     assert(count_selected_units(g, chess_color::white) == 0);
-    assert(get_closest_piece_to(g, to_coordinat("e2")).get_type() == piece_type::pawn);
+    assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
     assert(collect_messages(g).at(1).get_message_type() == message_type::cannot);
   }
 #endif // NDEBUG // no tests in release
