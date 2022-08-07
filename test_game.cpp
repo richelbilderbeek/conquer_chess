@@ -119,21 +119,39 @@ void test_game_functions()
     clear_piece_messages(g);
     assert(collect_messages(g).empty());
   }
-  #ifdef FIX_COLLECT_ALL_ACTIONS
+  #define FIX_ISSUE_26_COLLECT_ALL_ACTIONS
+  #ifdef FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // collect_all_actions
   {
     const game g;
     const auto actions{collect_all_actions(g)};
-    const piece_action e2e4(
-      side::lhs,
+    assert(!actions.empty());
+    const piece_action e2e3(
+      chess_color::white,
       piece_type::pawn,
       piece_action_type::move,
       square("e2"),
       square("e3")
     );
+    assert(is_in(e2e3, actions));
+    const piece_action e2e4(
+      chess_color::white,
+      piece_type::pawn,
+      piece_action_type::move,
+      square("e2"),
+      square("e4")
+    );
     assert(is_in(e2e4, actions));
+    const piece_action nb1c3(
+      chess_color::white,
+      piece_type::knight,
+      piece_action_type::move,
+      square("b1"),
+      square("c3")
+    );
+    assert(is_in(nb1c3, actions));
   }
-  #endif
+  #endif // FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // count_control_actions
   {
     const auto g{get_kings_only_game()};

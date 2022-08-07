@@ -86,6 +86,32 @@ bool are_on_same_rank(const square& a, const square& b) noexcept
   return a.get_x() == b.get_x();
 }
 
+std::vector<square> collect_all_knight_target_squares(const square& s) noexcept
+{
+  std::vector<square> targets;
+  std::vector<std::pair<int, int>> delta_pairs{
+    std::make_pair( 1, -2), // 1 o'clock
+    std::make_pair( 2, -1), // 2 o'clock
+    std::make_pair( 2,  1), // 4 o'clock
+    std::make_pair( 1,  2), // 5 o'clock
+    std::make_pair(-1,  2), // 7 o'clock
+    std::make_pair(-2,  1), // 8 o'clock
+    std::make_pair(-2, -1), // 10 o'clock
+    std::make_pair(-1, -2)  // 11 o'clock
+  };
+  for (const auto delta_pair: delta_pairs)
+  {
+    const int x{s.get_x() + delta_pair.first};
+    const int y{s.get_y() + delta_pair.second};
+    if (is_valid_square_xy(x, y))
+    {
+      targets.push_back(square(x, y));
+    }
+  }
+  assert(!targets.empty());
+  return targets;
+}
+
 std::vector<square> concatenate(
   const std::vector<square>& a,
   const std::vector<square>& b

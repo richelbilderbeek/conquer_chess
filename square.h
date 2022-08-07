@@ -63,6 +63,9 @@ bool are_on_same_half_diagonal(const square& a, const square& b) noexcept;
 /// Are the squares on the same rank, e.g. a1 and a8
 bool are_on_same_rank(const square& a, const square& b) noexcept;
 
+/// Collect all the possible target squares for a knight
+std::vector<square> collect_all_knight_target_squares(const square& s) noexcept;
+
 /// Concatenate the vectors
 std::vector<square> concatenate(
   const std::vector<square>& a,
