@@ -264,14 +264,18 @@ std::vector<piece_action> collect_all_pawn_actions(
     }
     else if (get_rank(s) == 1)
     {
-      #define FIX_ISSUE_4
-      #ifdef FIX_ISSUE_4
       actions.push_back(
-        piece_action(
-          color, type, piece_action_type::promote, from, square(0, y)
-        )
+        piece_action(color, piece_type::queen, piece_action_type::promote, from, from)
       );
-      #endif // FIX_ISSUE_4
+      actions.push_back(
+        piece_action(color, piece_type::rook, piece_action_type::promote, from, from)
+      );
+      actions.push_back(
+        piece_action(color, piece_type::bishop, piece_action_type::promote, from, from)
+      );
+      actions.push_back(
+        piece_action(color, piece_type::knight, piece_action_type::promote, from, from)
+      );
     }
     else
     {
@@ -313,14 +317,18 @@ std::vector<piece_action> collect_all_pawn_actions(
     }
     else if (get_rank(s) == 8)
     {
-      #define FIX_ISSUE_4
-      #ifdef FIX_ISSUE_4
       actions.push_back(
-        piece_action(
-          color, type, piece_action_type::promote, from, square(7, y)
-        )
+        piece_action(color, piece_type::queen, piece_action_type::promote, from, from)
       );
-      #endif // FIX_ISSUE_4
+      actions.push_back(
+        piece_action(color, piece_type::rook, piece_action_type::promote, from, from)
+      );
+      actions.push_back(
+        piece_action(color, piece_type::bishop, piece_action_type::promote, from, from)
+      );
+      actions.push_back(
+        piece_action(color, piece_type::knight, piece_action_type::promote, from, from)
+      );
     }
     else
     {

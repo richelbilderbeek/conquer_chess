@@ -61,14 +61,6 @@ void test_starting_position_type()
   }
   // get_next
   {
-    assert(get_next(starting_position_type::standard) == starting_position_type::kings_only);
-    assert(get_next(starting_position_type::kings_only) == starting_position_type::before_scholars_mate);
-    assert(get_next(starting_position_type::before_scholars_mate) == starting_position_type::queen_end_game);
-    assert(get_next(starting_position_type::queen_end_game) == starting_position_type::bishop_and_knight_end_game);
-    assert(get_next(starting_position_type::bishop_and_knight_end_game) == starting_position_type::pawn_all_out_assault);
-  }
-  // get_next, from collection
-  {
     for (const auto spt: get_all_starting_position_types())
     {
       const auto next{get_next(spt)};

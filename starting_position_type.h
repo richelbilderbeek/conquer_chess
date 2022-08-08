@@ -7,13 +7,15 @@
 /// The starting position type
 enum class starting_position_type
 {
-  standard,
-  kings_only,
   before_scholars_mate,
-  queen_end_game,
   bishop_and_knight_end_game,
+  kasparov_vs_topalov,
+  kings_only,
   pawn_all_out_assault,
-  pawns_near_promotion
+  pawns_at_promotion,
+  pawns_near_promotion,
+  queen_end_game,
+  standard
 };
 
 /// Get all the starting position types

@@ -135,9 +135,20 @@ std::vector<piece> get_pieces_before_scholars_mate() noexcept;
 /// From https://www.thechesswebsite.com/bishop-and-knight-end-game/
 std::vector<piece> get_pieces_bishop_and_knight_end_game() noexcept;
 
+/// Get the pieces for a Kasparov vs Topalov game,
+/// discovered at https://www.reddit.com/r/chess/comments/fmd7uh/this_is_a_position_from_the_famous_kasparov_vs/
+std::vector<piece> get_pieces_kasparov_vs_topalov() noexcept;
+
 /// Get the pieces from a standard game, with all pawns moved two
 /// squares forward
 std::vector<piece> get_pieces_pawn_all_out_assault() noexcept;
+
+/// Get the pieces where pawns are at promotion
+///  * White king: e1
+///  * White pawn: a8
+///  * Black king: e8
+///  * Black pawn: h1
+std::vector<piece> get_pieces_pawns_at_promotion() noexcept;
 
 /// Get the pieces where pawns are near promotion
 ///  * White king: e1

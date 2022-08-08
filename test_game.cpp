@@ -230,6 +230,22 @@ void test_game_functions()
       );
       assert(is_in(qd8a5, actions));
     }
+    // Kasparov versus Topalov
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::kasparov_vs_topalov)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action ka4xa3(
+        chess_color::black,
+        piece_type::king,
+        piece_action_type::attack,
+        square("a4"),
+        square("a3")
+      );
+      assert(is_in(ka4xa3, actions));
+    }
     // pawn all-out assault
     {
       const game g{
@@ -253,6 +269,30 @@ void test_game_functions()
         square("h6")
       );
       assert(is_in(rh8h6, actions));
+    }
+    // pawn at promotion
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::pawns_at_promotion)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action a8isq(
+        chess_color::white,
+        piece_type::queen,
+        piece_action_type::promote,
+        square("a8"),
+        square("a8")
+      );
+      assert(is_in(a8isq, actions));
+      const piece_action h1isr(
+        chess_color::black,
+        piece_type::rook,
+        piece_action_type::promote,
+        square("h1"),
+        square("h1")
+      );
+      assert(is_in(h1isr, actions));
     }
   }
   #endif // FIX_ISSUE_26_COLLECT_ALL_ACTIONS

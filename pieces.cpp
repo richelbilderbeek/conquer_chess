@@ -464,6 +464,32 @@ std::vector<piece> get_selected_pieces(
   return pieces;
 }
 
+std::vector<piece> get_pieces_kasparov_vs_topalov() noexcept
+{
+  return
+  {
+    piece(chess_color::white, piece_type::rook,   square("b7")),
+    piece(chess_color::white, piece_type::queen,  square("f6")),
+    piece(chess_color::white, piece_type::king,   square("b1")),
+    piece(chess_color::white, piece_type::bishop, square("h3")),
+    piece(chess_color::white, piece_type::pawn,   square("a3")),
+    piece(chess_color::white, piece_type::pawn,   square("b4")),
+    piece(chess_color::white, piece_type::pawn,   square("c2")),
+    piece(chess_color::white, piece_type::pawn,   square("f3")),
+    piece(chess_color::white, piece_type::pawn,   square("g3")),
+    piece(chess_color::white, piece_type::pawn,   square("h2")),
+    piece(chess_color::black, piece_type::rook,   square("d8")),
+    piece(chess_color::black, piece_type::queen,  square("c4")),
+    piece(chess_color::black, piece_type::king,   square("a4")),
+    piece(chess_color::black, piece_type::rook,   square("h8")),
+    piece(chess_color::black, piece_type::pawn,   square("a6")),
+    piece(chess_color::black, piece_type::pawn,   square("b5")),
+    piece(chess_color::black, piece_type::pawn,   square("f7")),
+    piece(chess_color::black, piece_type::pawn,   square("g6")),
+    piece(chess_color::black, piece_type::pawn,   square("h7"))
+  };
+}
+
 std::vector<piece> get_pieces_pawn_all_out_assault() noexcept
 {
   return
@@ -500,6 +526,17 @@ std::vector<piece> get_pieces_pawn_all_out_assault() noexcept
     piece(chess_color::black, piece_type::pawn,   square("f5")),
     piece(chess_color::black, piece_type::pawn,   square("g5")),
     piece(chess_color::black, piece_type::pawn,   square("h5"))
+  };
+}
+
+std::vector<piece> get_pieces_pawns_at_promotion() noexcept
+{
+  return
+  {
+    piece(chess_color::white, piece_type::king, square("e1")),
+    piece(chess_color::white, piece_type::pawn, square("a8")),
+    piece(chess_color::black, piece_type::king, square("e8")),
+    piece(chess_color::black, piece_type::pawn, square("h1"))
   };
 }
 
@@ -618,18 +655,26 @@ std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
 {
   switch (t)
   {
-    case starting_position_type::standard: return get_standard_starting_pieces();
-    case starting_position_type::kings_only: return get_kings_only_starting_pieces();
-    case starting_position_type::before_scholars_mate: return get_pieces_before_scholars_mate();
-    case starting_position_type::queen_end_game: return get_pieces_queen_endgame();
+    case starting_position_type::before_scholars_mate:
+      return get_pieces_before_scholars_mate();
     case starting_position_type::bishop_and_knight_end_game:
       return get_pieces_bishop_and_knight_end_game();
+    case starting_position_type::kasparov_vs_topalov:
+      return get_pieces_kasparov_vs_topalov();
+    case starting_position_type::kings_only:
+      return get_kings_only_starting_pieces();
     case starting_position_type::pawn_all_out_assault:
       return get_pieces_pawn_all_out_assault();
+    case starting_position_type::pawns_at_promotion:
+      return get_pieces_pawns_at_promotion();
     case starting_position_type::pawns_near_promotion:
-    default:
-      assert(t == starting_position_type::pawns_near_promotion);
       return get_pieces_pawns_near_promotion();
+    case starting_position_type::queen_end_game:
+      return get_pieces_queen_endgame();
+    case starting_position_type::standard:
+    default:
+      assert(t == starting_position_type::standard);
+      return get_standard_starting_pieces();
   }
 }
 
