@@ -39,7 +39,7 @@ bool can_castle_kingside(const piece& p, const game& g) noexcept
   if (has_moved(p)) return false;
   const auto king_square{p.get_current_square()};
   // In a starting position, it may be that king has not made a new move
-  if (king_square != square("e1") && king_square == square("e8")) return false;
+  if (king_square != square("e1") && king_square != square("e8")) return false;
   const auto rook_square(square(king_square.get_x(), 0));
   if (!is_piece_at(g, rook_square)) return false;
   const auto rook{get_piece_at(g, rook_square)};
@@ -47,14 +47,16 @@ bool can_castle_kingside(const piece& p, const game& g) noexcept
   if (has_moved(rook)) return false;
   const auto b_pawn_square(square(king_square.get_x(), 1));
   if (!is_empty(g, b_pawn_square)) return false;
-  const chess_color enemy_color{get_other_color(p.get_color())};
-  if (is_square_attacked_by(g, b_pawn_square, enemy_color)) return false;
   const auto c_pawn_square(square(king_square.get_x(), 2));
   if (!is_empty(g, c_pawn_square)) return false;
-  if (is_square_attacked_by(g, c_pawn_square, enemy_color)) return false;
   const auto d_pawn_square(square(king_square.get_x(), 3));
   if (!is_empty(g, d_pawn_square)) return false;
+  #ifdef PREVENT_RECURSION_COLLECT_ALL
+  const chess_color enemy_color{get_other_color(p.get_color())};
+  if (is_square_attacked_by(g, b_pawn_square, enemy_color)) return false;
+  if (is_square_attacked_by(g, c_pawn_square, enemy_color)) return false;
   if (is_square_attacked_by(g, d_pawn_square, enemy_color)) return false;
+  #endif // PREVENT_RECURSION_COLLECT_ALL
   return true;
 }
 
@@ -64,7 +66,7 @@ bool can_castle_queenside(const piece& p, const game& g) noexcept
   if (has_moved(p)) return false;
   const auto king_square{p.get_current_square()};
   // In a starting position, it may be that king has not made a new move
-  if (king_square != square("e1") && king_square == square("e8")) return false;
+  if (king_square != square("e1") && king_square != square("e8")) return false;
   const auto rook_square(square(king_square.get_x(), 7));
   if (!is_piece_at(g, rook_square)) return false;
   const auto rook{get_piece_at(g, rook_square)};
@@ -72,11 +74,13 @@ bool can_castle_queenside(const piece& p, const game& g) noexcept
   if (has_moved(rook)) return false;
   const auto f_pawn_square(square(king_square.get_x(), 1));
   if (!is_empty(g, f_pawn_square)) return false;
-  const chess_color enemy_color{get_other_color(p.get_color())};
-  if (is_square_attacked_by(g, f_pawn_square, enemy_color)) return false;
   const auto g_pawn_square(square(king_square.get_x(), 2));
   if (!is_empty(g, g_pawn_square)) return false;
+  #ifdef PREVENT_RECURSION_COLLECT_ALL
+  const chess_color enemy_color{get_other_color(p.get_color())};
+  if (is_square_attacked_by(g, f_pawn_square, enemy_color)) return false;
   if (is_square_attacked_by(g, g_pawn_square, enemy_color)) return false;
+  #endif // PREVENT_RECURSION_COLLECT_ALL
   return true;
 }
 
@@ -107,6 +111,8 @@ void clear_piece_messages(game& g) noexcept
 
 std::vector<piece_action> collect_all_actions(const game& g)
 {
+  // 1. Collect all the simple actions,
+  //    such as movement and attacks
   std::vector<piece_action> actions;
   for (const auto& p: g.get_pieces())
   {
@@ -963,6 +969,11 @@ piece& get_piece_at(game& g, const square& coordinat)
   return get_piece_at(g.get_pieces(), coordinat);
 }
 
+const piece& get_piece_at(const game& g, const std::string& coordinat_str)
+{
+  return get_piece_at(g, square(coordinat_str));
+}
+
 const delta_t& get_time(const game& g) noexcept
 {
   return g.get_time();
@@ -1003,6 +1014,7 @@ bool is_piece_at(
   return is_piece_at(g.get_pieces(), coordinat);
 }
 
+#ifdef PREVENT_RECURSION_COLLECT_ALL
 bool is_square_attacked_by(
   const game& g,
   const square& s,
@@ -1010,6 +1022,7 @@ bool is_square_attacked_by(
 )
 {
   // Need the enemy_color, else 'collect_all_actions' results in infinite recursion
+  RECURSION HERE!
   for (const auto& action: collect_all_actions(g, enemy_color))
   {
 
@@ -1020,6 +1033,7 @@ bool is_square_attacked_by(
   }
   return false;
 }
+#endif // PREVENT_RECURSION_COLLECT_ALL
 
 bool piece_with_id_is_at(
   game& g,

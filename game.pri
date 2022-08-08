@@ -1,5 +1,6 @@
 # Files
 HEADERS += \
+    $$PWD/board.h \
     $$PWD/castling_type.h \
     $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
@@ -52,6 +53,7 @@ HEADERS += \
 
 
 SOURCES += \
+    $$PWD/board.cpp \
     $$PWD/castling_type.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/chess_move.cpp \

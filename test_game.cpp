@@ -127,6 +127,16 @@ void test_game_class()
 void test_game_functions()
 {
 #ifndef NDEBUG // no tests in release
+  // can_castle_kingside
+  {
+    const game g{
+      get_game_with_starting_position(starting_position_type::ready_to_castle)
+    };
+    assert(can_castle_kingside(get_piece_at(g, "e1"), g));
+    assert(can_castle_queenside(get_piece_at(g, "e1"), g));
+    assert(can_castle_kingside(get_piece_at(g, "e8"), g));
+    assert(can_castle_queenside(get_piece_at(g, "e8"), g));
+  }
   // clear_sound_effects
   {
     game g;
