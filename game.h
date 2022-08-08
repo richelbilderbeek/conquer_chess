@@ -412,15 +412,6 @@ bool is_piece_at(
   const square& coordinat
 );
 
-#ifdef PREVENT_RECURSION_COLLECT_ALL
-/// Is the square attacked by a certain (enemy) color?
-bool is_square_attacked_by(
-  const game& g,
-  const square& s,
-  const chess_color enemy_color
-);
-#endif // PREVENT_RECURSION_COLLECT_ALL
-
 /// See if there is a piece with a certain ID at a certain square
 bool piece_with_id_is_at(
   game& g,

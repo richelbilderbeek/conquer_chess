@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "piece_actions.h"
 #include "controllers.h"
 #include "id.h"
 #include "sound_effects.h"
@@ -51,12 +52,8 @@ bool can_castle_kingside(const piece& p, const game& g) noexcept
   if (!is_empty(g, c_pawn_square)) return false;
   const auto d_pawn_square(square(king_square.get_x(), 3));
   if (!is_empty(g, d_pawn_square)) return false;
-  #ifdef PREVENT_RECURSION_COLLECT_ALL
-  const chess_color enemy_color{get_other_color(p.get_color())};
-  if (is_square_attacked_by(g, b_pawn_square, enemy_color)) return false;
-  if (is_square_attacked_by(g, c_pawn_square, enemy_color)) return false;
-  if (is_square_attacked_by(g, d_pawn_square, enemy_color)) return false;
-  #endif // PREVENT_RECURSION_COLLECT_ALL
+  // Do not check for moving through check or into check,
+  // this would give recursions
   return true;
 }
 
@@ -76,11 +73,8 @@ bool can_castle_queenside(const piece& p, const game& g) noexcept
   if (!is_empty(g, f_pawn_square)) return false;
   const auto g_pawn_square(square(king_square.get_x(), 2));
   if (!is_empty(g, g_pawn_square)) return false;
-  #ifdef PREVENT_RECURSION_COLLECT_ALL
-  const chess_color enemy_color{get_other_color(p.get_color())};
-  if (is_square_attacked_by(g, f_pawn_square, enemy_color)) return false;
-  if (is_square_attacked_by(g, g_pawn_square, enemy_color)) return false;
-  #endif // PREVENT_RECURSION_COLLECT_ALL
+  // Do not check for moving through check or into check,
+  // this would give recursions
   return true;
 }
 
@@ -125,6 +119,52 @@ std::vector<piece_action> collect_all_actions(const game& g)
       std::back_inserter(actions)
     );
   }
+  // 2. collect all attacked squares
+  std::vector<std::pair<square, chess_color>> attacked_squares{
+    collect_attacked_squares(actions)
+  };
+  #ifdef PREVENT_RECURSION_COLLECT_ALL
+  const chess_color enemy_color{get_other_color(p.get_color())};
+  if (is_square_attacked_by(g, b_pawn_square, enemy_color)) return false;
+  if (is_square_attacked_by(g, c_pawn_square, enemy_color)) return false;
+  if (is_square_attacked_by(g, d_pawn_square, enemy_color)) return false;
+  #endif // PREVENT_RECURSION_COLLECT_ALL
+  #ifdef PREVENT_RECURSION_COLLECT_ALL
+  #endif // PREVENT_RECURSION_COLLECT_ALL
+
+  const auto new_end{
+    std::remove_if(
+      std::begin(actions),
+      std::end(actions),
+      [attacked_squares](const piece_action& action)
+      {
+        if (action.get_action_type() == piece_action_type::castle_kingside)
+        {
+          const square king_square{action.get_from()};
+          const chess_color enemy_color{get_other_color(action.get_color())};
+          const square f_pawn_square{square(king_square.get_x(), 5)};
+          const square g_pawn_square{square(king_square.get_x(), 6)};
+          return is_square_attacked_by(attacked_squares, f_pawn_square, enemy_color)
+            || is_square_attacked_by(attacked_squares, g_pawn_square, enemy_color)
+          ;
+        }
+        else if (action.get_action_type() == piece_action_type::castle_queenside)
+        {
+          const square king_square{action.get_from()};
+          const chess_color enemy_color{get_other_color(action.get_color())};
+          const square b_pawn_square{square(king_square.get_x(), 1)};
+          const square c_pawn_square{square(king_square.get_x(), 2)};
+          const square d_pawn_square{square(king_square.get_x(), 3)};
+          return is_square_attacked_by(attacked_squares, b_pawn_square, enemy_color)
+            || is_square_attacked_by(attacked_squares, c_pawn_square, enemy_color)
+            || is_square_attacked_by(attacked_squares, d_pawn_square, enemy_color)
+          ;
+        }
+        return false;
+      }
+    )
+  };
+
   return actions;
 }
 
@@ -1013,27 +1053,6 @@ bool is_piece_at(
 ) {
   return is_piece_at(g.get_pieces(), coordinat);
 }
-
-#ifdef PREVENT_RECURSION_COLLECT_ALL
-bool is_square_attacked_by(
-  const game& g,
-  const square& s,
-  const chess_color enemy_color
-)
-{
-  // Need the enemy_color, else 'collect_all_actions' results in infinite recursion
-  RECURSION HERE!
-  for (const auto& action: collect_all_actions(g, enemy_color))
-  {
-
-    if (action.get_action_type() == piece_action_type::move
-      &&  action.get_to() == s
-      && action.get_color() == enemy_color
-    ) return true;
-  }
-  return false;
-}
-#endif // PREVENT_RECURSION_COLLECT_ALL
 
 bool piece_with_id_is_at(
   game& g,

@@ -641,6 +641,39 @@ std::vector<piece> get_pieces_ready_to_castle() noexcept
   };
 }
 
+std::vector<piece> get_pieces_ready_to_not_castle() noexcept
+{
+  return
+  {
+    piece(chess_color::white, piece_type::rook,   square("a1")),
+    piece(chess_color::white, piece_type::knight, square("c6")),
+    piece(chess_color::white, piece_type::king,   square("e1")),
+    piece(chess_color::white, piece_type::knight, square("h6")),
+    piece(chess_color::white, piece_type::rook,   square("h1")),
+    piece(chess_color::white, piece_type::pawn,   square("a2")),
+    piece(chess_color::white, piece_type::pawn,   square("b2")),
+    piece(chess_color::white, piece_type::pawn,   square("c2")),
+    piece(chess_color::white, piece_type::pawn,   square("d2")),
+    piece(chess_color::white, piece_type::pawn,   square("e2")),
+    piece(chess_color::white, piece_type::pawn,   square("f2")),
+    piece(chess_color::white, piece_type::pawn,   square("g2")),
+    piece(chess_color::white, piece_type::pawn,   square("h2")),
+    piece(chess_color::black, piece_type::rook,   square("a8")),
+    piece(chess_color::black, piece_type::knight, square("c3")),
+    piece(chess_color::black, piece_type::king,   square("e8")),
+    piece(chess_color::black, piece_type::knight, square("h3")),
+    piece(chess_color::black, piece_type::rook,   square("h8")),
+    piece(chess_color::black, piece_type::pawn,   square("a7")),
+    piece(chess_color::black, piece_type::pawn,   square("b7")),
+    piece(chess_color::black, piece_type::pawn,   square("c7")),
+    piece(chess_color::black, piece_type::pawn,   square("d7")),
+    piece(chess_color::black, piece_type::pawn,   square("e7")),
+    piece(chess_color::black, piece_type::pawn,   square("f7")),
+    piece(chess_color::black, piece_type::pawn,   square("g7")),
+    piece(chess_color::black, piece_type::pawn,   square("h7"))
+  };
+}
+
 
 std::vector<piece> get_standard_starting_pieces() noexcept
 {
@@ -703,6 +736,8 @@ std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
       return get_pieces_queen_endgame();
     case starting_position_type::ready_to_castle:
       return get_pieces_ready_to_castle();
+    case starting_position_type::ready_to_not_castle:
+      return get_pieces_ready_to_not_castle();
     case starting_position_type::standard:
     default:
       assert(t == starting_position_type::standard);

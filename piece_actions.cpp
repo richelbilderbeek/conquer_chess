@@ -5,9 +5,37 @@
 #include <iostream>
 #include <sstream>
 
+std::vector<std::pair<square, chess_color>>
+  collect_attacked_squares(const std::vector<piece_action>& actions)
+{
+  std::vector<std::pair<square, chess_color>> v;
+  for (const auto& action: actions)
+  {
+     if (action.get_action_type() == piece_action_type::move)
+     {
+       v.push_back(std::make_pair(action.get_to(), action.get_color()));
+     }
+  }
+  return v;
+}
+
 bool is_in(const piece_action& action, const std::vector<piece_action>& actions) noexcept
 {
   return std::find(std::begin(actions), std::end(actions), action) != std::end(actions);
+}
+
+bool is_square_attacked_by(
+  const std::vector<std::pair<square, chess_color>> attacked_squares,
+  const square& s,
+  const chess_color enemy_color
+)
+{
+  const auto p{std::make_pair(s, enemy_color)};
+  return std::find(
+    std::begin(attacked_squares),
+    std::end(attacked_squares),
+    p
+  ) != std::end(attacked_squares);
 }
 
 void test_piece_actions()
