@@ -69,6 +69,9 @@ public:
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }
 
+  /// Has this piece (attempted to) moved?
+  bool has_moved() const noexcept { return m_has_moved; }
+
   /// Increase the kill count by one
   void increase_kill_count() noexcept { ++m_kill_count; }
 
@@ -113,6 +116,9 @@ private:
 
   /// The square the piece occupies now
   square m_current_square;
+
+  /// Has this piece (attempted to) move?
+  bool m_has_moved;
 
   /// The health
   double m_health;
@@ -199,6 +205,9 @@ piece get_test_white_knight() noexcept;
 
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;
+
+/// Has this piece (attempted to) move?
+bool has_moved(const piece& p) noexcept;
 
 /// Is the unit dead?
 bool is_dead(const piece& p) noexcept;

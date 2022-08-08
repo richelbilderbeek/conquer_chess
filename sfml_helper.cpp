@@ -227,7 +227,10 @@ sf::Color to_sfml_color(
     {
       return sf::Color(255 - 64, 255 - 0, 255 - 64);
     }
-    assert(t == piece_action_type::attack);
+    assert(t == piece_action_type::attack
+      || t == piece_action_type::castle_kingside
+      || t == piece_action_type::castle_queenside
+    );
     return sf::Color(255 - 0, 255 - 64, 255 - 64);
   }
   assert(color == chess_color::black);
@@ -235,7 +238,10 @@ sf::Color to_sfml_color(
   {
     return sf::Color(128 - 64, 128 - 0, 128 - 64);
   }
-  assert(t == piece_action_type::attack);
+  assert(t == piece_action_type::attack
+    || t == piece_action_type::castle_kingside
+    || t == piece_action_type::castle_queenside
+  );
   return sf::Color(128 - 0, 128 - 64, 128 - 64);
 }
 

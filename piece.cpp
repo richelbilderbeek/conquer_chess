@@ -20,6 +20,7 @@ piece::piece(
   : m_color{color},
     m_current_action_time{delta_t(0.0)},
     m_current_square{coordinat},
+    m_has_moved{false},
     m_health{::get_max_health(type)},
     m_id{create_new_id()},
     m_is_selected{false},
@@ -292,6 +293,10 @@ bool has_actions(const piece& p) noexcept
   return count_piece_actions(p) != 0;
 }
 
+bool has_moved(const piece& p) noexcept
+{
+  return p.has_moved();
+}
 
 bool is_dead(const piece& p) noexcept
 {
@@ -380,6 +385,27 @@ void test_piece()
   {
     const auto piece{get_test_white_knight()};
     assert(piece.get_kill_count() == 0);
+  }
+  // piece::has_moved
+  {
+    // a piece has not moved at the start
+    {
+      const auto piece{get_test_white_knight()};
+      assert(!piece.has_moved());
+    }
+    // a piece has moved after a movement
+    {
+      piece p(
+        chess_color::white,
+        piece_type::pawn,
+        square("e2")
+      );
+      assert(!p.has_moved());
+      p.add_action(piece_action(chess_color::white, piece_type::pawn, piece_action_type::move, square("e2"), square("e4")));
+      game g;
+      p.tick(delta_t(0.01), g);
+      assert(p.has_moved());
+    }
   }
   // piece::get_messages
   {
@@ -815,6 +841,7 @@ void piece::tick(
   switch(action_type)
   {
     case piece_action_type::move:
+      m_has_moved = true; // Whatever happens, this piece has tried to move
       return tick_move(*this, dt, g);
     case piece_action_type::attack:
       return tick_attack(*this, dt, g);

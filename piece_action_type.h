@@ -8,7 +8,9 @@ enum class piece_action_type
 {
   move,
   attack,
-  promote
+  promote,
+  castle_kingside,
+  castle_queenside
 };
 
 /// Convert to string

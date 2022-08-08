@@ -33,6 +33,53 @@ void game::add_action(const control_action a)
   m_control_actions.add(a);
 }
 
+bool can_castle_kingside(const piece& p, const game& g) noexcept
+{
+  assert(p.get_type() == piece_type::king);
+  if (has_moved(p)) return false;
+  const auto king_square{p.get_current_square()};
+  // In a starting position, it may be that king has not made a new move
+  if (king_square != square("e1") && king_square == square("e8")) return false;
+  const auto rook_square(square(king_square.get_x(), 0));
+  if (!is_piece_at(g, rook_square)) return false;
+  const auto rook{get_piece_at(g, rook_square)};
+  if (rook.get_type() != piece_type::rook) return false;
+  if (has_moved(rook)) return false;
+  const auto b_pawn_square(square(king_square.get_x(), 1));
+  if (!is_empty(g, b_pawn_square)) return false;
+  const chess_color enemy_color{get_other_color(p.get_color())};
+  if (is_square_attacked_by(g, b_pawn_square, enemy_color)) return false;
+  const auto c_pawn_square(square(king_square.get_x(), 2));
+  if (!is_empty(g, c_pawn_square)) return false;
+  if (is_square_attacked_by(g, c_pawn_square, enemy_color)) return false;
+  const auto d_pawn_square(square(king_square.get_x(), 3));
+  if (!is_empty(g, d_pawn_square)) return false;
+  if (is_square_attacked_by(g, d_pawn_square, enemy_color)) return false;
+  return true;
+}
+
+bool can_castle_queenside(const piece& p, const game& g) noexcept
+{
+  assert(p.get_type() == piece_type::king);
+  if (has_moved(p)) return false;
+  const auto king_square{p.get_current_square()};
+  // In a starting position, it may be that king has not made a new move
+  if (king_square != square("e1") && king_square == square("e8")) return false;
+  const auto rook_square(square(king_square.get_x(), 7));
+  if (!is_piece_at(g, rook_square)) return false;
+  const auto rook{get_piece_at(g, rook_square)};
+  if (rook.get_type() != piece_type::rook) return false;
+  if (has_moved(rook)) return false;
+  const auto f_pawn_square(square(king_square.get_x(), 1));
+  if (!is_empty(g, f_pawn_square)) return false;
+  const chess_color enemy_color{get_other_color(p.get_color())};
+  if (is_square_attacked_by(g, f_pawn_square, enemy_color)) return false;
+  const auto g_pawn_square(square(king_square.get_x(), 2));
+  if (!is_empty(g, g_pawn_square)) return false;
+  if (is_square_attacked_by(g, g_pawn_square, enemy_color)) return false;
+  return true;
+}
+
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
   const chess_color player
@@ -63,6 +110,26 @@ std::vector<piece_action> collect_all_actions(const game& g)
   std::vector<piece_action> actions;
   for (const auto& p: g.get_pieces())
   {
+    const auto piece_actions{
+      collect_all_actions(g, p)
+    };
+    std::copy(
+      std::begin(piece_actions),
+      std::end(piece_actions),
+      std::back_inserter(actions)
+    );
+  }
+  return actions;
+}
+
+std::vector<piece_action> collect_all_actions(
+  const game& g,
+  const chess_color player_color)
+{
+  std::vector<piece_action> actions;
+  for (const auto& p: g.get_pieces())
+  {
+    if (p.get_color() != player_color) continue;
     const auto piece_actions{
       collect_all_actions(g, p)
     };
@@ -181,6 +248,30 @@ std::vector<piece_action> collect_all_king_actions(
         );
       }
     }
+  }
+  if (can_castle_kingside(p, g))
+  {
+    const square to{
+      p.get_current_square().get_x(),
+      p.get_current_square().get_y() + 2,
+    };
+    actions.push_back(
+      piece_action(
+        color, type, piece_action_type::castle_kingside, from, to
+      )
+    );
+  }
+  if (can_castle_queenside(p, g))
+  {
+    const square to{
+      p.get_current_square().get_x(),
+      p.get_current_square().get_y() - 2,
+    };
+    actions.push_back(
+      piece_action(
+        color, type, piece_action_type::castle_queenside, from, to
+      )
+    );
   }
   return actions;
 }
@@ -910,6 +1001,24 @@ bool is_piece_at(
   const square& coordinat
 ) {
   return is_piece_at(g.get_pieces(), coordinat);
+}
+
+bool is_square_attacked_by(
+  const game& g,
+  const square& s,
+  const chess_color enemy_color
+)
+{
+  // Need the enemy_color, else 'collect_all_actions' results in infinite recursion
+  for (const auto& action: collect_all_actions(g, enemy_color))
+  {
+
+    if (action.get_action_type() == piece_action_type::move
+      &&  action.get_to() == s
+      && action.get_color() == enemy_color
+    ) return true;
+  }
+  return false;
 }
 
 bool piece_with_id_is_at(

@@ -162,6 +162,9 @@ std::vector<piece> get_pieces_pawns_near_promotion() noexcept;
 /// from a default setup
 std::vector<piece> get_pieces_queen_endgame() noexcept;
 
+/// Get the pieces for a kings that are ready to castle
+std::vector<piece> get_pieces_ready_to_castle() noexcept;
+
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(
   const starting_position_type t

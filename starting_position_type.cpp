@@ -13,17 +13,6 @@ std::vector<starting_position_type> get_all_starting_position_types() noexcept
   std::copy(std::begin(a), std::end(a), std::back_inserter(v));
   assert(a.size() == v.size());
   return v;
-  /*
-  return
-  {
-    starting_position_type::standard,
-    starting_position_type::kings_only,
-    starting_position_type::before_scholars_mate,
-    starting_position_type::queen_end_game,
-    starting_position_type::bishop_and_knight_end_game,
-    starting_position_type::pawn_all_out_assault
-  };
-  */
 }
 
 starting_position_type get_next(const starting_position_type starting_position) noexcept
@@ -73,23 +62,4 @@ void test_starting_position_type()
 std::string to_str(const starting_position_type t) noexcept
 {
   return std::string(magic_enum::enum_name(t));
-  /*
-  switch(t)
-  {
-    case starting_position_type::standard:
-      return "standard";
-    case starting_position_type::kings_only:
-      return "kings_only";
-    case starting_position_type::before_scholars_mate:
-      return "before_scholars_mate";
-    case starting_position_type::queen_end_game:
-      return "queen_end_game";
-    case starting_position_type::bishop_and_knight_end_game:
-      return "bishop_and_knight_end_game";
-    case starting_position_type::pawn_all_out_assault:
-    default:
-      assert(t == starting_position_type::pawn_all_out_assault);
-      return "pawn_all_out_assault";
-  }
-  */
 }

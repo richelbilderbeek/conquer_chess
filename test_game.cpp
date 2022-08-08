@@ -294,6 +294,48 @@ void test_game_functions()
       );
       assert(is_in(h1isr, actions));
     }
+    // ready to castle
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::ready_to_castle)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action wcks(
+        chess_color::white,
+        piece_type::king,
+        piece_action_type::castle_kingside,
+        square("e1"),
+        square("g1")
+      );
+      assert(is_in(wcks, actions));
+      const piece_action wcqs(
+        chess_color::white,
+        piece_type::king,
+        piece_action_type::castle_queenside,
+        square("e1"),
+        square("c1")
+      );
+      #ifdef FIX_ISSUE_3
+      assert(is_in(wcqs, actions));
+      const piece_action bcks(
+        chess_color::black,
+        piece_type::king,
+        piece_action_type::castle_kingside,
+        square("e8"),
+        square("b8")
+      );
+      assert(is_in(bcks, actions));
+      const piece_action bcqs(
+        chess_color::black,
+        piece_type::king,
+        piece_action_type::castle_queenside,
+        square("e8"),
+        square("g8")
+      );
+      assert(is_in(bcqs, actions));
+      #endif // FIX_ISSUE_3
+    }
   }
   #endif // FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // count_control_actions

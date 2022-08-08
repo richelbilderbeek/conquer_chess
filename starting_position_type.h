@@ -15,6 +15,7 @@ enum class starting_position_type
   pawns_at_promotion,
   pawns_near_promotion,
   queen_end_game,
+  ready_to_castle,
   standard
 };
 

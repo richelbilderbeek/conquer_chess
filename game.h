@@ -92,6 +92,12 @@ private:
   friend void test_game();
 };
 
+/// Can this piece castle kingside?
+bool can_castle_kingside(const piece& p, const game& g) noexcept;
+
+/// Can this piece castle queenside?
+bool can_castle_queenside(const piece& p, const game& g) noexcept;
+
 /// Can the player select a piece at the current mouse position?
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
@@ -105,6 +111,13 @@ void clear_piece_messages(game& g) noexcept;
 /// Collect all valid moves and attackes at a board
 /// for all pieces
 std::vector<piece_action> collect_all_actions(const game& g);
+
+/// Collect all valid moves and attackes at a board
+/// for all pieces of a certain color
+std::vector<piece_action> collect_all_actions(
+  const game& g,
+  const chess_color player_color
+);
 
 /// Collect all valid moves and attackes at a board
 /// for a focal piece
@@ -393,6 +406,13 @@ bool is_piece_at(
 bool is_piece_at(
   const game& g,
   const square& coordinat
+);
+
+/// Is the square attacked by a certain (enemy) color?
+bool is_square_attacked_by(
+  const game& g,
+  const square& s,
+  const chess_color enemy_color
 );
 
 /// See if there is a piece with a certain ID at a certain square
