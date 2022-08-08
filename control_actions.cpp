@@ -158,12 +158,11 @@ void process_press_action_1(game& g, const control_action& action)
 
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
-    if (can_promote(get_piece_at(g, to)))
+    const auto& p{get_piece_at(g, to)};
+    if (p.is_selected() && can_promote(p))
     {
       //  3. promote to queen (for a pawn at the final file)
       unselect_all_pieces(g, player_color);
-      #define FIX_ISSUE_4
-      #ifdef FIX_ISSUE_4
       get_piece_at(g, to).add_action(
         piece_action(
           player_color,
@@ -173,7 +172,6 @@ void process_press_action_1(game& g, const control_action& action)
           to
         )
       );
-      #endif
       return;
     }
     //  1. select (when cursor is pointed to a square with a piece of own color)
@@ -193,6 +191,146 @@ void process_press_action_1(game& g, const control_action& action)
   );
 }
 
+void process_press_action_2(game& g, const control_action& action)
+{
+  assert(action.get_type() == control_action_type::press_action_2);
+  // press_action_2 can be
+  //  1. attack (for a selected piece and cursor points to square with enemy
+  //  3. promote to rook (for a selected pawn at the final file)
+
+  const side player_side{action.get_player()};
+  const chess_color player_color{get_player_color(g, player_side)};
+  const square to{square(get_player_pos(g, player_side))};
+
+  if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
+  {
+    const auto& p{get_piece_at(g, to)};
+    if (p.is_selected())
+    {
+      if (can_promote(p))
+      {
+        //  3. promote to queen (for a pawn at the final file)
+        unselect_all_pieces(g, player_color);
+        get_piece_at(g, to).add_action(
+          piece_action(
+            player_color,
+            piece_type::rook,
+            piece_action_type::promote,
+            to,
+            to
+          )
+        );
+        return;
+      }
+    }
+  }
+  start_attack(
+    g,
+    get_player_pos(g, action.get_player()),
+    get_player_color(g, action.get_player())
+  );
+}
+
+void process_press_action_3(game& g, const control_action& action)
+{
+  assert(action.get_type() == control_action_type::press_action_3);
+  // press_action_3 can be
+  //  1. promote to bishop (for a selected pawn at the final file)
+  //  2. castle kingside (for a selected king)
+
+  const side player_side{action.get_player()};
+  const chess_color player_color{get_player_color(g, player_side)};
+  const square to{square(get_player_pos(g, player_side))};
+
+  if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
+  {
+    const auto& p{get_piece_at(g, to)};
+    if (p.is_selected())
+    {
+      if (can_promote(p))
+      {
+        //  3. promote to queen (for a pawn at the final file)
+        unselect_all_pieces(g, player_color);
+        get_piece_at(g, to).add_action(
+          piece_action(
+            player_color,
+            piece_type::bishop,
+            piece_action_type::promote,
+            to,
+            to
+          )
+        );
+      }
+      #ifdef FIX_ISSUE_3
+      else if (can_castle(p, g))
+      {
+        unselect_all_pieces(g, player_color);
+        get_piece_at(g, to).add_action(
+          piece_action(
+            player_color,
+            piece_type::king,
+            piece_action_type::castle_kingside,
+            to,
+            to
+          )
+        );
+        assert(!"Also do the rook");
+      }
+      #endif // FIX_ISSUE_3
+    }
+  }
+}
+
+void process_press_action_4(game& g, const control_action& action)
+{
+  assert(action.get_type() == control_action_type::press_action_4);
+  // press_action_3 can be
+  //  1. promote to bishop (for a selected pawn at the final file)
+  //  2. castle kingside (for a selected king)
+
+  const side player_side{action.get_player()};
+  const chess_color player_color{get_player_color(g, player_side)};
+  const square to{square(get_player_pos(g, player_side))};
+
+  if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
+  {
+    const auto& p{get_piece_at(g, to)};
+    if (p.is_selected())
+    {
+      if (can_promote(p))
+      {
+        //  3. promote to knight (for a pawn at the final file)
+        unselect_all_pieces(g, player_color);
+        get_piece_at(g, to).add_action(
+          piece_action(
+            player_color,
+            piece_type::knight,
+            piece_action_type::promote,
+            to,
+            to
+          )
+        );
+      }
+      #ifdef FIX_ISSUE_3
+      else if (can_castle(p, g))
+      {
+        unselect_all_pieces(g, player_color);
+        get_piece_at(g, to).add_action(
+          piece_action(
+            player_color,
+            piece_type::king,
+            piece_action_type::castle_queenside,
+            to,
+            to
+          )
+        );
+        assert(!"Also do the rook");
+      }
+      #endif // FIX_ISSUE_3
+    }
+  }
+}
+
 void control_actions::process(game& g)
 {
   for (const auto& action: m_control_actions)
@@ -203,14 +341,15 @@ void control_actions::process(game& g)
     }
     else if (action.get_type() == control_action_type::press_action_2)
     {
-      if (has_selected_pieces(g, action.get_player()))
-      {
-        start_attack(
-          g,
-          get_player_pos(g, action.get_player()),
-          get_player_color(g, action.get_player())
-        );
-      }
+      process_press_action_2(g, action);
+    }
+    else if (action.get_type() == control_action_type::press_action_3)
+    {
+      process_press_action_3(g, action);
+    }
+    else if (action.get_type() == control_action_type::press_action_4)
+    {
+      process_press_action_4(g, action);
     }
     else if (action.get_type() == control_action_type::press_down)
     {

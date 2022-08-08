@@ -51,7 +51,17 @@ void do_select(
   const chess_color player_color
 );
 
+/// Respond to action 1
 void process_press_action_1(game& g, const control_action& action);
+
+/// Respond to action 2
+void process_press_action_2(game& g, const control_action& action);
+
+/// Respond to action 3
+void process_press_action_3(game& g, const control_action& action);
+
+/// Respond to action 4
+void process_press_action_4(game& g, const control_action& action);
 
 
 /// Process a space, hence a square as a coordinat

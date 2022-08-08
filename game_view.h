@@ -124,6 +124,9 @@ chess_color get_player_color(
   const side player
 ) noexcept;
 
+/// Get the player position
+const game_coordinat& get_player_pos(const game_view& view, const side player) noexcept;
+
 /// Get the text for an action, e.g.
 /// 'Q\nSelect' for a keyboard player that has nothing selected
 /// 'E\nAttack' for a keyboard player that has a piece select

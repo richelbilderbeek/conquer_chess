@@ -189,27 +189,43 @@ chess_color get_player_color(
   return get_player_color(v.get_game(), player);
 }
 
+const game_coordinat& get_player_pos(const game_view& view, const side player) noexcept
+{
+  return get_player_pos(view.get_game(), player);
+}
+
 std::string get_text_for_action(
   const game_view& view,
   const controller& c,
   const int key
 )
 {
+  const auto& g{view.get_game()};
   const chess_color player{
     get_player_color(view, c.get_player())
+  };
+  const square cursor_pos{
+    get_player_pos(view, c.get_player())
   };
   const bool has_selected_units{
     !get_selected_pieces(view.get_game(), player).empty()
   };
-  const bool is_promoting_pawn{
-    false // STUB
-  };
-  const bool is_king_that_may_castle_kingside{
-    false // STUB
-  };
-  const bool is_king_that_may_castle_queenside{
-    false // STUB
-  };
+  bool is_promoting_pawn{false};
+  bool is_king_that_may_castle_kingside{false};
+  bool is_king_that_may_castle_queenside{false};
+  if (is_piece_at(g, cursor_pos))
+  {
+    const auto& p{get_piece_at(g, cursor_pos)};
+    is_promoting_pawn = can_promote(p);
+    is_king_that_may_castle_kingside =
+      false // STUB
+    ;
+    is_king_that_may_castle_queenside =
+      false // STUB
+    ;
+
+  }
+
   return get_text_for_action(
     c,
     has_selected_units,
