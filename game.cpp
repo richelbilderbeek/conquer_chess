@@ -504,6 +504,16 @@ void do_select_and_move_keyboard_player_piece(
   do_move_keyboard_player_piece(g, to);
 }
 
+void do_select_and_promote_keyboard_player_piece(
+  game& g,
+  const square& pawn_location,
+  const piece_type promote_to
+)
+{
+  do_select_for_keyboard_player(g, pawn_location);
+  do_promote_keyboard_player_piece(g, pawn_location, promote_to);
+}
+
 void do_select_and_start_attack_keyboard_player_piece(
   game& g,
   const square& from,
@@ -532,16 +542,46 @@ bool do_show_selected(const game& g) noexcept
   return do_show_selected(g.get_options());
 }
 
+void do_promote_keyboard_player_piece(
+  game& g,
+  const square& pawn_location,
+  const piece_type promote_to
+)
+{
+  assert(has_keyboard_controller(g.get_options()));
+  assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
+  set_keyboard_player_pos(g, pawn_location);
+  assert(square(get_player_pos(g, side::lhs)) == pawn_location);
+  assert(get_piece_at(g, pawn_location).get_type() == piece_type::pawn);
+  switch (promote_to)
+  {
+    case piece_type::bishop:
+      g.add_action(create_press_action_3(get_keyboard_user_player_side(g)));
+      break;
+    case piece_type::knight:
+      g.add_action(create_press_action_4(get_keyboard_user_player_side(g)));
+      break;
+    case piece_type::king:
+    case piece_type::pawn:
+    case piece_type::queen:
+      assert(promote_to == piece_type::queen);
+      g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
+      break;
+    case piece_type::rook:
+      g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
+      break;
+  }
+
+
+}
+
 void do_start_attack_keyboard_player_piece(game& g, const square& s)
 {
   assert(has_keyboard_controller(g.get_options()));
   assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
   set_keyboard_player_pos(g, s);
   assert(square(get_player_pos(g, side::lhs)) == s);
-
   g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
-  //g.tick(delta_t(0.0)); // Process the actions
-  //assert(count_control_actions(g) == 0);
 }
 
 std::vector<piece> find_pieces(

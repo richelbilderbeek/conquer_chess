@@ -98,5 +98,49 @@ void test_game_scenarios()
     assert(is_idle(g));
     assert(piece_with_id_is_at(g, id, square("b1")));
   }
+  // a pawn can promote to queen
+  {
+    game g = get_game_with_starting_position(starting_position_type::pawns_near_promotion);
+    const auto id{get_id(g, square("a7"))};
+    do_select_and_move_keyboard_player_piece(g, square("a7"), square("a8"));
+    tick_until_idle(g);
+    do_select_and_promote_keyboard_player_piece(g, square("a8"), piece_type::queen);
+    g.tick(delta_t(0.01));
+    assert(piece_with_id_is_at(g, id, square("a8")));
+    assert(get_piece_with_id(g, id).get_type() == piece_type::queen);
+  }
+  // a pawn can promote to rook
+  {
+    game g = get_game_with_starting_position(starting_position_type::pawns_near_promotion);
+    const auto id{get_id(g, square("a7"))};
+    do_select_and_move_keyboard_player_piece(g, square("a7"), square("a8"));
+    tick_until_idle(g);
+    do_select_and_promote_keyboard_player_piece(g, square("a8"), piece_type::rook);
+    g.tick(delta_t(0.01));
+    assert(piece_with_id_is_at(g, id, square("a8")));
+    assert(get_piece_with_id(g, id).get_type() == piece_type::rook);
+  }
+  // a pawn can promote to bishop
+  {
+    game g = get_game_with_starting_position(starting_position_type::pawns_near_promotion);
+    const auto id{get_id(g, square("a7"))};
+    do_select_and_move_keyboard_player_piece(g, square("a7"), square("a8"));
+    tick_until_idle(g);
+    do_select_and_promote_keyboard_player_piece(g, square("a8"), piece_type::bishop);
+    g.tick(delta_t(0.01));
+    assert(piece_with_id_is_at(g, id, square("a8")));
+    assert(get_piece_with_id(g, id).get_type() == piece_type::bishop);
+  }
+  // a pawn can promote to knight
+  {
+    game g = get_game_with_starting_position(starting_position_type::pawns_near_promotion);
+    const auto id{get_id(g, square("a7"))};
+    do_select_and_move_keyboard_player_piece(g, square("a7"), square("a8"));
+    tick_until_idle(g);
+    do_select_and_promote_keyboard_player_piece(g, square("a8"), piece_type::knight);
+    g.tick(delta_t(0.01));
+    assert(piece_with_id_is_at(g, id, square("a8")));
+    assert(get_piece_with_id(g, id).get_type() == piece_type::knight);
+  }
 #endif // NDEBUG // no tests in release
 }

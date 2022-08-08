@@ -186,6 +186,12 @@ int count_selected_units(
 /// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
 void do_move_keyboard_player_piece(game& g, const square& s);
 
+void do_promote_keyboard_player_piece(
+  game& g,
+  const square& pawn_location,
+  const piece_type promote_to
+);
+
 /// Let the keyboard player select a square
 /// (assuming that a piece of the right color is there)
 /// and let it move to another square
@@ -197,6 +203,14 @@ void do_select_and_move_keyboard_player_piece(
   const square& to
 );
 
+/// Let the keyboard player select a square
+/// (assuming that a pawn of the right color is there)
+/// and let it promote to another type
+void do_select_and_promote_keyboard_player_piece(
+  game& g,
+  const square& pawn_location,
+  const piece_type promote_to
+);
 
 /// Let the keyboard player select a square
 /// (assuming that a piece of the right color is there)
@@ -258,12 +272,6 @@ int get_index_of_closest_piece_to(
   const game& g,
   const game_coordinat& coordinat
 );
-
-/// Get the position of the player that uses the keyboard
-//game_coordinat get_keyboard_player_pos(const game& g);
-
-/// Get the position of the player that uses the keyboard
-//game_coordinat& get_keyboard_player_pos(game& g);
 
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
