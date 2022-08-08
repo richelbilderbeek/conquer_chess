@@ -144,7 +144,6 @@ void test_game_functions()
     assert(collect_messages(g).empty());
     // Add a sound by selecting a piece
     g.add_action(create_press_action_1(side::rhs));
-    //g.add_action(create_press_lmb_action(black_king.get_coordinat()));
     g.tick();
     assert(!collect_messages(g).empty());
     clear_piece_messages(g);
@@ -326,14 +325,13 @@ void test_game_functions()
         square("e1"),
         square("c1")
       );
-      #ifdef FIX_ISSUE_3
       assert(is_in(wcqs, actions));
       const piece_action bcks(
         chess_color::black,
         piece_type::king,
         piece_action_type::castle_kingside,
         square("e8"),
-        square("b8")
+        square("g8")
       );
       assert(is_in(bcks, actions));
       const piece_action bcqs(
@@ -341,10 +339,9 @@ void test_game_functions()
         piece_type::king,
         piece_action_type::castle_queenside,
         square("e8"),
-        square("g8")
+        square("c8")
       );
       assert(is_in(bcqs, actions));
-      #endif // FIX_ISSUE_3
     }
   }
   #endif // FIX_ISSUE_26_COLLECT_ALL_ACTIONS
