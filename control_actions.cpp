@@ -2,6 +2,7 @@
 
 #include "game.h"
 #include "square.h"
+#include "piece_actions.h"
 
 #include <cassert>
 #include <iostream>
@@ -271,6 +272,8 @@ void start_attack(
   const chess_color player_color
 )
 {
+  const auto actions{collect_all_actions(g)};
+
   if (count_selected_units(g, player_color) == 0) return;
 
   for (auto& p: g.get_pieces())
@@ -279,6 +282,23 @@ void start_attack(
     {
       const auto& from{p.get_current_square()};
       const auto& to{square(coordinat)};
+      const piece_action action(
+        p.get_color(),
+        p.get_type(),
+        piece_action_type::attack,
+        square(from),
+        square(to)
+      );
+      if (is_in(action, actions))
+      {
+        clear_actions(p);
+        p.add_action(action);
+      }
+      else
+      {
+        p.add_message(message_type::cannot);
+      }
+      /*
       if (from != to)
       {
         // No shift, so all current actions are void
@@ -294,6 +314,7 @@ void start_attack(
           )
         );
       }
+      */
     }
   }
   unselect_all_pieces(g, player_color);

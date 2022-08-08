@@ -98,6 +98,27 @@ void test_game_class()
       // Must be captured
       assert(get_piece_at(g, square("f7")).get_color() == chess_color::white);
     }
+    // #20: A queen cannot attack over pieces
+    {
+      game g;
+      assert(is_piece_at(g, square("d1")));
+      do_select_and_start_attack_keyboard_player_piece(
+        g,
+        square("d1"),
+        square("d8")
+      );
+      assert(is_piece_at(g, square("d1")));
+      const auto white_queen_id{get_piece_at(g, square("d1")).get_id()};
+      for (int i{0}; i!=10; ++i)
+      {
+        g.tick(delta_t(0.25));
+      }
+      const piece& p{get_piece_with_id(g, white_queen_id)};
+      assert(is_piece_at(g, square("d1")));
+      assert(p.get_messages().back() == message_type::cannot);
+      const auto messages{get_piece_at(g, square("d1")).get_messages()};
+      assert(messages.back() == message_type::cannot);
+    }
   }
 #endif // NDEBUG // no tests in release
 }
