@@ -149,8 +149,6 @@ void test_game_functions()
     clear_piece_messages(g);
     assert(collect_messages(g).empty());
   }
-  #define FIX_ISSUE_26_COLLECT_ALL_ACTIONS
-  #ifdef FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // collect_all_actions
   {
     // default start
@@ -384,7 +382,6 @@ void test_game_functions()
       assert(!is_in(bcqs, actions));
     }
   }
-  #endif // FIX_ISSUE_26_COLLECT_ALL_ACTIONS
   // count_control_actions
   {
     const auto g{get_kings_only_game()};
