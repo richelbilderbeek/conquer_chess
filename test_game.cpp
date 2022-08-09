@@ -44,6 +44,32 @@ void test_game_class()
   }
   // game::tick
   {
+    #define FIX_ISSUE_27
+    #ifdef FIX_ISSUE_27
+    // a2-a4 takes as long as b2-b3
+    {
+      game g;
+      assert(is_piece_at(g, square("a2")));
+      assert(is_piece_at(g, square("b2")));
+      assert(!is_piece_at(g, square("a4")));
+      assert(!is_piece_at(g, square("a3")));
+      assert(!is_piece_at(g, square("b3")));
+      do_select_for_keyboard_player(g, square("a2"));
+      do_move_keyboard_player_piece(g, square("a4"));
+      assert(count_selected_units(g, chess_color::white) == 0);
+      do_select_for_keyboard_player(g, square("b2"));
+      do_move_keyboard_player_piece(g, square("b3"));
+      for (int i{0}; i!=5; ++i)
+      {
+        g.tick(delta_t(0.25));
+      }
+      assert(!is_piece_at(g, square("a2")));
+      assert(!is_piece_at(g, square("b2")));
+      assert(is_piece_at(g, square("a4")));
+      assert(!is_piece_at(g, square("a3")));
+      assert(is_piece_at(g, square("b3")));
+    }
+    #endif
     // A piece under attack must have decreasing health
     {
       game_options options{create_default_game_options()};

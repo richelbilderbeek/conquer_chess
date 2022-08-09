@@ -644,7 +644,7 @@ void do_move_keyboard_player_piece(game& g, const square& s)
 
   g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
   assert(count_control_actions(g) == 1);
-  g.tick(delta_t(0.1));
+  g.tick(delta_t(0.0));
   assert(count_control_actions(g) == 0);
 }
 
@@ -657,6 +657,7 @@ void do_select_and_move_keyboard_player_piece(
   do_select_for_keyboard_player(g, from);
   assert(count_selected_units(g) > 0);
   do_move_keyboard_player_piece(g, to);
+  assert(count_control_actions(g) == 0);
 }
 
 void do_select_and_promote_keyboard_player_piece(
@@ -667,6 +668,7 @@ void do_select_and_promote_keyboard_player_piece(
 {
   do_select_for_keyboard_player(g, pawn_location);
   do_promote_keyboard_player_piece(g, pawn_location, promote_to);
+  assert(count_control_actions(g) == 0);
 }
 
 void do_select_and_start_attack_keyboard_player_piece(
@@ -677,6 +679,7 @@ void do_select_and_start_attack_keyboard_player_piece(
 {
   do_select_for_keyboard_player(g, from);
   do_start_attack_keyboard_player_piece(g, to);
+  assert(count_control_actions(g) == 0);
 }
 
 void do_select_for_keyboard_player(game& g, const square& s)
@@ -687,7 +690,7 @@ void do_select_for_keyboard_player(game& g, const square& s)
   set_keyboard_player_pos(g, s);
   assert(square(get_player_pos(g, side::lhs)) == s);
   g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
-  g.tick();
+  g.tick(delta_t(0.0));
   assert(count_control_actions(g) == 0);
   assert(get_piece_at(g, s).is_selected());
 }
@@ -726,8 +729,6 @@ void do_promote_keyboard_player_piece(
       g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
       break;
   }
-
-
 }
 
 void do_start_attack_keyboard_player_piece(game& g, const square& s)
@@ -737,6 +738,8 @@ void do_start_attack_keyboard_player_piece(game& g, const square& s)
   set_keyboard_player_pos(g, s);
   assert(square(get_player_pos(g, side::lhs)) == s);
   g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
+  g.tick(delta_t(0.0));
+  assert(count_control_actions(g) == 0);
 }
 
 std::vector<piece> find_pieces(
@@ -1091,7 +1094,7 @@ void set_keyboard_player_pos(
   {
     g.add_action(create_press_down_action(get_keyboard_user_player_side(g)));
   }
-  g.tick();
+  g.tick(delta_t(0.0));
   assert(count_control_actions(g) == 0);
 }
 
