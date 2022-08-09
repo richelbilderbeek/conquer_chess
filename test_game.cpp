@@ -381,6 +381,30 @@ void test_game_functions()
       );
       assert(!is_in(bcqs, actions));
     }
+    // cannot move into check
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::ready_to_not_castle)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action ke1d1(
+        chess_color::white,
+        piece_type::king,
+        piece_action_type::move,
+        square("e1"),
+        square("d1")
+      );
+      assert(!is_in(ke1d1, actions));
+      const piece_action ke8d8(
+        chess_color::black,
+        piece_type::king,
+        piece_action_type::move,
+        square("e8"),
+        square("d8")
+      );
+      assert(!is_in(ke8d8, actions));
+    }
   }
   // count_control_actions
   {

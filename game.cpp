@@ -138,7 +138,16 @@ std::vector<piece_action> collect_all_actions(const game& g)
       std::end(actions),
       [attacked_squares](const piece_action& action)
       {
-        if (action.get_action_type() == piece_action_type::castle_kingside)
+        if (action.get_action_type() == piece_action_type::move)
+        {
+          if (action.get_piece_type() == piece_type::king)
+          {
+            // King cannot move into check
+            const chess_color enemy_color{get_other_color(action.get_color())};
+            return is_square_attacked_by(attacked_squares, action.get_to(), enemy_color);
+          }
+        }
+        else if (action.get_action_type() == piece_action_type::castle_kingside)
         {
           const square king_square{action.get_from()};
           const chess_color enemy_color{get_other_color(action.get_color())};
@@ -164,6 +173,7 @@ std::vector<piece_action> collect_all_actions(const game& g)
       }
     )
   };
+  actions.erase(new_end, std::end(actions));
 
   return actions;
 }
