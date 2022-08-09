@@ -1149,20 +1149,11 @@ void toggle_left_player_color(game& g)
 
 std::ostream& operator<<(std::ostream& os, const game& g) noexcept
 {
-  os << g.get_time();
-  assert(!"TODO");
-  /*
-
-  1  2  3  4  5  6  7  8
-a wr wp  .  .  .  . bp br
-b wb
-c wn
-d wq
-e wk
-f wb
-g wn
-h wr
-  */
+  os
+    << g.get_time() << '\n'
+    << to_board_str(g.get_pieces()) << '\n'
+    << "and more..."
+  ;
   return os;
 }
 

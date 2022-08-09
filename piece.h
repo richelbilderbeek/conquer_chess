@@ -26,6 +26,11 @@ public:
     const piece_type type,
     const square& coordinat
   );
+  explicit piece(
+    const chess_color color,
+    const piece_type type,
+    const std::string& coordinat
+  );
 
   /// Add an action for the piece to do
   /// This function will split up the action in smaller atomic actions
@@ -234,6 +239,17 @@ void tick_move(
   const delta_t& dt,
   game& g
 );
+
+/// Convert the piece to a char
+/// Type  |Character when white|Character when black
+/// ------|--------------------|--------------------
+/// bishop| b                  | B
+/// king  | k                  | K
+/// knight| n                  | N
+/// pawn  | p                  | P
+/// queen | q                  | Q
+/// rook  | r                  | R
+char to_char(const piece& p) noexcept;
 
 /// Select the piece
 void toggle_select(piece& p) noexcept;

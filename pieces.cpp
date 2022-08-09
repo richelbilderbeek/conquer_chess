@@ -947,7 +947,43 @@ void test_pieces()
     const auto pieces{get_standard_starting_pieces()};
     assert(is_piece_at(pieces, square("d1")));
   }
+  // to_board_strs
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    const auto strs{to_board_strs(pieces)};
+    assert(strs.size() == 8);
+    assert(strs[0].size() == 8);
+  }
+  // to_board_str
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    const auto str{to_board_str(pieces)};
+    assert(str.size() >= 64);
+  }
+
 #endif
+}
+
+std::string to_board_str(const std::vector<piece>& pieces) noexcept
+{
+  const auto strs{to_board_strs(pieces)};
+  std::string s;
+  for (const auto& str: strs) s += str + '\n';
+  assert(!s.empty());
+  s.pop_back();
+  return s;
+}
+
+std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcept
+{
+  std::vector<std::string> board(8, std::string("........"));
+  for (const auto p: pieces)
+  {
+    const int x{p.get_current_square().get_x()};
+    const int y{p.get_current_square().get_y()};
+    board[y][x] = to_char(p);
+  }
+  return board;
 }
 
 void unselect_all_pieces(

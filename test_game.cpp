@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 /// Test the game class
 void test_game_class()
@@ -586,6 +587,13 @@ void test_game_functions()
     toggle_left_player_color(g);
     const auto color_after{get_left_player_color(g.get_options())};
     assert(color_after != color_before);
+  }
+  // operator<<
+  {
+    game g;
+    std::stringstream s;
+    s << g;
+    assert(!s.str().empty());
   }
 #endif // NDEBUG // no tests in release
 }

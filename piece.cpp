@@ -26,12 +26,20 @@ piece::piece(
     m_is_selected{false},
     m_kill_count{0},
     m_max_health{::get_max_health(type)},
-    //m_player{player},
     m_target_square{},
     m_type{type}
 {
 
 }
+
+piece::piece(
+  const chess_color color,
+  const piece_type type,
+  const std::string& coordinat
+) : piece(color, type, square(coordinat)) {
+
+}
+
 
 void piece::add_action(const piece_action& action)
 {
@@ -658,6 +666,22 @@ void test_piece()
     const auto p{get_test_white_king()};
     assert(is_idle(p));
   }
+  // to_char
+  {
+    assert(to_char(piece(chess_color::black, piece_type::bishop, "e4")) == 'B');
+    assert(to_char(piece(chess_color::black, piece_type::king, "e4")) == 'K');
+    assert(to_char(piece(chess_color::black, piece_type::knight, "e4")) == 'N');
+    assert(to_char(piece(chess_color::black, piece_type::pawn, "e4")) == 'P');
+    assert(to_char(piece(chess_color::black, piece_type::queen, "e4")) == 'Q');
+    assert(to_char(piece(chess_color::black, piece_type::rook, "e4")) == 'R');
+    assert(to_char(piece(chess_color::white, piece_type::bishop, "e4")) == 'b');
+    assert(to_char(piece(chess_color::white, piece_type::king, "e4")) == 'k');
+    assert(to_char(piece(chess_color::white, piece_type::knight, "e4")) == 'n');
+    assert(to_char(piece(chess_color::white, piece_type::pawn, "e4")) == 'p');
+    assert(to_char(piece(chess_color::white, piece_type::queen, "e4")) == 'q');
+    assert(to_char(piece(chess_color::white, piece_type::rook, "e4")) == 'r');
+  }
+
   // toggle_select
   {
     auto p{get_test_white_king()};
@@ -980,6 +1004,28 @@ void tick_move(
   }
 }
 
+char to_char(const piece& p) noexcept
+{
+  char c = '\0';
+  switch (p.get_type())
+  {
+    case piece_type::bishop: c = 'B'; break;
+    case piece_type::knight: c = 'N'; break;
+    case piece_type::king: c = 'K'; break;
+    case piece_type::pawn: c = 'P'; break;
+    case piece_type::queen: c = 'Q'; break;
+    case piece_type::rook:
+    default:
+      assert(p.get_type() == piece_type::rook);
+      c = 'R';
+      break;
+  }
+  if (p.get_color() == chess_color::white)
+  {
+    c = std::tolower(c);
+  }
+  return c;
+}
 
 void toggle_select(piece& p) noexcept
 {

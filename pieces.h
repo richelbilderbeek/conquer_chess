@@ -196,6 +196,20 @@ bool is_piece_at(
 /// Test all these free functions
 void test_pieces();
 
+/// Show the pieces as if on a chessboard, such as:
+/// rp....PR
+/// np....PN
+/// bp....PB
+/// qp....PQ
+/// kp....PK
+/// bp....PB
+/// np....PN
+/// rp....PR
+std::string to_board_str(const std::vector<piece>& pieces) noexcept;
+
+/// Show the pieces as if on a chessboard
+std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcept;
+
 /// Unselect all pieces of a certain color
 void unselect_all_pieces(
   std::vector<piece>& pieces,
