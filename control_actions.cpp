@@ -174,10 +174,13 @@ void process_press_action_1(game& g, const control_action& action)
       );
       return;
     }
-    //  1. select (when cursor is pointed to a square with a piece of own color)
-    unselect_all_pieces(g, player_color);
-    get_piece_at(g, to).set_selected(true);
-    return;
+    else
+    {
+      //  1. select (when cursor is pointed to a square with a piece of own color)
+      unselect_all_pieces(g, player_color);
+      get_piece_at(g, to).set_selected(true);
+      return;
+    }
   }
 
   //  2. move (when a piece is selected and cursor points to empty square

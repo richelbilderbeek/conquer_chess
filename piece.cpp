@@ -83,6 +83,9 @@ void piece::add_action(const piece_action& action)
     m_actions.push_back(action);
     return;
   }
+  #ifndef TO_ATOMIC
+  m_actions.push_back(action);
+  #else
   const std::vector<piece_action> atomic_actions{
     to_atomic(action)
   };
@@ -105,6 +108,7 @@ void piece::add_action(const piece_action& action)
       }
     }
   );
+  #endif
 }
 
 void piece::add_message(const message_type& message)

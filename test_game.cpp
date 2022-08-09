@@ -705,11 +705,8 @@ void test_game_mouse_use()
     g.add_action(create_press_lmb_action(to_coordinat("e8"), side::rhs));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    g.add_action(create_press_rmb_action(to_coordinat("e6"), side::rhs));
-    g.tick(delta_t(0.25));
-    g.tick(delta_t(0.25));
-    g.tick(delta_t(0.25));
-    g.tick(delta_t(0.25));
+    g.add_action(create_press_rmb_action(to_coordinat("e7"), side::rhs));
+    g.tick(delta_t(0.01));
     assert(count_piece_actions(g, chess_color::black) >= 1);
   }
 #endif // NDEBUG // no tests in release
