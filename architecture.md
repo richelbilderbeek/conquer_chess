@@ -4,7 +4,7 @@
 
 ## Some tests
 
-```
+```mermaid
 sequenceDiagram
     participant user
     participant game_view
