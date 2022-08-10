@@ -20,7 +20,7 @@ sequenceDiagram
     controller->>game: control_action
     Note right of game: game::add_action
     Note right of game: game::process
-    game->>piece: piece_action
+    game->>chess_piece: piece_action
     Note right of chess_piece: chess_piece::add_action
     Note right of chess_piece: chess_piece::tick
 ```
