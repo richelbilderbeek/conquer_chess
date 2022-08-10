@@ -729,6 +729,7 @@ void do_promote_keyboard_player_piece(
       g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
       break;
   }
+  g.tick(delta_t(0.0));
 }
 
 void do_start_attack_keyboard_player_piece(game& g, const square& s)

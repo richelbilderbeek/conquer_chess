@@ -322,7 +322,7 @@ bool is_idle(const piece& p) noexcept
 
 void piece::receive_damage(const double damage)
 {
-  assert(damage > 0.0);
+  assert(damage >= 0.0);
   m_health -= damage;
 }
 
