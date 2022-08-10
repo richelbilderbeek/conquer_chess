@@ -1,7 +1,5 @@
 # Architecture
 
-## Some tests
-
 ```mermaid
 sequenceDiagram
     participant user
