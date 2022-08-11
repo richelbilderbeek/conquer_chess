@@ -44,9 +44,7 @@ void test_game_class()
   }
   // game::tick
   {
-    #define FIX_ISSUE_27
-    #ifdef FIX_ISSUE_27
-    // a2-a4 takes as long as b2-b3
+    // #27: a2-a4 takes as long as b2-b3
     {
       game g;
       assert(is_piece_at(g, square("a2")));
@@ -69,7 +67,6 @@ void test_game_class()
       assert(!is_piece_at(g, square("a3")));
       assert(is_piece_at(g, square("b3")));
     }
-    #endif
     // A piece under attack must have decreasing health
     {
       game_options options{create_default_game_options()};
@@ -224,8 +221,7 @@ void test_game_functions()
       );
       assert(is_in(nb8c6, actions));
     }
-    #ifdef FIX_ISSUE_28
-    // pawns can attack diagonally
+    // #28: pawns can attack diagonally
     {
       const game g{
         get_game_with_starting_position(starting_position_type::pawn_all_out_assault)
@@ -234,14 +230,21 @@ void test_game_functions()
       assert(!actions.empty());
       const piece_action e4xf5(
         chess_color::white,
-        piece_type::king,
+        piece_type::pawn,
         piece_action_type::attack,
         square("e4"),
         square("f5")
       );
       assert(is_in(e4xf5, actions));
+      const piece_action e5xd4(
+        chess_color::black,
+        piece_type::pawn,
+        piece_action_type::attack,
+        square("e5"),
+        square("d4")
+      );
+      assert(is_in(e5xd4, actions));
     }
-    #endif // FIX_ISSUE_28
     // kings only
     {
       const game g{

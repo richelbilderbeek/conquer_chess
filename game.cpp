@@ -123,15 +123,8 @@ std::vector<piece_action> collect_all_actions(const game& g)
   std::vector<std::pair<square, chess_color>> attacked_squares{
     collect_attacked_squares(actions)
   };
-  #ifdef PREVENT_RECURSION_COLLECT_ALL
-  const chess_color enemy_color{get_other_color(p.get_color())};
-  if (is_square_attacked_by(g, b_pawn_square, enemy_color)) return false;
-  if (is_square_attacked_by(g, c_pawn_square, enemy_color)) return false;
-  if (is_square_attacked_by(g, d_pawn_square, enemy_color)) return false;
-  #endif // PREVENT_RECURSION_COLLECT_ALL
-  #ifdef PREVENT_RECURSION_COLLECT_ALL
-  #endif // PREVENT_RECURSION_COLLECT_ALL
 
+  // 3. Prevent king moving into or through (by castling) check
   const auto new_end{
     std::remove_if(
       std::begin(actions),
@@ -174,6 +167,10 @@ std::vector<piece_action> collect_all_actions(const game& g)
     )
   };
   actions.erase(new_end, std::end(actions));
+
+  // Prevent opening up a pin
+
+  // If king is attacked, only moves that break check are possible
 
   return actions;
 }
@@ -387,6 +384,7 @@ std::vector<piece_action> collect_all_pawn_actions(
   const auto& from{p.get_current_square()};
   if (color == chess_color::black)
   {
+    // Move
     if (x == 6)
     {
       // Two forward
@@ -435,11 +433,33 @@ std::vector<piece_action> collect_all_pawn_actions(
         );
       }
     }
+    // Attack
+    if (x != 0)
+    {
+      const auto enemy_color{get_other_color(color)};
+      if (y > 0)
+      {
+        const square enemy_square{square(x - 1, y - 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
+      }
+      if (y < 7)
+      {
+        const square enemy_square{square(x - 1, y + 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
+      }
+    }
   }
   else
   {
     assert(color == chess_color::white);
     assert(get_rank(s) != 1);
+    // Move
     if (get_rank(s) == 2)
     {
       // Two forward
@@ -486,6 +506,27 @@ std::vector<piece_action> collect_all_pawn_actions(
             color, type, piece_action_type::move, from, square(x + 1, y)
           )
         );
+      }
+    }
+    // Attack
+    if (x != 7)
+    {
+      const auto enemy_color{get_other_color(color)};
+      if (y > 0)
+      {
+        const square enemy_square{square(x + 1, y - 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
+      }
+      if (y < 7)
+      {
+        const square enemy_square{square(x + 1, y + 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
       }
     }
   }
