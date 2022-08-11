@@ -1,5 +1,7 @@
 # Architecture
 
+## Handling user input
+
 ```mermaid
 sequenceDiagram
     participant user

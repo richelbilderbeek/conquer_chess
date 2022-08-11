@@ -50,7 +50,7 @@ these are the differences:
    For example, pawns move forward, bishops move diagonally and rooks move horizontally
  * All pieces move equally fast **per move**.
    This means that a queen can move from d1 to d8 
-   in the time one move takes.
+   in the same time a knight moves from b1 to c3
  * Pieces cannot move to occupied squares
    Squares occupied by the opponent's pieces must be attacked first
  * All pieces attack in the same directions and with the same distance as regular chess.
@@ -81,4 +81,10 @@ from [https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pg
 
 Under normal game speed, a piece moves one square (Euclidean distance)
 per second.
+
+## Technical
+
+### How is the user input handled?
+
+See [architecture](architecture.md)
 
