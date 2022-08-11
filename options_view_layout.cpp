@@ -106,6 +106,11 @@ options_view_layout::options_view_layout(
     screen_coordinat(x4, y7),
     screen_coordinat(x5, y8)
   );
+
+  m_font_size = std::min(
+    panel_height / 2,
+    bottom_panel_width / 6
+  );
 }
 
 const screen_rect& options_view_layout::get_selectable_rect(const options_view_item item) const noexcept

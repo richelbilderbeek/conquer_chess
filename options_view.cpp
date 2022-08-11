@@ -185,7 +185,8 @@ void options_view::set_text_style(sf::Text& text)
 {
   text.setFont(get_font(get_resources()));
   text.setStyle(sf::Text::Bold);
-  text.setCharacterSize(64);
+  //text.setCharacterSize(64);
+  text.setCharacterSize(m_layout.get_font_size());
   text.setFillColor(sf::Color::Black);
 }
 

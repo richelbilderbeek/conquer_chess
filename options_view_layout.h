@@ -32,6 +32,8 @@
 /// |                                                      |
 /// +------------------------------------------------------+
 ///
+/// Top panel must be 400 pixels at least (i.e. with current font size)
+/// Bottom panel must be 400 pixels at least (i.e. with current font size)
 class options_view_layout
 {
 public:
@@ -64,6 +66,7 @@ public:
   screen_rect get_left_controls_value() const noexcept { return m_left_controls_value; }
   screen_rect get_right_controls_value() const noexcept { return m_right_controls_value; }
 
+  int get_font_size() const noexcept { return m_font_size; }
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
 private:
@@ -88,6 +91,9 @@ private:
 
   screen_rect m_left_controls_value;
   screen_rect m_right_controls_value;
+
+  /// The size of the font that would fit nicely
+  int m_font_size;
 
   /// The size of the window
   screen_coordinat m_window_size;
