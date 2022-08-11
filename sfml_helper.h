@@ -16,6 +16,7 @@ sf::Color f_health_to_color(const double f);
 /// Make 'rectangle' have the same size and position as the 'screen_rect'
 void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect);
 
+#ifndef LOGIC_ONLY
 /// Make 'text' have the same size and position as the 'screen_rect'
 /// Assumes the text already has a font
 void set_text_position(sf::Text& text, const screen_rect& screen_rect);
@@ -28,6 +29,7 @@ void show_pieces(
   game_resources& resources,
   const bool show_selected
 );
+#endif
 
 /// Draw the squares of a chessboard at the window target rectangle's location
 void show_squares(

@@ -1,7 +1,10 @@
 #include "sfml_helper.h"
 
 #include "piece.h"
+
+#ifndef LOGIC_ONLY
 #include "game_resources.h"
+#endif
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
@@ -51,6 +54,7 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
   );
 }
 
+#ifndef LOGIC_ONLY
 void show_pieces(
   const std::vector<piece>& pieces,
   sf::RenderWindow& window,
@@ -155,6 +159,7 @@ void show_squares(
     }
   }
 }
+#endif
 
 void test_sfml_helper()
 {
