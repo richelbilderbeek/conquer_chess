@@ -89,6 +89,9 @@ void show_music_volume(options_view& v);
 /// Show all the layout panels
 void show_panels(options_view& v);
 
+/// Show all the pieces in the initial position
+void show_pieces(options_view& view);
+
 void show_starting_position(options_view& v);
 
 /// Show the selected panel

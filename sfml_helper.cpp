@@ -1,5 +1,6 @@
 #include "sfml_helper.h"
 
+#include "piece.h"
 #include "game_resources.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -48,6 +49,74 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
     std::round(text.getLocalBounds().width / 2.0),
     std::round(text.getLocalBounds().height / 2.0)
   );
+}
+
+void show_pieces(
+  const std::vector<piece>& pieces,
+  sf::RenderWindow& window,
+  const screen_rect& rect,
+  game_resources& resources,
+  const bool show_selected
+)
+{
+  const int square_width{1 + get_width(rect) / 8};
+  const int square_height{1 + get_height(rect) / 8};
+  for (const auto& piece: pieces)
+  {
+    sf::RectangleShape sprite;
+    sprite.setSize(sf::Vector2f(0.9 * square_width, 0.9 * square_height));
+    sprite.setTexture(
+      &resources.get_piece(
+        piece.get_color(),
+        piece.get_type()
+      )
+    );
+    // Transparency effect when moving
+    if (!piece.get_actions().empty()
+      && piece.get_actions()[0].get_action_type() == piece_action_type::move
+    )
+    {
+      const double f{piece.get_current_action_time().get()};
+      int alpha{0};
+      if (f < 0.5)
+      {
+        alpha = 255 - static_cast<int>(f * 255.0);
+      }
+      else
+      {
+        alpha = static_cast<int>(f * 255.0);
+      }
+      sprite.setFillColor(sf::Color(255, 255, 255, alpha));
+    }
+    else
+    {
+      //sprite.setFillColor(sf::Color(0, 0, 0, 255));
+    }
+    if (show_selected && piece.is_selected())
+    {
+      sprite.setOutlineColor(sf::Color(255, 0, 0));
+      sprite.setOutlineThickness(2);
+    }
+    sprite.setOrigin(sf::Vector2f(0.45 * square_width, 0.45 * square_height));
+    const game_coordinat game_pos{
+      to_coordinat(piece.get_current_square()) + game_coordinat(0.0, 0.1)
+    };
+    const screen_coordinat screen_position{
+      rect.get_tl().get_x() + static_cast<int>(game_pos.get_x() * square_width),
+      rect.get_tl().get_y() + static_cast<int>(game_pos.get_y() * square_height),
+    };
+    /*
+    const auto screen_position = convert_to_screen_coordinat(
+      to_coordinat(piece.get_current_square()) + game_coordinat(0.0, 0.1),
+      layout
+    );
+    */
+    sprite.setPosition(
+      screen_position.get_x(),
+      screen_position.get_y()
+    );
+    window.draw(sprite);
+  }
 }
 
 void show_squares(

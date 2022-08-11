@@ -20,6 +20,15 @@ void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect);
 /// Assumes the text already has a font
 void set_text_position(sf::Text& text, const screen_rect& screen_rect);
 
+/// Show the pieces
+void show_pieces(
+  const std::vector<piece>& pieces,
+  sf::RenderWindow& window,
+  const screen_rect& rect,
+  game_resources& resources,
+  const bool show_selected
+);
+
 /// Draw the squares of a chessboard at the window target rectangle's location
 void show_squares(
   sf::RenderWindow& window,

@@ -670,29 +670,6 @@ void show_squares(game_view& view)
     view.get_game().get_layout().get_board(),
     view.get_resources()
   );
-  /*
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
-
-  sf::RectangleShape black_square = create_black_square(view);
-  sf::RectangleShape white_square = create_white_square(view);
-
-  for (int x = 0; x != 8; ++x)
-  {
-    for (int y = 0; y != 8; ++y)
-    {
-      sf::RectangleShape& s = (x + y) % 2 == 0 ? black_square : white_square;
-      const screen_coordinat square_pos{
-        convert_to_screen_coordinat(
-          game_coordinat(x + 0.5, y + 0.5),
-          layout
-        )
-      };
-      s.setPosition(square_pos.get_x(), square_pos.get_y());
-      view.get_window().draw(s);
-    }
-  }
-  */
 }
 
 void show_square_under_cursor(

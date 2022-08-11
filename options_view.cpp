@@ -205,6 +205,7 @@ void options_view::show()
   show_selected_panel(*this);
 
   show_squares(m_window, m_layout.get_chess_board(), m_resources);
+  show_pieces(*this);
 
   // Display all shapes
   m_window.display();
@@ -359,6 +360,71 @@ void show_game_speed(options_view& v)
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
+}
+
+
+void show_pieces(options_view& view)
+{
+  show_pieces(
+    get_starting_pieces(view.get_options().get_starting_position()),
+    view.get_window(),
+    view.get_layout().get_chess_board(),
+    view.get_resources(),
+    view.get_options().do_show_selected()
+  );
+  /*
+  const auto& game = view.get_game();
+  const auto& layout = game.get_layout();
+  const double square_width{get_square_width(layout)};
+  const double square_height{get_square_height(layout)};
+  for (const auto& piece: game.get_pieces())
+  {
+    sf::RectangleShape sprite;
+    sprite.setSize(sf::Vector2f(0.9 * square_width, 0.9 * square_height));
+    sprite.setTexture(
+      &view.get_resources().get_piece(
+        piece.get_color(),
+        piece.get_type()
+      )
+    );
+    // Transparency effect when moving
+    if (!piece.get_actions().empty()
+      && piece.get_actions()[0].get_action_type() == piece_action_type::move
+    )
+    {
+      const double f{piece.get_current_action_time().get()};
+      int alpha{0};
+      if (f < 0.5)
+      {
+        alpha = 255 - static_cast<int>(f * 255.0);
+      }
+      else
+      {
+        alpha = static_cast<int>(f * 255.0);
+      }
+      sprite.setFillColor(sf::Color(255, 255, 255, alpha));
+    }
+    else
+    {
+      //sprite.setFillColor(sf::Color(0, 0, 0, 255));
+    }
+    if (do_show_selected(view) && piece.is_selected())
+    {
+      sprite.setOutlineColor(sf::Color(255, 0, 0));
+      sprite.setOutlineThickness(2);
+    }
+    sprite.setOrigin(sf::Vector2f(0.45 * square_width, 0.45 * square_height));
+    const auto screen_position = convert_to_screen_coordinat(
+      to_coordinat(piece.get_current_square()) + game_coordinat(0.0, 0.1),
+      layout
+    );
+    sprite.setPosition(
+      screen_position.get_x(),
+      screen_position.get_y()
+    );
+    view.get_window().draw(sprite);
+  }
+  */
 }
 
 void show_starting_position(options_view& v)
