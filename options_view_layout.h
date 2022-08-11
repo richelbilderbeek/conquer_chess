@@ -22,13 +22,21 @@
 /// | | starting pos            |                        | |
 /// | +-------------------------+------------------------+ | y4
 /// |                                                      |
-/// | +----------------+----------------+----------------+ | y5
-/// | | player         | color          | controls       | |
-/// | +----------------+----------------+----------------+ | y6
-/// | | left           | left_color     | left_controls  | |
+/// |                     +-------------+                  | y5
+/// |                     |             |                  |
+/// |                     | BOARD       |                  |
+/// |                     |             |                  |
+/// |                     |             |                  |
+/// |                     |             |                  |
+/// |                     +-------------+                  | y6
+/// |                                                      |
 /// | +----------------+----------------+----------------+ | y7
-/// | | right          | right_color    | right_controls | |
+/// | | player         | color          | controls       | |
 /// | +----------------+----------------+----------------+ | y8
+/// | | left           | left_color     | left_controls  | |
+/// | +----------------+----------------+----------------+ | y9
+/// | | right          | right_color    | right_controls | |
+/// | +----------------+----------------+----------------+ | y10
 /// |                                                      |
 /// +------------------------------------------------------+
 ///
@@ -45,31 +53,34 @@ public:
   /// Get a selectable item
   const screen_rect& get_selectable_rect(const options_view_item item) const noexcept;
 
-  screen_rect get_game_speed_label() const noexcept { return m_game_speed_label; }
-  screen_rect get_game_speed_value() const noexcept { return m_game_speed_value; }
+  const screen_rect& get_game_speed_label() const noexcept { return m_game_speed_label; }
+  const screen_rect& get_game_speed_value() const noexcept { return m_game_speed_value; }
 
-  screen_rect get_music_volume_label() const noexcept { return m_music_volume_label; }
-  screen_rect get_music_volume_value() const noexcept { return m_music_volume_value; }
+  const screen_rect& get_music_volume_label() const noexcept { return m_music_volume_label; }
+  const screen_rect& get_music_volume_value() const noexcept { return m_music_volume_value; }
 
-  screen_rect get_starting_pos_label() const noexcept { return m_starting_pos_label; }
-  screen_rect get_starting_pos_value() const noexcept { return m_starting_pos_value; }
+  const screen_rect& get_starting_pos_label() const noexcept { return m_starting_pos_label; }
+  const screen_rect& get_starting_pos_value() const noexcept { return m_starting_pos_value; }
 
-  screen_rect get_player_label() const noexcept { return m_player_label; }
-  screen_rect get_color_label() const noexcept { return m_color_label; }
-  screen_rect get_controls_label() const noexcept { return m_controls_label; }
-  screen_rect get_left_label() const noexcept { return m_left_label; }
-  screen_rect get_right_label() const noexcept { return m_right_label; }
+  const screen_rect& get_chess_board() const noexcept { return m_chess_board; }
 
-  screen_rect get_left_color_value() const noexcept { return m_left_color_value; }
-  screen_rect get_right_color_value() const noexcept { return m_right_color_value; }
 
-  screen_rect get_left_controls_value() const noexcept { return m_left_controls_value; }
-  screen_rect get_right_controls_value() const noexcept { return m_right_controls_value; }
+  const screen_rect& get_player_label() const noexcept { return m_player_label; }
+  const screen_rect& get_color_label() const noexcept { return m_color_label; }
+  const screen_rect& get_controls_label() const noexcept { return m_controls_label; }
+  const screen_rect& get_left_label() const noexcept { return m_left_label; }
+  const screen_rect& get_right_label() const noexcept { return m_right_label; }
+
+  const screen_rect& get_left_color_value() const noexcept { return m_left_color_value; }
+  const screen_rect& get_right_color_value() const noexcept { return m_right_color_value; }
+
+  const screen_rect& get_left_controls_value() const noexcept { return m_left_controls_value; }
+  const screen_rect& get_right_controls_value() const noexcept { return m_right_controls_value; }
 
   /// Get the size of the font that would fit nicely
   int get_font_size() const noexcept { return m_font_size; }
 
-  screen_coordinat get_window_size() const noexcept { return m_window_size; }
+  const screen_coordinat& get_window_size() const noexcept { return m_window_size; }
 
 private:
 
@@ -81,6 +92,8 @@ private:
 
   screen_rect m_starting_pos_label;
   screen_rect m_starting_pos_value;
+
+  screen_rect m_chess_board;
 
   screen_rect m_player_label;
   screen_rect m_color_label;

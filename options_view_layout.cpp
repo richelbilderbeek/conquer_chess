@@ -10,9 +10,11 @@ options_view_layout::options_view_layout(
   const int margin_width
 ) : m_window_size{window_size}
 {
+  // There are 6 panels
+  // the chessboard is aimed to be 4 panels high
   const int panel_height{
     static_cast<int>(
-      static_cast<double>(window_size.get_y() - (3 * margin_width)) / 6.0
+      static_cast<double>(window_size.get_y() - (4 * margin_width)) / 10.0
     )
   };
   const int top_panel_width{
@@ -20,6 +22,19 @@ options_view_layout::options_view_layout(
       static_cast<double>(window_size.get_x() - (2 * margin_width)) / 2.0
     )
   };
+  const int max_chess_board_height{
+    m_window_size.get_y() - (6 * panel_height) - (4 * margin_width)
+  };
+  const int max_chess_board_width{
+    window_size.get_x() - (2 * margin_width)
+  };
+  const int chess_board_width{
+    std::min(max_chess_board_height, max_chess_board_width)
+  };
+  const int chess_board_height{
+    chess_board_width
+  };
+
   const int bottom_panel_width{
     static_cast<int>(
       static_cast<double>(window_size.get_x() - (2 * margin_width)) / 3.0
@@ -32,14 +47,23 @@ options_view_layout::options_view_layout(
   const int x4{x2 + bottom_panel_width};
   const int x5{x3 + top_panel_width};
 
+  const int chess_board_tl_x{
+    (window_size.get_x() / 2) - (chess_board_width / 2)
+  };
+  const int chess_board_br_x{
+    (window_size.get_x() / 2) + (chess_board_width / 2)
+  };
+
   const int y1{margin_width};
   const int y2{y1 + panel_height};
   const int y3{y2 + panel_height};
   const int y4{y3 + panel_height};
   const int y5{y4 + margin_width};
-  const int y6{y5 + panel_height};
-  const int y7{y6 + panel_height};
+  const int y6{y5 + chess_board_height};
+  const int y7{y6 + margin_width};
   const int y8{y7 + panel_height};
+  const int y9{y8 + panel_height};
+  const int y10{y9 + panel_height};
 
   m_game_speed_label = screen_rect(
     screen_coordinat(x1, y1),
@@ -68,43 +92,48 @@ options_view_layout::options_view_layout(
     screen_coordinat(x5, y4)
   );
 
+  m_chess_board = screen_rect(
+    screen_coordinat(chess_board_tl_x, y5),
+    screen_coordinat(chess_board_br_x, y6)
+  );
+
   m_player_label = screen_rect(
-    screen_coordinat(x1, y5),
-    screen_coordinat(x2, y6)
-  );
-  m_color_label = screen_rect(
-    screen_coordinat(x2, y5),
-    screen_coordinat(x4, y6)
-  );
-  m_controls_label = screen_rect(
-    screen_coordinat(x4, y5),
-    screen_coordinat(x5, y6)
-  );
-  m_left_label = screen_rect(
-    screen_coordinat(x1, y6),
-    screen_coordinat(x2, y7)
-  );
-  m_right_label = screen_rect(
     screen_coordinat(x1, y7),
     screen_coordinat(x2, y8)
   );
-
-  m_left_color_value = screen_rect(
-    screen_coordinat(x2, y6),
-    screen_coordinat(x4, y7)
-  );
-  m_right_color_value = screen_rect(
+  m_color_label = screen_rect(
     screen_coordinat(x2, y7),
     screen_coordinat(x4, y8)
   );
-
-  m_left_controls_value = screen_rect(
-    screen_coordinat(x4, y6),
-    screen_coordinat(x5, y7)
-  );
-  m_right_controls_value = screen_rect(
+  m_controls_label = screen_rect(
     screen_coordinat(x4, y7),
     screen_coordinat(x5, y8)
+  );
+  m_left_label = screen_rect(
+    screen_coordinat(x1, y8),
+    screen_coordinat(x2, y9)
+  );
+  m_right_label = screen_rect(
+    screen_coordinat(x1, y9),
+    screen_coordinat(x2, y10)
+  );
+
+  m_left_color_value = screen_rect(
+    screen_coordinat(x2, y8),
+    screen_coordinat(x4, y9)
+  );
+  m_right_color_value = screen_rect(
+    screen_coordinat(x2, y9),
+    screen_coordinat(x4, y10)
+  );
+
+  m_left_controls_value = screen_rect(
+    screen_coordinat(x4, y8),
+    screen_coordinat(x5, y9)
+  );
+  m_right_controls_value = screen_rect(
+    screen_coordinat(x4, y9),
+    screen_coordinat(x5, y10)
   );
 
   m_font_size = std::min(
@@ -140,6 +169,7 @@ std::vector<screen_rect> get_panels(const options_view_layout& layout)
     layout.get_music_volume_value(),
     layout.get_starting_pos_label(),
     layout.get_starting_pos_value(),
+    layout.get_chess_board(),
     layout.get_player_label(),
     layout.get_color_label(),
     layout.get_controls_label(),
