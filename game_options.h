@@ -67,7 +67,7 @@ public:
   const auto& get_music_volume() const noexcept { return m_music_volume; }
 
   /// Get the sound effects volume
-  volume get_sound_effects_volume() const noexcept { return volume(50.0); }
+  volume get_sound_effects_volume() const noexcept { return volume(0.0); }
 
   /// Set the controller for a player
   void set_controller(const controller& c, const side player);

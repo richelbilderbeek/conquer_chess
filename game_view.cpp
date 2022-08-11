@@ -19,6 +19,7 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <sstream>
 
@@ -40,36 +41,6 @@ std::string bool_to_str(const bool b) noexcept
 {
   return b ? "true" : "false";
 }
-
-/*
-sf::RectangleShape create_black_square(game_view& view)
-{
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
-  const double square_width{get_square_width(layout)};
-  const double square_height{get_square_height(layout)};
-
-  sf::RectangleShape black_square;
-  black_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  black_square.setTexture(&view.get_resources().get_square(chess_color::black));
-  black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
-  return black_square;
-}
-
-sf::RectangleShape create_white_square(game_view& view)
-{
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
-  const double square_width{get_square_width(layout)};
-  const double square_height{get_square_height(layout)};
-
-  sf::RectangleShape white_square;
-  white_square.setSize(sf::Vector2f(square_width + 1, square_height + 1));
-  white_square.setTexture(&view.get_resources().get_square(chess_color::white));
-  white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
-  return white_square;
-}
-*/
 
 bool do_show_selected(const game_view& view)
 {
@@ -705,11 +676,11 @@ void show_square_under_cursor(
   const bool valid{would_be_valid(view, player_color)};
   if (valid)
   {
-    s.setOutlineThickness(4);
+    s.setOutlineThickness(std::max(4, static_cast<int>(square_height / 10)));
   }
   else
   {
-    s.setOutlineThickness(2);
+    s.setOutlineThickness(std::max(2, static_cast<int>(square_height / 20)));
   }
   view.get_window().draw(s);
   s.setFillColor(old_fill_color);

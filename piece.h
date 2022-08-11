@@ -50,6 +50,9 @@ public:
   /// Get all the piece actions
   auto& get_actions() noexcept { return m_actions; }
 
+  /// Get the actions history
+  const auto& get_action_history() const noexcept { return m_action_history; }
+
   /// Get the color of the piece, i.e. white or black
   chess_color get_color() const noexcept { return m_color; }
 
