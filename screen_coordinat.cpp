@@ -37,14 +37,12 @@ screen_coordinat get_default_controls_screen_size() noexcept
 
 screen_coordinat get_default_screen_size() noexcept
 {
-  //return screen_coordinat(1024, 576);
-  //return screen_coordinat(1024 + 400, 576);
   return screen_coordinat(1024 + 400, 576 + 400);
 }
 
 screen_coordinat get_default_main_menu_screen_size() noexcept
 {
-  return screen_coordinat(1100, 900);
+  return screen_coordinat(600, 900);
 }
 
 std::ostream& operator<<(std::ostream& os, const screen_coordinat& coordinat)
