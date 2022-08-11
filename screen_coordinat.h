@@ -40,11 +40,15 @@ double calc_angle_degrees(const screen_coordinat& delta);
 /// Calculate the Euclidean distance
 double calc_distance(const screen_coordinat& a, const screen_coordinat& b) noexcept;
 
+/// Get the default main about screen size, where x is the width and y is the height
+screen_coordinat get_default_about_screen_size() noexcept;
+
 /// Get the default controls screen size, where x is the width and y is the height
 screen_coordinat get_default_controls_screen_size() noexcept;
 
 /// Get the default main menu screen size, where x is the width and y is the height
 screen_coordinat get_default_main_menu_screen_size() noexcept;
+
 
 /// Get the default screen size, where x is the width and y is the height
 screen_coordinat get_default_screen_size() noexcept;

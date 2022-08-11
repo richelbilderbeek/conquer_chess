@@ -30,6 +30,11 @@ double calc_distance(const screen_coordinat& a, const screen_coordinat& b) noexc
   return calc_distance(delta.get_x(), delta.get_y());
 }
 
+screen_coordinat get_default_about_screen_size() noexcept
+{
+  return screen_coordinat(600, 900);
+}
+
 screen_coordinat get_default_controls_screen_size() noexcept
 {
   return get_default_main_menu_screen_size();

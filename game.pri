@@ -1,5 +1,7 @@
 # Files
 HEADERS += \
+    $$PWD/about_view_item.h \
+    $$PWD/about_view_layout.h \
     $$PWD/action_history.h \
     $$PWD/board.h \
     $$PWD/castling_type.h \
@@ -54,6 +56,8 @@ HEADERS += \
 
 
 SOURCES += \
+    $$PWD/about_view_item.cpp \
+    $$PWD/about_view_layout.cpp \
     $$PWD/action_history.cpp \
     $$PWD/board.cpp \
     $$PWD/castling_type.cpp \

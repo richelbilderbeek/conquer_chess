@@ -42,3 +42,4 @@ QT += core gui widgets
 LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 #INCLUDEPATH += ../magic_enum
+

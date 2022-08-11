@@ -2,6 +2,7 @@
 
 #ifndef LOGIC_ONLY
 
+#include "about_view.h"
 #include "screen_coordinat.h"
 #include "game_view.h"
 #include "options_view.h"
@@ -50,6 +51,12 @@ void menu_view::exec()
     show();
 
   }
+}
+
+void menu_view::exec_about()
+{
+  about_view view;
+  view.exec();
 }
 
 void menu_view::exec_game()
@@ -138,6 +145,10 @@ bool menu_view::process_events()
           return true;
         }
       }
+      else if (key_pressed == sf::Keyboard::Key::A)
+      {
+        exec_about();
+      }
       else if (key_pressed == sf::Keyboard::Key::O)
       {
         exec_options();
@@ -166,6 +177,7 @@ bool menu_view::process_events()
         };
         if (is_in(mouse_screen_pos, m_layout.get_start())) exec_game();
         else if (is_in(mouse_screen_pos, m_layout.get_options())) exec_options();
+        else if (is_in(mouse_screen_pos, m_layout.get_about())) exec_about();
         else if (is_in(mouse_screen_pos, m_layout.get_quit()))
         {
           m_window.close();

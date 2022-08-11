@@ -45,6 +45,9 @@ private:
   /// The selected item
   menu_view_item m_selected;
 
+  /// Run the about screen
+  void exec_about();
+
   /// Run the game
   void exec_game();
 
