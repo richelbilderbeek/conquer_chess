@@ -157,6 +157,13 @@ std::vector<piece> get_pieces_pawns_at_promotion() noexcept;
 ///  * Black pawn: h2
 std::vector<piece> get_pieces_pawns_near_promotion() noexcept;
 
+/// Get the pieces where pawns are nealy near promotion
+///  * White king: e1
+///  * White pawn: a6
+///  * Black king: e8
+///  * Black pawn: h3
+std::vector<piece> get_pieces_pawns_nearly_near_promotion() noexcept;
+
 /// Get the pieces for a queen endgame,
 /// which are having only the kings and queens left
 /// from a default setup

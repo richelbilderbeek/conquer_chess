@@ -387,11 +387,19 @@ std::vector<piece_action> collect_all_pawn_actions(
   const auto& from{p.get_current_square()};
   if (color == chess_color::black)
   {
-    assert(get_rank(s) != 8);
-    if (get_rank(s) == 7)
+    if (x == 6)
     {
       // Two forward
-      if (is_empty(g, square(5, y)) && is_empty(g, square(6, y)))
+      if (is_empty(g, square(4, y)) && is_empty(g, square(5, y)))
+      {
+        actions.push_back(
+          piece_action(
+            color, type, piece_action_type::move, from, square(4, y)
+          )
+        );
+      }
+      // One forward
+      if (is_empty(g, square(5, y)))
       {
         actions.push_back(
           piece_action(
@@ -399,17 +407,8 @@ std::vector<piece_action> collect_all_pawn_actions(
           )
         );
       }
-      // One forward
-      if (is_empty(g, square(6, y)))
-      {
-        actions.push_back(
-          piece_action(
-            color, type, piece_action_type::move, from, square(6, y)
-          )
-        );
-      }
     }
-    else if (get_rank(s) == 1)
+    else if (x == 0)
     {
       actions.push_back(
         piece_action(color, piece_type::queen, piece_action_type::promote, from, from)

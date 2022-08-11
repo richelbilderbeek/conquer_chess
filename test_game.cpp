@@ -199,6 +199,14 @@ void test_game_functions()
         square("e4")
       );
       assert(is_in(e2e4, actions));
+      const piece_action e7e5(
+        chess_color::black,
+        piece_type::pawn,
+        piece_action_type::move,
+        square("e7"),
+        square("e5")
+      );
+      assert(is_in(e7e5, actions));
       const piece_action nb1c3(
         chess_color::white,
         piece_type::knight,
@@ -216,6 +224,24 @@ void test_game_functions()
       );
       assert(is_in(nb8c6, actions));
     }
+    #ifdef FIX_ISSUE_28
+    // pawns can attack diagonally
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::pawn_all_out_assault)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action e4xf5(
+        chess_color::white,
+        piece_type::king,
+        piece_action_type::attack,
+        square("e4"),
+        square("f5")
+      );
+      assert(is_in(e4xf5, actions));
+    }
+    #endif // FIX_ISSUE_28
     // kings only
     {
       const game g{
@@ -303,6 +329,30 @@ void test_game_functions()
         square("h6")
       );
       assert(is_in(rh8h6, actions));
+    }
+    // pawns nearly near promotion
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::pawns_nearly_near_promotion)
+      };
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      const piece_action a6a7(
+        chess_color::white,
+        piece_type::pawn,
+        piece_action_type::move,
+        square("a6"),
+        square("a7")
+      );
+      assert(is_in(a6a7, actions));
+      const piece_action h3h2(
+        chess_color::black,
+        piece_type::pawn,
+        piece_action_type::move,
+        square("h3"),
+        square("h2")
+      );
+      assert(is_in(h3h2, actions));
     }
     // pawn at promotion
     {

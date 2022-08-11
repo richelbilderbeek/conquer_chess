@@ -14,6 +14,7 @@ enum class starting_position_type
   pawn_all_out_assault,
   pawns_at_promotion,
   pawns_near_promotion,
+  pawns_nearly_near_promotion,
   queen_end_game,
   ready_to_castle,
   ready_to_not_castle,
