@@ -1,5 +1,7 @@
 #include "sfml_helper.h"
 
+#include "game_resources.h"
+
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include <cassert>
@@ -46,6 +48,43 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
     std::round(text.getLocalBounds().width / 2.0),
     std::round(text.getLocalBounds().height / 2.0)
   );
+}
+
+void show_squares(
+  sf::RenderWindow& window,
+  const screen_rect& rect,
+  game_resources& resources
+)
+{
+  const int square_width{1 + (get_width(rect) / 8)};
+  const int square_height{1 + (get_height(rect) / 8)};
+  sf::RectangleShape black_square;
+  black_square.setSize(sf::Vector2f(square_width, square_height));
+  black_square.setTexture(&resources.get_square(chess_color::black));
+  black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
+
+  sf::RectangleShape white_square;
+  white_square.setSize(sf::Vector2f(square_width, square_height));
+  white_square.setTexture(&resources.get_square(chess_color::white));
+  white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
+
+  for (int x = 0; x != 8; ++x)
+  {
+    for (int y = 0; y != 8; ++y)
+    {
+      sf::RectangleShape& s = (x + y) % 2 == 0 ? black_square : white_square;
+      const screen_coordinat square_pos{
+        static_cast<int>(
+          rect.get_tl().get_x() + ((0.5 + x) * square_width)
+        ),
+        static_cast<int>(
+          rect.get_tl().get_y() + ((0.5 + y) * square_height)
+        )
+      };
+      s.setPosition(square_pos.get_x(), square_pos.get_y());
+      window.draw(s);
+    }
+  }
 }
 
 void test_sfml_helper()

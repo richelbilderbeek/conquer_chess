@@ -41,6 +41,7 @@ std::string bool_to_str(const bool b) noexcept
   return b ? "true" : "false";
 }
 
+/*
 sf::RectangleShape create_black_square(game_view& view)
 {
   const auto& game = view.get_game();
@@ -68,6 +69,7 @@ sf::RectangleShape create_white_square(game_view& view)
   white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   return white_square;
 }
+*/
 
 bool do_show_selected(const game_view& view)
 {
@@ -663,6 +665,12 @@ void show_sidebar_2(game_view& view)
 
 void show_squares(game_view& view)
 {
+  show_squares(
+    view.get_window(),
+    view.get_game().get_layout().get_board(),
+    view.get_resources()
+  );
+  /*
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
 
@@ -684,6 +692,7 @@ void show_squares(game_view& view)
       view.get_window().draw(s);
     }
   }
+  */
 }
 
 void show_square_under_cursor(

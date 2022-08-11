@@ -204,6 +204,8 @@ void options_view::show()
   show_bottom(*this);
   show_selected_panel(*this);
 
+  show_squares(m_window, m_layout.get_chess_board(), m_resources);
+
   // Display all shapes
   m_window.display();
 

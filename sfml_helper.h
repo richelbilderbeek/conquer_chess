@@ -3,6 +3,7 @@
 
 /// SFML helper functions
 
+#include "ccfwd.h"
 #include "chess_color.h"
 #include "screen_rect.h"
 #include "piece_action_type.h"
@@ -18,6 +19,13 @@ void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect);
 /// Make 'text' have the same size and position as the 'screen_rect'
 /// Assumes the text already has a font
 void set_text_position(sf::Text& text, const screen_rect& screen_rect);
+
+/// Draw the squares of a chessboard at the window target rectangle's location
+void show_squares(
+  sf::RenderWindow& window,
+  const screen_rect& rect,
+  game_resources& resources
+);
 
 /// Tes these function
 void test_sfml_helper();
