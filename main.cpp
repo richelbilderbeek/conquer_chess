@@ -1,5 +1,6 @@
 /// Use LOGIC_ONLY to be able to run on GHA
 
+#include "action_history.h"
 #include "chess_move.h"
 #include "controls_view.h"
 #include "controls_view_item.h"
@@ -36,7 +37,7 @@
 void test()
 {
 #ifndef NDEBUG
-
+  test_action_history();
   test_chess_color();
   test_chess_move();
   test_control_action();

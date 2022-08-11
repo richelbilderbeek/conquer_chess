@@ -26,7 +26,7 @@ piece::piece(
     m_is_selected{false},
     m_kill_count{0},
     m_max_health{::get_max_health(type)},
-    m_target_square{},
+    m_time{delta_t(0.0)},
     m_type{type}
 {
 
@@ -862,7 +862,11 @@ void piece::tick(
   game& g
 )
 {
-  if (m_actions.empty()) return;
+  if (m_actions.empty())
+  {
+    m_time += dt;
+    return;
+  }
   const auto action_type{m_actions[0].get_action_type()};
   std::clog << get_color() << " " << get_type() << " going to " << action_type << '\n';
 
@@ -884,6 +888,8 @@ void piece::tick(
       remove_first(m_actions);
     }
   }
+
+  m_time += dt;
 }
 
 void tick_attack(

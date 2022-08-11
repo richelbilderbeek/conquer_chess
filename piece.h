@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 
+#include "action_history.h"
 #include "delta_t.h"
 #include "chess_color.h"
 #include "id.h"
@@ -113,6 +114,9 @@ private:
   /// The actions the piece is doing, or about to do
   std::vector<piece_action> m_actions;
 
+  /// The history of actions, in chrononical order
+  action_history m_action_history;
+
   /// The color of the piece, i.e. white or black
   chess_color m_color;
 
@@ -143,8 +147,8 @@ private:
   /// The things this piece wants to say
   std::vector<message_type> m_messages;
 
-  /// The square the piece is moving to, if any
-  std::vector<square> m_target_square;
+  /// The time (in chess move time)
+  delta_t m_time;
 
   /// The type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type m_type;

@@ -7,7 +7,7 @@
 #include <sstream>
 
 piece_action::piece_action(
-    const chess_color color,
+  const chess_color color,
   const piece_type pt,
   const piece_action_type at,
   const square& from,
@@ -21,9 +21,32 @@ piece_action::piece_action(
   // m_from can be m_to if a piece needs to move back
 }
 
+piece_action::piece_action(
+  const chess_color color,
+  const piece_type pt,
+  const piece_action_type at,
+    const std::string& from_str,
+    const std::string& to_str
+) : piece_action(color, pt, at, square(from_str), square(to_str))
+{
+  // m_from can be m_to if a piece needs to move back
+}
+
+
 std::string describe_action(const piece_action& p)
 {
   return to_str(p);
+}
+
+piece_action get_test_piece_action() noexcept
+{
+  return piece_action(
+    chess_color::white,
+    piece_type::pawn,
+    piece_action_type::move,
+    "e2",
+    "e4"
+  );
 }
 
 bool is_atomic(const piece_action& a) noexcept
@@ -206,12 +229,13 @@ std::string to_str(const piece_action& a) noexcept
   std::stringstream s;
   if (a.get_action_type() == piece_action_type::move)
   {
-    s << a.get_piece_type() << " " << a.get_action_type() << " from " << a.get_from() << " to " << a.get_to();
+
+    s << a.get_color() << " " << a.get_piece_type() << " " << a.get_action_type() << " from " << a.get_from() << " to " << a.get_to();
   }
   else
   {
     assert(a.get_action_type() == piece_action_type::attack);
-    s << a.get_piece_type() << " " << a.get_action_type() << " " << a.get_to();
+    s << a.get_color() << " " << a.get_piece_type() << " " << a.get_action_type() << " " << a.get_to();
   }
   return s.str();
 }

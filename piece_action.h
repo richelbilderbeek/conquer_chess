@@ -26,6 +26,15 @@ public:
     const square& to
   );
 
+  /// Move of move from a square to another
+  explicit piece_action(
+    const chess_color color,
+    const piece_type pt,
+    const piece_action_type at,
+    const std::string& from_str,
+    const std::string& to_str
+  );
+
   auto get_action_type() const noexcept { return m_action_type; }
   const auto& get_from() const noexcept { return m_from; }
   auto get_piece_type() const noexcept { return m_piece_type; }
@@ -44,10 +53,13 @@ private:
 /// Describe the 'piece_action' in words, e.g. 'move to (3, 4)'
 std::string describe_action(const piece_action& p);
 
+/// Get a piece_action to be used in testing
+piece_action get_test_piece_action() noexcept;
+
 /// Is the action atomic, i.e. it cannot be split up further.
 /// For example, moving a queen d1 to d3 is not atomic,
 /// as it is split up in d1 -> d2 -> d3
-bool is_atomic(const piece_action& a) noexcept;
+bool is2_atomic(const piece_action& a) noexcept;
 
 /// Test the 'piece_action' class and its free functions
 void test_piece_action();
