@@ -68,7 +68,11 @@ public:
   const auto& get_options() const noexcept { return m_options; }
   const auto& get_quit() const noexcept { return m_quit; }
 
+  /// Get the size of the font that would fit nicely
+  int get_font_size() const noexcept { return m_font_size; }
+
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
+
 
 private:
 
@@ -78,6 +82,9 @@ private:
   screen_rect m_options;
   screen_rect m_about;
   screen_rect m_quit;
+
+  /// The size of the font that would fit nicely
+  int m_font_size;
 
   /// The size of the window
   screen_coordinat m_window_size;

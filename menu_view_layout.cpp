@@ -6,17 +6,17 @@
 menu_view_layout::menu_view_layout(
   const screen_coordinat& window_size,
   const int margin_width
-) : m_window_size{window_size}
+) : m_font_size{64},
+    m_window_size{window_size}
 {
   const int panel_height{
     static_cast<int>(
       static_cast<double>(window_size.get_y() - (9 * margin_width)) / 8.0
     )
   };
-  const int panel_width{500};
-
-  const int x1{(m_window_size.get_x() - (2 * panel_width)) / 2};
-  const int x2{m_window_size.get_x() - x1};
+  const int panel_width{window_size.get_x() - (2 * margin_width)};
+  const int x1{margin_width};
+  const int x2{x1 + panel_width};
 
   const int y1{margin_width};
   const int y2{y1 + panel_height + margin_width + panel_height};
@@ -54,6 +54,11 @@ menu_view_layout::menu_view_layout(
   m_quit = screen_rect(
     screen_coordinat(x1, y11),
     screen_coordinat(x2, y12)
+  );
+
+  m_font_size = std::min(
+    panel_height / 2,
+    panel_width / 6
   );
 }
 

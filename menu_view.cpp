@@ -177,6 +177,14 @@ bool menu_view::process_events()
   return false; // Do not close the window :-)
 }
 
+void menu_view::set_text_style(sf::Text& text)
+{
+  text.setFont(get_font(get_resources()));
+  text.setStyle(sf::Text::Bold);
+  text.setCharacterSize(m_layout.get_font_size());
+  text.setFillColor(sf::Color::Black);
+}
+
 void menu_view::show()
 {
   // Start drawing the new frame, by clearing the screen
@@ -208,11 +216,8 @@ void show_about_panel(menu_view& v)
   v.get_window().draw(rectangle);
 
   sf::Text text;
-  text.setFont(get_font(v.get_resources()));
   text.setString("About");
-  text.setStyle(sf::Text::Bold);
-  text.setCharacterSize(64);
-  text.setFillColor(sf::Color::Black);
+  v.set_text_style(text);
   set_text_position(text, screen_rect);
   v.get_window().draw(text);
 }
@@ -228,11 +233,8 @@ void show_options_panel(menu_view& v)
   v.get_window().draw(rectangle);
 
   sf::Text text;
-  text.setFont(get_font(v.get_resources()));
+  v.set_text_style(text);
   text.setString("Options");
-  text.setStyle(sf::Text::Bold);
-  text.setCharacterSize(64);
-  text.setFillColor(sf::Color::Black);
   set_text_position(text, screen_rect);
   v.get_window().draw(text);
 }
@@ -259,10 +261,8 @@ void show_quit_panel(menu_view& v)
   v.get_window().draw(rectangle);
 
   sf::Text text;
-  text.setFont(get_font(v.get_resources()));
   text.setString("Quit");
-  text.setStyle(sf::Text::Bold);
-  text.setCharacterSize(64);
+  v.set_text_style(text);
   text.setFillColor(sf::Color::Black);
   set_text_position(text, screen_rect);
   v.get_window().draw(text);
@@ -295,11 +295,8 @@ void show_start_panel(menu_view& v)
   v.get_window().draw(rectangle);
 
   sf::Text text;
-  text.setFont(get_font(v.get_resources()));
   text.setString("Start");
-  text.setStyle(sf::Text::Bold);
-  text.setCharacterSize(64);
-  text.setFillColor(sf::Color::Black);
+  v.set_text_style(text);
   set_text_position(text, screen_rect);
   v.get_window().draw(text);
 }

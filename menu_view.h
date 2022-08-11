@@ -25,6 +25,9 @@ public:
 
   auto& get_window() noexcept { return m_window; }
 
+  /// Set the text to a uniform style
+  void set_text_style(sf::Text& t);
+
 private:
 
   /// The layout of this window

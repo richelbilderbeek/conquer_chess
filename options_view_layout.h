@@ -66,7 +66,9 @@ public:
   screen_rect get_left_controls_value() const noexcept { return m_left_controls_value; }
   screen_rect get_right_controls_value() const noexcept { return m_right_controls_value; }
 
+  /// Get the size of the font that would fit nicely
   int get_font_size() const noexcept { return m_font_size; }
+
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
 private:
