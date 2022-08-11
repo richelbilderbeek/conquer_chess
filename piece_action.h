@@ -74,6 +74,7 @@ std::string to_str(const piece_action& a) noexcept;
 std::string to_str(const std::vector<piece_action>& a) noexcept;
 
 bool operator==(const piece_action& lhs, const piece_action& rhs) noexcept;
+bool operator!=(const piece_action& lhs, const piece_action& rhs) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const piece_action& p) noexcept;
 

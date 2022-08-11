@@ -264,6 +264,11 @@ bool operator==(const piece_action& lhs, const piece_action& rhs) noexcept
   ;
 }
 
+bool operator!=(const piece_action& lhs, const piece_action& rhs) noexcept
+{
+  return !(lhs == rhs);
+}
+
 std::ostream& operator<<(std::ostream& os, const piece_action& a) noexcept
 {
   os << to_str(a);

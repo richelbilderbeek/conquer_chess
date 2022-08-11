@@ -103,6 +103,11 @@ void clear_piece_messages(game& g) noexcept
   for (auto& p: g.get_pieces()) p.clear_messages();
 }
 
+action_history collect_action_history(const game& g)
+{
+  return collect_action_history(g.get_pieces());
+}
+
 std::vector<piece_action> collect_all_actions(const game& g)
 {
   // 1. Collect all the simple actions,
@@ -698,6 +703,19 @@ void do_select_and_move_keyboard_player_piece(
   assert(count_selected_units(g) > 0);
   do_move_keyboard_player_piece(g, to);
   assert(count_control_actions(g) == 0);
+}
+
+void do_select_and_move_keyboard_player_piece(
+  game& g,
+  const std::string& from_str,
+  const std::string& to_str
+)
+{
+  return do_select_and_move_keyboard_player_piece(
+    g,
+    square(from_str),
+    square(to_str)
+  );
 }
 
 void do_select_and_promote_keyboard_player_piece(

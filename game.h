@@ -108,6 +108,10 @@ bool can_player_select_piece_at_cursor_pos(
 /// i.e. resize to zero
 void clear_piece_messages(game& g) noexcept;
 
+/// Collect the history of a game,
+/// i.e. the moves played in time
+action_history collect_action_history(const game& g);
+
 /// Collect all valid moves and attackes at a board
 /// for all pieces
 std::vector<piece_action> collect_all_actions(const game& g);
@@ -214,6 +218,12 @@ void do_select_and_move_keyboard_player_piece(
   game& g,
   const square& from,
   const square& to
+);
+
+void do_select_and_move_keyboard_player_piece(
+  game& g,
+  const std::string& from_str,
+  const std::string& to_str
 );
 
 /// Let the keyboard player select a square

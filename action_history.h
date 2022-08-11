@@ -10,7 +10,9 @@
 class action_history
 {
 public:
-  action_history();
+  action_history(
+    const std::vector<std::pair<delta_t, piece_action>>& timed_actions  = {}
+  );
 
   void add_action(const delta_t& t, const piece_action& action) noexcept;
 
@@ -23,6 +25,12 @@ private:
 
 };
 
+const piece_action& get_last_action(const action_history& history);
+
+bool has_actions(const action_history& history) noexcept;
+
+/// Combine action histories and sort these
+action_history merge_action_histories(const std::vector<action_history> histories);
 
 /// Test this class and its free functions
 void test_action_history();

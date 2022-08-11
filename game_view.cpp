@@ -69,7 +69,10 @@ void game_view::exec()
     const bool must_quit{
       process_events() // main game loop
     };
-    if (must_quit) return;
+    if (must_quit)
+    {
+      break;
+    }
 
     // Do a tick, so that one delta_t equals one second under normal game speed
     m_game.tick(
@@ -83,6 +86,8 @@ void game_view::exec()
     // Show the new state
     show();
   }
+
+  std::clog << collect_action_history(m_game) << '\n';
 }
 
 const auto& game_view::get_controller(const side player) const noexcept

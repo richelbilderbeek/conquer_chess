@@ -11,6 +11,10 @@ std::vector<double> calc_distances(
   const game_coordinat& coordinat
 );
 
+/// Collect the history of a game,
+/// i.e. the moves played in time
+action_history collect_action_history(const std::vector<piece>& pieces);
+
 /// Count the total number of dead pieces
 int count_dead_pieces(
   const std::vector<piece>& pieces

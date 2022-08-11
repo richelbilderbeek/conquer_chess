@@ -173,6 +173,17 @@ void test_game_functions()
     clear_piece_messages(g);
     assert(collect_messages(g).empty());
   }
+  // collect_action_history
+  {
+    game g;
+    assert(!has_actions(collect_action_history(g)));
+    do_select_and_move_keyboard_player_piece(g, "e2", "e4");
+    assert(has_actions(collect_action_history(g)));
+    g.tick(delta_t(0.25));
+    g.tick(delta_t(0.25));
+    g.tick(delta_t(0.25));
+    do_select_and_move_keyboard_player_piece(g, "d2", "d4");
+  }
   // collect_all_actions
   {
     // default start

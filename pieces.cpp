@@ -26,6 +26,23 @@ std::vector<double> calc_distances(
   return distances;
 }
 
+action_history collect_action_history(const std::vector<piece>& pieces)
+{
+  std::vector<action_history> histories;
+  histories.reserve(pieces.size());
+  std::transform(
+    std::begin(pieces),
+    std::end(pieces),
+    std::back_inserter(histories),
+    [](const auto& p)
+    {
+      return p.get_action_history();
+    }
+  );
+  const auto history{merge_action_histories(histories)};
+  return history;
+}
+
 int count_dead_pieces(
   const std::vector<piece>& pieces
 )
