@@ -139,6 +139,7 @@ bool menu_view::process_events()
       {
         if (m_selected == menu_view_item::start) exec_game();
         else if (m_selected == menu_view_item::options) exec_options();
+        else if (m_selected == menu_view_item::about) exec_about();
         else if (m_selected == menu_view_item::quit)
         {
           m_window.close();
