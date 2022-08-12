@@ -19,24 +19,26 @@
 /// | +-------------------------+------------------------+ | y2
 /// | | music volume            |                        | |
 /// | +-------------------------+------------------------+ | y3
-/// | | starting pos            |                        | |
+/// | | sound effects           |                        | |
 /// | +-------------------------+------------------------+ | y4
+/// | | starting pos            |                        | |
+/// | +-------------------------+------------------------+ | y5
 /// |                                                      |
-/// |                     +-------------+                  | y5
+/// |                     +-------------+                  | y6
 /// |                     |             |                  |
 /// |                     | BOARD       |                  |
 /// |                     |             |                  |
 /// |                     |             |                  |
 /// |                     |             |                  |
-/// |                     +-------------+                  | y6
+/// |                     +-------------+                  | y7
 /// |                                                      |
-/// | +----------------+----------------+----------------+ | y7
-/// | | player         | color          | controls       | |
 /// | +----------------+----------------+----------------+ | y8
-/// | | left           | left_color     | left_controls  | |
+/// | | player         | color          | controls       | |
 /// | +----------------+----------------+----------------+ | y9
-/// | | right          | right_color    | right_controls | |
+/// | | left           | left_color     | left_controls  | |
 /// | +----------------+----------------+----------------+ | y10
+/// | | right          | right_color    | right_controls | |
+/// | +----------------+----------------+----------------+ | y11
 /// |                                                      |
 /// +------------------------------------------------------+
 ///
@@ -58,6 +60,9 @@ public:
 
   const screen_rect& get_music_volume_label() const noexcept { return m_music_volume_label; }
   const screen_rect& get_music_volume_value() const noexcept { return m_music_volume_value; }
+
+  const screen_rect& get_sound_effects_volume_label() const noexcept { return m_sound_effects_volume_label; }
+  const screen_rect& get_sound_effects_volume_value() const noexcept { return m_sound_effects_volume_value; }
 
   const screen_rect& get_starting_pos_label() const noexcept { return m_starting_pos_label; }
   const screen_rect& get_starting_pos_value() const noexcept { return m_starting_pos_value; }
@@ -89,6 +94,9 @@ private:
 
   screen_rect m_music_volume_label;
   screen_rect m_music_volume_value;
+
+  screen_rect m_sound_effects_volume_label;
+  screen_rect m_sound_effects_volume_value;
 
   screen_rect m_starting_pos_label;
   screen_rect m_starting_pos_value;

@@ -83,7 +83,7 @@ void show_bottom_right(options_view& v);
 /// Show the game speed label and value
 void show_game_speed(options_view& v);
 
-/// Show the game speed label and value
+/// Show the music volume label and value
 void show_music_volume(options_view& v);
 
 /// Show all the layout panels
@@ -92,6 +92,10 @@ void show_panels(options_view& v);
 /// Show all the pieces in the initial position
 void show_pieces(options_view& view);
 
+/// Show the sound effects volume label and value
+void show_sound_effects_volume(options_view& v);
+
+/// Show the starting position label and value
 void show_starting_position(options_view& v);
 
 /// Show the selected panel

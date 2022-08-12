@@ -67,7 +67,7 @@ public:
   const auto& get_music_volume() const noexcept { return m_music_volume; }
 
   /// Get the sound effects volume
-  volume get_sound_effects_volume() const noexcept { return volume(0.0); }
+  const volume& get_sound_effects_volume() const noexcept { return m_sound_effects_volume; }
 
   /// Set the controller for a player
   void set_controller(const controller& c, const side player);
@@ -83,6 +83,9 @@ public:
 
   /// Set the starting position
   void set_starting_position(const starting_position_type starting_position) noexcept { m_starting_position = starting_position; }
+
+  /// Set the sound effects volume, as a percentage
+  void set_sound_effects_volume(const volume& v) noexcept { m_sound_effects_volume = v; }
 
   /// Set the volume, as a percentage
   void set_volume(const volume& v) noexcept { m_music_volume = v; }
@@ -113,8 +116,12 @@ private:
   /// The starting position
   starting_position_type m_starting_position;
 
-  /// Volume in percent: 0 is silent, 100 is loudest
+  /// Music volume
   volume m_music_volume;
+
+  /// Sound effects volume
+  volume m_sound_effects_volume;
+
 };
 
 /// Create the default game options
@@ -169,6 +176,9 @@ chess_color get_right_player_color(const game_options& options) noexcept;
 
 /// Get the controller of the right player
 controller_type get_right_player_controller(const game_options& options) noexcept;
+
+/// Get the sound effects volume
+const volume& get_sound_effects_volume(const game_options& options) noexcept;
 
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(

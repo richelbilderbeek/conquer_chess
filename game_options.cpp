@@ -19,7 +19,8 @@ game_options::game_options(
     m_replayer(replay("")),
     m_screen_size{screen_size},
     m_starting_position{starting_position},
-    m_music_volume{0}
+    m_music_volume{0},
+    m_sound_effects_volume{10} // percent
 {
   assert(m_click_distance > 0.0);
   assert(m_margin_width >= 0);
@@ -166,6 +167,11 @@ bool has_mouse_controller(const game_options& options) noexcept
 void game_options::set_left_player_color(const chess_color c) noexcept
 {
   m_left_player_color = c;
+}
+
+const volume& get_sound_effects_volume(const game_options& options) noexcept
+{
+  return options.get_sound_effects_volume();
 }
 
 std::vector<piece> get_starting_pieces(
