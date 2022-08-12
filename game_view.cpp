@@ -196,10 +196,10 @@ std::string get_text_for_action(
     const auto& p{get_piece_at(g, cursor_pos)};
     is_promoting_pawn = can_promote(p);
     is_king_that_may_castle_kingside =
-      false // STUB
+      can_castle_kingside(p, g);
     ;
     is_king_that_may_castle_queenside =
-      false // STUB
+      can_castle_queenside(p, g);
     ;
 
   }
@@ -352,6 +352,7 @@ void show_controls(game_view& view, const side player)
       )
     };
     text.setString(s.c_str());
+    text.setFillColor(sf::Color::Black);
     text.setPosition(
       layout.get_controls_key(player, key).get_tl().get_x(),
       layout.get_controls_key(player, key).get_tl().get_y()

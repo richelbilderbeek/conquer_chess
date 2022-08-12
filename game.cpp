@@ -36,6 +36,7 @@ void game::add_action(const control_action a)
 
 bool can_castle_kingside(const piece& p, const game& g) noexcept
 {
+  if (p.get_type() != piece_type::king) return false;
   assert(p.get_type() == piece_type::king);
   if (has_moved(p)) return false;
   const auto king_square{p.get_current_square()};
@@ -59,6 +60,7 @@ bool can_castle_kingside(const piece& p, const game& g) noexcept
 
 bool can_castle_queenside(const piece& p, const game& g) noexcept
 {
+  if (p.get_type() != piece_type::king) return false;
   assert(p.get_type() == piece_type::king);
   if (has_moved(p)) return false;
   const auto king_square{p.get_current_square()};
