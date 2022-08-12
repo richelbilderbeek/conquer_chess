@@ -124,6 +124,10 @@ std::vector<piece> get_selected_pieces(
 /// Get all the pieces in the starting position
 std::vector<piece> get_standard_starting_pieces() noexcept;
 
+
+/// Get the pieces before an en passant becomes possible
+std::vector<piece> get_pieces_before_en_passant() noexcept;
+
 /// Get the pieces before a scholar's mate
 /// 1. e4 e5
 /// 2. Qh5 Nc6

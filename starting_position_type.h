@@ -7,6 +7,7 @@
 /// The starting position type
 enum class starting_position_type
 {
+  before_en_passant,
   before_scholars_mate,
   bishop_and_knight_end_game,
   kasparov_vs_topalov,

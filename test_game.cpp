@@ -496,6 +496,32 @@ void test_game_functions()
       );
       assert(!is_in(ke8d8, actions));
     }
+    #ifdef FIX_ISSUE_21
+    // 21: can do en-passant
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::before_en_passant)
+      };
+      do_select_and_move_keyboard_player_piece(g, "g2", "g4");
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+
+      const piece_action h4xg3ep(
+        chess_color::black,
+        piece_type::pawn,
+        piece_action_type::attack,
+        square("h4"),
+        square("g3")
+      );
+      assert(is_in(h4xg3ep, actions));
+
+      // After 1 move disappears
+      g.tick(delta_t(1.0));
+      const auto actions_again{collect_all_actions(g)};
+      assert(!is_in(h4xg3ep, actions_again));
+      assert(!"Progress #21");
+    }
+    #endif // FIX_ISSUE_21
   }
   // count_control_actions
   {
