@@ -86,5 +86,6 @@
         <file>resources/t.png</file>
         <file>resources/title.png</file>
         <file>resources/arial.ttf</file>
+        <file>resources/CodeSquaredRegular-AYRg.ttf</file>
     </qresource>
 </RCC>

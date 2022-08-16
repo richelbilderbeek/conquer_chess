@@ -22,8 +22,8 @@ played_game_view_layout::played_game_view_layout(
     screen_coordinat(x2, y2)
   );
   m_font_size = std::min(
-    panel_height / 20,
-    panel_width / 10
+    panel_height / 10,
+    panel_width / 35
   );
 }
 

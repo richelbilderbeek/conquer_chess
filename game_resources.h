@@ -30,8 +30,11 @@ public:
     const piece_type type
   );
 
-  /// Get a font
+  /// Get an Arial font
   sf::Font& get_arial_font() noexcept {return m_arial_font; }
+
+  /// Get the Code Squared font
+  sf::Font& get_code_squared_font() noexcept {return m_code_squared_font; }
 
   sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
 
@@ -50,15 +53,21 @@ private:
   textures m_textures;
 
   sf::Font m_arial_font;
+  sf::Font m_code_squared_font;
   sf::Music m_ninja_gods;
 };
 
 sf::Texture& get_about(game_resources& r) noexcept;
 
+/// Get the Arial font
+sf::Font& get_arial_font(game_resources& r) noexcept;
+
 /// Get a picture of a black/dark square
 sf::Texture& get_black_square(game_resources& r) noexcept;
 
-sf::Font& get_arial_font(game_resources& r) noexcept;
+/// Get the Arial font
+sf::Font& get_code_squared_font(game_resources& r) noexcept;
+
 
 sf::Texture& get_options(game_resources& r) noexcept;
 
