@@ -204,7 +204,7 @@ bool menu_view::process_events()
 
 void menu_view::set_text_style(sf::Text& text)
 {
-  text.setFont(get_font(get_resources()));
+  text.setFont(get_arial_font(get_resources()));
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(m_layout.get_font_size());
   text.setFillColor(sf::Color::Black);

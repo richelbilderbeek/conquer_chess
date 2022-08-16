@@ -12,7 +12,7 @@ game_resources::game_resources()
     const QString filename{"arial.ttf"};
     QFile f(":/resources/" + filename);
     f.copy(filename);
-    if (!m_font.loadFromFile(filename.toStdString()))
+    if (!m_arial_font.loadFromFile(filename.toStdString()))
     {
       QString msg{"Cannot find font file '" + filename + "'"};
       throw std::runtime_error(msg.toStdString());
@@ -41,9 +41,9 @@ sf::Texture& get_black_square(game_resources& r) noexcept
   return r.get_square(chess_color::black);
 }
 
-sf::Font& get_font(game_resources& r) noexcept
+sf::Font& get_arial_font(game_resources& r) noexcept
 {
-  return r.get_font();
+  return r.get_arial_font();
 }
 
 sf::Texture& game_resources::get_piece(

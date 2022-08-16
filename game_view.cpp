@@ -323,7 +323,7 @@ void show_controls(game_view& view, const side player)
 {
   const auto& layout = view.get_game().get_layout();
   sf::Text text;
-  text.setFont(view.get_resources().get_font());
+  text.setFont(view.get_resources().get_arial_font());
   text.setCharacterSize(16);
 
   const std::vector<sf::Color> colors{
@@ -367,7 +367,7 @@ void show_debug_1(game_view& view)
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
   sf::Text text;
-  text.setFont(view.get_resources().get_font());
+  text.setFont(view.get_resources().get_arial_font());
   const piece& closest_piece{
     get_closest_piece_to(game, get_player_pos(game, side::lhs))
   };
@@ -413,7 +413,7 @@ void show_debug_2(game_view& view)
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
   sf::Text text;
-  text.setFont(view.get_resources().get_font());
+  text.setFont(view.get_resources().get_arial_font());
   const piece& closest_piece{
     get_closest_piece_to(game, get_player_pos(game, side::rhs))
   };
@@ -492,7 +492,7 @@ void show_log(game_view& view, const side player)
 {
   const auto& layout = view.get_game().get_layout();
   sf::Text text;
-  text.setFont(view.get_resources().get_font());
+  text.setFont(view.get_resources().get_arial_font());
   std::stringstream s;
   s << get_last_log_messages(view, player);
   text.setString(s.str().c_str());
@@ -895,7 +895,7 @@ void show_unit_sprites_1(game_view& view)
     view.get_window().draw(sprite);
     // text
     sf::Text text;
-    text.setFont(view.get_resources().get_font());
+    text.setFont(view.get_resources().get_arial_font());
     std::stringstream s;
 
     s << piece.get_type() << ": "
@@ -944,7 +944,7 @@ void show_unit_sprites_2(game_view& view)
     view.get_window().draw(sprite);
     // text
     sf::Text text;
-    text.setFont(view.get_resources().get_font());
+    text.setFont(view.get_resources().get_arial_font());
     std::stringstream s;
 
     s << piece.get_type() << ": "

@@ -1,5 +1,15 @@
 # resources
 
+ * Fonts
+ * Images
+ * Sounds
+
+## Fonts
+
+File                         |License
+-----------------------------|--------------------------------------------------------------------
+`CodeSquaredRegular-AYRg.ttf`|[CC-SA by GuyStruct](code_squared_font_license/license-1f93.txt)                 
+
 ## Images
 
 Image              |Description                         |Adapted from picture at URL
@@ -24,3 +34,5 @@ Unused             |Hugo                                |https://commons.wikimed
 Sound              |Description                                            |URL
 -------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------
 `hide.ogg`         |Hide sounds from tresinformal game, by Sebastian Mader |https://github.com/tresinformal/game/blob/master/hide.ogg
+
+

@@ -198,7 +198,7 @@ bool controls_view::process_events()
 
 void controls_view::set_text_style(sf::Text& text)
 {
-  text.setFont(get_font(get_resources()));
+  text.setFont(get_arial_font(get_resources()));
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(32);
   text.setFillColor(sf::Color::Black);
