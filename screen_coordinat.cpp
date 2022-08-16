@@ -40,6 +40,11 @@ screen_coordinat get_default_controls_screen_size() noexcept
   return get_default_main_menu_screen_size();
 }
 
+screen_coordinat get_default_played_game_screen_size() noexcept
+{
+  return get_default_screen_size();
+}
+
 screen_coordinat get_default_screen_size() noexcept
 {
   return screen_coordinat(1024 + 400, 576 + 400);

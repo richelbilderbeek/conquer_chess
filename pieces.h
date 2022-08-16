@@ -225,6 +225,10 @@ std::string to_board_str(const std::vector<piece>& pieces) noexcept;
 /// Show the pieces as if on a chessboard
 std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcept;
 
+/// Convert the played game (i.e. the action_history) to pseudo-PGN notation
+/// Returns one string with newlines
+std::string to_pgn(const std::vector<piece>& pieces);
+
 /// Unselect all pieces of a certain color
 void unselect_all_pieces(
   std::vector<piece>& pieces,

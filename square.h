@@ -2,6 +2,7 @@
 #define SQUARE_H
 
 #include <iosfwd>
+#include <random>
 #include <string>
 #include <vector>
 #include "ccfwd.h"
@@ -99,6 +100,10 @@ std::vector<square> concatenate(
   const std::vector<square>& b
 );
 
+/// Create a random square
+square create_random_square(
+  std::default_random_engine& rng_engine
+);
 
 /// Get the file of a square, e.g. 'd' from 'd4'
 char get_file(const square& s) noexcept;

@@ -197,6 +197,12 @@ int count_selected_units(
   const chess_color player
 );
 
+/// Create a randomly played game
+game create_randomly_played_game(
+  const int n_moves = 10,
+  const int seed = 42
+);
+
 /// Let the keyboard player move a piece
 /// from the current selected square to a new target
 /// @see 'do_select_and_move_keyboard_player_piece' does both
@@ -440,6 +446,10 @@ void tick_until_idle(game& g);
 
 /// Toggle the color of the active player
 void toggle_left_player_color(game& g);
+
+/// Convert the played game to pseudo-PGN notation
+/// Returns one string with newlines
+std::string to_pgn(const game& g);
 
 /// Unselect all pieces of a certain color
 void unselect_all_pieces(

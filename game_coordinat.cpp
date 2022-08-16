@@ -41,6 +41,13 @@ game_coordinat center_on_center(const game_coordinat& coordinat)
   );
 }
 
+game_coordinat create_random_game_coordinat(
+  std::default_random_engine& rng_engine
+)
+{
+  return to_coordinat(create_random_square(rng_engine));
+}
+
 game_coordinat get_above(const game_coordinat& coordinat) noexcept
 {
   game_coordinat pos{coordinat + game_coordinat(0.0, -1.0)};
@@ -115,6 +122,12 @@ void test_game_coordinat()
     const game_coordinat expected(3.5, 4.5);
     const game_coordinat created(center_on_center(c));
     assert(expected == created);
+  }
+  // create_random_game_coordinat
+  {
+    const int seed{314};
+    std::default_random_engine rng_engine(seed);
+    create_random_game_coordinat(rng_engine);
   }
   // get
   {

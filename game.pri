@@ -42,6 +42,7 @@ HEADERS += \
     $$PWD/piece_actions.h \
     $$PWD/piece_type.h \
     $$PWD/pieces.h \
+    $$PWD/played_game_view_layout.h \
     $$PWD/replay.h \
     $$PWD/replayer.h \
     $$PWD/screen_coordinat.h \
@@ -97,6 +98,7 @@ SOURCES += \
     $$PWD/piece_actions.cpp \
     $$PWD/piece_type.cpp \
     $$PWD/pieces.cpp \
+    $$PWD/played_game_view_layout.cpp \
     $$PWD/replay.cpp \
     $$PWD/replayer.cpp \
     $$PWD/screen_coordinat.cpp \

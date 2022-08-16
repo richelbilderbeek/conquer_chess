@@ -4,6 +4,7 @@
 #include <cassert>
 #include <numeric>
 #include <iostream>
+#include <sstream>
 
 std::vector<double> calc_distances(
   const std::vector<piece>& pieces,
@@ -1029,6 +1030,15 @@ std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcep
     board[y][x] = to_char(p);
   }
   return board;
+}
+
+
+std::string to_pgn(const std::vector<piece>& pieces)
+{
+  const auto history{collect_action_history(pieces)};
+  std::stringstream s;
+  s << history;
+  return s.str();
 }
 
 void unselect_all_pieces(

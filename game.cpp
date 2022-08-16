@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include <sstream>
 
 game::game(
   const game_options& options
@@ -667,6 +668,24 @@ int count_selected_units(
   return count_selected_units(g.get_pieces(), player);
 }
 
+game create_randomly_played_game(
+  const int n_moves,
+  const int seed
+)
+{
+  game g;
+  std::default_random_engine generator(seed);
+  for (int i{0}; i!=n_moves; ++i)
+  {
+    const control_action action{
+      create_random_control_action(generator)
+    };
+    g.add_action(action);
+    g.tick(delta_t(0.1));
+  }
+  return g;
+}
+
 void game::do_move(const chess_move& m)
 {
   if (is_simple_move(m))
@@ -1209,6 +1228,11 @@ void tick_until_idle(game& g)
 void toggle_left_player_color(game& g)
 {
   toggle_left_player_color(g.get_options());
+}
+
+std::string to_pgn(const game& g)
+{
+  return to_pgn(g.get_pieces());
 }
 
 std::ostream& operator<<(std::ostream& os, const game& g) noexcept

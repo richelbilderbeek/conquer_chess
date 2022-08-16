@@ -49,6 +49,8 @@ screen_coordinat get_default_controls_screen_size() noexcept;
 /// Get the default main menu screen size, where x is the width and y is the height
 screen_coordinat get_default_main_menu_screen_size() noexcept;
 
+/// Get the default played game screen size, where x is the width and y is the height
+screen_coordinat get_default_played_game_screen_size() noexcept;
 
 /// Get the default screen size, where x is the width and y is the height
 screen_coordinat get_default_screen_size() noexcept;

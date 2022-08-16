@@ -4,6 +4,7 @@
 #include "action_history.h"
 #include "chess_move.h"
 #include "controls_view.h"
+#include "played_game_view_layout.h"
 #include "controls_view_item.h"
 #include "controls_view_layout.h"
 #include "controller.h"
@@ -73,6 +74,7 @@ void test()
   test_piece_action_type();
   test_piece_type();
   test_pieces();
+  test_played_game_view_layout();
   test_replay();
   test_replayer();
   test_screen_coordinat();

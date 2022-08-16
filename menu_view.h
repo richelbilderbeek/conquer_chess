@@ -54,6 +54,9 @@ private:
   /// Run the options screen
   void exec_options();
 
+  /// View the played game
+  void exec_played_game();
+
   /// Process all events
   /// @return if the user wants to quit
   bool process_events();

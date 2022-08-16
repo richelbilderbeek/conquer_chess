@@ -5,6 +5,7 @@
 #include "about_view.h"
 #include "screen_coordinat.h"
 #include "game_view.h"
+#include "played_game_view.h"
 #include "options_view.h"
 
 #include "sfml_helper.h"
@@ -72,6 +73,13 @@ void menu_view::exec_options()
   view.exec();
   assert(!to_str(get_starting_position(view)).empty());
   m_options = view.get_options();
+}
+
+void menu_view::exec_played_game()
+{
+  // Approx 1 in 500 is a valid move
+  played_game_view view(create_randomly_played_game(2000));
+  view.exec();
 }
 
 bool menu_view::process_events()
@@ -162,6 +170,10 @@ bool menu_view::process_events()
       {
         m_window.close();
         return true;
+      }
+      else if (key_pressed == sf::Keyboard::Key::F2)
+      {
+        exec_played_game();
       }
       else if (key_pressed == sf::Keyboard::Key::F3)
       {

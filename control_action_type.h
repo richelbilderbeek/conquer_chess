@@ -1,6 +1,8 @@
 #ifndef CONTROL_ACTION_TYPE_H
 #define CONTROL_ACTION_TYPE_H
 
+#include <random>
+
 /// The actions done by the controller,
 /// such as keyboard, mouse and joystick actions
 enum class control_action_type
@@ -17,5 +19,16 @@ enum class control_action_type
   rmb_down,
   mouse_move
 };
+
+/// Create a random control_action_type
+control_action_type create_random_control_action_type(
+  std::default_random_engine& rng_engine
+);
+
+/// Get all the control_action_types
+std::vector<control_action_type> get_all_control_action_types() noexcept;
+
+/// Test this enum class and its fee functions
+void test_control_action_type();
 
 #endif // ACTION_TYPE_H

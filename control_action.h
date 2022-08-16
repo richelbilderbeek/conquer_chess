@@ -7,6 +7,7 @@
 #include "game_coordinat.h"
 #include "side.h"
 
+#include <random>
 #include <SFML/Window/Event.hpp>
 
 /// An action
@@ -56,6 +57,10 @@ control_action create_press_rmb_action(
 );
 
 control_action create_press_up_action(const side player);
+
+control_action create_random_control_action(
+  std::default_random_engine& rng_engine
+);
 
 /// Test the 'control_action' class and its free functions
 void test_control_action();

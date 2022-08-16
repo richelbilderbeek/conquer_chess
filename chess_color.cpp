@@ -8,11 +8,12 @@
 
 std::vector<chess_color> get_all_chess_colors() noexcept
 {
-  return
-  {
-    chess_color::black,
-    chess_color::white
-  };
+  const auto a{magic_enum::enum_values<chess_color>()};
+  std::vector<chess_color> v;
+  v.reserve(a.size());
+  std::copy(std::begin(a), std::end(a), std::back_inserter(v));
+  assert(a.size() == v.size());
+  return v;
 }
 
 chess_color get_other_color(const chess_color c) noexcept

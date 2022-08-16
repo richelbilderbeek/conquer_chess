@@ -5,6 +5,7 @@ HEADERS += \
     $$PWD/game_view.h \
     $$PWD/menu_view.h \
     $$PWD/options_view.h \
+    $$PWD/played_game_view.h \
     $$PWD/sfml_helper.h
 
 SOURCES += \
@@ -14,4 +15,5 @@ SOURCES += \
     $$PWD/main.cpp \
     $$PWD/menu_view.cpp \
     $$PWD/options_view.cpp \
+    $$PWD/played_game_view.cpp \
     $$PWD/sfml_helper.cpp

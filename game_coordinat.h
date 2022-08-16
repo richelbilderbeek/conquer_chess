@@ -1,11 +1,11 @@
 #ifndef GAME_COORDINAT_H
 #define GAME_COORDINAT_H
 
-#include <iosfwd>
-
 #include "ccfwd.h"
 #include "chess_color.h"
-//#include "side.h"
+
+#include <iosfwd>
+#include <random>
 
 /// Coordinat on the board
 /// @see use screen_coordinat for a coordinat on the screen
@@ -42,6 +42,11 @@ double calc_distance(const game_coordinat& lhs, const game_coordinat& rhs) noexc
 /// Calculate the length of the vector,
 /// a.k.a. the distance between the coordinat and the origin
 double calc_length(const game_coordinat& coordinat) noexcept;
+
+/// Create a random game_coordinat
+game_coordinat create_random_game_coordinat(
+  std::default_random_engine& rng_engine
+);
 
 /// Get the game coordinat one square above this one,
 /// i.e. when the player presses up

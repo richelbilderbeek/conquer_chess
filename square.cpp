@@ -270,6 +270,20 @@ std::vector<square> concatenate(
   return c;
 }
 
+square create_random_square(
+  std::default_random_engine& rng_engine
+)
+{
+  std::uniform_int_distribution<int> distribution{0, 8 - 1}; // -1 as inclusive
+  const auto x{distribution(rng_engine)};
+  assert(x >= 0);
+  assert(x < 8);
+  const auto y{distribution(rng_engine)};
+  assert(y >= 0);
+  assert(y < 8);
+  return square(x, y);
+}
+
 char get_file(const square& s) noexcept
 {
   return 'a' + s.get_y();
@@ -433,6 +447,15 @@ void test_square()
   // are_on_same_rank
   {
     assert(are_on_same_rank(square("a1"), square("h1")));
+  }
+  // create_random_square
+  {
+    const int seed{314};
+    std::default_random_engine rng_engine(seed);
+    for (int i{0}; i!=100; ++i)
+    {
+      create_random_square(rng_engine);
+    }
   }
   // get_file
   {

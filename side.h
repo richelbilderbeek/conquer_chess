@@ -2,6 +2,7 @@
 #define SIDE_H
 
 #include <iosfwd>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -11,6 +12,11 @@ enum class side
   lhs, // left-hand side
   rhs  // right-hand side
 };
+
+/// Create a random game_coordinat
+side create_random_side(
+  std::default_random_engine& rng_engine
+);
 
 /// Get all sides
 std::vector<side> get_all_sides() noexcept;

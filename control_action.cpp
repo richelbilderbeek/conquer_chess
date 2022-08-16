@@ -76,6 +76,20 @@ control_action create_press_up_action(const side player)
   return control_action(control_action_type::press_up, player, game_coordinat());
 }
 
+control_action create_random_control_action(
+  std::default_random_engine& rng_engine
+)
+{
+  const control_action_type type{create_random_control_action_type(rng_engine)};
+  const side player{create_random_side(rng_engine)};
+  const game_coordinat coordinat{create_random_game_coordinat(rng_engine)};
+  return control_action(
+    type,
+    player,
+    coordinat
+  );
+}
+
 void test_control_action()
 {
 #ifndef NDEBUG
@@ -91,6 +105,12 @@ void test_control_action()
     assert(create_press_right_action(side::lhs).get_type() == control_action_type::press_right);
     assert(create_press_rmb_action(game_coordinat(), side::lhs).get_type() == control_action_type::rmb_down);
     assert(create_press_up_action(side::lhs).get_type() == control_action_type::press_up);
+  }
+  // create_random_control_action
+  {
+    const int seed{314};
+    std::default_random_engine rng_engine(seed);
+    create_random_control_action(rng_engine);
   }
 #endif // DEBUG
 }
