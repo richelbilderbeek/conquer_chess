@@ -152,6 +152,14 @@ chess_color get_left_player_color(const game_options& options) noexcept;
 /// Get the controller of the left player
 controller_type get_left_player_controller(const game_options& options) noexcept;
 
+/// Get the color of the mouse using player
+/// Will throw if no user uses a mouse
+chess_color get_mouse_user_player_color(const game_options& options);
+
+/// Get the side of the controller that uses the mouse.
+/// Assumes there is one controller that uses the mouse
+side get_mouse_user_player_side(const game_options& options);
+
 /// Get the music volume
 const volume& get_music_volume(const game_options& options) noexcept;
 

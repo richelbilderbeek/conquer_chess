@@ -839,6 +839,24 @@ void do_move_keyboard_player_piece(game& g, const square& s)
   assert(count_control_actions(g) == 0);
 }
 
+void do_move_mouse_player_piece(game& g, const square& s)
+{
+  assert(has_mouse_controller(g.get_options()));
+  assert(count_selected_units(g, get_mouse_user_player_color(g)) == 1);
+  set_mouse_player_pos(g, s);
+  assert(square(get_player_pos(g, get_mouse_user_player_side(g))) == s);
+
+  g.add_action(
+    create_press_lmb_action(
+      to_coordinat(s),
+      get_mouse_user_player_side(g)
+    )
+  );
+  assert(count_control_actions(g) == 1);
+  g.tick(delta_t(0.0));
+  assert(count_control_actions(g) == 0);
+}
+
 void do_select_and_move_keyboard_player_piece(
   game& g,
   const square& from,
@@ -858,6 +876,31 @@ void do_select_and_move_keyboard_player_piece(
 )
 {
   return do_select_and_move_keyboard_player_piece(
+    g,
+    square(from_str),
+    square(to_str)
+  );
+}
+
+void do_select_and_move_mouse_player_piece(
+  game& g,
+  const square& from,
+  const square& to
+)
+{
+  do_select_for_mouse_player(g, from);
+  assert(count_selected_units(g) > 0);
+  do_move_mouse_player_piece(g, to);
+  assert(count_control_actions(g) == 0);
+}
+
+void do_select_and_move_mouse_player_piece(
+  game& g,
+  const std::string& from_str,
+  const std::string& to_str
+)
+{
+  return do_select_and_move_mouse_player_piece(
     g,
     square(from_str),
     square(to_str)
@@ -892,8 +935,26 @@ void do_select_for_keyboard_player(game& g, const square& s)
   assert(is_piece_at(g, s));
   assert(!get_piece_at(g, s).is_selected());
   set_keyboard_player_pos(g, s);
-  assert(square(get_player_pos(g, side::lhs)) == s);
+  assert(square(get_player_pos(g, get_keyboard_user_player_side(g))) == s);
   g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
+  g.tick(delta_t(0.0));
+  assert(count_control_actions(g) == 0);
+  assert(get_piece_at(g, s).is_selected());
+}
+
+void do_select_for_mouse_player(game& g, const square& s)
+{
+  assert(has_mouse_controller(g.get_options()));
+  assert(is_piece_at(g, s));
+  assert(!get_piece_at(g, s).is_selected());
+  set_mouse_player_pos(g, s);
+  assert(square(get_player_pos(g, get_mouse_user_player_side(g))) == s);
+  g.add_action(
+    create_press_lmb_action(
+      to_coordinat(s),
+      get_mouse_user_player_side(g)
+    )
+  );
   g.tick(delta_t(0.0));
   assert(count_control_actions(g) == 0);
   assert(get_piece_at(g, s).is_selected());
@@ -1060,6 +1121,16 @@ game get_kings_only_game() noexcept
 const game_view_layout& get_layout(const game& g) noexcept
 {
   return g.get_layout();
+}
+
+chess_color get_mouse_user_player_color(const game& g)
+{
+  return get_mouse_user_player_color(g.get_options());
+}
+
+side get_mouse_user_player_side(const game& g)
+{
+  return get_mouse_user_player_side(g.get_options());
 }
 
 double get_music_volume_as_percentage(const game& g) noexcept
@@ -1299,6 +1370,22 @@ void set_keyboard_player_pos(
   {
     g.add_action(create_press_down_action(get_keyboard_user_player_side(g)));
   }
+  g.tick(delta_t(0.0));
+  assert(count_control_actions(g) == 0);
+}
+
+void set_mouse_player_pos(
+  game& g,
+  const square& s
+)
+{
+  assert(has_mouse_controller(g.get_options()));
+  g.add_action(
+    create_mouse_move_action(
+      to_coordinat(s),
+      get_mouse_user_player_side(g)
+    )
+  );
   g.tick(delta_t(0.0));
   assert(count_control_actions(g) == 0);
 }

@@ -230,6 +230,12 @@ game create_randomly_played_game(
 /// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
 void do_move_keyboard_player_piece(game& g, const square& s);
 
+/// Let the mouse player move a piece
+/// from the current selected square to a new target
+/// @see 'do_select_and_move_mouse_player_piece' does both
+/// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
+void do_move_mouse_player_piece(game& g, const square& s);
+
 void do_promote_keyboard_player_piece(
   game& g,
   const square& pawn_location,
@@ -252,6 +258,24 @@ void do_select_and_move_keyboard_player_piece(
   const std::string& from_str,
   const std::string& to_str
 );
+
+/// Let the mouse player select a square
+/// (assuming that a piece of the right color is there)
+/// and let it move to another square
+/// @see 'do_select_and_move_mouse_player_piece' does both
+/// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
+void do_select_and_move_mouse_player_piece(
+  game& g,
+  const square& from,
+  const square& to
+);
+
+void do_select_and_move_mouse_player_piece(
+  game& g,
+  const std::string& from_str,
+  const std::string& to_str
+);
+
 
 /// Let the keyboard player select a square
 /// (assuming that a pawn of the right color is there)
@@ -278,6 +302,12 @@ void do_select_and_start_attack_keyboard_player_piece(
 /// @see 'do_select_and_move_keyboard_player_piece' does both
 /// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
 void do_select_for_keyboard_player(game& g, const square& s);
+
+/// Let the mouse player select the square
+/// Assumes that a piece of the right color is there
+/// @see 'do_select_and_move_mouse_player_piece' does both
+/// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
+void do_select_for_mouse_player(game& g, const square& s);
 
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game& g) noexcept;
@@ -340,6 +370,14 @@ game get_kings_only_game() noexcept;
 
 /// Get the layout
 const game_view_layout& get_layout(const game& g) noexcept;
+
+/// Get the color of the mouse using player
+/// Will throw if no user uses a mouse
+chess_color get_mouse_user_player_color(const game& g);
+
+/// Get the side of the controller that uses the mouse.
+/// Assumes there is one controller that uses the mouse
+side get_mouse_user_player_side(const game& g);
 
 /// Get the music volume as a percentage
 double get_music_volume_as_percentage(const game& g) noexcept;
@@ -458,6 +496,12 @@ bool piece_with_id_is_at(
 
 /// The the cursor of the keyboard player to the desired square
 void set_keyboard_player_pos(
+  game& g,
+  const square& s
+);
+
+/// The the cursor of the mouse player to the desired square
+void set_mouse_player_pos(
   game& g,
   const square& s
 );

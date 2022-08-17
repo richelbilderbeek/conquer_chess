@@ -112,6 +112,11 @@ chess_color get_mouse_user_player_color(const game_options& options)
   );
 }
 
+side get_mouse_user_player_side(const game_options& options)
+{
+  return get_mouse_user_player_side(options.get_controllers());
+}
+
 const volume& get_music_volume(const game_options& options) noexcept
 {
   return options.get_music_volume();
