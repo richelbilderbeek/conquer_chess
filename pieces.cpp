@@ -488,9 +488,11 @@ std::vector<piece> get_pieces_before_en_passant() noexcept
   {
     piece(chess_color::white, piece_type::king,   square("e1")),
     piece(chess_color::white, piece_type::pawn,   square("a5")), // b7-b5, a5xb6 e.p.
+    piece(chess_color::white, piece_type::pawn,   square("c5")), // b7-b5, c5xb6 e.p.
     piece(chess_color::white, piece_type::pawn,   square("g2")),
     piece(chess_color::black, piece_type::king,   square("e8")),
     piece(chess_color::black, piece_type::pawn,   square("b7")),
+    piece(chess_color::black, piece_type::pawn,   square("f4")), // g2-g4, f4xg3 e.p.
     piece(chess_color::black, piece_type::pawn,   square("h4")) // g2-g4, h4xg3 e.p.
   };
 }

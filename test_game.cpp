@@ -496,9 +496,7 @@ void test_game_functions()
       );
       assert(!is_in(ke8d8, actions));
     }
-    #define FIX_ISSUE_21
-    #ifdef FIX_ISSUE_21
-    // 21: can do en-passant, black h4xg3
+    // 21: can do en-passant after white g2-g4
     {
       game g{
         get_game_with_starting_position(starting_position_type::before_en_passant)
@@ -520,12 +518,61 @@ void test_game_functions()
       );
       assert(is_in(h4xg3ep, actions));
 
+      const piece_action f4xg3ep(
+        chess_color::black,
+        piece_type::pawn,
+        piece_action_type::en_passant,
+        square("f4"),
+        square("g3")
+      );
+      assert(is_in(f4xg3ep, actions));
+
       // After 1 move disappears
       g.tick(delta_t(1.0));
       const auto actions_again{collect_all_actions(g)};
       assert(!is_in(h4xg3ep, actions_again));
+      assert(!is_in(f4xg3ep, actions_again));
     }
-    //assert(!"Progress #21");
+    //#define FIX_ISSUE_21
+    #ifdef FIX_ISSUE_21
+    // 21: can do en-passant after black b7-b5
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::before_en_passant)
+      };
+      do_select_and_move_mouse_player_piece(g, "b7", "b5");
+      // It takes 1 time unit to move,
+      // aim at halfway to window of opportunity for en-passant
+      for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
+      const auto actions{collect_all_actions(g)};
+      assert(!actions.empty());
+      assert(has_action_of_type(actions, piece_action_type::en_passant));
+
+      const piece_action a5xb6ep(
+        chess_color::white,
+        piece_type::pawn,
+        piece_action_type::en_passant,
+        square("a5"),
+        square("b6")
+      );
+      assert(is_in(a5xb6ep, actions));
+
+      const piece_action c5xb6ep(
+        chess_color::white,
+        piece_type::pawn,
+        piece_action_type::en_passant,
+        square("c5"),
+        square("b6")
+      );
+      assert(is_in(c5xb6ep, actions));
+
+      // After 1 move disappears
+      g.tick(delta_t(1.0));
+      const auto actions_again{collect_all_actions(g)};
+      assert(!is_in(a5xb6ep, actions_again));
+      assert(!is_in(c5xb6ep, actions_again));
+    }
+    assert(!"Progress #21");
     #endif // FIX_ISSUE_21
   }
   // count_control_actions
