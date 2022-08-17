@@ -12,6 +12,12 @@
 std::vector<std::pair<square, chess_color>>
   collect_attacked_squares(const std::vector<piece_action>& actions);
 
+/// Concatenate the vectors
+std::vector<piece_action> concatenate(
+  const std::vector<piece_action>& lhs_actions,
+  const std::vector<piece_action>& rhs_actions
+);
+
 bool is_in(const piece_action& action, const std::vector<piece_action>& actions) noexcept;
 
 /// Is the square attacked by a certain (enemy) color?

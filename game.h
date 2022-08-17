@@ -158,6 +158,20 @@ std::vector<piece_action> collect_all_pawn_actions(
   const piece& p
 );
 
+/// Collect all valid attack actions at a board
+/// for a focal pawn
+std::vector<piece_action> collect_all_pawn_attack_actions(
+  const game& g,
+  const piece& p
+);
+
+/// Collect all valid move actions at a board
+/// for a focal pawn
+std::vector<piece_action> collect_all_pawn_move_actions(
+  const game& g,
+  const piece& p
+);
+
 /// Collect all valid moves and attacks at a board
 /// for a focal queen
 std::vector<piece_action> collect_all_queen_actions(

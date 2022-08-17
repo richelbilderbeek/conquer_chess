@@ -385,6 +385,85 @@ std::vector<piece_action> collect_all_pawn_actions(
   std::vector<piece_action> actions;
   const auto type{p.get_type()};
   assert(type == piece_type::pawn);
+  const auto move_actions{collect_all_pawn_move_actions(g, p)};
+  const auto attack_actions{collect_all_pawn_attack_actions(g, p)};
+  return concatenate(move_actions, attack_actions);
+}
+
+std::vector<piece_action> collect_all_pawn_attack_actions(
+  const game& g,
+  const piece& p
+)
+{
+  std::vector<piece_action> actions;
+  const auto type{p.get_type()};
+  assert(type == piece_type::pawn);
+  const auto& s{p.get_current_square()};
+  const auto x{s.get_x()};
+  const auto y{s.get_y()};
+  const auto color{p.get_color()};
+  const auto& from{p.get_current_square()};
+  if (color == chess_color::black)
+  {
+    // Attack
+    if (x != 0)
+    {
+      const auto enemy_color{get_other_color(color)};
+      if (y > 0)
+      {
+        const square enemy_square{square(x - 1, y - 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
+      }
+      if (y < 7)
+      {
+        const square enemy_square{square(x - 1, y + 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
+      }
+    }
+  }
+  else
+  {
+    assert(color == chess_color::white);
+    assert(get_rank(s) != 1);
+    // Attack
+    if (x != 7)
+    {
+      const auto enemy_color{get_other_color(color)};
+      if (y > 0)
+      {
+        const square enemy_square{square(x + 1, y - 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
+      }
+      if (y < 7)
+      {
+        const square enemy_square{square(x + 1, y + 1)};
+        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
+        {
+          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
+        }
+      }
+    }
+  }
+  return actions;
+}
+
+std::vector<piece_action> collect_all_pawn_move_actions(
+  const game& g,
+  const piece& p
+)
+{
+  std::vector<piece_action> actions;
+  const auto type{p.get_type()};
+  assert(type == piece_type::pawn);
   const auto& s{p.get_current_square()};
   const auto x{s.get_x()};
   const auto y{s.get_y()};
@@ -441,27 +520,6 @@ std::vector<piece_action> collect_all_pawn_actions(
         );
       }
     }
-    // Attack
-    if (x != 0)
-    {
-      const auto enemy_color{get_other_color(color)};
-      if (y > 0)
-      {
-        const square enemy_square{square(x - 1, y - 1)};
-        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
-        {
-          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
-        }
-      }
-      if (y < 7)
-      {
-        const square enemy_square{square(x - 1, y + 1)};
-        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
-        {
-          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
-        }
-      }
-    }
   }
   else
   {
@@ -514,27 +572,6 @@ std::vector<piece_action> collect_all_pawn_actions(
             color, type, piece_action_type::move, from, square(x + 1, y)
           )
         );
-      }
-    }
-    // Attack
-    if (x != 7)
-    {
-      const auto enemy_color{get_other_color(color)};
-      if (y > 0)
-      {
-        const square enemy_square{square(x + 1, y - 1)};
-        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
-        {
-          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
-        }
-      }
-      if (y < 7)
-      {
-        const square enemy_square{square(x + 1, y + 1)};
-        if (is_piece_at(g, enemy_square) && get_piece_at(g, enemy_square).get_color() == enemy_color)
-        {
-          actions.push_back(piece_action(color, type, piece_action_type::attack, from, enemy_square));
-        }
       }
     }
   }

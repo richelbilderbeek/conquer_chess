@@ -19,6 +19,21 @@ std::vector<std::pair<square, chess_color>>
   return v;
 }
 
+std::vector<piece_action> concatenate(
+  const std::vector<piece_action>& lhs_actions,
+  const std::vector<piece_action>& rhs_actions
+)
+{
+  std::vector<piece_action> actions{lhs_actions};
+  actions.reserve(lhs_actions.size() + rhs_actions.size());
+  std::copy(
+    std::begin(rhs_actions),
+    std::end(rhs_actions),
+    std::back_inserter(actions)
+  );
+  return actions;
+}
+
 bool is_in(const piece_action& action, const std::vector<piece_action>& actions) noexcept
 {
   return std::find(std::begin(actions), std::end(actions), action) != std::end(actions);

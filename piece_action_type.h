@@ -7,7 +7,8 @@
 enum class piece_action_type
 {
   move,
-  attack,
+  attack, // capture the attacked piece
+  en_passant,
   promote,
   castle_kingside,
   castle_queenside

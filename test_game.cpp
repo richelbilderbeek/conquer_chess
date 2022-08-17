@@ -496,6 +496,7 @@ void test_game_functions()
       );
       assert(!is_in(ke8d8, actions));
     }
+    //#define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21
     // 21: can do en-passant
     {
@@ -509,7 +510,7 @@ void test_game_functions()
       const piece_action h4xg3ep(
         chess_color::black,
         piece_type::pawn,
-        piece_action_type::attack,
+        piece_action_type::en_passant,
         square("h4"),
         square("g3")
       );
