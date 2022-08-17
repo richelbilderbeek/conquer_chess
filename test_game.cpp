@@ -496,16 +496,20 @@ void test_game_functions()
       );
       assert(!is_in(ke8d8, actions));
     }
-    //#define FIX_ISSUE_21
+    #define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21
-    // 21: can do en-passant
+    // 21: can do en-passant, black h4xg3
     {
       game g{
         get_game_with_starting_position(starting_position_type::before_en_passant)
       };
       do_select_and_move_keyboard_player_piece(g, "g2", "g4");
+      // It takes 1 time unit to move,
+      // aim at halfway to window of opportunity for en-passant
+      for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
       const auto actions{collect_all_actions(g)};
       assert(!actions.empty());
+      assert(has_action_of_type(actions, piece_action_type::en_passant));
 
       const piece_action h4xg3ep(
         chess_color::black,
@@ -520,8 +524,8 @@ void test_game_functions()
       g.tick(delta_t(1.0));
       const auto actions_again{collect_all_actions(g)};
       assert(!is_in(h4xg3ep, actions_again));
-      assert(!"Progress #21");
     }
+    //assert(!"Progress #21");
     #endif // FIX_ISSUE_21
   }
   // count_control_actions

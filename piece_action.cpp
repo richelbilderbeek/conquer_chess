@@ -2,6 +2,7 @@
 
 #include "piece.h"
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <sstream>
@@ -47,6 +48,18 @@ piece_action get_test_piece_action() noexcept
     "e2",
     "e4"
   );
+}
+
+bool has_action_of_type(
+  const std::vector<piece_action>& actions,
+  const piece_action_type t
+)
+{
+  return std::find_if(
+    std::begin(actions),
+    std::end(actions),
+    [t](const piece_action& action) { return action.get_action_type() == t; }
+  ) != std::end(actions);
 }
 
 bool is_double_move(const piece_action& a) noexcept

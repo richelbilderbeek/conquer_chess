@@ -56,6 +56,12 @@ std::string describe_action(const piece_action& p);
 /// Get a piece_action to be used in testing
 piece_action get_test_piece_action() noexcept;
 
+/// Is there at least one action of the specified type?
+bool has_action_of_type(
+  const std::vector<piece_action>& actions,
+  const piece_action_type t
+);
+
 /// Is this a pawn moving two squares forward?
 bool is_double_move(const piece_action& a) noexcept;
 
