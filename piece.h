@@ -218,8 +218,16 @@ piece get_test_white_knight() noexcept;
 /// Does the piece have actions to do?
 bool has_actions(const piece& p) noexcept;
 
+/// Has this piece (i.e. a pawn) did a double move forward last time unit?
+/// Only pawns can do this, e.g. e2-e4 or e7-e5
+bool has_just_double_moved(
+  const piece& p,
+  const delta_t when
+) noexcept;
+
 /// Has this piece (attempted to) move?
 bool has_moved(const piece& p) noexcept;
+
 
 /// Is the unit dead?
 bool is_dead(const piece& p) noexcept;

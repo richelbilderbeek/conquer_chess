@@ -100,6 +100,11 @@ bool operator<(const delta_t& lhs, const delta_t& rhs) noexcept
   return lhs.get() < rhs.get();
 }
 
+bool operator<=(const delta_t& lhs, const delta_t& rhs) noexcept
+{
+  return lhs.get() <= rhs.get();
+}
+
 delta_t& operator+=(delta_t& lhs, const delta_t& rhs) noexcept
 {
   lhs = lhs + rhs;

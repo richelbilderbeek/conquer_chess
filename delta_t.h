@@ -25,6 +25,7 @@ void test_delta_t();
 
 bool operator==(const delta_t& lhs, const delta_t& rhs) noexcept;
 bool operator<(const delta_t& lhs, const delta_t& rhs) noexcept;
+bool operator<=(const delta_t& lhs, const delta_t& rhs) noexcept;
 delta_t& operator+=(delta_t& lhs, const delta_t& rhs) noexcept;
 delta_t operator+(const delta_t& lhs, const delta_t& rhs) noexcept;
 delta_t operator-(const delta_t& lhs, const delta_t& rhs) noexcept;

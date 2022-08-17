@@ -49,6 +49,13 @@ piece_action get_test_piece_action() noexcept
   );
 }
 
+bool is_double_move(const piece_action& a) noexcept
+{
+  return a.get_piece_type() == piece_type::pawn
+    && a.get_action_type() == piece_action_type::move
+    && std::abs(a.get_from().get_x() - a.get_to().get_x()) == 2;
+}
+
 bool is_atomic(const piece_action& a) noexcept
 {
   if (a.get_from() == a.get_to()) return true;

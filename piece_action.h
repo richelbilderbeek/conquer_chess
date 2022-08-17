@@ -56,10 +56,13 @@ std::string describe_action(const piece_action& p);
 /// Get a piece_action to be used in testing
 piece_action get_test_piece_action() noexcept;
 
+/// Is this a pawn moving two squares forward?
+bool is_double_move(const piece_action& a) noexcept;
+
 /// Is the action atomic, i.e. it cannot be split up further.
 /// For example, moving a queen d1 to d3 is not atomic,
 /// as it is split up in d1 -> d2 -> d3
-bool is2_atomic(const piece_action& a) noexcept;
+bool is_atomic(const piece_action& a) noexcept;
 
 /// Test the 'piece_action' class and its free functions
 void test_piece_action();

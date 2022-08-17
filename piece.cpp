@@ -305,6 +305,14 @@ bool has_actions(const piece& p) noexcept
   return count_piece_actions(p) != 0;
 }
 
+bool has_just_double_moved(
+  const piece& p,
+  const delta_t when
+) noexcept
+{
+  return has_just_double_moved(p.get_action_history(), when);
+}
+
 bool has_moved(const piece& p) noexcept
 {
   return p.has_moved();
@@ -660,6 +668,25 @@ void test_piece()
   {
     const auto p{get_test_white_king()};
     assert(!has_actions(p));
+  }
+  // has_just_double_moved
+  {
+    action_history h;
+    assert(!has_just_double_moved(h, delta_t(2.0)));
+    h.add_action(
+      delta_t(0.5),
+      piece_action(
+        chess_color::white,
+        piece_type::pawn,
+        piece_action_type::move,
+        "e2",
+        "e4"
+      )
+    );
+    assert(!has_just_double_moved(h, delta_t(0.0)));
+    assert(!has_just_double_moved(h, delta_t(1.0)));
+    assert(has_just_double_moved(h, delta_t(2.0)));
+    assert(!has_just_double_moved(h, delta_t(3.0)));
   }
   // is_idle
   {
