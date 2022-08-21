@@ -105,7 +105,7 @@ std::vector<std::vector<square>> collect_all_bishop_target_squares(const square&
   const std::vector<std::pair<int, int>> delta_pairs{
     collect_all_bishop_delta_pairs()
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     std::vector<square> targets;
     for (int distance{1}; distance != 8; ++distance)
@@ -135,7 +135,7 @@ std::vector<square> collect_all_king_target_squares(const square& s) noexcept
     std::make_pair(-1,  0), // W
     std::make_pair(-1, -1)  // SE
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     const int x{s.get_x() + delta_pair.first};
     const int y{s.get_y() + delta_pair.second};
@@ -169,7 +169,7 @@ std::vector<square> collect_all_knight_target_squares(const square& s) noexcept
   const std::vector<std::pair<int, int>> delta_pairs{
     collect_all_knight_delta_pairs()
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     const int x{s.get_x() + delta_pair.first};
     const int y{s.get_y() + delta_pair.second};
@@ -205,7 +205,7 @@ std::vector<std::vector<square>> collect_all_queen_target_squares(const square& 
   const std::vector<std::pair<int, int>> delta_pairs{
     collect_all_queen_delta_pairs()
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     std::vector<square> targets;
     for (int distance{1}; distance != 8; ++distance)
@@ -241,7 +241,7 @@ std::vector<std::vector<square>> collect_all_rook_target_squares(const square& s
   const std::vector<std::pair<int, int>> delta_pairs{
     collect_all_rook_delta_pairs()
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     std::vector<square> targets;
     for (int distance{1}; distance != 8; ++distance)

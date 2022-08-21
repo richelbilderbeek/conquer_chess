@@ -209,7 +209,7 @@ std::vector<square> get_possible_bishop_moves(
     std::make_pair(-1,  1), // SW
     std::make_pair(-1, -1)  // NW
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     for (int distance{1}; distance != 8; ++distance)
     {
@@ -287,7 +287,7 @@ std::vector<square> get_possible_knight_moves(
     std::make_pair(-2, -1), // 10 o'clock
     std::make_pair(-1, -2)  // 11 o'clock
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     for (int distance{1}; distance != 4; ++distance)
     {
@@ -403,7 +403,7 @@ std::vector<square> get_possible_queen_moves(
     std::make_pair(-1,  0), // W
     std::make_pair(-1, -1)  // SE
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     for (int distance{1}; distance != 8; ++distance)
     {
@@ -442,7 +442,7 @@ std::vector<square> get_possible_rook_moves(
     std::make_pair( 0,  1), // S
     std::make_pair(-1,  0)  // W
   };
-  for (const auto delta_pair: delta_pairs)
+  for (const auto& delta_pair: delta_pairs)
   {
     for (int distance{1}; distance != 8; ++distance)
     {
@@ -1007,7 +1007,7 @@ std::string to_board_str(const std::vector<piece>& pieces) noexcept
 std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcept
 {
   std::vector<std::string> board(8, std::string("........"));
-  for (const auto p: pieces)
+  for (const auto& p: pieces)
   {
     const int x{p.get_current_square().get_x()};
     const int y{p.get_current_square().get_y()};
