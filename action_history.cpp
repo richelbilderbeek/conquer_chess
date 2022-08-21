@@ -78,7 +78,7 @@ bool has_just_double_moved(
 action_history merge_action_histories(const std::vector<action_history> histories)
 {
   std::vector<std::pair<delta_t, piece_action>> timed_actions;
-  for (const auto history: histories)
+  for (const auto& history: histories)
   {
     const auto tas{history.get_timed_actions()};
     std::copy(std::begin(tas), std::end(tas), std::back_inserter(timed_actions));

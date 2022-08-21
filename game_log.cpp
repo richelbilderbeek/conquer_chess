@@ -35,7 +35,7 @@ std::string get_last_log_messages(
 std::string game_log::get_last_messages(const chess_color color) const
 {
   std::stringstream s;
-  for (const auto m: m_timed_messages)
+  for (const auto& m: m_timed_messages)
   {
     if (m.second.get_color() != color) continue;
     s << m.second << '\n';
