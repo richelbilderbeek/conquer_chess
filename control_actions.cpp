@@ -547,3 +547,25 @@ void test_control_actions()
   }
 #endif // NDEBUG
 }
+
+control_actions to_control_actions(const piece_action& pa, const game& g)
+{
+  const auto player_color{pa.get_color()};
+  const side player_side{get_player_side(g, player_color)};
+  const controller c{get_controller(g, player_side)};
+  const control_action_type select_action_type{
+    c.get_type() == controller_type::mouse ?
+    control_action_type::lmb_down :
+    control_action_type::press_down
+  };
+
+  const control_action select(
+    select_action_type,
+    player_side,
+    to_coordinat(pa.get_from())
+  );
+
+  control_actions v;
+  v.add(select);
+  return v;
+}

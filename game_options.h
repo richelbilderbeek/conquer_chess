@@ -135,6 +135,9 @@ game_options create_default_game_options_with_controllers(
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& options) noexcept;
 
+/// Get the controller for a certain side
+const controller& get_controller(const game_options& options, const side player);
+
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game_options& options);

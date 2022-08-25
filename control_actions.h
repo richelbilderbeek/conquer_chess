@@ -87,4 +87,7 @@ void start_move_unit(
 /// Test this class and its free functions
 void test_control_actions();
 
+/// Convert a 'piece_action' to a 'control_actions'
+control_actions to_control_actions(const piece_action& pa, const game& g);
+
 #endif // ACTIONS_H

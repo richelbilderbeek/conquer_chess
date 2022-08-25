@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "game_options.h"
 #include "piece_actions.h"
 #include "controllers.h"
 #include "id.h"
@@ -110,6 +111,19 @@ action_history collect_action_history(const game& g)
 {
   return collect_action_history(g.get_pieces());
 }
+
+std::vector<control_actions> collect_all_control_actionses(const game& g)
+{
+  std::vector<control_actions> control_actions;
+
+  const auto piece_actions{collect_all_piece_actions(g)};
+  control_actions.reserve(piece_actions.size());
+  for (const auto& piece_action: piece_actions) {
+    control_actions.push_back(to_control_actions(piece_action, g));
+  }
+  return control_actions;
+}
+
 
 std::vector<piece_action> collect_all_piece_actions(const game& g)
 {
@@ -1042,6 +1056,11 @@ piece& get_closest_piece_to(
 )
 {
   return g.get_pieces()[get_index_of_closest_piece_to(g, coordinat)];
+}
+
+const controller& get_controller(const game& g, const side player)
+{
+  return ::get_controller(g.get_options(), player);
 }
 
 game_coordinat get_cursor_pos(

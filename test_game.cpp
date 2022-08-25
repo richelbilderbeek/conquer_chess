@@ -184,7 +184,7 @@ void test_game_functions()
     g.tick(delta_t(0.25));
     do_select_and_move_keyboard_player_piece(g, "d2", "d4");
   }
-  // collect_all_actions
+  // collect_all_piece_actions
   {
     // default start
     {
@@ -575,6 +575,20 @@ void test_game_functions()
     }
     assert(!"Progress #21");
     #endif // FIX_ISSUE_21
+  }
+  // collect_all_piece_actions
+  {
+    #define FIX_ISSUE_34
+    #ifdef FIX_ISSUE_34
+    // default start
+    {
+      const game g;
+      const auto control_actions{collect_all_control_actionses(g)};
+      assert(!control_actions.empty());
+      const auto piece_actions{collect_all_piece_actions(g)};
+      assert(control_actions.size() == piece_actions.size());
+    }
+    #endif // FIX_ISSUE_34
   }
   // count_control_actions
   {

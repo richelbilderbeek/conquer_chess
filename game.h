@@ -112,8 +112,16 @@ void clear_piece_messages(game& g) noexcept;
 /// i.e. the moves played in time
 action_history collect_action_history(const game& g);
 
+/// Collect all valid 'control_actions' for all players.
+/// Each 'control_actions' equals one 'piece_action'
+/// @see use 'collect_all_piece_actions'
+/// to get all the 'piece_action's from a game
+std::vector<control_actions> collect_all_control_actionses(const game& g);
+
 /// Collect all valid moves and attackes at a board
 /// for all pieces
+/// @see use 'collect_all_control_actions'
+/// to get all the 'control_action's from a game
 std::vector<piece_action> collect_all_piece_actions(const game& g);
 
 /// Collect all valid moves and attackes at a board
@@ -330,6 +338,9 @@ const piece& get_closest_piece_to(const game& g, const game_coordinat& coordinat
 
 /// Get the piece that is closest to the coordinat
 piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
+
+/// Get the controller for a certain side
+const controller& get_controller(const game& g, const side player);
 
 /// Get the cursor position for a player
 game_coordinat get_cursor_pos(
