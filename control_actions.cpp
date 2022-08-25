@@ -414,7 +414,7 @@ void start_attack(
   const chess_color player_color
 )
 {
-  const auto actions{collect_all_actions(g)};
+  const auto actions{collect_all_piece_actions(g)};
 
   if (count_selected_units(g, player_color) == 0) return;
 

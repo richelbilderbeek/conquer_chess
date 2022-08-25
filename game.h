@@ -114,18 +114,18 @@ action_history collect_action_history(const game& g);
 
 /// Collect all valid moves and attackes at a board
 /// for all pieces
-std::vector<piece_action> collect_all_actions(const game& g);
+std::vector<piece_action> collect_all_piece_actions(const game& g);
 
 /// Collect all valid moves and attackes at a board
 /// for all pieces of a certain color
-std::vector<piece_action> collect_all_actions(
+std::vector<piece_action> collect_all_piece_actions(
   const game& g,
   const chess_color player_color
 );
 
 /// Collect all valid moves and attackes at a board
 /// for a focal piece
-std::vector<piece_action> collect_all_actions(
+std::vector<piece_action> collect_all_piece_actions(
   const game& g,
   const piece& p
 );

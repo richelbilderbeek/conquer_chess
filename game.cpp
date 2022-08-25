@@ -111,7 +111,7 @@ action_history collect_action_history(const game& g)
   return collect_action_history(g.get_pieces());
 }
 
-std::vector<piece_action> collect_all_actions(const game& g)
+std::vector<piece_action> collect_all_piece_actions(const game& g)
 {
   // 1. Collect all the simple actions,
   //    such as movement and attacks
@@ -119,7 +119,7 @@ std::vector<piece_action> collect_all_actions(const game& g)
   for (const auto& p: g.get_pieces())
   {
     const auto piece_actions{
-      collect_all_actions(g, p)
+      collect_all_piece_actions(g, p)
     };
     std::copy(
       std::begin(piece_actions),
@@ -183,7 +183,7 @@ std::vector<piece_action> collect_all_actions(const game& g)
   return actions;
 }
 
-std::vector<piece_action> collect_all_actions(
+std::vector<piece_action> collect_all_piece_actions(
   const game& g,
   const chess_color player_color)
 {
@@ -192,7 +192,7 @@ std::vector<piece_action> collect_all_actions(
   {
     if (p.get_color() != player_color) continue;
     const auto piece_actions{
-      collect_all_actions(g, p)
+      collect_all_piece_actions(g, p)
     };
     std::copy(
       std::begin(piece_actions),
@@ -203,7 +203,7 @@ std::vector<piece_action> collect_all_actions(
   return actions;
 }
 
-std::vector<piece_action> collect_all_actions(
+std::vector<piece_action> collect_all_piece_actions(
   const game& g,
   const piece& p
 )

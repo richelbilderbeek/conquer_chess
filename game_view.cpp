@@ -601,7 +601,7 @@ void show_possible_moves(game_view& view)
 {
   const auto& g{view.get_game()};
   const auto& layout{g.get_layout()};
-  const auto actions{collect_all_actions(g)};
+  const auto actions{collect_all_piece_actions(g)};
   for (const auto& action: actions)
   {
     if (!get_piece_at(g, action.get_from()).is_selected()) continue;

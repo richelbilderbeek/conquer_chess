@@ -189,7 +189,7 @@ void test_game_functions()
     // default start
     {
       const game g;
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action e2e3(
         chess_color::white,
@@ -237,7 +237,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::pawn_all_out_assault)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action e4xf5(
         chess_color::white,
@@ -261,7 +261,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::kings_only)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action ke1e2(
         chess_color::white,
@@ -285,7 +285,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::queen_end_game)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action qd1d5(
         chess_color::white,
@@ -309,7 +309,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::kasparov_vs_topalov)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action ka4xa3(
         chess_color::black,
@@ -325,7 +325,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::pawn_all_out_assault)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action ra1a3(
         chess_color::white,
@@ -349,7 +349,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::pawns_nearly_near_promotion)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action a6a7(
         chess_color::white,
@@ -373,7 +373,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::pawns_at_promotion)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action a8isq(
         chess_color::white,
@@ -397,7 +397,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::ready_to_castle)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action wcks(
         chess_color::white,
@@ -437,7 +437,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::ready_to_not_castle)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action wcks(
         chess_color::white,
@@ -477,7 +477,7 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::ready_to_not_castle)
       };
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       const piece_action ke1d1(
         chess_color::white,
@@ -505,7 +505,7 @@ void test_game_functions()
       // It takes 1 time unit to move,
       // aim at halfway to window of opportunity for en-passant
       for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       assert(has_action_of_type(actions, piece_action_type::en_passant));
 
@@ -529,7 +529,7 @@ void test_game_functions()
 
       // After 1 move disappears
       g.tick(delta_t(1.0));
-      const auto actions_again{collect_all_actions(g)};
+      const auto actions_again{collect_all_piece_actions(g)};
       assert(!is_in(h4xg3ep, actions_again));
       assert(!is_in(f4xg3ep, actions_again));
     }
