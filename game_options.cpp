@@ -71,7 +71,7 @@ const controller& game_options::get_controller(const side& player) const
   return m_controllers[1];
 }
 
-const controller& get_controller(const game_options& options, const side& player)
+const controller& get_controller(const game_options& options, const side player)
 {
   return options.get_controller(player);
 }
