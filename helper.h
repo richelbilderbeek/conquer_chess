@@ -1,6 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <string>
@@ -30,6 +31,18 @@ double calc_distance(const double dx, const double dy) noexcept;
 template <class T> bool is_close(const T& lhs, const T& rhs, const T& max)
 {
   return std::abs(lhs - rhs) < max;
+}
+
+template <class T> bool is_present_in(
+  const T& element,
+  const std::vector<T>& collection
+)
+{
+  return std::find(
+    std::begin(collection),
+    std::end(collection),
+    element
+  ) != std::end(collection);
 }
 
 /// Make a sequence in an incluse way:

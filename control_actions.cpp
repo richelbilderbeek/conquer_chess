@@ -22,6 +22,30 @@ int count_control_actions(const control_actions& a)
   return static_cast<int>(a.get_actions().size());
 }
 
+control_actions create_control_actions(
+  const std::string& pgn_str,
+  const chess_color color,
+  const game& g
+)
+{
+  return create_control_actions(
+    chess_move(pgn_str, color),
+    g
+  );
+}
+
+control_actions create_control_actions(
+  const chess_move& m,
+  const game& g
+)
+{
+  assert(m.get_winner().empty());
+  assert(!g.get_pieces().empty());
+
+  return control_actions();
+}
+
+
 void do_select(
   game& g,
   const game_coordinat& coordinat,
@@ -568,4 +592,9 @@ control_actions to_control_actions(const piece_action& pa, const game& g)
   control_actions v;
   v.add(select);
   return v;
+}
+
+bool operator==(const control_actions& lhs, const control_actions& rhs) noexcept
+{
+  return lhs.get_actions() == rhs.get_actions();
 }

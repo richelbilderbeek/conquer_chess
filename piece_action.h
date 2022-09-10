@@ -87,5 +87,4 @@ bool operator!=(const piece_action& lhs, const piece_action& rhs) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const piece_action& p) noexcept;
 
-
 #endif // PIECE_ACTION_H

@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "helper.h"
 #include "id.h"
 #include "test_game.h"
 #include "piece_actions.h"
@@ -545,7 +546,7 @@ void test_game_functions()
       // aim at halfway to window of opportunity for en-passant
       for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
       std::clog << to_board_str(g.get_pieces()) << '\n';
-      const auto actions{collect_all_actions(g)};
+      const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       assert(has_action_of_type(actions, piece_action_type::en_passant));
 
@@ -569,7 +570,7 @@ void test_game_functions()
 
       // After 1 move disappears
       g.tick(delta_t(1.0));
-      const auto actions_again{collect_all_actions(g)};
+      const auto actions_again{collect_all_piece_actions(g)};
       assert(!is_in(a5xb6ep, actions_again));
       assert(!is_in(c5xb6ep, actions_again));
     }
@@ -587,6 +588,13 @@ void test_game_functions()
       assert(!control_actions.empty());
       const auto piece_actions{collect_all_piece_actions(g)};
       assert(control_actions.size() == piece_actions.size());
+    }
+    // default start
+    {
+      const game g;
+      const auto control_actions{collect_all_control_actionses(g)};
+      const auto e2e4{create_control_actions("e2e4", chess_color::white, g)};
+      assert(is_present_in(e2e4, control_actions));
     }
     #endif // FIX_ISSUE_34
   }

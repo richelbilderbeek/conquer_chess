@@ -36,6 +36,7 @@ HEADERS += \
     $$PWD/message_type.h \
     $$PWD/options_view_item.h \
     $$PWD/options_view_layout.h \
+    $$PWD/pgn_string.h \
     $$PWD/piece.h \
     $$PWD/piece_action.h \
     $$PWD/piece_action_type.h \
@@ -92,6 +93,7 @@ SOURCES += \
     $$PWD/message_type.cpp \
     $$PWD/options_view_item.cpp \
     $$PWD/options_view_layout.cpp \
+    $$PWD/pgn_string.cpp \
     $$PWD/piece.cpp \
     $$PWD/piece_action.cpp \
     $$PWD/piece_action_type.cpp \

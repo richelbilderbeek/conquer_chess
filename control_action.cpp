@@ -114,3 +114,11 @@ void test_control_action()
   }
 #endif // DEBUG
 }
+
+bool operator==(const control_action& lhs, const control_action& rhs) noexcept
+{
+  return lhs.get_coordinat() == rhs.get_coordinat()
+    && lhs.get_player() == rhs.get_player()
+    && lhs.get_type() == rhs.get_type()
+  ;
+}

@@ -65,5 +65,7 @@ control_action create_random_control_action(
 /// Test the 'control_action' class and its free functions
 void test_control_action();
 
+bool operator==(const control_action& lhs, const control_action& rhs) noexcept;
+
 #endif // CONTROL_ACTION_H
 

@@ -44,6 +44,25 @@ int count_control_actions(const control_actions& a);
 /// Count the total number of piece actions to be done by the game
 int count_piece_actions(const control_actions& a);
 
+/// Create the control actions to do a PGN move from a certain
+/// game. The game is needed to determine how the cursor
+/// is moved (e.g. by mouse/keyboard, if keyboard:
+/// how many squares)
+control_actions create_control_actions(
+  const std::string& pgn_str,
+  const chess_color color,
+  const game& g
+);
+
+/// Create the control actions to do a PGN move from a certain
+/// game. The game is needed to determine how the cursor
+/// is moved (e.g. by mouse/keyboard, if keyboard:
+/// how many squares)
+control_actions create_control_actions(
+  const chess_move& m,
+  const game& g
+);
+
 /// Process a left-mouse-button, hence a game_coordinat as a coordinat
 void do_select(
   game& g,
@@ -62,7 +81,6 @@ void process_press_action_3(game& g, const control_action& action);
 
 /// Respond to action 4
 void process_press_action_4(game& g, const control_action& action);
-
 
 /// Process a space, hence a square as a coordinat
 void do_select(
@@ -89,5 +107,7 @@ void test_control_actions();
 
 /// Convert a 'piece_action' to a 'control_actions'
 control_actions to_control_actions(const piece_action& pa, const game& g);
+
+bool operator==(const control_actions& lhs, const control_actions& rhs) noexcept;
 
 #endif // ACTIONS_H

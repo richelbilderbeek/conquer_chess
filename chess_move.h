@@ -31,7 +31,7 @@ public:
   /// Will be empty if this move is not a promotion
   const auto& get_promotion_type() const noexcept { return m_promotion_type; };
 
-  /// Get the target square, e.g. 'e4' in 'Pxe4'
+  /// Get the target square, e.g. 'e4' in 'Pxe4'.
   /// Result will be empty when castling (e.g. 'O-O') or winning (e.g. '1-0')
   const auto& get_to() const noexcept { return m_to; }
 
