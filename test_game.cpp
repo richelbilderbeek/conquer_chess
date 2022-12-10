@@ -579,7 +579,7 @@ void test_game_functions()
   }
   // collect_all_piece_actions
   {
-    #define FIX_ISSUE_34
+    //#define FIX_ISSUE_34
     #ifdef FIX_ISSUE_34
     // default start
     {
