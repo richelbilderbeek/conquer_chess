@@ -4,6 +4,7 @@ HEADERS += \
     $$PWD/about_view_layout.h \
     $$PWD/action_history.h \
     $$PWD/board.h \
+    $$PWD/board_to_text_options.h \
     $$PWD/castling_type.h \
     $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
@@ -62,6 +63,7 @@ SOURCES += \
     $$PWD/about_view_layout.cpp \
     $$PWD/action_history.cpp \
     $$PWD/board.cpp \
+    $$PWD/board_to_text_options.cpp \
     $$PWD/castling_type.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/chess_move.cpp \

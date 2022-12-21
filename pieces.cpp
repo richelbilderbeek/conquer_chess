@@ -39,6 +39,23 @@ std::vector<std::string> add_coordinats(
   return t;
 }
 
+std::vector<std::string> add_legend(
+  const std::vector<std::string>& strs
+)
+{
+  assert(strs.size() >= 8);
+  std::vector<std::string> text_with_legend{strs};
+  text_with_legend[0] += " Type  |White|Black";
+  text_with_legend[1] += " ------|-----|-----";
+  text_with_legend[2] += " bishop| b   | B   ";
+  text_with_legend[3] += " king  | k   | K   ";
+  text_with_legend[4] += " knight| n   | N   ";
+  text_with_legend[5] += " pawn  | p   | P   ";
+  text_with_legend[6] += " queen | q   | Q   ";
+  text_with_legend[7] += " rook  | r   | R   ";
+  return text_with_legend;
+}
+
 std::vector<double> calc_distances(
   const std::vector<piece>& pieces,
   const game_coordinat& coordinat
@@ -1038,7 +1055,9 @@ void test_pieces()
   // 35: to_board_strs shows coordinats
   {
     const auto pieces{get_standard_starting_pieces()};
-    const auto strs{to_board_strs(pieces, true)};
+    board_to_text_options options;
+    options.set_show_coordinats(true);
+    const auto strs{to_board_strs(pieces, options)};
     assert(strs.size() == 8 + 4);
     assert(strs[0].size() == 8 + 4);
     assert(strs[0] == "  12345678  ");
@@ -1057,16 +1076,49 @@ void test_pieces()
   // 35: to_board_strs shows coordinats
   {
     const auto pieces{get_standard_starting_pieces()};
-    const auto str_without_coordinats{to_board_strs(pieces, false)};
-    const auto str_with_coordinats{to_board_strs(pieces, true)};
+    const board_to_text_options no_coords(false);
+    assert(!no_coords.get_show_coordinats());
+    const auto str_without_coordinats{to_board_strs(pieces, no_coords)};
+    const board_to_text_options with_coords(true);
+    assert(with_coords.get_show_coordinats());
+    const auto str_with_coordinats{to_board_strs(pieces, with_coords)};
     assert(str_with_coordinats.size() >= str_without_coordinats.size());
 
   }
   // 35: to_board_str shows coordinats
   {
     const auto pieces{get_standard_starting_pieces()};
-    const auto str_without_coordinats{to_board_str(pieces, false)};
-    const auto str_with_coordinats{to_board_str(pieces, true)};
+    const board_to_text_options no_coords(false);
+    assert(!no_coords.get_show_coordinats());
+    const auto str_without_coordinats{to_board_str(pieces, no_coords)};
+    const board_to_text_options with_coords(true);
+    assert(with_coords.get_show_coordinats());
+    const auto str_with_coordinats{to_board_str(pieces, with_coords)};
+    assert(str_with_coordinats.size() >= str_without_coordinats.size());
+  }
+  // 36: to_board_strs shows legend
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    const board_to_text_options no_legend(false, false);
+    assert(!no_legend.get_show_coordinats());
+    assert(!no_legend.get_show_legend());
+    const auto str_without_coordinats{to_board_strs(pieces, no_legend)};
+    const board_to_text_options with_legend(false, true);
+    assert(!no_legend.get_show_coordinats());
+    assert(!no_legend.get_show_legend());
+    const auto str_with_coordinats{to_board_strs(pieces, with_legend)};
+    assert(str_with_coordinats.size() >= str_without_coordinats.size());
+
+  }
+  // 35: to_board_str shows legend
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    const board_to_text_options no_legend(false, false);
+    assert(!no_legend.get_show_legend());
+    const auto str_without_coordinats{to_board_str(pieces, no_legend)};
+    const board_to_text_options with_legend(false, true);
+    assert(with_legend.get_show_legend());
+    const auto str_with_coordinats{to_board_str(pieces, with_legend)};
     assert(str_with_coordinats.size() >= str_without_coordinats.size());
   }
 #endif
@@ -1074,10 +1126,10 @@ void test_pieces()
 
 std::string to_board_str(
   const std::vector<piece>& pieces,
-  const bool show_coordinats
+  const board_to_text_options& options
 ) noexcept
 {
-  const auto strs{to_board_strs(pieces, show_coordinats)};
+  const auto strs{to_board_strs(pieces, options)};
   std::string s;
   for (const auto& str: strs) s += str + '\n';
   assert(!s.empty());
@@ -1087,7 +1139,7 @@ std::string to_board_str(
 
 std::vector<std::string> to_board_strs(
   const std::vector<piece>& pieces,
-  const bool show_coordinats
+  const board_to_text_options& options
 ) noexcept
 {
   std::vector<std::string> board(8, std::string("........"));
@@ -1097,9 +1149,13 @@ std::vector<std::string> to_board_strs(
     const int y{p.get_current_square().get_y()};
     board[y][x] = to_char(p);
   }
-  if (show_coordinats)
+  if (options.get_show_coordinats())
   {
     board = add_coordinats(board);
+  }
+  if (options.get_show_legend())
+  {
+    board = add_legend(board);
   }
   return board;
 }

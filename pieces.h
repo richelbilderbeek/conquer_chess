@@ -2,10 +2,50 @@
 #define PIECES_H
 
 /// Functions to work on collections of pieces
+#include "board_to_text_options.h"
 #include "piece.h"
 
 /// Surround the 8x8 strings of a chessboard by coordinats
+/// Without coordinats:
+///
+/// rp....PR
+/// np....PN
+/// bp....PB
+/// qp....PQ
+/// kp....PK
+/// bp....PB
+/// np....PN
+/// rp....PR
+///
+/// With coordinats:
+///
+///   12345678
+///  +--------+
+/// A|rp....PR|A
+/// B|np....PN|B
+/// C|bp....PB|C
+/// D|qp....PQ|D
+/// E|kp....PK|E
+/// F|bp....PB|F
+/// G|np....PN|G
+/// H|rp....PR|H
+///  +--------+
+///   12345678
 std::vector<std::string> add_coordinats(
+  const std::vector<std::string>& strs
+);
+
+/// Add a legend to the 8x8 or 12x12 strings of a chessboard.
+///
+/// Type  |White|Black
+/// ------|-----|-----
+/// bishop| b   | B
+/// king  | k   | K
+/// knight| n   | N
+/// pawn  | p   | P
+/// queen | q   | Q
+/// rook  | r   | R
+std::vector<std::string> add_legend(
   const std::vector<std::string>& strs
 );
 
@@ -256,13 +296,13 @@ void test_pieces();
 ///
 std::string to_board_str(
   const std::vector<piece>& pieces,
-  const bool show_coordinats = false
+  const board_to_text_options& options = board_to_text_options()
 ) noexcept;
 
 /// Show the pieces as if on a chessboard
 std::vector<std::string> to_board_strs(
   const std::vector<piece>& pieces,
-  const bool show_coordinats = false
+  const board_to_text_options& options = board_to_text_options()
 ) noexcept;
 
 /// Convert the played game (i.e. the action_history) to pseudo-PGN notation

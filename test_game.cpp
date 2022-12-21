@@ -541,11 +541,23 @@ void test_game_functions()
       game g{
         get_game_with_starting_position(starting_position_type::before_en_passant)
       };
+      std::clog << "==================================\n";
+      std::clog << "= START                          =\n";
+      std::clog << "==================================\n";
+      std::clog << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n';
+      std::clog << g << '\n';
+      assert(is_piece_at(g, square("b7")));
+      assert(!is_piece_at(g, square("b5")));
       do_select_and_move_mouse_player_piece(g, "b7", "b5");
       // It takes 1 time unit to move,
       // aim at halfway to window of opportunity for en-passant
       for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
-      std::clog << to_board_str(g.get_pieces(), true) << '\n';
+      assert(!is_piece_at(g, square("b7")));
+      assert(is_piece_at(g, square("b5")));
+      std::clog << "==================================\n";
+      std::clog << "= AFTER                          =\n";
+      std::clog << "==================================\n";
+      std::clog << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n';
       const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       assert(has_action_of_type(actions, piece_action_type::en_passant));
