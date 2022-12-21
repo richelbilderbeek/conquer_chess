@@ -6,6 +6,39 @@
 #include <iostream>
 #include <sstream>
 
+std::vector<std::string> add_coordinats(
+  const std::vector<std::string>& strs
+)
+{
+  assert(strs.size() == 8);
+  assert(strs[0].size() == 8);
+  // Step 1: add the files, strs -> strs_with_files
+  std::vector<std::string> strs_with_files{strs};
+  for (int i = 0; i!=8; ++i)
+  {
+    strs_with_files[i] =
+      std::string(1, 'A' + static_cast<unsigned char>(i))
+      + std::string("|")
+      + strs_with_files[i]
+      + std::string("|")
+      + std::string(1, 'A' + static_cast<unsigned char>(i))
+    ;
+  }
+  // Step 2: add the ranks, strs_with_files -> t
+  std::vector<std::string> t;
+  t.reserve(12);
+  t.push_back("  12345678  ");
+  t.push_back(" +--------+ ");
+  std::copy(
+    std::begin(strs_with_files),
+    std::end(strs_with_files),
+    std::back_insert_iterator(t)
+  );
+  t.push_back(" +--------+ ");
+  t.push_back("  12345678  ");
+  return t;
+}
+
 std::vector<double> calc_distances(
   const std::vector<piece>& pieces,
   const game_coordinat& coordinat
@@ -1002,19 +1035,49 @@ void test_pieces()
     assert(strs.size() == 8);
     assert(strs[0].size() == 8);
   }
+  // 35: to_board_strs shows coordinats
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    const auto strs{to_board_strs(pieces, true)};
+    assert(strs.size() == 8 + 4);
+    assert(strs[0].size() == 8 + 4);
+    assert(strs[0] == "  12345678  ");
+    assert(strs[1] == " +--------+ ");
+    assert(strs[2][0] == 'A');
+    assert(strs[2][1] == '|');
+    assert(strs[2][10] == '|');
+    assert(strs[2][11] == 'A');
+  }
   // to_board_str
   {
     const auto pieces{get_standard_starting_pieces()};
     const auto str{to_board_str(pieces)};
-    assert(str.size() >= 64);
+    assert(str.size() >= (8 * 8));
   }
+  // 35: to_board_strs shows coordinats
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    const auto str_without_coordinats{to_board_strs(pieces, false)};
+    const auto str_with_coordinats{to_board_strs(pieces, true)};
+    assert(str_with_coordinats.size() >= str_without_coordinats.size());
 
+  }
+  // 35: to_board_str shows coordinats
+  {
+    const auto pieces{get_standard_starting_pieces()};
+    const auto str_without_coordinats{to_board_str(pieces, false)};
+    const auto str_with_coordinats{to_board_str(pieces, true)};
+    assert(str_with_coordinats.size() >= str_without_coordinats.size());
+  }
 #endif
 }
 
-std::string to_board_str(const std::vector<piece>& pieces) noexcept
+std::string to_board_str(
+  const std::vector<piece>& pieces,
+  const bool show_coordinats
+) noexcept
 {
-  const auto strs{to_board_strs(pieces)};
+  const auto strs{to_board_strs(pieces, show_coordinats)};
   std::string s;
   for (const auto& str: strs) s += str + '\n';
   assert(!s.empty());
@@ -1022,7 +1085,10 @@ std::string to_board_str(const std::vector<piece>& pieces) noexcept
   return s;
 }
 
-std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcept
+std::vector<std::string> to_board_strs(
+  const std::vector<piece>& pieces,
+  const bool show_coordinats
+) noexcept
 {
   std::vector<std::string> board(8, std::string("........"));
   for (const auto& p: pieces)
@@ -1030,6 +1096,10 @@ std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcep
     const int x{p.get_current_square().get_x()};
     const int y{p.get_current_square().get_y()};
     board[y][x] = to_char(p);
+  }
+  if (show_coordinats)
+  {
+    board = add_coordinats(board);
   }
   return board;
 }

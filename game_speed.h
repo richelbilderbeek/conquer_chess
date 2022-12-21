@@ -10,7 +10,7 @@ enum class game_speed
 };
 
 /// Get the default game speed
-constexpr game_speed get_default_game_speed() { return game_speed::normal; }
+constexpr game_speed get_default_game_speed() { return game_speed::slowest; }
 
 /// Get the next game speed,
 /// i.e. when the user presses right

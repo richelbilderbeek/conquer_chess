@@ -535,7 +535,7 @@ std::vector<piece_action> collect_all_pawn_en_passant_actions(
         && has_just_double_moved(get_piece_at(g, enemy_square), g.get_time())
       )
       {
-        assert(!"YAY");
+        assert(!"YAY, triggered en-passant for FIX_ISSUE_21");
         actions.push_back(piece_action(color, type, piece_action_type::en_passant, from, to_square));
       }
     }

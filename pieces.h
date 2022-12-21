@@ -4,6 +4,10 @@
 /// Functions to work on collections of pieces
 #include "piece.h"
 
+/// Surround the 8x8 strings of a chessboard by coordinats
+std::vector<std::string> add_coordinats(
+  const std::vector<std::string>& strs
+);
 
 /// Calculate the distances that each piece has to a coordinat
 std::vector<double> calc_distances(
@@ -212,6 +216,9 @@ bool is_piece_at(
 void test_pieces();
 
 /// Show the pieces as if on a chessboard, such as:
+///
+/// Without coordinats:
+///
 /// rp....PR
 /// np....PN
 /// bp....PB
@@ -220,10 +227,43 @@ void test_pieces();
 /// bp....PB
 /// np....PN
 /// rp....PR
-std::string to_board_str(const std::vector<piece>& pieces) noexcept;
+///
+/// With coordinats:
+///
+///   12345678
+///  +--------+
+/// A|rp....PR|A
+/// B|np....PN|B
+/// C|bp....PB|C
+/// D|qp....PQ|D
+/// E|kp....PK|E
+/// F|bp....PB|F
+/// G|np....PN|G
+/// H|rp....PR|H
+///  +--------+
+///   12345678
+///
+/// With legend:
+///
+/// Type  |Character when white|Character when black
+/// ------|--------------------|--------------------
+/// bishop| b                  | B
+/// king  | k                  | K
+/// knight| n                  | N
+/// pawn  | p                  | P
+/// queen | q                  | Q
+/// rook  | r                  | R
+///
+std::string to_board_str(
+  const std::vector<piece>& pieces,
+  const bool show_coordinats = false
+) noexcept;
 
 /// Show the pieces as if on a chessboard
-std::vector<std::string> to_board_strs(const std::vector<piece>& pieces) noexcept;
+std::vector<std::string> to_board_strs(
+  const std::vector<piece>& pieces,
+  const bool show_coordinats = false
+) noexcept;
 
 /// Convert the played game (i.e. the action_history) to pseudo-PGN notation
 /// Returns one string with newlines
