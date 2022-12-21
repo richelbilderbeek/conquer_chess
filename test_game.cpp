@@ -544,7 +544,6 @@ void test_game_functions()
       std::clog << "==================================\n";
       std::clog << "= START                          =\n";
       std::clog << "==================================\n";
-      std::clog << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n';
       std::clog << g << '\n';
       assert(is_piece_at(g, square("b7")));
       assert(!is_piece_at(g, square("b5")));
@@ -557,7 +556,7 @@ void test_game_functions()
       std::clog << "==================================\n";
       std::clog << "= AFTER                          =\n";
       std::clog << "==================================\n";
-      std::clog << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n';
+      std::clog << g << '\n';
       const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       assert(has_action_of_type(actions, piece_action_type::en_passant));

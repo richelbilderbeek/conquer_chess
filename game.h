@@ -30,9 +30,11 @@ public:
 
   /// Get the game actions
   const auto& get_actions() const noexcept { return m_control_actions; }
+  const auto& get_control_actions() const noexcept { return get_actions(); }
 
   /// Get the game actions
   auto& get_actions() noexcept { return m_control_actions; }
+  auto& get_control_actions() noexcept { return get_actions(); }
 
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
