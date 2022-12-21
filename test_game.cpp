@@ -551,12 +551,12 @@ void test_game_functions()
       // It takes 1 time unit to move,
       // aim at halfway to window of opportunity for en-passant
       for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
-      assert(!is_piece_at(g, square("b7")));
-      assert(is_piece_at(g, square("b5")));
       std::clog << "==================================\n";
       std::clog << "= AFTER                          =\n";
       std::clog << "==================================\n";
       std::clog << g << '\n';
+      assert(!is_piece_at(g, square("b7")));
+      assert(is_piece_at(g, square("b5")));
       const auto actions{collect_all_piece_actions(g)};
       assert(!actions.empty());
       assert(has_action_of_type(actions, piece_action_type::en_passant));

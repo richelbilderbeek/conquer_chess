@@ -6,6 +6,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 control_actions::control_actions()
 {
@@ -597,4 +598,33 @@ control_actions to_control_actions(const piece_action& pa, const game& g)
 bool operator==(const control_actions& lhs, const control_actions& rhs) noexcept
 {
   return lhs.get_actions() == rhs.get_actions();
+}
+
+std::ostream& operator<<(std::ostream& os, const control_actions& actions) noexcept
+{
+  #ifdef FIX_ISSUE_37
+  std::stringstream s;
+  const auto& v{actions.get_actions()};
+  std::transform(
+    std::begin(v),
+    std::end(v),
+    std::back_insert_iterator(s),
+    [](const auto& a)
+    {
+      std::stringstream t;
+      t << a << ", ";
+      return t.str();
+    }
+  );
+  std::string u{s.str()};
+  assert(!u.empty());
+  u.pop_back();
+  assert(!u.empty());
+  u.pop_back();
+  os << u;
+  return os;
+  #else
+  os << "TODO" << actions.get_actions().empty();
+  return os;
+  #endif
 }

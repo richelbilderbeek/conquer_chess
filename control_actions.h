@@ -8,6 +8,7 @@
 #include "piece_action.h"
 #include "message.h"
 
+#include <iostream>
 #include <vector>
 
 /// The actions in a game, with two types:
@@ -108,6 +109,7 @@ void test_control_actions();
 /// Convert a 'piece_action' to a 'control_actions'
 control_actions to_control_actions(const piece_action& pa, const game& g);
 
+std::ostream& operator<<(std::ostream& os, const control_actions& actions) noexcept;
 bool operator==(const control_actions& lhs, const control_actions& rhs) noexcept;
 
 #endif // ACTIONS_H

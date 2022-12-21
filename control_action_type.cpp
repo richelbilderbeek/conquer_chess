@@ -47,3 +47,9 @@ void test_control_action_type()
   }
 #endif
 }
+
+std::ostream& operator<<(std::ostream& os, const control_action_type t) noexcept
+{
+  os << std::string(magic_enum::enum_name(t));
+  return os;
+}

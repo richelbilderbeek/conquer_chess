@@ -1471,6 +1471,7 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
+#define FIX_ISSUE_37
 #ifdef FIX_ISSUE_37
     << "Control actions: " << g.get_control_actions() << '\n'
 #endif // FIX_ISSUE_37

@@ -7,6 +7,7 @@
 #include "game_coordinat.h"
 #include "side.h"
 
+#include <iosfwd>
 #include <random>
 #include <SFML/Window/Event.hpp>
 
@@ -66,6 +67,7 @@ control_action create_random_control_action(
 void test_control_action();
 
 bool operator==(const control_action& lhs, const control_action& rhs) noexcept;
+std::ostream& operator<<(std::ostream& os, const control_action& a) noexcept;
 
 #endif // CONTROL_ACTION_H
 

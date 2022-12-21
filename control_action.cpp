@@ -1,6 +1,7 @@
 #include "control_action.h"
 
 #include <cassert>
+#include <iostream>
 
 #include "game_coordinat.h"
 
@@ -121,4 +122,14 @@ bool operator==(const control_action& lhs, const control_action& rhs) noexcept
     && lhs.get_player() == rhs.get_player()
     && lhs.get_type() == rhs.get_type()
   ;
+}
+
+std::ostream& operator<<(std::ostream& os, const control_action& a) noexcept
+{
+  os
+    << "coordinat: " << a.get_coordinat() << '\n'
+    << "player: " << a.get_player() << '\n'
+    << "type: " << a.get_type()
+  ;
+  return os;
 }

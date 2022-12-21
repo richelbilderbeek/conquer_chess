@@ -31,4 +31,6 @@ std::vector<control_action_type> get_all_control_action_types() noexcept;
 /// Test this enum class and its fee functions
 void test_control_action_type();
 
+std::ostream& operator<<(std::ostream& os, const control_action_type t) noexcept;
+
 #endif // ACTION_TYPE_H
