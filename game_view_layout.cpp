@@ -7,6 +7,8 @@
 
 #include <cassert>
 #include <cmath>
+#include <iostream>
+#include <sstream>
 
 game_view_layout::game_view_layout(
   const screen_coordinat& window_size,
@@ -394,5 +396,37 @@ void test_game_view_layout()
     assert(a1_rect.get_tl() == layout.get_board().get_tl());
     assert(h8_rect.get_br() == layout.get_board().get_br());
   }
+  // 39: operator<<
+  {
+    const game_view_layout layout;
+    std::stringstream s;
+    s << layout;
+    assert(!s.str().empty());
+  }
   #endif
+}
+
+std::ostream& operator<<(std::ostream& os, const game_view_layout& layout) noexcept
+{
+  os
+    << "window_size: " << layout.get_window_size() << '\n'
+    << "board: " << layout.get_board() << '\n'
+    << "LHS units: " << layout.get_units_1() << '\n'
+    << "LHS controls: " << layout.get_controls(side::lhs) << '\n'
+    << "LHS controls key 1: " << layout.get_controls_key(side::lhs, 1) << '\n'
+    << "LHS controls key 2: " << layout.get_controls_key(side::lhs, 2) << '\n'
+    << "LHS controls key 3: " << layout.get_controls_key(side::lhs, 3) << '\n'
+    << "LHS controls key 4: " << layout.get_controls_key(side::lhs, 4) << '\n'
+    << "LHS log: " << layout.get_log(side::lhs) << '\n'
+    << "LHS debug: " << layout.get_debug_1() << '\n'
+    << "RHS units: " << layout.get_units_2() << '\n'
+    << "RHS controls: " << layout.get_controls(side::rhs) << '\n'
+    << "RHS controls key 1: " << layout.get_controls_key(side::rhs, 1) << '\n'
+    << "RHS controls key 2: " << layout.get_controls_key(side::rhs, 2) << '\n'
+    << "RHS controls key 3: " << layout.get_controls_key(side::rhs, 3) << '\n'
+    << "RHS controls key 4: " << layout.get_controls_key(side::rhs, 4) << '\n'
+    << "RHS log: " << layout.get_log(side::rhs) << '\n'
+    << "RHS debug: " << layout.get_debug_2()
+  ;
+  return os;
 }

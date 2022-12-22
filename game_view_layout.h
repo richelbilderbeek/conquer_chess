@@ -8,6 +8,7 @@
 #include "layout.h"
 #include "side.h"
 
+#include <iosfwd>
 #include <vector>
 
 
@@ -125,5 +126,7 @@ std::vector<screen_rect> get_panels(const game_view_layout& layout);
 
 /// Test the game_view_layout class
 void test_game_view_layout();
+
+std::ostream& operator<<(std::ostream& os, const game_view_layout& layout) noexcept;
 
 #endif // GAME_VIEW_LAYOUT_H
