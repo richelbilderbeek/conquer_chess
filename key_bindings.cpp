@@ -1,6 +1,8 @@
 #include "key_bindings.h"
 
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 key_bindings::key_bindings(
   const sf::Keyboard::Key up,
@@ -128,6 +130,13 @@ void test_key_bindings()
     assert(a == b);
     assert(!(a == c));
   }
+  // 44: operator<<
+  {
+    const auto keys{create_left_keyboard_key_bindings()};
+    std::stringstream s;
+    s << keys;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
@@ -142,4 +151,19 @@ bool operator==(const key_bindings& lhs, const key_bindings& rhs) noexcept
     && lhs.get_key_for_move_right() == rhs.get_key_for_move_right()
     && lhs.get_key_for_move_up() == rhs.get_key_for_move_up()
   ;
+}
+
+std::ostream& operator<<(std::ostream& os, const key_bindings& keys) noexcept
+{
+  os
+    << "Key for move up: " << keys.get_key_for_move_up() << '\n'
+    << "Key for move right: " << keys.get_key_for_move_right() << '\n'
+    << "Key for move down: " << keys.get_key_for_move_down() << '\n'
+    << "Key for move left: " << keys.get_key_for_move_left() << '\n'
+    << "Key for action 1: " << keys.get_key_for_action(1) << '\n'
+    << "Key for action 2: " << keys.get_key_for_action(2) << '\n'
+    << "Key for action 3: " << keys.get_key_for_action(3) << '\n'
+    << "Key for action 4: " << keys.get_key_for_action(4)
+  ;
+  return os;
 }

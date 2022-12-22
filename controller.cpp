@@ -522,9 +522,7 @@ bool operator!=(const controller& lhs, const controller& rhs) noexcept
 std::ostream& operator<<(std::ostream& os, const controller& c) noexcept
 {
   os
-  #ifdef FIX_ISSUE_44
     << "Key bindings: " << c.get_key_bindings() << '\n'
-  #endif
     << "Player: " << c.get_player() << '\n'
     << "Type: " << c.get_type()
   ;

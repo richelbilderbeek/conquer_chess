@@ -3,10 +3,11 @@
 
 #include "control_action.h"
 
-#include <vector>
-
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
+
+#include <iosfwd>
+#include <vector>
 
 /// Which key does which action
 class key_bindings
@@ -50,7 +51,7 @@ private:
   sf::Keyboard::Key m_down;
   sf::Keyboard::Key m_left;
   sf::Keyboard::Key m_right;
-  sf::Keyboard::Key m_up;  
+  sf::Keyboard::Key m_up;
 };
 
 /// Create the key bindings for a player at the left side of a keyboard
@@ -66,5 +67,7 @@ sf::Keyboard::Key get_key_for_action(const key_bindings& k, const int action) no
 void test_key_bindings();
 
 bool operator==(const key_bindings& lhs, const key_bindings& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const key_bindings& keys) noexcept;
 
 #endif // KEY_BINDINGS_H
