@@ -4,6 +4,8 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 replay::replay(const std::string& pgn_str)
 {
@@ -82,10 +84,35 @@ void test_replay()
     const replay r(get_replay_1_as_pgn_str());
     assert(get_n_moves(r) > 8);
   }
+  // 45: operator<<
+  {
+    const replay r(get_replay_1_as_pgn_str());
+    std::stringstream s;
+    s << r;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
 bool operator==(const replay& lhs, const replay& rhs) noexcept
 {
   return lhs.get_moves() == rhs.get_moves();
+}
+
+std::ostream& operator<<(std::ostream& os, const replay& r) noexcept
+{
+  std::stringstream s;
+  const int n = r.get_moves().size();
+  for (int i{0}; i!=n; ++i)
+  {
+    s << i << ": " << r.get_moves()[i] << ", ";
+  }
+  std::string t{s.str()};
+  if (t.empty()) return os;
+  assert(!t.empty());
+  t.pop_back();
+  assert(!t.empty());
+  t.pop_back();
+  os << t;
+  return os;
 }

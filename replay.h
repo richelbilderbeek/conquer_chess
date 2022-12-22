@@ -3,6 +3,7 @@
 
 #include "chess_move.h"
 
+#include <iosfwd>
 #include <string>
 #include <vector>
 
@@ -39,5 +40,7 @@ std::vector<std::string> split_pgn_str(const std::string pgn_str);
 void test_replay();
 
 bool operator==(const replay& lhs, const replay& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const replay& r) noexcept;
 
 #endif // REPLAY_H

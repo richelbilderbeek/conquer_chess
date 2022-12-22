@@ -93,9 +93,7 @@ std::ostream& operator<<(std::ostream& os, const replayer& r) noexcept
 {
   os
     << "Last time: " << r.get_last_time() << '\n'
-  #ifdef FIX_ISSUE_45
     << "Replay: " << r.get_replay()
-  #endif
   ;
   return os;
 
