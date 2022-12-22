@@ -361,9 +361,7 @@ std::ostream& operator<<(std::ostream& os, const game_options& options) noexcept
     << "Replayer: " << options.get_replayer() << '\n'
   #endif
     << "Screen size: " << options.get_screen_size() << '\n'
-  #ifdef FIX_ISSUE_43
     << "Starting position: " << options.get_starting_position() << '\n'
-  #endif
     << "Music volume: " << options.get_music_volume() << '\n'
     << "Sound effects volume: " << options.get_sound_effects_volume()
   ;
