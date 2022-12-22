@@ -570,6 +570,21 @@ void test_control_actions()
     const game_coordinat after{get_player_pos(g, side::lhs)};
     assert(before != after);
   }
+  // 37: operator<< for no actions
+  {
+    const control_actions actions;
+    std::stringstream s;
+    s << actions;
+    assert(s.str().empty());
+  }
+  // 37: operator<< for one action
+  {
+    control_actions actions;
+    actions.add(create_press_action_1(side::lhs));
+    std::stringstream s;
+    s << actions;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
@@ -602,20 +617,13 @@ bool operator==(const control_actions& lhs, const control_actions& rhs) noexcept
 
 std::ostream& operator<<(std::ostream& os, const control_actions& actions) noexcept
 {
-  #ifdef FIX_ISSUE_37
+  const int n = actions.get_actions().size();
+  if (n == 0) return os;
   std::stringstream s;
-  const auto& v{actions.get_actions()};
-  std::transform(
-    std::begin(v),
-    std::end(v),
-    std::back_insert_iterator(s),
-    [](const auto& a)
-    {
-      std::stringstream t;
-      t << a << ", ";
-      return t.str();
-    }
-  );
+  for (int i{0}; i!=n; ++i)
+  {
+    s << i << ": " << actions.get_actions()[i] << ", ";
+  }
   std::string u{s.str()};
   assert(!u.empty());
   u.pop_back();
@@ -623,8 +631,4 @@ std::ostream& operator<<(std::ostream& os, const control_actions& actions) noexc
   u.pop_back();
   os << u;
   return os;
-  #else
-  os << "TODO" << actions.get_actions().empty();
-  return os;
-  #endif
 }
