@@ -353,9 +353,7 @@ std::ostream& operator<<(std::ostream& os, const game_options& options) noexcept
     << "LHS color: " << options.get_left_player_color() << '\n'
     << "Margin width: " << options.get_margin_width() << '\n'
     << "Message display time (sec): " << options.get_message_display_time_secs() << '\n'
-  #ifdef FIX_ISSUE_38
     << "Replayer: " << options.get_replayer() << '\n'
-  #endif
     << "Screen size: " << options.get_screen_size() << '\n'
     << "Starting position: " << options.get_starting_position() << '\n'
     << "Music volume: " << options.get_music_volume() << '\n'

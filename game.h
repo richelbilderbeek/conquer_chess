@@ -60,6 +60,9 @@ public:
   /// Get all the pieces
   const auto& get_pieces() const noexcept { return m_pieces; }
 
+  /// Get all the replayer
+  const auto& get_replayer() const noexcept { return m_replayer; }
+
   /// Get the in-game time
   const auto& get_time() const noexcept { return m_t; }
 

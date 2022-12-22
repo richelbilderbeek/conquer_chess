@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <sstream>
 
 replayer::replayer(const replay& r)
   : m_last_time{-1.0},
@@ -71,6 +72,13 @@ void test_replayer()
     assert(!is_piece_at(g, square("e2")));
     assert(is_piece_at(g, square("e4")));
   }
+  // 38: operator<<
+  {
+    const replayer r;
+    std::stringstream s;
+    s << r;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
@@ -79,4 +87,16 @@ bool operator==(const replayer& lhs, const replayer& rhs) noexcept
   return lhs.get_replay() == rhs.get_replay()
     && lhs.get_last_time() == rhs.get_last_time()
   ;
+}
+
+std::ostream& operator<<(std::ostream& os, const replayer& r) noexcept
+{
+  os
+    << "Last time: " << r.get_last_time() << '\n'
+  #ifdef FIX_ISSUE_45
+    << "Replay: " << r.get_replay()
+  #endif
+  ;
+  return os;
+
 }

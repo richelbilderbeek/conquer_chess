@@ -5,6 +5,8 @@
 #include "delta_t.h"
 #include "replay.h"
 
+#include <iosfwd>
+
 /// Player that replays a match
 class replayer
 {
@@ -36,5 +38,7 @@ int get_n_moves(const replayer& r) noexcept;
 void test_replayer();
 
 bool operator==(const replayer& lhs, const replayer& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const replayer& r) noexcept;
 
 #endif // REPLAYER_H
