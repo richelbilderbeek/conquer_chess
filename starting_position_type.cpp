@@ -2,6 +2,8 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 #include "../magic_enum/include/magic_enum.hpp"
 
@@ -56,10 +58,23 @@ void test_starting_position_type()
       assert(next != spt);
     }
   }
+  // 43: operator<<
+  {
+    std::stringstream s;
+    const auto t = starting_position_type::before_en_passant;
+    s << t;
+    assert(!s.str().empty());
+  }
 #endif // DEBUG
 }
 
 std::string to_str(const starting_position_type t) noexcept
 {
   return std::string(magic_enum::enum_name(t));
+}
+
+std::ostream& operator<<(std::ostream& os, const starting_position_type t) noexcept
+{
+  os << to_str(t);
+  return os;
 }

@@ -1,6 +1,7 @@
 #ifndef STARTING_POSITION_TYPE_H
 #define STARTING_POSITION_TYPE_H
 
+#include <iosfwd>
 #include <string>
 #include <vector>
 
@@ -35,5 +36,7 @@ starting_position_type get_next(const starting_position_type starting_position) 
 void test_starting_position_type();
 
 std::string to_str(const starting_position_type t) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const starting_position_type t) noexcept;
 
 #endif // STARTING_POSITION_TYPE_H
