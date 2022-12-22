@@ -3,6 +3,8 @@
 
 #include "delta_t.h"
 
+#include <iosfwd>
+
 /// The game speed
 enum class game_speed
 {
@@ -22,5 +24,7 @@ void test_game_speed();
 delta_t to_delta_t(const game_speed speed) noexcept;
 
 std::string to_str(const game_speed speed) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const game_speed speed) noexcept;
 
 #endif // GAME_SPEED_H

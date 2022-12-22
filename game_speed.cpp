@@ -1,6 +1,10 @@
 #include "game_speed.h"
 
 #include <cassert>
+#include <iostream>
+#include <sstream>
+
+#include "../magic_enum/include/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 game_speed get_next(const game_speed speed) noexcept
 {
@@ -48,6 +52,13 @@ void test_game_speed()
     assert(to_str(game_speed::fast) == "fast");
     assert(to_str(game_speed::fastest) == "fastest");
   }
+  // 42: operator<<
+  {
+    const auto speed{game_speed::fastest};
+    std::stringstream s;
+    s << speed;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
@@ -68,6 +79,8 @@ delta_t to_delta_t(const game_speed speed) noexcept
 
 std::string to_str(const game_speed speed) noexcept
 {
+  return std::string(magic_enum::enum_name(speed));
+  /*
   switch (speed)
   {
     case game_speed::fastest: return "fastest";
@@ -79,4 +92,12 @@ std::string to_str(const game_speed speed) noexcept
       assert(speed == game_speed::slowest);
       return "slowest";
   }
+  */
+}
+
+
+std::ostream& operator<<(std::ostream& os, const game_speed speed) noexcept
+{
+  os << to_str(speed);
+  return os;
 }
