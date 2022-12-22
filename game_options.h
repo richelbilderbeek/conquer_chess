@@ -1,8 +1,6 @@
 #ifndef GAME_OPTIONS_H
 #define GAME_OPTIONS_H
 
-#include <vector>
-
 #include "controller.h"
 #include "controller_type.h"
 #include "delta_t.h"
@@ -12,6 +10,9 @@
 #include "volume.h"
 #include "replayer.h"
 #include "game_speed.h"
+
+#include <iosfwd>
+#include <vector>
 
 /// Options for the game, such as speed
 class game_options
@@ -212,5 +213,7 @@ void test_game_options();
 void toggle_left_player_color(game_options& options);
 
 bool operator==(const game_options& lhs, const game_options& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const game_options& options) noexcept;
 
 #endif // GAME_OPTIONS_H

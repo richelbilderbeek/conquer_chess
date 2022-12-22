@@ -3,7 +3,10 @@
 #include "controllers.h"
 #include "game_view_layout.h"
 #include "pieces.h"
+
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 game_options::game_options(
   const screen_coordinat& screen_size,
@@ -303,6 +306,13 @@ void test_game_options()
     assert(get_keyboard_user_player_color(options) == chess_color::black);
     assert(get_mouse_user_player_color(options) == chess_color::white);
   }
+  // 40: operator<<
+  {
+    const auto options{create_default_game_options()};
+    std::stringstream s;
+    s << options;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
@@ -330,4 +340,32 @@ bool operator==(const game_options& lhs, const game_options& rhs) noexcept
     && lhs.get_music_volume() == rhs.get_music_volume()
     && lhs.get_sound_effects_volume() == rhs.get_sound_effects_volume()
   ;
+}
+
+std::ostream& operator<<(std::ostream& os, const game_options& options) noexcept
+{
+  os
+    << "click distance: " << options.get_click_distance() << '\n'
+  #ifdef FIX_ISSUE_41
+    << "LHS controller: " << options.get_controller(side::lhs) << '\n'
+    << "RHS controller: " << options.get_controller(side::rhs) << '\n'
+  #endif
+    << "damage per chess move: " << options.get_damage_per_chess_move() << '\n'
+  #ifdef FIX_ISSUE_42
+    << "game speed: " << options.get_game_speed() << '\n'
+  #endif
+    << "LHS color: " << options.get_left_player_color() << '\n'
+    << "Margin width: " << options.get_margin_width() << '\n'
+    << "Message display time (sec): " << options.get_message_display_time_secs() << '\n'
+  #ifdef FIX_ISSUE_38
+    << "Replayer: " << options.get_replayer() << '\n'
+  #endif
+    << "Screen size: " << options.get_screen_size() << '\n'
+  #ifdef FIX_ISSUE_43
+    << "Starting position: " << options.get_starting_position() << '\n'
+  #endif
+    << "Music volume: " << options.get_music_volume() << '\n'
+    << "Sound effects volume: " << options.get_sound_effects_volume()
+  ;
+  return os;
 }

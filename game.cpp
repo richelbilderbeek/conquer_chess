@@ -1475,9 +1475,7 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
     << "Layout: " << g.get_layout() << '\n'
     << "LHS player position: " << g.get_player_pos(side::lhs) << '\n'
     << "RHS player position: " << g.get_player_pos(side::rhs) << '\n'
-#ifdef FIX_ISSUE_40
     << "Options: " << g.get_options() << '\n'
-#endif // FIX_ISSUE_40
 #ifdef FIX_ISSUE_38
     << "Replayer: " << g.get_replayer()
 #endif // FIX_ISSUE_38
