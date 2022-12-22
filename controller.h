@@ -5,6 +5,8 @@
 #include "control_action.h"
 #include "controller_type.h"
 
+#include <iosfwd>
+
 /// A controller is a class that takes input from
 /// a mouse/keyboard/AI and converts these into
 /// the right 'control_action'.
@@ -112,5 +114,7 @@ void test_controller();
 
 bool operator==(const controller& lhs, const controller& rhs) noexcept;
 bool operator!=(const controller& lhs, const controller& rhs) noexcept;
+
+std::ostream& operator<<(std::ostream& os, const controller& c) noexcept;
 
 #endif // CONTROLLER_H

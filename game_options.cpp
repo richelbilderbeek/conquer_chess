@@ -346,10 +346,8 @@ std::ostream& operator<<(std::ostream& os, const game_options& options) noexcept
 {
   os
     << "click distance: " << options.get_click_distance() << '\n'
-  #ifdef FIX_ISSUE_41
     << "LHS controller: " << options.get_controller(side::lhs) << '\n'
     << "RHS controller: " << options.get_controller(side::rhs) << '\n'
-  #endif
     << "damage per chess move: " << options.get_damage_per_chess_move() << '\n'
     << "game speed: " << options.get_game_speed() << '\n'
     << "LHS color: " << options.get_left_player_color() << '\n'

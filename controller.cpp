@@ -4,6 +4,8 @@
 #include "sfml_helper.h"
 
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 controller::controller(
   const controller_type type,
@@ -494,6 +496,13 @@ void test_controller()
     assert(a == b);
     assert(!(a == c));
   }
+  // 41: operator<<
+  {
+    const controller c{create_left_keyboard_controller(side::lhs)};
+    std::stringstream s;
+    s << c;
+    assert(!s.str().empty());
+  }
 #endif
 }
 
@@ -508,4 +517,16 @@ bool operator==(const controller& lhs, const controller& rhs) noexcept
 bool operator!=(const controller& lhs, const controller& rhs) noexcept
 {
   return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os, const controller& c) noexcept
+{
+  os
+  #ifdef FIX_ISSUE_44
+    << "Key bindings: " << c.get_key_bindings() << '\n'
+  #endif
+    << "Player: " << c.get_player() << '\n'
+    << "Type: " << c.get_type()
+  ;
+  return os;
 }
