@@ -873,8 +873,6 @@ void test_game_keyboard_use()
     assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
     assert(collect_messages(g).at(1).get_message_type() == message_type::cannot);
   }
-  #define FIX_ISSSUE_47
-  #ifdef FIX_ISSSUE_47
   // 47: set_keyboard_player_pos for RHS player
   {
     game g;
@@ -884,7 +882,7 @@ void test_game_keyboard_use()
     set_keyboard_player_pos(g, s);
     assert(s == square(get_player_pos(g, get_keyboard_user_player_side(g))));
   }
-  // 47: set_keyboard_player_pos for LHS player
+  // 47: set_keyboard_player_pos for RHS player
   {
     game g{
       create_default_game_options_with_controllers(
@@ -896,10 +894,7 @@ void test_game_keyboard_use()
     const square s("a1");
     set_keyboard_player_pos(g, s);
     assert(s == square(get_player_pos(g, get_keyboard_user_player_side(g))));
-    assert(!"FIX #47");
-
   }
-  #endif // FIX_ISSUE_47
 #endif // NDEBUG // no tests in release
 }
 

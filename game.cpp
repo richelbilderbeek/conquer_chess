@@ -1381,7 +1381,8 @@ void set_keyboard_player_pos(
 )
 {
   assert(has_keyboard_controller(g.get_options()));
-  const auto current_pos{get_player_pos(g, side::lhs)};
+
+  const auto current_pos{get_player_pos(g, get_keyboard_user_player_side(g))};
   const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
   const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
   for (int i{0}; i!=n_right; ++i)
