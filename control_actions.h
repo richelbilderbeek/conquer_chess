@@ -71,6 +71,27 @@ void do_select(
   const chess_color player_color
 );
 
+/// Process a space, hence a square as a coordinat
+void do_select(
+  game& g,
+  const square& coordinat,
+  const chess_color player_color
+);
+
+/// Select a piece
+void do_select(
+  game& g,
+  const std::string& square_str,
+  const chess_color player_color
+);
+
+/// Select a piece
+void do_select(
+  game& g,
+  const std::string& square_str,
+  const side player_side
+);
+
 /// Respond to action 1
 void process_press_action_1(game& g, const control_action& action);
 
@@ -83,12 +104,6 @@ void process_press_action_3(game& g, const control_action& action);
 /// Respond to action 4
 void process_press_action_4(game& g, const control_action& action);
 
-/// Process a space, hence a square as a coordinat
-void do_select(
-  game& g,
-  const square& coordinat,
-  const chess_color player_color
-);
 /// Process an A or right-mouse-button down
 void start_attack(
   game& g,

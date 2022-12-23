@@ -169,6 +169,24 @@ void do_select(
   }
 }
 
+void do_select(
+  game& g,
+  const std::string& square_str,
+  const chess_color player_color
+)
+{
+  do_select(g, square(square_str), player_color);
+}
+
+void do_select(
+  game& g,
+  const std::string& square_str,
+  const side player_side
+)
+{
+  do_select(g, square_str, get_player_color(g, player_side));
+}
+
 void process_press_action_1(game& g, const control_action& action)
 {
   assert(action.get_type() == control_action_type::press_action_1);

@@ -104,6 +104,14 @@ bool can_castle_kingside(const piece& p, const game& g) noexcept;
 /// Can this piece castle queenside?
 bool can_castle_queenside(const piece& p, const game& g) noexcept;
 
+/// Can an action be done?
+bool can_do(const game& g,
+  const piece& selected_piece,
+  const piece_action_type action,
+  const square& cursor_square,
+  const side player_side
+);
+
 /// Can the player select a piece at the current mouse position?
 bool can_player_select_piece_at_cursor_pos(
   const game& g,

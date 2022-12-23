@@ -553,6 +553,14 @@ void test_game_functions()
       assert(!get_default_piece_action(g, side::lhs));
       assert(!get_default_piece_action(g, side::rhs));
     }
+    // 53: nothing selected, cursor at square with opponent piece -> no action
+    {
+      game g;
+      move_cursor_to(g, "d8", side::lhs);
+      move_cursor_to(g, "d1", side::rhs);
+      assert(!get_default_piece_action(g, side::lhs));
+      assert(!get_default_piece_action(g, side::rhs));
+    }
     // 53: nothing selected, cursor at square of own color -> select
     {
       game g;
@@ -574,7 +582,16 @@ void test_game_functions()
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::unselect);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::unselect);
     }
-
+    // 53: Piece selected, cursor at valid target square -> move
+    {
+      game g;
+      do_select(g, "d2", side::lhs);
+      do_select(g, "d7", side::rhs);
+      move_cursor_to(g, "d3", side::lhs);
+      move_cursor_to(g, "d5", side::rhs);
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::move);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::move);
+    }
     #endif // FIX_ISSUE_53
     //#define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21

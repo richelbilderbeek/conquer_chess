@@ -82,6 +82,27 @@ bool can_castle_queenside(const piece& p, const game& g) noexcept
   return true;
 }
 
+bool can_do(const game& g,
+  const piece& selected_piece,
+  const piece_action_type action,
+  const square& cursor_square,
+  const side player_side
+)
+{
+  const auto player_color{get_player_color(g, player_side)};
+  assert(player_color == selected_piece.get_color());
+  if (action == piece_action_type::move)
+  {
+    return can_move(
+      player_color,
+      selected_piece.get_type(),
+      selected_piece.get_current_square(),
+      cursor_square
+    );
+  }
+  return false;
+}
+
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
   const chess_color player
@@ -1119,14 +1140,26 @@ std::optional<piece_action_type> get_default_piece_action(
   const side player_side
 ) noexcept
 {
-  if (count_selected_units(g, player_side))
+
+  if (has_selected_pieces(g, player_side))
   {
     // Has selected pieces
-    const auto cursor_pos{get_cursor_pos(g, player_side)};
-    if (is_piece_at(g, square(cursor_pos)))
+    const auto cursor_square{get_cursor_square(g, player_side)};
+
+    if (is_piece_at(g, cursor_square))
     {
-      const piece& p{get_piece_at(g, square(cursor_pos))};
+      const piece& p{get_piece_at(g, cursor_square)};
       if (p.is_selected()) return piece_action_type::unselect;
+    }
+    else
+    {
+      // No piece at cursor, maybe can move there?
+      assert(get_selected_pieces(g, player_side).size() == 1);
+      const auto selected_piece{get_selected_pieces(g, player_side)[0]};
+      if (can_do(g, selected_piece, piece_action_type::move, cursor_square, player_side))
+      {
+        return piece_action_type::move;
+      }
     }
   }
   else
@@ -1136,7 +1169,11 @@ std::optional<piece_action_type> get_default_piece_action(
     if (is_piece_at(g, square(cursor_pos)))
     {
       const piece& p{get_piece_at(g, square(cursor_pos))};
-      if (!p.is_selected()) return piece_action_type::select;
+      const auto player_color{get_player_color(g, player_side)};
+      if (p.get_color() == player_color)
+      {
+        if (!p.is_selected()) return piece_action_type::select;
+      }
     }
   }
   return std::optional<piece_action_type>();
