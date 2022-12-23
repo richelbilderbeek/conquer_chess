@@ -570,10 +570,7 @@ void test_game_functions()
       move_cursor_to(g, "d8", side::rhs);
       g.add_action(create_press_action_1(side::lhs));
       g.add_action(create_press_action_1(side::rhs));
-      move_cursor_to(g, "d1", side::lhs);
-      move_cursor_to(g, "d8", side::rhs);
-      assert(get_default_piece_action(g, side::lhs));
-      assert(get_default_piece_action(g, side::rhs));
+      g.tick(delta_t(0.0));
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::unselect);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::unselect);
     }

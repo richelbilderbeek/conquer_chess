@@ -1099,6 +1099,14 @@ game_coordinat get_cursor_pos(
   return get_player_pos(g, player_side);
 }
 
+square get_cursor_square(
+  const game& g,
+  const side player_side
+)
+{
+  return square(get_cursor_pos(g, player_side));
+}
+
 game get_default_game() noexcept
 {
   return game{

@@ -369,6 +369,12 @@ game_coordinat get_cursor_pos(
   const side player_side
 );
 
+/// Get the square of the cursor position for a player
+square get_cursor_square(
+  const game& g,
+  const side player_side
+);
+
 game get_default_game() noexcept;
 
 /// Get the default, primary, most likely piece action
