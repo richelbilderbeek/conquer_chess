@@ -52,11 +52,9 @@ public:
   const auto& get_board() const noexcept { return m_board; }
   const screen_rect& get_controls(const side player) const noexcept;
   const screen_rect& get_controls_key(const side player, const int key) const noexcept;
-  const auto& get_debug_1() const noexcept { return m_debug_1; }
-  const auto& get_debug_2() const noexcept { return m_debug_2; }
+  const screen_rect& get_debug(const side player) const noexcept;
   const screen_rect& get_log(const side player) const noexcept;
-  const auto& get_units_1() const noexcept { return m_units_1; }
-  const auto& get_units_2() const noexcept { return m_units_2; }
+  const screen_rect& get_units(const side player) const noexcept;
 
   screen_coordinat get_window_size() const noexcept { return m_window_size; }
 
@@ -74,12 +72,12 @@ private:
   screen_rect m_controls_rhs_key_2;
   screen_rect m_controls_rhs_key_3;
   screen_rect m_controls_rhs_key_4;
-  screen_rect m_debug_1;
-  screen_rect m_debug_2;
-  screen_rect m_log_1;
-  screen_rect m_log_2;
-  screen_rect m_units_1;
-  screen_rect m_units_2;
+  screen_rect m_debug_lhs;
+  screen_rect m_debug_rhs;
+  screen_rect m_log_lhs;
+  screen_rect m_log_rhs;
+  screen_rect m_units_lhs;
+  screen_rect m_units_rhs;
 
   /// The size of the window
   screen_coordinat m_window_size;

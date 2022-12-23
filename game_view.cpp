@@ -402,8 +402,8 @@ void show_debug_1(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_debug_1().get_tl().get_x(),
-    layout.get_debug_1().get_tl().get_y()
+    layout.get_debug(side::lhs).get_tl().get_x(),
+    layout.get_debug(side::lhs).get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -443,8 +443,8 @@ void show_debug_2(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_debug_2().get_tl().get_x(),
-    layout.get_debug_2().get_tl().get_y()
+    layout.get_debug(side::rhs).get_tl().get_x(),
+    layout.get_debug(side::rhs).get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -873,7 +873,7 @@ void show_unit_sprites_1(game_view& view)
   const auto& layout = view.get_game().get_layout();
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
-  screen_coordinat screen_position = layout.get_units_1().get_tl();
+  screen_coordinat screen_position = layout.get_units(side::lhs).get_tl();
   const auto player_color{get_left_player_color(view.get_game().get_options())};
 
   for (const auto& piece: get_selected_pieces(view.get_game(), player_color))
@@ -923,7 +923,7 @@ void show_unit_sprites_2(game_view& view)
   const auto& layout = view.get_game().get_layout();
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
-  screen_coordinat screen_position = layout.get_units_2().get_tl();
+  screen_coordinat screen_position = layout.get_units(side::rhs).get_tl();
   const auto player_color{get_right_player_color(view.get_game().get_options())};
   for (const auto& piece: get_selected_pieces(view.get_game(), player_color))
   {

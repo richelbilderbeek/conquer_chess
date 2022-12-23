@@ -76,10 +76,10 @@ private:
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
 
-  /// The in-game coordinat of the keyboard user
+  /// The in-game coordinat of the LHS user
   game_coordinat m_player_1_pos;
 
-  /// The in-game coordinat of the mouse
+  /// The in-game coordinat of the RHS user
   game_coordinat m_player_2_pos;
 
   /// The game options

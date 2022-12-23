@@ -52,7 +52,7 @@ game_view_layout::game_view_layout(
 
 
   // Panel 1
-  m_units_1 = screen_rect(
+  m_units_lhs = screen_rect(
     screen_coordinat(x1, y1),
     screen_coordinat(x2, y2)
   );
@@ -60,11 +60,11 @@ game_view_layout::game_view_layout(
     screen_coordinat(x1, y2),
     screen_coordinat(x2, y3)
   );
-  m_log_1 = screen_rect(
+  m_log_lhs = screen_rect(
     screen_coordinat(x1, y4),
     screen_coordinat(x2, y5)
   );
-  m_debug_1 = screen_rect(
+  m_debug_lhs = screen_rect(
     screen_coordinat(x1, y6),
     screen_coordinat(x2, y7)
   );
@@ -84,7 +84,7 @@ game_view_layout::game_view_layout(
   assert(get_width(m_board) == get_height(m_board));
 
   // Panel 2
-  m_units_2 = screen_rect(
+  m_units_rhs = screen_rect(
     screen_coordinat(x5, y1),
     screen_coordinat(x6, y2)
   );
@@ -92,11 +92,11 @@ game_view_layout::game_view_layout(
     screen_coordinat(x5, y2),
     screen_coordinat(x6, y3)
   );
-  m_log_2 = screen_rect(
+  m_log_rhs = screen_rect(
     screen_coordinat(x5, y4),
     screen_coordinat(x6, y5)
   );
-  m_debug_2 = screen_rect(
+  m_debug_rhs = screen_rect(
     screen_coordinat(x5, y6),
     screen_coordinat(x6, y7)
   );
@@ -259,13 +259,19 @@ const screen_rect& game_view_layout::get_controls_key(
   }
 }
 
+const screen_rect& game_view_layout::get_debug(const side player) const noexcept
+{
+  if (player == side::lhs) return m_debug_lhs;
+  assert(player == side::rhs);
+  return m_debug_rhs;
+}
 
 
 const screen_rect& game_view_layout::get_log(const side player) const noexcept
 {
-  if (player == side::lhs) return m_log_1;
+  if (player == side::lhs) return m_log_lhs;
   assert(player == side::rhs);
-  return m_log_2;
+  return m_log_rhs;
 }
 
 std::vector<screen_rect> get_panels(const game_view_layout& layout)
@@ -275,12 +281,12 @@ std::vector<screen_rect> get_panels(const game_view_layout& layout)
     layout.get_board(),
     layout.get_controls(side::lhs),
     layout.get_controls(side::rhs),
-    layout.get_debug_1(),
-    layout.get_debug_2(),
+    layout.get_debug(side::lhs),
+    layout.get_debug(side::rhs),
     layout.get_log(side::lhs),
     layout.get_log(side::rhs),
-    layout.get_units_1(),
-    layout.get_units_2()
+    layout.get_units(side::lhs),
+    layout.get_units(side::rhs)
   };
 }
 
@@ -292,6 +298,13 @@ double get_square_height(const game_view_layout& layout) noexcept
 double get_square_width(const game_view_layout& layout) noexcept
 {
   return static_cast<double>(get_board_width(layout)) / 8.0;
+}
+
+const screen_rect& game_view_layout::get_units(const side player) const noexcept
+{
+  if (player == side::lhs) return m_units_lhs;
+  assert(player == side::rhs);
+  return m_units_rhs;
 }
 
 void test_game_view_layout()
@@ -308,10 +321,10 @@ void test_game_view_layout()
     assert(layout.get_board().get_tl().get_x() > 0.0);
     assert(layout.get_board().get_tl().get_y() > 0.0);
 
-    assert(layout.get_debug_2().get_br().get_x() > 0.0);
-    assert(layout.get_debug_2().get_br().get_y() > 0.0);
-    assert(layout.get_units_2().get_tl().get_x() > 0.0);
-    assert(layout.get_units_2().get_tl().get_y() > 0.0);
+    assert(layout.get_debug(side::lhs).get_br().get_x() > 0.0);
+    assert(layout.get_debug(side::lhs).get_br().get_y() > 0.0);
+    assert(layout.get_units(side::lhs).get_tl().get_x() > 0.0);
+    assert(layout.get_units(side::lhs).get_tl().get_y() > 0.0);
     assert(get_board_width(layout) > 0.0);
     assert(get_board_height(layout) > 0.0);
     assert(get_square_width(layout) > 0.0);
@@ -411,22 +424,22 @@ std::ostream& operator<<(std::ostream& os, const game_view_layout& layout) noexc
   os
     << "window_size: " << layout.get_window_size() << '\n'
     << "board: " << layout.get_board() << '\n'
-    << "LHS units: " << layout.get_units_1() << '\n'
+    << "LHS units: " << layout.get_units(side::lhs) << '\n'
     << "LHS controls: " << layout.get_controls(side::lhs) << '\n'
     << "LHS controls key 1: " << layout.get_controls_key(side::lhs, 1) << '\n'
     << "LHS controls key 2: " << layout.get_controls_key(side::lhs, 2) << '\n'
     << "LHS controls key 3: " << layout.get_controls_key(side::lhs, 3) << '\n'
     << "LHS controls key 4: " << layout.get_controls_key(side::lhs, 4) << '\n'
     << "LHS log: " << layout.get_log(side::lhs) << '\n'
-    << "LHS debug: " << layout.get_debug_1() << '\n'
-    << "RHS units: " << layout.get_units_2() << '\n'
+    << "LHS debug: " << layout.get_debug(side::lhs) << '\n'
+    << "RHS units: " << layout.get_units(side::rhs) << '\n'
     << "RHS controls: " << layout.get_controls(side::rhs) << '\n'
     << "RHS controls key 1: " << layout.get_controls_key(side::rhs, 1) << '\n'
     << "RHS controls key 2: " << layout.get_controls_key(side::rhs, 2) << '\n'
     << "RHS controls key 3: " << layout.get_controls_key(side::rhs, 3) << '\n'
     << "RHS controls key 4: " << layout.get_controls_key(side::rhs, 4) << '\n'
     << "RHS log: " << layout.get_log(side::rhs) << '\n'
-    << "RHS debug: " << layout.get_debug_2()
+    << "RHS debug: " << layout.get_debug(side::rhs)
   ;
   return os;
 }
