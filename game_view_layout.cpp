@@ -421,25 +421,27 @@ void test_game_view_layout()
 
 std::ostream& operator<<(std::ostream& os, const game_view_layout& layout) noexcept
 {
-  os
+  std::stringstream s;
+  s
     << "window_size: " << layout.get_window_size() << '\n'
     << "board: " << layout.get_board() << '\n'
-    << "LHS units: " << layout.get_units(side::lhs) << '\n'
-    << "LHS controls: " << layout.get_controls(side::lhs) << '\n'
-    << "LHS controls key 1: " << layout.get_controls_key(side::lhs, 1) << '\n'
-    << "LHS controls key 2: " << layout.get_controls_key(side::lhs, 2) << '\n'
-    << "LHS controls key 3: " << layout.get_controls_key(side::lhs, 3) << '\n'
-    << "LHS controls key 4: " << layout.get_controls_key(side::lhs, 4) << '\n'
-    << "LHS log: " << layout.get_log(side::lhs) << '\n'
-    << "LHS debug: " << layout.get_debug(side::lhs) << '\n'
-    << "RHS units: " << layout.get_units(side::rhs) << '\n'
-    << "RHS controls: " << layout.get_controls(side::rhs) << '\n'
-    << "RHS controls key 1: " << layout.get_controls_key(side::rhs, 1) << '\n'
-    << "RHS controls key 2: " << layout.get_controls_key(side::rhs, 2) << '\n'
-    << "RHS controls key 3: " << layout.get_controls_key(side::rhs, 3) << '\n'
-    << "RHS controls key 4: " << layout.get_controls_key(side::rhs, 4) << '\n'
-    << "RHS log: " << layout.get_log(side::rhs) << '\n'
-    << "RHS debug: " << layout.get_debug(side::rhs)
   ;
+  for (const auto side: get_all_sides())
+  {
+    s
+      << side << " units: " << layout.get_units(side) << '\n'
+      << side << " controls: " << layout.get_controls(side) << '\n'
+      << side << " controls key 1: " << layout.get_controls_key(side, 1) << '\n'
+      << side << " controls key 2: " << layout.get_controls_key(side, 2) << '\n'
+      << side << " controls key 3: " << layout.get_controls_key(side, 3) << '\n'
+      << side << " controls key 4: " << layout.get_controls_key(side, 4) << '\n'
+      << side << " log: " << layout.get_log(side) << '\n'
+      << side << " debug: " << layout.get_debug(side) << '\n'
+    ;
+  }
+  std::string t{s.str()};
+  assert(!t.empty());
+  t.pop_back(); // the newline
+  os << t;
   return os;
 }
