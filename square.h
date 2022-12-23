@@ -119,10 +119,6 @@ std::vector<square> get_intermediate_squares(
 /// Get the rank of a square, e.g. '3' from 'e3'
 int get_rank(const square& s) noexcept;
 
-/// Rotate the (coordinator of the) square,
-/// i.e. turn the board 180 degrees
-//1square get_rotated_square(const square& position) noexcept;
-
 /// Is the square 's' occupied?
 bool is_occupied(
   const square& s,

@@ -535,6 +535,29 @@ void test_game_functions()
       assert(!is_in(h4xg3ep, actions_again));
       assert(!is_in(f4xg3ep, actions_again));
     }
+    // is_empty_between
+    {
+      const game g;
+      assert(is_empty_between(g, "d3", "d5"));
+      assert(!is_empty_between(g, "a1", "a8"));
+      assert(is_empty_between(g, "d3", "d4"));
+    }
+    // can_do
+    {
+      const game g;
+      // Pawns move forward
+      assert(can_do(g, get_piece_at(g, "d2"), piece_action_type::move, "d4", side::lhs));
+      assert(can_do(g, get_piece_at(g, "d7"), piece_action_type::move, "d5", side::rhs));
+      // Pawns do not move backwards
+      assert(!can_do(g, get_piece_at(g, "d2"), piece_action_type::move, "d1", side::lhs));
+      assert(!can_do(g, get_piece_at(g, "d7"), piece_action_type::move, "d8", side::rhs));
+      // Knights can jump
+      assert(can_do(g, get_piece_at(g, "b1"), piece_action_type::move, "c3", side::lhs));
+      assert(can_do(g, get_piece_at(g, "b8"), piece_action_type::move, "c6", side::rhs));
+      // Bishops cannot move over other pieces
+      assert(!can_do(g, get_piece_at(g, "c1"), piece_action_type::move, "a3", side::lhs));
+      assert(!can_do(g, get_piece_at(g, "c8"), piece_action_type::move, "a6", side::rhs));
+    }
     // 55: move cursor
     {
       game g;

@@ -112,6 +112,14 @@ bool can_do(const game& g,
   const side player_side
 );
 
+/// Can an action be done?
+bool can_do(const game& g,
+  const piece& selected_piece,
+  const piece_action_type action,
+  const std::string& cursor_square_str,
+  const side player_side
+);
+
 /// Can the player select a piece at the current mouse position?
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
@@ -524,6 +532,22 @@ bool has_selected_pieces(const game& g, const side player);
 
 /// Is the square empty?
 bool is_empty(const game& g, const square& s) noexcept;
+
+/// Are all squares between these two squares empty?
+/// Returns true if the squares are adjacent
+bool is_empty_between(
+  const game& g,
+  const square& from,
+  const square& to
+);
+
+/// Are all squares between these two squares empty?
+/// Returns true if the squares are adjacent
+bool is_empty_between(
+  const game& g,
+  const std::string& from_square_str,
+  const std::string& to_square_str
+);
 
 /// Are all pieces idle?
 bool is_idle(const game& g) noexcept;

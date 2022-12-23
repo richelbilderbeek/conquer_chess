@@ -93,14 +93,39 @@ bool can_do(const game& g,
   assert(player_color == selected_piece.get_color());
   if (action == piece_action_type::move)
   {
-    return can_move(
-      player_color,
-      selected_piece.get_type(),
+    // Is it theoretically possible, e.g. on an empty board?
+    if (
+      !can_move(
+        player_color,
+        selected_piece.get_type(),
+        selected_piece.get_current_square(),
+        cursor_square
+      )
+    ) return false;
+    // Is it possible in this situation?
+    return is_empty_between(
+      g,
       selected_piece.get_current_square(),
       cursor_square
     );
   }
   return false;
+}
+
+bool can_do(const game& g,
+  const piece& selected_piece,
+  const piece_action_type action,
+  const std::string& cursor_square_str,
+  const side player_side
+)
+{
+  return can_do(
+    g,
+    selected_piece,
+    action,
+    square(cursor_square_str),
+    player_side
+  );
 }
 
 bool can_player_select_piece_at_cursor_pos(
@@ -1437,6 +1462,35 @@ bool has_selected_pieces(const game& g, const side player)
 bool is_empty(const game& g, const square& s) noexcept
 {
   return !is_piece_at(g, s);
+}
+
+bool is_empty_between(
+  const game& g,
+  const square& from,
+  const square& to
+)
+{
+  assert(from != to);
+  const auto squares{get_intermediate_squares(from, to)};
+  assert(squares.front() == from);
+  assert(squares.back() == to);
+  assert(squares.size() >= 2);
+  const int n{static_cast<int>(squares.size())};
+  for (int i{1}; i!=n-1;++i)
+  {
+    assert(i < n);
+    if (!is_empty(g, squares[i])) return false;
+  }
+  return true;
+}
+
+bool is_empty_between(
+  const game& g,
+  const std::string& from_square_str,
+  const std::string& to_square_str
+)
+{
+  return is_empty_between(g, square(from_square_str), square(to_square_str));
 }
 
 bool is_idle(const game& g) noexcept
