@@ -17,6 +17,20 @@ controls_view::controls_view(const controller& c)
 {
 
 }
+void controls_view::change_selected()
+{
+
+  switch (m_selected)
+  {
+    case controls_view_item::type:
+      m_controller.set_type(
+        get_next(m_controller.get_type())
+      );
+    break;
+    default:
+      std::clog << "TODO\n";
+  }
+}
 
 void draw_panel(
   controls_view& v,
@@ -170,16 +184,7 @@ bool controls_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
-        switch (m_selected)
-        {
-          case controls_view_item::type:
-            m_controller.set_type(
-              get_next(m_controller.get_type())
-            );
-          break;
-          default:
-            std::clog << "TODO\n";
-        }
+        change_selected();
       }
       else if (key_pressed == sf::Keyboard::Key::Q)
       {
@@ -191,6 +196,27 @@ bool controls_view::process_events()
         // debug
         std::clog << "Debug";
       }
+    }
+    else if (event.type == sf::Event::MouseMoved)
+    {
+      const auto mouse_screen_pos{
+        screen_coordinat(event.mouseMove.x, event.mouseMove.y)
+      };
+      if (is_in(mouse_screen_pos, m_layout.get_action_1_value())) m_selected = controls_view_item::action_1;
+      if (is_in(mouse_screen_pos, m_layout.get_action_2_value())) m_selected = controls_view_item::action_2;
+      if (is_in(mouse_screen_pos, m_layout.get_action_3_value())) m_selected = controls_view_item::action_3;
+      if (is_in(mouse_screen_pos, m_layout.get_action_4_value())) m_selected = controls_view_item::action_4;
+      if (is_in(mouse_screen_pos, m_layout.get_controller_type_value())) m_selected = controls_view_item::type;
+      if (is_in(mouse_screen_pos, m_layout.get_do_value())) m_selected = controls_view_item::do_action;
+      if (is_in(mouse_screen_pos, m_layout.get_down_value())) m_selected = controls_view_item::down;
+      if (is_in(mouse_screen_pos, m_layout.get_left_value())) m_selected = controls_view_item::left;
+      if (is_in(mouse_screen_pos, m_layout.get_next_value())) m_selected = controls_view_item::next_action;
+      if (is_in(mouse_screen_pos, m_layout.get_right_value())) m_selected = controls_view_item::right;
+      if (is_in(mouse_screen_pos, m_layout.get_up_value())) m_selected = controls_view_item::up;
+    }
+    else if (event.type == sf::Event::MouseButtonPressed)
+    {
+      change_selected();
     }
   }
   return false; // Do not close the window :-)

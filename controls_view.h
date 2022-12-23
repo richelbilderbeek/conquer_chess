@@ -48,6 +48,9 @@ private:
   /// The selected item
   controls_view_item m_selected;
 
+  /// Change the selected item, from spacebar or LMB click
+  void change_selected();
+
   /// Process all events
   /// @return if the user wants to quit
   bool process_events();
