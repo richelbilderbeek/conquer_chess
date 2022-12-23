@@ -73,7 +73,7 @@ these are the differences:
 
 From [https://database.lichess.org/](https://database.lichess.org/).
 There I took the earliest games played in january 2013
-from [https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.bz2](https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.bz2)
+from (the now expired link) `https://database.lichess.org/standard/lichess_db_standard_rated_2013-01.pgn.bz2`.
 
 ## Game settings
 
