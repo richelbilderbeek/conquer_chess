@@ -179,6 +179,33 @@ std::string get_text_for_action(
 )
 {
   const auto& g{view.get_game()};
+  const auto default_action{
+    get_default_piece_action(g, c.get_player())
+  };
+  if (!default_action) return "";
+  if (key == 1)
+  {
+    return to_str(default_action.value());
+  }
+  else
+  {
+    if (default_action.value() == piece_action_type::promote)
+    {
+      switch (key)
+      {
+        case 2: return "Promote to Rook";
+        case 3: return "Promote to bishop";
+        case 4:
+        default:
+          assert(key == 4);
+          return "Promote to knight";
+      }
+    }
+    return "";
+  }
+
+  /*
+  const auto& g{view.get_game()};
   const chess_color player{
     get_player_color(view, c.get_player())
   };
@@ -212,6 +239,7 @@ std::string get_text_for_action(
     is_king_that_may_castle_queenside,
     key
   );
+  */
 }
 
 const delta_t& get_time(const game_view& v) noexcept
