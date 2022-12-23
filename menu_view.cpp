@@ -191,7 +191,7 @@ bool menu_view::process_events()
       else if (is_in(mouse_screen_pos, m_layout.get_about())) m_selected = menu_view_item::about;
       else if (is_in(mouse_screen_pos, m_layout.get_quit())) m_selected = menu_view_item::quit;
     }
-    if (event.type == sf::Event::MouseButtonPressed)
+    else if (event.type == sf::Event::MouseButtonPressed)
     {
       if (event.mouseButton.button == sf::Mouse::Left)
       {
