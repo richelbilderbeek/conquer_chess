@@ -1066,6 +1066,11 @@ const controller& get_controller(const game& g, const side player)
   return ::get_controller(g.get_options(), player);
 }
 
+controller_type get_controller_type(const game& g, const side player)
+{
+  return get_controller(g, player).get_type();
+}
+
 game_coordinat get_cursor_pos(
   const game& g,
   const chess_color c
@@ -1373,6 +1378,74 @@ bool is_piece_at(
   return is_piece_at(g.get_pieces(), coordinat);
 }
 
+void move_cursor_to(
+  game& g,
+  const std::string& square_str,
+  const side player_side
+)
+{
+  move_cursor_to(g, square(square_str), player_side);
+}
+
+void move_cursor_to(
+  game& g,
+  const square& s,
+  const side player_side
+)
+{
+  if (get_controller_type(g, player_side) == controller_type::keyboard)
+  {
+    move_keyboard_cursor_to(g, s, player_side);
+  }
+  else
+  {
+    assert(get_controller_type(g, player_side) == controller_type::mouse);
+    move_mouse_cursor_to(g, s, player_side);
+  }
+  assert(count_control_actions(g) == 0); // All actions are processed
+}
+
+void move_keyboard_cursor_to(
+  game& g,
+  const square& s,
+  const side player_side
+)
+{
+  assert(
+    g.get_options().get_controller(player_side).get_type()
+    == controller_type::keyboard
+  );
+  const auto current_pos{get_player_pos(g, player_side)};
+  const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
+  const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
+  for (int i{0}; i!=n_right; ++i)
+  {
+    g.add_action(create_press_right_action(player_side));
+  }
+  for (int i{0}; i!=n_down; ++i)
+  {
+    g.add_action(create_press_down_action(player_side));
+  }
+  // Process all actions
+  g.tick(delta_t(0.0));
+  assert(count_control_actions(g) == 0);
+}
+
+void move_mouse_cursor_to(
+  game& g,
+  const square& s,
+  const side player_side
+)
+{
+  assert(
+    g.get_options().get_controller(player_side).get_type()
+    == controller_type::mouse
+  );
+  set_mouse_player_pos(g, s); // Processes the action
+  assert(square(get_player_pos(g, get_mouse_user_player_side(g))) == s);
+  assert(count_control_actions(g) == 0);
+}
+
 bool piece_with_id_is_at(
   game& g,
   const id& i,
@@ -1389,19 +1462,10 @@ void set_keyboard_player_pos(
 )
 {
   assert(has_keyboard_controller(g.get_options()));
+  const auto player_side{get_keyboard_user_player_side(g)};
+  move_cursor_to(g, s, player_side);
 
-  const auto current_pos{get_player_pos(g, get_keyboard_user_player_side(g))};
-  const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
-  const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
-  for (int i{0}; i!=n_right; ++i)
-  {
-    g.add_action(create_press_right_action(get_keyboard_user_player_side(g)));
-  }
-  for (int i{0}; i!=n_down; ++i)
-  {
-    g.add_action(create_press_down_action(get_keyboard_user_player_side(g)));
-  }
-  g.tick(delta_t(0.0));
+  //
   assert(count_control_actions(g) == 0);
 }
 

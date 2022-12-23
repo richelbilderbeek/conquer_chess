@@ -348,6 +348,9 @@ piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
 /// Get the controller for a certain side
 const controller& get_controller(const game& g, const side player);
 
+/// Get the controller type for a certain side
+controller_type get_controller_type(const game& g, const side player);
+
 /// Get the cursor position for a player
 game_coordinat get_cursor_pos(
   const game& g,
@@ -510,6 +513,41 @@ bool is_piece_at(
 bool is_piece_at(
   const game& g,
   const square& coordinat
+);
+
+/// Put the cursor (i.e. the selector, not the mouse pointer)
+/// at the desired square
+void move_cursor_to(
+  game& g,
+  const std::string& square_str,
+  const side player_side
+);
+
+/// Put the cursor (i.e. the selector, not the mouse pointer)
+/// at the desired square.
+/// Does not select the square where the cursor is.
+void move_cursor_to(
+  game& g,
+  const square& s,
+  const side player_side
+);
+
+/// Put the cursor (i.e. the selector)
+/// at the desired square
+/// @see \link{move_cursor_to} is more general
+void move_keyboard_cursor_to(
+  game& g,
+  const square& s,
+  const side player_side
+);
+
+/// Put the cursor (i.e. the selector, not the mouse pointer)
+/// at the desired square
+/// @see \link{move_cursor_to} is more general
+void move_mouse_cursor_to(
+  game& g,
+  const square& s,
+  const side player_side
 );
 
 /// See if there is a piece with a certain ID at a certain square
