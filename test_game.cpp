@@ -535,7 +535,15 @@ void test_game_functions()
       assert(!is_in(h4xg3ep, actions_again));
       assert(!is_in(f4xg3ep, actions_again));
     }
-    #define FIX_ISSUE_53
+    // 55: move cursor
+    {
+      game g;
+      move_cursor_to(g, "d1", side::lhs);
+      assert(g.get_player_pos(side::lhs) == to_coordinat(square("d1")));
+      move_cursor_to(g, "f6", side::rhs);
+      assert(g.get_player_pos(side::rhs) == to_coordinat(square("f6")));
+    }
+    //#define FIX_ISSUE_53
     #ifdef FIX_ISSUE_53
     // 53: nothing selected, cursor at empty square -> no action
     {
@@ -543,6 +551,18 @@ void test_game_functions()
       assert(!get_default_piece_action(g, side::lhs));
       assert(!get_default_piece_action(g, side::rhs));
     }
+    // 53: nothing selected, cursor at square of own color -> select
+    {
+      game g;
+      move_cursor_to(g, "d1", side::lhs);
+      move_cursor_to(g, "d8", side::rhs);
+      assert(!get_default_piece_action(g, side::rhs));
+      assert(!get_default_piece_action(g, side::lhs));
+
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::select);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::select);
+    }
+
     #endif // FIX_ISSUE_53
     //#define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21
