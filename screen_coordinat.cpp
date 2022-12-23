@@ -37,7 +37,7 @@ screen_coordinat get_default_about_screen_size() noexcept
 
 screen_coordinat get_default_controls_screen_size() noexcept
 {
-  return get_default_main_menu_screen_size();
+  return screen_coordinat(700, 900);
 }
 
 screen_coordinat get_default_played_game_screen_size() noexcept
