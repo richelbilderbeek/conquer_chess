@@ -11,6 +11,7 @@
 #include "replayer.h"
 
 #include <iosfwd>
+#include <optional>
 #include <vector>
 
 /// Contains the game logic.
@@ -354,6 +355,14 @@ game_coordinat get_cursor_pos(
 );
 
 game get_default_game() noexcept;
+
+/// Get the default, primary, most likely piece action
+/// Returns an empty optional if the current setup
+/// cannot result in an action
+std::optional<piece_action_type> get_default_piece_action(
+  const game& g,
+  const side player_side
+) noexcept;
 
 /// Create a game with all default settings
 /// and s specific starting position

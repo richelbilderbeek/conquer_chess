@@ -535,6 +535,15 @@ void test_game_functions()
       assert(!is_in(h4xg3ep, actions_again));
       assert(!is_in(f4xg3ep, actions_again));
     }
+    #define FIX_ISSUE_53
+    #ifdef FIX_ISSUE_53
+    // 53: nothing selected, cursor at empty square -> no action
+    {
+      const game g;
+      assert(!get_default_piece_action(g, side::lhs));
+      assert(!get_default_piece_action(g, side::rhs));
+    }
+    #endif // FIX_ISSUE_53
     //#define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21
     // 21: can do en-passant after black b7-b5

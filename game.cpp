@@ -1085,6 +1085,14 @@ game get_default_game() noexcept
   };
 }
 
+std::optional<piece_action_type> get_default_piece_action(
+  const game& /* g */,
+  const side /* player_side */
+) noexcept
+{
+  return std::optional<piece_action_type>();
+}
+
 game get_game_with_starting_position(starting_position_type t) noexcept
 {
   const game_options options(
