@@ -98,19 +98,12 @@ When                                              |Action key 1    |Action key 2
 --------------------------------------------------|----------------|---------------|-----------------|-----------------
 Nothing selected                                  |.               |.              |.                |.
 Nothing selected, cursor at square with own piece |Select          |.              |.                |.
+Piece selected, cursor at the selected piece      |Unselect        |.              |.                |.
 Piece selected, cursor at valid target square     |Move            |.              |.                |.
 Piece selected, cursor at valid target opponent   |Attack          |.              |.                |.
 King selected, cursor at valid castling square    |Castle          |.              |.                |.
 Pawn in promotion selected                        |Promote to queen|Promote to rook|Promote to bishop|Promote to knight
 
-<!-- old
-When                      |Action key 1    |Action key 2   |Action key 3     |Action key 4
---------------------------|----------------|---------------|-----------------|-------------------
-Nothing selected          |Select          |Select         |Select           |Select
-Piece selected            |Move            |Attack         |Move             |Attack
-King selected             |Move            |Attack         |Castle king-side |Castle queen-side
-Pawn in promotion selected|Promote to queen|Promote to rook|Promote to bishop|Promote to knight
--->
 
 ### Mouse controls
 
@@ -122,11 +115,11 @@ When                                              |LMB default     |Other option
 --------------------------------------------------|----------------|-----------------------------------------------------
 Nothing selected                                  |.               |.
 Nothing selected, cursor at square with own piece |Select          |.
+Piece selected, cursor at the selected piece      |Unselect        |.
 Piece selected, cursor at valid target square     |Move            |.
 Piece selected, cursor at valid target opponent   |Attack          |.
 King selected, cursor at valid castling square    |Castle          |.
 Pawn in promotion selected                        |Promote to queen|Promote to rook, promote to bishop, promote to knight
-
 
 ## Technical
 

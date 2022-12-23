@@ -1083,6 +1083,14 @@ game_coordinat get_cursor_pos(
   return get_player_pos(g, side::rhs);
 }
 
+game_coordinat get_cursor_pos(
+  const game& g,
+  const side player_side
+)
+{
+  return get_player_pos(g, player_side);
+}
+
 game get_default_game() noexcept
 {
   return game{
@@ -1091,11 +1099,28 @@ game get_default_game() noexcept
 }
 
 std::optional<piece_action_type> get_default_piece_action(
-  const game& /* g */,
-  const side /* player_side */
+  const game& g,
+  const side player_side
 ) noexcept
 {
-  return std::optional<piece_action_type>();
+  if (count_selected_units(g, player_side))
+  {
+    // Has selected pieces
+    assert(!"TODO");
+    return std::optional<piece_action_type>();
+  }
+  else
+  {
+    // Has no selected pieces
+    const auto cursor_pos{get_cursor_pos(g, player_side)};
+    if (is_piece_at(g, square(cursor_pos)))
+    {
+      const piece& p{get_piece_at(g, square(cursor_pos))};
+      if (!p.is_selected()) return piece_action_type::select;
+      if (p.is_selected()) return piece_action_type::unselect;
+    }
+    return std::optional<piece_action_type>();
+  }
 }
 
 game get_game_with_starting_position(starting_position_type t) noexcept

@@ -6,6 +6,8 @@
 /// The type of actions a piece can do
 enum class piece_action_type
 {
+  select,
+  unselect,
   move,
   attack, // capture the attacked piece
   en_passant,

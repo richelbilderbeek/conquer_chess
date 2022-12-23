@@ -543,7 +543,7 @@ void test_game_functions()
       move_cursor_to(g, "f6", side::rhs);
       assert(g.get_player_pos(side::rhs) == to_coordinat(square("f6")));
     }
-    //#define FIX_ISSUE_53
+    #define FIX_ISSUE_53
     #ifdef FIX_ISSUE_53
     // 53: nothing selected, cursor at empty square -> no action
     {
@@ -556,9 +556,8 @@ void test_game_functions()
       game g;
       move_cursor_to(g, "d1", side::lhs);
       move_cursor_to(g, "d8", side::rhs);
-      assert(!get_default_piece_action(g, side::rhs));
-      assert(!get_default_piece_action(g, side::lhs));
-
+      assert(get_default_piece_action(g, side::lhs));
+      assert(get_default_piece_action(g, side::rhs));
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::select);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::select);
     }

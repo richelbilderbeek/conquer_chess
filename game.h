@@ -232,6 +232,12 @@ int count_selected_units(
   const chess_color player
 );
 
+/// Count the number of selected units of a player side
+int count_selected_units(
+  const game& g,
+  const side player_side
+);
+
 /// Create a randomly played game
 game create_randomly_played_game(
   const int n_moves = 10,
@@ -351,10 +357,16 @@ const controller& get_controller(const game& g, const side player);
 /// Get the controller type for a certain side
 controller_type get_controller_type(const game& g, const side player);
 
-/// Get the cursor position for a player
+/// Get the cursor position for a chess color
 game_coordinat get_cursor_pos(
   const game& g,
   const chess_color c
+);
+
+/// Get the cursor position for a player
+game_coordinat get_cursor_pos(
+  const game& g,
+  const side player_side
 );
 
 game get_default_game() noexcept;
