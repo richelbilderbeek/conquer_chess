@@ -378,12 +378,48 @@ void show_controls(game_view& view, const side player)
       get_default_piece_action(view.get_game(), player)
     };
     if (!maybe_action) continue;
-
-    sprite.setTexture(
-      &view.get_resources().get_textures().get_action_icon(
-        maybe_action.value()
-      )
-    );
+    const piece_action_type action{maybe_action.value()};
+    if (key == 1)
+    {
+      sprite.setTexture(
+        &view.get_resources().get_textures().get_action_icon(action)
+      );
+    }
+    else
+    {
+      if (action == piece_action_type::promote_to_queen)
+      {
+        switch (key)
+        {
+          case 2:
+            sprite.setTexture(
+              &view.get_resources().get_textures().get_action_icon(
+                piece_action_type::promote_to_rook
+              )
+            );
+          break;
+          case 3:
+            sprite.setTexture(
+              &view.get_resources().get_textures().get_action_icon(
+                piece_action_type::promote_to_bishop
+              )
+            );
+          break;
+          case 4:
+            assert(key == 4);
+            sprite.setTexture(
+              &view.get_resources().get_textures().get_action_icon(
+                piece_action_type::promote_to_knight
+              )
+            );
+          break;
+        }
+      }
+      else
+      {
+        continue;
+      }
+    }
     view.get_window().draw(sprite);
     #else
 
