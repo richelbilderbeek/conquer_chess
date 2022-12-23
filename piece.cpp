@@ -86,7 +86,12 @@ void piece::add_action(const piece_action& action)
   }
   else
   {
-    assert(action.get_action_type() == piece_action_type::promote);
+    assert(
+      action.get_action_type() == piece_action_type::promote_to_knight
+      || action.get_action_type() == piece_action_type::promote_to_bishop
+      || action.get_action_type() == piece_action_type::promote_to_rook
+      || action.get_action_type() == piece_action_type::promote_to_queen
+    );
     assert(can_promote(m_color, m_type, m_current_square));
     m_actions.push_back(action);
     return;
@@ -785,7 +790,15 @@ void test_piece()
       piece_type::pawn,
       square("a8")
     );
-    p.add_action(piece_action(chess_color::white, piece_type::queen, piece_action_type::promote, square("a8"), square("a8")));
+    p.add_action(
+      piece_action(
+        chess_color::white,
+        piece_type::queen,
+        piece_action_type::promote_to_queen,
+        square("a8"),
+        square("a8")
+      )
+    );
     assert(!p.get_actions().empty());
     game g;
     assert(count_piece_actions(p) == 1);
@@ -911,11 +924,19 @@ void piece::tick(
       return tick_move(*this, dt, g);
     case piece_action_type::attack:
       return tick_attack(*this, dt, g);
-    case piece_action_type::promote:
+    case piece_action_type::promote_to_knight:
+    case piece_action_type::promote_to_bishop:
+    case piece_action_type::promote_to_rook:
+    case piece_action_type::promote_to_queen:
     default:
     {
       const auto first_action{m_actions[0]};
-      assert(first_action.get_action_type() == piece_action_type::promote);
+      assert(
+           first_action.get_action_type() == piece_action_type::promote_to_knight
+        || first_action.get_action_type() == piece_action_type::promote_to_bishop
+        || first_action.get_action_type() == piece_action_type::promote_to_rook
+        || first_action.get_action_type() == piece_action_type::promote_to_queen
+      );
       assert(m_type == piece_type::pawn);
       add_message(message_type::done);
       m_type = first_action.get_piece_type();

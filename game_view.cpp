@@ -189,7 +189,7 @@ std::string get_text_for_action(
   }
   else
   {
-    if (default_action.value() == piece_action_type::promote)
+    if (default_action.value() == piece_action_type::promote_to_queen)
     {
       switch (key)
       {

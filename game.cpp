@@ -644,16 +644,16 @@ std::vector<piece_action> collect_all_pawn_move_actions(
     else if (x == 0)
     {
       actions.push_back(
-        piece_action(color, piece_type::queen, piece_action_type::promote, from, from)
+        piece_action(color, piece_type::queen, piece_action_type::promote_to_queen, from, from)
       );
       actions.push_back(
-        piece_action(color, piece_type::rook, piece_action_type::promote, from, from)
+        piece_action(color, piece_type::rook, piece_action_type::promote_to_rook, from, from)
       );
       actions.push_back(
-        piece_action(color, piece_type::bishop, piece_action_type::promote, from, from)
+        piece_action(color, piece_type::bishop, piece_action_type::promote_to_bishop, from, from)
       );
       actions.push_back(
-        piece_action(color, piece_type::knight, piece_action_type::promote, from, from)
+        piece_action(color, piece_type::knight, piece_action_type::promote_to_knight, from, from)
       );
     }
     else
@@ -698,16 +698,17 @@ std::vector<piece_action> collect_all_pawn_move_actions(
     else if (get_rank(s) == 8)
     {
       actions.push_back(
-        piece_action(color, piece_type::queen, piece_action_type::promote, from, from)
+        piece_action(color, piece_type::queen, piece_action_type::promote_to_queen, from, from)
       );
       actions.push_back(
-        piece_action(color, piece_type::rook, piece_action_type::promote, from, from)
+        piece_action(color, piece_type::rook, piece_action_type::promote_to_rook, from, from)
       );
       actions.push_back(
-        piece_action(color, piece_type::bishop, piece_action_type::promote, from, from)
+        piece_action(color, piece_type::bishop, piece_action_type::promote_to_bishop, from, from)
       );
       actions.push_back(
-        piece_action(color, piece_type::knight, piece_action_type::promote, from, from)
+
+        piece_action(color, piece_type::knight, piece_action_type::promote_to_knight, from, from)
       );
     }
     else

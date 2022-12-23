@@ -210,7 +210,7 @@ void process_press_action_1(game& g, const control_action& action)
         piece_action(
           player_color,
           piece_type::queen,
-          piece_action_type::promote,
+          piece_action_type::promote_to_queen,
           to,
           to
         )
@@ -261,7 +261,7 @@ void process_press_action_2(game& g, const control_action& action)
           piece_action(
             player_color,
             piece_type::rook,
-            piece_action_type::promote,
+            piece_action_type::promote_to_rook,
             to,
             to
           )
@@ -301,7 +301,7 @@ void process_press_action_3(game& g, const control_action& action)
           piece_action(
             player_color,
             piece_type::bishop,
-            piece_action_type::promote,
+            piece_action_type::promote_to_bishop,
             to,
             to
           )
@@ -351,7 +351,7 @@ void process_press_action_4(game& g, const control_action& action)
           piece_action(
             player_color,
             piece_type::knight,
-            piece_action_type::promote,
+            piece_action_type::promote_to_knight,
             to,
             to
           )

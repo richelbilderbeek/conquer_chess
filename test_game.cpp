@@ -380,7 +380,7 @@ void test_game_functions()
       const piece_action a8isq(
         chess_color::white,
         piece_type::queen,
-        piece_action_type::promote,
+        piece_action_type::promote_to_queen,
         square("a8"),
         square("a8")
       );
@@ -388,7 +388,7 @@ void test_game_functions()
       const piece_action h1isr(
         chess_color::black,
         piece_type::rook,
-        piece_action_type::promote,
+        piece_action_type::promote_to_rook,
         square("h1"),
         square("h1")
       );
