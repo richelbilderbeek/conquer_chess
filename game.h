@@ -77,10 +77,10 @@ private:
   game_view_layout m_layout;
 
   /// The in-game coordinat of the LHS user
-  game_coordinat m_player_1_pos;
+  game_coordinat m_player_lhs_pos;
 
   /// The in-game coordinat of the RHS user
-  game_coordinat m_player_2_pos;
+  game_coordinat m_player_rhs_pos;
 
   /// The game options
   game_options m_options;

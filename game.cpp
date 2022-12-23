@@ -20,8 +20,8 @@ game::game(
 )
   : m_control_actions{},
     m_layout{options.get_screen_size(), options.get_margin_width()},
-    m_player_1_pos{0.5, 4.5},
-    m_player_2_pos{7.5, 4.5},
+    m_player_lhs_pos{0.5, 4.5},
+    m_player_rhs_pos{7.5, 4.5},
     m_options{options},
     m_pieces{get_starting_pieces(options)},
     m_replayer{options.get_replayer()},
@@ -1232,16 +1232,16 @@ side get_player_side(const game& g, const chess_color& color) noexcept
 
 const game_coordinat& game::get_player_pos(const side player) const noexcept
 {
-  if (player == side::lhs) return m_player_1_pos;
+  if (player == side::lhs) return m_player_lhs_pos;
   assert(player == side::rhs);
-  return m_player_2_pos;
+  return m_player_rhs_pos;
 }
 
 game_coordinat& game::get_player_pos(const side player) noexcept
 {
-  if (player == side::lhs) return m_player_1_pos;
+  if (player == side::lhs) return m_player_lhs_pos;
   assert(player == side::rhs);
-  return m_player_2_pos;
+  return m_player_rhs_pos;
 }
 
 const game_coordinat& get_player_pos(const game& g, const side player) noexcept
