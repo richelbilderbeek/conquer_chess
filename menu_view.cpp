@@ -181,6 +181,16 @@ bool menu_view::process_events()
         std::clog << "Debug";
       }
     }
+    if (event.type == sf::Event::MouseMoved)
+    {
+      const auto mouse_screen_pos{
+        screen_coordinat(event.mouseMove.x, event.mouseMove.y)
+      };
+      if (is_in(mouse_screen_pos, m_layout.get_start())) m_selected = menu_view_item::start;
+      else if (is_in(mouse_screen_pos, m_layout.get_options())) m_selected = menu_view_item::options;
+      else if (is_in(mouse_screen_pos, m_layout.get_about())) m_selected = menu_view_item::about;
+      else if (is_in(mouse_screen_pos, m_layout.get_quit())) m_selected = menu_view_item::quit;
+    }
     if (event.type == sf::Event::MouseButtonPressed)
     {
       if (event.mouseButton.button == sf::Mouse::Left)
