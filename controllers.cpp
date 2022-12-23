@@ -30,10 +30,24 @@ int count_mouse_controllers(const std::vector<controller>& controllers) noexcept
 
 std::vector<controller> create_default_controllers() noexcept
 {
+  return create_keyboard_mouse_controllers();
+}
+
+std::vector<controller> create_keyboard_mouse_controllers() noexcept
+{
   return
   {
     create_left_keyboard_controller(side::lhs),
     create_default_mouse_controller(side::rhs)
+  };
+}
+
+std::vector<controller> create_mouse_keyboard_controllers() noexcept
+{
+  return
+  {
+    create_default_mouse_controller(side::lhs),
+    create_right_keyboard_controller(side::rhs)
   };
 }
 

@@ -407,6 +407,11 @@ void control_actions::process(game& g)
         pos = action.get_coordinat();
       }
     }
+    #ifdef FIX_ISSUE_46
+    // Below you see that LMB selects and RMB moves
+    // Instead, the mouse controller has an active action
+    // triggered by LMB, and RMB goes to the next
+    #endif // FIX_ISSUE_46
     else if (action.get_type() == control_action_type::lmb_down)
     {
       if (has_mouse_controller(g.get_options()))

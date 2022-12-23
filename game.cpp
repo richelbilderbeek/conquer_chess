@@ -845,7 +845,10 @@ void do_move_keyboard_player_piece(game& g, const square& s)
   assert(has_keyboard_controller(g.get_options()));
   assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
   set_keyboard_player_pos(g, s);
-  assert(square(get_player_pos(g, side::lhs)) == s);
+
+  assert(s
+    == square(get_player_pos(g, get_keyboard_user_player_side(g)))
+  );
 
   g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
   assert(count_control_actions(g) == 1);

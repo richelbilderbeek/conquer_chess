@@ -13,10 +13,24 @@ int count_keyboard_controllers(const std::vector<controller>& controllers) noexc
 /// Count the number of controllers that use the keyboard
 int count_mouse_controllers(const std::vector<controller>& controllers) noexcept;
 
-/// Get a keyboard and a mouse controller
+/// Get a keyboard and a mouse controller.
+/// @see use \link{create_two_keyboard_controllers}
+/// to create two keyboard controllers
 std::vector<controller> create_default_controllers() noexcept;
 
-/// Get two keyboard controllers
+/// Get two controllers,
+/// where LHS player uses keyboard,
+/// and RHS player uses mouse
+std::vector<controller> create_keyboard_mouse_controllers() noexcept;
+
+/// Get two controllers,
+/// where LHS player uses mouse,
+/// and RHS player uses keyboard
+std::vector<controller> create_mouse_keyboard_controllers() noexcept;
+
+/// Get two keyboard controllers.
+/// @see use \link{create_default_controllers}
+/// to create the defaults one-keyboard-one-mouse controllers
 std::vector<controller> create_two_keyboard_controllers() noexcept;
 
 /// Get the side of the controller that uses the keyboard.

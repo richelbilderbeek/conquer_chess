@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "controllers.h"
 #include "helper.h"
 #include "id.h"
 #include "test_game.h"
@@ -539,7 +540,13 @@ void test_game_functions()
     // 21: can do en-passant after black b7-b5
     {
       game g{
-        get_game_with_starting_position(starting_position_type::before_en_passant)
+        game_options(
+          get_default_screen_size(),
+          create_mouse_keyboard_controllers(),
+          starting_position_type::before_en_passant,
+          get_default_game_speed(),
+          get_default_margin_width()
+        )
       };
       std::clog << "==================================\n";
       std::clog << "= START                          =\n";
@@ -547,10 +554,11 @@ void test_game_functions()
       std::clog << g << '\n';
       assert(is_piece_at(g, square("b7")));
       assert(!is_piece_at(g, square("b5")));
-      do_select_and_move_mouse_player_piece(g, "b7", "b5");
+      do_select_and_move_keyboard_player_piece(g, "b7", "b5");
       // It takes 1 time unit to move,
       // aim at halfway to window of opportunity for en-passant
       for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
+      assert(!is_piece_at(g, square("b7")));
       std::clog << "==================================\n";
       std::clog << "= AFTER                          =\n";
       std::clog << "==================================\n";
@@ -865,6 +873,33 @@ void test_game_keyboard_use()
     assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
     assert(collect_messages(g).at(1).get_message_type() == message_type::cannot);
   }
+  #define FIX_ISSSUE_47
+  #ifdef FIX_ISSSUE_47
+  // 47: set_keyboard_player_pos for RHS player
+  {
+    game g;
+    assert(get_keyboard_user_player_color(g) == chess_color::white);
+    assert(get_keyboard_user_player_side(g) == side::lhs);
+    const square s("a1");
+    set_keyboard_player_pos(g, s);
+    assert(s == square(get_player_pos(g, get_keyboard_user_player_side(g))));
+  }
+  // 47: set_keyboard_player_pos for LHS player
+  {
+    game g{
+      create_default_game_options_with_controllers(
+        create_mouse_keyboard_controllers()
+      )
+    };
+    assert(get_keyboard_user_player_color(g) == chess_color::black);
+    assert(get_keyboard_user_player_side(g) == side::rhs);
+    const square s("a1");
+    set_keyboard_player_pos(g, s);
+    assert(s == square(get_player_pos(g, get_keyboard_user_player_side(g))));
+    assert(!"FIX #47");
+
+  }
+  #endif // FIX_ISSUE_47
 #endif // NDEBUG // no tests in release
 }
 
