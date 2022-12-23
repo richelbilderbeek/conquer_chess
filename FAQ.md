@@ -82,6 +82,52 @@ from (the now expired link) `https://database.lichess.org/standard/lichess_db_st
 Under normal game speed, a piece moves one square (Euclidean distance)
 per second.
 
+## Controls
+
+Each player can control the game with a keyboard or a mouse,
+with a maximum of 1 mouse user.
+
+### Keyboard controls
+
+The keyboard has 4 action keys.
+
+The first action key has a default action, which is the one expected.
+If there are multiple actions, using another action key triggers the other actions.
+
+When                                              |Action key 1    |Action key 2   |Action key 3     |Action key 4
+--------------------------------------------------|----------------|---------------|-----------------|-----------------
+Nothing selected                                  |.               |.              |.                |.
+Nothing selected, cursor at square with own piece |Select          |.              |.                |.
+Piece selected, cursor at valid target square     |Move            |.              |.                |.
+Piece selected, cursor at valid target opponent   |Attack          |.              |.                |.
+King selected, cursor at valid castling square    |Castle          |.              |.                |.
+Pawn in promotion selected                        |Promote to queen|Promote to rook|Promote to bishop|Promote to knight
+
+<!-- old
+When                      |Action key 1    |Action key 2   |Action key 3     |Action key 4
+--------------------------|----------------|---------------|-----------------|-------------------
+Nothing selected          |Select          |Select         |Select           |Select
+Piece selected            |Move            |Attack         |Move             |Attack
+King selected             |Move            |Attack         |Castle king-side |Castle queen-side
+Pawn in promotion selected|Promote to queen|Promote to rook|Promote to bishop|Promote to knight
+-->
+
+### Mouse controls
+
+The mouse has a default action, triggered by the Left Mouse Button ('LMB').
+If there are multiple actions, clicking Right Mouse Button ('RMB')
+changes to another action.
+
+When                                              |LMB default     |Other options, if any
+--------------------------------------------------|----------------|-----------------------------------------------------
+Nothing selected                                  |.               |.
+Nothing selected, cursor at square with own piece |Select          |.
+Piece selected, cursor at valid target square     |Move            |.
+Piece selected, cursor at valid target opponent   |Attack          |.
+King selected, cursor at valid castling square    |Castle          |.
+Pawn in promotion selected                        |Promote to queen|Promote to rook, promote to bishop, promote to knight
+
+
 ## Technical
 
 ### How is the user input handled?
