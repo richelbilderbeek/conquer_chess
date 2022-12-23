@@ -103,6 +103,38 @@ bool can_do(const game& g,
       )
     ) return false;
     // Is it possible in this situation?
+    assert(is_piece_at(g, selected_piece.get_current_square()));
+    assert(get_piece_at(g, selected_piece.get_current_square()).get_color()
+      == player_color
+    );
+    if (is_piece_at(g, cursor_square)) return false;
+    return is_empty_between(
+      g,
+      selected_piece.get_current_square(),
+      cursor_square
+    );
+  }
+  if (action == piece_action_type::attack)
+  {
+    // Is it theoretically possible, e.g. on an empty board?
+    if (
+      !can_attack(
+        player_color,
+        selected_piece.get_type(),
+        selected_piece.get_current_square(),
+        cursor_square
+      )
+    ) return false;
+    // Is it possible in this situation?
+    assert(is_piece_at(g, selected_piece.get_current_square()));
+    assert(get_piece_at(g, selected_piece.get_current_square()).get_color()
+      == player_color
+    );
+    if (!is_piece_at(g, cursor_square)) return false;
+    if(get_piece_at(g, cursor_square).get_color() == player_color)
+    {
+      return false;
+    }
     return is_empty_between(
       g,
       selected_piece.get_current_square(),
@@ -1171,8 +1203,12 @@ std::optional<piece_action_type> get_default_piece_action(
   {
     // Has selected pieces
     const auto cursor_square{get_cursor_square(g, player_side)};
+    const chess_color player_color{get_player_color(g, player_side)};
 
-    if (is_piece_at(g, cursor_square))
+    if (
+      is_piece_at(g, cursor_square)
+      && get_piece_at(g, cursor_square).get_color() == player_color
+    )
     {
       const piece& p{get_piece_at(g, cursor_square)};
       if (p.is_selected()) return piece_action_type::unselect;
@@ -1185,6 +1221,10 @@ std::optional<piece_action_type> get_default_piece_action(
       if (can_do(g, selected_piece, piece_action_type::move, cursor_square, player_side))
       {
         return piece_action_type::move;
+      }
+      if (can_do(g, selected_piece, piece_action_type::attack, cursor_square, player_side))
+      {
+        return piece_action_type::attack;
       }
     }
   }

@@ -542,7 +542,7 @@ void test_game_functions()
       assert(!is_empty_between(g, "a1", "a8"));
       assert(is_empty_between(g, "d3", "d4"));
     }
-    // can_do
+    // can_do: standard stup
     {
       const game g;
       // Pawns move forward
@@ -557,6 +557,18 @@ void test_game_functions()
       // Bishops cannot move over other pieces
       assert(!can_do(g, get_piece_at(g, "c1"), piece_action_type::move, "a3", side::lhs));
       assert(!can_do(g, get_piece_at(g, "c8"), piece_action_type::move, "a6", side::rhs));
+    }
+    // can_do: queen end-game
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::queen_end_game)
+      };
+      // Queens can attack one another
+      assert(!can_do(g, get_piece_at(g, "d1"), piece_action_type::move, "d8", side::lhs));
+      assert(can_do(g, get_piece_at(g, "d1"), piece_action_type::attack, "d8", side::lhs));
+      assert(can_do(g, get_piece_at(g, "d8"), piece_action_type::attack, "d1", side::rhs));
+      assert(!can_do(g, get_piece_at(g, "d1"), piece_action_type::attack, "d7", side::lhs));
+      assert(!can_do(g, get_piece_at(g, "d8"), piece_action_type::attack, "d2", side::rhs));
     }
     // 55: move cursor
     {
@@ -614,6 +626,19 @@ void test_game_functions()
       move_cursor_to(g, "d5", side::rhs);
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::move);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::move);
+    }
+    // 53: Piece selected, opponent at target square -> attack
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::queen_end_game)
+      };
+      do_select(g, "d1", side::lhs);
+      do_select(g, "d8", side::rhs);
+      move_cursor_to(g, "d8", side::lhs);
+      move_cursor_to(g, "d1", side::rhs);
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::attack);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::attack);
     }
     #endif // FIX_ISSUE_53
     //#define FIX_ISSUE_21
