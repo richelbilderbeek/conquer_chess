@@ -128,6 +128,22 @@ bool can_do_attack(
   const side player_side
 );
 
+/// Can a piece_action_type::castle_kingside action be done?
+bool can_do_castle_kingside(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+);
+
+/// Can a piece_action_type::castle_queenside action be done?
+bool can_do_castle_queenside(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+);
+
 /// Can a piece_action_type::move action be done?
 bool can_do_move(
   const game& g,

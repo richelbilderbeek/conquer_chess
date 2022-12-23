@@ -105,6 +105,9 @@ square create_random_square(
   std::default_random_engine& rng_engine
 );
 
+/// Get the default king square, i.e. e1 for white and e8 for black
+square get_default_king_square(const chess_color player_color) noexcept;
+
 /// Get the file of a square, e.g. 'd' from 'd4'
 char get_file(const square& s) noexcept;
 

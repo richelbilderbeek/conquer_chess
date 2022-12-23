@@ -98,6 +98,14 @@ bool can_do(
   {
     return can_do_attack(g, selected_piece, cursor_square, player_side);
   }
+  if (action == piece_action_type::castle_kingside)
+  {
+    return can_do_castle_kingside(g, selected_piece, cursor_square, player_side);
+  }
+  if (action == piece_action_type::castle_queenside)
+  {
+    return can_do_castle_queenside(g, selected_piece, cursor_square, player_side);
+  }
   return false;
 }
 
@@ -153,7 +161,38 @@ bool can_do_attack(
 
 }
 
-/// Can a piece_action_type::move action be done?
+bool can_do_castle_kingside(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+)
+{
+  const auto player_color{get_player_color(g, player_side)};
+  assert(player_color == selected_piece.get_color());
+  const square king_square{get_default_king_square(player_color)};
+  if (!is_piece_at(g, king_square)) return false;
+  const square ksc_square{king_square.get_x() + 2, king_square.get_y()};
+  if (cursor_square != ksc_square) return false;
+  return can_castle_kingside(get_piece_at(g, king_square), g);
+}
+
+bool can_do_castle_queenside(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+)
+{
+  const auto player_color{get_player_color(g, player_side)};
+  assert(player_color == selected_piece.get_color());
+  const square king_square{get_default_king_square(player_color)};
+  if (!is_piece_at(g, king_square)) return false;
+  const square qsc_square{king_square.get_x() - 2, king_square.get_y()};
+  if (cursor_square != qsc_square) return false;
+  return can_castle_queenside(get_piece_at(g, king_square), g);
+}
+
 bool can_do_move(
   const game& g,
   const piece& selected_piece,
