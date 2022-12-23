@@ -190,14 +190,14 @@ bool options_view::process_events()
         screen_coordinat(event.mouseMove.x, event.mouseMove.y)
       };
       if (is_in(mouse_screen_pos, m_layout.get_chess_board())) m_selected = options_view_item::starting_position;
-      if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) m_selected = options_view_item::game_speed;
-      if (is_in(mouse_screen_pos, m_layout.get_left_color_value())) m_selected = options_view_item::left_color;
-      if (is_in(mouse_screen_pos, m_layout.get_left_controls_value())) m_selected = options_view_item::left_controls;
-      if (is_in(mouse_screen_pos, m_layout.get_music_volume_value())) m_selected = options_view_item::music_volume;
-      if (is_in(mouse_screen_pos, m_layout.get_right_color_value())) m_selected = options_view_item::right_color;
-      if (is_in(mouse_screen_pos, m_layout.get_right_controls_value())) m_selected = options_view_item::right_controls;
-      if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) m_selected = options_view_item::sound_effects_volume;
-      if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) m_selected = options_view_item::starting_position;
+      else if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) m_selected = options_view_item::game_speed;
+      else if (is_in(mouse_screen_pos, m_layout.get_left_color_value())) m_selected = options_view_item::left_color;
+      else if (is_in(mouse_screen_pos, m_layout.get_left_controls_value())) m_selected = options_view_item::left_controls;
+      else if (is_in(mouse_screen_pos, m_layout.get_music_volume_value())) m_selected = options_view_item::music_volume;
+      else if (is_in(mouse_screen_pos, m_layout.get_right_color_value())) m_selected = options_view_item::right_color;
+      else if (is_in(mouse_screen_pos, m_layout.get_right_controls_value())) m_selected = options_view_item::right_controls;
+      else if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) m_selected = options_view_item::sound_effects_volume;
+      else if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) m_selected = options_view_item::starting_position;
     }
     else if (event.type == sf::Event::MouseButtonPressed)
     {
