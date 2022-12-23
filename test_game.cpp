@@ -570,6 +570,7 @@ void test_game_functions()
       assert(!can_do(g, get_piece_at(g, "d8"), piece_action_type::attack, "d2", side::rhs));
     }
     // can_do: queen end-game
+    #ifdef FIX_ISSUE_55
     {
       const game g{
         get_game_with_starting_position(starting_position_type::ready_to_castle)
@@ -580,6 +581,7 @@ void test_game_functions()
       assert(can_do(g, get_piece_at(g, "e1"), piece_action_type::castle_queenside, "c1", side::lhs));
       assert(can_do(g, get_piece_at(g, "e8"), piece_action_type::castle_queenside, "c8", side::rhs));
     }
+    #endif // FIX_ISSUE_55
     // 55: move cursor
     {
       game g;

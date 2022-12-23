@@ -24,6 +24,7 @@
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
 #include "options_view_layout.h"
+#include "pgn_string.h"
 #include "piece_actions.h"
 #include "sfml_helper.h"
 #include "replay.h"
@@ -46,6 +47,7 @@ void test()
   test_chess_color();
   test_chess_move();
   test_control_action();
+  test_control_action_type();
   test_control_actions();
   test_controller();
   test_controller_type();
@@ -70,6 +72,7 @@ void test()
   test_message_type();
   test_options_view_item();
   test_options_view_layout();
+  test_pgn_string();
   test_piece();
   test_piece_action();
   test_piece_actions();

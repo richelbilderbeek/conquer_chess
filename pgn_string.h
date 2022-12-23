@@ -8,4 +8,7 @@ public:
   pgn_string();
 };
 
+void test_pgn_string();
+
+
 #endif // PGN_STRING_H
