@@ -87,5 +87,15 @@
         <file>resources/title.png</file>
         <file>resources/arial.ttf</file>
         <file>resources/CodeSquaredRegular-AYRg.ttf</file>
+        <file>resources/icon_attack.png</file>
+        <file>resources/icon_castle_kingside.png</file>
+        <file>resources/icon_castle_queenside.png</file>
+        <file>resources/icon_move.png</file>
+        <file>resources/icon_promote_to_bishop.png</file>
+        <file>resources/icon_promote_to_knight.png</file>
+        <file>resources/icon_promote_to_queen.png</file>
+        <file>resources/icon_promote_to_rook.png</file>
+        <file>resources/icon_select.png</file>
+        <file>resources/icon_unselect.png</file>
     </qresource>
 </RCC>

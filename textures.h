@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "chess_color.h"
 #include "piece_type.h"
+#include "piece_action_type.h"
 
 /// The games' textures
 /// The raw game resources
@@ -19,6 +20,12 @@ public:
     const chess_color square_color,
     const chess_color occupant_color
   ) noexcept;
+
+  /// Get the icon for an action
+  sf::Texture& get_action_icon(
+    const piece_action_type t
+  ) noexcept;
+
 
   /// Get texture of a piece
   sf::Texture& get_piece(
@@ -68,6 +75,19 @@ private:
   sf::Texture m_dark_square;
   sf::Texture m_dark_white_square;
   sf::Texture m_dark_strip;
+
+  sf::Texture m_action_attack;
+  sf::Texture m_action_castle_kingside;
+  sf::Texture m_action_castle_queenside;
+  sf::Texture m_action_en_passant;
+  sf::Texture m_action_move;
+  sf::Texture m_action_promote_to_bishop;
+  sf::Texture m_action_promote_to_knight;
+  sf::Texture m_action_promote_to_queen;
+  sf::Texture m_action_promote_to_rook;
+  sf::Texture m_action_select;
+  sf::Texture m_action_unselect;
+
   sf::Texture m_light_black_square;
   sf::Texture m_light_square;
   sf::Texture m_light_white_square;

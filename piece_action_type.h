@@ -9,9 +9,12 @@ enum class piece_action_type
   select,
   unselect,
   move,
-  attack, // capture the attacked piece
-  en_passant,
-  promote,
+  attack, // will capture the attacked piece
+  en_passant, // a type of attack
+  promote_to_queen,
+  promote_to_rook,
+  promote_to_bishop,
+  promote_to_knight,
   castle_kingside,
   castle_queenside
 };
