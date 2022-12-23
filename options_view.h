@@ -48,6 +48,10 @@ private:
   /// The window to draw to
   sf::RenderWindow m_window;
 
+  /// Change the selected square,
+  /// can be done by LMB and space
+  void change_selected();
+
   /// Process all events
   /// @return if the user wants to quit
   bool process_events();

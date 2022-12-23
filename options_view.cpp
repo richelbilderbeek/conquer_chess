@@ -23,6 +23,47 @@ options_view::options_view(const game_options& options)
 
 }
 
+void options_view::change_selected()
+{
+  switch (m_selected)
+  {
+    case options_view_item::game_speed:
+      m_options.set_game_speed(get_next(m_options.get_game_speed()));
+    break;
+    case options_view_item::music_volume:
+      m_options.set_volume(get_next(m_options.get_music_volume()));
+    break;
+    case options_view_item::sound_effects_volume:
+      m_options.set_sound_effects_volume(get_next(m_options.get_sound_effects_volume()));
+    break;
+    case options_view_item::starting_position:
+      assert(!to_str(get_starting_position(*this)).empty());
+      m_options.set_starting_position(get_next(get_starting_position(m_options)));
+      assert(!to_str(get_starting_position(*this)).empty());
+    break;
+    case options_view_item::left_color:
+    case options_view_item::right_color:
+      m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
+    break;
+    case options_view_item::left_controls:
+    {
+      const side player{side::lhs};
+      controls_view v(m_options.get_controller(player));
+      v.exec();
+      m_options.set_controller(v.get_controller(), player);
+    }
+    break;
+    case options_view_item::right_controls:
+    {
+      const side player{side::rhs};
+      controls_view v(m_options.get_controller(player));
+      v.exec();
+      m_options.set_controller(v.get_controller(), player);
+    }
+    break;
+  }
+}
+
 void draw_panel(
   options_view& v,
   const screen_rect& panel_position,
@@ -135,44 +176,7 @@ bool options_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
-        switch (m_selected)
-        {
-          case options_view_item::game_speed:
-            m_options.set_game_speed(get_next(m_options.get_game_speed()));
-          break;
-          case options_view_item::music_volume:
-            m_options.set_volume(get_next(m_options.get_music_volume()));
-          break;
-          case options_view_item::sound_effects_volume:
-            m_options.set_sound_effects_volume(get_next(m_options.get_sound_effects_volume()));
-          break;
-          case options_view_item::starting_position:
-            assert(!to_str(get_starting_position(*this)).empty());
-            m_options.set_starting_position(get_next(get_starting_position(m_options)));
-            assert(!to_str(get_starting_position(*this)).empty());
-          break;
-          case options_view_item::left_color:
-          case options_view_item::right_color:
-            m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
-          break;
-          case options_view_item::left_controls:
-          {
-            const side player{side::lhs};
-            controls_view v(m_options.get_controller(player));
-            v.exec();
-            m_options.set_controller(v.get_controller(), player);
-          }
-          break;
-          case options_view_item::right_controls:
-          {
-            const side player{side::rhs};
-            controls_view v(m_options.get_controller(player));
-            v.exec();
-            m_options.set_controller(v.get_controller(), player);
-          }
-          break;
-        }
-
+        change_selected();
       }
       else if (key_pressed == sf::Keyboard::Key::F3)
       {
@@ -194,6 +198,10 @@ bool options_view::process_events()
       if (is_in(mouse_screen_pos, m_layout.get_right_controls_value())) m_selected = options_view_item::right_controls;
       if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) m_selected = options_view_item::sound_effects_volume;
       if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) m_selected = options_view_item::starting_position;
+    }
+    else if (event.type == sf::Event::MouseButtonPressed)
+    {
+      change_selected();
     }
   }
   return false; // if no events proceed with tick
