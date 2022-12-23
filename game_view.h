@@ -151,11 +151,8 @@ void show_board(game_view& view);
 /// Show the controls (e.g. for a unit) on-screen for a player
 void show_controls(game_view& view, const side player);
 
-/// Show debug info on-screen for player 1
-void show_debug_1(game_view& view);
-
-/// Show debug info on-screen for player 2
-void show_debug_2(game_view& view);
+/// Show debug info on-screen for a player
+void show_debug(game_view& view, const side player_side);
 
 /// Show the layout of the window: board and panels
 void show_layout(game_view& view);
@@ -175,11 +172,8 @@ void show_pieces(game_view& view);
 /// Does nothing if no pieces are selected
 void show_possible_moves(game_view& view);
 
-/// Show the info on the side-bar on-screen for player 1
-void show_sidebar_1(game_view& view);
-
-/// Show the info on the side-bar on-screen for player 2
-void show_sidebar_2(game_view& view);
+/// Show the info on the side-bar on-screen for a player
+void show_sidebar(game_view& view, const side player_side);
 
 /// Show the squares of the board on-screen
 void show_squares(game_view& view);
@@ -193,11 +187,8 @@ void show_unit_health_bars(game_view& view);
 /// Show the planned paths for the units on-screen
 void show_unit_paths(game_view& view);
 
-/// Show the selected unit(s) on-screen for player 1
-void show_unit_sprites_1(game_view& view);
-
-/// Show the selected unit(s) on-screen for player 2
-void show_unit_sprites_2(game_view& view);
+/// Show the selected unit(s) on-screen for a player
+void show_unit_sprites(game_view& view, const side player_side);
 
 void test_game_view();
 

@@ -294,8 +294,8 @@ void game_view::show()
   show_board(*this);
 
   // Show the sidebars: controls (with log), units, debug
-  show_sidebar_1(*this);
-  show_sidebar_2(*this);
+  show_sidebar(*this, side::lhs);
+  show_sidebar(*this, side::rhs);
 
   // Show the mouse cursor
   //show_mouse_cursor();
@@ -362,29 +362,29 @@ void show_controls(game_view& view, const side player)
 
 }
 
-void show_debug_1(game_view& view)
+void show_debug(game_view& view, const side player_side)
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
   sf::Text text;
   text.setFont(view.get_resources().get_arial_font());
   const piece& closest_piece{
-    get_closest_piece_to(game, get_player_pos(game, side::lhs))
+    get_closest_piece_to(game, get_player_pos(game, player_side))
   };
   const auto color{get_left_player_color(game.get_options())};
   std::stringstream s;
   s << "Color: " << color << '\n'
     << "Controller: " << get_left_player_controller(view.get_game().get_options()) << '\n'
     << "Game position: "
-    << to_notation(get_player_pos(game, side::lhs))
+    << to_notation(get_player_pos(game, player_side))
     << " "
-    << get_player_pos(game, side::lhs)
+    << get_player_pos(game, player_side)
     << '\n'
     << "Screen position: "
-    << convert_to_screen_coordinat(get_player_pos(game, side::lhs), layout)
+    << convert_to_screen_coordinat(get_player_pos(game, player_side), layout)
     << '\n'
     << "Is there a piece here: "
-    << bool_to_str(is_piece_at(game, get_player_pos(game, side::lhs), 0.5))
+    << bool_to_str(is_piece_at(game, get_player_pos(game, player_side), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << to_coordinat(closest_piece.get_current_square()) << '\n'
     << "Number of game actions: " << count_control_actions(game) << '\n'
@@ -402,49 +402,8 @@ void show_debug_1(game_view& view)
   text.setString(s.str());
   text.setCharacterSize(20);
   text.setPosition(
-    layout.get_debug(side::lhs).get_tl().get_x(),
-    layout.get_debug(side::lhs).get_tl().get_y()
-  );
-  view.get_window().draw(text);
-}
-
-void show_debug_2(game_view& view)
-{
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
-  sf::Text text;
-  text.setFont(view.get_resources().get_arial_font());
-  const piece& closest_piece{
-    get_closest_piece_to(game, get_player_pos(game, side::rhs))
-  };
-  const auto color{get_right_player_color(game.get_options())};
-  std::stringstream s;
-  s << "Color: " << color << '\n'
-    << "Controller: " << get_right_player_controller(game.get_options()) << '\n'
-    << "Game position: "
-    << to_notation(get_player_pos(game, side::rhs))
-    << " "
-    << get_player_pos(game, side::rhs)
-    << '\n'
-    << "Screen position: "
-    << convert_to_screen_coordinat(get_player_pos(game, side::rhs), layout)
-    << '\n'
-    << "Is there a piece here: "
-    << bool_to_str(is_piece_at(game, get_player_pos(game, side::rhs), 0.5))
-    << '\n'
-    << "Closest piece: "
-      << closest_piece.get_type() << ": "
-      << to_coordinat(closest_piece.get_current_square()) << '\n'
-    << "Number of game actions: " << count_control_actions(game) << '\n'
-    << "Number of selected units: " << count_selected_units(game, color) << '\n'
-    << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
-  ;
-
-  text.setString(s.str());
-  text.setCharacterSize(20);
-  text.setPosition(
-    layout.get_debug(side::rhs).get_tl().get_x(),
-    layout.get_debug(side::rhs).get_tl().get_y()
+    layout.get_debug(player_side).get_tl().get_x(),
+    layout.get_debug(player_side).get_tl().get_y()
   );
   view.get_window().draw(text);
 }
@@ -624,20 +583,12 @@ void show_possible_moves(game_view& view)
   }
 }
 
-void show_sidebar_1(game_view& view)
+void show_sidebar(game_view& view, const side player_side)
 {
-  show_unit_sprites_1(view);
-  show_controls(view, side::lhs);
-  show_log(view, side::lhs);
-  show_debug_1(view);
-}
-
-void show_sidebar_2(game_view& view)
-{
-  show_unit_sprites_2(view);
-  show_controls(view, side::rhs);
-  show_log(view, side::rhs);
-  show_debug_2(view);
+  show_unit_sprites(view, player_side);
+  show_controls(view, player_side);
+  show_log(view, player_side);
+  show_debug(view, player_side);
 }
 
 void show_squares(game_view& view)
@@ -868,63 +819,14 @@ void show_unit_paths(game_view& view)
   }
 }
 
-void show_unit_sprites_1(game_view& view)
+void show_unit_sprites(game_view& view, const side player_side)
 {
   const auto& layout = view.get_game().get_layout();
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
-  screen_coordinat screen_position = layout.get_units(side::lhs).get_tl();
-  const auto player_color{get_left_player_color(view.get_game().get_options())};
+  const auto player_color{get_player_color(view, player_side)};
+  screen_coordinat screen_position = layout.get_units(player_side).get_tl();
 
-  for (const auto& piece: get_selected_pieces(view.get_game(), player_color))
-  {
-    // sprite of the piece
-    sf::RectangleShape sprite;
-    sprite.setSize(sf::Vector2f(square_width, square_height));
-    sprite.setTexture(
-      &view.get_resources().get_piece_portrait(
-        piece.get_color(),
-        piece.get_type()
-      )
-    );
-    sprite.setOrigin(0.0, 0.0);
-    sprite.setPosition(
-      screen_position.get_x(),
-      screen_position.get_y()
-    );
-    view.get_window().draw(sprite);
-    // text
-    sf::Text text;
-    text.setFont(view.get_resources().get_arial_font());
-    std::stringstream s;
-
-    s << piece.get_type() << ": "
-      << piece.get_health() << "/"
-      << piece.get_max_health() << '\n'
-      << piece.get_current_square() << '\n'
-      << describe_actions(piece)
-    ;
-    text.setString(s.str());
-    text.setCharacterSize(20);
-    const auto text_position{
-      screen_position + screen_coordinat(square_width + 10, 0)
-    };
-    text.setPosition(
-      text_position.get_x(),
-      text_position.get_y()
-    );
-    view.get_window().draw(text);
-    screen_position += screen_coordinat(0, square_height);
-  }
-}
-
-void show_unit_sprites_2(game_view& view)
-{
-  const auto& layout = view.get_game().get_layout();
-  const double square_width{get_square_width(layout)};
-  const double square_height{get_square_height(layout)};
-  screen_coordinat screen_position = layout.get_units(side::rhs).get_tl();
-  const auto player_color{get_right_player_color(view.get_game().get_options())};
   for (const auto& piece: get_selected_pieces(view.get_game(), player_color))
   {
     // sprite of the piece
