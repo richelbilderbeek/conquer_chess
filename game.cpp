@@ -82,64 +82,21 @@ bool can_castle_queenside(const piece& p, const game& g) noexcept
   return true;
 }
 
-bool can_do(const game& g,
+bool can_do(
+  const game& g,
   const piece& selected_piece,
   const piece_action_type action,
   const square& cursor_square,
   const side player_side
 )
 {
-  const auto player_color{get_player_color(g, player_side)};
-  assert(player_color == selected_piece.get_color());
   if (action == piece_action_type::move)
   {
-    // Is it theoretically possible, e.g. on an empty board?
-    if (
-      !can_move(
-        player_color,
-        selected_piece.get_type(),
-        selected_piece.get_current_square(),
-        cursor_square
-      )
-    ) return false;
-    // Is it possible in this situation?
-    assert(is_piece_at(g, selected_piece.get_current_square()));
-    assert(get_piece_at(g, selected_piece.get_current_square()).get_color()
-      == player_color
-    );
-    if (is_piece_at(g, cursor_square)) return false;
-    return is_empty_between(
-      g,
-      selected_piece.get_current_square(),
-      cursor_square
-    );
+    return can_do_move(g, selected_piece, cursor_square, player_side);
   }
   if (action == piece_action_type::attack)
   {
-    // Is it theoretically possible, e.g. on an empty board?
-    if (
-      !can_attack(
-        player_color,
-        selected_piece.get_type(),
-        selected_piece.get_current_square(),
-        cursor_square
-      )
-    ) return false;
-    // Is it possible in this situation?
-    assert(is_piece_at(g, selected_piece.get_current_square()));
-    assert(get_piece_at(g, selected_piece.get_current_square()).get_color()
-      == player_color
-    );
-    if (!is_piece_at(g, cursor_square)) return false;
-    if(get_piece_at(g, cursor_square).get_color() == player_color)
-    {
-      return false;
-    }
-    return is_empty_between(
-      g,
-      selected_piece.get_current_square(),
-      cursor_square
-    );
+    return can_do_attack(g, selected_piece, cursor_square, player_side);
   }
   return false;
 }
@@ -158,6 +115,75 @@ bool can_do(const game& g,
     square(cursor_square_str),
     player_side
   );
+}
+
+bool can_do_attack(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+)
+{
+  const auto player_color{get_player_color(g, player_side)};
+  assert(player_color == selected_piece.get_color());
+  // Is it theoretically possible, e.g. on an empty board?
+  if (
+    !can_attack(
+      player_color,
+      selected_piece.get_type(),
+      selected_piece.get_current_square(),
+      cursor_square
+    )
+  ) return false;
+  // Is it possible in this situation?
+  assert(is_piece_at(g, selected_piece.get_current_square()));
+  assert(get_piece_at(g, selected_piece.get_current_square()).get_color()
+    == player_color
+  );
+  if (!is_piece_at(g, cursor_square)) return false;
+  if(get_piece_at(g, cursor_square).get_color() == player_color)
+  {
+    return false;
+  }
+  return is_empty_between(
+    g,
+    selected_piece.get_current_square(),
+    cursor_square
+  );
+
+}
+
+/// Can a piece_action_type::move action be done?
+bool can_do_move(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+)
+{
+  const auto player_color{get_player_color(g, player_side)};
+  assert(player_color == selected_piece.get_color());
+  // Is it theoretically possible, e.g. on an empty board?
+  if (
+    !can_move(
+      player_color,
+      selected_piece.get_type(),
+      selected_piece.get_current_square(),
+      cursor_square
+    )
+  ) return false;
+  // Is it possible in this situation?
+  assert(is_piece_at(g, selected_piece.get_current_square()));
+  assert(get_piece_at(g, selected_piece.get_current_square()).get_color()
+    == player_color
+  );
+  if (is_piece_at(g, cursor_square)) return false;
+  return is_empty_between(
+    g,
+    selected_piece.get_current_square(),
+    cursor_square
+  );
+
 }
 
 bool can_player_select_piece_at_cursor_pos(

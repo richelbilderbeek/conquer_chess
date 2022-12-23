@@ -563,12 +563,22 @@ void test_game_functions()
       const game g{
         get_game_with_starting_position(starting_position_type::queen_end_game)
       };
-      // Queens can attack one another
       assert(!can_do(g, get_piece_at(g, "d1"), piece_action_type::move, "d8", side::lhs));
       assert(can_do(g, get_piece_at(g, "d1"), piece_action_type::attack, "d8", side::lhs));
       assert(can_do(g, get_piece_at(g, "d8"), piece_action_type::attack, "d1", side::rhs));
       assert(!can_do(g, get_piece_at(g, "d1"), piece_action_type::attack, "d7", side::lhs));
       assert(!can_do(g, get_piece_at(g, "d8"), piece_action_type::attack, "d2", side::rhs));
+    }
+    // can_do: queen end-game
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::ready_to_castle)
+      };
+      // Kings can castle
+      assert(can_do(g, get_piece_at(g, "e1"), piece_action_type::castle_kingside, "g1", side::lhs));
+      assert(can_do(g, get_piece_at(g, "e8"), piece_action_type::castle_kingside, "g8", side::rhs));
+      assert(can_do(g, get_piece_at(g, "e1"), piece_action_type::castle_queenside, "c1", side::lhs));
+      assert(can_do(g, get_piece_at(g, "e8"), piece_action_type::castle_queenside, "c8", side::rhs));
     }
     // 55: move cursor
     {

@@ -120,6 +120,22 @@ bool can_do(const game& g,
   const side player_side
 );
 
+/// Can a piece_action_type::attack action be done?
+bool can_do_attack(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+);
+
+/// Can a piece_action_type::move action be done?
+bool can_do_move(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+);
+
 /// Can the player select a piece at the current mouse position?
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
