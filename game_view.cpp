@@ -370,8 +370,6 @@ void show_controls(game_view& view, const side player)
     rectangle.setOutlineThickness(1);
     rectangle.setOutlineColor(sf::Color::White);
     view.get_window().draw(rectangle);
-    #define USE_ICONS
-    #ifdef USE_ICONS
     sf::RectangleShape sprite;
     set_rect(sprite, layout.get_controls_key(player, key));
     const auto maybe_action{
@@ -421,26 +419,7 @@ void show_controls(game_view& view, const side player)
       }
     }
     view.get_window().draw(sprite);
-    #else
-
-    // Text
-    const std::string s{
-      get_controls_text(
-        view,
-        view.get_controller(player),
-        key
-      )
-    };
-    text.setString(s.c_str());
-    text.setFillColor(sf::Color::Black);
-    text.setPosition(
-      layout.get_controls_key(player, key).get_tl().get_x(),
-      layout.get_controls_key(player, key).get_tl().get_y()
-    );
-    view.get_window().draw(text);
-    #endif
   }
-
 }
 
 void show_debug(game_view& view, const side player_side)
