@@ -547,7 +547,9 @@ void test_game_functions()
     #ifdef FIX_ISSUE_53
     // 53: nothing selected, cursor at empty square -> no action
     {
-      const game g;
+      game g;
+      move_cursor_to(g, "d4", side::lhs);
+      move_cursor_to(g, "d5", side::rhs);
       assert(!get_default_piece_action(g, side::lhs));
       assert(!get_default_piece_action(g, side::rhs));
     }
@@ -560,6 +562,20 @@ void test_game_functions()
       assert(get_default_piece_action(g, side::rhs));
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::select);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::select);
+    }
+    // 53: selected piece, cursor still there -> unselect
+    {
+      game g;
+      move_cursor_to(g, "d1", side::lhs);
+      move_cursor_to(g, "d8", side::rhs);
+      g.add_action(create_press_action_1(side::lhs));
+      g.add_action(create_press_action_1(side::rhs));
+      move_cursor_to(g, "d1", side::lhs);
+      move_cursor_to(g, "d8", side::rhs);
+      assert(get_default_piece_action(g, side::lhs));
+      assert(get_default_piece_action(g, side::rhs));
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::unselect);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::unselect);
     }
 
     #endif // FIX_ISSUE_53

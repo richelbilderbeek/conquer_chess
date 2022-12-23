@@ -807,6 +807,14 @@ int count_selected_units(
   return count_selected_units(g.get_pieces(), player);
 }
 
+int count_selected_units(
+  const game& g,
+  const side player_side
+)
+{
+  return count_selected_units(g, get_player_color(g, player_side));
+}
+
 game create_randomly_played_game(
   const int n_moves,
   const int seed
@@ -1106,8 +1114,12 @@ std::optional<piece_action_type> get_default_piece_action(
   if (count_selected_units(g, player_side))
   {
     // Has selected pieces
-    assert(!"TODO");
-    return std::optional<piece_action_type>();
+    const auto cursor_pos{get_cursor_pos(g, player_side)};
+    if (is_piece_at(g, square(cursor_pos)))
+    {
+      const piece& p{get_piece_at(g, square(cursor_pos))};
+      if (p.is_selected()) return piece_action_type::unselect;
+    }
   }
   else
   {
@@ -1117,10 +1129,9 @@ std::optional<piece_action_type> get_default_piece_action(
     {
       const piece& p{get_piece_at(g, square(cursor_pos))};
       if (!p.is_selected()) return piece_action_type::select;
-      if (p.is_selected()) return piece_action_type::unselect;
     }
-    return std::optional<piece_action_type>();
   }
+  return std::optional<piece_action_type>();
 }
 
 game get_game_with_starting_position(starting_position_type t) noexcept
