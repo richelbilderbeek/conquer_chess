@@ -47,18 +47,26 @@ void options_view::change_selected()
     break;
     case options_view_item::left_controls:
     {
+      const auto cur_pos{m_window.getPosition()};
       const side player{side::lhs};
       controls_view v(m_options.get_controller(player));
+      m_window.setVisible(false);
       v.exec();
       m_options.set_controller(v.get_controller(), player);
+      m_window.setVisible(true);
+      m_window.setPosition(cur_pos);
     }
     break;
     case options_view_item::right_controls:
     {
+      const auto cur_pos{m_window.getPosition()};
       const side player{side::rhs};
       controls_view v(m_options.get_controller(player));
+      m_window.setVisible(false);
       v.exec();
       m_options.set_controller(v.get_controller(), player);
+      m_window.setVisible(true);
+      m_window.setPosition(cur_pos);
     }
     break;
   }

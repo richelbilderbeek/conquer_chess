@@ -56,23 +56,35 @@ void menu_view::exec()
 
 void menu_view::exec_about()
 {
+  const auto cur_pos{m_window.getPosition()};
+  m_window.setVisible(false);
   about_view view;
   view.exec();
+  m_window.setVisible(true);
+  m_window.setPosition(cur_pos);
 }
 
 void menu_view::exec_game()
 {
+  const auto cur_pos{m_window.getPosition()};
+  m_window.setVisible(false);
   game_view view{game(m_options)};
   view.exec();
+  m_window.setVisible(true);
+  m_window.setPosition(cur_pos);
 }
 
 void menu_view::exec_options()
 {
+  const auto cur_pos{m_window.getPosition()};
+  m_window.setVisible(false);
   options_view view(m_options);
   assert(!to_str(get_starting_position(view)).empty());
   view.exec();
   assert(!to_str(get_starting_position(view)).empty());
   m_options = view.get_options();
+  m_window.setVisible(true);
+  m_window.setPosition(cur_pos);
 }
 
 void menu_view::exec_played_game()
