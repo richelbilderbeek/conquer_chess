@@ -33,6 +33,6 @@ Unused             |Hugo                                |https://commons.wikimed
 
 Sound              |Description                                            |URL
 -------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------
-`hide.ogg`         |Hide sounds from tresinformal game, by Sebastian Mader |https://github.com/tresinformal/game/blob/master/hide.ogg
+`hide.ogg`         |Hide sounds from Drakkar, by Sebastian Mader           |https://github.com/tresinformal/drakkar/blob/master/resources/hide.ogg
 
 
