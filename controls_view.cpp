@@ -45,7 +45,7 @@ void draw_panel(
   rectangle.setTexture(
     &get_strip(v.get_resources(), color)
   );
-  if (!is_active) rectangle.setFillColor(sf::Color::Red);
+  if (!is_active) rectangle.setFillColor(sf::Color(128, 128, 128, 128));
   v.get_window().draw(rectangle);
 
   sf::Text text;
