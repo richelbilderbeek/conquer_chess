@@ -36,7 +36,8 @@ void draw_panel(
   controls_view& v,
   const screen_rect& panel_position,
   const std::string panel_text,
-  const chess_color color
+  const chess_color color,
+  const bool is_active
 )
 {
   sf::RectangleShape rectangle;
@@ -44,6 +45,7 @@ void draw_panel(
   rectangle.setTexture(
     &get_strip(v.get_resources(), color)
   );
+  if (!is_active) rectangle.setFillColor(sf::Color::Red);
   v.get_window().draw(rectangle);
 
   sf::Text text;
@@ -260,10 +262,13 @@ void show_keyboard_panel(controls_view& v)
     std::make_pair(layout.get_action_3_label(), "3"),
     std::make_pair(layout.get_action_4_label(), "4")
   };
+  const bool is_active{
+    v.get_controller().get_type() == controller_type::keyboard
+  };
   chess_color color{chess_color::black};
   for (const auto& p: labels)
   {
-    draw_panel(v, p.first, p.second, color);
+    draw_panel(v, p.first, p.second, color, is_active);
     color = get_other_color(color);
   }
 
@@ -281,7 +286,7 @@ void show_keyboard_panel(controls_view& v)
   color = get_other_color(color);
   for (const auto& p: values)
   {
-    draw_panel(v, p.first, p.second, color);
+    draw_panel(v, p.first, p.second, color, is_active);
     color = get_other_color(color);
   }
 }
@@ -294,10 +299,13 @@ void show_mouse_panel(controls_view& v)
     std::make_pair(layout.get_do_label(), "do"),
     std::make_pair(layout.get_next_label(), "next")
   };
+  const bool is_active{
+    v.get_controller().get_type() == controller_type::mouse
+  };
   chess_color color{chess_color::black};
   for (const auto& p: labels)
   {
-    draw_panel(v, p.first, p.second, color);
+    draw_panel(v, p.first, p.second, color, is_active);
     color = get_other_color(color);
   }
 
@@ -309,7 +317,7 @@ void show_mouse_panel(controls_view& v)
   color = get_other_color(color);
   for (const auto& p: values)
   {
-    draw_panel(v, p.first, p.second, color);
+    draw_panel(v, p.first, p.second, color, is_active);
     color = get_other_color(color);
   }
 }
@@ -346,17 +354,20 @@ void show_selected_panel(controls_view& v)
 
 void show_type_panel(controls_view& v)
 {
+  const bool is_active{true};
   draw_panel(
     v,
     v.get_layout().get_controller_type_label(),
     "Controller",
-    chess_color::white
+    chess_color::white,
+    is_active
   );
   draw_panel(
     v,
     v.get_layout().get_controller_type_value(),
     to_str(v.get_controller().get_type()),
-    chess_color::black
+    chess_color::black,
+    is_active
   );
 }
 

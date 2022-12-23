@@ -60,11 +60,15 @@ private:
   void show();
 };
 
+/// @param is_active if the panel is active:
+///   if true, draw with the real color,
+///   else use a greyed out color
 void draw_panel(
   controls_view& v,
   const screen_rect& panel_position,
   const std::string panel_text,
-  const chess_color color
+  const chess_color color,
+  const bool is_active
 );
 
 
