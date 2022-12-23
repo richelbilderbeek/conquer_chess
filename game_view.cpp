@@ -370,6 +370,22 @@ void show_controls(game_view& view, const side player)
     rectangle.setOutlineThickness(1);
     rectangle.setOutlineColor(sf::Color::White);
     view.get_window().draw(rectangle);
+    #define USE_ICONS
+    #ifdef USE_ICONS
+    sf::RectangleShape sprite;
+    set_rect(sprite, layout.get_controls_key(player, key));
+    const auto maybe_action{
+      get_default_piece_action(view.get_game(), player)
+    };
+    if (!maybe_action) continue;
+
+    sprite.setTexture(
+      &view.get_resources().get_textures().get_action_icon(
+        maybe_action.value()
+      )
+    );
+    view.get_window().draw(sprite);
+    #else
 
     // Text
     const std::string s{
@@ -386,6 +402,7 @@ void show_controls(game_view& view, const side player)
       layout.get_controls_key(player, key).get_tl().get_y()
     );
     view.get_window().draw(text);
+    #endif
   }
 
 }

@@ -82,6 +82,39 @@ textures::textures()
   }
 }
 
+sf::Texture& textures::get_action_icon(
+  const piece_action_type t
+) noexcept
+{
+  switch(t)
+  {
+    case piece_action_type::attack:
+      return m_action_attack;
+    case piece_action_type::castle_kingside:
+      return m_action_castle_kingside;
+    case piece_action_type::castle_queenside:
+      return m_action_castle_queenside;
+    case piece_action_type::en_passant:
+      return m_action_en_passant;
+    case piece_action_type::move:
+      return m_action_move;
+    case piece_action_type::promote_to_bishop:
+      return m_action_promote_to_bishop;
+    case piece_action_type::promote_to_knight:
+      return m_action_promote_to_knight;
+    case piece_action_type::promote_to_queen:
+      return m_action_promote_to_queen;
+    case piece_action_type::promote_to_rook:
+      return m_action_promote_to_rook;
+    case piece_action_type::select:
+      return m_action_select;
+    case piece_action_type::unselect:
+    default:
+      assert(t == piece_action_type::unselect);
+      return m_action_unselect;
+  }
+}
+
 sf::Texture& get_black_square(textures& t) noexcept
 {
   return t.get_square(chess_color::black);
