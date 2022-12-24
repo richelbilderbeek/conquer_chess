@@ -172,7 +172,7 @@ bool can_do_castle_kingside(
   assert(player_color == selected_piece.get_color());
   const square king_square{get_default_king_square(player_color)};
   if (!is_piece_at(g, king_square)) return false;
-  const square ksc_square{king_square.get_x() + 2, king_square.get_y()};
+  const square ksc_square{king_square.get_x(), king_square.get_y() + 2};
   if (cursor_square != ksc_square) return false;
   return can_castle_kingside(get_piece_at(g, king_square), g);
 }
@@ -188,7 +188,7 @@ bool can_do_castle_queenside(
   assert(player_color == selected_piece.get_color());
   const square king_square{get_default_king_square(player_color)};
   if (!is_piece_at(g, king_square)) return false;
-  const square qsc_square{king_square.get_x() - 2, king_square.get_y()};
+  const square qsc_square{king_square.get_x(), king_square.get_y() - 2};
   if (cursor_square != qsc_square) return false;
   return can_castle_queenside(get_piece_at(g, king_square), g);
 }
@@ -1283,6 +1283,15 @@ std::optional<piece_action_type> get_default_piece_action(
       // No piece at cursor, maybe can move there?
       assert(get_selected_pieces(g, player_side).size() == 1);
       const auto selected_piece{get_selected_pieces(g, player_side)[0]};
+      if (can_do(g, selected_piece, piece_action_type::castle_kingside, cursor_square, player_side))
+      {
+        return piece_action_type::castle_kingside;
+      }
+      if (can_do(g, selected_piece, piece_action_type::castle_queenside, cursor_square, player_side))
+      {
+        return piece_action_type::castle_queenside;
+      }
+
       if (can_do(g, selected_piece, piece_action_type::move, cursor_square, player_side))
       {
         return piece_action_type::move;

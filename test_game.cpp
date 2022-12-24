@@ -653,6 +653,32 @@ void test_game_functions()
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::attack);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::attack);
     }
+    // 53: King selected, cursor at valid king-side castling square -> king-side castle
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::ready_to_castle)
+      };
+      do_select(g, "e1", side::lhs);
+      do_select(g, "e8", side::rhs);
+      move_cursor_to(g, "g1", side::lhs);
+      move_cursor_to(g, "g8", side::rhs);
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::castle_kingside);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::castle_kingside);
+    }
+    // 53: King selected, cursor at valid queen-side castling square -> queen-side castle
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::ready_to_castle)
+      };
+      do_select(g, "e1", side::lhs);
+      do_select(g, "e8", side::rhs);
+      move_cursor_to(g, "c1", side::lhs);
+      move_cursor_to(g, "c8", side::rhs);
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::castle_queenside);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::castle_queenside);
+    }
     #endif // FIX_ISSUE_53
     //#define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21
