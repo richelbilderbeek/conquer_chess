@@ -22,17 +22,19 @@ See [FAQ](FAQ.md)
 
 ## Screenshots
 
-![](screenshots/202208016_1.png)
+![](screenshots/20221224_1.png)
 
-![](screenshots/202208012_1.png)
+![](screenshots/20220816_1.png)
 
-![](screenshots/202208011_4.png)
+![](screenshots/20220812_1.png)
 
-![](screenshots/202208011_3.png)
+![](screenshots/20220811_4.png)
 
-![](screenshots/202208011_2.png)
+![](screenshots/20220811_3.png)
 
-![](screenshots/202208011_1.png)
+![](screenshots/20220811_2.png)
+
+![](screenshots/20220811_1.png)
 
 ![](screenshots/20220808_1.png)
 
