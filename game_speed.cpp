@@ -21,6 +21,21 @@ game_speed get_next(const game_speed speed) noexcept
   }
 }
 
+game_speed get_previous(const game_speed speed) noexcept
+{
+  switch (speed)
+  {
+    case game_speed::fastest: return game_speed::fast;
+    case game_speed::fast: return game_speed::normal;
+    case game_speed::normal: return game_speed::slow;
+    case game_speed::slow: return game_speed::slowest;
+    default:
+    case game_speed::slowest:
+      assert(speed == game_speed::slowest);
+      return game_speed::fastest;
+  }
+}
+
 void test_game_speed()
 {
 #ifndef NDEBUG
@@ -31,6 +46,14 @@ void test_game_speed()
     assert(get_next(game_speed::normal) == game_speed::fast);
     assert(get_next(game_speed::fast) == game_speed::fastest);
     assert(get_next(game_speed::fastest) == game_speed::slowest);
+  }
+  // get_previous
+  {
+    assert(get_previous(get_next(game_speed::slowest)) == game_speed::slowest);
+    assert(get_previous(get_next(game_speed::slow)) == game_speed::slow);
+    assert(get_previous(get_next(game_speed::normal)) == game_speed::normal);
+    assert(get_previous(get_next(game_speed::fast)) == game_speed::fast);
+    assert(get_previous(get_next(game_speed::fastest)) == game_speed::fastest);
   }
   // to_delta_t
   {

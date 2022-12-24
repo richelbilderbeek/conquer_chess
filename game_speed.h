@@ -18,6 +18,10 @@ constexpr game_speed get_default_game_speed() { return game_speed::slowest; }
 /// i.e. when the user presses right
 game_speed get_next(const game_speed speed) noexcept;
 
+/// Get the previous game speed,
+/// i.e. when the user presses left
+game_speed get_previous(const game_speed speed) noexcept;
+
 /// Test this class and its free functions
 void test_game_speed();
 

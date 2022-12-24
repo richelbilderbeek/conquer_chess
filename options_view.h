@@ -48,9 +48,13 @@ private:
   /// The window to draw to
   sf::RenderWindow m_window;
 
-  /// Change the selected square,
-  /// can be done by LMB and space
-  void change_selected();
+  /// Increase the value in the selected square,
+  /// can be done by leftarrow key
+  void decrease_selected();
+
+  /// Increase the value in the selected square,
+  /// can be done by LMB, space and right arrow key
+  void increase_selected();
 
   /// Process all events
   /// @return if the user wants to quit

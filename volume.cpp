@@ -18,6 +18,13 @@ volume get_next(const volume& v) noexcept
   );
 }
 
+volume get_previous(const volume& v) noexcept
+{
+  return volume(
+    (v.get_percentage() - 1 + 101) % 101
+  );
+}
+
 void test_volume()
 {
 #ifndef NDEBUG
@@ -39,6 +46,11 @@ void test_volume()
     const volume v(100);
     const auto next_volume{get_next(v)};
     assert(next_volume.get_percentage() == 0);
+  }
+  // get_next increments
+  {
+    assert(get_previous(get_next(volume(0))) == volume(0));
+    assert(get_previous(get_next(volume(100))) == volume(100));
   }
   // operator==
   {

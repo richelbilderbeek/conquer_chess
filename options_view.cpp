@@ -23,7 +23,56 @@ options_view::options_view(const game_options& options)
 
 }
 
-void options_view::change_selected()
+void options_view::decrease_selected()
+{
+  switch (m_selected)
+  {
+    case options_view_item::game_speed:
+      m_options.set_game_speed(get_previous(m_options.get_game_speed()));
+    break;
+    case options_view_item::music_volume:
+      m_options.set_volume(get_previous(m_options.get_music_volume()));
+    break;
+    case options_view_item::sound_effects_volume:
+      m_options.set_sound_effects_volume(get_previous(m_options.get_sound_effects_volume()));
+    break;
+    case options_view_item::starting_position:
+      assert(!to_str(get_starting_position(*this)).empty());
+      m_options.set_starting_position(get_previous(get_starting_position(m_options)));
+      assert(!to_str(get_starting_position(*this)).empty());
+    break;
+    case options_view_item::left_color:
+    case options_view_item::right_color:
+      m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
+    break;
+    case options_view_item::left_controls:
+    {
+      const auto cur_pos{m_window.getPosition()};
+      const side player{side::lhs};
+      controls_view v(m_options.get_controller(player));
+      m_window.setVisible(false);
+      v.exec();
+      m_options.set_controller(v.get_controller(), player);
+      m_window.setVisible(true);
+      m_window.setPosition(cur_pos);
+    }
+    break;
+    case options_view_item::right_controls:
+    {
+      const auto cur_pos{m_window.getPosition()};
+      const side player{side::rhs};
+      controls_view v(m_options.get_controller(player));
+      m_window.setVisible(false);
+      v.exec();
+      m_options.set_controller(v.get_controller(), player);
+      m_window.setVisible(true);
+      m_window.setPosition(cur_pos);
+    }
+    break;
+  }
+}
+
+void options_view::increase_selected()
 {
   switch (m_selected)
   {
@@ -184,7 +233,7 @@ bool options_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
-        change_selected();
+        increase_selected();
       }
       else if (key_pressed == sf::Keyboard::Key::F3)
       {
@@ -209,7 +258,7 @@ bool options_view::process_events()
     }
     else if (event.type == sf::Event::MouseButtonPressed)
     {
-      change_selected();
+      increase_selected();
     }
   }
   return false; // if no events proceed with tick

@@ -25,6 +25,9 @@ private:
 /// Get the next volume, i.e. the volume when the user presses right
 volume get_next(const volume& v) noexcept;
 
+/// Get the previous volume, i.e. the volume when the user presses left
+volume get_previous(const volume& v) noexcept;
+
 /// Test this class and its free functions
 void test_volume();
 

@@ -31,6 +31,19 @@ starting_position_type get_next(const starting_position_type starting_position) 
   return *(++there);
 }
 
+starting_position_type get_previous(const starting_position_type starting_position) noexcept
+{
+  const auto v{get_all_starting_position_types()};
+  auto there{std::find(std::begin(v), std::end(v), starting_position)};
+  assert(there != std::end(v));
+  if (there == std::begin(v))
+  {
+    assert(!v.empty());
+    const starting_position_type t{v.back()};
+    return t;
+  }
+  return *(--there);
+}
 
 void test_starting_position_type()
 {
@@ -56,6 +69,15 @@ void test_starting_position_type()
     {
       const auto next{get_next(spt)};
       assert(next != spt);
+    }
+  }
+  // get_previous
+  {
+    for (const auto spt: get_all_starting_position_types())
+    {
+      const auto next{get_next(spt)};
+      const auto previous{get_previous(next)};
+      assert(previous == spt);
     }
   }
   // 43: operator<<

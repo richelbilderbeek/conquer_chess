@@ -32,6 +32,10 @@ constexpr starting_position_type get_default_starting_position() { return starti
 /// i.e. when the user presses right
 starting_position_type get_next(const starting_position_type starting_position) noexcept;
 
+/// Get the previous starting position,
+/// i.e. when the user presses left
+starting_position_type get_previous(const starting_position_type starting_position) noexcept;
+
 /// Test this class and its free functions
 void test_starting_position_type();
 

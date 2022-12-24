@@ -11,6 +11,13 @@ controller_type get_next(const controller_type t) noexcept
   return controller_type::mouse;
 }
 
+controller_type get_previous(const controller_type t) noexcept
+{
+  if (t == controller_type::mouse) return controller_type::keyboard;
+  assert(t == controller_type::keyboard);
+  return controller_type::mouse;
+}
+
 void test_controller_type()
 {
 #ifndef NDEBUG
@@ -23,6 +30,12 @@ void test_controller_type()
   {
     assert(get_next(controller_type::mouse) == controller_type::keyboard);
     assert(get_next(controller_type::keyboard) == controller_type::mouse);
+
+  }
+  // get_previous
+  {
+    assert(get_previous(get_next(controller_type::mouse)) == controller_type::mouse);
+    assert(get_previous(get_next(controller_type::keyboard)) == controller_type::keyboard);
 
   }
   // operator<<
