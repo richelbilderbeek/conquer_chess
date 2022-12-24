@@ -70,6 +70,7 @@ void options_view::decrease_selected()
     }
     break;
   }
+  m_resources.get_sound_effects().play_hide();
 }
 
 void options_view::increase_selected()
@@ -119,6 +120,7 @@ void options_view::increase_selected()
     }
     break;
   }
+  m_resources.get_sound_effects().play_hide();
 }
 
 void draw_panel(
@@ -218,8 +220,24 @@ bool options_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
-        m_selected = get_right_of(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        switch (m_selected)
+        {
+          case options_view_item::game_speed:
+          default:
+          assert(m_selected == options_view_item::game_speed);
+          case options_view_item::music_volume:
+          case options_view_item::sound_effects_volume:
+          case options_view_item::starting_position:
+            increase_selected();
+          break;
+          case options_view_item::left_color:
+          case options_view_item::left_controls:
+          case options_view_item::right_color:
+          case options_view_item::right_controls:
+            m_selected = get_right_of(m_selected);
+            m_resources.get_sound_effects().play_hide();
+          break;
+        }
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
@@ -228,8 +246,24 @@ bool options_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
-        m_selected = get_left_of(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        switch (m_selected)
+        {
+          case options_view_item::game_speed:
+          default:
+          assert(m_selected == options_view_item::game_speed);
+          case options_view_item::music_volume:
+          case options_view_item::sound_effects_volume:
+          case options_view_item::starting_position:
+            decrease_selected();
+          break;
+          case options_view_item::left_color:
+          case options_view_item::left_controls:
+          case options_view_item::right_color:
+          case options_view_item::right_controls:
+            m_selected = get_left_of(m_selected);
+            m_resources.get_sound_effects().play_hide();
+          break;
+        }
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
