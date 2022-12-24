@@ -580,6 +580,20 @@ void test_game_functions()
       assert(can_do(g, get_piece_at(g, "e1"), piece_action_type::castle_queenside, "c1", side::lhs));
       assert(can_do(g, get_piece_at(g, "e8"), piece_action_type::castle_queenside, "c8", side::rhs));
     }
+    // can_do: promote
+    {
+      const game g{
+        get_game_with_starting_position(starting_position_type::pawns_at_promotion)
+      };
+      assert(can_do(g, get_piece_at(g, "a8"), piece_action_type::promote_to_queen, "a8", side::lhs));
+      assert(can_do(g, get_piece_at(g, "a8"), piece_action_type::promote_to_rook, "a8", side::lhs));
+      assert(can_do(g, get_piece_at(g, "a8"), piece_action_type::promote_to_bishop, "a8", side::lhs));
+      assert(can_do(g, get_piece_at(g, "a8"), piece_action_type::promote_to_knight, "a8", side::lhs));
+      assert(can_do(g, get_piece_at(g, "h1"), piece_action_type::promote_to_queen, "h1", side::rhs));
+      assert(can_do(g, get_piece_at(g, "h1"), piece_action_type::promote_to_rook, "h1", side::rhs));
+      assert(can_do(g, get_piece_at(g, "h1"), piece_action_type::promote_to_bishop, "h1", side::rhs));
+      assert(can_do(g, get_piece_at(g, "h1"), piece_action_type::promote_to_knight, "h1", side::rhs));
+    }
     // 55: move cursor
     {
       game g;
@@ -588,8 +602,6 @@ void test_game_functions()
       move_cursor_to(g, "f6", side::rhs);
       assert(g.get_player_pos(side::rhs) == to_coordinat(square("f6")));
     }
-    #define FIX_ISSUE_53
-    #ifdef FIX_ISSUE_53
     // 53: nothing selected, cursor at empty square -> no action
     {
       game g;
@@ -701,7 +713,6 @@ void test_game_functions()
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::promote_to_queen);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::promote_to_queen);
     }
-    #endif // FIX_ISSUE_53
     //#define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21
     // 21: can do en-passant after black b7-b5

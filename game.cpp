@@ -90,10 +90,6 @@ bool can_do(
   const side player_side
 )
 {
-  if (action == piece_action_type::move)
-  {
-    return can_do_move(g, selected_piece, cursor_square, player_side);
-  }
   if (action == piece_action_type::attack)
   {
     return can_do_attack(g, selected_piece, cursor_square, player_side);
@@ -105,6 +101,18 @@ bool can_do(
   if (action == piece_action_type::castle_queenside)
   {
     return can_do_castle_queenside(g, selected_piece, cursor_square, player_side);
+  }
+  if (action == piece_action_type::move)
+  {
+    return can_do_move(g, selected_piece, cursor_square, player_side);
+  }
+  if (action == piece_action_type::promote_to_bishop
+    || action == piece_action_type::promote_to_knight
+    || action == piece_action_type::promote_to_queen
+    || action == piece_action_type::promote_to_rook
+  )
+  {
+    return can_do_promote(g, selected_piece, cursor_square, player_side);
   }
   return false;
 }
@@ -223,6 +231,22 @@ bool can_do_move(
     cursor_square
   );
 
+}
+
+bool can_do_promote(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+)
+{
+  const auto player_color{get_player_color(g, player_side)};
+  assert(player_color == selected_piece.get_color());
+  if (selected_piece.get_current_square() != cursor_square)
+  {
+    return false;
+  }
+  return can_promote(selected_piece);
 }
 
 bool can_player_select_piece_at_cursor_pos(

@@ -152,6 +152,14 @@ bool can_do_move(
   const side player_side
 );
 
+/// Can a piece_action_type::promote_to_bishop action be done?
+bool can_do_promote(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+);
+
 /// Can the player select a piece at the current mouse position?
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
