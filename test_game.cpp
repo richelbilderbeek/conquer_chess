@@ -679,6 +679,31 @@ void test_game_functions()
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::castle_queenside);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::castle_queenside);
     }
+    // 53: Pawns move to the square where they are promoted -> move
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::pawns_near_promotion)
+      };
+      do_select(g, "a7", side::lhs);
+      do_select(g, "h2", side::rhs);
+      move_cursor_to(g, "a8", side::lhs);
+      move_cursor_to(g, "h1", side::rhs);
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::move);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::move);
+    }
+    // 53: Pawns are at square where they are promoted -> promote
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::pawns_at_promotion)
+      };
+      do_select(g, "a8", side::lhs);
+      do_select(g, "h1", side::rhs);
+      move_cursor_to(g, "a8", side::lhs);
+      move_cursor_to(g, "h1", side::rhs);
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::unselect);
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::promote_to_queen);
+      assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::promote_to_queen);
+    }
     #endif // FIX_ISSUE_53
     //#define FIX_ISSUE_21
     #ifdef FIX_ISSUE_21

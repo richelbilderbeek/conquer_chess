@@ -1276,7 +1276,17 @@ std::optional<piece_action_type> get_default_piece_action(
     )
     {
       const piece& p{get_piece_at(g, cursor_square)};
-      if (p.is_selected()) return piece_action_type::unselect;
+      if (p.is_selected())
+      {
+        if (can_promote(p))
+        {
+          return piece_action_type::promote_to_queen;
+        }
+        else
+        {
+          return piece_action_type::unselect;
+        }
+      }
     }
     else
     {
