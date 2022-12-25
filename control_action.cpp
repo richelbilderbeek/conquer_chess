@@ -9,9 +9,9 @@ control_action::control_action(
   const control_action_type type,
   const side player,
   const game_coordinat& coordinat
-) : m_coordinat{coordinat},
-    m_player{player},
-    m_type{type}
+) : m_control_action_type{type},
+    m_coordinat{coordinat},
+    m_player{player}
 {
 
 }
@@ -95,17 +95,17 @@ void test_control_action()
 {
 #ifndef NDEBUG
   {
-    assert(create_mouse_move_action(game_coordinat(), side::lhs).get_type() == control_action_type::mouse_move);
-    assert(create_press_action_1(side::lhs).get_type() == control_action_type::press_action_1);
-    assert(create_press_action_2(side::lhs).get_type() == control_action_type::press_action_2);
-    assert(create_press_action_3(side::lhs).get_type() == control_action_type::press_action_3);
-    assert(create_press_action_4(side::lhs).get_type() == control_action_type::press_action_4);
-    assert(create_press_down_action(side::lhs).get_type() == control_action_type::press_down);
-    assert(create_press_left_action(side::lhs).get_type() == control_action_type::press_left);
-    assert(create_press_lmb_action(game_coordinat(), side::lhs).get_type() == control_action_type::lmb_down);
-    assert(create_press_right_action(side::lhs).get_type() == control_action_type::press_right);
-    assert(create_press_rmb_action(game_coordinat(), side::lhs).get_type() == control_action_type::rmb_down);
-    assert(create_press_up_action(side::lhs).get_type() == control_action_type::press_up);
+    assert(create_mouse_move_action(game_coordinat(), side::lhs).get_control_action_type() == control_action_type::mouse_move);
+    assert(create_press_action_1(side::lhs).get_control_action_type() == control_action_type::press_action_1);
+    assert(create_press_action_2(side::lhs).get_control_action_type() == control_action_type::press_action_2);
+    assert(create_press_action_3(side::lhs).get_control_action_type() == control_action_type::press_action_3);
+    assert(create_press_action_4(side::lhs).get_control_action_type() == control_action_type::press_action_4);
+    assert(create_press_down_action(side::lhs).get_control_action_type() == control_action_type::press_down);
+    assert(create_press_left_action(side::lhs).get_control_action_type() == control_action_type::press_left);
+    assert(create_press_lmb_action(game_coordinat(), side::lhs).get_control_action_type() == control_action_type::lmb_down);
+    assert(create_press_right_action(side::lhs).get_control_action_type() == control_action_type::press_right);
+    assert(create_press_rmb_action(game_coordinat(), side::lhs).get_control_action_type() == control_action_type::rmb_down);
+    assert(create_press_up_action(side::lhs).get_control_action_type() == control_action_type::press_up);
   }
   // create_random_control_action
   {
@@ -120,7 +120,7 @@ bool operator==(const control_action& lhs, const control_action& rhs) noexcept
 {
   return lhs.get_coordinat() == rhs.get_coordinat()
     && lhs.get_player() == rhs.get_player()
-    && lhs.get_type() == rhs.get_type()
+    && lhs.get_control_action_type() == rhs.get_control_action_type()
   ;
 }
 
@@ -129,7 +129,7 @@ std::ostream& operator<<(std::ostream& os, const control_action& a) noexcept
   os
     << "coordinat: " << a.get_coordinat() << '\n'
     << "player: " << a.get_player() << '\n'
-    << "type: " << a.get_type()
+    << "type: " << a.get_control_action_type()
   ;
   return os;
 }

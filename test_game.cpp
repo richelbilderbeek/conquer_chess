@@ -54,7 +54,10 @@ void test_game_class()
       assert(!is_piece_at(g, square("a4")));
       assert(!is_piece_at(g, square("a3")));
       assert(!is_piece_at(g, square("b3")));
+      std::clog << "HIERO" << '\n';
+      assert(count_selected_units(g, chess_color::white) == 0);
       do_select_for_keyboard_player(g, square("a2"));
+      assert(count_selected_units(g, chess_color::white) == 1);
       do_move_keyboard_player_piece(g, square("a4"));
       assert(count_selected_units(g, chess_color::white) == 0);
       do_select_for_keyboard_player(g, square("b2"));
@@ -542,16 +545,35 @@ void test_game_functions()
       assert(!is_empty_between(g, "a1", "a8"));
       assert(is_empty_between(g, "d3", "d4"));
     }
+    #define FIX_ISSUE_DOUBLE_MOVE_BLACK
     #ifdef FIX_ISSUE_DOUBLE_MOVE_BLACK
-    // do_select_and_move_piece
+    // do_select_and_move_piece e2-e3
     {
       game g;
-      assert(is_piece_at(g, "d2"));
-      do_select_and_move_piece(g, "d2", "d3", side::lhs);
-      assert(!is_piece_at(g, "d2"));
-      assert(is_piece_at(g, "d7"));
-      do_select_and_move_piece(g, "d7", "d5", side::rhs);
-      assert(!is_piece_at(g, "d7"));
+      assert(is_piece_at(g, "e2"));
+      do_select_and_move_piece(g, "e2", "e3", side::lhs);
+      assert(!is_piece_at(g, "e2"));
+    }
+    // do_select_and_move_piece e2-e4
+    {
+      game g;
+      assert(is_piece_at(g, "e2"));
+      do_select_and_move_piece(g, "e2", "e4", side::lhs);
+      assert(!is_piece_at(g, "e2"));
+    }
+    // do_select_and_move_piece: e7-e6
+    {
+      game g;
+      assert(is_piece_at(g, "e7"));
+      do_select_and_move_piece(g, "e7", "e6", side::rhs);
+      assert(!is_piece_at(g, "e7"));
+    }
+    // do_select_and_move_piece: e7-e5
+    {
+      game g;
+      assert(is_piece_at(g, "e7"));
+      do_select_and_move_piece(g, "e7", "e5", side::rhs);
+      assert(!is_piece_at(g, "e7"));
     }
     #endif // FIX_ISSUE_DOUBLE_MOVE_BLACK
     // can_do: standard stup

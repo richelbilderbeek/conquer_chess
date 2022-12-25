@@ -1148,6 +1148,8 @@ void do_select_and_start_attack_keyboard_player_piece(
 
 void do_select_for_keyboard_player(game& g, const square& s)
 {
+  return do_select(g, s, get_keyboard_user_player_color(g));
+  /*
   assert(has_keyboard_controller(g.get_options()));
   assert(is_piece_at(g, s));
   assert(!get_piece_at(g, s).is_selected());
@@ -1157,6 +1159,7 @@ void do_select_for_keyboard_player(game& g, const square& s)
   g.tick(delta_t(0.0));
   assert(count_control_actions(g) == 0);
   assert(get_piece_at(g, s).is_selected());
+  */
 }
 
 void do_select_for_mouse_player(game& g, const square& s)

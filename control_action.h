@@ -20,18 +20,20 @@ public:
     const side player,
     const game_coordinat& coordinat
   );
+  auto get_control_action_type() const noexcept { return m_control_action_type; }
   auto& get_coordinat() const noexcept { return m_coordinat; }
   auto get_player() const noexcept { return m_player; }
-  auto get_type() const noexcept { return m_type; }
 
 private:
+
+  control_action_type m_control_action_type;
+
   /// Must be a game_coordinat (not a square),
   /// as the mouse has actions
   game_coordinat m_coordinat;
 
   side m_player;
 
-  control_action_type m_type;
 };
 
 control_action create_mouse_move_action(

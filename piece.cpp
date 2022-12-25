@@ -46,7 +46,12 @@ void piece::add_action(const piece_action& action)
   assert(action.get_piece_type() == m_type || m_type == piece_type::pawn);
   assert(action.get_color() == m_color);
 
-  if (action.get_action_type() == piece_action_type::move)
+  if (action.get_action_type() == piece_action_type::select)
+  {
+    assert(!m_is_selected);
+    this->add_message(message_type::select);
+  }
+  else if (action.get_action_type() == piece_action_type::move)
   {
     if (
       !can_move(
@@ -966,9 +971,14 @@ void piece::tick(
   {
     case piece_action_type::move:
       m_has_moved = true; // Whatever happens, this piece has tried to move
+      m_is_selected = false; //
       return tick_move(*this, dt, g);
     case piece_action_type::attack:
       return tick_attack(*this, dt, g);
+    case piece_action_type::select:
+      assert(!m_is_selected);
+      m_is_selected = true;
+      return;
     case piece_action_type::promote_to_knight:
     case piece_action_type::promote_to_bishop:
     case piece_action_type::promote_to_rook:
