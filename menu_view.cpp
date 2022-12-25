@@ -137,23 +137,19 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
-        m_selected = get_previous(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        set_selected(get_previous(m_selected));
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
-        m_selected = get_next(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        set_selected(get_next(m_selected));
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
-        m_selected = get_next(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        set_selected(get_next(m_selected));
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
-        m_selected = get_previous(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        set_selected(get_previous(m_selected));
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
@@ -198,10 +194,10 @@ bool menu_view::process_events()
       const auto mouse_screen_pos{
         screen_coordinat(event.mouseMove.x, event.mouseMove.y)
       };
-      if (is_in(mouse_screen_pos, m_layout.get_start())) m_selected = menu_view_item::start;
-      else if (is_in(mouse_screen_pos, m_layout.get_options())) m_selected = menu_view_item::options;
-      else if (is_in(mouse_screen_pos, m_layout.get_about())) m_selected = menu_view_item::about;
-      else if (is_in(mouse_screen_pos, m_layout.get_quit())) m_selected = menu_view_item::quit;
+      if (is_in(mouse_screen_pos, m_layout.get_start())) set_selected(menu_view_item::start);
+      else if (is_in(mouse_screen_pos, m_layout.get_options())) set_selected(menu_view_item::options);
+      else if (is_in(mouse_screen_pos, m_layout.get_about())) set_selected(menu_view_item::about);
+      else if (is_in(mouse_screen_pos, m_layout.get_quit())) set_selected(menu_view_item::quit);
     }
     else if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -222,6 +218,15 @@ bool menu_view::process_events()
     }
   }
   return false; // Do not close the window :-)
+}
+
+void menu_view::set_selected(const menu_view_item i)
+{
+  if (m_selected != i)
+  {
+    m_resources.get_sound_effects().play_hide();
+  }
+  m_selected = i;
 }
 
 void menu_view::set_text_style(sf::Text& text)

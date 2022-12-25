@@ -90,6 +90,10 @@ bool can_do(
   const side player_side
 )
 {
+  if (action == piece_action_type::en_passant)
+  {
+    return can_do_en_passant(g, selected_piece, cursor_square, player_side);
+  }
   if (action == piece_action_type::attack)
   {
     return can_do_attack(g, selected_piece, cursor_square, player_side);
@@ -199,6 +203,26 @@ bool can_do_castle_queenside(
   const square qsc_square{king_square.get_x(), king_square.get_y() - 2};
   if (cursor_square != qsc_square) return false;
   return can_castle_queenside(get_piece_at(g, king_square), g);
+}
+
+bool can_do_en_passant(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+)
+{
+  const auto player_color{get_player_color(g, player_side)};
+  assert(player_color == selected_piece.get_color());
+  assert(is_piece_at(g, selected_piece.get_current_square()));
+  assert(get_piece_at(g, selected_piece.get_current_square()).get_color()
+    == player_color
+  );
+  if (is_piece_at(g, cursor_square)) return false;
+  #ifdef FIX_ISSUE_21
+  assert(!"Find adjacent pieces");
+  #endif
+  return false;
 }
 
 bool can_do_move(
@@ -1314,9 +1338,13 @@ std::optional<piece_action_type> get_default_piece_action(
     }
     else
     {
-      // No piece at cursor, maybe can move there?
+      // No own piece at cursor, maybe can move/castle/en-passant there?
       assert(get_selected_pieces(g, player_side).size() == 1);
       const auto selected_piece{get_selected_pieces(g, player_side)[0]};
+      if (can_do(g, selected_piece, piece_action_type::en_passant, cursor_square, player_side))
+      {
+        return piece_action_type::en_passant;
+      }
       if (can_do(g, selected_piece, piece_action_type::castle_kingside, cursor_square, player_side))
       {
         return piece_action_type::castle_kingside;
@@ -1325,7 +1353,6 @@ std::optional<piece_action_type> get_default_piece_action(
       {
         return piece_action_type::castle_queenside;
       }
-
       if (can_do(g, selected_piece, piece_action_type::move, cursor_square, player_side))
       {
         return piece_action_type::move;
@@ -1660,6 +1687,13 @@ bool is_piece_at(
   const square& coordinat
 ) {
   return is_piece_at(g.get_pieces(), coordinat);
+}
+
+bool is_piece_at(
+  const game& g,
+  const std::string& square_str
+) {
+  return is_piece_at(g, square(square_str));
 }
 
 void move_cursor_to(

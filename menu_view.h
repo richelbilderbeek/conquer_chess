@@ -25,6 +25,10 @@ public:
 
   auto& get_window() noexcept { return m_window; }
 
+  /// Sets the selected item.
+  /// If the selected item changes, play sound
+  void set_selected(const menu_view_item i);
+
   /// Set the text to a uniform style
   void set_text_style(sf::Text& t);
 

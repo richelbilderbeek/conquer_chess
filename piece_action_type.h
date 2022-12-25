@@ -9,7 +9,7 @@ enum class piece_action_type
   select,
   unselect,
   move,
-  attack, // will capture the attacked piece
+  attack, // a regular attack, not en-passant
   en_passant, // a type of attack
   promote_to_queen,
   promote_to_rook,

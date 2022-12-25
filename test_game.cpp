@@ -542,6 +542,18 @@ void test_game_functions()
       assert(!is_empty_between(g, "a1", "a8"));
       assert(is_empty_between(g, "d3", "d4"));
     }
+    #ifdef FIX_ISSUE_DOUBLE_MOVE_BLACK
+    // do_select_and_move_piece
+    {
+      game g;
+      assert(is_piece_at(g, "d2"));
+      do_select_and_move_piece(g, "d2", "d3", side::lhs);
+      assert(!is_piece_at(g, "d2"));
+      assert(is_piece_at(g, "d7"));
+      do_select_and_move_piece(g, "d7", "d5", side::rhs);
+      assert(!is_piece_at(g, "d7"));
+    }
+    #endif // FIX_ISSUE_DOUBLE_MOVE_BLACK
     // can_do: standard stup
     {
       const game g;
@@ -558,7 +570,7 @@ void test_game_functions()
       assert(!can_do(g, get_piece_at(g, "c1"), piece_action_type::move, "a3", side::lhs));
       assert(!can_do(g, get_piece_at(g, "c8"), piece_action_type::move, "a6", side::rhs));
     }
-    // can_do: queen end-game
+    // can_do: attack
     {
       const game g{
         get_game_with_starting_position(starting_position_type::queen_end_game)
@@ -569,12 +581,28 @@ void test_game_functions()
       assert(!can_do(g, get_piece_at(g, "d1"), piece_action_type::attack, "d7", side::lhs));
       assert(!can_do(g, get_piece_at(g, "d8"), piece_action_type::attack, "d2", side::rhs));
     }
-    // can_do: ready_to_castle
+    //#define FIX_ISSUE_21
+    #ifdef FIX_ISSUE_21
+    // can_do: en_passant
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::before_en_passant)
+      };
+      do_select_and_move_piece(g, "b7", "b5", side::rhs);
+      assert(is_piece_at(g, square("b5")));
+      do_select_and_move_piece(g, "b7", "b5", side::rhs);
+      assert(get_default_piece_action(g, side::lhs));
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::attack);
+      std::clog << g << '\n';
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::en_passant);
+    }
+    #endif // FIX_ISSUE_21
+    // can_do: castling
     {
       const game g{
         get_game_with_starting_position(starting_position_type::ready_to_castle)
       };
-      // Kings can castle
       assert(can_do(g, get_piece_at(g, "e1"), piece_action_type::castle_kingside, "g1", side::lhs));
       assert(can_do(g, get_piece_at(g, "e8"), piece_action_type::castle_kingside, "g8", side::rhs));
       assert(can_do(g, get_piece_at(g, "e1"), piece_action_type::castle_queenside, "c1", side::lhs));
@@ -662,6 +690,23 @@ void test_game_functions()
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::attack);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::attack);
     }
+    //#define FIX_ISSUE_21
+    #ifdef FIX_ISSUE_21
+    // 53: Piece selected, opponent at target square -> en_passant
+    {
+      game g{
+        get_game_with_starting_position(starting_position_type::before_en_passant)
+      };
+      // Black opens up en-passant
+      do_select_and_move_piece(g, "b7", "b5", side::rhs);
+      do_select(g, "a5", side::lhs);
+      move_cursor_to(g, "b6", side::lhs);
+      assert(get_default_piece_action(g, side::lhs));
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
+      assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::attack);
+      assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::en_passant);
+    }
+    #endif // FIX_ISSUE_21
     // 53: King selected, cursor at valid king-side castling square -> king-side castle
     {
       game g{

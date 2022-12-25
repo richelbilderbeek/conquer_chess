@@ -92,6 +92,14 @@ void do_select(
   const side player_side
 );
 
+/// Select a piece and move it to a target square
+void do_select_and_move_piece(
+  game& g,
+  const std::string& from_square_str,
+  const std::string& to_square_str,
+  const side player_side
+);
+
 /// Respond to action 1
 void process_press_action_1(game& g, const control_action& action);
 

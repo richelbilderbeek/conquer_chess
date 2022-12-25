@@ -121,6 +121,8 @@ bool can_do(const game& g,
 );
 
 /// Can a piece_action_type::attack action be done?
+/// This is not an en-passant
+/// @see use \link{can_do_en_passant} for an piece_action_type::en_passant
 bool can_do_attack(
   const game& g,
   const piece& selected_piece,
@@ -138,6 +140,16 @@ bool can_do_castle_kingside(
 
 /// Can a piece_action_type::castle_queenside action be done?
 bool can_do_castle_queenside(
+  const game& g,
+  const piece& selected_piece,
+  const square& cursor_square,
+  const side player_side
+);
+
+/// Can a piece_action_type::en_passant action be done?
+/// This is not a regular attack
+/// @see use \link{can_do_attack} for an piece_action_type::attack
+bool can_do_en_passant(
   const game& g,
   const piece& selected_piece,
   const square& cursor_square,
@@ -603,6 +615,12 @@ bool is_piece_at(
 bool is_piece_at(
   const game& g,
   const square& coordinat
+);
+
+/// Determine if there is a piece at the coordinat
+bool is_piece_at(
+  const game& g,
+  const std::string& square_str
 );
 
 /// Put the cursor (i.e. the selector, not the mouse pointer)

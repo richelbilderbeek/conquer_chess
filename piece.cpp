@@ -674,7 +674,7 @@ void test_piece()
     const auto p{get_test_white_king()};
     assert(!has_actions(p));
   }
-  // has_just_double_moved
+  // has_just_double_moved, white
   {
     action_history h;
     assert(!has_just_double_moved(h, delta_t(2.0)));
@@ -686,6 +686,25 @@ void test_piece()
         piece_action_type::move,
         "e2",
         "e4"
+      )
+    );
+    assert(!has_just_double_moved(h, delta_t(0.0)));
+    assert(!has_just_double_moved(h, delta_t(1.0)));
+    assert(has_just_double_moved(h, delta_t(2.0)));
+    assert(!has_just_double_moved(h, delta_t(3.0)));
+  }
+  // has_just_double_moved, black
+  {
+    action_history h;
+    assert(!has_just_double_moved(h, delta_t(2.0)));
+    h.add_action(
+      delta_t(0.5),
+      piece_action(
+        chess_color::white,
+        piece_type::pawn,
+        piece_action_type::move,
+        "e7",
+        "e5"
       )
     );
     assert(!has_just_double_moved(h, delta_t(0.0)));
@@ -759,6 +778,32 @@ void test_piece()
     p.add_action(piece_action(chess_color::white, piece_type::pawn, piece_action_type::move, square("e7"), square("e5")));
     assert(p.get_actions().empty()); // Actions cleared
     assert(p.get_current_square() == square("e7")); // Piece stays put
+  }
+  // A pawn for the rhs player can move left
+  {
+    piece p(
+      chess_color::black,
+      piece_type::pawn,
+      square("e7")
+    );
+    p.add_action(
+      piece_action(
+        chess_color::black,
+        piece_type::pawn,
+        piece_action_type::move,
+        square("e7"), square("e5")
+      )
+    );
+    assert(!p.get_actions().empty());
+    int n_ticks{0};
+    game g;
+    while (p.get_current_square() == square("e7"))
+    {
+      p.tick(delta_t(0.1), g);
+      ++n_ticks;
+      assert(n_ticks < 1000);
+    }
+    assert(p.get_current_square() == square("e5"));
   }
   // A queen for the lhs player can move up
   {

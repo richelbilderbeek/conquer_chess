@@ -187,6 +187,35 @@ void do_select(
   do_select(g, square_str, get_player_color(g, player_side));
 }
 
+void do_select_and_move_piece(
+  game& g,
+  const std::string& from_square_str,
+  const std::string& to_square_str,
+  const side player_side
+)
+{
+  do_select(g, from_square_str, player_side);
+  move_cursor_to(g, to_square_str, player_side);
+  if (get_controller_type(g, player_side) == controller_type::keyboard)
+  {
+    g.add_action(create_press_action_1(player_side));
+  }
+  else
+  {
+    g.add_action(
+      create_press_lmb_action(
+        to_coordinat(to_square_str),
+        player_side
+      )
+    );
+  }
+  g.tick(delta_t(0.0));
+  for (int i{0}; i!=2; ++i)
+  {
+    g.tick(delta_t(0.5));
+  }
+}
+
 void process_press_action_1(game& g, const control_action& action)
 {
   assert(action.get_type() == control_action_type::press_action_1);
