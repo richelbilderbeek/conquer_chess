@@ -215,8 +215,7 @@ bool options_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Up)
       {
-        m_selected = get_above(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        set_selected(get_above(m_selected));
       }
       else if (key_pressed == sf::Keyboard::Key::Right)
       {
@@ -234,15 +233,13 @@ bool options_view::process_events()
           case options_view_item::left_controls:
           case options_view_item::right_color:
           case options_view_item::right_controls:
-            m_selected = get_right_of(m_selected);
-            m_resources.get_sound_effects().play_hide();
+            set_selected(get_right_of(m_selected));
           break;
         }
       }
       else if (key_pressed == sf::Keyboard::Key::Down)
       {
-        m_selected = get_below(m_selected);
-        m_resources.get_sound_effects().play_hide();
+        set_selected(get_below(m_selected));
       }
       else if (key_pressed == sf::Keyboard::Key::Left)
       {
@@ -260,8 +257,7 @@ bool options_view::process_events()
           case options_view_item::left_controls:
           case options_view_item::right_color:
           case options_view_item::right_controls:
-            m_selected = get_left_of(m_selected);
-            m_resources.get_sound_effects().play_hide();
+            set_selected(get_left_of(m_selected));
           break;
         }
       }
@@ -280,15 +276,15 @@ bool options_view::process_events()
       const auto mouse_screen_pos{
         screen_coordinat(event.mouseMove.x, event.mouseMove.y)
       };
-      if (is_in(mouse_screen_pos, m_layout.get_chess_board())) m_selected = options_view_item::starting_position;
-      else if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) m_selected = options_view_item::game_speed;
-      else if (is_in(mouse_screen_pos, m_layout.get_left_color_value())) m_selected = options_view_item::left_color;
-      else if (is_in(mouse_screen_pos, m_layout.get_left_controls_value())) m_selected = options_view_item::left_controls;
-      else if (is_in(mouse_screen_pos, m_layout.get_music_volume_value())) m_selected = options_view_item::music_volume;
-      else if (is_in(mouse_screen_pos, m_layout.get_right_color_value())) m_selected = options_view_item::right_color;
-      else if (is_in(mouse_screen_pos, m_layout.get_right_controls_value())) m_selected = options_view_item::right_controls;
-      else if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) m_selected = options_view_item::sound_effects_volume;
-      else if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) m_selected = options_view_item::starting_position;
+      if (is_in(mouse_screen_pos, m_layout.get_chess_board())) set_selected(options_view_item::starting_position);
+      else if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) set_selected(options_view_item::game_speed);
+      else if (is_in(mouse_screen_pos, m_layout.get_left_color_value())) set_selected(options_view_item::left_color);
+      else if (is_in(mouse_screen_pos, m_layout.get_left_controls_value())) set_selected(options_view_item::left_controls);
+      else if (is_in(mouse_screen_pos, m_layout.get_music_volume_value())) set_selected(options_view_item::music_volume);
+      else if (is_in(mouse_screen_pos, m_layout.get_right_color_value())) set_selected(options_view_item::right_color);
+      else if (is_in(mouse_screen_pos, m_layout.get_right_controls_value())) set_selected(options_view_item::right_controls);
+      else if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) set_selected(options_view_item::sound_effects_volume);
+      else if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) set_selected(options_view_item::starting_position);
     }
     else if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -296,6 +292,15 @@ bool options_view::process_events()
     }
   }
   return false; // if no events proceed with tick
+}
+
+void options_view::set_selected(const options_view_item i)
+{
+  if (m_selected != i)
+  {
+    m_resources.get_sound_effects().play_hide();
+  }
+  m_selected = i;
 }
 
 void options_view::set_text_style(sf::Text& text)
