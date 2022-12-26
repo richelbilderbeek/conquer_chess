@@ -41,7 +41,10 @@ control_action create_mouse_move_action(
   const side player
 );
 
-control_action create_press_action_1(const side player);
+control_action create_press_action_1(
+  const side player,
+  const game_coordinat& coordinat
+);
 control_action create_press_action_2(const side player);
 control_action create_press_action_3(const side player);
 control_action create_press_action_4(const side player);

@@ -1050,7 +1050,12 @@ void do_move_keyboard_player_piece(game& g, const square& s)
     == square(get_player_pos(g, get_keyboard_user_player_side(g)))
   );
 
-  g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
+  g.add_action(
+    create_press_action_1(
+      get_keyboard_user_player_side(g),
+      to_coordinat(s)
+    )
+  );
   assert(count_control_actions(g) == 1);
   g.tick(delta_t(0.0));
   assert(count_control_actions(g) == 0);
@@ -1208,7 +1213,12 @@ void do_promote_keyboard_player_piece(
     case piece_type::pawn:
     case piece_type::queen:
       assert(promote_to == piece_type::queen);
-      g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
+      g.add_action(
+        create_press_action_1(
+          get_keyboard_user_player_side(g),
+          to_coordinat(pawn_location)
+        )
+      );
       break;
     case piece_type::rook:
       g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));

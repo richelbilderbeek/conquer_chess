@@ -198,7 +198,12 @@ void do_select_and_move_piece(
   move_cursor_to(g, to_square_str, player_side);
   if (get_controller_type(g, player_side) == controller_type::keyboard)
   {
-    g.add_action(create_press_action_1(player_side));
+    g.add_action(
+      create_press_action_1(
+        player_side,
+        to_coordinat(to_square_str)
+      )
+    );
   }
   else
   {
@@ -673,7 +678,7 @@ void test_control_actions()
   // 37: operator<< for one action
   {
     control_actions actions;
-    actions.add(create_press_action_1(side::lhs));
+    actions.add(create_press_action_1(side::lhs, to_coordinat("d1")));
     std::stringstream s;
     s << actions;
     assert(!s.str().empty());
