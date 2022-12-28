@@ -14,7 +14,8 @@ enum class message_type
   done,
   select,
   start_attack,
-  start_move
+  start_move,
+  unselect
 };
 
 /// Get all the message_type values

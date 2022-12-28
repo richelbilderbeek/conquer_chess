@@ -51,6 +51,11 @@ void piece::add_action(const piece_action& action)
     assert(!m_is_selected);
     this->add_message(message_type::select);
   }
+  else if (action.get_action_type() == piece_action_type::unselect)
+  {
+    assert(m_is_selected);
+    this->add_message(message_type::unselect);
+  }
   else if (action.get_action_type() == piece_action_type::move)
   {
     if (
@@ -975,6 +980,10 @@ void piece::tick(
       return tick_move(*this, dt, g);
     case piece_action_type::attack:
       return tick_attack(*this, dt, g);
+    case piece_action_type::unselect:
+      assert(m_is_selected);
+      m_is_selected = false;
+      return;
     case piece_action_type::select:
       assert(!m_is_selected);
       m_is_selected = true;

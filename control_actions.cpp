@@ -507,6 +507,49 @@ void control_actions::process(game& g)
     #endif // FIX_ISSUE_46
     else if (action.get_control_action_type() == control_action_type::lmb_down)
     {
+      if (!has_mouse_controller(g.get_options())) return;
+      const auto player_side{get_mouse_user_player_side(g)};
+      const chess_color player_color{get_player_color(g, player_side)};
+      const square to{square(get_player_pos(g, player_side))};
+      const auto maybe_action{get_default_piece_action(g, player_side)};
+      if (!maybe_action)
+      {
+        unselect_all_pieces(g, player_color);
+        return;
+      }
+      const auto piece_action_type{maybe_action.value()};
+      const auto selected_pieces{get_selected_pieces(g, player_side)};
+      if (selected_pieces.size() == 0)
+      {
+        assert(piece_action_type == piece_action_type::select);
+        const auto cursor_pos{action.get_coordinat()};
+        assert(is_piece_at(g, square(cursor_pos)));
+        piece& p{get_piece_at(g, square(cursor_pos))};
+        assert(player_color == get_player_color(g, player_side));
+        assert(player_color == p.get_color());
+        p.add_action(
+          piece_action(
+          player_color,
+          p.get_type(),
+          piece_action_type,
+          p.get_current_square(),
+          to
+          )
+        );
+        return;
+      }
+      const auto selected_piece_copy{selected_pieces[0]};
+      auto& selected_piece{get_piece_at(g, selected_piece_copy.get_current_square())};
+      selected_piece.add_action(
+        piece_action(
+          player_color,
+          selected_piece.get_type(),
+          piece_action_type,
+          selected_piece.get_current_square(),
+          to
+        )
+      );
+      /*
       if (has_mouse_controller(g.get_options()))
       {
         do_select(
@@ -515,6 +558,7 @@ void control_actions::process(game& g)
           get_player_color(g, action.get_player())
         );
       }
+      */
     }
     else if (action.get_control_action_type() == control_action_type::rmb_down)
     {
