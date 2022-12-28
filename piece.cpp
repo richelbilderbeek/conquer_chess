@@ -51,6 +51,11 @@ void piece::add_action(const piece_action& action)
     assert(!m_is_selected);
     this->add_message(message_type::select);
   }
+  else if (action.get_action_type() == piece_action_type::unselect)
+  {
+    assert(m_is_selected);
+    this->add_message(message_type::unselect);
+  }
   else if (action.get_action_type() == piece_action_type::move)
   {
     if (
