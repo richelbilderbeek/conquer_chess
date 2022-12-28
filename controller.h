@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 
 #include "key_bindings.h"
-#include "control_action.h"
+#include "user_input.h"
 #include "controller_type.h"
 
 #include <iosfwd>
@@ -31,7 +31,7 @@ public:
   /// Process the input for this controller.
   /// Returns an an empty vector if this controller is uneffected by the event
 
-  std::vector<control_action> process_input(
+  std::vector<user_input> process_input(
    const sf::Event& event,
    const game& g
  ) const;
@@ -48,18 +48,18 @@ private:
   controller_type m_type;
 
   /// Process a key press from a keyboard
-  std::vector<control_action> process_key_press(
+  std::vector<user_input> process_key_press(
     const sf::Event& event
   ) const;
 
   /// Process the input from a mouse button press
-  std::vector<control_action> process_mouse_pressed(
+  std::vector<user_input> process_mouse_pressed(
     const sf::Event& event,
     const game& g
   ) const;
 
   /// Process the input from a mouse movement
-  std::vector<control_action> process_mouse_moved(
+  std::vector<user_input> process_mouse_moved(
     const sf::Event& event,
     const game& g
   ) const;

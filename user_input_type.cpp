@@ -1,8 +1,8 @@
-#include "control_action_type.h"
+#include "user_input_type.h"
 
 #include "../magic_enum/include/magic_enum.hpp"
 
-control_action_type create_random_control_action_type(
+user_input_type create_random_control_action_type(
   std::default_random_engine& rng_engine
 )
 {
@@ -18,10 +18,10 @@ control_action_type create_random_control_action_type(
   return control_types[i];
 }
 
-std::vector<control_action_type> get_all_control_action_types() noexcept
+std::vector<user_input_type> get_all_control_action_types() noexcept
 {
-  const auto a{magic_enum::enum_values<control_action_type>()};
-  std::vector<control_action_type> v;
+  const auto a{magic_enum::enum_values<user_input_type>()};
+  std::vector<user_input_type> v;
   v.reserve(a.size());
   std::copy(std::begin(a), std::end(a), std::back_inserter(v));
   assert(a.size() == v.size());
@@ -48,7 +48,7 @@ void test_control_action_type()
 #endif
 }
 
-std::ostream& operator<<(std::ostream& os, const control_action_type t) noexcept
+std::ostream& operator<<(std::ostream& os, const user_input_type t) noexcept
 {
   os << std::string(magic_enum::enum_name(t));
   return os;

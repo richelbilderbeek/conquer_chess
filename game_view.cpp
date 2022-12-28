@@ -4,7 +4,7 @@
 
 #include "controller.h"
 #include "controllers.h"
-#include "control_action_type.h"
+#include "user_input_type.h"
 #include "game.h"
 #include "game_resources.h"
 #include "game_view_layout.h"
@@ -447,7 +447,7 @@ void show_debug(game_view& view, const side player_side)
     << bool_to_str(is_piece_at(game, get_player_pos(game, player_side), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << to_coordinat(closest_piece.get_current_square()) << '\n'
-    << "Number of game actions: " << count_control_actions(game) << '\n'
+    << "Number of game actions: " << count_user_inputs(game) << '\n'
     << "Number of selected units: " << count_selected_units(game, color) << '\n'
     << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
   ;
@@ -807,7 +807,7 @@ void show_unit_paths(game_view& view)
       std::begin(actions),
       std::end(actions),
       std::back_inserter(coordinats),
-      [layout](const auto& control_action)
+      [layout](const auto& user_input)
       {
         return convert_to_screen_coordinat(
           to_coordinat(control_action.get_to()),

@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include "ccfwd.h"
-#include "control_actions.h"
+#include "user_inputs.h"
 #include "game_coordinat.h"
 #include "game_options.h"
 #include "game_view_layout.h"
@@ -24,18 +24,16 @@ public:
   );
 
   /// Add an action. These will be processed in 'tick'
-  void add_action(const control_action a);
+  void add_action(const user_input a);
 
   /// Do a chess move instantaneously
   void do_move(const chess_move& m);
 
   /// Get the game actions
-  const auto& get_actions() const noexcept { return m_control_actions; }
-  const auto& get_control_actions() const noexcept { return get_actions(); }
+  const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
   /// Get the game actions
-  auto& get_actions() noexcept { return m_control_actions; }
-  auto& get_control_actions() noexcept { return get_actions(); }
+  auto& get_user_inputs() noexcept { return m_user_inputs; }
 
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
@@ -72,7 +70,7 @@ public:
 
 private:
 
-  control_actions m_control_actions;
+  user_inputs m_user_inputs;
 
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
@@ -190,7 +188,7 @@ action_history collect_action_history(const game& g);
 /// Each 'control_actions' equals one 'piece_action'
 /// @see use 'collect_all_piece_actions'
 /// to get all the 'piece_action's from a game
-std::vector<control_actions> collect_all_control_actionses(const game& g);
+std::vector<user_inputs> collect_all_control_actionses(const game& g);
 
 /// Collect all valid moves and attackes at a board
 /// for all pieces
@@ -280,7 +278,7 @@ std::vector<message> collect_messages(const game& g) noexcept;
 
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick
-int count_control_actions(const game& g);
+int count_user_inputs(const game& g);
 
 /// Count the total number of actions to be done by pieces of both players
 int count_piece_actions(const game& g);

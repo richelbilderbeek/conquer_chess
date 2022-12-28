@@ -165,7 +165,7 @@ std::string get_text_for_action(
 }
 
 
-std::vector<control_action> controller::process_input(
+std::vector<user_input> controller::process_input(
   const sf::Event& event,
   const game& g
 ) const
@@ -193,21 +193,21 @@ std::vector<control_action> controller::process_input(
   return {};
 }
 
-std::vector<control_action> controller::process_key_press(
+std::vector<user_input> controller::process_key_press(
   const sf::Event& event
 ) const
 {
   assert(event.type == sf::Event::KeyPressed);
-  std::vector<control_action> v;
+  std::vector<user_input> v;
   const auto actions_types{m_key_bindings.create_actions(event.key.code)};
   for (const auto t: actions_types)
   {
-     v.push_back(control_action(t, m_player, game_coordinat()));
+     v.push_back(user_input(t, m_player, game_coordinat()));
   }
   return v;
 }
 
-std::vector<control_action> controller::process_mouse_pressed(
+std::vector<user_input> controller::process_mouse_pressed(
   const sf::Event& event,
   const game& g
 ) const
@@ -240,7 +240,7 @@ std::vector<control_action> controller::process_mouse_pressed(
   };
 }
 
-std::vector<control_action> controller::process_mouse_moved(
+std::vector<user_input> controller::process_mouse_moved(
   const sf::Event& event,
   const game& g
 ) const
@@ -289,7 +289,7 @@ void test_controller()
   {
     game g;
     const controller c{create_default_mouse_controller(side::lhs)};
-    std::vector<control_action> actions{
+    std::vector<user_input> actions{
       c.process_input(
         create_mouse_moved_event(screen_coordinat()),
         g
@@ -301,7 +301,7 @@ void test_controller()
   {
     game g;
     const controller c{create_default_mouse_controller(side::lhs)};
-    std::vector<control_action> actions{
+    std::vector<user_input> actions{
       c.process_input(
         create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Left),
         g
@@ -313,7 +313,7 @@ void test_controller()
   {
     game g;
     const controller c{create_default_mouse_controller(side::lhs)};
-    std::vector<control_action> actions{
+    std::vector<user_input> actions{
       c.process_input(
         create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Right),
         g

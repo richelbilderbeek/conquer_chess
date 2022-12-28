@@ -6,6 +6,7 @@
 #include "id.h"
 #include "sound_effects.h"
 #include "square.h"
+#include "user_inputs.h"
 
 #include <cassert>
 #include <cmath>
@@ -18,7 +19,7 @@
 game::game(
   const game_options& options
 )
-  : m_control_actions{},
+  : m_user_inputs{},
     m_layout{options.get_screen_size(), options.get_margin_width()},
     m_player_lhs_pos{0.5, 4.5},
     m_player_rhs_pos{7.5, 4.5},
@@ -30,10 +31,10 @@ game::game(
 
 }
 
-void game::add_action(const control_action a)
+void game::add_action(const user_input a)
 {
   // These will be processed in 'tick'
-  m_control_actions.add(a);
+  m_user_inputs.add(a);
 }
 
 bool can_castle_kingside(const piece& p, const game& g) noexcept
@@ -303,16 +304,16 @@ action_history collect_action_history(const game& g)
   return collect_action_history(g.get_pieces());
 }
 
-std::vector<control_actions> collect_all_control_actionses(const game& g)
+std::vector<user_inputs> collect_all_user_inputses(const game& g)
 {
-  std::vector<control_actions> control_actions;
+  std::vector<user_inputs> user_inputs;
 
   const auto piece_actions{collect_all_piece_actions(g)};
-  control_actions.reserve(piece_actions.size());
+  user_inputs.reserve(piece_actions.size());
   for (const auto& piece_action: piece_actions) {
-    control_actions.push_back(to_control_actions(piece_action, g));
+    user_inputs.push_back(to_user_inputs(piece_action, g));
   }
-  return control_actions;
+  return user_inputs;
 }
 
 
@@ -964,9 +965,9 @@ std::vector<piece_action> collect_all_rook_actions(
   return actions;
 }
 
-int count_control_actions(const game& g)
+int count_user_inputs(const game& g)
 {
-  return count_control_actions(g.get_actions());
+  return count_user_inputs(g.get_user_inputs());
 }
 
 int count_piece_actions(const game& g)
@@ -1016,7 +1017,7 @@ game create_randomly_played_game(
   std::default_random_engine generator(seed);
   for (int i{0}; i!=n_moves; ++i)
   {
-    const control_action action{
+    const user_input action{
       create_random_control_action(generator)
     };
     g.add_action(action);
@@ -1056,9 +1057,9 @@ void do_move_keyboard_player_piece(game& g, const square& s)
       to_coordinat(s)
     )
   );
-  assert(count_control_actions(g) == 1);
+  assert(count_user_inputs(g) == 1);
   g.tick(delta_t(0.0));
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void do_move_mouse_player_piece(game& g, const square& s)
@@ -1074,9 +1075,9 @@ void do_move_mouse_player_piece(game& g, const square& s)
       get_mouse_user_player_side(g)
     )
   );
-  assert(count_control_actions(g) == 1);
+  assert(count_user_inputs(g) == 1);
   g.tick(delta_t(0.0));
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void do_select_and_move_keyboard_player_piece(
@@ -1088,7 +1089,7 @@ void do_select_and_move_keyboard_player_piece(
   do_select_for_keyboard_player(g, from);
   assert(count_selected_units(g) > 0);
   do_move_keyboard_player_piece(g, to);
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void do_select_and_move_keyboard_player_piece(
@@ -1113,7 +1114,7 @@ void do_select_and_move_mouse_player_piece(
   do_select_for_mouse_player(g, from);
   assert(count_selected_units(g) > 0);
   do_move_mouse_player_piece(g, to);
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void do_select_and_move_mouse_player_piece(
@@ -1137,7 +1138,7 @@ void do_select_and_promote_keyboard_player_piece(
 {
   do_select_for_keyboard_player(g, pawn_location);
   do_promote_keyboard_player_piece(g, pawn_location, promote_to);
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void do_select_and_start_attack_keyboard_player_piece(
@@ -1148,7 +1149,7 @@ void do_select_and_start_attack_keyboard_player_piece(
 {
   do_select_for_keyboard_player(g, from);
   do_start_attack_keyboard_player_piece(g, to);
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void do_select_for_keyboard_player(game& g, const square& s)
@@ -1162,7 +1163,7 @@ void do_select_for_keyboard_player(game& g, const square& s)
   assert(square(get_player_pos(g, get_keyboard_user_player_side(g))) == s);
   g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
   g.tick(delta_t(0.0));
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
   assert(get_piece_at(g, s).is_selected());
   */
 }
@@ -1181,7 +1182,7 @@ void do_select_for_mouse_player(game& g, const square& s)
     )
   );
   g.tick(delta_t(0.0));
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
   assert(get_piece_at(g, s).is_selected());
 }
 
@@ -1235,7 +1236,7 @@ void do_start_attack_keyboard_player_piece(game& g, const square& s)
   assert(square(get_player_pos(g, side::lhs)) == s);
   g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
   g.tick(delta_t(0.0));
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 std::vector<piece> find_pieces(
@@ -1733,7 +1734,7 @@ void move_cursor_to(
     assert(get_controller_type(g, player_side) == controller_type::mouse);
     move_mouse_cursor_to(g, s, player_side);
   }
-  assert(count_control_actions(g) == 0); // All actions are processed
+  assert(count_user_inputs(g) == 0); // All actions are processed
 }
 
 void move_keyboard_cursor_to(
@@ -1759,7 +1760,7 @@ void move_keyboard_cursor_to(
   }
   // Process all actions
   g.tick(delta_t(0.0));
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void move_mouse_cursor_to(
@@ -1774,7 +1775,7 @@ void move_mouse_cursor_to(
   );
   set_mouse_player_pos(g, s); // Processes the action
   assert(square(get_player_pos(g, get_mouse_user_player_side(g))) == s);
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 bool piece_with_id_is_at(
@@ -1797,7 +1798,7 @@ void set_keyboard_player_pos(
   move_cursor_to(g, s, player_side);
 
   //
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void set_mouse_player_pos(
@@ -1813,7 +1814,7 @@ void set_mouse_player_pos(
     )
   );
   g.tick(delta_t(0.0));
-  assert(count_control_actions(g) == 0);
+  assert(count_user_inputs(g) == 0);
 }
 
 void game::tick(const delta_t& dt)
@@ -1821,8 +1822,8 @@ void game::tick(const delta_t& dt)
   // Let the replayer do its move
   m_replayer.do_move(*this);
 
-  // Convert control_actions to piece_actions instantaneous
-  m_control_actions.process(*this);
+  // Convert user_inputs to piece_actions instantaneous
+  m_user_inputs.process(*this);
 
   assert(count_dead_pieces(m_pieces) == 0);
 
@@ -1878,7 +1879,7 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
-    << "Control actions: " << g.get_control_actions() << '\n'
+    << "Control actions: " << g.get_user_inputs() << '\n'
     << "Layout: " << g.get_layout() << '\n'
     << "LHS player position: " << g.get_player_pos(side::lhs) << '\n'
     << "RHS player position: " << g.get_player_pos(side::rhs) << '\n'

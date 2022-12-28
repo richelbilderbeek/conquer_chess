@@ -9,9 +9,6 @@ HEADERS += \
     $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
     $$PWD/chess_move.h \
-    $$PWD/control_action.h \
-    $$PWD/control_action_type.h \
-    $$PWD/control_actions.h \
     $$PWD/controller.h \
     $$PWD/controller_type.h \
     $$PWD/controllers.h \
@@ -55,6 +52,9 @@ HEADERS += \
     $$PWD/starting_position_type.h \
     $$PWD/test_game.h \
     $$PWD/textures.h \
+    $$PWD/user_input.h \
+    $$PWD/user_input_type.h \
+    $$PWD/user_inputs.h \
     $$PWD/volume.h
 
 
@@ -67,9 +67,6 @@ SOURCES += \
     $$PWD/castling_type.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/chess_move.cpp \
-    $$PWD/control_action.cpp \
-    $$PWD/control_action_type.cpp \
-    $$PWD/control_actions.cpp \
     $$PWD/controller.cpp \
     $$PWD/controller_type.cpp \
     $$PWD/controllers.cpp \
@@ -114,6 +111,9 @@ SOURCES += \
     $$PWD/test_game.cpp \
     $$PWD/test_game_scenarios.cpp \
     $$PWD/textures.cpp \
+    $$PWD/user_input.cpp \
+    $$PWD/user_input_type.cpp \
+    $$PWD/user_inputs.cpp \
     $$PWD/volume.cpp
 
 RESOURCES += \

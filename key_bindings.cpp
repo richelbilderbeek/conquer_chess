@@ -22,41 +22,41 @@ key_bindings::key_bindings(
 
 }
 
-std::vector<control_action_type> key_bindings::create_actions(
+std::vector<user_input_type> key_bindings::create_actions(
   const sf::Keyboard::Key key_pressed
 ) const noexcept
 {
   if (key_pressed == get_key_for_move_up())
   {
-    return { control_action_type::press_up };
+    return { user_input_type::press_up };
   }
   else if (key_pressed == get_key_for_move_right())
   {
-    return { control_action_type::press_right };
+    return { user_input_type::press_right };
   }
   else if (key_pressed == get_key_for_move_down())
   {
-    return { control_action_type::press_down };
+    return { user_input_type::press_down };
   }
   else if (key_pressed == get_key_for_move_left())
   {
-    return { control_action_type::press_left };
+    return { user_input_type::press_left };
   }
   else if (key_pressed == get_key_for_action(1))
   {
-    return { control_action_type::press_action_1 };
+    return { user_input_type::press_action_1 };
   }
   else if (key_pressed == get_key_for_action(2))
   {
-    return { control_action_type::press_action_2 };
+    return { user_input_type::press_action_2 };
   }
   else if (key_pressed == get_key_for_action(3))
   {
-    return { control_action_type::press_action_3 };
+    return { user_input_type::press_action_3 };
   }
   else if (key_pressed == get_key_for_action(4))
   {
-    return { control_action_type::press_action_4 };
+    return { user_input_type::press_action_4 };
   }
   return {};
 

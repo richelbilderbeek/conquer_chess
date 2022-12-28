@@ -870,7 +870,7 @@ void test_game_functions()
   {
     const auto g{get_kings_only_game()};
     // No game actions at start
-    assert(count_control_actions(g) == 0);
+    assert(count_user_inputs(g) == 0);
     // TODO: add action
   }
   // count_piece_actions: actions in pieces accumulate

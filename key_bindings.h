@@ -1,7 +1,7 @@
 #ifndef KEY_BINDINGS_H
 #define KEY_BINDINGS_H
 
-#include "control_action.h"
+#include "user_input.h"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Event.hpp>
@@ -26,7 +26,7 @@ public:
 
   /// From an event, create zero or one action_types
   /// Return the 'control_action_type' corresponding to an event
-  std::vector<control_action_type> create_actions(
+  std::vector<user_input_type> create_actions(
     const sf::Keyboard::Key k
   ) const noexcept;
 

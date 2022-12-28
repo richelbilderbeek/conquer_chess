@@ -3,8 +3,8 @@
 
 /// Conquer Chess forward declarations
 class chess_move;
-class control_actions;
-class control_action;
+class user_inputs;
+class user_input;
 class controller;
 class delta_t;
 class game_coordinat;

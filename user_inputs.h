@@ -4,7 +4,7 @@
 #include "ccfwd.h"
 
 #include "chess_color.h"
-#include "control_action.h"
+#include "user_input.h"
 #include "piece_action.h"
 #include "message.h"
 
@@ -20,13 +20,13 @@
 /// The control_actions processes user actions
 /// and passes the into the pieces it concerns, as 'piece_actions'.
 /// There, the pieces take over.
-class control_actions
+class user_inputs
 {
 public:
-  control_actions();
+  user_inputs();
 
   /// Add a new user actions
-  void add(const control_action& action);
+  void add(const user_input& action);
 
   const auto& get_actions() const noexcept { return m_control_actions; }
 
@@ -35,21 +35,21 @@ public:
 
 private:
 
-  std::vector<control_action> m_control_actions;
+  std::vector<user_input> m_control_actions;
 };
 
 /// Count the total number of control actions to be done by the game,
 /// which should be zero after each tick
-int count_control_actions(const control_actions& a);
+int count_user_inputs(const user_inputs& a);
 
 /// Count the total number of piece actions to be done by the game
-int count_piece_actions(const control_actions& a);
+int count_piece_actions(const user_inputs& a);
 
 /// Create the control actions to do a PGN move from a certain
 /// game. The game is needed to determine how the cursor
 /// is moved (e.g. by mouse/keyboard, if keyboard:
 /// how many squares)
-control_actions create_control_actions(
+user_inputs create_control_actions(
   const std::string& pgn_str,
   const chess_color color,
   const game& g
@@ -59,7 +59,7 @@ control_actions create_control_actions(
 /// game. The game is needed to determine how the cursor
 /// is moved (e.g. by mouse/keyboard, if keyboard:
 /// how many squares)
-control_actions create_control_actions(
+user_inputs create_control_actions(
   const chess_move& m,
   const game& g
 );
@@ -101,16 +101,16 @@ void do_select_and_move_piece(
 );
 
 /// Respond to action 1
-void process_press_action_1(game& g, const control_action& action);
+void process_press_action_1(game& g, const user_input& action);
 
 /// Respond to action 2
-void process_press_action_2(game& g, const control_action& action);
+void process_press_action_2(game& g, const user_input& action);
 
 /// Respond to action 3
-void process_press_action_3(game& g, const control_action& action);
+void process_press_action_3(game& g, const user_input& action);
 
 /// Respond to action 4
-void process_press_action_4(game& g, const control_action& action);
+void process_press_action_4(game& g, const user_input& action);
 
 /// Process an A or right-mouse-button down
 void start_attack(
@@ -130,9 +130,9 @@ void start_move_unit(
 void test_control_actions();
 
 /// Convert a 'piece_action' to a 'control_actions'
-control_actions to_control_actions(const piece_action& pa, const game& g);
+user_inputs to_user_inputs(const piece_action& pa, const game& g);
 
-std::ostream& operator<<(std::ostream& os, const control_actions& actions) noexcept;
-bool operator==(const control_actions& lhs, const control_actions& rhs) noexcept;
+std::ostream& operator<<(std::ostream& os, const user_inputs& actions) noexcept;
+bool operator==(const user_inputs& lhs, const user_inputs& rhs) noexcept;
 
 #endif // ACTIONS_H
