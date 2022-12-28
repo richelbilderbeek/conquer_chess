@@ -1071,7 +1071,6 @@ void test_game_keyboard_use()
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
-  #ifdef FIX_ISSUE_60
   // Keyboard: select on white king selects king,
   // the select on white queen selects white queen
   {
@@ -1123,7 +1122,6 @@ void test_game_keyboard_use()
     assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
     assert(collect_messages(g).at(1).get_message_type() == message_type::cannot);
   }
-  #endif // FIX_ISSUE_60
   // 47: set_keyboard_player_pos for RHS player
   {
     game g;
@@ -1162,7 +1160,6 @@ void test_game_mouse_use()
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
   }
-  #ifdef FIX_ISSUE_60
   // Clicking a unit twice with LMB selects and unselects it
   {
     game g;
@@ -1201,7 +1198,6 @@ void test_game_mouse_use()
     g.tick(delta_t(0.01));
     assert(count_piece_actions(g, chess_color::black) >= 1);
   }
-  #endif // FIX_ISSUE_60
 #endif // NDEBUG // no tests in release
 }
 

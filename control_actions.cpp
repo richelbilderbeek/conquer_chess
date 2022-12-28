@@ -223,10 +223,7 @@ void do_select_and_move_piece(
 
 void process_press_action_1(game& g, const control_action& action)
 {
-  assert(
-    action.get_control_action_type() == control_action_type::press_action_1
-    || action.get_control_action_type() == control_action_type::lmb_down
-  );
+  assert(action.get_control_action_type() == control_action_type::press_action_1);
   // press_action_1 can be
   //  1. select (when cursor is pointed to a square with a piece of own color)
   //  2. move (when a piece is selected and cursor points to empty square
@@ -262,7 +259,6 @@ void process_press_action_1(game& g, const control_action& action)
       to
       )
     );
-    unselect_all_pieces(g, player_color);
     return;
   }
   const auto selected_piece_copy{selected_pieces[0]};
@@ -511,10 +507,6 @@ void control_actions::process(game& g)
     #endif // FIX_ISSUE_46
     else if (action.get_control_action_type() == control_action_type::lmb_down)
     {
-      #define USE_NEW_CONTROLLER_SYSTEM_2
-      #ifdef USE_NEW_CONTROLLER_SYSTEM_2
-      process_press_action_1(g, action);
-      #else
       if (has_mouse_controller(g.get_options()))
       {
         do_select(
@@ -523,7 +515,6 @@ void control_actions::process(game& g)
           get_player_color(g, action.get_player())
         );
       }
-      #endif
     }
     else if (action.get_control_action_type() == control_action_type::rmb_down)
     {
