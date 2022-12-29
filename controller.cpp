@@ -186,7 +186,7 @@ std::vector<user_input> controller::process_input(
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
-      return process_mouse_pressed(event, g);
+      return process_mouse_pressed(event);
     }
   }
   // Ignore the rest
