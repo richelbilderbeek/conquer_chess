@@ -1218,7 +1218,9 @@ void test_game_mouse_use()
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 0);
   }
-  // Clicking a unit with LMB, then another unit with LMB, only the last unit is selected
+  // 60: selectedness is transferred
+  // Clicking a unit with LMB,
+  // then another unit with LMB, only the last unit is selected
   {
     game g;
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
