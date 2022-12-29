@@ -205,10 +205,7 @@ void do_select_and_move_piece(
   else
   {
     g.add_action(
-      create_press_lmb_action(
-        to_coordinat(to_square_str),
-        player_side
-      )
+      create_press_lmb_action(player_side)
     );
   }
   g.tick(delta_t(0.0));

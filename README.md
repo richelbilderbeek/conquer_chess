@@ -18,6 +18,7 @@ See [FAQ](FAQ.md)
 
 ## Videos
 
+ * 2022-12-29: [watch on YouTube](https://youtu.be/azkFdfcwZBU) or [download (.ogv)](https://richelbilderbeek.nl/conquer_chess_20221239.ogv) 
  * 2022-07-31: [watch on YouTube](https://youtu.be/Y2m_hyusuPc) or [download (.ogv)](https://richelbilderbeek.nl/conquer_chess_20220731.ogv) 
 
 ## Screenshots

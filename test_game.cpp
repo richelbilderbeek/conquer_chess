@@ -1181,25 +1181,21 @@ void test_game_mouse_use()
   // Clicking a unit once with LMB selects it
   {
     game g;
-    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(count_selected_units(g, chess_color::black) == 0);
-    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square()), side::rhs));
+    move_cursor_to(g, "e8", side::rhs);
+    g.add_action(create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
   }
   // Clicking a unit twice with LMB selects and unselects it
   {
     game g;
-    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     assert(count_selected_units(g, chess_color::black) == 0);
-    g.add_action(
-      create_press_lmb_action(
-        to_coordinat(black_king.get_current_square()), side::rhs
-      )
-    );
+    move_cursor_to(g, "e8", side::rhs);
+    g.add_action(create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
-    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square()), side::rhs));
+    g.add_action(create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 0);
   }
@@ -1208,27 +1204,27 @@ void test_game_mouse_use()
   // then another unit with LMB, only the last unit is selected
   {
     game g;
-    const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
-    const auto black_queen{find_pieces(g, piece_type::queen, chess_color::black).at(0)};
     assert(count_selected_units(g, chess_color::black) == 0);
     move_cursor_to(g, "d8", side::rhs);
-    g.add_action(create_press_lmb_action(to_coordinat(black_queen.get_current_square()), side::rhs));
+    g.add_action(create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
     move_cursor_to(g, "e8", side::rhs);
-    g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square()), side::rhs));
+    g.add_action(create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) != 2);
     assert(count_selected_units(g, chess_color::black) != 0);
     assert(count_selected_units(g, chess_color::black) == 1);
   }
-  // LMB then RMB makes a unit move
+  // Ke8e7 works by LMB, LMB
   {
     game g = get_kings_only_game();
-    g.add_action(create_press_lmb_action(to_coordinat("e8"), side::rhs));
+    move_cursor_to(g, "e8", side::rhs);
+    g.add_action(create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    g.add_action(create_press_rmb_action(to_coordinat("e7"), side::rhs));
+    move_cursor_to(g, "e7", side::rhs);
+    g.add_action(create_press_lmb_action(side::rhs));
     g.tick(delta_t(0.01));
     assert(count_piece_actions(g, chess_color::black) >= 1);
   }

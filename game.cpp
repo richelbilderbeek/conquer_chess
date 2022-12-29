@@ -1070,7 +1070,6 @@ void do_move_mouse_player_piece(game& g, const square& s)
 
   g.add_action(
     create_press_lmb_action(
-      to_coordinat(s),
       get_mouse_user_player_side(g)
     )
   );
@@ -1176,7 +1175,6 @@ void do_select_for_mouse_player(game& g, const square& s)
   assert(square(get_player_pos(g, get_mouse_user_player_side(g))) == s);
   g.add_action(
     create_press_lmb_action(
-      to_coordinat(s),
       get_mouse_user_player_side(g)
     )
   );

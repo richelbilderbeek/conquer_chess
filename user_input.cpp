@@ -57,11 +57,10 @@ user_input create_press_left_action(const side player)
 }
 
 user_input create_press_lmb_action(
-  const game_coordinat& coordinat,
   const side player
 )
 {
-  return user_input(user_input_type::lmb_down, player, coordinat);
+  return user_input(user_input_type::lmb_down, player);
 }
 
 user_input create_press_right_action(const side player)
@@ -69,9 +68,9 @@ user_input create_press_right_action(const side player)
   return user_input(user_input_type::press_right, player);
 }
 
-user_input create_press_rmb_action(const game_coordinat& coordinat, const side player)
+user_input create_press_rmb_action(const side player)
 {
-  return user_input(user_input_type::rmb_down, player, coordinat);
+  return user_input(user_input_type::rmb_down, player);
 }
 
 user_input create_press_up_action(const side player)
@@ -104,9 +103,9 @@ void test_control_action()
     assert(create_press_action_4(side::lhs).get_user_input_type() == user_input_type::press_action_4);
     assert(create_press_down_action(side::lhs).get_user_input_type() == user_input_type::press_down);
     assert(create_press_left_action(side::lhs).get_user_input_type() == user_input_type::press_left);
-    assert(create_press_lmb_action(game_coordinat(), side::lhs).get_user_input_type() == user_input_type::lmb_down);
+    assert(create_press_lmb_action(side::lhs).get_user_input_type() == user_input_type::lmb_down);
     assert(create_press_right_action(side::lhs).get_user_input_type() == user_input_type::press_right);
-    assert(create_press_rmb_action(game_coordinat(), side::lhs).get_user_input_type() == user_input_type::rmb_down);
+    assert(create_press_rmb_action(side::lhs).get_user_input_type() == user_input_type::rmb_down);
     assert(create_press_up_action(side::lhs).get_user_input_type() == user_input_type::press_up);
   }
   // create_random_control_action

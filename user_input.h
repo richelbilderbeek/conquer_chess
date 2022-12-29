@@ -68,17 +68,16 @@ user_input create_press_action_3(const side player);
 user_input create_press_action_4(const side player);
 user_input create_press_down_action(const side player);
 user_input create_press_left_action(const side player);
-user_input create_press_lmb_action(
-  const game_coordinat& coordinat,
-  const side player
-);
+
+/// Do LMB action on the square where the player's
+/// cursor is.
+/// @see Use \link{move_cursor_to} to put the cursor
+/// at the square to act upon
+user_input create_press_lmb_action(const side player);
 
 user_input create_press_right_action(const side player);
 
-user_input create_press_rmb_action(
-  const game_coordinat& coordinat,
-  const side player
-);
+user_input create_press_rmb_action(const side player);
 
 user_input create_press_up_action(const side player);
 
