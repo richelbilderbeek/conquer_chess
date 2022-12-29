@@ -228,8 +228,8 @@ void process_press_action_1(game& g, const user_input& action)
 
 void process_press_action_1_or_lmb_down(game& g, const user_input& action)
 {
-  assert(action.get_control_action_type() == user_input_type::press_action_1
-    || action.get_control_action_type() == user_input_type::lmb_down
+  assert(action.get_user_input_type() == user_input_type::press_action_1
+    || action.get_user_input_type() == user_input_type::lmb_down
   );
   // this action can be
   //  1. select (when cursor is pointed to a square with a piece of own color)
@@ -308,7 +308,7 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
 
 void process_press_action_2(game& g, const user_input& action)
 {
-  assert(action.get_control_action_type() == user_input_type::press_action_2);
+  assert(action.get_user_input_type() == user_input_type::press_action_2);
   // press_action_2 can be
   //  1. attack (for a selected piece and cursor points to square with enemy
   //  3. promote to rook (for a selected pawn at the final file)
@@ -348,7 +348,7 @@ void process_press_action_2(game& g, const user_input& action)
 
 void process_press_action_3(game& g, const user_input& action)
 {
-  assert(action.get_control_action_type() == user_input_type::press_action_3);
+  assert(action.get_user_input_type() == user_input_type::press_action_3);
   // press_action_3 can be
   //  1. promote to bishop (for a selected pawn at the final file)
   //  2. castle kingside (for a selected king)
@@ -398,7 +398,7 @@ void process_press_action_3(game& g, const user_input& action)
 
 void process_press_action_4(game& g, const user_input& action)
 {
-  assert(action.get_control_action_type() == user_input_type::press_action_4);
+  assert(action.get_user_input_type() == user_input_type::press_action_4);
   // press_action_3 can be
   //  1. promote to bishop (for a selected pawn at the final file)
   //  2. castle kingside (for a selected king)
@@ -450,48 +450,49 @@ void user_inputs::process(game& g)
 {
   for (const auto& action: m_control_actions)
   {
-    if (action.get_control_action_type() == user_input_type::press_action_1)
+    if (action.get_user_input_type() == user_input_type::press_action_1)
     {
       process_press_action_1(g, action);
     }
-    else if (action.get_control_action_type() == user_input_type::press_action_2)
+    else if (action.get_user_input_type() == user_input_type::press_action_2)
     {
       process_press_action_2(g, action);
     }
-    else if (action.get_control_action_type() == user_input_type::press_action_3)
+    else if (action.get_user_input_type() == user_input_type::press_action_3)
     {
       process_press_action_3(g, action);
     }
-    else if (action.get_control_action_type() == user_input_type::press_action_4)
+    else if (action.get_user_input_type() == user_input_type::press_action_4)
     {
       process_press_action_4(g, action);
     }
-    else if (action.get_control_action_type() == user_input_type::press_down)
+    else if (action.get_user_input_type() == user_input_type::press_down)
     {
       auto& pos{get_player_pos(g, action.get_player())};
       pos = get_below(pos);
     }
-    else if (action.get_control_action_type() == user_input_type::press_left)
+    else if (action.get_user_input_type() == user_input_type::press_left)
     {
       auto& pos{get_player_pos(g, action.get_player())};
       pos = get_left(pos);
     }
-    else if (action.get_control_action_type() == user_input_type::press_right)
+    else if (action.get_user_input_type() == user_input_type::press_right)
     {
       auto& pos{get_player_pos(g, action.get_player())};
       pos = get_right(pos);
     }
-    else if (action.get_control_action_type() == user_input_type::press_up)
+    else if (action.get_user_input_type() == user_input_type::press_up)
     {
       auto& pos{get_player_pos(g, action.get_player())};
       pos = get_above(pos);
     }
-    else if (action.get_control_action_type() == user_input_type::mouse_move)
+    else if (action.get_user_input_type() == user_input_type::mouse_move)
     {
       if (has_mouse_controller(g.get_options()))
       {
         auto& pos{get_player_pos(g, action.get_player())};
-        pos = action.get_coordinat();
+        assert(action.get_coordinat());
+        pos = action.get_coordinat().value();
       }
     }
     #ifdef FIX_ISSUE_46
@@ -499,19 +500,20 @@ void user_inputs::process(game& g)
     // Instead, the mouse controller has an active action
     // triggered by LMB, and RMB goes to the next
     #endif // FIX_ISSUE_46
-    else if (action.get_control_action_type() == user_input_type::lmb_down)
+    else if (action.get_user_input_type() == user_input_type::lmb_down)
     {
       if (!has_mouse_controller(g.get_options())) return;
       process_press_action_1_or_lmb_down(g, action);
 
     }
-    else if (action.get_control_action_type() == user_input_type::rmb_down)
+    else if (action.get_user_input_type() == user_input_type::rmb_down)
     {
       if (has_mouse_controller(g.get_options()))
       {
+        assert(action.get_coordinat());
         start_move_unit(
           g,
-          action.get_coordinat(),
+          action.get_coordinat().value(),
           get_player_color(g, action.get_player())
         );
       }

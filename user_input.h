@@ -9,6 +9,7 @@
 
 #include <iosfwd>
 #include <random>
+#include <optional>
 #include <SFML/Window/Event.hpp>
 
 /// An action
@@ -18,22 +19,35 @@ public:
   explicit user_input(
     const user_input_type type,
     const side player,
-    const game_coordinat& coordinat
+    const std::optional<game_coordinat>& coordinat = {}
   );
-  auto get_control_action_type() const noexcept { return m_control_action_type; }
+  auto get_user_input_type() const noexcept { return m_user_input_type; }
   auto& get_coordinat() const noexcept { return m_coordinat; }
   auto get_player() const noexcept { return m_player; }
 
 private:
 
-  user_input_type m_control_action_type;
+  user_input_type m_user_input_type;
 
-  /// Must be a game_coordinat (not a square),
-  /// as the mouse has actions
-  game_coordinat m_coordinat;
+  /// Fpr the user input types that need a coordinat.
+  /// The others need the cursor's current square
+  ///
+  /// Type           | Does have a coordinat
+  /// ---------------|----------------------
+  /// press_action_1 | no
+  /// press_action_2 | no
+  /// press_action_3 | no
+  /// press_action_4 | no
+  /// press_down     | no
+  /// press_left     | no
+  /// press_right    | no
+  /// press_up       | no
+  /// lmb_down       | no
+  /// rmb_down       | no
+  /// mouse_move     | yes
+  std::optional<game_coordinat> m_coordinat;
 
   side m_player;
-
 };
 
 user_input create_mouse_move_action(
