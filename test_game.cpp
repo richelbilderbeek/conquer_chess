@@ -1070,22 +1070,20 @@ void test_game_keyboard_use()
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
-  // Keyboard: select on white king selects king,
-  // the select on white queen selects white queen
+  // 60: selectedness is transferred
   {
     game g;
-    //g.get_player_pos(side::lhs) = to_coordinat(square("e1"));
     move_cursor_to(g, "e1", side::lhs);
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_action(create_press_action_1(to_coordinat("e1"), side::lhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::white) == 1);
-    //g.get_player_pos(side::lhs) = to_coordinat(square("d1"));
     move_cursor_to(g, "d1", side::lhs);
     g.add_action(create_press_action_1(to_coordinat("d1"), side::lhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::white) != 2);
-    assert(count_selected_units(g, chess_color::white) == 1); // Selectedness is transferred
+    assert(count_selected_units(g, chess_color::white) != 0);
+    assert(count_selected_units(g, chess_color::white) == 1);
   }
   // Selecting a unit twice with action 1 selects and unselects it
   {
