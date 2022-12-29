@@ -231,10 +231,14 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
   assert(action.get_control_action_type() == user_input_type::press_action_1
     || action.get_control_action_type() == user_input_type::lmb_down
   );
-  // press_action_1 can be
+  // this action can be
   //  1. select (when cursor is pointed to a square with a piece of own color)
   //  2. move (when a piece is selected and cursor points to empty square
   //  3. promote to queen (for a pawn at the final file)
+  //  4. unselect (when cursor is pointed to a square with a piece of own color)
+
+  // Cursor location | Selected piece location |
+  // to              |
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
@@ -242,26 +246,51 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
     const auto& p{get_piece_at(g, to)};
-    if (p.is_selected() && can_promote(p))
+    if (p.is_selected())
     {
-      //  3. promote to queen (for a pawn at the final file)
-      unselect_all_pieces(g, player_color);
-      get_piece_at(g, to).add_action(
-        piece_action(
-          player_color,
-          piece_type::queen,
-          piece_action_type::promote_to_queen,
-          to,
-          to
-        )
-      );
-      return;
+      if (can_promote(p))
+      {
+        //  3. promote to queen (for a pawn at the final file)
+        unselect_all_pieces(g, player_color);
+        get_piece_at(g, to).add_action(
+          piece_action(
+            player_color,
+            piece_type::queen,
+            piece_action_type::promote_to_queen,
+            to,
+            to
+          )
+        );
+        return;
+      }
+      else
+      {
+        //  4. unselect (when cursor is pointed to a square with a piece of own color)
+        get_piece_at(g, to).add_action(
+          piece_action(
+            player_color,
+            p.get_type(),
+            piece_action_type::unselect,
+            to,
+            to
+          )
+        );
+        return;
+      }
     }
     else
     {
       //  1. select (when cursor is pointed to a square with a piece of own color)
       unselect_all_pieces(g, player_color);
-      get_piece_at(g, to).set_selected(true);
+      get_piece_at(g, to).add_action(
+        piece_action(
+          player_color,
+          p.get_type(),
+          piece_action_type::select,
+          to,
+          to
+        )
+      );
       return;
     }
   }

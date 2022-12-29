@@ -45,7 +45,6 @@ void piece::add_action(const piece_action& action)
 {
   assert(action.get_piece_type() == m_type || m_type == piece_type::pawn);
   assert(action.get_color() == m_color);
-
   if (action.get_action_type() == piece_action_type::select)
   {
     assert(!m_is_selected);
@@ -983,10 +982,12 @@ void piece::tick(
     case piece_action_type::unselect:
       assert(m_is_selected);
       m_is_selected = false;
+      remove_first(m_actions);
       return;
     case piece_action_type::select:
       assert(!m_is_selected);
       m_is_selected = true;
+      remove_first(m_actions);
       return;
     case piece_action_type::promote_to_knight:
     case piece_action_type::promote_to_bishop:

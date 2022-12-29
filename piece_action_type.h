@@ -6,8 +6,8 @@
 /// The type of actions a piece can do
 enum class piece_action_type
 {
-  select,
-  unselect,
+  select,   // select and unselect are valud piece action,
+  unselect, // as the GUI can suggest these as the default (piece) action
   move,
   attack, // a regular attack, not en-passant
   en_passant, // a type of attack

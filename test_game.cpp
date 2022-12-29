@@ -54,7 +54,6 @@ void test_game_class()
       assert(!is_piece_at(g, square("a4")));
       assert(!is_piece_at(g, square("a3")));
       assert(!is_piece_at(g, square("b3")));
-      std::clog << "HIERO" << '\n';
       assert(count_selected_units(g, chess_color::white) == 0);
       do_select_for_keyboard_player(g, square("a2"));
       assert(count_selected_units(g, chess_color::white) == 1);
@@ -1075,29 +1074,40 @@ void test_game_keyboard_use()
   // the select on white queen selects white queen
   {
     game g;
-    g.get_player_pos(side::lhs) = to_coordinat(square("e1"));
+    //g.get_player_pos(side::lhs) = to_coordinat(square("e1"));
+    move_cursor_to(g, "e1", side::lhs);
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_action(create_press_action_1(to_coordinat("e1"), side::lhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::white) == 1);
-    g.get_player_pos(side::lhs) = to_coordinat(square("e1"));
-    g.add_action(create_press_action_1(to_coordinat("e1"), side::lhs));
+    //g.get_player_pos(side::lhs) = to_coordinat(square("d1"));
+    move_cursor_to(g, "d1", side::lhs);
+    g.add_action(create_press_action_1(to_coordinat("d1"), side::lhs));
     g.tick(delta_t(0.01));
+    assert(count_selected_units(g, chess_color::white) != 2);
     assert(count_selected_units(g, chess_color::white) == 1); // Selectedness is transferred
   }
   // Selecting a unit twice with action 1 selects and unselects it
   {
     game g;
-    const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
+    const auto white_king{
+      find_pieces(
+        g,
+        piece_type::king,
+        chess_color::white
+       ).at(0)
+    };
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_action(
       create_press_action_1(
-        to_coordinat(white_king.get_current_square()), side::rhs
+        to_coordinat(white_king.get_current_square()), side::lhs
       )
     );
     g.tick();
+    assert(count_selected_units(g, chess_color::white) != 2);
+    assert(count_selected_units(g, chess_color::white) != 0);
     assert(count_selected_units(g, chess_color::white) == 1);
-    g.add_action(create_press_lmb_action(to_coordinat(white_king.get_current_square()), side::rhs));
+    g.add_action(create_press_action_1(to_coordinat(white_king.get_current_square()), side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
@@ -1199,11 +1209,15 @@ void test_game_mouse_use()
     const auto black_king{find_pieces(g, piece_type::king, chess_color::black).at(0)};
     const auto black_queen{find_pieces(g, piece_type::queen, chess_color::black).at(0)};
     assert(count_selected_units(g, chess_color::black) == 0);
+    move_cursor_to(g, "d8", side::rhs);
     g.add_action(create_press_lmb_action(to_coordinat(black_queen.get_current_square()), side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
+    move_cursor_to(g, "e8", side::rhs);
     g.add_action(create_press_lmb_action(to_coordinat(black_king.get_current_square()), side::rhs));
     g.tick();
+    assert(count_selected_units(g, chess_color::black) != 2);
+    assert(count_selected_units(g, chess_color::black) != 0);
     assert(count_selected_units(g, chess_color::black) == 1);
   }
   // LMB then RMB makes a unit move
