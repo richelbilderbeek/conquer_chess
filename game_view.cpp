@@ -810,7 +810,7 @@ void show_unit_paths(game_view& view)
       [layout](const auto& user_input)
       {
         return convert_to_screen_coordinat(
-          to_coordinat(control_action.get_to()),
+          to_coordinat(user_input.get_to()),
           layout
         );
       }
