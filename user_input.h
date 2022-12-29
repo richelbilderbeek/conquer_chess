@@ -55,8 +55,11 @@ user_input create_mouse_move_action(
   const side player
 );
 
+/// Do action 1 with keyboard on the square where the player's
+/// cursor is.
+/// @see Use \link{move_cursor_to} to put the cursor
+/// at the square to act upon
 user_input create_press_action_1(
-  const game_coordinat& coordinat,
   const side player
 );
 

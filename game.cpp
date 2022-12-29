@@ -1053,7 +1053,6 @@ void do_move_keyboard_player_piece(game& g, const square& s)
 
   g.add_action(
     create_press_action_1(
-      to_coordinat(s),
       get_keyboard_user_player_side(g)
     )
   );
@@ -1216,7 +1215,6 @@ void do_promote_keyboard_player_piece(
       assert(promote_to == piece_type::queen);
       g.add_action(
         create_press_action_1(
-          to_coordinat(pawn_location),
           get_keyboard_user_player_side(g)
         )
       );
