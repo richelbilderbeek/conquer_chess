@@ -1070,7 +1070,7 @@ void test_game_keyboard_use()
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
-  // 60: selectedness is transferred
+  // 60: selectedness is transferred, for white
   {
     game g;
     move_cursor_to(g, "e1", side::lhs);
@@ -1084,6 +1084,23 @@ void test_game_keyboard_use()
     assert(count_selected_units(g, chess_color::white) != 2);
     assert(count_selected_units(g, chess_color::white) != 0);
     assert(count_selected_units(g, chess_color::white) == 1);
+  }
+  // 60: selectedness is transferred, for black
+  {
+    game g{
+      get_game_with_controllers(create_two_keyboard_controllers())
+    };
+    move_cursor_to(g, "e8", side::rhs);
+    assert(count_selected_units(g, chess_color::black) == 0);
+    g.add_action(create_press_action_1(to_coordinat("e8"), side::rhs));
+    g.tick(delta_t(0.01));
+    assert(count_selected_units(g, chess_color::black) == 1);
+    move_cursor_to(g, "d8", side::rhs);
+    g.add_action(create_press_action_1(to_coordinat("d8"), side::rhs));
+    g.tick(delta_t(0.01));
+    assert(count_selected_units(g, chess_color::black) != 2);
+    assert(count_selected_units(g, chess_color::black) != 0);
+    assert(count_selected_units(g, chess_color::black) == 1);
   }
   // Selecting a unit twice with action 1 selects and unselects it
   {

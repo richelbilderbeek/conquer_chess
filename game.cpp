@@ -1394,6 +1394,19 @@ std::optional<piece_action_type> get_default_piece_action(
   return std::optional<piece_action_type>();
 }
 
+game get_game_with_controllers(const std::vector<controller>& c) noexcept
+{
+  const game_options options(
+    get_default_screen_size(),
+    c,
+    get_default_starting_position(),
+    get_default_game_speed(),
+    get_default_margin_width()
+  );
+  return game(options);
+}
+
+
 game get_game_with_starting_position(starting_position_type t) noexcept
 {
   const game_options options(

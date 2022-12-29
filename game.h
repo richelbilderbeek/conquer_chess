@@ -452,7 +452,11 @@ std::optional<piece_action_type> get_default_piece_action(
 ) noexcept;
 
 /// Create a game with all default settings
-/// and s specific starting position
+/// and a specific set of controllers
+game get_game_with_controllers(const std::vector<controller>& c) noexcept;
+
+/// Create a game with all default settings
+/// and a specific starting position
 game get_game_with_starting_position(starting_position_type t) noexcept;
 
 /// Get the ID of a piece at a square
