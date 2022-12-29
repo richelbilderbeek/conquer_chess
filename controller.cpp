@@ -208,16 +208,10 @@ std::vector<user_input> controller::process_key_press(
 }
 
 std::vector<user_input> controller::process_mouse_pressed(
-  const sf::Event& event,
-  const game& /* g */
+  const sf::Event& event
 ) const
 {
   assert(event.type == sf::Event::MouseButtonPressed);
-  /*
-  const auto mouse_screen_pos{
-    screen_coordinat(event.mouseButton.x, event.mouseButton.y)
-  };
-  */
   if (event.mouseButton.button == sf::Mouse::Left)
   {
     return {

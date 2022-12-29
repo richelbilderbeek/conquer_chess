@@ -50,6 +50,7 @@ private:
   side m_player;
 };
 
+/// The only `user_input` with a coordinat
 user_input create_mouse_move_action(
   const game_coordinat& coordinat,
   const side player
@@ -59,9 +60,7 @@ user_input create_mouse_move_action(
 /// cursor is.
 /// @see Use \link{move_cursor_to} to put the cursor
 /// at the square to act upon
-user_input create_press_action_1(
-  const side player
-);
+user_input create_press_action_1(const side player);
 
 user_input create_press_action_2(const side player);
 user_input create_press_action_3(const side player);

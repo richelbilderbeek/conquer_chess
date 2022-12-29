@@ -54,8 +54,7 @@ private:
 
   /// Process the input from a mouse button press
   std::vector<user_input> process_mouse_pressed(
-    const sf::Event& event,
-    const game& g
+    const sf::Event& event
   ) const;
 
   /// Process the input from a mouse movement
