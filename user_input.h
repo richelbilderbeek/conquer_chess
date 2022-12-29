@@ -42,9 +42,10 @@ user_input create_mouse_move_action(
 );
 
 user_input create_press_action_1(
-  const side player,
-  const game_coordinat& coordinat
+  const game_coordinat& coordinat,
+  const side player
 );
+
 user_input create_press_action_2(const side player);
 user_input create_press_action_3(const side player);
 user_input create_press_action_4(const side player);

@@ -25,8 +25,8 @@ user_input create_mouse_move_action(
 }
 
 user_input create_press_action_1(
-  const side player,
-  const game_coordinat& coordinat
+  const game_coordinat& coordinat,
+  const side player
 )
 {
   return user_input(user_input_type::press_action_1, player, coordinat);
@@ -99,7 +99,7 @@ void test_control_action()
 #ifndef NDEBUG
   {
     assert(create_mouse_move_action(game_coordinat(), side::lhs).get_control_action_type() == user_input_type::mouse_move);
-    assert(create_press_action_1(side::lhs, game_coordinat()).get_control_action_type() == user_input_type::press_action_1);
+    assert(create_press_action_1(game_coordinat(), side::lhs).get_control_action_type() == user_input_type::press_action_1);
     assert(create_press_action_2(side::lhs).get_control_action_type() == user_input_type::press_action_2);
     assert(create_press_action_3(side::lhs).get_control_action_type() == user_input_type::press_action_3);
     assert(create_press_action_4(side::lhs).get_control_action_type() == user_input_type::press_action_4);

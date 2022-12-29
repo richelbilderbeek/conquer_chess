@@ -200,8 +200,8 @@ void do_select_and_move_piece(
   {
     g.add_action(
       create_press_action_1(
-        player_side,
-        to_coordinat(to_square_str)
+        to_coordinat(to_square_str),
+        player_side
       )
     );
   }
@@ -232,7 +232,6 @@ void process_press_action_1(game& g, const user_input& action)
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
   const square to{square(get_player_pos(g, player_side))};
-  #define CONTROL_SYSTEM_2
   #ifdef CONTROL_SYSTEM_2
   const auto maybe_action{get_default_piece_action(g, player_side)};
   if (!maybe_action)
@@ -508,6 +507,54 @@ void user_inputs::process(game& g)
     else if (action.get_control_action_type() == user_input_type::lmb_down)
     {
       if (!has_mouse_controller(g.get_options())) return;
+      #define USE_CONTROL_SYSTEM_FROM_ACTION_1
+      #ifdef USE_CONTROL_SYSTEM_FROM_ACTION_1
+      assert(action.get_control_action_type() == user_input_type::lmb_down);
+      // press_action_1 can be
+      //  1. select (when cursor is pointed to a square with a piece of own color)
+      //  2. move (when a piece is selected and cursor points to empty square
+      //  3. promote to queen (for a pawn at the final file)
+
+      const side player_side{action.get_player()};
+      const chess_color player_color{get_player_color(g, player_side)};
+      const square to{square(get_player_pos(g, player_side))};
+      if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
+      {
+        const auto& p{get_piece_at(g, to)};
+        if (p.is_selected() && can_promote(p))
+        {
+          //  3. promote to queen (for a pawn at the final file)
+          unselect_all_pieces(g, player_color);
+          get_piece_at(g, to).add_action(
+            piece_action(
+              player_color,
+              piece_type::queen,
+              piece_action_type::promote_to_queen,
+              to,
+              to
+            )
+          );
+          return;
+        }
+        else
+        {
+          //  1. select (when cursor is pointed to a square with a piece of own color)
+          unselect_all_pieces(g, player_color);
+          get_piece_at(g, to).set_selected(true);
+          return;
+        }
+      }
+
+      //  2. move (when a piece is selected and cursor points to empty square
+      if (!has_selected_pieces(g, player_side)) return;
+
+      // 'start_move_unit' will check for piece, color, etc.
+      start_move_unit(
+        g,
+        get_player_pos(g, action.get_player()),
+        get_player_color(g, action.get_player())
+      );
+      #else
       const auto player_side{get_mouse_user_player_side(g)};
       const chess_color player_color{get_player_color(g, player_side)};
       const square to{square(get_player_pos(g, player_side))};
@@ -559,6 +606,7 @@ void user_inputs::process(game& g)
         );
       }
       */
+      #endif
     }
     else if (action.get_control_action_type() == user_input_type::rmb_down)
     {
@@ -722,7 +770,7 @@ void test_control_actions()
   // 37: operator<< for one action
   {
     user_inputs actions;
-    actions.add(create_press_action_1(side::lhs, to_coordinat("d1")));
+    actions.add(create_press_action_1(to_coordinat("d1"), side::lhs));
     std::stringstream s;
     s << actions;
     assert(!s.str().empty());
