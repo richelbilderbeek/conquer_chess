@@ -223,7 +223,14 @@ void do_select_and_move_piece(
 
 void process_press_action_1(game& g, const user_input& action)
 {
-  assert(action.get_control_action_type() == user_input_type::press_action_1);
+  process_press_action_1_or_lmb_down(g, action);
+}
+
+void process_press_action_1_or_lmb_down(game& g, const user_input& action)
+{
+  assert(action.get_control_action_type() == user_input_type::press_action_1
+    || action.get_control_action_type() == user_input_type::lmb_down
+  );
   // press_action_1 can be
   //  1. select (when cursor is pointed to a square with a piece of own color)
   //  2. move (when a piece is selected and cursor points to empty square
@@ -232,46 +239,6 @@ void process_press_action_1(game& g, const user_input& action)
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
   const square to{square(get_player_pos(g, player_side))};
-  #ifdef CONTROL_SYSTEM_2
-  const auto maybe_action{get_default_piece_action(g, player_side)};
-  if (!maybe_action)
-  {
-    unselect_all_pieces(g, player_color);
-    return;
-  }
-  const auto piece_action_type{maybe_action.value()};
-  const auto selected_pieces{get_selected_pieces(g, player_side)};
-  if (selected_pieces.size() == 0)
-  {
-    assert(piece_action_type == piece_action_type::select);
-    const auto cursor_pos{action.get_coordinat()};
-    assert(is_piece_at(g, square(cursor_pos)));
-    piece& p{get_piece_at(g, square(cursor_pos))};
-    assert(player_color == get_player_color(g, player_side));
-    assert(player_color == p.get_color());
-    p.add_action(
-      piece_action(
-      player_color,
-      p.get_type(),
-      piece_action_type,
-      p.get_current_square(),
-      to
-      )
-    );
-    return;
-  }
-  const auto selected_piece_copy{selected_pieces[0]};
-  auto& selected_piece{get_piece_at(g, selected_piece_copy.get_current_square())};
-  selected_piece.add_action(
-    piece_action(
-      player_color,
-      selected_piece.get_type(),
-      piece_action_type,
-      selected_piece.get_current_square(),
-      to
-    )
-  );
-  #else
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
     const auto& p{get_piece_at(g, to)};
@@ -308,7 +275,6 @@ void process_press_action_1(game& g, const user_input& action)
     get_player_pos(g, action.get_player()),
     get_player_color(g, action.get_player())
   );
-  #endif
 }
 
 void process_press_action_2(game& g, const user_input& action)
@@ -507,106 +473,8 @@ void user_inputs::process(game& g)
     else if (action.get_control_action_type() == user_input_type::lmb_down)
     {
       if (!has_mouse_controller(g.get_options())) return;
-      #define USE_CONTROL_SYSTEM_FROM_ACTION_1
-      #ifdef USE_CONTROL_SYSTEM_FROM_ACTION_1
-      assert(action.get_control_action_type() == user_input_type::lmb_down);
-      // press_action_1 can be
-      //  1. select (when cursor is pointed to a square with a piece of own color)
-      //  2. move (when a piece is selected and cursor points to empty square
-      //  3. promote to queen (for a pawn at the final file)
+      process_press_action_1_or_lmb_down(g, action);
 
-      const side player_side{action.get_player()};
-      const chess_color player_color{get_player_color(g, player_side)};
-      const square to{square(get_player_pos(g, player_side))};
-      if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
-      {
-        const auto& p{get_piece_at(g, to)};
-        if (p.is_selected() && can_promote(p))
-        {
-          //  3. promote to queen (for a pawn at the final file)
-          unselect_all_pieces(g, player_color);
-          get_piece_at(g, to).add_action(
-            piece_action(
-              player_color,
-              piece_type::queen,
-              piece_action_type::promote_to_queen,
-              to,
-              to
-            )
-          );
-          return;
-        }
-        else
-        {
-          //  1. select (when cursor is pointed to a square with a piece of own color)
-          unselect_all_pieces(g, player_color);
-          get_piece_at(g, to).set_selected(true);
-          return;
-        }
-      }
-
-      //  2. move (when a piece is selected and cursor points to empty square
-      if (!has_selected_pieces(g, player_side)) return;
-
-      // 'start_move_unit' will check for piece, color, etc.
-      start_move_unit(
-        g,
-        get_player_pos(g, action.get_player()),
-        get_player_color(g, action.get_player())
-      );
-      #else
-      const auto player_side{get_mouse_user_player_side(g)};
-      const chess_color player_color{get_player_color(g, player_side)};
-      const square to{square(get_player_pos(g, player_side))};
-      const auto maybe_action{get_default_piece_action(g, player_side)};
-      if (!maybe_action)
-      {
-        unselect_all_pieces(g, player_color);
-        return;
-      }
-      const auto piece_action_type{maybe_action.value()};
-      const auto selected_pieces{get_selected_pieces(g, player_side)};
-      if (selected_pieces.size() == 0)
-      {
-        assert(piece_action_type == piece_action_type::select);
-        const auto cursor_pos{action.get_coordinat()};
-        assert(is_piece_at(g, square(cursor_pos)));
-        piece& p{get_piece_at(g, square(cursor_pos))};
-        assert(player_color == get_player_color(g, player_side));
-        assert(player_color == p.get_color());
-        p.add_action(
-          piece_action(
-          player_color,
-          p.get_type(),
-          piece_action_type,
-          p.get_current_square(),
-          to
-          )
-        );
-        return;
-      }
-      const auto selected_piece_copy{selected_pieces[0]};
-      auto& selected_piece{get_piece_at(g, selected_piece_copy.get_current_square())};
-      selected_piece.add_action(
-        piece_action(
-          player_color,
-          selected_piece.get_type(),
-          piece_action_type,
-          selected_piece.get_current_square(),
-          to
-        )
-      );
-      /*
-      if (has_mouse_controller(g.get_options()))
-      {
-        do_select(
-          g,
-          action.get_coordinat(),
-          get_player_color(g, action.get_player())
-        );
-      }
-      */
-      #endif
     }
     else if (action.get_control_action_type() == user_input_type::rmb_down)
     {

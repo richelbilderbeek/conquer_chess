@@ -103,6 +103,9 @@ void do_select_and_move_piece(
 /// Respond to action 1
 void process_press_action_1(game& g, const user_input& action);
 
+/// Respond to action 1 or LMB down
+void process_press_action_1_or_lmb_down(game& g, const user_input& action);
+
 /// Respond to action 2
 void process_press_action_2(game& g, const user_input& action);
 
