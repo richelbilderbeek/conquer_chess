@@ -259,6 +259,22 @@ const screen_rect& game_view_layout::get_controls_key(
   }
 }
 
+screen_rect game_view_layout::get_controls_key_input(const side player, const int key) const noexcept
+{
+  const auto full_rect{get_controls_key(player, key)};
+  // Get the bottom-left corner
+  const screen_coordinat top_left(
+    full_rect.get_tl().get_x(),
+    (full_rect.get_tl().get_y() + full_rect.get_br().get_y()) / 2
+  );
+  const screen_coordinat bottom_right(
+    (full_rect.get_tl().get_x() + full_rect.get_br().get_x()) / 2,
+    full_rect.get_br().get_y()
+  );
+  const screen_rect corner(top_left, bottom_right);
+  return corner;
+}
+
 const screen_rect& game_view_layout::get_debug(const side player) const noexcept
 {
   if (player == side::lhs) return m_debug_lhs;

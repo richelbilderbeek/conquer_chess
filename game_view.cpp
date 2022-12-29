@@ -350,10 +350,11 @@ void show_board(game_view& view)
 void show_controls(game_view& view, const side player)
 {
   const auto& layout = view.get_game().get_layout();
+  /*
   sf::Text text;
   text.setFont(view.get_resources().get_arial_font());
   text.setCharacterSize(16);
-
+  */
   const std::vector<sf::Color> colors{
     sf::Color(255,  0,  0),
     sf::Color(255,128,  0),
@@ -363,62 +364,84 @@ void show_controls(game_view& view, const side player)
 
   for (int key{1}; key<=4; ++key) // Human based counting
   {
-    // Rect
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, layout.get_controls_key(player, key));
-    rectangle.setFillColor(colors[key -1]);
-    rectangle.setOutlineThickness(1);
-    rectangle.setOutlineColor(sf::Color::White);
-    view.get_window().draw(rectangle);
+    // Background tile
+    sf::RectangleShape background;
+    set_rect(background, layout.get_controls_key(player, key));
+    background.setFillColor(colors[key - 1]);
+    background.setOutlineThickness(1);
+    background.setOutlineColor(sf::Color::White);
+    view.get_window().draw(background);
+
+    // Tile that is a sprite
     sf::RectangleShape sprite;
     set_rect(sprite, layout.get_controls_key(player, key));
     const auto maybe_action{
       get_default_piece_action(view.get_game(), player)
     };
-    if (!maybe_action) continue;
-    const piece_action_type action{maybe_action.value()};
-    if (key == 1)
+    if (maybe_action)
     {
-      sprite.setTexture(
-        &view.get_resources().get_textures().get_action_icon(action)
-      );
-    }
-    else
-    {
-      if (action == piece_action_type::promote_to_queen)
+      const piece_action_type action{maybe_action.value()};
+      if (key == 1)
       {
-        switch (key)
-        {
-          case 2:
-            sprite.setTexture(
-              &view.get_resources().get_textures().get_action_icon(
-                piece_action_type::promote_to_rook
-              )
-            );
-          break;
-          case 3:
-            sprite.setTexture(
-              &view.get_resources().get_textures().get_action_icon(
-                piece_action_type::promote_to_bishop
-              )
-            );
-          break;
-          case 4:
-            assert(key == 4);
-            sprite.setTexture(
-              &view.get_resources().get_textures().get_action_icon(
-                piece_action_type::promote_to_knight
-              )
-            );
-          break;
-        }
+        sprite.setTexture(
+          &view.get_resources().get_textures().get_action_icon(action)
+        );
       }
       else
       {
-        continue;
+        if (action == piece_action_type::promote_to_queen)
+        {
+          switch (key)
+          {
+            case 2:
+              sprite.setTexture(
+                &view.get_resources().get_textures().get_action_icon(
+                  piece_action_type::promote_to_rook
+                )
+              );
+            break;
+            case 3:
+              sprite.setTexture(
+                &view.get_resources().get_textures().get_action_icon(
+                  piece_action_type::promote_to_bishop
+                )
+              );
+            break;
+            case 4:
+              assert(key == 4);
+              sprite.setTexture(
+                &view.get_resources().get_textures().get_action_icon(
+                  piece_action_type::promote_to_knight
+                )
+              );
+            break;
+          }
+        }
       }
+      view.get_window().draw(sprite);
     }
-    view.get_window().draw(sprite);
+    // Rectangle as background for text
+    sf::RectangleShape text_background;
+    const screen_rect corner_rect{
+      layout.get_controls_key_input(player, key)
+    };
+    set_rect(text_background, corner_rect);
+    text_background.setFillColor(sf::Color::Black);
+    text_background.setOutlineThickness(1);
+    text_background.setOutlineColor(sf::Color::White);
+    view.get_window().draw(text_background);
+
+    // The text there
+    sf::Text text;
+    text.setFont(view.get_resources().get_code_squared_font());
+    text.setString("X");
+    text.setCharacterSize(get_height(corner_rect) * 2 / 3);
+    text.setPosition(
+      corner_rect.get_tl().get_x(),
+      corner_rect.get_tl().get_y()
+    );
+    view.get_window().draw(text);
+
   }
 }
 

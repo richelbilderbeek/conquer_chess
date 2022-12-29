@@ -51,7 +51,15 @@ public:
 
   const auto& get_board() const noexcept { return m_board; }
   const screen_rect& get_controls(const side player) const noexcept;
+
+  /// The square that shows:
+  ///   1. the action name, e.g. 'attack'
+  ///   2. the action icon, e.g. an arrow that points to a cross for attack
+  ///   3. the user input, e.g. 'Q' or LMB,
+  ///      use \link{get_controls_key_input} to get the screen_rect
+  ///      for this section
   const screen_rect& get_controls_key(const side player, const int key) const noexcept;
+  screen_rect get_controls_key_input(const side player, const int key) const noexcept;
   const screen_rect& get_debug(const side player) const noexcept;
   const screen_rect& get_log(const side player) const noexcept;
   const screen_rect& get_units(const side player) const noexcept;
