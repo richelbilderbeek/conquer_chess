@@ -23,10 +23,11 @@ public:
     const game_options& options = create_default_game_options()
   );
 
-  /// Add an action. These will be processed in 'tick'
-  void add_action(const user_input a);
+  /// Add a user input. These will be processed in 'tick'
+  void add_user_input(const user_input a);
 
   /// Do a chess move instantaneously
+  /// TODO: remove this when #64 is done
   void do_move(const chess_move& m);
 
   /// Get the game actions

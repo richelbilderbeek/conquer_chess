@@ -31,7 +31,7 @@ game::game(
 
 }
 
-void game::add_action(const user_input a)
+void game::add_user_input(const user_input a)
 {
   // These will be processed in 'tick'
   m_user_inputs.add(a);
@@ -1020,7 +1020,7 @@ game create_randomly_played_game(
     const user_input action{
       create_random_user_input(generator)
     };
-    g.add_action(action);
+    g.add_user_input(action);
     g.tick(delta_t(0.1));
   }
   return g;
@@ -1051,7 +1051,7 @@ void do_move_keyboard_player_piece(game& g, const square& s)
     == square(get_player_pos(g, get_keyboard_user_player_side(g)))
   );
 
-  g.add_action(
+  g.add_user_input(
     create_press_action_1(
       get_keyboard_user_player_side(g)
     )
@@ -1068,7 +1068,7 @@ void do_move_mouse_player_piece(game& g, const square& s)
   set_mouse_player_pos(g, s);
   assert(square(get_player_pos(g, get_mouse_user_player_side(g))) == s);
 
-  g.add_action(
+  g.add_user_input(
     create_press_lmb_action(
       get_mouse_user_player_side(g)
     )
@@ -1173,7 +1173,7 @@ void do_select_for_mouse_player(game& g, const square& s)
   assert(!get_piece_at(g, s).is_selected());
   set_mouse_player_pos(g, s);
   assert(square(get_player_pos(g, get_mouse_user_player_side(g))) == s);
-  g.add_action(
+  g.add_user_input(
     create_press_lmb_action(
       get_mouse_user_player_side(g)
     )
@@ -1202,23 +1202,23 @@ void do_promote_keyboard_player_piece(
   switch (promote_to)
   {
     case piece_type::bishop:
-      g.add_action(create_press_action_3(get_keyboard_user_player_side(g)));
+      g.add_user_input(create_press_action_3(get_keyboard_user_player_side(g)));
       break;
     case piece_type::knight:
-      g.add_action(create_press_action_4(get_keyboard_user_player_side(g)));
+      g.add_user_input(create_press_action_4(get_keyboard_user_player_side(g)));
       break;
     case piece_type::king:
     case piece_type::pawn:
     case piece_type::queen:
       assert(promote_to == piece_type::queen);
-      g.add_action(
+      g.add_user_input(
         create_press_action_1(
           get_keyboard_user_player_side(g)
         )
       );
       break;
     case piece_type::rook:
-      g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
+      g.add_user_input(create_press_action_2(get_keyboard_user_player_side(g)));
       break;
   }
   g.tick(delta_t(0.0));
@@ -1230,7 +1230,7 @@ void do_start_attack_keyboard_player_piece(game& g, const square& s)
   assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
   set_keyboard_player_pos(g, s);
   assert(square(get_player_pos(g, side::lhs)) == s);
-  g.add_action(create_press_action_2(get_keyboard_user_player_side(g)));
+  g.add_user_input(create_press_action_2(get_keyboard_user_player_side(g)));
   g.tick(delta_t(0.0));
   assert(count_user_inputs(g) == 0);
 }
@@ -1761,11 +1761,11 @@ void move_keyboard_cursor_to(
   const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
   for (int i{0}; i!=n_right; ++i)
   {
-    g.add_action(create_press_right_action(player_side));
+    g.add_user_input(create_press_right_action(player_side));
   }
   for (int i{0}; i!=n_down; ++i)
   {
-    g.add_action(create_press_down_action(player_side));
+    g.add_user_input(create_press_down_action(player_side));
   }
   // Process all actions
   g.tick(delta_t(0.0));
@@ -1816,7 +1816,7 @@ void set_mouse_player_pos(
 )
 {
   assert(has_mouse_controller(g.get_options()));
-  g.add_action(
+  g.add_user_input(
     create_mouse_move_action(
       to_coordinat(s),
       get_mouse_user_player_side(g)

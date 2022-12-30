@@ -198,13 +198,13 @@ void do_select_and_move_piece(
   move_cursor_to(g, to_square_str, player_side);
   if (get_controller_type(g, player_side) == controller_type::keyboard)
   {
-    g.add_action(
+    g.add_user_input(
       create_press_action_1(player_side)
     );
   }
   else
   {
-    g.add_action(
+    g.add_user_input(
       create_press_lmb_action(player_side)
     );
   }
