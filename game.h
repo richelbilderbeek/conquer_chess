@@ -26,10 +26,6 @@ public:
   /// Add a user input. These will be processed in 'tick'
   void add_user_input(const user_input a);
 
-  /// Do a chess move instantaneously
-  /// TODO: remove this when #64 is done
-  void do_move(const chess_move& m);
-
   /// Get the game actions
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
@@ -96,6 +92,9 @@ private:
 
   friend void test_game();
 };
+
+/// Add zero, one or more user_inputs
+void add_user_inputs(game& g, const std::vector<user_input>& inputs) noexcept;
 
 /// Can this piece castle kingside?
 bool can_castle_kingside(const piece& p, const game& g) noexcept;

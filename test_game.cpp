@@ -21,6 +21,13 @@ void test_game_class()
   ////////////////////////////////////////////////////////////////////////////
   // Member functions
   ////////////////////////////////////////////////////////////////////////////
+  // game::add_user_input
+  {
+    game g;
+    assert(is_empty(g.get_user_inputs()));
+    g.add_user_input(create_press_action_1(side::lhs));
+    assert(!is_empty(g.get_user_inputs()));
+  }
   // game::get_layout, const
   {
     const auto g{get_default_game()};
@@ -155,6 +162,13 @@ void test_game_class()
 void test_game_functions()
 {
 #ifndef NDEBUG // no tests in release
+  // add_user_inputs
+  {
+    game g;
+    assert(is_empty(g.get_user_inputs()));
+    add_user_inputs(g, { create_press_action_1(side::lhs) } );
+    assert(!is_empty(g.get_user_inputs()));
+  }
   // can_castle_kingside
   {
     const game g{

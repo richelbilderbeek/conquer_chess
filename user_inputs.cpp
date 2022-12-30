@@ -15,12 +15,12 @@ user_inputs::user_inputs()
 
 void user_inputs::add(const user_input& action)
 {
-  m_control_actions.push_back(action);
+  m_user_inputs.push_back(action);
 }
 
 int count_user_inputs(const user_inputs& a)
 {
-  return static_cast<int>(a.get_actions().size());
+  return static_cast<int>(a.get_user_inputs().size());
 }
 
 user_inputs create_control_actions(
@@ -244,6 +244,11 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
     inputs.push_back(create_press_down_action(player_side));
   }
   return inputs;
+}
+
+bool is_empty(const user_inputs& inputs) noexcept
+{
+  return inputs.get_user_inputs().empty();
 }
 
 void process_press_action_1(game& g, const user_input& action)
@@ -473,7 +478,7 @@ void process_press_action_4(game& g, const user_input& action)
 
 void user_inputs::process(game& g)
 {
-  for (const auto& action: m_control_actions)
+  for (const auto& action: m_user_inputs)
   {
     if (action.get_user_input_type() == user_input_type::press_action_1)
     {
@@ -543,7 +548,7 @@ void user_inputs::process(game& g)
       }
     }
   }
-  m_control_actions = std::vector<user_input>();
+  m_user_inputs = std::vector<user_input>();
 }
 
 void start_attack(
@@ -641,7 +646,7 @@ void test_user_inputs()
   // Empty on construction
   {
     const user_inputs c;
-    assert(c.get_actions().empty());
+    assert(c.get_user_inputs().empty());
   }
   // Move up does something
   {
@@ -708,7 +713,7 @@ void test_user_inputs()
       get_user_inputs_to_move_cursor_to(g, square("e2"), side::lhs)
     };
     assert(!inputs.empty());
-    for (const auto& i: inputs) g.add_user_input(i);
+    add_user_inputs(g, inputs);
     g.tick(delta_t(0.0));
     assert(square(g.get_player_pos(side::lhs)) == square("e2"));
   }
@@ -717,8 +722,8 @@ void test_user_inputs()
     game g;
     move_cursor_to(g, "e2", side::lhs);
     assert(!get_piece_at(g, "e2").is_selected());
-    const user_input i{get_user_input_to_select(g, side::lhs)};
-    g.add_user_input(i);
+    const user_input input{get_user_input_to_select(g, side::lhs)};
+    g.add_user_input(input);
     g.tick(delta_t(0.0));
     assert(get_piece_at(g, "e2").is_selected());
   }
@@ -750,17 +755,17 @@ user_inputs to_user_inputs(const piece_action& pa, const game& g)
 
 bool operator==(const user_inputs& lhs, const user_inputs& rhs) noexcept
 {
-  return lhs.get_actions() == rhs.get_actions();
+  return lhs.get_user_inputs() == rhs.get_user_inputs();
 }
 
 std::ostream& operator<<(std::ostream& os, const user_inputs& actions) noexcept
 {
-  const int n = actions.get_actions().size();
+  const int n = actions.get_user_inputs().size();
   if (n == 0) return os;
   std::stringstream s;
   for (int i{0}; i!=n; ++i)
   {
-    s << i << ": " << actions.get_actions()[i] << ", ";
+    s << i << ": " << actions.get_user_inputs()[i] << ", ";
   }
   std::string u{s.str()};
   assert(!u.empty());

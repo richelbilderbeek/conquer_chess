@@ -37,6 +37,14 @@ void game::add_user_input(const user_input a)
   m_user_inputs.add(a);
 }
 
+void add_user_inputs(game& g, const std::vector<user_input>& inputs) noexcept
+{
+  for (const auto& input: inputs)
+  {
+    g.add_user_input(input);
+  }
+}
+
 bool can_castle_kingside(const piece& p, const game& g) noexcept
 {
   if (p.get_type() != piece_type::king) return false;
@@ -1068,21 +1076,6 @@ game create_randomly_played_game(
   return g;
 }
 
-void game::do_move(const chess_move& m)
-{
-  if (is_simple_move(m))
-  {
-    piece& piece{get_piece_that_moves(*this, m)};
-    assert(!m.get_to().empty());
-    piece.set_current_square(m.get_to()[0]);
-  }
-  else
-  {
-    // Do castling, etc.
-    assert(!"TODO");
-  }
-}
-
 void do_move_keyboard_player_piece(game& g, const square& s)
 {
   assert(has_keyboard_controller(g.get_options()));
@@ -1801,24 +1794,7 @@ void move_keyboard_cursor_to(
   const auto inputs{
     get_user_inputs_to_move_cursor_to(g, s, player_side)
   };
-  for (const auto& i: inputs)
-  {
-    g.add_user_input(i);
-  }
-  /*
-  const auto current_pos{get_player_pos(g, player_side)};
-  const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
-  const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
-  for (int i{0}; i!=n_right; ++i)
-  {
-    g.add_user_input(create_press_right_action(player_side));
-  }
-  for (int i{0}; i!=n_down; ++i)
-  {
-    g.add_user_input(create_press_down_action(player_side));
-  }
-  */
-  // Process all actions
+  add_user_inputs(g, inputs);
   g.tick(delta_t(0.0));
   assert(count_user_inputs(g) == 0);
 }

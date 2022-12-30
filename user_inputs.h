@@ -28,14 +28,14 @@ public:
   /// Add a new user actions
   void add(const user_input& action);
 
-  const auto& get_actions() const noexcept { return m_control_actions; }
+  const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
   /// Process all actions and apply these on the game
   void process(game& g);
 
 private:
 
-  std::vector<user_input> m_control_actions;
+  std::vector<user_input> m_user_inputs;
 };
 
 /// Count the total number of control actions to be done by the game,
@@ -112,6 +112,8 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
   const square& to,
   const side player_side
 );
+
+bool is_empty(const user_inputs& inputs) noexcept;
 
 /// Respond to action 1
 void process_press_action_1(game& g, const user_input& action);
