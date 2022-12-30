@@ -300,6 +300,21 @@ square get_default_king_square(const chess_color player_color) noexcept
   return square("e8");
 }
 
+square get_default_rook_square(
+  const chess_color player_color,
+  const castling_type t
+) noexcept
+{
+  const std::string first_char{
+    t == castling_type::queen_side ?
+    "a" : "h"
+  };
+  const std::string second_char{
+    player_color == chess_color::white ?
+    "1" : "8"
+  };
+  return square(first_char + second_char);
+}
 
 
 char get_file(const square& s) noexcept
@@ -484,6 +499,13 @@ void test_square()
   {
     assert(get_default_king_square(chess_color::white) == square("e1"));
     assert(get_default_king_square(chess_color::black) == square("e8"));
+  }
+  // get_default_rook_square
+  {
+    assert(get_default_rook_square(chess_color::white, castling_type::king_side) == square("h1"));
+    assert(get_default_rook_square(chess_color::white, castling_type::queen_side) == square("a1"));
+    assert(get_default_rook_square(chess_color::black, castling_type::king_side) == square("h8"));
+    assert(get_default_rook_square(chess_color::black, castling_type::queen_side) == square("a8"));
   }
   // get_file
   {

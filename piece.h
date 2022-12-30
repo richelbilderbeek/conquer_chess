@@ -248,6 +248,20 @@ void tick_attack(
   game& g
 );
 
+/// Process a tick, when the current action is a castling to kingside
+void tick_castle_kingside(
+  piece& p,
+  const delta_t& dt,
+  game& g
+);
+
+/// Process a tick, when the current action is a castling to queenside
+void tick_castle_queenside(
+  piece& p,
+  const delta_t& dt,
+  game& g
+);
+
 /// Process a tick, when the current action is a move
 void tick_move(
   piece& p,

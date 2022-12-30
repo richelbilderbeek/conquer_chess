@@ -7,6 +7,7 @@
 #include <vector>
 #include "ccfwd.h"
 #include "chess_color.h"
+#include "castling_type.h"
 
 /// A chess square, e.g. e4
 class square
@@ -114,8 +115,23 @@ square get_behind(
   const chess_color color
 );
 
-/// Get the default king square, i.e. e1 for white and e8 for black
+/// Get the default king square.
+/// These are:
+///  * e1 for white
+///  * e8 for black
 square get_default_king_square(const chess_color player_color) noexcept;
+
+/// Get the default rook square,
+/// for a castling direction.
+/// These are:
+///  * h1 for white for a kingside castle
+///  * a1 for white for a queenside castle
+///  * h8 for black for a kingside castle
+///  * a8 for black for a queenside castle
+square get_default_rook_square(
+  const chess_color player_color,
+  const castling_type t
+) noexcept;
 
 /// Get the file of a square, e.g. 'd' from 'd4'
 char get_file(const square& s) noexcept;

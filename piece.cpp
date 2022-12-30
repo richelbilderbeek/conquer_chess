@@ -93,6 +93,14 @@ void piece::add_action(const piece_action& action)
       this->add_message(message_type::start_attack);
     }
   }
+  else if (action.get_action_type() == piece_action_type::castle_kingside)
+  {
+    this->add_message(message_type::start_castling_kingside);
+  }
+  else if (action.get_action_type() == piece_action_type::castle_queenside)
+  {
+    this->add_message(message_type::start_castling_queenside);
+  }
   else
   {
     assert(
@@ -989,6 +997,20 @@ void piece::tick(
       m_is_selected = true;
       remove_first(m_actions);
       return;
+    case piece_action_type::castle_kingside:
+      m_is_selected = false; //
+      #ifdef FIX_ISSUE_3
+      return tick_castle_kingside(*this, dt, g);
+      #else
+      return;
+      #endif // FIX_ISSUE_3
+    case piece_action_type::castle_queenside:
+      m_is_selected = false; //
+      #ifdef FIX_ISSUE_3
+      return tick_castle_queenside(*this, dt, g);
+      #else
+      return;
+      #endif // FIX_ISSUE_3
     case piece_action_type::promote_to_knight:
     case piece_action_type::promote_to_bishop:
     case piece_action_type::promote_to_rook:

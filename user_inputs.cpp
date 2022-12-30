@@ -318,7 +318,7 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
     && get_piece_at(g, cursor).is_selected()
     && can_promote(get_piece_at(g, cursor))
   };
-  //#define FIX_ISSUE_3
+  #define FIX_ISSUE_3
   #ifdef FIX_ISSUE_3
   const square king_square{get_default_king_square(player_color)};
   const bool is_castle_kingside{
@@ -337,6 +337,15 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
         piece_type::king,
         piece_action_type::castle_kingside,
         get_default_king_square(player_color),
+        cursor
+      )
+    );
+    get_piece_at(g, get_default_rook_square(player_color, castling_type::king_side)).add_action(
+      piece_action(
+        player_color,
+        piece_type::rook,
+        piece_action_type::castle_kingside,
+        get_default_rook_square(player_color, castling_type::king_side),
         cursor
       )
     );

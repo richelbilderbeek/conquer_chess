@@ -1206,8 +1206,9 @@ void test_game_keyboard_use()
     g.tick(delta_t(0.0));
     assert(count_selected_units(g, chess_color::white) == 0);
     assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
+    #define FIX_ISSUE_3
     #ifdef FIX_ISSUE_3
-    assert(collect_messages(g).at(1).get_message_type() == message_type::start_castle_kingside);
+    assert(collect_messages(g).at(1).get_message_type() == message_type::start_castling_kingside);
     #endif // FIX_ISSUE_3
   }
   // 47: set_keyboard_player_pos for RHS player
