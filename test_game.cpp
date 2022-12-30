@@ -876,13 +876,27 @@ void test_game_functions()
   }
   #define FIX_ISSUE_64
   #ifdef FIX_ISSUE_64
+  // To do e2-e4, from e1, it takes 5 key presses
   {
     game g;
+    move_cursor_to(g, "e1", side::lhs);
     const chess_move m("e4", chess_color::white);
     const std::vector<user_input> user_inputs{
       convert_move_to_user_inputs(g, m)
     };
     assert(!user_inputs.empty());
+    assert(user_inputs.size() == 5);
+    assert(user_inputs[0].get_user_input_type() == user_input_type::press_right);
+    assert(user_inputs[1].get_user_input_type() == user_input_type::press_action_1);
+    assert(user_inputs[2].get_user_input_type() == user_input_type::press_right);
+    assert(user_inputs[3].get_user_input_type() == user_input_type::press_right);
+    assert(user_inputs[4].get_user_input_type() == user_input_type::press_action_1);
+    add_user_inputs(g, user_inputs);
+    #ifdef FIX_ISSUE_64_NO_ACTION
+    assert(is_piece_at(g, "e2"));
+    g.tick();
+    assert(!is_piece_at(g, "e2"));
+    #endif // FIX_ISSUE_64_NO_ACTION
   }
   #endif // FIX_ISSUE_64
   // count_user_inputs
