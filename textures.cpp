@@ -38,10 +38,6 @@ textures::textures()
     std::make_pair(std::ref(m_action_castle_queenside), "icon_castle_queenside.png"),
     std::make_pair(std::ref(m_action_en_passant), "icon_attack.png"),
     std::make_pair(std::ref(m_action_move), "icon_move.png"),
-    std::make_pair(std::ref(m_action_promote_to_bishop), "icon_promote_to_bishop.png"),
-    std::make_pair(std::ref(m_action_promote_to_knight), "icon_promote_to_knight.png"),
-    std::make_pair(std::ref(m_action_promote_to_queen), "icon_promote_to_queen.png"),
-    std::make_pair(std::ref(m_action_promote_to_rook), "icon_promote_to_rook.png"),
     std::make_pair(std::ref(m_action_select), "icon_select.png"),
     std::make_pair(std::ref(m_action_unselect), "icon_unselect.png"),
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
@@ -83,6 +79,7 @@ textures::textures()
 }
 
 sf::Texture& textures::get_action_icon(
+  const chess_color color,
   const piece_action_type t
 ) noexcept
 {
@@ -99,13 +96,13 @@ sf::Texture& textures::get_action_icon(
     case piece_action_type::move:
       return m_action_move;
     case piece_action_type::promote_to_bishop:
-      return m_action_promote_to_bishop;
+      return get_piece(color, piece_type::bishop);
     case piece_action_type::promote_to_knight:
-      return m_action_promote_to_knight;
+      return get_piece(color, piece_type::knight);
     case piece_action_type::promote_to_queen:
-      return m_action_promote_to_queen;
+      return get_piece(color, piece_type::queen);
     case piece_action_type::promote_to_rook:
-      return m_action_promote_to_rook;
+      return get_piece(color, piece_type::rook);
     case piece_action_type::select:
       return m_action_select;
     case piece_action_type::unselect:

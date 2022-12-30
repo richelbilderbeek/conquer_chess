@@ -350,11 +350,7 @@ void show_board(game_view& view)
 void show_controls(game_view& view, const side player)
 {
   const auto& layout = view.get_game().get_layout();
-  /*
-  sf::Text text;
-  text.setFont(view.get_resources().get_arial_font());
-  text.setCharacterSize(16);
-  */
+  const auto player_color{get_player_color(view, player)};
   const std::vector<sf::Color> colors{
     sf::Color(255,  0,  0),
     sf::Color(255,128,  0),
@@ -384,7 +380,7 @@ void show_controls(game_view& view, const side player)
       if (key == 1)
       {
         sprite.setTexture(
-          &view.get_resources().get_textures().get_action_icon(action)
+          &view.get_resources().get_textures().get_action_icon(player_color, action)
         );
       }
       else
@@ -396,14 +392,14 @@ void show_controls(game_view& view, const side player)
             case 2:
               sprite.setTexture(
                 &view.get_resources().get_textures().get_action_icon(
-                  piece_action_type::promote_to_rook
+                  player_color, piece_action_type::promote_to_rook
                 )
               );
             break;
             case 3:
               sprite.setTexture(
                 &view.get_resources().get_textures().get_action_icon(
-                  piece_action_type::promote_to_bishop
+                  player_color, piece_action_type::promote_to_bishop
                 )
               );
             break;
@@ -411,7 +407,7 @@ void show_controls(game_view& view, const side player)
               assert(key == 4);
               sprite.setTexture(
                 &view.get_resources().get_textures().get_action_icon(
-                  piece_action_type::promote_to_knight
+                  player_color, piece_action_type::promote_to_knight
                 )
               );
             break;

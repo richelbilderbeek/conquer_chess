@@ -23,6 +23,7 @@ public:
 
   /// Get the icon for an action
   sf::Texture& get_action_icon(
+    const chess_color color,
     const piece_action_type t
   ) noexcept;
 
@@ -81,10 +82,6 @@ private:
   sf::Texture m_action_castle_queenside;
   sf::Texture m_action_en_passant;
   sf::Texture m_action_move;
-  sf::Texture m_action_promote_to_bishop;
-  sf::Texture m_action_promote_to_knight;
-  sf::Texture m_action_promote_to_queen;
-  sf::Texture m_action_promote_to_rook;
   sf::Texture m_action_select;
   sf::Texture m_action_unselect;
 
