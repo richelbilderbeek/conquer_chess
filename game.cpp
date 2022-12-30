@@ -965,6 +965,48 @@ std::vector<piece_action> collect_all_rook_actions(
   return actions;
 }
 
+std::vector<user_input> convert_move_to_user_inputs(
+  const game& g,
+  const chess_move& m
+)
+{
+  const auto player_side{get_player_side(g, m.get_color())};
+  const square from{get_from(g, m)};
+
+  std::vector<user_input> inputs;
+  // Move the cursor to target square
+  {
+    const auto v{get_user_inputs_to_move_cursor_to(g, from, player_side)};
+    std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
+  }
+  // Select the piece
+  {
+    const auto i{get_user_input_to_select(g, player_side)};
+    inputs.push_back(i);
+  }
+  #ifdef FIX_ISSUE_64
+  // Do something with the piece
+  if (is_castling(m)) {
+    if (m.get_castling_type()[0] == castling_type::king_side)
+    {
+      const auto v{get_user_inputs_to_castle_kingside(g, from)};
+      std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
+    }
+    else
+    {
+      assert(m.get_castling_type()[0] == castling_type::queen_side);
+      const auto v{get_user_inputs_to_castle_queenside(g, from)};
+      std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
+    }
+  }
+  else
+  {
+    // TODO
+  }
+  #endif
+  return inputs;
+}
+
 int count_user_inputs(const game& g)
 {
   return count_user_inputs(g.get_user_inputs());
@@ -1756,6 +1798,14 @@ void move_keyboard_cursor_to(
     g.get_options().get_controller(player_side).get_type()
     == controller_type::keyboard
   );
+  const auto inputs{
+    get_user_inputs_to_move_cursor_to(g, s, player_side)
+  };
+  for (const auto& i: inputs)
+  {
+    g.add_user_input(i);
+  }
+  /*
   const auto current_pos{get_player_pos(g, player_side)};
   const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
   const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
@@ -1767,6 +1817,7 @@ void move_keyboard_cursor_to(
   {
     g.add_user_input(create_press_down_action(player_side));
   }
+  */
   // Process all actions
   g.tick(delta_t(0.0));
   assert(count_user_inputs(g) == 0);

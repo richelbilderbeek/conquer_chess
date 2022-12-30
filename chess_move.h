@@ -33,16 +33,18 @@ public:
 
   /// Get the target square, e.g. 'e4' in 'Pxe4'.
   /// Result will be empty when castling (e.g. 'O-O') or winning (e.g. '1-0')
+  /// @see use the free function \link{get_from} to determine the
+  /// square where the pieces comes from
   const auto& get_to() const noexcept { return m_to; }
 
-  /// The type of chess piece
+  /// The type of chess piece.
   /// Result will be empty when castling (e.g. 'O-O') or winning (e.g. '1-0')
   const auto& get_type() const noexcept { return m_type; }
 
-  /// Get the winner
-  /// If this is empty, the game is still on-going
-  /// If this has 1 element, that color is the winner
-  /// If this has 2 elements, the game ended in a draw
+  /// Get the winner.
+  /// If this is empty, the game is still on-going.
+  /// If this has 1 element, that color is the winner.
+  /// If this has 2 elements, the game ended in a draw.
   const auto& get_winner() const noexcept { return m_winner; }
 
   /// Is this move a capture?
@@ -71,6 +73,11 @@ private:
   std::vector<chess_color> m_winner;
 
 };
+
+/// Get the square the piece doing the move came from.
+/// Even with, e.g., castling, it is the king at e1 that
+/// needed to be selected to do that move
+square get_from(const game& g, const chess_move& m);
 
 /// Get the square from a string
 /// E.g. 'Nc3' will result in 'c3'

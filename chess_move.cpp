@@ -1,8 +1,10 @@
 #include "chess_move.h"
+#include "game.h"
 
 #include <cassert>
 #include <iostream>
 #include <regex>
+
 
 chess_move::chess_move(std::string s, const chess_color color)
   : m_color{color},
@@ -41,6 +43,30 @@ bool is_capture(const std::string& s)
   const std::regex e("x");
   std::smatch m;
   return std::regex_search(s, m, e);
+}
+
+square get_from(const game& g, const chess_move& m)
+{
+
+  if (is_simple_move(m))
+  {
+    if (m.get_type()[0] == piece_type::pawn)
+    {
+      const square one_behind{get_behind(m.get_to()[0], m.get_color())};
+      if (is_piece_at(g, one_behind))
+      {
+        assert(get_piece_at(g, one_behind).get_type() == piece_type::pawn);
+        return one_behind;
+      }
+      const square two_behind{get_behind(one_behind, m.get_color())};
+      if (is_piece_at(g, two_behind))
+      {
+        assert(get_piece_at(g, two_behind).get_type() == piece_type::pawn);
+        return two_behind;
+      }
+    }
+  }
+  assert(!"TODO");
 }
 
 piece_type get_piece_type(const std::string& s)
@@ -135,6 +161,12 @@ void test_chess_move()
     assert(pgn_str == m.get_pgn_str());
   }
   // Individual functions
+  // get_from: e2-e3
+  {
+    const game g;
+    const chess_move m("e3", chess_color::white);
+    assert(get_from(g, m) == square("e2"));
+  }
   // get_winner
   {
     assert(get_winner("0-1").at(0) == chess_color::black);

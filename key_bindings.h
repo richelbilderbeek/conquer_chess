@@ -24,8 +24,8 @@ public:
     const sf::Keyboard::Key action_4
   );
 
-  /// From an event, create zero or one action_types
-  /// Return the 'control_action_type' corresponding to an event
+  /// From an event, create zero or one user inputs.
+  /// Return the 'user_input_type' corresponding to an event
   std::vector<user_input_type> create_actions(
     const sf::Keyboard::Key k
   ) const noexcept;

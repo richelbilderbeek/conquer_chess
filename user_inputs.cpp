@@ -196,23 +196,54 @@ void do_select_and_move_piece(
 {
   do_select(g, from_square_str, player_side);
   move_cursor_to(g, to_square_str, player_side);
-  if (get_controller_type(g, player_side) == controller_type::keyboard)
-  {
-    g.add_user_input(
-      create_press_action_1(player_side)
-    );
-  }
-  else
-  {
-    g.add_user_input(
-      create_press_lmb_action(player_side)
-    );
-  }
+  g.add_user_input(
+    get_user_input_to_select(g, player_side)
+  );
   g.tick(delta_t(0.0));
   for (int i{0}; i!=2; ++i)
   {
     g.tick(delta_t(0.5));
   }
+}
+
+user_input get_user_input_to_select(
+  const game& g,
+  const side player_side
+)
+{
+  if (get_controller_type(g, player_side) == controller_type::keyboard)
+  {
+    return create_press_action_1(player_side);
+  }
+  else
+  {
+    return create_press_lmb_action(player_side);
+  }
+}
+
+std::vector<user_input> get_user_inputs_to_move_cursor_to(
+  const game& g,
+  const square& s,
+  const side player_side
+)
+{
+  assert(
+    g.get_options().get_controller(player_side).get_type()
+    == controller_type::keyboard
+  );
+  const auto current_pos{get_player_pos(g, player_side)};
+  const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
+  const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
+  std::vector<user_input> inputs;
+  for (int i{0}; i!=n_right; ++i)
+  {
+    inputs.push_back(create_press_right_action(player_side));
+  }
+  for (int i{0}; i!=n_down; ++i)
+  {
+    inputs.push_back(create_press_down_action(player_side));
+  }
+  return inputs;
 }
 
 void process_press_action_1(game& g, const user_input& action)
@@ -604,7 +635,7 @@ void start_move_unit(
   unselect_all_pieces(g, player_color);
 }
 
-void test_control_actions()
+void test_user_inputs()
 {
 #ifndef NDEBUG
   // Empty on construction
@@ -667,6 +698,31 @@ void test_control_actions()
     s << actions;
     assert(!s.str().empty());
   }
+  #define FIX_ISSUE_64
+  #ifdef FIX_ISSUE_64
+  // 64: move white's cursor to e2
+  {
+    game g;
+    assert(square(g.get_player_pos(side::lhs)) != square("e2"));
+    const auto inputs{
+      get_user_inputs_to_move_cursor_to(g, square("e2"), side::lhs)
+    };
+    assert(!inputs.empty());
+    for (const auto& i: inputs) g.add_user_input(i);
+    g.tick(delta_t(0.0));
+    assert(square(g.get_player_pos(side::lhs)) == square("e2"));
+  }
+  // 64: move white's cursor to e2 and select the pawn
+  {
+    game g;
+    move_cursor_to(g, "e2", side::lhs);
+    assert(!get_piece_at(g, "e2").is_selected());
+    const user_input i{get_user_input_to_select(g, side::lhs)};
+    g.add_user_input(i);
+    g.tick(delta_t(0.0));
+    assert(get_piece_at(g, "e2").is_selected());
+  }
+  #endif
 #endif // NDEBUG
 }
 

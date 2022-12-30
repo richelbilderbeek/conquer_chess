@@ -284,6 +284,15 @@ square create_random_square(
   return square(x, y);
 }
 
+square get_behind(
+  const square& pawn_square,
+  const chess_color color
+)
+{
+  const int dx{color == chess_color::white ? -1 : 1};
+  return square(pawn_square.get_x() + dx, pawn_square.get_y());
+}
+
 square get_default_king_square(const chess_color player_color) noexcept
 {
   if (player_color == chess_color::white) return square("e1");
@@ -465,6 +474,11 @@ void test_square()
     {
       create_random_square(rng_engine);
     }
+  }
+  // get_behind
+  {
+    assert(get_behind(square("e4"), chess_color::white) == square("e3"));
+    assert(get_behind(square("e5"), chess_color::black) == square("e6"));
   }
   // get_default_king_square
   {

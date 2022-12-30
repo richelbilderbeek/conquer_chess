@@ -185,16 +185,16 @@ void clear_piece_messages(game& g) noexcept;
 /// i.e. the moves played in time
 action_history collect_action_history(const game& g);
 
-/// Collect all valid 'control_actions' for all players.
-/// Each 'control_actions' equals one 'piece_action'
+/// Collect all valid 'user_input' for all players.
+/// Each 'user_inputs' equals one 'piece_action'
 /// @see use 'collect_all_piece_actions'
 /// to get all the 'piece_action's from a game
-std::vector<user_inputs> collect_all_control_actionses(const game& g);
+std::vector<user_inputs> collect_all_user_actionses(const game& g);
 
 /// Collect all valid moves and attackes at a board
 /// for all pieces
-/// @see use 'collect_all_control_actions'
-/// to get all the 'control_action's from a game
+/// @see use 'collect_all_user_inputs'
+/// to get all the 'user_input's from a game
 std::vector<piece_action> collect_all_piece_actions(const game& g);
 
 /// Collect all valid moves and attackes at a board
@@ -276,6 +276,13 @@ std::vector<piece_action> collect_all_rook_actions(
 
 /// Get all the sound effects to be processed
 std::vector<message> collect_messages(const game& g) noexcept;
+
+/// Convert a chess move, e.g. e4,
+/// to the right user inputs
+std::vector<user_input> convert_move_to_user_inputs(
+  const game& g,
+  const chess_move& move
+);
 
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick

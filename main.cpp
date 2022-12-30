@@ -46,9 +46,9 @@ void test()
   test_board_to_text_options();
   test_chess_color();
   test_chess_move();
-  test_control_action();
+  test_user_input();
   test_control_action_type();
-  test_control_actions();
+  test_user_inputs();
   test_controller();
   test_controller_type();
   test_controllers();

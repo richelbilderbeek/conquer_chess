@@ -105,6 +105,15 @@ square create_random_square(
   std::default_random_engine& rng_engine
 );
 
+/// Get the square behind a pawn.
+/// Examples:
+///  * for white, behind e4 would be e3.
+///  * for black, behind e5 would be e6.
+square get_behind(
+  const square& pawn_square,
+  const chess_color color
+);
+
 /// Get the default king square, i.e. e1 for white and e8 for black
 square get_default_king_square(const chess_color player_color) noexcept;
 

@@ -29,7 +29,7 @@ user_input_type create_random_user_input_type(
 bool does_input_type_need_coordinat(const user_input_type t) noexcept;
 
 /// Get all the control_action_types
-std::vector<user_input_type> get_all_control_action_types() noexcept;
+std::vector<user_input_type> get_all_user_input_types() noexcept;
 
 /// Test this enum class and its fee functions
 void test_control_action_type();

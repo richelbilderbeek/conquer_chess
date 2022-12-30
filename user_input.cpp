@@ -105,7 +105,7 @@ user_input create_random_user_input(
   );
 }
 
-void test_control_action()
+void test_user_input()
 {
 #ifndef NDEBUG
   {

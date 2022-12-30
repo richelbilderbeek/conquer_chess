@@ -846,21 +846,32 @@ void test_game_functions()
     // default start
     {
       const game g;
-      const auto control_actions{collect_all_control_actionses(g)};
-      assert(!control_actions.empty());
+      const auto user_inputs{collect_all_user_inputses(g)};
+      assert(!user_inputs.empty());
       const auto piece_actions{collect_all_piece_actions(g)};
-      assert(control_actions.size() == piece_actions.size());
+      assert(user_inputs.size() == piece_actions.size());
     }
     // default start
     {
       const game g;
-      const auto control_actions{collect_all_control_actionses(g)};
-      const auto e2e4{create_control_actions("e2e4", chess_color::white, g)};
-      assert(is_present_in(e2e4, control_actions));
+      const auto user_inputs{collect_all_user_inputses(g)};
+      const auto e2e4{create_user_inputs("e2e4", chess_color::white, g)};
+      assert(is_present_in(e2e4, user_inputs));
     }
     #endif // FIX_ISSUE_34
   }
-  // count_control_actions
+  #define FIX_ISSUE_64
+  #ifdef FIX_ISSUE_64
+  {
+    game g;
+    const chess_move m("e4", chess_color::white);
+    const std::vector<user_input> user_inputs{
+      convert_move_to_user_inputs(g, m)
+    };
+    assert(!user_inputs.empty());
+  }
+  #endif // FIX_ISSUE_64
+  // count_user_inputs
   {
     const auto g{get_kings_only_game()};
     // No game actions at start

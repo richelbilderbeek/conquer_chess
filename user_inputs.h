@@ -100,6 +100,19 @@ void do_select_and_move_piece(
   const side player_side
 );
 
+/// Create the user inputs to select the square at the cursor
+user_input get_user_input_to_select(
+  const game& g,
+  const side player_side
+);
+
+/// Create the user inputs to move the cursor to a target square
+std::vector<user_input> get_user_inputs_to_move_cursor_to(
+  const game& g,
+  const square& to,
+  const side player_side
+);
+
 /// Respond to action 1
 void process_press_action_1(game& g, const user_input& action);
 
@@ -130,7 +143,7 @@ void start_move_unit(
 );
 
 /// Test this class and its free functions
-void test_control_actions();
+void test_user_inputs();
 
 /// Convert a 'piece_action' to a 'control_actions'
 user_inputs to_user_inputs(const piece_action& pa, const game& g);

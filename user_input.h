@@ -88,7 +88,7 @@ user_input create_random_user_input(
 );
 
 /// Test the 'control_action' class and its free functions
-void test_control_action();
+void test_user_input();
 
 bool operator==(const user_input& lhs, const user_input& rhs) noexcept;
 std::ostream& operator<<(std::ostream& os, const user_input& a) noexcept;

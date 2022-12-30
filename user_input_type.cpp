@@ -6,7 +6,7 @@ user_input_type create_random_user_input_type(
   std::default_random_engine& rng_engine
 )
 {
-  const auto control_types{get_all_control_action_types()};
+  const auto control_types{get_all_user_input_types()};
   assert(!control_types.empty());
   std::uniform_int_distribution<int> distribution{
     0,
@@ -23,7 +23,7 @@ bool does_input_type_need_coordinat(const user_input_type t) noexcept
   return t == user_input_type::mouse_move;
 }
 
-std::vector<user_input_type> get_all_control_action_types() noexcept
+std::vector<user_input_type> get_all_user_input_types() noexcept
 {
   const auto a{magic_enum::enum_values<user_input_type>()};
   std::vector<user_input_type> v;
@@ -61,7 +61,7 @@ void test_control_action_type()
   }
   // get_all_control_action_types
   {
-    const auto v{get_all_control_action_types()};
+    const auto v{get_all_user_input_types()};
     assert(!v.empty());
   }
 #endif
