@@ -185,9 +185,19 @@ void test_piece_action()
       assert(a == b);
       assert(!(a == c));
     }
-    // to_str
+    // 63: to_str
     {
-      assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"))).empty());
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::king,
+            piece_action_type::attack,
+            square("a1"),
+            square("a3")
+          )
+        ).empty()
+      );
       assert(
         !to_str(
           piece_action(
