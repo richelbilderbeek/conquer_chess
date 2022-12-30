@@ -39,7 +39,7 @@ jobs:
         run: make debug --silent
 
       - name: run
-        run: ./game --test
+        run: ./conquer_chess --test
 
       - name: Measure codecov 1
         run: ./scripts/get_code_cov.sh
