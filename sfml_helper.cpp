@@ -320,8 +320,7 @@ void test_sfml_helper()
     assert(bm != wm);
     assert(wa != wm);
   }
-  #ifdef FIX_ISSUE_62
-  // to_one_char_str
+  // 62: to_one_char_str
   {
     assert(to_one_char_str(sf::Keyboard::A) == "A");
     assert(to_one_char_str(sf::Keyboard::Num0) == "0");
@@ -360,21 +359,57 @@ void test_sfml_helper()
     assert(to_one_char_str(sf::Keyboard::Numpad8) == "8");
     assert(to_one_char_str(sf::Keyboard::Numpad9) == "9");
   }
-  #endif // FIX_ISSUE_62
 #endif
 }
 
 std::string to_one_char_str(const sf::Keyboard::Key k)
 {
-  if (k == sf::Keyboard::Comma) return ",";
-  std::string s{to_str(k)};
-  if (s.length() == 1)
+  switch (k)
   {
-    std::clog << "s: " << s << '\n';
-    return s;
+    case sf::Keyboard::Num0: return "0";
+    case sf::Keyboard::Num1: return "1";
+    case sf::Keyboard::Num2: return "2";
+    case sf::Keyboard::Num3: return "3";
+    case sf::Keyboard::Num4: return "4";
+    case sf::Keyboard::Num5: return "5";
+    case sf::Keyboard::Num6: return "6";
+    case sf::Keyboard::Num7: return "7";
+    case sf::Keyboard::Num8: return "8";
+    case sf::Keyboard::Num9: return "9";
+    case sf::Keyboard::LBracket: return "[";
+    case sf::Keyboard::RBracket: return "]";
+    case sf::Keyboard::Semicolon: return ";";
+    case sf::Keyboard::Comma: return ",";
+    case sf::Keyboard::Period: return "'";
+    case sf::Keyboard::Quote: return "\"";
+    case sf::Keyboard::Slash: return "/";
+    case sf::Keyboard::Backslash: return "\\";
+    case sf::Keyboard::Tilde: return "~";
+    case sf::Keyboard::Equal: return "=";
+    case sf::Keyboard::Hyphen: return "-";
+    case sf::Keyboard::Add: return "+";
+    case sf::Keyboard::Subtract: return "-";
+    case sf::Keyboard::Multiply: return "*";
+    case sf::Keyboard::Divide: return "/";
+    case sf::Keyboard::Numpad0: return "0";
+    case sf::Keyboard::Numpad1: return "1";
+    case sf::Keyboard::Numpad2: return "2";
+    case sf::Keyboard::Numpad3: return "3";
+    case sf::Keyboard::Numpad4: return "4";
+    case sf::Keyboard::Numpad5: return "5";
+    case sf::Keyboard::Numpad6: return "6";
+    case sf::Keyboard::Numpad7: return "7";
+    case sf::Keyboard::Numpad8: return "8";
+    case sf::Keyboard::Numpad9: return "9";
+    default:
+      std::string s{to_str(k)};
+      if (s.length() == 1)
+      {
+        return s;
+      }
+      assert(!s.empty());
+      return s.substr(0, 1);
   }
-  assert(!s.empty());
-  return s.substr(0, 1);
 }
 
 sf::Color to_sfml_color(const chess_color color) noexcept
