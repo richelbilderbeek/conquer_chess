@@ -19,6 +19,9 @@ enum class piece_action_type
   unselect  // as the GUI can suggest these as the default (piece) action
 };
 
+/// Convert to short, 3 character, string
+std::string to_three_char_str(const piece_action_type t) noexcept;
+
 /// Convert to string
 std::string to_str(const piece_action_type t) noexcept;
 

@@ -54,12 +54,29 @@ public:
 
   /// The square that shows:
   ///   1. the action name, e.g. 'attack'
-  ///   2. the action icon, e.g. an arrow that points to a cross for attack
-  ///   3. the user input, e.g. 'Q' or LMB,
-  ///      use \link{get_controls_key_input} to get the screen_rect
+  ///      Use \link{get_controls_key_name} to get the screen_rect
+  ///      for this section
+  ///   2. the action icon, e.g. an arrow that points to a cross for attack.
+  ///      Use \link{get_controls_key_icon} to get the screen_rect
+  ///      for this section
+  ///   3. the user input, e.g. 'Q' or LMB.
+  ///      Use \link{get_controls_key_input} to get the screen_rect
   ///      for this section
   const screen_rect& get_controls_key(const side player, const int key) const noexcept;
+
+  /// The square that show the icon of the user input, e.g. an arrow
+  /// as is part of \link{get_controls_key}
+  screen_rect get_controls_key_icon(const side player, const int key) const noexcept;
+
+  /// The square that show the user input needed, e.g. 'Q',
+  /// as is part of \link{get_controls_key}
   screen_rect get_controls_key_input(const side player, const int key) const noexcept;
+
+  /// The square that show the text for the name of the user input,
+  /// e.g. 'attack',
+  /// as is part of \link{get_controls_key}
+  screen_rect get_controls_key_name(const side player, const int key) const noexcept;
+
   const screen_rect& get_debug(const side player) const noexcept;
   const screen_rect& get_log(const side player) const noexcept;
   const screen_rect& get_units(const side player) const noexcept;

@@ -21,10 +21,95 @@ screen_coordinat get_center(const screen_rect& r) noexcept
   );
 }
 
+screen_rect get_bottom_left_corner(const screen_rect& r) noexcept
+{
+  const screen_coordinat top_left(
+    r.get_tl().get_x(),
+    (r.get_tl().get_y() + r.get_br().get_y()) / 2
+  );
+  const screen_coordinat bottom_right(
+    (r.get_tl().get_x() + r.get_br().get_x()) / 2,
+    r.get_br().get_y()
+  );
+  const screen_rect corner(top_left, bottom_right);
+  return corner;
+}
+
+screen_rect get_bottom_right_corner(const screen_rect& r) noexcept
+{
+  const screen_coordinat top_left(
+    (r.get_tl().get_x() + r.get_br().get_x()) / 2,
+    (r.get_tl().get_y() + r.get_br().get_y()) / 2
+  );
+  const screen_coordinat bottom_right(
+    r.get_br().get_x(),
+    r.get_br().get_y()
+  );
+  const screen_rect corner(top_left, bottom_right);
+  return corner;
+}
+
 int get_height(const screen_rect& r) noexcept
 {
   return r.get_br().get_y() - r.get_tl().get_y();
 }
+
+screen_rect get_lower_half(const screen_rect& r) noexcept
+{
+  const screen_coordinat top_left(
+    r.get_tl().get_x(),
+    (r.get_tl().get_y() + r.get_br().get_y()) / 2
+  );
+  const screen_coordinat bottom_right(
+    r.get_br().get_x(),
+    r.get_br().get_y()
+  );
+  const screen_rect half(top_left, bottom_right);
+  return half;
+}
+
+screen_rect get_top_left_corner(const screen_rect& r) noexcept
+{
+  const screen_coordinat top_left(
+    r.get_tl().get_x(),
+    r.get_tl().get_y()
+  );
+  const screen_coordinat bottom_right(
+    (r.get_tl().get_x() + r.get_br().get_x()) / 2,
+    (r.get_tl().get_y() + r.get_br().get_y()) / 2
+  );
+  const screen_rect corner(top_left, bottom_right);
+  return corner;
+}
+
+screen_rect get_top_right_corner(const screen_rect& r) noexcept
+{
+  const screen_coordinat top_left(
+    (r.get_tl().get_x() + r.get_br().get_x()) / 2,
+    r.get_tl().get_y()
+  );
+  const screen_coordinat bottom_right(
+    r.get_br().get_x(),
+    (r.get_tl().get_y() + r.get_br().get_y()) / 2
+  );
+  const screen_rect corner(top_left, bottom_right);
+  return corner;
+}
+
+screen_rect get_upper_half(const screen_rect& r) noexcept
+{
+  const screen_coordinat top_left(
+    r.get_tl().get_x(),
+    r.get_tl().get_y()
+  );
+  const screen_coordinat bottom_right(
+    r.get_br().get_x(),
+    (r.get_tl().get_y() + r.get_br().get_y()) / 2
+  );
+  const screen_rect half(top_left, bottom_right);
+  return half;
+}
+
 int get_width(const screen_rect& r) noexcept
 {
   return r.get_br().get_x() - r.get_tl().get_x();
@@ -42,6 +127,72 @@ bool is_in(const screen_coordinat& pos, const screen_rect& r) noexcept
 void test_screen_rect()
 {
 #ifndef NDEBUG
+  // get_bottom_left_corner
+  {
+    const screen_rect r(screen_coordinat(0, 0), screen_coordinat(2, 2));
+    const screen_rect created{get_bottom_left_corner(r)};
+    assert(r != created);
+    const screen_rect expected(
+      screen_coordinat(0, 1),
+      screen_coordinat(1, 2)
+    );
+    assert(created == expected);
+  }
+  // get_bottom_right_corner
+  {
+    const screen_rect r(screen_coordinat(0, 0), screen_coordinat(2, 2));
+    const screen_rect created{get_bottom_right_corner(r)};
+    assert(r != created);
+    const screen_rect expected(
+      screen_coordinat(1, 1),
+      screen_coordinat(2, 2)
+    );
+    assert(created == expected);
+  }
+  // get_lower_half
+  {
+    const screen_rect r(screen_coordinat(0, 0), screen_coordinat(2, 2));
+    const screen_rect created{get_lower_half(r)};
+    assert(r != created);
+    const screen_rect expected(
+      screen_coordinat(0, 1),
+      screen_coordinat(2, 2)
+    );
+    assert(created == expected);
+  }
+  // get_top_left_corner
+  {
+    const screen_rect r(screen_coordinat(0, 0), screen_coordinat(2, 2));
+    const screen_rect created{get_top_left_corner(r)};
+    assert(r != created);
+    const screen_rect expected(
+      screen_coordinat(0, 0),
+      screen_coordinat(1, 1)
+    );
+    assert(created == expected);
+  }
+  // get_top_right_corner
+  {
+    const screen_rect r(screen_coordinat(0, 0), screen_coordinat(2, 2));
+    const screen_rect created{get_top_right_corner(r)};
+    assert(r != created);
+    const screen_rect expected(
+      screen_coordinat(1, 0),
+      screen_coordinat(2, 1)
+    );
+    assert(created == expected);
+  }
+  // get_upper_half
+  {
+    const screen_rect r(screen_coordinat(0, 0), screen_coordinat(2, 2));
+    const screen_rect created{get_upper_half(r)};
+    assert(r != created);
+    const screen_rect expected(
+      screen_coordinat(0, 0),
+      screen_coordinat(2, 1)
+    );
+    assert(created == expected);
+  }
   // get_width and get_height
   {
     //   012345678901
@@ -98,6 +249,14 @@ void test_screen_rect()
     assert(a == b);
     assert(!(a == c));
   }
+  // operator!=
+  {
+    const screen_rect a;
+    const screen_rect b;
+    const screen_rect c(screen_coordinat(1, 2), screen_coordinat(3, 4));
+    assert(!(a != b));
+    assert(a != c);
+  }
   // operator<<
   {
     std::stringstream s;
@@ -112,6 +271,11 @@ bool operator==(const screen_rect& lhs, const screen_rect& rhs) noexcept
   return lhs.get_tl() == rhs.get_tl()
     && lhs.get_br() == rhs.get_br()
   ;
+}
+
+bool operator!=(const screen_rect& lhs, const screen_rect& rhs) noexcept
+{
+  return !(lhs == rhs);
 }
 
 screen_rect& operator+=(screen_rect& rect, const screen_coordinat& delta) noexcept

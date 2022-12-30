@@ -368,79 +368,98 @@ void show_controls(game_view& view, const side player)
     background.setOutlineColor(sf::Color::White);
     view.get_window().draw(background);
 
-    // Tile that is a sprite
-    sf::RectangleShape sprite;
-    set_rect(sprite, layout.get_controls_key(player, key));
-    const auto maybe_action{
-      get_default_piece_action(view.get_game(), player)
-    };
-    if (maybe_action)
+    // Determine the piece action type
+    std::optional<piece_action_type> maybe_action;
     {
-      const piece_action_type action{maybe_action.value()};
-      if (key == 1)
+      // The default action at key 1
+      const std::optional<piece_action_type> maybe_first_action{
+        get_default_piece_action(view.get_game(), player)
+      };
+      if (maybe_first_action)
       {
+        if (key == 1) maybe_action = maybe_first_action.value();
+        if (key == 2 && maybe_first_action.value() == piece_action_type::promote_to_queen) maybe_action = piece_action_type::promote_to_rook;
+        if (key == 3 && maybe_first_action.value() == piece_action_type::promote_to_queen) maybe_action = piece_action_type::promote_to_bishop;
+        if (key == 4 && maybe_first_action.value() == piece_action_type::promote_to_queen) maybe_action = piece_action_type::promote_to_knight;
+      }
+    }
+
+    // Tile that is a sprite
+    const bool show_icon{true};
+    if (show_icon)
+    {
+      sf::RectangleShape sprite;
+      set_rect(sprite, layout.get_controls_key_icon(player, key));
+      if (maybe_action)
+      {
+        const piece_action_type action{maybe_action.value()};
         sprite.setTexture(
           &view.get_resources().get_textures().get_action_icon(player_color, action)
         );
+        view.get_window().draw(sprite);
       }
-      else
-      {
-        if (action == piece_action_type::promote_to_queen)
-        {
-          switch (key)
-          {
-            case 2:
-              sprite.setTexture(
-                &view.get_resources().get_textures().get_action_icon(
-                  player_color, piece_action_type::promote_to_rook
-                )
-              );
-            break;
-            case 3:
-              sprite.setTexture(
-                &view.get_resources().get_textures().get_action_icon(
-                  player_color, piece_action_type::promote_to_bishop
-                )
-              );
-            break;
-            case 4:
-              assert(key == 4);
-              sprite.setTexture(
-                &view.get_resources().get_textures().get_action_icon(
-                  player_color, piece_action_type::promote_to_knight
-                )
-              );
-            break;
-          }
-        }
-      }
-      view.get_window().draw(sprite);
     }
-    // Rectangle as background for text
-    sf::RectangleShape text_background;
-    const screen_rect corner_rect{
-      layout.get_controls_key_input(player, key)
-    };
-    set_rect(text_background, corner_rect);
-    text_background.setFillColor(sf::Color::Black);
-    text_background.setOutlineThickness(1);
-    text_background.setOutlineColor(sf::Color::White);
-    view.get_window().draw(text_background);
+    const bool show_input{true};
+    if (show_input)
+    {
+      // Draw user input text
+      sf::RectangleShape text_background;
+      const screen_rect corner_rect{
+        layout.get_controls_key_input(player, key)
+      };
+      set_rect(text_background, corner_rect);
+      text_background.setFillColor(sf::Color::Black);
+      text_background.setOutlineThickness(1);
+      text_background.setOutlineColor(sf::Color::White);
+      view.get_window().draw(text_background);
 
-    // The text there
-    sf::Text text;
-    text.setFont(view.get_resources().get_futuristic_font());
+      // The text there
+      sf::Text text;
+      text.setFont(view.get_resources().get_futuristic_font());
+      text.setString(
+        to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(key))
+      );
+      text.setCharacterSize(get_height(corner_rect) * 2 / 3);
+      text.setPosition(
+        corner_rect.get_tl().get_x() + 2,
+        corner_rect.get_tl().get_y() + 2
+      );
+      view.get_window().draw(text);
+    }
+    const bool show_name{true};
+    if (show_name)
+    {
+      // Draw name of the action
+      sf::RectangleShape text_background;
+      const screen_rect half_rect{
+        layout.get_controls_key_name(player, key)
+      };
+      set_rect(text_background, half_rect);
+      text_background.setFillColor(sf::Color::Black);
+      text_background.setOutlineThickness(1);
+      text_background.setOutlineColor(sf::Color::White);
+      view.get_window().draw(text_background);
 
-    text.setString(
-      to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(key))
-    );
-    text.setCharacterSize(get_height(corner_rect) * 2 / 3);
-    text.setPosition(
-      corner_rect.get_tl().get_x() + 2,
-      corner_rect.get_tl().get_y() + 2
-    );
-    view.get_window().draw(text);
-
+      // The text there
+      sf::Text text;
+      text.setFont(view.get_resources().get_futuristic_font());
+      text.setFillColor(colors[key - 1]);
+      if (maybe_action)
+      {
+        const std::string s{to_three_char_str(maybe_action.value())};
+        text.setString(s);
+        const int font_size{
+          get_width(half_rect) / static_cast<int>(s.size())
+        };
+        assert(font_size > 0);
+        text.setCharacterSize(font_size);
+      }
+      text.setPosition(
+        half_rect.get_tl().get_x() + 2,
+        half_rect.get_tl().get_y() + 2
+      );
+      view.get_window().draw(text);
+    }
   }
 }
 
