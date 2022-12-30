@@ -188,7 +188,7 @@ action_history collect_action_history(const game& g);
 /// Each 'user_inputs' equals one 'piece_action'
 /// @see use 'collect_all_piece_actions'
 /// to get all the 'piece_action's from a game
-std::vector<user_inputs> collect_all_user_actionses(const game& g);
+std::vector<user_inputs> collect_all_user_inputses(const game& g);
 
 /// Collect all valid moves and attackes at a board
 /// for all pieces

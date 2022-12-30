@@ -859,7 +859,7 @@ void test_game_functions()
     assert(!"Progress #21");
     #endif // FIX_ISSUE_21
   }
-  // collect_all_piece_actions
+  // collect_all_user_inputses
   {
     //#define FIX_ISSUE_34
     #ifdef FIX_ISSUE_34
