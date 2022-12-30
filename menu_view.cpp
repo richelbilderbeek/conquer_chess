@@ -99,7 +99,7 @@ void menu_view::exec_replay()
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
   game_options options{m_options};
-  options.set_game_speed(game_speed::fastest);
+  options.set_game_speed(game_speed::slowest);
   options.set_replayer(
     replayer(
       replay(

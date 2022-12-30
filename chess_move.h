@@ -79,6 +79,26 @@ private:
 /// needed to be selected to do that move
 square get_from(const game& g, const chess_move& m);
 
+/// Get the square the bishop doing the move came from.
+square get_from_for_bishop(const game& g, const chess_move& m);
+
+/// Get the square the king doing the move came from.
+/// Even with, e.g., castling for white, it is the king at e1 that
+/// needed to be selected to do that move
+square get_from_for_king(const game& g, const chess_move& m);
+
+/// Get the square the knight doing the move came from.
+square get_from_for_knight(const game& g, const chess_move& m);
+
+/// Get the square the pawn doing the move came from.
+square get_from_for_pawn(const game& g, const chess_move& m);
+
+/// Get the square the queen doing the move came from.
+square get_from_for_queen(const game& g, const chess_move& m);
+
+/// Get the square the rook doing the move came from.
+square get_from_for_rook(const game& g, const chess_move& m);
+
 /// Get the square from a string
 /// E.g. 'Nc3' will result in 'c3'
 square get_square(const std::string& pgn_str);

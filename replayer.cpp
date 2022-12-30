@@ -28,6 +28,7 @@ void replayer::do_move(game& g)
   const auto& move{m_replay.get_moves().at(move_index)};
   #define FIX_ISSUE_64
   #ifdef FIX_ISSUE_64
+  std::clog << g.get_time() << ": replayer doing " << move << '\n';
   const auto inputs{convert_move_to_user_inputs(g, move)};
   add_user_inputs(g, inputs);
   #else

@@ -47,27 +47,140 @@ bool is_capture(const std::string& s)
 
 square get_from(const game& g, const chess_move& m)
 {
-
-  if (is_simple_move(m))
+  if (!m.get_type().empty())
   {
-    if (m.get_type()[0] == piece_type::pawn)
+    const piece_type pt{m.get_type()[0]};
+    switch (pt)
     {
-      const square one_behind{get_behind(m.get_to()[0], m.get_color())};
-      if (is_piece_at(g, one_behind))
-      {
-        assert(get_piece_at(g, one_behind).get_type() == piece_type::pawn);
-        return one_behind;
-      }
-      const square two_behind{get_behind(one_behind, m.get_color())};
-      if (is_piece_at(g, two_behind))
-      {
-        assert(get_piece_at(g, two_behind).get_type() == piece_type::pawn);
-        return two_behind;
-      }
+      case piece_type::bishop: return get_from_for_bishop(g, m);
+      case piece_type::king: return get_from_for_king(g, m);
+      case piece_type::knight: return get_from_for_knight(g, m);
+      case piece_type::pawn: return get_from_for_pawn(g, m);
+      case piece_type::queen: return get_from_for_queen(g, m);
+      default:
+      case piece_type::rook:
+        assert(pt == piece_type::rook);
+        return get_from_for_rook(g, m);
     }
   }
   assert(!"TODO");
 }
+
+square get_from_for_bishop(const game& g, const chess_move& m)
+{
+  assert(!m.get_type().empty());
+  assert(m.get_type()[0] == piece_type::bishop);
+  const auto pieces{
+    find_pieces(g, piece_type::bishop, m.get_color())
+  };
+  assert(!pieces.empty());
+  assert(!m.get_to().empty());
+  const square target{m.get_to()[0]};
+  for (const auto& piece: pieces)
+  {
+    if (are_on_same_diagonal(piece.get_current_square(), target))
+    {
+      return piece.get_current_square();
+    }
+  }
+  assert(!"Should not get here: there had to be a bishop on the diagonal");
+}
+
+square get_from_for_king(const game& g, const chess_move& m)
+{
+  assert(!m.get_type().empty());
+  assert(m.get_type()[0] == piece_type::king);
+  const auto pieces{
+    find_pieces(g, piece_type::king, m.get_color())
+  };
+  assert(!pieces.empty());
+  assert(pieces.size() == 1); // There is only 1 king
+  return pieces[0].get_current_square();
+}
+
+square get_from_for_knight(const game& g, const chess_move& m)
+{
+  assert(!m.get_type().empty());
+  assert(m.get_type()[0] == piece_type::knight);
+  const auto pieces{
+    find_pieces(g, piece_type::knight, m.get_color())
+  };
+  assert(!pieces.empty());
+  assert(!m.get_to().empty());
+  const square target{m.get_to()[0]};
+
+  for (const auto& piece: pieces)
+  {
+    if (are_adjacent_for_knight(piece.get_current_square(), target))
+    {
+      return piece.get_current_square();
+    }
+  }
+  assert(!"Should not get here: there had to be a knight a knight's jump away");
+}
+
+square get_from_for_pawn(const game& g, const chess_move& m)
+{
+  assert(!m.get_type().empty());
+  assert(m.get_type()[0] == piece_type::pawn);
+  assert(!m.is_capture());
+  const square one_behind{get_behind(m.get_to()[0], m.get_color())};
+  if (is_piece_at(g, one_behind))
+  {
+    assert(get_piece_at(g, one_behind).get_type() == piece_type::pawn);
+    return one_behind;
+  }
+  const square two_behind{get_behind(one_behind, m.get_color())};
+  assert(is_piece_at(g, two_behind));
+  assert(get_piece_at(g, two_behind).get_type() == piece_type::pawn);
+  return two_behind;
+}
+
+square get_from_for_queen(const game& g, const chess_move& m)
+{
+  assert(!m.get_type().empty());
+  assert(m.get_type()[0] == piece_type::queen);
+  const auto pieces{
+    find_pieces(g, piece_type::queen, m.get_color())
+  };
+  assert(!pieces.empty());
+  assert(!m.get_to().empty());
+  const square target{m.get_to()[0]};
+  for (const auto& piece: pieces)
+  {
+    if (are_on_same_diagonal(piece.get_current_square(), target)
+      || are_on_same_rank(piece.get_current_square(), target)
+      || are_on_same_file(piece.get_current_square(), target)
+    )
+    {
+      return piece.get_current_square();
+    }
+  }
+  assert(!"Should not get here: there had to be a queen on the same rank, file, or diagonal");
+}
+
+square get_from_for_rook(const game& g, const chess_move& m)
+{
+  assert(!m.get_type().empty());
+  assert(m.get_type()[0] == piece_type::rook);
+  const auto pieces{
+    find_pieces(g, piece_type::rook, m.get_color())
+  };
+  assert(!pieces.empty());
+  assert(!m.get_to().empty());
+  const square target{m.get_to()[0]};
+  for (const auto& piece: pieces)
+  {
+    if (are_on_same_rank(piece.get_current_square(), target)
+      || are_on_same_file(piece.get_current_square(), target)
+    )
+    {
+      return piece.get_current_square();
+    }
+  }
+  assert(!"Should not get here: there had to be a rook on the same rank or file");
+}
+
 
 piece_type get_piece_type(const std::string& s)
 {
