@@ -61,6 +61,9 @@ private:
   /// View the played game
   void exec_played_game();
 
+  /// Run the game with a replay
+  void exec_replay();
+
   /// Process all events
   /// @return if the user wants to quit
   bool process_events();

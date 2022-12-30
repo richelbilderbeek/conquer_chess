@@ -94,6 +94,24 @@ void menu_view::exec_played_game()
   view.exec();
 }
 
+void menu_view::exec_replay()
+{
+  const auto cur_pos{m_window.getPosition()};
+  m_window.setVisible(false);
+  game_options options{m_options};
+  options.set_replayer(
+    replayer(
+      replay(
+        get_scholars_mate_as_pgn_str()
+      )
+    )
+  );
+  game_view view{game(options)};
+  view.exec();
+  m_window.setVisible(true);
+  m_window.setPosition(cur_pos);
+}
+
 bool menu_view::process_events()
 {
   // User interaction
@@ -178,6 +196,10 @@ bool menu_view::process_events()
       {
         m_window.close();
         return true;
+      }
+      else if (key_pressed == sf::Keyboard::Key::F1)
+      {
+        exec_replay();
       }
       else if (key_pressed == sf::Keyboard::Key::F2)
       {

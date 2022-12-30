@@ -6,17 +6,17 @@
 /// The type of actions a piece can do
 enum class piece_action_type
 {
-  select,   // select and unselect are valud piece action,
-  unselect, // as the GUI can suggest these as the default (piece) action
-  move,
   attack, // a regular attack, not en-passant
+  castle_kingside,
+  castle_queenside,
   en_passant, // a type of attack
-  promote_to_queen,
-  promote_to_rook,
+  move,
   promote_to_bishop,
   promote_to_knight,
-  castle_kingside,
-  castle_queenside
+  promote_to_queen,
+  promote_to_rook,
+  select,   // select and unselect are valid piece action,
+  unselect  // as the GUI can suggest these as the default (piece) action
 };
 
 /// Convert to string
