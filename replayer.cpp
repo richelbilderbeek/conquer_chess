@@ -27,7 +27,7 @@ void replayer::do_move(game& g)
   // Do the move
   const auto& move{m_replay.get_moves().at(move_index)};
   #ifdef FIX_ISSUE_64
-  const user_input input{move_to_user_input(g, move)};
+  const user_input input{convert_move_to_user_input(g, move)};
   g.add_user_input(input);
   #else
   g.do_move(move);
