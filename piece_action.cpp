@@ -185,6 +185,15 @@ void test_piece_action()
       assert(a == b);
       assert(!(a == c));
     }
+    // to_str
+    {
+      assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e4"))).empty());
+      assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"))).empty());
+      #ifdef FIX_ISSUE_63
+      assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::select, square("e1"), square("e1"))).empty());
+      #endif // FIX_ISSUE_63
+    }
+
   }
 #endif // DEBUG
 }

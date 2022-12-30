@@ -504,10 +504,9 @@ void user_inputs::process(game& g)
     {
       if (has_mouse_controller(g.get_options()))
       {
-        assert(action.get_coordinat());
         start_move_unit(
           g,
-          action.get_coordinat().value(),
+          get_player_pos(g, action.get_player()),
           get_player_color(g, action.get_player())
         );
       }
