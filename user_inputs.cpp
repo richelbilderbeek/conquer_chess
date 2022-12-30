@@ -206,6 +206,21 @@ void do_select_and_move_piece(
   }
 }
 
+user_input get_user_input_to_do_action_1(
+  const game& g,
+  const side player_side
+)
+{
+  if (get_controller_type(g, player_side) == controller_type::keyboard)
+  {
+    return create_press_action_1(player_side);
+  }
+  else
+  {
+    return create_press_lmb_action(player_side);
+  }
+}
+
 user_input get_user_input_to_select(
   const game& g,
   const side player_side
@@ -223,7 +238,7 @@ user_input get_user_input_to_select(
 
 std::vector<user_input> get_user_inputs_to_move_cursor_to(
   const game& g,
-  const square& s,
+  const square& to,
   const side player_side
 )
 {
@@ -231,9 +246,28 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
     g.get_options().get_controller(player_side).get_type()
     == controller_type::keyboard
   );
-  const auto current_pos{get_player_pos(g, player_side)};
-  const int n_right{(s.get_x() - square(current_pos).get_x() + 8) % 8};
-  const int n_down{(s.get_y() - square(current_pos).get_y() + 8) % 8};
+  const square from{get_player_pos(g, player_side)};
+  return get_user_inputs_to_move_cursor_from_to(
+    g,
+    from,
+    to,
+    player_side
+  );
+}
+
+std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
+  const game& g,
+  const square& from,
+  const square& to,
+  const side player_side
+)
+{
+  assert(
+    g.get_options().get_controller(player_side).get_type()
+    == controller_type::keyboard
+  );
+  const int n_right{(to.get_x() - from.get_x() + 8) % 8};
+  const int n_down{(to.get_y() - from.get_y() + 8) % 8};
   std::vector<user_input> inputs;
   for (int i{0}; i!=n_right; ++i)
   {

@@ -100,6 +100,12 @@ void do_select_and_move_piece(
   const side player_side
 );
 
+/// Create the user inputs to do action_1 at the square at the cursor
+user_input get_user_input_to_do_action_1(
+  const game& g,
+  const side player_side
+);
+
 /// Create the user inputs to select the square at the cursor
 user_input get_user_input_to_select(
   const game& g,
@@ -109,6 +115,18 @@ user_input get_user_input_to_select(
 /// Create the user inputs to move the cursor to a target square
 std::vector<user_input> get_user_inputs_to_move_cursor_to(
   const game& g,
+  const square& to,
+  const side player_side
+);
+
+/// Create the user inputs to move the cursor to a target square
+/// knowing it will be at the 'from' square.
+/// This is useful for creating future 'user_input's,
+/// e.g. for white doing e4, the cursor must be moved to e2
+/// to select a pawn, then to e4 to select the target.
+std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
+  const game& g,
+  const square& from,
   const square& to,
   const side player_side
 );

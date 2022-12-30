@@ -982,7 +982,7 @@ std::vector<user_input> convert_move_to_user_inputs(
   const square from{get_from(g, m)};
 
   std::vector<user_input> inputs;
-  // Move the cursor to target square
+  // Move the cursor to piece's square
   {
     const auto v{get_user_inputs_to_move_cursor_to(g, from, player_side)};
     std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
@@ -992,26 +992,24 @@ std::vector<user_input> convert_move_to_user_inputs(
     const auto i{get_user_input_to_select(g, player_side)};
     inputs.push_back(i);
   }
-  #ifdef FIX_ISSUE_64
-  // Do something with the piece
-  if (is_castling(m)) {
-    if (m.get_castling_type()[0] == castling_type::king_side)
-    {
-      const auto v{get_user_inputs_to_castle_kingside(g, from)};
-      std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
-    }
-    else
-    {
-      assert(m.get_castling_type()[0] == castling_type::queen_side);
-      const auto v{get_user_inputs_to_castle_queenside(g, from)};
-      std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
-    }
-  }
-  else
+  // Move the cursor to target's square
   {
-    // TODO
+    assert(!m.get_to().empty());
+    const auto v{
+      get_user_inputs_to_move_cursor_from_to(
+        g,
+        from,
+        m.get_to()[0],
+        player_side
+      )
+    };
+    std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
   }
-  #endif
+  // Do the action
+  {
+    const auto i{get_user_input_to_do_action_1(g, player_side)};
+    inputs.push_back(i);
+  }
   return inputs;
 }
 
