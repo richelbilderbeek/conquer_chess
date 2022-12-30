@@ -187,14 +187,108 @@ void test_piece_action()
     }
     // to_str
     {
-      assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e4"))).empty());
       assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::attack, square("a1"), square("a3"))).empty());
-      #define FIX_ISSUE_63
-      #ifdef FIX_ISSUE_63
-      assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::select, square("e1"), square("e1"))).empty());
-      #endif // FIX_ISSUE_63
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::king,
+            piece_action_type::castle_kingside,
+            square("e1"),
+            square("g1")
+          )
+        ).empty()
+      );
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::king,
+            piece_action_type::castle_queenside,
+            square("e1"),
+            square("c1")
+          )
+        ).empty()
+      );
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::pawn,
+            piece_action_type::en_passant,
+            square("e5"),
+            square("d6")
+          )
+        ).empty()
+      );
+      assert(!to_str(piece_action(chess_color::white, piece_type::king, piece_action_type::move, square("e2"), square("e4"))).empty());
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::pawn,
+            piece_action_type::promote_to_bishop,
+            square("e7"),
+            square("d8")
+          )
+        ).empty()
+      );
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::pawn,
+            piece_action_type::promote_to_knight,
+            square("e7"),
+            square("d8")
+          )
+        ).empty()
+      );
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::pawn,
+            piece_action_type::promote_to_queen,
+            square("e7"),
+            square("d8")
+          )
+        ).empty()
+      );
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::pawn,
+            piece_action_type::promote_to_rook,
+            square("e7"),
+            square("d8")
+          )
+        ).empty()
+      );
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::pawn,
+            piece_action_type::select,
+            square("e2"),
+            square("e2")
+          )
+        ).empty()
+      );
+      assert(
+        !to_str(
+          piece_action(
+            chess_color::white,
+            piece_type::pawn,
+            piece_action_type::unselect,
+            square("e2"),
+            square("e2")
+          )
+        ).empty()
+      );
     }
-
   }
 #endif // DEBUG
 }
@@ -267,7 +361,7 @@ std::string to_str(const piece_action& a) noexcept
       s << a.get_color() << " " << a.get_piece_type() << " castles kingside";
       break;
     case piece_action_type::castle_queenside:
-      assert(a.get_piece_type() == piece_type::queen);
+      assert(a.get_piece_type() == piece_type::king);
       s << a.get_color() << " " << a.get_piece_type() << " castles queenside";
       break;
     case piece_action_type::en_passant:
@@ -278,19 +372,19 @@ std::string to_str(const piece_action& a) noexcept
       s << a.get_color() << " " << a.get_piece_type() << " " << a.get_action_type() << " from " << a.get_from() << " to " << a.get_to();
      break;
     case piece_action_type::promote_to_bishop:
-      assert(a.get_piece_type() == piece_type::bishop);
+      assert(a.get_piece_type() == piece_type::pawn || a.get_piece_type() == piece_type::bishop);
       s << a.get_color() << " pawn moves from " << a.get_from() << " to " << a.get_to() << " to become a " << a.get_piece_type();
      break;
     case piece_action_type::promote_to_knight:
-      assert(a.get_piece_type() == piece_type::knight);
+      assert(a.get_piece_type() == piece_type::pawn || a.get_piece_type() == piece_type::knight);
       s << a.get_color() << " pawn moves from " << a.get_from() << " to " << a.get_to() << " to become a " << a.get_piece_type();
      break;
     case piece_action_type::promote_to_queen:
-      assert(a.get_piece_type() == piece_type::queen);
+      assert(a.get_piece_type() == piece_type::pawn || a.get_piece_type() == piece_type::queen);
       s << a.get_color() << " pawn moves from " << a.get_from() << " to " << a.get_to() << " to become a " << a.get_piece_type();
      break;
     case piece_action_type::promote_to_rook:
-      assert(a.get_piece_type() == piece_type::rook);
+      assert(a.get_piece_type() == piece_type::pawn || a.get_piece_type() == piece_type::rook);
       s << a.get_color() << " pawn moves from " << a.get_from() << " to " << a.get_to() << " to become a " << a.get_piece_type();
      break;
     case piece_action_type::select:
