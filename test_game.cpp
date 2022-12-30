@@ -175,8 +175,14 @@ void test_game_functions()
       get_game_with_starting_position(starting_position_type::ready_to_castle)
     };
     assert(can_castle_kingside(get_piece_at(g, "e1"), g));
-    assert(can_castle_queenside(get_piece_at(g, "e1"), g));
     assert(can_castle_kingside(get_piece_at(g, "e8"), g));
+  }
+  // can_castle_queenside
+  {
+    const game g{
+      get_game_with_starting_position(starting_position_type::ready_to_castle)
+    };
+    assert(can_castle_queenside(get_piece_at(g, "e1"), g));
     assert(can_castle_queenside(get_piece_at(g, "e8"), g));
   }
   // clear_sound_effects
@@ -1150,7 +1156,6 @@ void test_game_keyboard_use()
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 0);
   }
-
   // Keyboard: can move pawn forward
   {
     game g;
@@ -1187,6 +1192,23 @@ void test_game_keyboard_use()
     assert(count_selected_units(g, chess_color::white) == 0);
     assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
     assert(collect_messages(g).at(1).get_message_type() == message_type::cannot);
+  }
+  // 3: white castles kingside
+  {
+    game g = get_game_with_starting_position(starting_position_type::ready_to_castle);
+    move_cursor_to(g, "e1", side::lhs);
+    g.add_user_input(create_press_action_1(side::lhs));
+    g.tick(delta_t(0.0));
+    assert(count_selected_units(g, chess_color::white) == 1);
+    assert(collect_messages(g).at(0).get_message_type() == message_type::select);
+    move_cursor_to(g, "g1", side::lhs);
+    g.add_user_input(create_press_action_1(side::lhs));
+    g.tick(delta_t(0.0));
+    assert(count_selected_units(g, chess_color::white) == 0);
+    assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
+    #ifdef FIX_ISSUE_3
+    assert(collect_messages(g).at(1).get_message_type() == message_type::start_castle_kingside);
+    #endif // FIX_ISSUE_3
   }
   // 47: set_keyboard_player_pos for RHS player
   {

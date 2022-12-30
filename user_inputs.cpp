@@ -300,29 +300,66 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
   //  2. move (when a piece is selected and cursor points to empty square
   //  3. promote to queen (for a pawn at the final file)
   //  4. unselect (when cursor is pointed to a square with a piece of own color)
+  //  5. promotion (when a king is selected and cursor points to empty square
+  //  6. attack (when a piece is selected and cursor points to an enemy square)
+  //  7. castling (when a king is selected and cursor points to an empty target)
+
+
 
   // Cursor location | Selected piece location |
-  // to              |
+  //                 |
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square to{square(get_player_pos(g, player_side))};
-  if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
+  const square cursor{square(get_player_pos(g, player_side))};
+  const bool is_promotion_to_queen{
+       is_piece_at(g, cursor)
+    && get_piece_at(g, cursor).get_color() == player_color
+    && get_piece_at(g, cursor).is_selected()
+    && can_promote(get_piece_at(g, cursor))
+  };
+  //#define FIX_ISSUE_3
+  #ifdef FIX_ISSUE_3
+  const square king_square{get_default_king_square(player_color)};
+  const bool is_castle_kingside{
+       !is_piece_at(g, cursor)
+    && is_piece_at(g, king_square)
+    && get_piece_at(g, king_square).get_color() == player_color
+    && get_piece_at(g, king_square).is_selected()
+    && can_castle_kingside(get_piece_at(g, king_square), g)
+  };
+  if (is_castle_kingside)
   {
-    const auto& p{get_piece_at(g, to)};
+    unselect_all_pieces(g, player_color);
+    get_piece_at(g, get_default_king_square(player_color)).add_action(
+      piece_action(
+        player_color,
+        piece_type::king,
+        piece_action_type::castle_kingside,
+        get_default_king_square(player_color),
+        cursor
+      )
+    );
+    return;
+  }
+  #endif // FIX_ISSUE_3
+  if (is_piece_at(g, cursor) && get_piece_at(g, cursor).get_color() == player_color)
+  {
+    const auto& p{get_piece_at(g, cursor)};
     if (p.is_selected())
     {
       if (can_promote(p))
       {
         //  3. promote to queen (for a pawn at the final file)
         unselect_all_pieces(g, player_color);
-        get_piece_at(g, to).add_action(
+        assert(is_promotion_to_queen);
+        get_piece_at(g, cursor).add_action(
           piece_action(
             player_color,
             piece_type::queen,
             piece_action_type::promote_to_queen,
-            to,
-            to
+            cursor,
+            cursor
           )
         );
         return;
@@ -330,13 +367,13 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
       else
       {
         //  4. unselect (when cursor is pointed to a square with a piece of own color)
-        get_piece_at(g, to).add_action(
+        get_piece_at(g, cursor).add_action(
           piece_action(
             player_color,
             p.get_type(),
             piece_action_type::unselect,
-            to,
-            to
+            cursor,
+            cursor
           )
         );
         return;
@@ -346,20 +383,23 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
     {
       //  1. select (when cursor is pointed to a square with a piece of own color)
       unselect_all_pieces(g, player_color);
-      get_piece_at(g, to).add_action(
+      get_piece_at(g, cursor).add_action(
         piece_action(
           player_color,
           p.get_type(),
           piece_action_type::select,
-          to,
-          to
+          cursor,
+          cursor
         )
       );
       return;
     }
   }
 
+  // Options left:
   //  2. move (when a piece is selected and cursor points to empty square
+  //  5. promotion (when a king is selected and cursor points to empty square
+
   if (!has_selected_pieces(g, player_side)) return;
 
   // 'start_move_unit' will check for piece, color, etc.
@@ -440,7 +480,7 @@ void process_press_action_3(game& g, const user_input& action)
           )
         );
       }
-      #ifdef FIX_ISSUE_3
+      #ifdef FIX_ISSUE_3_2
       else if (can_castle(p, g))
       {
         unselect_all_pieces(g, player_color);
@@ -455,7 +495,7 @@ void process_press_action_3(game& g, const user_input& action)
         );
         assert(!"Also do the rook");
       }
-      #endif // FIX_ISSUE_3
+      #endif // FIX_ISSUE_3_2
     }
   }
 }
@@ -490,7 +530,7 @@ void process_press_action_4(game& g, const user_input& action)
           )
         );
       }
-      #ifdef FIX_ISSUE_3
+      #ifdef FIX_ISSUE_3_2
       else if (can_castle(p, g))
       {
         unselect_all_pieces(g, player_color);
@@ -505,7 +545,7 @@ void process_press_action_4(game& g, const user_input& action)
         );
         assert(!"Also do the rook");
       }
-      #endif // FIX_ISSUE_3
+      #endif // FIX_ISSUE_3_2
     }
   }
 }
