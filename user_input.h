@@ -29,7 +29,7 @@ private:
 
   user_input_type m_user_input_type;
 
-  /// Fpr the user input types that need a coordinat.
+  /// For the user input types that need a coordinat.
   /// The others need the cursor's current square
   ///
   /// Type           | Does have a coordinat
@@ -45,6 +45,9 @@ private:
   /// lmb_down       | no
   /// rmb_down       | no
   /// mouse_move     | yes
+  ///
+  /// @see use \link{does_input_type_need_coordinat} to determine
+  /// if the user_input_type needs a coordinat
   std::optional<game_coordinat> m_coordinat;
 
   side m_player;
@@ -80,7 +83,7 @@ user_input create_press_rmb_action(const side player);
 
 user_input create_press_up_action(const side player);
 
-user_input create_random_control_action(
+user_input create_random_user_input(
   std::default_random_engine& rng_engine
 );
 

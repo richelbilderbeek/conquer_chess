@@ -21,9 +21,12 @@ enum class user_input_type
 };
 
 /// Create a random control_action_type
-user_input_type create_random_control_action_type(
+user_input_type create_random_user_input_type(
   std::default_random_engine& rng_engine
 );
+
+/// Does that input type need a game coordinat?
+bool does_input_type_need_coordinat(const user_input_type t) noexcept;
 
 /// Get all the control_action_types
 std::vector<user_input_type> get_all_control_action_types() noexcept;

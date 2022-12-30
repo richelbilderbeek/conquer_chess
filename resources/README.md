@@ -3,12 +3,14 @@
  * Fonts
  * Images
  * Sounds
+ * Games
 
 ## Fonts
 
-File                         |License
------------------------------|--------------------------------------------------------------------
-`CodeSquaredRegular-AYRg.ttf`|[CC-SA by GuyStruct](code_squared_font_license/license-1f93.txt)                 
+File                           |License
+-------------------------------|--------------------------------------------------------------------
+`CodeSquaredRegular-AYRg.ttf`  |[CC-SA by GuyStruct](code_squared_font_license/license-1f93.txt)                 
+`16114_FuturistFixed-width.ttf`|None, from https://ttfonts.net/font/17388_FuturistFixed-width.htm
 
 ## Images
 
@@ -35,4 +37,8 @@ Sound              |Description                                            |URL
 -------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------
 `hide.ogg`         |Hide sounds from Drakkar, by Sebastian Mader           |https://github.com/tresinformal/drakkar/blob/master/resources/hide.ogg
 
+## Games
 
+Game                |Description                                            |URL
+--------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------
+`garry_kasparov.pgn`|Downloaded all first ?50 games                         |https://www.chess.com/games/garry-kasparov

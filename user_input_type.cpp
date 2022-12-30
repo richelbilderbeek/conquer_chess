@@ -2,7 +2,7 @@
 
 #include "../magic_enum/include/magic_enum.hpp"
 
-user_input_type create_random_control_action_type(
+user_input_type create_random_user_input_type(
   std::default_random_engine& rng_engine
 )
 {
@@ -16,6 +16,11 @@ user_input_type create_random_control_action_type(
   assert(i >= 0);
   assert(i < static_cast<int>(control_types.size()));
   return control_types[i];
+}
+
+bool does_input_type_need_coordinat(const user_input_type t) noexcept
+{
+  return t == user_input_type::mouse_move;
 }
 
 std::vector<user_input_type> get_all_control_action_types() noexcept
@@ -37,8 +42,22 @@ void test_control_action_type()
     std::default_random_engine rng_engine(seed);
     for (int i{0}; i!=100; ++i)
     {
-      create_random_control_action_type(rng_engine);
+      create_random_user_input_type(rng_engine);
     }
+  }
+  // does_input_type_need_coordinat
+  {
+    assert(!does_input_type_need_coordinat(user_input_type::press_action_1));
+    assert(!does_input_type_need_coordinat(user_input_type::press_action_2));
+    assert(!does_input_type_need_coordinat(user_input_type::press_action_3));
+    assert(!does_input_type_need_coordinat(user_input_type::press_action_4));
+    assert(!does_input_type_need_coordinat(user_input_type::press_down));
+    assert(!does_input_type_need_coordinat(user_input_type::press_left));
+    assert(!does_input_type_need_coordinat(user_input_type::press_right));
+    assert(!does_input_type_need_coordinat(user_input_type::press_up));
+    assert(!does_input_type_need_coordinat(user_input_type::lmb_down));
+    assert(!does_input_type_need_coordinat(user_input_type::rmb_down));
+    assert(does_input_type_need_coordinat(user_input_type::mouse_move));
   }
   // get_all_control_action_types
   {

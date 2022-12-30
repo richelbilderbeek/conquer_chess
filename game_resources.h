@@ -36,6 +36,10 @@ public:
   /// Get the Code Squared font
   sf::Font& get_code_squared_font() noexcept {return m_code_squared_font; }
 
+  /// Get the Futuristic Fixed-Width font
+  sf::Font& get_futuristic_font() noexcept {return m_futuristic_font; }
+
+
   sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
 
   auto& get_sound_effects() noexcept { return m_sound_effects; }
@@ -54,6 +58,8 @@ private:
 
   sf::Font m_arial_font;
   sf::Font m_code_squared_font;
+  sf::Font m_futuristic_font;
+
   sf::Music m_ninja_gods;
 };
 

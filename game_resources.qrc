@@ -97,5 +97,6 @@
         <file>resources/icon_promote_to_rook.png</file>
         <file>resources/icon_select.png</file>
         <file>resources/icon_unselect.png</file>
+        <file>resources/16114_FuturistFixed-width.ttf</file>
     </qresource>
 </RCC>

@@ -202,7 +202,7 @@ std::vector<user_input> controller::process_key_press(
   const auto actions_types{m_key_bindings.create_actions(event.key.code)};
   for (const auto t: actions_types)
   {
-     v.push_back(user_input(t, m_player, game_coordinat()));
+     v.push_back(user_input(t, m_player));
   }
   return v;
 }

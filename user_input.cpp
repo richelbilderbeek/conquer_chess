@@ -13,7 +13,16 @@ user_input::user_input(
     m_coordinat{coordinat},
     m_player{player}
 {
-
+  #ifndef NDEBUG
+  if (does_input_type_need_coordinat(m_user_input_type))
+  {
+    assert(m_coordinat);
+  }
+  else
+  {
+    assert(!m_coordinat);
+  }
+  #endif
 }
 
 user_input create_mouse_move_action(
@@ -78,17 +87,21 @@ user_input create_press_up_action(const side player)
   return user_input(user_input_type::press_up, player);
 }
 
-user_input create_random_control_action(
+user_input create_random_user_input(
   std::default_random_engine& rng_engine
 )
 {
-  const user_input_type type{create_random_control_action_type(rng_engine)};
+  const user_input_type type{create_random_user_input_type(rng_engine)};
   const side player{create_random_side(rng_engine)};
-  const game_coordinat coordinat{create_random_game_coordinat(rng_engine)};
+  std::optional<game_coordinat> maybe_coordinat;
+  if (does_input_type_need_coordinat(type))
+  {
+    maybe_coordinat = create_random_game_coordinat(rng_engine);
+  }
   return user_input(
     type,
     player,
-    coordinat
+    maybe_coordinat
   );
 }
 
@@ -112,7 +125,7 @@ void test_control_action()
   {
     const int seed{314};
     std::default_random_engine rng_engine(seed);
-    create_random_control_action(rng_engine);
+    create_random_user_input(rng_engine);
   }
 #endif // DEBUG
 }

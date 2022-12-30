@@ -433,12 +433,15 @@ void show_controls(game_view& view, const side player)
 
     // The text there
     sf::Text text;
-    text.setFont(view.get_resources().get_code_squared_font());
-    text.setString("X");
+    text.setFont(view.get_resources().get_futuristic_font());
+
+    text.setString(
+      to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(key))
+    );
     text.setCharacterSize(get_height(corner_rect) * 2 / 3);
     text.setPosition(
-      corner_rect.get_tl().get_x(),
-      corner_rect.get_tl().get_y()
+      corner_rect.get_tl().get_x() + 2,
+      corner_rect.get_tl().get_y() + 2
     );
     view.get_window().draw(text);
 

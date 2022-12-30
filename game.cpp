@@ -1018,7 +1018,7 @@ game create_randomly_played_game(
   for (int i{0}; i!=n_moves; ++i)
   {
     const user_input action{
-      create_random_control_action(generator)
+      create_random_user_input(generator)
     };
     g.add_action(action);
     g.tick(delta_t(0.1));

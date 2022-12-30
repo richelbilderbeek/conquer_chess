@@ -29,6 +29,19 @@ game_resources::game_resources()
       throw std::runtime_error(msg.toStdString());
     }
   }
+  // Load font file
+  {
+    const QString filename{"16114_FuturistFixed-width.ttf"};
+    QFile f(":/resources/" + filename);
+    f.copy(filename);
+    if (!m_futuristic_font.loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find font file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+
+
   // Load music
   // Playing sound on Travis gives thousands of error lines, which causes the
   // build to fail

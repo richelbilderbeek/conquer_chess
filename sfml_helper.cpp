@@ -10,6 +10,7 @@
 
 #include <cassert>
 #include <cmath>
+#include <iostream>
 
 sf::Color f_health_to_color(const double f)
 {
@@ -319,7 +320,61 @@ void test_sfml_helper()
     assert(bm != wm);
     assert(wa != wm);
   }
+  #ifdef FIX_ISSUE_62
+  // to_one_char_str
+  {
+    assert(to_one_char_str(sf::Keyboard::A) == "A");
+    assert(to_one_char_str(sf::Keyboard::Num0) == "0");
+    assert(to_one_char_str(sf::Keyboard::Num1) == "1");
+    assert(to_one_char_str(sf::Keyboard::Num2) == "2");
+    assert(to_one_char_str(sf::Keyboard::Num3) == "3");
+    assert(to_one_char_str(sf::Keyboard::Num4) == "4");
+    assert(to_one_char_str(sf::Keyboard::Num5) == "5");
+    assert(to_one_char_str(sf::Keyboard::Num6) == "6");
+    assert(to_one_char_str(sf::Keyboard::Num7) == "7");
+    assert(to_one_char_str(sf::Keyboard::Num8) == "8");
+    assert(to_one_char_str(sf::Keyboard::Num9) == "9");
+    assert(to_one_char_str(sf::Keyboard::LBracket) == "[");
+    assert(to_one_char_str(sf::Keyboard::RBracket) == "]");
+    assert(to_one_char_str(sf::Keyboard::Semicolon) == ";");
+    assert(to_one_char_str(sf::Keyboard::Comma) == ",");
+    assert(to_one_char_str(sf::Keyboard::Period) == "'");
+    assert(to_one_char_str(sf::Keyboard::Quote) == "\"");
+    assert(to_one_char_str(sf::Keyboard::Slash) == "/");
+    assert(to_one_char_str(sf::Keyboard::Backslash) == "\\");
+    assert(to_one_char_str(sf::Keyboard::Tilde) == "~");
+    assert(to_one_char_str(sf::Keyboard::Equal) == "=");
+    assert(to_one_char_str(sf::Keyboard::Hyphen) == "-");
+    assert(to_one_char_str(sf::Keyboard::Add) == "+");
+    assert(to_one_char_str(sf::Keyboard::Subtract) == "-");
+    assert(to_one_char_str(sf::Keyboard::Multiply) == "*");
+    assert(to_one_char_str(sf::Keyboard::Divide) == "/");
+    assert(to_one_char_str(sf::Keyboard::Numpad0) == "0");
+    assert(to_one_char_str(sf::Keyboard::Numpad1) == "1");
+    assert(to_one_char_str(sf::Keyboard::Numpad2) == "2");
+    assert(to_one_char_str(sf::Keyboard::Numpad3) == "3");
+    assert(to_one_char_str(sf::Keyboard::Numpad4) == "4");
+    assert(to_one_char_str(sf::Keyboard::Numpad5) == "5");
+    assert(to_one_char_str(sf::Keyboard::Numpad6) == "6");
+    assert(to_one_char_str(sf::Keyboard::Numpad7) == "7");
+    assert(to_one_char_str(sf::Keyboard::Numpad8) == "8");
+    assert(to_one_char_str(sf::Keyboard::Numpad9) == "9");
+  }
+  #endif // FIX_ISSUE_62
 #endif
+}
+
+std::string to_one_char_str(const sf::Keyboard::Key k)
+{
+  if (k == sf::Keyboard::Comma) return ",";
+  std::string s{to_str(k)};
+  if (s.length() == 1)
+  {
+    std::clog << "s: " << s << '\n';
+    return s;
+  }
+  assert(!s.empty());
+  return s.substr(0, 1);
 }
 
 sf::Color to_sfml_color(const chess_color color) noexcept

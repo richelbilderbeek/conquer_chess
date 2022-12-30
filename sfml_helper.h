@@ -44,6 +44,9 @@ void test_sfml_helper();
 /// Convert an SFML key to a string
 std::string to_str(const sf::Keyboard::Key k);
 
+/// Convert a key to its one-character description
+std::string to_one_char_str(const sf::Keyboard::Key);
+
 /// Convert chess_color to sf::Color
 sf::Color to_sfml_color(const chess_color color) noexcept;
 
