@@ -1592,10 +1592,12 @@ const game_coordinat& get_player_pos(const game& g, const side player) noexcept
   return g.get_controller().get_player_pos(player);
 }
 
+/*
 game_coordinat& get_player_pos(game& g, const side player) noexcept
 {
   return g.get_controller().get_player_pos(player);
 }
+*/
 
 std::vector<square> get_possible_moves(
   const game& g,
@@ -1877,6 +1879,15 @@ void unselect_all_pieces(
 )
 {
   return unselect_all_pieces(g.get_pieces(), color);
+}
+
+void set_player_pos(
+  game& g,
+  const game_coordinat& pos,
+  const side player
+) noexcept
+{
+  g.get_controller().set_player_pos(pos, player);
 }
 
 void tick_until_idle(game& g)

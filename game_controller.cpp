@@ -16,9 +16,26 @@ const game_coordinat& game_controller::get_player_pos(const side player) const n
   return m_player_rhs_pos;
 }
 
+/*
 game_coordinat& game_controller::get_player_pos(const side player) noexcept
 {
   if (player == side::lhs) return m_player_lhs_pos;
   assert(player == side::rhs);
   return m_player_rhs_pos;
+}
+*/
+
+void game_controller::set_player_pos(
+  const game_coordinat& pos,
+  const side player) noexcept
+{
+  if (player == side::lhs)
+  {
+    m_player_lhs_pos = pos;
+  }
+  else
+  {
+    assert(player == side::rhs);
+    m_player_rhs_pos = pos;
+  }
 }

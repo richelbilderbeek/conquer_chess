@@ -14,7 +14,10 @@ public:
   const game_coordinat& get_player_pos(const side player) const noexcept;
 
   /// Get the player position
-  game_coordinat& get_player_pos(const side player) noexcept;
+  //game_coordinat& get_player_pos(const side player) noexcept;
+
+  /// Set a player's position
+  void set_player_pos(const game_coordinat& pos, const side player) noexcept;
 
 private:
   /// The in-game coordinat of the LHS user's cursor
@@ -22,6 +25,7 @@ private:
 
   /// The in-game coordinat of the RHS user's cursor
   game_coordinat m_player_rhs_pos;
+
 };
 
 #endif // GAME_CONTROLLER_H

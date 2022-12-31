@@ -578,31 +578,30 @@ void user_inputs::process(game& g)
     }
     else if (action.get_user_input_type() == user_input_type::press_down)
     {
-      auto& pos{get_player_pos(g, action.get_player())};
-      pos = get_below(pos);
+      const auto pos{get_player_pos(g, action.get_player())};
+      set_player_pos(g, get_below(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_left)
     {
-      auto& pos{get_player_pos(g, action.get_player())};
-      pos = get_left(pos);
+      const auto pos{get_player_pos(g, action.get_player())};
+      set_player_pos(g, get_left(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_right)
     {
-      auto& pos{get_player_pos(g, action.get_player())};
-      pos = get_right(pos);
+      const auto pos{get_player_pos(g, action.get_player())};
+      set_player_pos(g, get_right(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_up)
     {
-      auto& pos{get_player_pos(g, action.get_player())};
-      pos = get_above(pos);
+      const auto pos{get_player_pos(g, action.get_player())};
+      set_player_pos(g, get_above(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::mouse_move)
     {
       if (has_mouse_controller(g.get_options()))
       {
-        auto& pos{get_player_pos(g, action.get_player())};
         assert(action.get_coordinat());
-        pos = action.get_coordinat().value();
+        set_player_pos(g, action.get_coordinat().value(), action.get_player());
       }
     }
     #ifdef FIX_ISSUE_46

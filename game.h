@@ -579,7 +579,7 @@ const std::vector<piece>& get_pieces(const game& g) noexcept;
 const game_coordinat& get_player_pos(const game& g, const side player) noexcept;
 
 /// Get the player position
-game_coordinat& get_player_pos(game& g, const side player) noexcept;
+//game_coordinat& get_player_pos(game& g, const side player) noexcept;
 
 /// Get the time in the game
 const delta_t& get_time(const game& g) noexcept;
@@ -687,6 +687,9 @@ void set_mouse_player_pos(
   game& g,
   const square& s
 );
+
+/// Set the cursor's position
+void set_player_pos(game& g, const game_coordinat& pos, const side player) noexcept;
 
 /// Call game::tick until all pieces are idle
 void tick_until_idle(game& g);

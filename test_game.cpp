@@ -951,8 +951,8 @@ void test_game_functions()
     game g;
     assert(get_keyboard_user_player_color(g) == chess_color::white);
     const auto pos_before{get_player_pos(g, side::lhs)};
-    auto& pos = get_player_pos(g, side::lhs);
-    pos += game_coordinat(0.1, 0.1);
+    const auto pos = get_player_pos(g, side::lhs);
+    set_player_pos(g, pos + game_coordinat(0.1, 0.1), side::lhs);
     const auto pos_after{get_player_pos(g, side::lhs)};
     assert(pos_before != pos_after);
   }
@@ -1073,8 +1073,8 @@ void test_game_functions()
   {
     game g;
     const auto pos_before{get_player_pos(g, side::rhs)};
-    auto& pos = get_player_pos(g, side::rhs);
-    pos += game_coordinat(0.1, 0.1);
+    const auto pos = get_player_pos(g, side::rhs);
+    set_player_pos(g, pos + game_coordinat(0.1, 0.1), side::rhs);
     const auto pos_after{get_player_pos(g, side::rhs)};
     assert(pos_before != pos_after);
   }
@@ -1104,7 +1104,7 @@ void test_game_keyboard_use()
   {
     game g;
     const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
-    get_player_pos(g, side::lhs) = to_coordinat(white_king.get_current_square());
+    set_player_pos(g, to_coordinat(white_king.get_current_square()), side::lhs);
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_user_input(create_press_action_1(side::lhs));
     g.tick();
