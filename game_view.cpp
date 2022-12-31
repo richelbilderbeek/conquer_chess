@@ -363,6 +363,8 @@ void show_controls(game_view& view, const side player)
   std::vector<std::string> key_descriptions(4);
   if (is_mouse_user)
   {
+    key_descriptions[maybe_mouse_user_selector.value().get_number() - 1] = "LMB";
+    key_descriptions[get_next(maybe_mouse_user_selector.value()).get_number() - 1] = "RMB";
   }
   else
   {
@@ -418,9 +420,11 @@ void show_controls(game_view& view, const side player)
       // The text there
       sf::Text text;
       text.setFont(view.get_resources().get_futuristic_font());
-      text.setString(
-        to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(number))
-      );
+      text.setString(key_descriptions[key - 1]);
+      //key_descriptions
+      //text.setString(
+      //  to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(number))
+      //);
       text.setCharacterSize(get_height(corner_rect) * 2 / 3);
       text.setPosition(
         corner_rect.get_tl().get_x() + 2,
