@@ -666,9 +666,9 @@ void test_game_functions()
     {
       game g;
       move_cursor_to(g, "d1", side::lhs);
-      assert(get_player_pos(g, side::lhs) == to_coordinat(square("d1")));
+      assert(get_cursor_pos(g, side::lhs) == to_coordinat(square("d1")));
       move_cursor_to(g, "f6", side::rhs);
-      assert(get_player_pos(g, side::rhs) == to_coordinat(square("f6")));
+      assert(get_cursor_pos(g, side::rhs) == to_coordinat(square("f6")));
     }
     // 53: nothing selected, cursor at empty square -> no action
     {
@@ -950,10 +950,10 @@ void test_game_functions()
   {
     game g;
     assert(get_keyboard_user_player_color(g) == chess_color::white);
-    const auto pos_before{get_player_pos(g, side::lhs)};
-    const auto pos = get_player_pos(g, side::lhs);
+    const auto pos_before{get_cursor_pos(g, side::lhs)};
+    const auto pos = get_cursor_pos(g, side::lhs);
     set_player_pos(g, pos + game_coordinat(0.1, 0.1), side::lhs);
-    const auto pos_after{get_player_pos(g, side::lhs)};
+    const auto pos_after{get_cursor_pos(g, side::lhs)};
     assert(pos_before != pos_after);
   }
   // get_layout
@@ -1072,10 +1072,10 @@ void test_game_functions()
   // get_mouse_player_pos
   {
     game g;
-    const auto pos_before{get_player_pos(g, side::rhs)};
-    const auto pos = get_player_pos(g, side::rhs);
+    const auto pos_before{get_cursor_pos(g, side::rhs)};
+    const auto pos = get_cursor_pos(g, side::rhs);
     set_player_pos(g, pos + game_coordinat(0.1, 0.1), side::rhs);
-    const auto pos_after{get_player_pos(g, side::rhs)};
+    const auto pos_after{get_cursor_pos(g, side::rhs)};
     assert(pos_before != pos_after);
   }
   // toggle_left_player_color

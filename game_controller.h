@@ -16,7 +16,7 @@ public:
   void add_user_input(const user_input& a);
 
   /// Get the player position
-  const game_coordinat& get_player_pos(const side player) const noexcept;
+  const game_coordinat& get_cursor_pos(const side player) const noexcept;
 
   /// Get the game users' inputs
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }

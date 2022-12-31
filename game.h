@@ -428,13 +428,13 @@ const physical_controller& get_controller(const game& g, const side player);
 physical_controller_type get_controller_type(const game& g, const side player);
 
 /// Get the cursor position for a chess color
-game_coordinat get_cursor_pos(
+const game_coordinat& get_cursor_pos(
   const game& g,
   const chess_color c
 );
 
 /// Get the cursor position for a player
-game_coordinat get_cursor_pos(
+const game_coordinat& get_cursor_pos(
   const game& g,
   const side player_side
 );
@@ -569,9 +569,6 @@ std::vector<piece>& get_pieces(game& g) noexcept;
 
 /// Get all the pieces
 const std::vector<piece>& get_pieces(const game& g) noexcept;
-
-/// Get the player position
-const game_coordinat& get_player_pos(const game& g, const side player) noexcept;
 
 /// Get the time in the game
 const delta_t& get_time(const game& g) noexcept;

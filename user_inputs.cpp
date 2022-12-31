@@ -244,7 +244,7 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
 )
 {
   assert(get_controller_type(g, player_side) == physical_controller_type::keyboard);
-  const square from{get_player_pos(g, player_side)};
+  const square from{get_cursor_pos(g, player_side)};
   return get_user_inputs_to_move_cursor_from_to(
     g,
     from,
@@ -309,7 +309,7 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square cursor{square(get_player_pos(g, player_side))};
+  const square cursor{square(get_cursor_pos(g, player_side))};
   const bool is_promotion_to_queen{
        is_piece_at(g, cursor)
     && get_piece_at(g, cursor).get_color() == player_color
@@ -412,7 +412,7 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
   // 'start_move_unit' will check for piece, color, etc.
   start_move_unit(
     g,
-    get_player_pos(g, action.get_player()),
+    get_cursor_pos(g, action.get_player()),
     get_player_color(g, action.get_player())
   );
 }
@@ -426,7 +426,7 @@ void process_press_action_2(game& g, const user_input& action)
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square to{square(get_player_pos(g, player_side))};
+  const square to{square(get_cursor_pos(g, player_side))};
 
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
@@ -452,7 +452,7 @@ void process_press_action_2(game& g, const user_input& action)
   }
   start_attack(
     g,
-    get_player_pos(g, action.get_player()),
+    get_cursor_pos(g, action.get_player()),
     get_player_color(g, action.get_player())
   );
 }
@@ -466,7 +466,7 @@ void process_press_action_3(game& g, const user_input& action)
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square to{square(get_player_pos(g, player_side))};
+  const square to{square(get_cursor_pos(g, player_side))};
 
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
@@ -516,7 +516,7 @@ void process_press_action_4(game& g, const user_input& action)
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square to{square(get_player_pos(g, player_side))};
+  const square to{square(get_cursor_pos(g, player_side))};
 
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
@@ -579,22 +579,22 @@ void user_inputs::process(game& g)
     }
     else if (action.get_user_input_type() == user_input_type::press_down)
     {
-      const auto pos{get_player_pos(g, action.get_player())};
+      const auto pos{get_cursor_pos(g, action.get_player())};
       set_player_pos(g, get_below(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_left)
     {
-      const auto pos{get_player_pos(g, action.get_player())};
+      const auto pos{get_cursor_pos(g, action.get_player())};
       set_player_pos(g, get_left(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_right)
     {
-      const auto pos{get_player_pos(g, action.get_player())};
+      const auto pos{get_cursor_pos(g, action.get_player())};
       set_player_pos(g, get_right(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_up)
     {
-      const auto pos{get_player_pos(g, action.get_player())};
+      const auto pos{get_cursor_pos(g, action.get_player())};
       set_player_pos(g, get_above(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::mouse_move)
@@ -622,7 +622,7 @@ void user_inputs::process(game& g)
       {
         start_move_unit(
           g,
-          get_player_pos(g, action.get_player()),
+          get_cursor_pos(g, action.get_player()),
           get_player_color(g, action.get_player())
         );
       }
@@ -731,41 +731,41 @@ void test_user_inputs()
   // Move up does something
   {
     game g;
-    const game_coordinat before{get_player_pos(g, side::lhs)};
+    const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_up_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_player_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move right does something
   {
     game g;
-    const game_coordinat before{get_player_pos(g, side::lhs)};
+    const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_right_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_player_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move down does something
   {
     game g;
-    const game_coordinat before{get_player_pos(g, side::lhs)};
+    const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_down_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_player_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move left does something
   {
     game g;
-    const game_coordinat before{get_player_pos(g, side::lhs)};
+    const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_left_action(side::lhs));
     c.process(g);
-    const game_coordinat after{get_player_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
   // 37: operator<< for no actions
@@ -788,14 +788,14 @@ void test_user_inputs()
   // 64: move white's cursor to e2
   {
     game g;
-    assert(square(get_player_pos(g, side::lhs)) != square("e2"));
+    assert(square(get_cursor_pos(g, side::lhs)) != square("e2"));
     const auto inputs{
       get_user_inputs_to_move_cursor_to(g, square("e2"), side::lhs)
     };
     assert(!inputs.empty());
     add_user_inputs(g, inputs);
     g.tick(delta_t(0.0));
-    assert(square(get_player_pos(g, side::lhs)) == square("e2"));
+    assert(square(get_cursor_pos(g, side::lhs)) == square("e2"));
   }
   // 64: move white's cursor to e2 and select the pawn
   {

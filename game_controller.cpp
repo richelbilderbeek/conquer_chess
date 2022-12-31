@@ -18,7 +18,7 @@ void game_controller::add_user_input(const user_input& a)
   m_user_inputs.add(a);
 }
 
-const game_coordinat& game_controller::get_player_pos(const side player) const noexcept
+const game_coordinat& game_controller::get_cursor_pos(const side player) const noexcept
 {
   if (player == side::lhs) return m_player_lhs_pos;
   assert(player == side::rhs);
@@ -171,7 +171,7 @@ void test_game_controller_keyboard_use()
     assert(get_keyboard_user_player_side(g) == side::lhs);
     const square s("a1");
     set_keyboard_player_pos(g, s);
-    assert(s == square(get_player_pos(g, get_keyboard_user_player_side(g))));
+    assert(s == square(get_cursor_pos(g, get_keyboard_user_player_side(g))));
   }
   // 47: set_keyboard_player_pos for RHS player
   {
@@ -184,7 +184,7 @@ void test_game_controller_keyboard_use()
     assert(get_keyboard_user_player_side(g) == side::rhs);
     const square s("a1");
     set_keyboard_player_pos(g, s);
-    assert(s == square(get_player_pos(g, get_keyboard_user_player_side(g))));
+    assert(s == square(get_cursor_pos(g, get_keyboard_user_player_side(g))));
   }
 #endif // NDEBUG // no tests in release
 }

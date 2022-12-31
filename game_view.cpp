@@ -177,9 +177,10 @@ chess_color get_player_color(
   return get_player_color(v.get_game(), player);
 }
 
-const game_coordinat& get_player_pos(const game_view& view, const side player) noexcept
+const game_coordinat& get_cursor_pos(const game_view& view, const side player) noexcept
 {
-  return get_player_pos(view.get_game(), player);
+  //return g.get_controller().get_cursor_pos(player);
+  return get_cursor_pos(view.get_game(), player);
 }
 
 std::string get_text_for_action(
@@ -220,7 +221,7 @@ std::string get_text_for_action(
     get_player_color(view, c.get_player())
   };
   const square cursor_pos{
-    get_player_pos(view, c.get_player())
+    get_cursor_pos(view, c.get_player())
   };
   const bool has_selected_units{
     !get_selected_pieces(view.get_game(), player).empty()
@@ -482,7 +483,7 @@ void show_debug(game_view& view, const side player_side)
   sf::Text text;
   text.setFont(view.get_resources().get_arial_font());
   const piece& closest_piece{
-    get_closest_piece_to(game, get_player_pos(game, player_side))
+    get_closest_piece_to(game, get_cursor_pos(game, player_side))
   };
 
   const auto color{get_player_color(view, player_side)};
@@ -490,15 +491,15 @@ void show_debug(game_view& view, const side player_side)
   s << "Color: " << color << '\n'
     << "Controller type: " << get_controller_type(view, player_side) << '\n'
     << "Game position: "
-    << to_notation(get_player_pos(game, player_side))
+    << to_notation(get_cursor_pos(game, player_side))
     << " "
-    << get_player_pos(game, player_side)
+    << get_cursor_pos(game, player_side)
     << '\n'
     << "Screen position: "
-    << convert_to_screen_coordinat(get_player_pos(game, player_side), layout)
+    << convert_to_screen_coordinat(get_cursor_pos(game, player_side), layout)
     << '\n'
     << "Is there a piece here: "
-    << bool_to_str(is_piece_at(game, get_player_pos(game, player_side), 0.5))
+    << bool_to_str(is_piece_at(game, get_cursor_pos(game, player_side), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << to_coordinat(closest_piece.get_current_square()) << '\n'
     << "Number of game actions: " << count_user_inputs(game) << '\n'
@@ -535,7 +536,7 @@ void game_view::show_mouse_cursor()
   cursor.setOrigin(16.0, 16.0);
   const screen_coordinat cursor_pos{
     convert_to_screen_coordinat(
-      get_player_pos(m_game, side::rhs),
+      get_cursor_pos(m_game, side::rhs),
       layout
     )
   };
@@ -720,9 +721,9 @@ void show_square_under_cursor(
 {
   const auto& game = view.get_game();
   const auto& layout = game.get_layout();
-  const int x{static_cast<int>(std::trunc(get_player_pos(game, player).get_x()))};
+  const int x{static_cast<int>(std::trunc(get_cursor_pos(game, player).get_x()))};
   if (x < 0 || x >= 8) return;
-  const int y{static_cast<int>(std::trunc(get_player_pos(game, player).get_y()))};
+  const int y{static_cast<int>(std::trunc(get_cursor_pos(game, player).get_y()))};
   if (y < 0 || y >= 8) return;
 
   assert(x >= 0 && x < 8 && y >= 0 && y < 8);
