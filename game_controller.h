@@ -36,7 +36,17 @@ private:
 
   /// The user inputs that need to be processed
   user_inputs m_user_inputs;
-
 };
+
+/// Test this class and its free functions
+void test_game_controller();
+
+/// Test the \link{game_controller} class
+/// and its free functions, for keyboard use
+void test_game_controller_keyboard_use();
+
+/// Test the \link{game_controller} class
+/// and its free functions, for mouse use
+void test_game_controller_mouse_use();
 
 #endif // GAME_CONTROLLER_H
