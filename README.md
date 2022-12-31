@@ -23,6 +23,8 @@ See [FAQ](FAQ.md)
 
 ## Screenshots
 
+![](screenshots/20221231_1.png)
+
 ![](screenshots/20221224_1.png)
 
 ![](screenshots/20220816_1.png)
