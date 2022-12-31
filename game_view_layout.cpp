@@ -372,7 +372,7 @@ void test_game_view_layout()
     const game_view_layout layout;
     for (const auto player: get_all_sides())
     {
-      for (int key{1}; key<=4; ++key)
+      for (const auto& key: get_all_action_numbers())
       {
         assert(layout.get_controls_key(player, key).get_br().get_x() >= 0);
       }
@@ -466,10 +466,10 @@ std::ostream& operator<<(std::ostream& os, const game_view_layout& layout) noexc
     s
       << side << " units: " << layout.get_units(side) << '\n'
       << side << " controls: " << layout.get_controls(side) << '\n'
-      << side << " controls key 1: " << layout.get_controls_key(side, 1) << '\n'
-      << side << " controls key 2: " << layout.get_controls_key(side, 2) << '\n'
-      << side << " controls key 3: " << layout.get_controls_key(side, 3) << '\n'
-      << side << " controls key 4: " << layout.get_controls_key(side, 4) << '\n'
+      << side << " controls key 1: " << layout.get_controls_key(side, action_number(1)) << '\n'
+      << side << " controls key 2: " << layout.get_controls_key(side, action_number(2)) << '\n'
+      << side << " controls key 3: " << layout.get_controls_key(side, action_number(3)) << '\n'
+      << side << " controls key 4: " << layout.get_controls_key(side, action_number(4)) << '\n'
       << side << " log: " << layout.get_log(side) << '\n'
       << side << " debug: " << layout.get_debug(side) << '\n'
     ;
