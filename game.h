@@ -26,11 +26,8 @@ public:
   /// Add a user input. These will be processed in 'tick'
   void add_user_input(const user_input a);
 
-  /// Get the game actions
+  /// Get the game user inputs
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
-
-  /// Get the game actions
-  auto& get_user_inputs() noexcept { return m_user_inputs; }
 
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
