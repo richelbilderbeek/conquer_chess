@@ -17,6 +17,7 @@ HEADERS += \
     $$PWD/delta_t.h \
     $$PWD/fps_clock.h \
     $$PWD/game.h \
+    $$PWD/game_controller.h \
     $$PWD/game_coordinat.h \
     $$PWD/game_log.h \
     $$PWD/game_options.h \
@@ -75,6 +76,7 @@ SOURCES += \
     $$PWD/delta_t.cpp \
     $$PWD/fps_clock.cpp \
     $$PWD/game.cpp \
+    $$PWD/game_controller.cpp \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_log.cpp \
     $$PWD/game_options.cpp \

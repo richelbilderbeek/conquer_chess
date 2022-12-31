@@ -6,6 +6,7 @@
 #include "game_coordinat.h"
 #include "game_options.h"
 #include "game_view_layout.h"
+#include "game_controller.h"
 #include "pieces.h"
 #include "message.h"
 #include "replayer.h"
@@ -16,6 +17,11 @@
 
 /// Contains the game logic.
 /// All data types used by this class are STL and/or Boost
+///
+/// This class is part of an MVC Design Pattern:
+///  * Model: \link{game}
+///  * View: \link{game_view}
+///  * Controller: \link{game_controller}
 class game
 {
 public:
@@ -26,20 +32,22 @@ public:
   /// Add a user input. These will be processed in 'tick'
   void add_user_input(const user_input a);
 
-  /// Get the game user inputs
+  /// Get the Controller of game.
+  const game_controller& get_controller() const noexcept { return m_controller; }
+
+  /// Get the Controller of game.
+  game_controller& get_controller() noexcept { return m_controller; }
+
+  /// Get the game users' inputs
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
-  /// Get the layout of the screen
+  /// Get the layout of the screen.
+  /// If the screen is resized by the operating system,
+  /// this member needs to be updated.
   auto& get_layout() noexcept { return m_layout; }
-
-  /// Get the player position
-  const game_coordinat& get_player_pos(const side player) const noexcept;
-
-  /// Get the player position
-  game_coordinat& get_player_pos(const side player) noexcept;
 
   /// Get the game options
   auto& get_options() noexcept { return m_options; }
@@ -69,11 +77,8 @@ private:
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
 
-  /// The in-game coordinat of the LHS user's cursor
-  game_coordinat m_player_lhs_pos;
-
-  /// The in-game coordinat of the RHS user's cursor
-  game_coordinat m_player_rhs_pos;
+  /// The Controller of game
+  game_controller m_controller;
 
   /// The game options
   game_options m_options;

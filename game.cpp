@@ -21,8 +21,6 @@ game::game(
 )
   : m_user_inputs{},
     m_layout{options.get_screen_size(), options.get_margin_width()},
-    m_player_lhs_pos{0.5, 4.5},
-    m_player_rhs_pos{7.5, 4.5},
     m_options{options},
     m_pieces{get_starting_pieces(options)},
     m_replayer{options.get_replayer()},
@@ -1588,28 +1586,15 @@ side get_player_side(const game& g, const chess_color& color) noexcept
   return side::rhs;
 }
 
-const game_coordinat& game::get_player_pos(const side player) const noexcept
-{
-  if (player == side::lhs) return m_player_lhs_pos;
-  assert(player == side::rhs);
-  return m_player_rhs_pos;
-}
-
-game_coordinat& game::get_player_pos(const side player) noexcept
-{
-  if (player == side::lhs) return m_player_lhs_pos;
-  assert(player == side::rhs);
-  return m_player_rhs_pos;
-}
 
 const game_coordinat& get_player_pos(const game& g, const side player) noexcept
 {
-  return g.get_player_pos(player);
+  return g.get_controller().get_player_pos(player);
 }
 
 game_coordinat& get_player_pos(game& g, const side player) noexcept
 {
-  return g.get_player_pos(player);
+  return g.get_controller().get_player_pos(player);
 }
 
 std::vector<square> get_possible_moves(
@@ -1922,8 +1907,8 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
     << "Control actions: " << g.get_user_inputs() << '\n'
     << "Layout: " << g.get_layout() << '\n'
-    << "LHS player position: " << g.get_player_pos(side::lhs) << '\n'
-    << "RHS player position: " << g.get_player_pos(side::rhs) << '\n'
+    << "LHS player position: " << get_player_pos(g, side::lhs) << '\n'
+    << "RHS player position: " << get_player_pos(g, side::rhs) << '\n'
     << "Options: " << g.get_options() << '\n'
     << "Replayer: " << g.get_replayer()
   ;

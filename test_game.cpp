@@ -666,9 +666,9 @@ void test_game_functions()
     {
       game g;
       move_cursor_to(g, "d1", side::lhs);
-      assert(g.get_player_pos(side::lhs) == to_coordinat(square("d1")));
+      assert(get_player_pos(g, side::lhs) == to_coordinat(square("d1")));
       move_cursor_to(g, "f6", side::rhs);
-      assert(g.get_player_pos(side::rhs) == to_coordinat(square("f6")));
+      assert(get_player_pos(g, side::rhs) == to_coordinat(square("f6")));
     }
     // 53: nothing selected, cursor at empty square -> no action
     {
@@ -1073,7 +1073,7 @@ void test_game_functions()
   {
     game g;
     const auto pos_before{get_player_pos(g, side::rhs)};
-    auto& pos = g.get_player_pos(side::rhs);
+    auto& pos = get_player_pos(g, side::rhs);
     pos += game_coordinat(0.1, 0.1);
     const auto pos_after{get_player_pos(g, side::rhs)};
     assert(pos_before != pos_after);
@@ -1104,7 +1104,7 @@ void test_game_keyboard_use()
   {
     game g;
     const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
-    g.get_player_pos(side::lhs) = to_coordinat(white_king.get_current_square());
+    get_player_pos(g, side::lhs) = to_coordinat(white_king.get_current_square());
     assert(count_selected_units(g, chess_color::white) == 0);
     g.add_user_input(create_press_action_1(side::lhs));
     g.tick();

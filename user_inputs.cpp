@@ -788,14 +788,14 @@ void test_user_inputs()
   // 64: move white's cursor to e2
   {
     game g;
-    assert(square(g.get_player_pos(side::lhs)) != square("e2"));
+    assert(square(get_player_pos(g, side::lhs)) != square("e2"));
     const auto inputs{
       get_user_inputs_to_move_cursor_to(g, square("e2"), side::lhs)
     };
     assert(!inputs.empty());
     add_user_inputs(g, inputs);
     g.tick(delta_t(0.0));
-    assert(square(g.get_player_pos(side::lhs)) == square("e2"));
+    assert(square(get_player_pos(g, side::lhs)) == square("e2"));
   }
   // 64: move white's cursor to e2 and select the pawn
   {
