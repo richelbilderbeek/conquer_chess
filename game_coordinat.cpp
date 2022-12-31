@@ -96,6 +96,16 @@ game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept
   );
 }
 
+bool is_coordinat_on_board(const game_coordinat& c) noexcept
+{
+  return
+       c.get_x() >= 0.0
+    && c.get_x() <  8.0
+    && c.get_y() >= 0.0
+    && c.get_y() <  8.0
+  ;
+}
+
 bool is_forward(
   const chess_color color,
   const square& from,
@@ -191,6 +201,17 @@ void test_game_coordinat()
     const auto rotated{get_rotated_coordinat(c)};
     assert(is_close(rotated.get_x(), 6.5, 0.1));
     assert(is_close(rotated.get_y(), 5.5, 0.1));
+  }
+  // is_coordinat_on_board
+  {
+    assert(is_coordinat_on_board(game_coordinat()));
+    assert(is_coordinat_on_board(game_coordinat(1.2, 3.4)));
+    assert(is_coordinat_on_board(game_coordinat(4.0, 4.0)));
+    assert(!is_coordinat_on_board(game_coordinat(-4.0, 4.0)));
+    assert(!is_coordinat_on_board(game_coordinat(4.0, -4.0)));
+    assert(!is_coordinat_on_board(game_coordinat(-4.0, -4.0)));
+    assert(!is_coordinat_on_board(game_coordinat(400.0, 4.0)));
+    assert(!is_coordinat_on_board(game_coordinat(4.0, 400.0)));
   }
   // to_notation
   {

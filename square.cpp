@@ -23,7 +23,8 @@ square::square(const game_coordinat& g)
   : m_x{static_cast<int>(std::trunc(g.get_x()))},
     m_y{static_cast<int>(std::trunc(g.get_y()))}
 {
-  assert(is_valid_square_xy(m_x, m_y));
+  assert(is_coordinat_on_board(g)); // Test the input
+  assert(is_valid_square_xy(m_x, m_y)); //
 }
 
 square::square(const int x, const int y)

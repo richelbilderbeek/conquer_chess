@@ -68,6 +68,11 @@ game_coordinat get_right(const game_coordinat& coordinat) noexcept;
 /// i.e. turn the board 180 degrees
 game_coordinat get_rotated_coordinat(const game_coordinat& coordinat) noexcept;
 
+/// Determine if the coordinat is on the chess board.
+/// Any game_coordinat that is on the board can be
+/// converted to a square.
+bool is_coordinat_on_board(const game_coordinat& c) noexcept;
+
 /// Is the 'to' coordinat forward,
 /// i.e. at a rank forward,
 /// i.e. can a pawn move/attack in that direction?
