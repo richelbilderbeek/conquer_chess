@@ -196,7 +196,8 @@ void do_select_and_move_piece(
 {
   do_select(g, from_square_str, player_side);
   move_cursor_to(g, to_square_str, player_side);
-  g.add_user_input(
+  add_user_input(
+    g,
     get_user_input_to_select(g, player_side)
   );
   g.tick(delta_t(0.0));
@@ -211,7 +212,7 @@ user_input get_user_input_to_do_action_1(
   const side player_side
 )
 {
-  if (get_controller_type(g, player_side) == controller_type::keyboard)
+  if (get_controller_type(g, player_side) == physical_controller_type::keyboard)
   {
     return create_press_action_1(player_side);
   }
@@ -226,7 +227,7 @@ user_input get_user_input_to_select(
   const side player_side
 )
 {
-  if (get_controller_type(g, player_side) == controller_type::keyboard)
+  if (get_controller_type(g, player_side) == physical_controller_type::keyboard)
   {
     return create_press_action_1(player_side);
   }
@@ -242,7 +243,7 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
   const side player_side
 )
 {
-  assert(get_controller_type(g, player_side) == controller_type::keyboard);
+  assert(get_controller_type(g, player_side) == physical_controller_type::keyboard);
   const square from{get_player_pos(g, player_side)};
   return get_user_inputs_to_move_cursor_from_to(
     g,
@@ -261,7 +262,7 @@ std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
 {
   assert(
     g.get_options().get_controller(player_side).get_type()
-    == controller_type::keyboard
+    == physical_controller_type::keyboard
   );
   const int n_right{(to.get_x() - from.get_x() + 8) % 8};
   const int n_down{(to.get_y() - from.get_y() + 8) % 8};
@@ -802,7 +803,7 @@ void test_user_inputs()
     move_cursor_to(g, "e2", side::lhs);
     assert(!get_piece_at(g, "e2").is_selected());
     const user_input input{get_user_input_to_select(g, side::lhs)};
-    g.add_user_input(input);
+    add_user_input(g, input);
     g.tick(delta_t(0.0));
     assert(get_piece_at(g, "e2").is_selected());
   }
@@ -814,9 +815,9 @@ user_inputs to_user_inputs(const piece_action& pa, const game& g)
 {
   const auto player_color{pa.get_color()};
   const side player_side{get_player_side(g, player_color)};
-  const controller c{get_controller(g, player_side)};
+  const physical_controller c{get_controller(g, player_side)};
   const user_input_type select_action_type{
-    c.get_type() == controller_type::mouse ?
+    c.get_type() == physical_controller_type::mouse ?
     user_input_type::lmb_down :
     user_input_type::press_down
   };

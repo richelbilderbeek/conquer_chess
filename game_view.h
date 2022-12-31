@@ -4,7 +4,7 @@
 #ifndef LOGIC_ONLY
 
 #include "ccfwd.h"
-#include "controller.h"
+#include "physical_controller.h"
 #include "game.h"
 #include "fps_clock.h"
 #include "game_log.h"
@@ -47,7 +47,7 @@ private:
   sf::Clock m_clock;
 
   /// The controllers, e.g. a keyboard and a mouse player
-  std::vector<controller> m_controllers;
+  std::vector<physical_controller> m_controllers;
 
   /// The FPS clock
   fps_clock m_fps_clock;
@@ -94,15 +94,15 @@ sf::RectangleShape create_white_square(game_view& view);
 bool do_show_selected(const game_view& view);
 
 /// Get the controller for a certain side
-const controller& get_controller(const game_view& view, const side player);
+const physical_controller& get_controller(const game_view& view, const side player);
 
 /// Get the controller type for a certain side
-controller_type get_controller_type(const game_view& view, const side player);
+physical_controller_type get_controller_type(const game_view& view, const side player);
 
 /// Get the controls text for a player with a controller
 std::string get_controls_text(
   const game_view& view,
-  const controller& c,
+  const physical_controller& c,
   const int key
 );
 
@@ -139,7 +139,7 @@ const game_coordinat& get_player_pos(const game_view& view, const side player) n
 /// 'LMB\nSelect' for a mouse player that has nothing selected'
 std::string get_text_for_action(
   const game_view& view,
-  const controller& c,
+  const physical_controller& c,
   const int key
 );
 

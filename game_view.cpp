@@ -2,8 +2,8 @@
 
 #ifndef LOGIC_ONLY
 
-#include "controller.h"
-#include "controllers.h"
+#include "physical_controller.h"
+#include "physical_controllers.h"
 #include "user_input_type.h"
 #include "game.h"
 #include "game_resources.h"
@@ -104,19 +104,19 @@ const auto& game_view::get_controller(const side player) const noexcept
   return m_controllers[1];
 }
 
-const controller& get_controller(const game_view& view, const side player_side)
+const physical_controller& get_controller(const game_view& view, const side player_side)
 {
   return get_controller(view.get_game(), player_side);
 }
 
-controller_type get_controller_type(const game_view& view, const side player_side)
+physical_controller_type get_controller_type(const game_view& view, const side player_side)
 {
   return get_controller(view, player_side).get_type();
 }
 
 std::string get_controls_text(
   const game_view& view,
-  const controller& c,
+  const physical_controller& c,
   const int key
 )
 {
@@ -184,7 +184,7 @@ const game_coordinat& get_player_pos(const game_view& view, const side player) n
 
 std::string get_text_for_action(
   const game_view& view,
-  const controller& c,
+  const physical_controller& c,
   const int key
 )
 {
@@ -302,7 +302,7 @@ void process_event(game& g, const sf::Event& event)
   {
      for (const auto a: controller.process_input(event, g))
      {
-       g.add_user_input(a);
+       add_user_input(g, a);
      }
   }
 }

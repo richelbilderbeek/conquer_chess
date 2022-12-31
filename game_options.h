@@ -1,8 +1,8 @@
 #ifndef GAME_OPTIONS_H
 #define GAME_OPTIONS_H
 
-#include "controller.h"
-#include "controller_type.h"
+#include "physical_controller.h"
+#include "physical_controller_type.h"
 #include "delta_t.h"
 #include "piece.h"
 #include "screen_coordinat.h"
@@ -20,7 +20,7 @@ class game_options
 public:
   explicit game_options(
     const screen_coordinat& screen_size,
-    const std::vector<controller>& controllers,
+    const std::vector<physical_controller>& controllers,
     const starting_position_type starting_position,
     const game_speed speed,
     const int margin_width
@@ -38,7 +38,7 @@ public:
 
   const auto& get_controllers() const noexcept { return m_controllers; }
 
-  const controller& get_controller(const side& player) const;
+  const physical_controller& get_controller(const side& player) const;
 
   /// Get the damage per chess move that all pieces deal
   auto get_damage_per_chess_move() const noexcept { return 1.0; }
@@ -71,7 +71,7 @@ public:
   const volume& get_sound_effects_volume() const noexcept { return m_sound_effects_volume; }
 
   /// Set the controller for a player
-  void set_controller(const controller& c, const side player);
+  void set_controller(const physical_controller& c, const side player);
 
   /// Set the game speed
   void set_game_speed(const game_speed speed) noexcept { m_game_speed = speed; }
@@ -97,7 +97,7 @@ private:
   /// for a click to connect to a piece
   double m_click_distance;
 
-  std::vector<controller> m_controllers;
+  std::vector<physical_controller> m_controllers;
 
   /// The game speed
   game_speed m_game_speed;
@@ -130,14 +130,14 @@ game_options create_default_game_options() noexcept;
 
 /// Create the default game options, yet for different controllers
 game_options create_default_game_options_with_controllers(
-  const std::vector<controller>& controllers
+  const std::vector<physical_controller>& controllers
 );
 
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& options) noexcept;
 
 /// Get the controller for a certain side
-const controller& get_controller(const game_options& options, const side player);
+const physical_controller& get_controller(const game_options& options, const side player);
 
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
@@ -154,7 +154,7 @@ sf::Keyboard::Key get_key_for_action(const game_options& options, const side pla
 chess_color get_left_player_color(const game_options& options) noexcept;
 
 /// Get the controller of the left player
-controller_type get_left_player_controller(const game_options& options) noexcept;
+physical_controller_type get_left_player_controller(const game_options& options) noexcept;
 
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse
@@ -177,7 +177,7 @@ chess_color get_player_color(
 ) noexcept;
 
 /// Get the controller of a player
-controller_type get_player_controller(
+physical_controller_type get_player_controller(
   const game_options& options,
   const side player
 ) noexcept;
@@ -187,7 +187,7 @@ controller_type get_player_controller(
 chess_color get_right_player_color(const game_options& options) noexcept;
 
 /// Get the controller of the right player
-controller_type get_right_player_controller(const game_options& options) noexcept;
+physical_controller_type get_right_player_controller(const game_options& options) noexcept;
 
 /// Get the sound effects volume
 const volume& get_sound_effects_volume(const game_options& options) noexcept;

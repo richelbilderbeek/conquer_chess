@@ -1,39 +1,39 @@
-#include "controllers.h"
+#include "physical_controllers.h"
 
 #include <algorithm>
 #include <cassert>
 
-int count_keyboard_controllers(const std::vector<controller>& controllers) noexcept
+int count_keyboard_controllers(const std::vector<physical_controller>& controllers) noexcept
 {
   return std::count_if(
     std::begin(controllers),
     std::end(controllers),
     [](const auto& c)
     {
-      return c.get_type() == controller_type::keyboard;
+      return c.get_type() == physical_controller_type::keyboard;
     }
   );
 }
 
-int count_mouse_controllers(const std::vector<controller>& controllers) noexcept
+int count_mouse_controllers(const std::vector<physical_controller>& controllers) noexcept
 {
   return std::count_if(
     std::begin(controllers),
     std::end(controllers),
     [](const auto& c)
     {
-      return c.get_type() == controller_type::mouse;
+      return c.get_type() == physical_controller_type::mouse;
     }
   );
 }
 
 
-std::vector<controller> create_default_controllers() noexcept
+std::vector<physical_controller> create_default_controllers() noexcept
 {
   return create_keyboard_mouse_controllers();
 }
 
-std::vector<controller> create_keyboard_mouse_controllers() noexcept
+std::vector<physical_controller> create_keyboard_mouse_controllers() noexcept
 {
   return
   {
@@ -42,7 +42,7 @@ std::vector<controller> create_keyboard_mouse_controllers() noexcept
   };
 }
 
-std::vector<controller> create_mouse_keyboard_controllers() noexcept
+std::vector<physical_controller> create_mouse_keyboard_controllers() noexcept
 {
   return
   {
@@ -51,7 +51,7 @@ std::vector<controller> create_mouse_keyboard_controllers() noexcept
   };
 }
 
-std::vector<controller> create_two_keyboard_controllers() noexcept
+std::vector<physical_controller> create_two_keyboard_controllers() noexcept
 {
   return
   {
@@ -60,7 +60,7 @@ std::vector<controller> create_two_keyboard_controllers() noexcept
   };
 }
 
-side get_keyboard_user_player_side(const std::vector<controller>& controllers)
+side get_keyboard_user_player_side(const std::vector<physical_controller>& controllers)
 {
   assert(has_keyboard_controller(controllers));
   const auto i{
@@ -69,7 +69,7 @@ side get_keyboard_user_player_side(const std::vector<controller>& controllers)
       std::end(controllers),
       [](const auto& c)
       {
-        return c.get_type() == controller_type::keyboard;
+        return c.get_type() == physical_controller_type::keyboard;
       }
     )
   };
@@ -77,7 +77,7 @@ side get_keyboard_user_player_side(const std::vector<controller>& controllers)
   return (*i).get_player();
 }
 
-side get_mouse_user_player_side(const std::vector<controller>& controllers)
+side get_mouse_user_player_side(const std::vector<physical_controller>& controllers)
 {
   assert(has_mouse_controller(controllers));
   const auto i{
@@ -86,7 +86,7 @@ side get_mouse_user_player_side(const std::vector<controller>& controllers)
       std::end(controllers),
       [](const auto& c)
       {
-        return c.get_type() == controller_type::mouse;
+        return c.get_type() == physical_controller_type::mouse;
       }
     )
   };
@@ -94,12 +94,12 @@ side get_mouse_user_player_side(const std::vector<controller>& controllers)
   return (*i).get_player();
 }
 
-bool has_keyboard_controller(const std::vector<controller>& controllers) noexcept
+bool has_keyboard_controller(const std::vector<physical_controller>& controllers) noexcept
 {
   return count_keyboard_controllers(controllers);
 }
 
-bool has_mouse_controller(const std::vector<controller>& controllers) noexcept
+bool has_mouse_controller(const std::vector<physical_controller>& controllers) noexcept
 {
   return count_mouse_controllers(controllers);
 }

@@ -9,9 +9,6 @@ HEADERS += \
     $$PWD/ccfwd.h \
     $$PWD/chess_color.h \
     $$PWD/chess_move.h \
-    $$PWD/controller.h \
-    $$PWD/controller_type.h \
-    $$PWD/controllers.h \
     $$PWD/controls_view_item.h \
     $$PWD/controls_view_layout.h \
     $$PWD/delta_t.h \
@@ -36,6 +33,9 @@ HEADERS += \
     $$PWD/options_view_item.h \
     $$PWD/options_view_layout.h \
     $$PWD/pgn_string.h \
+    $$PWD/physical_controller.h \
+    $$PWD/physical_controller_type.h \
+    $$PWD/physical_controllers.h \
     $$PWD/piece.h \
     $$PWD/piece_action.h \
     $$PWD/piece_action_type.h \
@@ -68,9 +68,6 @@ SOURCES += \
     $$PWD/castling_type.cpp \
     $$PWD/chess_color.cpp \
     $$PWD/chess_move.cpp \
-    $$PWD/controller.cpp \
-    $$PWD/controller_type.cpp \
-    $$PWD/controllers.cpp \
     $$PWD/controls_view_item.cpp \
     $$PWD/controls_view_layout.cpp \
     $$PWD/delta_t.cpp \
@@ -95,6 +92,9 @@ SOURCES += \
     $$PWD/options_view_item.cpp \
     $$PWD/options_view_layout.cpp \
     $$PWD/pgn_string.cpp \
+    $$PWD/physical_controller.cpp \
+    $$PWD/physical_controller_type.cpp \
+    $$PWD/physical_controllers.cpp \
     $$PWD/piece.cpp \
     $$PWD/piece_action.cpp \
     $$PWD/piece_action_type.cpp \

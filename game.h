@@ -29,17 +29,11 @@ public:
     const game_options& options = create_default_game_options()
   );
 
-  /// Add a user input. These will be processed in 'tick'
-  void add_user_input(const user_input a);
-
   /// Get the Controller of game.
   const game_controller& get_controller() const noexcept { return m_controller; }
 
   /// Get the Controller of game.
   game_controller& get_controller() noexcept { return m_controller; }
-
-  /// Get the game users' inputs
-  const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
@@ -72,8 +66,6 @@ public:
 
 private:
 
-  user_inputs m_user_inputs;
-
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
 
@@ -94,6 +86,9 @@ private:
 
   friend void test_game();
 };
+
+/// Add zero, one or more user_inputs
+void add_user_input(game& g, const user_input& input) noexcept;
 
 /// Add zero, one or more user_inputs
 void add_user_inputs(game& g, const std::vector<user_input>& inputs) noexcept;
@@ -427,10 +422,10 @@ const piece& get_closest_piece_to(const game& g, const game_coordinat& coordinat
 piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
 
 /// Get the controller for a certain side
-const controller& get_controller(const game& g, const side player);
+const physical_controller& get_controller(const game& g, const side player);
 
 /// Get the controller type for a certain side
-controller_type get_controller_type(const game& g, const side player);
+physical_controller_type get_controller_type(const game& g, const side player);
 
 /// Get the cursor position for a chess color
 game_coordinat get_cursor_pos(
@@ -462,7 +457,7 @@ std::optional<piece_action_type> get_default_piece_action(
 
 /// Create a game with all default settings
 /// and a specific set of controllers
-game get_game_with_controllers(const std::vector<controller>& c) noexcept;
+game get_game_with_controllers(const std::vector<physical_controller>& c) noexcept;
 
 /// Create a game with all default settings
 /// and a specific starting position
@@ -578,11 +573,11 @@ const std::vector<piece>& get_pieces(const game& g) noexcept;
 /// Get the player position
 const game_coordinat& get_player_pos(const game& g, const side player) noexcept;
 
-/// Get the player position
-//game_coordinat& get_player_pos(game& g, const side player) noexcept;
-
 /// Get the time in the game
 const delta_t& get_time(const game& g) noexcept;
+
+/// Get the game users' inputs
+const user_inputs& get_user_inputs(const game& g) noexcept;
 
 /// See if there is at least 1 piece selected
 /// @param g a game

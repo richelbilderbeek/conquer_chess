@@ -11,7 +11,7 @@
 #include <cmath>
 #include <iostream>
 
-controls_view::controls_view(const controller& c)
+controls_view::controls_view(const physical_controller& c)
   : m_controller(c),
     m_selected{controls_view_item::type}
 {
@@ -263,7 +263,7 @@ void show_keyboard_panel(controls_view& v)
     std::make_pair(layout.get_action_4_label(), "4")
   };
   const bool is_active{
-    v.get_controller().get_type() == controller_type::keyboard
+    v.get_controller().get_type() == physical_controller_type::keyboard
   };
   chess_color color{chess_color::black};
   for (const auto& p: labels)
@@ -300,7 +300,7 @@ void show_mouse_panel(controls_view& v)
     std::make_pair(layout.get_next_label(), "next")
   };
   const bool is_active{
-    v.get_controller().get_type() == controller_type::mouse
+    v.get_controller().get_type() == physical_controller_type::mouse
   };
   chess_color color{chess_color::black};
   for (const auto& p: labels)

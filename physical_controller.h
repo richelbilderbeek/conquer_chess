@@ -1,21 +1,21 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#ifndef PHYSICAL_CONTROLLER_H
+#define PHYSICAL_CONTROLLER_H
 
 #include "key_bindings.h"
 #include "user_input.h"
-#include "controller_type.h"
+#include "physical_controller_type.h"
 
 #include <iosfwd>
 
-/// A controller is a class that takes input from
-/// a mouse/keyboard/AI and converts these into
+/// A physical controller is a class that takes input from
+/// a mouse or keyboard and converts these into
 /// the right 'user_input'.
 /// sf::Event -> controllers -> user_input
-class controller
+class physical_controller
 {
 public:
-  explicit controller(
-    const controller_type type,
+  explicit physical_controller(
+    const physical_controller_type type,
     const side player,
     const key_bindings& ks
   );
@@ -26,7 +26,7 @@ public:
   /// Get the side this controller is on
   side get_player() const noexcept { return m_player; }
 
-  const controller_type& get_type() const noexcept { return m_type; }
+  const physical_controller_type& get_type() const noexcept { return m_type; }
 
   /// Process the input for this controller.
   /// Returns an an empty vector if this controller is uneffected by the event
@@ -36,7 +36,7 @@ public:
    const game& g
  ) const;
 
-  void set_type(const controller_type t) noexcept { m_type = t; }
+  void set_type(const physical_controller_type t) noexcept { m_type = t; }
 
 private:
 
@@ -45,7 +45,7 @@ private:
 
   side m_player;
 
-  controller_type m_type;
+  physical_controller_type m_type;
 
   /// Process a key press from a keyboard
   std::vector<user_input> process_key_press(
@@ -66,17 +66,17 @@ private:
 
 /// Create a default keyboard controller,
 /// which is the left keyboard controller
-controller create_default_keyboard_controller(const side player) noexcept;
+physical_controller create_default_keyboard_controller(const side player) noexcept;
 
 /// Create a mouse controller
-controller create_default_mouse_controller(const side player) noexcept;
+physical_controller create_default_mouse_controller(const side player) noexcept;
 
 /// Create an sf::Event with type sf::Event::KeyPressed
 sf::Event create_key_pressed_event(const sf::Keyboard::Key k);
 
 /// Create a keyboard controller
 /// for a user at the left side of the keyboard
-controller create_left_keyboard_controller(const side player) noexcept;
+physical_controller create_left_keyboard_controller(const side player) noexcept;
 
 /// Create an sf::Event with type sf::Event::MouseButtonPressed
 sf::Event create_mouse_button_pressed_event(
@@ -90,17 +90,17 @@ sf::Event create_mouse_moved_event(const screen_coordinat& cursor_pos);
 
 /// Create a keyboard controller
 /// for a user at the right side of the keyboard
-controller create_right_keyboard_controller(const side player) noexcept;
+physical_controller create_right_keyboard_controller(const side player) noexcept;
 
 /// Get the key for a action 1, 2, 3 or 4 for a controller
-sf::Keyboard::Key get_key_for_action(const controller& c, const int action);
+sf::Keyboard::Key get_key_for_action(const physical_controller& c, const int action);
 
 /// Get the text for action 1, 2, 3 or 4, e.g.
 /// 'Q\nSelect' for a keyboard player that has nothing selected
 /// 'E\nAttack' for a keyboard player that has a piece select
 /// 'LMB\nSelect' for a mouse player that has nothing selected'
 std::string get_text_for_action(
-  const controller& c,
+  const physical_controller& c,
   const bool has_selected_units,
   const bool is_promoting_pawn,
   const bool is_king_that_may_castle_kingside,
@@ -111,9 +111,9 @@ std::string get_text_for_action(
 /// Test this class and its free functions
 void test_controller();
 
-bool operator==(const controller& lhs, const controller& rhs) noexcept;
-bool operator!=(const controller& lhs, const controller& rhs) noexcept;
+bool operator==(const physical_controller& lhs, const physical_controller& rhs) noexcept;
+bool operator!=(const physical_controller& lhs, const physical_controller& rhs) noexcept;
 
-std::ostream& operator<<(std::ostream& os, const controller& c) noexcept;
+std::ostream& operator<<(std::ostream& os, const physical_controller& c) noexcept;
 
-#endif // CONTROLLER_H
+#endif // PHYSICAL_CONTROLLER_H

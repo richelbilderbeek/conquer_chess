@@ -4,7 +4,7 @@
 #ifndef LOGIC_ONLY
 
 #include <SFML/Graphics.hpp>
-#include "controller.h"
+#include "physical_controller.h"
 #include "game_resources.h"
 #include "controls_view_layout.h"
 #include "controls_view_item.h"
@@ -12,7 +12,7 @@
 class controls_view
 {
 public:
-  controls_view(const controller& c);
+  controls_view(const physical_controller& c);
 
   /// Run the menu, until the user quits
   void exec();
@@ -40,7 +40,7 @@ private:
   sf::RenderWindow m_window;
 
   /// The controller
-  controller m_controller;
+  physical_controller m_controller;
 
   /// Resources
   game_resources m_resources;

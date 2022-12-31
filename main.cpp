@@ -8,8 +8,8 @@
 #include "played_game_view_layout.h"
 #include "controls_view_item.h"
 #include "controls_view_layout.h"
-#include "controller.h"
-#include "controllers.h"
+#include "physical_controller.h"
+#include "physical_controllers.h"
 #include "fps_clock.h"
 #include "game.h"
 #include "game_log.h"
@@ -50,7 +50,7 @@ void test()
   test_control_action_type();
   test_user_inputs();
   test_controller();
-  test_controller_type();
+  test_physical_controller_type();
   test_controllers();
   test_controls_view_item();
   test_controls_view_layout();

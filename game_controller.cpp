@@ -9,6 +9,12 @@ game_controller::game_controller()
 
 }
 
+void game_controller::add_user_input(const user_input& a)
+{
+  // These will be processed in 'tick'
+  m_user_inputs.add(a);
+}
+
 const game_coordinat& game_controller::get_player_pos(const side player) const noexcept
 {
   if (player == side::lhs) return m_player_lhs_pos;

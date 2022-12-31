@@ -1,53 +1,53 @@
-#ifndef CONTROLLERS_H
-#define CONTROLLERS_H
+#ifndef PHYSICAL_CONTROLLERS_H
+#define PHYSICAL_CONTROLLERS_H
 
 #include "chess_color.h"
-#include "controller.h"
+#include "physical_controller.h"
 #include <vector>
 
-// Work on more controllers
+// Work on more physical controllers
 
 /// Count the number of controllers that use the keyboard
-int count_keyboard_controllers(const std::vector<controller>& controllers) noexcept;
+int count_keyboard_controllers(const std::vector<physical_controller>& controllers) noexcept;
 
 /// Count the number of controllers that use the keyboard
-int count_mouse_controllers(const std::vector<controller>& controllers) noexcept;
+int count_mouse_controllers(const std::vector<physical_controller>& controllers) noexcept;
 
 /// Get a keyboard and a mouse controller.
 /// @see use \link{create_two_keyboard_controllers}
 /// to create two keyboard controllers
-std::vector<controller> create_default_controllers() noexcept;
+std::vector<physical_controller> create_default_controllers() noexcept;
 
 /// Get two controllers,
 /// where LHS player uses keyboard,
 /// and RHS player uses mouse
-std::vector<controller> create_keyboard_mouse_controllers() noexcept;
+std::vector<physical_controller> create_keyboard_mouse_controllers() noexcept;
 
 /// Get two controllers,
 /// where LHS player uses mouse,
 /// and RHS player uses keyboard
-std::vector<controller> create_mouse_keyboard_controllers() noexcept;
+std::vector<physical_controller> create_mouse_keyboard_controllers() noexcept;
 
 /// Get two keyboard controllers.
 /// @see use \link{create_default_controllers}
 /// to create the defaults one-keyboard-one-mouse controllers
-std::vector<controller> create_two_keyboard_controllers() noexcept;
+std::vector<physical_controller> create_two_keyboard_controllers() noexcept;
 
 /// Get the side of the controller that uses the keyboard.
 /// Assumes there is one controller that uses the keyboard
-side get_keyboard_user_player_side(const std::vector<controller>& controllers);
+side get_keyboard_user_player_side(const std::vector<physical_controller>& controllers);
 
 /// Get the side of the controller that uses the mouse.
 /// Assumes there is one controller that uses the mouse
-side get_mouse_user_player_side(const std::vector<controller>& controllers);
+side get_mouse_user_player_side(const std::vector<physical_controller>& controllers);
 
 /// Determine if there is at least one controller that use the keyboard
-bool has_keyboard_controller(const std::vector<controller>& controllers) noexcept;
+bool has_keyboard_controller(const std::vector<physical_controller>& controllers) noexcept;
 
 /// Determine if there is at least one controller that use the mouse
-bool has_mouse_controller(const std::vector<controller>& controllers) noexcept;
+bool has_mouse_controller(const std::vector<physical_controller>& controllers) noexcept;
 
 /// Test this class and its free functions
 void test_controllers();
 
-#endif // CONTROLLERS_H
+#endif // PHYSICAL_CONTROLLERS_H

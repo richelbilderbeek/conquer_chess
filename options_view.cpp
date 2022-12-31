@@ -2,9 +2,9 @@
 
 #ifndef LOGIC_ONLY
 
-#include "controller.h"
-#include "controllers.h"
-#include "controller_type.h"
+#include "physical_controller.h"
+#include "physical_controllers.h"
+#include "physical_controller_type.h"
 #include "options_view.h"
 
 #include "controls_view.h"
@@ -167,7 +167,7 @@ void options_view::exec()
   }
 }
 
-controller_type get_controller_type(const options_view& v, const side player)
+physical_controller_type get_controller_type(const options_view& v, const side player)
 {
   return v.get_options().get_controller(player).get_type();
 }

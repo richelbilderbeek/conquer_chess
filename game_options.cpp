@@ -1,6 +1,6 @@
 #include "game_options.h"
 
-#include "controllers.h"
+#include "physical_controllers.h"
 #include "game_view_layout.h"
 #include "pieces.h"
 
@@ -10,7 +10,7 @@
 
 game_options::game_options(
   const screen_coordinat& screen_size,
-  const std::vector<controller>& controllers,
+  const std::vector<physical_controller>& controllers,
   const starting_position_type starting_position,
   const game_speed speed,
   const int margin_width
@@ -43,7 +43,7 @@ game_options create_default_game_options() noexcept
 }
 
 game_options create_default_game_options_with_controllers(
-  const std::vector<controller>& controllers
+  const std::vector<physical_controller>& controllers
 )
 {
   return game_options(
@@ -60,7 +60,7 @@ bool do_show_selected(const game_options& options) noexcept
   return options.do_show_selected();
 }
 
-const controller& game_options::get_controller(const side& player) const
+const physical_controller& game_options::get_controller(const side& player) const
 {
   if (player == side::lhs)
   {
@@ -74,7 +74,7 @@ const controller& game_options::get_controller(const side& player) const
   return m_controllers[1];
 }
 
-const controller& get_controller(const game_options& options, const side player)
+const physical_controller& get_controller(const game_options& options, const side player)
 {
   return options.get_controller(player);
 }
@@ -104,7 +104,7 @@ chess_color get_left_player_color(const game_options& options) noexcept
   return options.get_left_player_color();
 }
 
-controller_type get_left_player_controller(const game_options& options) noexcept
+physical_controller_type get_left_player_controller(const game_options& options) noexcept
 {
   assert(options.get_controllers().size() >= 1);
   assert(options.get_controllers()[0].get_player() == side::lhs);
@@ -145,7 +145,7 @@ chess_color get_player_color(
   return get_right_player_color(options);
 }
 
-controller_type get_player_controller(
+physical_controller_type get_player_controller(
   const game_options& options,
   const side player
 ) noexcept
@@ -160,7 +160,7 @@ chess_color get_right_player_color(const game_options& options) noexcept
   return get_other_color(options.get_left_player_color());
 }
 
-controller_type get_right_player_controller(const game_options& options) noexcept
+physical_controller_type get_right_player_controller(const game_options& options) noexcept
 {
   assert(options.get_controllers().size() >= 2);
   assert(options.get_controllers()[1].get_player() == side::rhs);
@@ -201,7 +201,7 @@ starting_position_type get_starting_position(const game_options& options) noexce
   return options.get_starting_position();
 }
 
-void game_options::set_controller(const controller& c, const side player)
+void game_options::set_controller(const physical_controller& c, const side player)
 {
   if (player == side::lhs)
   {
@@ -269,14 +269,14 @@ void test_game_options()
     const auto options{create_default_game_options()};
     assert(get_left_player_color(options) == chess_color::white);
     assert(get_right_player_color(options) == chess_color::black);
-    assert(get_left_player_controller(options) == controller_type::keyboard);
-    assert(get_right_player_controller(options) == controller_type::mouse);
+    assert(get_left_player_controller(options) == physical_controller_type::keyboard);
+    assert(get_right_player_controller(options) == physical_controller_type::mouse);
     assert(get_keyboard_user_player_color(options) == chess_color::white);
     assert(get_mouse_user_player_color(options) == chess_color::black);
     assert(options.do_show_selected() || !options.do_show_selected());
     assert(options.get_click_distance() > 0.0);
-    assert(get_player_controller(options, side::lhs) == controller_type::keyboard);
-    assert(get_player_controller(options, side::rhs) == controller_type::mouse);
+    assert(get_player_controller(options, side::lhs) == physical_controller_type::keyboard);
+    assert(get_player_controller(options, side::rhs) == physical_controller_type::mouse);
     assert(get_player_color(options, side::lhs) == chess_color::white);
     assert(get_player_color(options, side::rhs) == chess_color::black);
   }

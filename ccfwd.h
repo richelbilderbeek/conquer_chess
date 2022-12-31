@@ -3,7 +3,6 @@
 
 /// Conquer Chess forward declarations
 class chess_move;
-class controller;
 class delta_t;
 class game;
 class game_controller;
@@ -21,6 +20,7 @@ class menu_view_layout;
 class message;
 class options_view;
 class options_view_layout;
+class physical_controller;
 class piece;
 class piece_action;
 class replay;
