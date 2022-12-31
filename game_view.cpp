@@ -104,6 +104,11 @@ const auto& game_view::get_controller(const side player) const noexcept
   return m_controllers[1];
 }
 
+const controller& get_controller(const game_view& view, const side player_side)
+{
+  return get_controller(view.get_game(), player_side);
+}
+
 std::string get_controls_text(
   const game_view& view,
   const controller& c,
@@ -465,17 +470,18 @@ void show_controls(game_view& view, const side player)
 
 void show_debug(game_view& view, const side player_side)
 {
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
+  const auto& game{view.get_game()};
+  const auto& layout{game.get_layout()};
   sf::Text text;
   text.setFont(view.get_resources().get_arial_font());
   const piece& closest_piece{
     get_closest_piece_to(game, get_player_pos(game, player_side))
   };
-  const auto color{get_left_player_color(game.get_options())};
+
+  const auto color{get_player_color(view, player_side)};
   std::stringstream s;
   s << "Color: " << color << '\n'
-    << "Controller: " << get_left_player_controller(view.get_game().get_options()) << '\n'
+    << "Controller: " << get_controller(view, player_side) << '\n'
     << "Game position: "
     << to_notation(get_player_pos(game, player_side))
     << " "
