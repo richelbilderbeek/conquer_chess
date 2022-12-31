@@ -485,7 +485,7 @@ chess_color get_keyboard_user_player_color(const game& g);
 side get_keyboard_user_player_side(const game& g);
 
 /// Get the key for action 1, 2, 3 or 4 for a player
-sf::Keyboard::Key get_key_for_action(const game& g, const side player, const int action);
+sf::Keyboard::Key get_key_for_action(const game& g, const side player, const action_number& action);
 
 /// Create a game in which it is only a king versus a king,
 /// to be used in debugging

@@ -330,8 +330,8 @@ void show_controls(game_view& view, const side player)
     sf::Color(255,255,  0),
     sf::Color(128,255,  0)
   };
-  std::optional<action_number> maybe_mouse_user_selector;
   // Determine maybe_mouse_user_selector
+  std::optional<action_number> maybe_mouse_user_selector;
   {
     const auto& physical_controllers{
       view.get_game().get_controller().get_physical_controllers()
@@ -341,6 +341,35 @@ void show_controls(game_view& view, const side player)
     {
       maybe_mouse_user_selector = view.get_game().get_controller().get_mouse_user_selector();
     }
+  }
+  const bool is_mouse_user{maybe_mouse_user_selector.has_value()};
+  std::vector<std::optional<piece_action_type>> maybe_actions(4);
+  {
+    // The default action at key 1
+    const std::optional<piece_action_type> maybe_first_action{
+      get_default_piece_action(view.get_game(), player)
+    };
+    if (maybe_first_action)
+    {
+      maybe_actions[0] = maybe_first_action.value();
+      if (maybe_first_action.value() == piece_action_type::promote_to_queen)
+      {
+         maybe_actions[1] = piece_action_type::promote_to_rook;
+         maybe_actions[2] = piece_action_type::promote_to_bishop;
+         maybe_actions[3] = piece_action_type::promote_to_knight;
+      }
+    }
+  }
+  std::vector<std::string> key_descriptions(4);
+  if (is_mouse_user)
+  {
+  }
+  else
+  {
+    key_descriptions[0] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(1)));
+    key_descriptions[1] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(2)));
+    key_descriptions[2] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(3)));
+    key_descriptions[3] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(4)));
   }
 
   for (const auto& number: get_all_action_numbers())
@@ -355,20 +384,7 @@ void show_controls(game_view& view, const side player)
     view.get_window().draw(background);
 
     // Determine the piece action type
-    std::optional<piece_action_type> maybe_action;
-    {
-      // The default action at key 1
-      const std::optional<piece_action_type> maybe_first_action{
-        get_default_piece_action(view.get_game(), player)
-      };
-      if (maybe_first_action)
-      {
-        if (key == 1) maybe_action = maybe_first_action.value();
-        if (key == 2 && maybe_first_action.value() == piece_action_type::promote_to_queen) maybe_action = piece_action_type::promote_to_rook;
-        if (key == 3 && maybe_first_action.value() == piece_action_type::promote_to_queen) maybe_action = piece_action_type::promote_to_bishop;
-        if (key == 4 && maybe_first_action.value() == piece_action_type::promote_to_queen) maybe_action = piece_action_type::promote_to_knight;
-      }
-    }
+    const auto& maybe_action{maybe_actions[key - 1]};
 
     // Tile that is a sprite
     const bool show_icon{true};
@@ -403,7 +419,7 @@ void show_controls(game_view& view, const side player)
       sf::Text text;
       text.setFont(view.get_resources().get_futuristic_font());
       text.setString(
-        to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(key))
+        to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(number))
       );
       text.setCharacterSize(get_height(corner_rect) * 2 / 3);
       text.setPosition(
@@ -448,7 +464,7 @@ void show_controls(game_view& view, const side player)
     }
   }
   // 46: for the mouse player, draw the selected active action
-  if (maybe_mouse_user_selector)
+  if (is_mouse_user)
   {
     const auto number{maybe_mouse_user_selector.value()};
     // Re-use background tile

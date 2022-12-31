@@ -1,6 +1,7 @@
 #ifndef PHYSICAL_CONTROLLER_H
 #define PHYSICAL_CONTROLLER_H
 
+#include "ccfwd.h"
 #include "key_bindings.h"
 #include "user_input.h"
 #include "physical_controller_type.h"
@@ -93,7 +94,7 @@ sf::Event create_mouse_moved_event(const screen_coordinat& cursor_pos);
 physical_controller create_right_keyboard_controller(const side player) noexcept;
 
 /// Get the key for a action 1, 2, 3 or 4 for a controller
-sf::Keyboard::Key get_key_for_action(const physical_controller& c, const int action);
+sf::Keyboard::Key get_key_for_action(const physical_controller& c, const action_number& action);
 
 /// Get the text for action 1, 2, 3 or 4, e.g.
 /// 'Q\nSelect' for a keyboard player that has nothing selected
@@ -105,7 +106,7 @@ std::string get_text_for_action(
   const bool is_promoting_pawn,
   const bool is_king_that_may_castle_kingside,
   const bool is_king_that_may_castle_queenside,
-  const int action_key_number
+  const action_number& action_key_number
 ) noexcept;
 
 /// Test this class and its free functions

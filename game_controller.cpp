@@ -15,7 +15,7 @@ game_controller::game_controller(
 {
   if (has_mouse_controller(m_physical_controllers))
   {
-    m_mouse_user_selector = 1;
+    m_mouse_user_selector = action_number(1);
   }
 
 }

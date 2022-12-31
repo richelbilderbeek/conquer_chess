@@ -1481,10 +1481,8 @@ side get_keyboard_user_player_side(const game& g)
 }
 
 
-sf::Keyboard::Key get_key_for_action(const game& g, const side player, const int action)
+sf::Keyboard::Key get_key_for_action(const game& g, const side player, const action_number& action)
 {
-  assert(action >= 1);
-  assert(action <= 4);
   return get_key_for_action(g.get_options(), player, action);
 }
 

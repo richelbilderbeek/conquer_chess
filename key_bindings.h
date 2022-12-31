@@ -31,7 +31,7 @@ public:
   ) const noexcept;
 
   /// Get the key for action 1, 2, 3 or 4.
-  sf::Keyboard::Key get_key_for_action(const int action) const noexcept;
+  sf::Keyboard::Key get_key_for_action(const action_number& action) const noexcept;
 
   /// Get the key for moving down
   sf::Keyboard::Key get_key_for_move_down() const noexcept { return m_down; }
@@ -61,7 +61,10 @@ key_bindings create_left_keyboard_key_bindings() noexcept;
 key_bindings create_right_keyboard_key_bindings() noexcept;
 
 /// Get the key for a specific action
-sf::Keyboard::Key get_key_for_action(const key_bindings& k, const int action) noexcept;
+sf::Keyboard::Key get_key_for_action(
+  const key_bindings& k,
+  const action_number& action
+) noexcept;
 
 /// Test this class and its free functions
 void test_key_bindings();

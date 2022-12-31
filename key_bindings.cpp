@@ -1,5 +1,7 @@
 #include "key_bindings.h"
 
+#include "action_number.h"
+
 #include <cassert>
 #include <iostream>
 #include <sstream>
@@ -42,19 +44,19 @@ std::vector<user_input_type> key_bindings::create_actions(
   {
     return { user_input_type::press_left };
   }
-  else if (key_pressed == get_key_for_action(1))
+  else if (key_pressed == get_key_for_action(action_number(1)))
   {
     return { user_input_type::press_action_1 };
   }
-  else if (key_pressed == get_key_for_action(2))
+  else if (key_pressed == get_key_for_action(action_number(2)))
   {
     return { user_input_type::press_action_2 };
   }
-  else if (key_pressed == get_key_for_action(3))
+  else if (key_pressed == get_key_for_action(action_number(3)))
   {
     return { user_input_type::press_action_3 };
   }
-  else if (key_pressed == get_key_for_action(4))
+  else if (key_pressed == get_key_for_action(action_number(4)))
   {
     return { user_input_type::press_action_4 };
   }
@@ -90,20 +92,16 @@ key_bindings create_right_keyboard_key_bindings() noexcept
   );
 }
 
-sf::Keyboard::Key key_bindings::get_key_for_action(const int action) const noexcept
+sf::Keyboard::Key key_bindings::get_key_for_action(const action_number& number) const noexcept
 {
-  assert(action >= 1); // Human based counting
-  assert(action <= 4); // Human based counting
-  const int i{action - 1};
+  const int i{number.get_number() - 1};
   assert(i >= 0);
   assert(i < static_cast<int>(m_actions.size()));
   return m_actions[i];
 }
 
-sf::Keyboard::Key get_key_for_action(const key_bindings& k, const int action) noexcept
+sf::Keyboard::Key get_key_for_action(const key_bindings& k, const action_number& action) noexcept
 {
-  assert(action >= 1); // Human based counting
-  assert(action <= 4); // Human based counting
   return k.get_key_for_action(action);
 }
 
@@ -112,9 +110,9 @@ void test_key_bindings()
 #ifndef NDEBUG
   // key_bindings::key_bindings
   {
-    const key_bindings k = create_left_keyboard_key_bindings();
-    assert(k.get_key_for_action(1) != k.get_key_for_action(2));
-    assert(k.get_key_for_action(3) != k.get_key_for_action(4));
+    const key_bindings k{create_left_keyboard_key_bindings()};
+    assert(k.get_key_for_action(action_number(1)) != k.get_key_for_action(action_number(2)));
+    assert(k.get_key_for_action(action_number(3)) != k.get_key_for_action(action_number(4)));
     assert(k.get_key_for_move_up() != k.get_key_for_move_down());
     assert(k.get_key_for_move_left() != k.get_key_for_move_right());
   }
@@ -142,10 +140,10 @@ void test_key_bindings()
 
 bool operator==(const key_bindings& lhs, const key_bindings& rhs) noexcept
 {
-  return lhs.get_key_for_action(1) == rhs.get_key_for_action(1)
-    && lhs.get_key_for_action(2) == rhs.get_key_for_action(2)
-    && lhs.get_key_for_action(3) == rhs.get_key_for_action(3)
-    && lhs.get_key_for_action(4) == rhs.get_key_for_action(4)
+  return lhs.get_key_for_action(action_number(1)) == rhs.get_key_for_action(action_number(1))
+    && lhs.get_key_for_action(action_number(2)) == rhs.get_key_for_action(action_number(2))
+    && lhs.get_key_for_action(action_number(3)) == rhs.get_key_for_action(action_number(3))
+    && lhs.get_key_for_action(action_number(4)) == rhs.get_key_for_action(action_number(4))
     && lhs.get_key_for_move_down() == rhs.get_key_for_move_down()
     && lhs.get_key_for_move_left() == rhs.get_key_for_move_left()
     && lhs.get_key_for_move_right() == rhs.get_key_for_move_right()
@@ -160,10 +158,10 @@ std::ostream& operator<<(std::ostream& os, const key_bindings& keys) noexcept
     << "Key for move right: " << keys.get_key_for_move_right() << '\n'
     << "Key for move down: " << keys.get_key_for_move_down() << '\n'
     << "Key for move left: " << keys.get_key_for_move_left() << '\n'
-    << "Key for action 1: " << keys.get_key_for_action(1) << '\n'
-    << "Key for action 2: " << keys.get_key_for_action(2) << '\n'
-    << "Key for action 3: " << keys.get_key_for_action(3) << '\n'
-    << "Key for action 4: " << keys.get_key_for_action(4)
+    << "Key for action 1: " << keys.get_key_for_action(action_number(1)) << '\n'
+    << "Key for action 2: " << keys.get_key_for_action(action_number(2)) << '\n'
+    << "Key for action 3: " << keys.get_key_for_action(action_number(3)) << '\n'
+    << "Key for action 4: " << keys.get_key_for_action(action_number(4))
   ;
   return os;
 }

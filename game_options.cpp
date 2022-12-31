@@ -102,10 +102,12 @@ side get_keyboard_user_player_side(const game_options& options)
   return get_keyboard_user_player_side(options.get_physical_controllers());
 }
 
-sf::Keyboard::Key get_key_for_action(const game_options& options, const side player, const int action)
+sf::Keyboard::Key get_key_for_action(
+  const game_options& options,
+  const side player,
+  const action_number& action
+)
 {
-  assert(action >= 1);
-  assert(action <= 4);
   return get_key_for_action(options.get_physical_controller(player), action);
 }
 

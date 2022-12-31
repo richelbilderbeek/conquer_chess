@@ -89,22 +89,22 @@ void controls_view::exec()
 
 std::string get_key_str_for_action_1(const controls_view& v)
 {
-  return to_str(v.get_controller().get_key_bindings().get_key_for_action(1));
+  return to_str(v.get_controller().get_key_bindings().get_key_for_action(action_number(1)));
 }
 
 std::string get_key_str_for_action_2(const controls_view& v)
 {
-  return to_str(v.get_controller().get_key_bindings().get_key_for_action(2));
+  return to_str(v.get_controller().get_key_bindings().get_key_for_action(action_number(2)));
 }
 
 std::string get_key_str_for_action_3(const controls_view& v)
 {
-  return to_str(v.get_controller().get_key_bindings().get_key_for_action(3));
+  return to_str(v.get_controller().get_key_bindings().get_key_for_action(action_number(3)));
 }
 
 std::string get_key_str_for_action_4(const controls_view& v)
 {
-  return to_str(v.get_controller().get_key_bindings().get_key_for_action(4));
+  return to_str(v.get_controller().get_key_bindings().get_key_for_action(action_number(4)));
 }
 
 std::string get_key_str_for_do(const controls_view& /* v */)

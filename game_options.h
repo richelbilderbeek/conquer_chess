@@ -156,7 +156,7 @@ chess_color get_keyboard_user_player_color(const game_options& options);
 side get_keyboard_user_player_side(const game_options& options);
 
 /// Get the key for a action 1, 2, 3 or 4 for a player
-sf::Keyboard::Key get_key_for_action(const game_options& options, const side player, const int action);
+sf::Keyboard::Key get_key_for_action(const game_options& options, const side player, const action_number& action);
 
 /// Get the color of the left player
 chess_color get_left_player_color(const game_options& options) noexcept;
