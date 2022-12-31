@@ -110,12 +110,6 @@ void show_pieces(
       rect.get_tl().get_x() + static_cast<int>(game_pos.get_x() * square_width),
       rect.get_tl().get_y() + static_cast<int>(game_pos.get_y() * square_height),
     };
-    /*
-    const auto screen_position = convert_to_screen_coordinat(
-      to_coordinat(piece.get_current_square()) + game_coordinat(0.0, 0.1),
-      layout
-    );
-    */
     sprite.setPosition(
       screen_position.get_x(),
       screen_position.get_y()

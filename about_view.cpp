@@ -139,25 +139,6 @@ void show_text_panel(about_view& v)
     screen_rect,
     v.get_resources()
   );
-  /*
-  show_pieces(
-    get_standard_starting_pieces(),
-    v.get_window(),
-    screen_rect,
-    v.get_resources(),
-    false
-  );
-  */
-
-  /*
-  sf::RectangleShape rectangle;
-  set_rect(rectangle, screen_rect);
-  rectangle.setTexture(
-    &get_strip(v.get_resources(), chess_color::white)
-  );
-  v.get_window().draw(rectangle);
-  */
-
   std::stringstream s;
   s
     << "Conquer Chess\n"

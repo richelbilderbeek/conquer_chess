@@ -103,19 +103,6 @@ delta_t to_delta_t(const game_speed speed) noexcept
 std::string to_str(const game_speed speed) noexcept
 {
   return std::string(magic_enum::enum_name(speed));
-  /*
-  switch (speed)
-  {
-    case game_speed::fastest: return "fastest";
-    case game_speed::fast: return "fast";
-    case game_speed::normal: return "normal";
-    case game_speed::slow: return "slow";
-    default:
-    case game_speed::slowest:
-      assert(speed == game_speed::slowest);
-      return "slowest";
-  }
-  */
 }
 
 

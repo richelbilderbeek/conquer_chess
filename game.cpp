@@ -1184,17 +1184,6 @@ void do_select_and_start_attack_keyboard_player_piece(
 void do_select_for_keyboard_player(game& g, const square& s)
 {
   return do_select(g, s, get_keyboard_user_player_color(g));
-  /*
-  assert(has_keyboard_controller(g.get_options()));
-  assert(is_piece_at(g, s));
-  assert(!get_piece_at(g, s).is_selected());
-  set_keyboard_player_pos(g, s);
-  assert(square(get_cursor_pos(g, get_keyboard_user_player_side(g))) == s);
-  g.add_action(create_press_action_1(get_keyboard_user_player_side(g)));
-  g.tick(delta_t(0.0));
-  assert(count_user_inputs(g) == 0);
-  assert(get_piece_at(g, s).is_selected());
-  */
 }
 
 void do_select_for_mouse_player(game& g, const square& s)
@@ -1583,13 +1572,6 @@ side get_player_side(const game& g, const chess_color& color) noexcept
   assert(get_player_color(g, side::rhs) == color);
   return side::rhs;
 }
-
-/*
-const game_coordinat& get_cursor_pos(const game& g, const side player) noexcept
-{
-  return g.get_controller().get_cursor_pos(player);
-}
-*/
 
 std::vector<square> get_possible_moves(
   const game& g,

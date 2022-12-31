@@ -295,15 +295,6 @@ square get_occupied_square(const piece& p) noexcept
   return p.get_current_square();
 }
 
-/*
-piece get_rotated_piece(const piece& p) noexcept
-{
-  piece q = p;
-  q.set_current_square(get_rotated_square(p.get_current_square()));
-  return q;
-}
-*/
-
 piece get_test_white_king() noexcept
 {
   return piece(

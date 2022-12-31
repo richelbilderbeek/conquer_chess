@@ -663,23 +663,6 @@ void start_attack(
       {
         p.add_message(message_type::cannot);
       }
-      /*
-      if (from != to)
-      {
-        // No shift, so all current actions are void
-        clear_actions(p);
-
-        p.add_action(
-          piece_action(
-            p.get_color(),
-            p.get_type(),
-            piece_action_type::attack,
-            square(from),
-            square(to)
-          )
-        );
-      }
-      */
     }
   }
   unselect_all_pieces(g, player_color);
