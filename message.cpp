@@ -86,6 +86,9 @@ std::string to_str(const message& m) noexcept
     case message_type::select:
       s << m.get_color() << " " << m.get_piece_type() << " selected";
       break;
+    case message_type::unselect:
+      s << m.get_color() << " " << m.get_piece_type() << " unselected";
+      break;
     case message_type::start_move:
       s << m.get_color() << " " << m.get_piece_type() << " starts moving";
       break;

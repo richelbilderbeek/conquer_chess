@@ -106,6 +106,9 @@ void sound_effects::play(const message& effect)
       }
       break;
     }
+    case message_type::unselect:
+      m_hide.play();
+      break;
     case message_type::select:
     {
       switch (piece_type)

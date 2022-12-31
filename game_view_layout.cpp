@@ -17,7 +17,7 @@ game_view_layout::game_view_layout(
 ) : m_window_size{window_size}
 {
   const int unit_panel_height{100};
-  const int control_panel_height{75};
+  const int control_panel_height{300};
   const int log_panel_height{
     (
       window_size.get_y()
@@ -105,6 +105,8 @@ game_view_layout::game_view_layout(
   assert(get_board_width(*this) == get_board_height(*this));
   assert(get_square_width(*this) == get_square_height(*this));
 
+  const bool arrange_horizontally{false};
+  if (arrange_horizontally)
   {
     const int sz{75};
     m_controls_lhs_key_1 = screen_rect(
@@ -139,6 +141,43 @@ game_view_layout::game_view_layout(
     m_controls_rhs_key_4 = screen_rect(
       m_controls_rhs.get_tl() + screen_coordinat(3 * sz, 0 * sz),
       m_controls_rhs.get_tl() + screen_coordinat(4 * sz, 1 * sz)
+    );
+  }
+  else
+  {
+    const int sz{75};
+    m_controls_lhs_key_1 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(0 * sz, 0 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(4 * sz, 1 * sz)
+    );
+    m_controls_lhs_key_2 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(0 * sz, 1 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(4 * sz, 2 * sz)
+    );
+    m_controls_lhs_key_3 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(0 * sz, 2 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(4 * sz, 3 * sz)
+    );
+    m_controls_lhs_key_4 = screen_rect(
+      m_controls_lhs.get_tl() + screen_coordinat(0 * sz, 3 * sz),
+      m_controls_lhs.get_tl() + screen_coordinat(4 * sz, 4 * sz)
+    );
+
+    m_controls_rhs_key_1 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(0 * sz, 0 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(4 * sz, 1 * sz)
+    );
+    m_controls_rhs_key_2 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(0 * sz, 1 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(4 * sz, 2 * sz)
+    );
+    m_controls_rhs_key_3 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(0 * sz, 2 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(4 * sz, 3 * sz)
+    );
+    m_controls_rhs_key_4 = screen_rect(
+      m_controls_rhs.get_tl() + screen_coordinat(0 * sz, 3 * sz),
+      m_controls_rhs.get_tl() + screen_coordinat(4 * sz, 4 * sz)
     );
   }
 }

@@ -419,12 +419,10 @@ void show_controls(game_view& view, const side player)
 
       // The text there
       sf::Text text;
-      text.setFont(view.get_resources().get_futuristic_font());
+      //text.setFont(view.get_resources().get_futuristic_font());
+      text.setFont(view.get_resources().get_arial_font());
+      text.setFillColor(colors[key - 1]);
       text.setString(key_descriptions[key - 1]);
-      //key_descriptions
-      //text.setString(
-      //  to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(number))
-      //);
       text.setCharacterSize(get_height(corner_rect) * 2 / 3);
       text.setPosition(
         corner_rect.get_tl().get_x() + 2,
@@ -448,14 +446,15 @@ void show_controls(game_view& view, const side player)
 
       // The text there
       sf::Text text;
-      text.setFont(view.get_resources().get_futuristic_font());
+      //text.setFont(view.get_resources().get_futuristic_font());
+      text.setFont(view.get_resources().get_arial_font());
       text.setFillColor(colors[key - 1]);
       if (maybe_action)
       {
-        const std::string s{to_three_char_str(maybe_action.value())};
+        const std::string s{to_str(maybe_action.value())};
         text.setString(s);
         const int font_size{
-          get_width(half_rect) / static_cast<int>(s.size())
+          get_height(half_rect) * 2 / 3
         };
         assert(font_size > 0);
         text.setCharacterSize(font_size);
