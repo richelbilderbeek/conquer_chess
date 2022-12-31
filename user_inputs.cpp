@@ -619,14 +619,16 @@ void user_inputs::process(game& g)
     }
     else if (action.get_user_input_type() == user_input_type::rmb_down)
     {
-      if (has_mouse_controller(g.get_options()))
-      {
-        start_move_unit(
-          g,
-          get_cursor_pos(g, action.get_player()),
-          get_player_color(g, action.get_player())
-        );
-      }
+      const auto maybe_index{
+        g.get_controller().get_mouse_user_selector()
+      };
+      assert(maybe_index);
+      const int index{maybe_index.value()};
+      assert(index >= 1 && index <= 4);
+      const int new_index{(index % 4) + 1};
+      assert(new_index >= 1 && new_index <= 4);
+      assert(new_index > index || new_index == 1);
+      g.get_controller().set_mouse_user_selector(new_index);
     }
   }
   m_user_inputs = std::vector<user_input>();

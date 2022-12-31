@@ -34,6 +34,10 @@ public:
   /// Get the game users' inputs
   auto& get_user_inputs() noexcept { return m_user_inputs; }
 
+  /// Set the selected action for the mouse user.
+  /// Assumes there is a mouse user
+  void set_mouse_user_selector(const int index);
+
   /// Set a player's position
   void set_player_pos(const game_coordinat& pos, const side player) noexcept;
 
