@@ -1550,8 +1550,8 @@ piece& get_piece_that_moves(game& g, const chess_move& move)
     auto& piece{ps[i]};
     if (piece.get_color() != move.get_color()) continue;
     const auto& color{piece.get_color()};
-    assert(move.get_type().size() == 1);
-    if (piece.get_type() != move.get_type()[0]) continue;
+    assert(move.get_type().has_value());
+    if (piece.get_type() != move.get_type().value()) continue;
     const auto& piece_type{piece.get_type()};
     const auto& from{piece.get_current_square()};
     assert(move.get_to().has_value());

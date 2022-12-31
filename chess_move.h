@@ -70,7 +70,7 @@ private:
 
   std::optional<square> m_to;
 
-  std::vector<piece_type> m_type;
+  std::optional<piece_type> m_type;
 
   /// Can be
   ///  * No winner yet: empty
