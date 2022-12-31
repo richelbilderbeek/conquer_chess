@@ -2,6 +2,7 @@
 
 #include "game.h"
 #include "square.h"
+#include "game_coordinat.h"
 #include "piece_actions.h"
 
 #include <cassert>
@@ -243,14 +244,29 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
   const side player_side
 )
 {
-  assert(get_physical_controller_type(g, player_side) == physical_controller_type::keyboard);
-  const square from{get_cursor_pos(g, player_side)};
-  return get_user_inputs_to_move_cursor_from_to(
-    g,
-    from,
-    to,
-    player_side
-  );
+  if (get_physical_controller_type(g, player_side) == physical_controller_type::mouse)
+  {
+    // A mouse user 'just' moves its mouse at the correct position,
+    // regardless of the current cursors' position
+     return {
+       create_mouse_move_action(
+         to_coordinat(to),
+         player_side
+       )
+     };
+  }
+  else
+  {
+    assert(get_physical_controller_type(g, player_side) == physical_controller_type::keyboard);
+    // A keyboard user must move the cursor from its existing position
+    const square from{get_cursor_pos(g, player_side)};
+    return get_user_inputs_to_move_cursor_from_to(
+      g,
+      from,
+      to,
+      player_side
+    );
+  }
 }
 
 std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
@@ -260,23 +276,31 @@ std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
   const side player_side
 )
 {
-
-  assert(
-    get_physical_controller_type(g, player_side)
-    == physical_controller_type::keyboard
-  );
-  const int n_right{(to.get_x() - from.get_x() + 8) % 8};
-  const int n_down{(to.get_y() - from.get_y() + 8) % 8};
-  std::vector<user_input> inputs;
-  for (int i{0}; i!=n_right; ++i)
+  if (get_physical_controller_type(g, player_side) == physical_controller_type::mouse)
   {
-    inputs.push_back(create_press_right_action(player_side));
+    // A mouse user 'just' moves its mouse at the correct position,
+    // regardless of the current cursors' position
+    return get_user_inputs_to_move_cursor_to(g, to, player_side);
   }
-  for (int i{0}; i!=n_down; ++i)
+  else
   {
-    inputs.push_back(create_press_down_action(player_side));
+    assert(
+      get_physical_controller_type(g, player_side)
+      == physical_controller_type::keyboard
+    );
+    const int n_right{(to.get_x() - from.get_x() + 8) % 8};
+    const int n_down{(to.get_y() - from.get_y() + 8) % 8};
+    std::vector<user_input> inputs;
+    for (int i{0}; i!=n_right; ++i)
+    {
+      inputs.push_back(create_press_right_action(player_side));
+    }
+    for (int i{0}; i!=n_down; ++i)
+    {
+      inputs.push_back(create_press_down_action(player_side));
+    }
+    return inputs;
   }
-  return inputs;
 }
 
 bool is_empty(const user_inputs& inputs) noexcept
