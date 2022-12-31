@@ -12,7 +12,7 @@
 include(game.pri)
 include(game_view.pri)
 
-TARGET = search_and_destroy_chess
+TARGET = conquer_chess
 
 # Use the C++ version that all team members can use
 CONFIG += c++17
