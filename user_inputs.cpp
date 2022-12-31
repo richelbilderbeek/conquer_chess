@@ -623,12 +623,9 @@ void user_inputs::process(game& g)
         g.get_controller().get_mouse_user_selector()
       };
       assert(maybe_index);
-      const int index{maybe_index.value()};
-      assert(index >= 1 && index <= 4);
-      const int new_index{(index % 4) + 1};
-      assert(new_index >= 1 && new_index <= 4);
-      assert(new_index > index || new_index == 1);
-      g.get_controller().set_mouse_user_selector(new_index);
+      g.get_controller().set_mouse_user_selector(
+        get_next(maybe_index.value())
+      );
     }
   }
   m_user_inputs = std::vector<user_input>();

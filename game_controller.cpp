@@ -38,12 +38,10 @@ const std::vector<physical_controller>& get_physical_controllers(const game_cont
   return c.get_physical_controllers();
 }
 
-void game_controller::set_mouse_user_selector(const int index)
+void game_controller::set_mouse_user_selector(const action_number& number)
 {
-  assert(index >= 1);
-  assert(index <= 4);
   assert(m_mouse_user_selector.has_value());
-  m_mouse_user_selector = index;
+  m_mouse_user_selector = number;
 }
 
 void game_controller::set_player_pos(

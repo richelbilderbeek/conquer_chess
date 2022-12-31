@@ -2,6 +2,8 @@
 #define GAME_CONTROLLER_H
 
 #include "ccfwd.h"
+#include "action_number.h"
+
 #include "game_coordinat.h"
 #include "side.h"
 #include "user_inputs.h"
@@ -36,7 +38,7 @@ public:
 
   /// Set the selected action for the mouse user.
   /// Assumes there is a mouse user
-  void set_mouse_user_selector(const int index);
+  void set_mouse_user_selector(const action_number& number);
 
   /// Set a player's position
   void set_player_pos(const game_coordinat& pos, const side player) noexcept;
@@ -48,7 +50,7 @@ private:
 
   /// A mouse user selects one of the four actions
   /// (a keyboard user has different keys for that)
-  std::optional<int> m_mouse_user_selector;
+  std::optional<action_number> m_mouse_user_selector;
 
   /// The physical controllers the players use
   std::vector<physical_controller> m_physical_controllers;

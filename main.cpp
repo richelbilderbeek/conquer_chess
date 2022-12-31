@@ -41,6 +41,7 @@
 void test()
 {
 #ifndef NDEBUG
+  test_action_number();
   test_about_view_layout();
   test_action_history();
   test_board_to_text_options();

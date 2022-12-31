@@ -3,6 +3,7 @@ HEADERS += \
     $$PWD/about_view_item.h \
     $$PWD/about_view_layout.h \
     $$PWD/action_history.h \
+    $$PWD/action_number.h \
     $$PWD/board.h \
     $$PWD/board_to_text_options.h \
     $$PWD/castling_type.h \
@@ -63,6 +64,7 @@ SOURCES += \
     $$PWD/about_view_item.cpp \
     $$PWD/about_view_layout.cpp \
     $$PWD/action_history.cpp \
+    $$PWD/action_number.cpp \
     $$PWD/board.cpp \
     $$PWD/board_to_text_options.cpp \
     $$PWD/castling_type.cpp \
