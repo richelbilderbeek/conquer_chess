@@ -112,7 +112,7 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   {
     #ifndef LOGIC_ONLY
 
-    #define USE_TWO_KEYBOARDS
+    //#define USE_TWO_KEYBOARDS
     #ifdef USE_TWO_KEYBOARDS
     const auto options{
       create_default_game_options_with_controllers(

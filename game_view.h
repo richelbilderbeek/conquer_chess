@@ -96,6 +96,9 @@ bool do_show_selected(const game_view& view);
 /// Get the controller for a certain side
 const controller& get_controller(const game_view& view, const side player);
 
+/// Get the controller type for a certain side
+controller_type get_controller_type(const game_view& view, const side player);
+
 /// Get the controls text for a player with a controller
 std::string get_controls_text(
   const game_view& view,
