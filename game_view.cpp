@@ -471,6 +471,8 @@ void show_controls(game_view& view, const side player)
       view.get_window().draw(text);
     }
   }
+  // 46: for the mouse player, draw the selected active action
+
 }
 
 void show_debug(game_view& view, const side player_side)

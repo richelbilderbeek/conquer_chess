@@ -72,10 +72,10 @@ private:
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
 
-  /// The in-game coordinat of the LHS user
+  /// The in-game coordinat of the LHS user's cursor
   game_coordinat m_player_lhs_pos;
 
-  /// The in-game coordinat of the RHS user
+  /// The in-game coordinat of the RHS user's cursor
   game_coordinat m_player_rhs_pos;
 
   /// The game options

@@ -242,10 +242,7 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
   const side player_side
 )
 {
-  assert(
-    g.get_options().get_controller(player_side).get_type()
-    == controller_type::keyboard
-  );
+  assert(get_controller_type(g, player_side) == controller_type::keyboard);
   const square from{get_player_pos(g, player_side)};
   return get_user_inputs_to_move_cursor_from_to(
     g,
