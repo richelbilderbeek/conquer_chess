@@ -66,11 +66,11 @@ public:
 
 private:
 
-  /// The layout of the screen, e.g. the top-left of the sidebar
-  game_view_layout m_layout;
-
   /// The Controller of game
   game_controller m_controller;
+
+  /// The layout of the screen, e.g. the top-left of the sidebar
+  game_view_layout m_layout;
 
   /// The game options
   game_options m_options;
@@ -422,10 +422,13 @@ const piece& get_closest_piece_to(const game& g, const game_coordinat& coordinat
 piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
 
 /// Get the controller for a certain side
-const physical_controller& get_controller(const game& g, const side player);
+const physical_controller& get_physical_controller(const game& g, const side player);
+
+/// Get the physical controllers
+const std::vector<physical_controller>& get_physical_controllers(const game& g);
 
 /// Get the controller type for a certain side
-physical_controller_type get_controller_type(const game& g, const side player);
+physical_controller_type get_physical_controller_type(const game& g, const side player);
 
 /// Get the cursor position for a chess color
 const game_coordinat& get_cursor_pos(

@@ -5,10 +5,18 @@
 
 #include <cassert>
 
-game_controller::game_controller()
+game_controller::game_controller(
+  const std::vector<physical_controller>& physical_controllers
+)
   : m_lhs_cursor_pos{0.5, 4.5},
+    m_mouse_user_selector{},
+    m_physical_controllers{physical_controllers},
     m_rhs_cursor_pos{7.5, 4.5}
 {
+  if (has_mouse_controller(m_physical_controllers))
+  {
+    m_mouse_user_selector = 1;
+  }
 
 }
 
@@ -23,6 +31,11 @@ const game_coordinat& game_controller::get_cursor_pos(const side player) const n
   if (player == side::lhs) return m_lhs_cursor_pos;
   assert(player == side::rhs);
   return m_rhs_cursor_pos;
+}
+
+const std::vector<physical_controller>& get_physical_controllers(const game_controller& c) noexcept
+{
+  return c.get_physical_controllers();
 }
 
 void game_controller::set_player_pos(
@@ -53,6 +66,14 @@ void test_game_controller() //!OCLINT tests may be many
 void test_game_controller_keyboard_use()
 {
 #ifndef NDEBUG // no tests in release
+  // No selected action type square for keyboard users
+  {
+    game_controller g(
+      create_two_keyboard_controllers()
+    );
+
+
+  }
   // Keyboard: select white king
   {
     game g;

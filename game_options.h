@@ -36,10 +36,6 @@ public:
   /// for a click to connect to a piece
   auto get_click_distance() const noexcept { return m_click_distance; }
 
-  const auto& get_controllers() const noexcept { return m_controllers; }
-
-  const physical_controller& get_controller(const side& player) const;
-
   /// Get the damage per chess move that all pieces deal
   auto get_damage_per_chess_move() const noexcept { return 1.0; }
 
@@ -54,6 +50,12 @@ public:
 
   /// How long log messages are displayed
   double get_message_display_time_secs() const noexcept { return 5.0; }
+
+  /// Get the physical controllers
+  const auto& get_physical_controllers() const noexcept { return m_physical_controllers; }
+
+  /// Get the physical controller of a player at a certain side
+  const physical_controller& get_physical_controller(const side& player) const;
 
   /// Get the replay of a match
   const auto& get_replayer() const noexcept { return m_replayer; }
@@ -97,7 +99,7 @@ private:
   /// for a click to connect to a piece
   double m_click_distance;
 
-  std::vector<physical_controller> m_controllers;
+  std::vector<physical_controller> m_physical_controllers;
 
   /// The game speed
   game_speed m_game_speed;
@@ -137,7 +139,13 @@ game_options create_default_game_options_with_controllers(
 bool do_show_selected(const game_options& options) noexcept;
 
 /// Get the controller for a certain side
-const physical_controller& get_controller(const game_options& options, const side player);
+const physical_controller& get_physical_controller(const game_options& options, const side player);
+
+/// Get the controller for a certain side
+physical_controller_type get_physical_controller_type(const game_options& options, const side player);
+
+/// Get the physical controllers
+const std::vector<physical_controller>& get_physical_controllers(const game_options& options);
 
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard

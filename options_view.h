@@ -75,7 +75,7 @@ void draw_panel(
   const chess_color color
 );
 
-physical_controller_type get_controller_type(const options_view& v, const side player);
+physical_controller_type get_physical_controller_type(const options_view& v, const side player);
 
 /// Get the starting position
 starting_position_type get_starting_position(const options_view& v) noexcept;

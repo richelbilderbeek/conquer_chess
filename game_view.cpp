@@ -104,14 +104,14 @@ const auto& game_view::get_controller(const side player) const noexcept
   return m_controllers[1];
 }
 
-const physical_controller& get_controller(const game_view& view, const side player_side)
+const physical_controller& get_physical_controller(const game_view& view, const side player_side)
 {
-  return get_controller(view.get_game(), player_side);
+  return get_physical_controller(view.get_game(), player_side);
 }
 
-physical_controller_type get_controller_type(const game_view& view, const side player_side)
+physical_controller_type get_physical_controller_type(const game_view& view, const side player_side)
 {
-  return get_controller(view, player_side).get_type();
+  return get_physical_controller(view, player_side).get_type();
 }
 
 std::string get_controls_text(
@@ -261,7 +261,7 @@ bool game_view::process_events()
 
 void process_event(game& g, const sf::Event& event)
 {
-  for (const auto& controller: g.get_options().get_controllers())
+  for (const auto& controller: get_physical_controllers(g))
   {
      for (const auto a: controller.process_input(event, g))
      {
@@ -451,7 +451,7 @@ void show_debug(game_view& view, const side player_side)
   const auto color{get_player_color(view, player_side)};
   std::stringstream s;
   s << "Color: " << color << '\n'
-    << "Controller type: " << get_controller_type(view, player_side) << '\n'
+    << "Controller type: " << get_physical_controller_type(view, player_side) << '\n'
     << "Game position: "
     << to_notation(get_cursor_pos(game, player_side))
     << " "

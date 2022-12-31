@@ -212,7 +212,7 @@ user_input get_user_input_to_do_action_1(
   const side player_side
 )
 {
-  if (get_controller_type(g, player_side) == physical_controller_type::keyboard)
+  if (get_physical_controller_type(g, player_side) == physical_controller_type::keyboard)
   {
     return create_press_action_1(player_side);
   }
@@ -227,7 +227,7 @@ user_input get_user_input_to_select(
   const side player_side
 )
 {
-  if (get_controller_type(g, player_side) == physical_controller_type::keyboard)
+  if (get_physical_controller_type(g, player_side) == physical_controller_type::keyboard)
   {
     return create_press_action_1(player_side);
   }
@@ -243,7 +243,7 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
   const side player_side
 )
 {
-  assert(get_controller_type(g, player_side) == physical_controller_type::keyboard);
+  assert(get_physical_controller_type(g, player_side) == physical_controller_type::keyboard);
   const square from{get_cursor_pos(g, player_side)};
   return get_user_inputs_to_move_cursor_from_to(
     g,
@@ -260,8 +260,9 @@ std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
   const side player_side
 )
 {
+
   assert(
-    g.get_options().get_controller(player_side).get_type()
+    get_physical_controller_type(g, player_side)
     == physical_controller_type::keyboard
   );
   const int n_right{(to.get_x() - from.get_x() + 8) % 8};
@@ -798,7 +799,7 @@ user_inputs to_user_inputs(const piece_action& pa, const game& g)
 {
   const auto player_color{pa.get_color()};
   const side player_side{get_player_side(g, player_color)};
-  const physical_controller c{get_controller(g, player_side)};
+  const physical_controller c{get_physical_controller(g, player_side)};
   const user_input_type select_action_type{
     c.get_type() == physical_controller_type::mouse ?
     user_input_type::lmb_down :

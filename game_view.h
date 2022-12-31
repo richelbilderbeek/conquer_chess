@@ -94,10 +94,10 @@ sf::RectangleShape create_white_square(game_view& view);
 bool do_show_selected(const game_view& view);
 
 /// Get the controller for a certain side
-const physical_controller& get_controller(const game_view& view, const side player);
+const physical_controller& get_physical_controller(const game_view& view, const side player);
 
 /// Get the controller type for a certain side
-physical_controller_type get_controller_type(const game_view& view, const side player);
+physical_controller_type get_physical_controller_type(const game_view& view, const side player);
 
 /// Get the controls text for a player with a controller
 std::string get_controls_text(

@@ -9,6 +9,7 @@
 
 #include "controls_view.h"
 #include "screen_coordinat.h"
+#include "game_options.h"
 #include "game_view.h"
 #include "sfml_helper.h"
 
@@ -49,7 +50,7 @@ void options_view::decrease_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::lhs};
-      controls_view v(m_options.get_controller(player));
+      controls_view v(m_options.get_physical_controller(player));
       m_window.setVisible(false);
       v.exec();
       m_options.set_controller(v.get_controller(), player);
@@ -61,7 +62,7 @@ void options_view::decrease_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::rhs};
-      controls_view v(m_options.get_controller(player));
+      controls_view v(m_options.get_physical_controller(player));
       m_window.setVisible(false);
       v.exec();
       m_options.set_controller(v.get_controller(), player);
@@ -99,7 +100,7 @@ void options_view::increase_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::lhs};
-      controls_view v(m_options.get_controller(player));
+      controls_view v(m_options.get_physical_controller(player));
       m_window.setVisible(false);
       v.exec();
       m_options.set_controller(v.get_controller(), player);
@@ -111,7 +112,7 @@ void options_view::increase_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::rhs};
-      controls_view v(m_options.get_controller(player));
+      controls_view v(m_options.get_physical_controller(player));
       m_window.setVisible(false);
       v.exec();
       m_options.set_controller(v.get_controller(), player);
@@ -167,17 +168,15 @@ void options_view::exec()
   }
 }
 
-physical_controller_type get_controller_type(const options_view& v, const side player)
+physical_controller_type get_physical_controller_type(const options_view& v, const side player)
 {
-  return v.get_options().get_controller(player).get_type();
+  return get_physical_controller_type(v.get_options(), player);
 }
 
 starting_position_type get_starting_position(const options_view& v) noexcept
 {
   return get_starting_position(v.get_options());
 }
-
-
 
 bool options_view::process_events()
 {
@@ -405,7 +404,7 @@ void show_bottom_left(options_view& v)
     draw_panel(
       v,
       layout.get_left_controls_value(),
-      to_str(get_controller_type(v, side::lhs)), chess_color::black
+      to_str(get_physical_controller_type(v, side::lhs)), chess_color::black
     );
   }
 }
@@ -443,7 +442,7 @@ void show_bottom_right(options_view& v)
     draw_panel(
       v,
       layout.get_right_controls_value(),
-      to_str(get_controller_type(v, side::rhs)), chess_color::white
+      to_str(get_physical_controller_type(v, side::rhs)), chess_color::white
     );
   }
 }

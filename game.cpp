@@ -19,13 +19,14 @@
 game::game(
   const game_options& options
 )
-  : m_layout{options.get_screen_size(), options.get_margin_width()},
+  : m_controller{options.get_physical_controllers()},
+    m_layout{options.get_screen_size(), options.get_margin_width()},
     m_options{options},
     m_pieces{get_starting_pieces(options)},
     m_replayer{options.get_replayer()},
     m_t{0.0}
 {
-
+  assert(m_options.get_physical_controllers() == m_controller.get_physical_controllers());
 }
 
 void add_user_input(game& g, const user_input& input) noexcept
@@ -1293,14 +1294,23 @@ piece& get_closest_piece_to(
   return g.get_pieces()[get_index_of_closest_piece_to(g, coordinat)];
 }
 
-const physical_controller& get_controller(const game& g, const side player)
+const physical_controller& get_physical_controller(const game& g, const side player)
 {
-  return ::get_controller(g.get_options(), player);
+  return ::get_physical_controller(g.get_options(), player);
 }
 
-physical_controller_type get_controller_type(const game& g, const side player)
+const std::vector<physical_controller>& get_physical_controllers(const game& g)
 {
-  return get_controller(g, player).get_type();
+  assert(
+       get_physical_controllers(g.get_controller())
+    == get_physical_controllers(g.get_options())
+  );
+  return get_physical_controllers(g.get_controller());
+}
+
+physical_controller_type get_physical_controller_type(const game& g, const side player)
+{
+  return get_physical_controller(g, player).get_type();
 }
 
 const game_coordinat& get_cursor_pos(
@@ -1740,13 +1750,13 @@ void move_cursor_to(
   const side player_side
 )
 {
-  if (get_controller_type(g, player_side) == physical_controller_type::keyboard)
+  if (get_physical_controller_type(g, player_side) == physical_controller_type::keyboard)
   {
     move_keyboard_cursor_to(g, s, player_side);
   }
   else
   {
-    assert(get_controller_type(g, player_side) == physical_controller_type::mouse);
+    assert(get_physical_controller_type(g, player_side) == physical_controller_type::mouse);
     move_mouse_cursor_to(g, s, player_side);
   }
   assert(count_user_inputs(g) == 0); // All actions are processed
@@ -1758,8 +1768,9 @@ void move_keyboard_cursor_to(
   const side player_side
 )
 {
+
   assert(
-    g.get_options().get_controller(player_side).get_type()
+    get_physical_controller_type(g, player_side)
     == physical_controller_type::keyboard
   );
   const auto inputs{
@@ -1777,7 +1788,7 @@ void move_mouse_cursor_to(
 )
 {
   assert(
-    g.get_options().get_controller(player_side).get_type()
+    get_physical_controller_type(g, player_side)
     == physical_controller_type::mouse
   );
   set_mouse_player_pos(g, s); // Processes the action
