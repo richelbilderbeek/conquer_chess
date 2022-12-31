@@ -12,10 +12,10 @@ class game_controller
 public:
   game_controller();
 
-  /// Add a user input. These will be processed in 'tick'
+  /// Add a user input. These will be processed in 'game::tick'
   void add_user_input(const user_input& a);
 
-  /// Get the player position
+  /// Get the a player's cursor position
   const game_coordinat& get_cursor_pos(const side player) const noexcept;
 
   /// Get the game users' inputs
@@ -29,10 +29,10 @@ public:
 
 private:
   /// The in-game coordinat of the LHS user's cursor
-  game_coordinat m_player_lhs_pos;
+  game_coordinat m_lhs_cursor_pos;
 
   /// The in-game coordinat of the RHS user's cursor
-  game_coordinat m_player_rhs_pos;
+  game_coordinat m_rhs_cursor_pos;
 
   /// The user inputs that need to be processed
   user_inputs m_user_inputs;
