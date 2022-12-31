@@ -1339,7 +1339,9 @@ square get_cursor_square(
   const side player_side
 )
 {
-  return square(get_cursor_pos(g, player_side));
+  const game_coordinat cursor_pos{get_cursor_pos(g, player_side)};
+  assert(is_coordinat_on_board(cursor_pos));
+  return square(cursor_pos);
 }
 
 game get_default_game() noexcept
@@ -1358,7 +1360,12 @@ std::optional<piece_action_type> get_default_piece_action(
   if (has_selected_pieces(g, player_side))
   {
     // Has selected pieces
-    const auto cursor_square{get_cursor_square(g, player_side)};
+    const game_coordinat cursor_pos{get_cursor_pos(g, player_side)};
+    if (!is_coordinat_on_board(cursor_pos))
+    {
+      return {};
+    }
+    const auto cursor_square{square(cursor_pos)};
     const chess_color player_color{get_player_color(g, player_side)};
 
     if (
