@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <optional>
 #include <iosfwd>
 
 #include "castling_type.h"
@@ -54,7 +55,7 @@ public:
 private:
 
   /// The type of castling. Empty if move is not a castling
-  std::vector<castling_type> m_castling_type;
+  std::optional<castling_type> m_castling_type;
 
   chess_color m_color;
 

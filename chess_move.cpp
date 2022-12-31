@@ -28,12 +28,12 @@ chess_move::chess_move(std::string s, const chess_color color)
   {
     if (s == "O-O")
     {
-      m_castling_type.push_back(castling_type::king_side);
+      m_castling_type = castling_type::king_side;
     }
     else
     {
       assert(s == "O-O-O");
-      m_castling_type.push_back(castling_type::queen_side);
+      m_castling_type = castling_type::queen_side;
     }
   }
 }
@@ -230,7 +230,7 @@ bool is_capture(const chess_move& move) noexcept
 
 bool is_castling(const chess_move& move) noexcept
 {
-  return !move.get_castling_type().empty();
+  return move.get_castling_type().has_value();
 }
 
 bool is_draw(const chess_move& move) noexcept
