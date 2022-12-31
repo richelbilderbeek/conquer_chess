@@ -15,7 +15,7 @@ chess_move::chess_move(std::string s, const chess_color color)
   // Simple 'go to there' move, no 'from'
   if (std::regex_match(s, std::regex("^[BKNQR]?x?[a-h][1-8](=[BKNQR])?(\\?\\?|\\?|\\+|#)?$")))
   {
-    m_to.push_back(get_square(s));
+    m_to = get_square(s);
     m_type.push_back(get_piece_type(s));
     m_is_capture = ::is_capture(s);
     m_promotion_type = ::get_promotion_type(s);
@@ -74,8 +74,8 @@ square get_from_for_bishop(const game& g, const chess_move& m)
     find_pieces(g, piece_type::bishop, m.get_color())
   };
   assert(!pieces.empty());
-  assert(!m.get_to().empty());
-  const square target{m.get_to()[0]};
+  assert(m.get_to().has_value());
+  const square target{m.get_to().value()};
   for (const auto& piece: pieces)
   {
     if (are_on_same_diagonal(piece.get_current_square(), target))
@@ -106,8 +106,8 @@ square get_from_for_knight(const game& g, const chess_move& m)
     find_pieces(g, piece_type::knight, m.get_color())
   };
   assert(!pieces.empty());
-  assert(!m.get_to().empty());
-  const square target{m.get_to()[0]};
+  assert(m.get_to().has_value());
+  const square target{m.get_to().value()};
 
   for (const auto& piece: pieces)
   {
@@ -124,7 +124,9 @@ square get_from_for_pawn(const game& g, const chess_move& m)
   assert(!m.get_type().empty());
   assert(m.get_type()[0] == piece_type::pawn);
   assert(!m.is_capture());
-  const square one_behind{get_behind(m.get_to()[0], m.get_color())};
+  const square one_behind{
+    get_behind(m.get_to().value(), m.get_color())
+  };
   if (is_piece_at(g, one_behind))
   {
     assert(get_piece_at(g, one_behind).get_type() == piece_type::pawn);
@@ -144,8 +146,8 @@ square get_from_for_queen(const game& g, const chess_move& m)
     find_pieces(g, piece_type::queen, m.get_color())
   };
   assert(!pieces.empty());
-  assert(!m.get_to().empty());
-  const square target{m.get_to()[0]};
+  assert(m.get_to().has_value());
+  const square target{m.get_to().value()};
   for (const auto& piece: pieces)
   {
     if (are_on_same_diagonal(piece.get_current_square(), target)
@@ -167,8 +169,8 @@ square get_from_for_rook(const game& g, const chess_move& m)
     find_pieces(g, piece_type::rook, m.get_color())
   };
   assert(!pieces.empty());
-  assert(!m.get_to().empty());
-  const square target{m.get_to()[0]};
+  assert(m.get_to().has_value());
+  const square target{m.get_to().value()};
   for (const auto& piece: pieces)
   {
     if (are_on_same_rank(piece.get_current_square(), target)
@@ -193,7 +195,7 @@ piece_type get_piece_type(const std::string& s)
   return to_piece_type(m.str()[0]);
 }
 
-std::vector<piece_type> get_promotion_type(const std::string& s)
+std::optional<piece_type> get_promotion_type(const std::string& s)
 {
   const std::regex e("=[BKNQR]");
   std::smatch m;
@@ -202,7 +204,7 @@ std::vector<piece_type> get_promotion_type(const std::string& s)
   assert(!m.str().empty());
   assert(m.str().size() == 2);
   assert(m.str()[0] == '=');
-  return { to_piece_type(m.str()[1]) };
+  return to_piece_type(m.str()[1]);
 }
 
 square get_square(const std::string& s)
@@ -240,7 +242,7 @@ bool is_draw(const chess_move& move) noexcept
 
 bool is_promotion(const chess_move& move) noexcept
 {
-  return !move.get_promotion_type().empty();
+  return move.get_promotion_type().has_value();
 }
 
 bool is_simple_move(const chess_move& move) noexcept
@@ -345,63 +347,63 @@ void test_chess_move()
   // '1. e4 e5 2. Qh5 Nc6 3. Bc4 Nf6?? Qxf7# 1-0'
   {
     const chess_move m("e4", chess_color::white);
-    assert(!m.get_to().empty());
-    assert(m.get_to().at(0) == square("e4"));
+    assert(m.get_to().has_value());
+    assert(m.get_to().value() == square("e4"));
     assert(!m.get_type().empty());
-    assert(m.get_type().at(0) == piece_type::pawn);
+    assert(m.get_type()[0] == piece_type::pawn);
     assert(!m.is_capture());
   }
   {
     const chess_move m("e5", chess_color::black);
-    assert(!m.get_to().empty());
-    assert(m.get_to().at(0) == square("e5"));
+    assert(m.get_to().has_value());
+    assert(m.get_to().value() == square("e5"));
     assert(!m.get_type().empty());
     assert(m.get_type().at(0) == piece_type::pawn);
     assert(!m.is_capture());
   }
   {
     const chess_move m("Qh5", chess_color::white);
-    assert(!m.get_to().empty());
-    assert(m.get_to().at(0) == square("h5"));
+    assert(m.get_to().has_value());
+    assert(m.get_to().value() == square("h5"));
     assert(!m.get_type().empty());
     assert(m.get_type().at(0) == piece_type::queen);
     assert(!m.is_capture());
   }
   {
     const chess_move m("Nc6", chess_color::black);
-    assert(!m.get_to().empty());
-    assert(m.get_to().at(0) == square("c6"));
+    assert(m.get_to().has_value());
+    assert(m.get_to().value() == square("c6"));
     assert(!m.get_type().empty());
     assert(m.get_type().at(0) == piece_type::knight);
     assert(!m.is_capture());
   }
   {
     const chess_move m("Bc4", chess_color::white);
-    assert(!m.get_to().empty());
-    assert(m.get_to().at(0) == square("c4"));
+    assert(m.get_to().has_value());
+    assert(m.get_to().value() == square("c4"));
     assert(!m.get_type().empty());
     assert(m.get_type().at(0) == piece_type::bishop);
     assert(!m.is_capture());
   }
   {
     const chess_move m("Nf6??", chess_color::black);
-    assert(!m.get_to().empty());
-    assert(m.get_to().at(0) == square("f6"));
+    assert(m.get_to().has_value());
+    assert(m.get_to().value() == square("f6"));
     assert(!m.get_type().empty());
     assert(m.get_type().at(0) == piece_type::knight);
     assert(!m.is_capture());
   }
   {
     const chess_move m("Qxf7#", chess_color::white);
-    assert(!m.get_to().empty());
-    assert(m.get_to().at(0) == square("f7"));
+    assert(m.get_to().has_value());
+    assert(m.get_to().value() == square("f7"));
     assert(!m.get_type().empty());
     assert(m.get_type().at(0) == piece_type::queen);
     assert(m.is_capture());
   }
   {
     const chess_move m("1-0", chess_color::white);
-    assert(m.get_to().empty());
+    assert(!m.get_to().has_value());
     assert(m.get_type().empty());
     assert(!m.is_capture());
     assert(!m.get_winner().empty());

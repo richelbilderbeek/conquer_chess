@@ -990,12 +990,12 @@ std::vector<user_input> convert_move_to_user_inputs(
   }
   // Move the cursor to target's square
   {
-    assert(!m.get_to().empty());
+    assert(m.get_to().has_value());
     const auto v{
       get_user_inputs_to_move_cursor_from_to(
         g,
         from,
-        m.get_to()[0],
+        m.get_to().value(),
         player_side
       )
     };
@@ -1554,8 +1554,8 @@ piece& get_piece_that_moves(game& g, const chess_move& move)
     if (piece.get_type() != move.get_type()[0]) continue;
     const auto& piece_type{piece.get_type()};
     const auto& from{piece.get_current_square()};
-    assert(move.get_to().size() == 1);
-    const auto& to{move.get_to()[0]};
+    assert(move.get_to().has_value());
+    const auto& to{move.get_to().value()};
     if (can_move(color, piece_type, from, to))
     {
       return piece;

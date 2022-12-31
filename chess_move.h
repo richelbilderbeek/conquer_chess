@@ -43,9 +43,9 @@ public:
   const auto& get_type() const noexcept { return m_type; }
 
   /// Get the winner.
-  /// If this is empty, the game is still on-going.
-  /// If this has 1 element, that color is the winner.
-  /// If this has 2 elements, the game ended in a draw.
+  ///  * If this is empty, the game is still on-going.
+  ///  * If this has 1 element, that color is the winner.
+  ///  * If this has 2 elements, the game ended in a draw.
   const auto& get_winner() const noexcept { return m_winner; }
 
   /// Is this move a capture?
@@ -64,13 +64,18 @@ private:
   /// The original PGN string
   std::string m_pgn_str;
 
-  /// The type of piece a pawn promotes into. Empty if move is not a promotion
-  std::vector<piece_type> m_promotion_type;
+  /// The type of piece a pawn promotes into.
+  /// Empty if move is not a promotion
+  std::optional<piece_type> m_promotion_type;
 
-  std::vector<square> m_to;
+  std::optional<square> m_to;
 
   std::vector<piece_type> m_type;
 
+  /// Can be
+  ///  * No winner yet: empty
+  ///  * One winner: one element
+  ///  * Draw: two elements
   std::vector<chess_color> m_winner;
 
 };
@@ -110,10 +115,10 @@ piece_type get_piece_type(const std::string& pgn_str);
 
 /// Get the type the piece is promoted to.
 /// Will be empty if this is no promotion
-std::vector<piece_type> get_promotion_type(const std::string& pgn_str);
+std::optional<piece_type> get_promotion_type(const std::string& pgn_str);
 
 /// Get the winner from a notation.
-/// Assumes a win ('1-0' or '0-1') or a draw ('1/2-1/2')
+/// Assumes a win ('1-0' or '0-1') or a draw ('1/2-1/2').
 std::vector<chess_color> get_winner(const std::string& pgn_str);
 
 /// Conclude if the move is a capture from a PGN string
