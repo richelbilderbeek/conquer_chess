@@ -330,12 +330,25 @@ void show_controls(game_view& view, const side player)
     sf::Color(255,255,  0),
     sf::Color(128,255,  0)
   };
-
-  for (int key{1}; key<=4; ++key) // Human based counting
+  std::optional<action_number> maybe_mouse_user_selector;
+  // Determine maybe_mouse_user_selector
   {
+    const auto& physical_controllers{
+      view.get_game().get_controller().get_physical_controllers()
+    };
+    if (has_mouse_controller(physical_controllers)
+      && player == get_mouse_user_player_side(physical_controllers))
+    {
+      maybe_mouse_user_selector = view.get_game().get_controller().get_mouse_user_selector();
+    }
+  }
+
+  for (const auto& number: get_all_action_numbers())
+  {
+    const int key{number.get_number()};
     // Background tile
     sf::RectangleShape background;
-    set_rect(background, layout.get_controls_key(player, key));
+    set_rect(background, layout.get_controls_key(player, number));
     background.setFillColor(colors[key - 1]);
     background.setOutlineThickness(1);
     background.setOutlineColor(sf::Color::White);
@@ -362,7 +375,7 @@ void show_controls(game_view& view, const side player)
     if (show_icon)
     {
       sf::RectangleShape sprite;
-      set_rect(sprite, layout.get_controls_key_icon(player, key));
+      set_rect(sprite, layout.get_controls_key_icon(player, number));
       if (maybe_action)
       {
         const piece_action_type action{maybe_action.value()};
@@ -378,7 +391,7 @@ void show_controls(game_view& view, const side player)
       // Draw user input text
       sf::RectangleShape text_background;
       const screen_rect corner_rect{
-        layout.get_controls_key_input(player, key)
+        layout.get_controls_key_input(player, number)
       };
       set_rect(text_background, corner_rect);
       text_background.setFillColor(sf::Color::Black);
@@ -405,7 +418,7 @@ void show_controls(game_view& view, const side player)
       // Draw name of the action
       sf::RectangleShape text_background;
       const screen_rect half_rect{
-        layout.get_controls_key_name(player, key)
+        layout.get_controls_key_name(player, number)
       };
       set_rect(text_background, half_rect);
       text_background.setFillColor(sf::Color::Black);
@@ -435,7 +448,17 @@ void show_controls(game_view& view, const side player)
     }
   }
   // 46: for the mouse player, draw the selected active action
-
+  if (maybe_mouse_user_selector)
+  {
+    const auto number{maybe_mouse_user_selector.value()};
+    // Re-use background tile
+    sf::RectangleShape selector_square;
+    set_rect(selector_square, layout.get_controls_key(player, number));
+    selector_square.setFillColor(sf::Color::Transparent);
+    selector_square.setOutlineThickness(5);
+    selector_square.setOutlineColor(sf::Color::White);
+    view.get_window().draw(selector_square);
+  }
 }
 
 void show_debug(game_view& view, const side player_side)

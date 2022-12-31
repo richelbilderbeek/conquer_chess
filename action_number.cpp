@@ -8,6 +8,18 @@ action_number::action_number(const int number)
   assert(m_number >= 1 && m_number <= 4);
 }
 
+std::vector<action_number> get_all_action_numbers() noexcept
+{
+  std::vector<action_number> v;
+  v.reserve(4);
+  for (int i{1}; i <= 4; ++i)
+  {
+    v.push_back(action_number(i));
+  }
+  assert(v.size() == 4);
+  return v;
+}
+
 action_number get_next(const action_number& n) noexcept
 {
   const int new_number{(n.get_number() % 4) + 1};
@@ -29,6 +41,10 @@ void test_action_number()
   {
     const action_number n(1);
     assert(n.get_number() == 1);
+  }
+  // get_all_action_numbers
+  {
+    assert(get_all_action_numbers().size() == 4);
   }
   // get_next
   {
@@ -54,6 +70,18 @@ void test_action_number()
     assert(d.get_number() == 4);
     assert(e.get_number() == 3);
   }
-
+  // operator==
+  {
+    const action_number a(1);
+    const action_number b(1);
+    const action_number c(2);
+    assert(a == b);
+    assert(!(a == c));
+  }
 #endif // NDEBUG
+}
+
+bool operator==(const action_number& lhs, const action_number& rhs) noexcept
+{
+  return lhs.get_number() == rhs.get_number();
 }

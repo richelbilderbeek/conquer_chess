@@ -1,6 +1,8 @@
 #ifndef ACTION_NUMBER_H
 #define ACTION_NUMBER_H
 
+#include <vector>
+
 /// The index/number of the action,
 /// using human counting.
 /// As there are four actions, an action_number
@@ -8,7 +10,7 @@
 class action_number
 {
 public:
-  action_number(const int number);
+  explicit action_number(const int number);
 
   int get_number() const noexcept { return m_number; }
 
@@ -16,6 +18,9 @@ private:
 
   int m_number;
 };
+
+/// Get all the action_numbers in increasing height
+std::vector<action_number> get_all_action_numbers() noexcept;
 
 /// Get the next action_number,
 /// e.g. when having 2, this will be 3.
@@ -29,5 +34,7 @@ action_number get_previous(const action_number& n) noexcept;
 
 /// Test this class and its members
 void test_action_number();
+
+bool operator==(const action_number& lhs, const action_number& rhs) noexcept;
 
 #endif // ACTION_NUMBER_H

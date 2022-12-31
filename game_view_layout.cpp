@@ -1,5 +1,6 @@
 #include "game_view_layout.h"
 
+#include "action_number.h"
 #include "helper.h"
 #include "game_rect.h"
 #include "game_coordinat.h"
@@ -228,38 +229,39 @@ const screen_rect& game_view_layout::get_controls(const side player) const noexc
 
 const screen_rect& game_view_layout::get_controls_key(
   const side player,
-  const int key
+  const action_number& key
 ) const noexcept
 {
-  assert(key >= 1); // Human based counting
-  assert(key <= 4); // Human based counting
   if (player == side::lhs)
   {
-    switch (key)
+    switch (key.get_number())
     {
       case 1: return m_controls_lhs_key_1;
       case 2: return m_controls_lhs_key_2;
       case 3: return m_controls_lhs_key_3;
       case 4:
         default:
-        assert(key == 4);
+        assert(key.get_number() == 4);
         return m_controls_lhs_key_4;
     }
   }
   assert(player == side::rhs);
-  switch (key)
+  switch (key.get_number())
   {
     case 1: return m_controls_rhs_key_1;
     case 2: return m_controls_rhs_key_2;
     case 3: return m_controls_rhs_key_3;
     case 4:
       default:
-      assert(key == 4);
+      assert(key.get_number() == 4);
       return m_controls_rhs_key_4;
   }
 }
 
-screen_rect game_view_layout::get_controls_key_icon(const side player, const int key) const noexcept
+screen_rect game_view_layout::get_controls_key_icon(
+  const side player,
+  const action_number& key
+) const noexcept
 {
   const auto full_rect{get_controls_key(player, key)};
   const screen_rect corner{
@@ -268,7 +270,10 @@ screen_rect game_view_layout::get_controls_key_icon(const side player, const int
   return corner;
 }
 
-screen_rect game_view_layout::get_controls_key_input(const side player, const int key) const noexcept
+screen_rect game_view_layout::get_controls_key_input(
+  const side player,
+  const action_number& key
+) const noexcept
 {
   const auto full_rect{get_controls_key(player, key)};
   const screen_rect corner{
@@ -277,7 +282,10 @@ screen_rect game_view_layout::get_controls_key_input(const side player, const in
   return corner;
 }
 
-screen_rect game_view_layout::get_controls_key_name(const side player, const int key) const noexcept
+screen_rect game_view_layout::get_controls_key_name(
+  const side player,
+  const action_number& key
+) const noexcept
 {
   const auto full_rect{get_controls_key(player, key)};
   const screen_rect half{
