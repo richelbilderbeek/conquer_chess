@@ -261,7 +261,13 @@ bool game_view::process_events()
 
 void process_event(game& g, const sf::Event& event)
 {
-  for (const auto& controller: get_physical_controllers(g))
+
+  for (const auto& controller:
+    {
+      get_physical_controller(g, side::lhs),
+      get_physical_controller(g, side::rhs),
+    }
+  )
   {
      for (const auto a: controller.process_input(event, g))
      {
@@ -333,11 +339,8 @@ void show_controls(game_view& view, const side player)
   // Determine maybe_mouse_user_selector
   std::optional<action_number> maybe_mouse_user_selector;
   {
-    const auto& physical_controllers{
-      view.get_game().get_controller().get_physical_controllers()
-    };
-    if (has_mouse_controller(physical_controllers)
-      && player == get_mouse_user_player_side(physical_controllers))
+    if (has_mouse_controller(view.get_game().get_controller())
+      && player == get_mouse_user_player_side(view.get_game().get_controller()))
     {
       maybe_mouse_user_selector = view.get_game().get_controller().get_mouse_user_selector();
     }

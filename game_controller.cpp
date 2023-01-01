@@ -33,9 +33,39 @@ const game_coordinat& game_controller::get_cursor_pos(const side player) const n
   return m_rhs_cursor_pos;
 }
 
-const std::vector<physical_controller>& get_physical_controllers(const game_controller& c) noexcept
+side get_mouse_user_player_side(const game_controller& c)
 {
-  return c.get_physical_controllers();
+  assert(has_mouse_controller(c));
+  if (c.get_physical_controller(side::lhs).get_type() == physical_controller_type::mouse)
+  {
+    return side::lhs;
+  }
+  assert(c.get_physical_controller(side::rhs).get_type() == physical_controller_type::mouse);
+  return side::rhs;
+}
+
+const physical_controller& game_controller::get_physical_controller(const side player) const noexcept
+{
+  assert(m_physical_controllers.size() == 2);
+  if (player == side::lhs) return m_physical_controllers[0];
+  assert(player == side::rhs);
+  return m_physical_controllers[1];
+}
+
+const physical_controller& get_physical_controller(
+  const game_controller& c,
+  const side player
+) noexcept
+{
+  return c.get_physical_controller(player);
+}
+
+bool has_mouse_controller(const game_controller& c)
+{
+  return
+       c.get_physical_controller(side::lhs).get_type() == physical_controller_type::mouse
+    || c.get_physical_controller(side::rhs).get_type() == physical_controller_type::mouse
+  ;
 }
 
 void game_controller::set_mouse_user_selector(const action_number& number)
@@ -72,13 +102,12 @@ void test_game_controller() //!OCLINT tests may be many
 void test_game_controller_keyboard_use()
 {
 #ifndef NDEBUG // no tests in release
-  // No selected action type square for keyboard users
+  // has_mouse_controller
   {
     game_controller g(
       create_two_keyboard_controllers()
     );
-
-
+    assert(!has_mouse_controller(g));
   }
   // Keyboard: select white king
   {
@@ -220,6 +249,27 @@ void test_game_controller_keyboard_use()
 void test_game_controller_mouse_use()
 {
 #ifndef NDEBUG // no tests in release
+  // has_mouse_controller
+  {
+    const game_controller g(
+      create_mouse_keyboard_controllers()
+    );
+    assert(has_mouse_controller(g));
+  }
+  // get_mouse_user_player_side, mouse at LHS
+  {
+    const game_controller g(
+      create_mouse_keyboard_controllers()
+    );
+    assert(get_mouse_user_player_side(g) == side::lhs);
+  }
+  // get_mouse_user_player_side, mouse at RHS
+  {
+    const game_controller g(
+      create_keyboard_mouse_controllers()
+    );
+    assert(get_mouse_user_player_side(g) == side::rhs);
+  }
   // Clicking a unit once with LMB selects it
   {
     game g;
@@ -271,4 +321,27 @@ void test_game_controller_mouse_use()
     assert(count_piece_actions(g, chess_color::black) >= 1);
   }
 #endif // NDEBUG // no tests in release
+}
+
+std::ostream& operator<<(std::ostream& os, const game_controller& g) noexcept
+{
+
+  os
+    << "LHS cursor position: " << g.get_cursor_pos(side::lhs) << '\n'
+    << "RHS cursor position: " << g.get_cursor_pos(side::rhs) << '\n'
+    << "LHS player physical controller: " << get_physical_controller(g, side::lhs) << '\n'
+    << "RHS player physical controller: " << get_physical_controller(g, side::rhs) << '\n'
+  ;
+  if (g.get_mouse_user_selector())
+  {
+    os << "Mouse user selector: " << g.get_mouse_user_selector().value() << '\n';
+  }
+  else
+  {
+    os << "Mouse user selector: " << "{}" << '\n';
+  }
+  os
+    << "User inputs: " << g.get_user_inputs() << '\n'
+  ;
+  return os;
 }

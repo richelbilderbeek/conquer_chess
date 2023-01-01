@@ -424,9 +424,6 @@ piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
 /// Get the controller for a certain side
 const physical_controller& get_physical_controller(const game& g, const side player);
 
-/// Get the physical controllers
-const std::vector<physical_controller>& get_physical_controllers(const game& g);
-
 /// Get the controller type for a certain side
 physical_controller_type get_physical_controller_type(const game& g, const side player);
 

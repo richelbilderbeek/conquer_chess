@@ -1,6 +1,8 @@
 #include "action_number.h"
 
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 action_number::action_number(const int number)
   : m_number{number}
@@ -78,10 +80,23 @@ void test_action_number()
     assert(a == b);
     assert(!(a == c));
   }
+  // operator<<
+  {
+    std::stringstream s;
+    const action_number a(1);
+    s << a;
+    assert(!s.str().empty());
+  }
 #endif // NDEBUG
 }
 
 bool operator==(const action_number& lhs, const action_number& rhs) noexcept
 {
   return lhs.get_number() == rhs.get_number();
+}
+
+std::ostream& operator<<(std::ostream& os, const action_number& number) noexcept
+{
+  os << number.get_number();
+  return os;
 }

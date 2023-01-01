@@ -8,6 +8,8 @@
 #include "side.h"
 #include "user_inputs.h"
 
+#include <iosfwd>
+
 /// The class that acts as a controller for \link{game}.
 class game_controller
 {
@@ -31,7 +33,8 @@ public:
   /// Get the game users' inputs
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
-  const auto& get_physical_controllers() const noexcept { return m_physical_controllers; }
+  /// Get a player's physical controller
+  const physical_controller& get_physical_controller(const side player) const noexcept;
 
   /// Get the game users' inputs
   auto& get_user_inputs() noexcept { return m_user_inputs; }
@@ -62,8 +65,17 @@ private:
   user_inputs m_user_inputs;
 };
 
+/// What side does the player with the mouse control?
+side get_mouse_user_player_side(const game_controller& c);
+
 /// Get the physical controllers
-const std::vector<physical_controller>& get_physical_controllers(const game_controller& c) noexcept;
+const physical_controller& get_physical_controller(
+  const game_controller& c,
+  const side player_side
+) noexcept;
+
+/// Is there a player that uses the mouse?
+bool has_mouse_controller(const game_controller& c);
 
 /// Test this class and its free functions
 void test_game_controller();
@@ -75,5 +87,7 @@ void test_game_controller_keyboard_use();
 /// Test the \link{game_controller} class
 /// and its free functions, for mouse use
 void test_game_controller_mouse_use();
+
+std::ostream& operator<<(std::ostream& os, const game_controller& g) noexcept;
 
 #endif // GAME_CONTROLLER_H

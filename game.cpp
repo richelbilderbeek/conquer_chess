@@ -26,7 +26,8 @@ game::game(
     m_replayer{options.get_replayer()},
     m_t{0.0}
 {
-  assert(m_options.get_physical_controllers() == m_controller.get_physical_controllers());
+  assert(get_physical_controller(m_options, side::lhs) == get_physical_controller(m_controller, side::lhs));
+  assert(get_physical_controller(m_options, side::rhs) == get_physical_controller(m_controller, side::rhs));
 }
 
 void add_user_input(game& g, const user_input& input) noexcept
@@ -1299,15 +1300,6 @@ const physical_controller& get_physical_controller(const game& g, const side pla
   return ::get_physical_controller(g.get_options(), player);
 }
 
-const std::vector<physical_controller>& get_physical_controllers(const game& g)
-{
-  assert(
-       get_physical_controllers(g.get_controller())
-    == get_physical_controllers(g.get_options())
-  );
-  return get_physical_controllers(g.get_controller());
-}
-
 physical_controller_type get_physical_controller_type(const game& g, const side player)
 {
   return get_physical_controller(g, player).get_type();
@@ -1905,6 +1897,7 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
+    << "Conroller: " << g.get_controller() << '\n'
     << "Control actions: " << get_user_inputs(g) << '\n'
     << "Layout: " << g.get_layout() << '\n'
     << "LHS player position: " << get_cursor_pos(g, side::lhs) << '\n'
@@ -1914,4 +1907,3 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   ;
   return os;
 }
-
