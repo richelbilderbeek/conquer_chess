@@ -29,19 +29,6 @@ game_speed get_next(const game_speed speed) noexcept
     return t;
   }
   return *(++there);
-  /*
-  switch (speed)
-  {
-    case game_speed::fastest: return game_speed::slowest;
-    case game_speed::fast: return game_speed::fastest;
-    case game_speed::normal: return game_speed::fast;
-    case game_speed::slow: return game_speed::normal;
-    default:
-    case game_speed::slowest:
-      assert(speed == game_speed::slowest);
-      return game_speed::slow;
-  }
-  */
 }
 
 game_speed get_previous(const game_speed speed) noexcept
@@ -56,19 +43,6 @@ game_speed get_previous(const game_speed speed) noexcept
     return t;
   }
   return *(--there);
-  /*
-  switch (speed)
-  {
-    case game_speed::fastest: return game_speed::fast;
-    case game_speed::fast: return game_speed::normal;
-    case game_speed::normal: return game_speed::slow;
-    case game_speed::slow: return game_speed::slowest;
-    default:
-    case game_speed::slowest:
-      assert(speed == game_speed::slowest);
-      return game_speed::fastest;
-  }
-  */
 }
 
 void test_game_speed()

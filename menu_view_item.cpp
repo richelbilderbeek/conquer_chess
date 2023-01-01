@@ -27,13 +27,6 @@ menu_view_item get_next(const menu_view_item item)
     return t;
   }
   return *(++there);
-  /*
-  if (there == menu_view_item::start) return menu_view_item::options;
-  if (there == menu_view_item::options) return menu_view_item::about;
-  if (there == menu_view_item::about) return menu_view_item::quit;
-  assert(there == menu_view_item::quit);
-  return menu_view_item::start;
-  */
 }
 
 menu_view_item get_previous(const menu_view_item& item)
@@ -48,13 +41,6 @@ menu_view_item get_previous(const menu_view_item& item)
     return t;
   }
   return *(--there);
-  /*
-  if (there == menu_view_item::start) return menu_view_item::quit;
-  if (there == menu_view_item::options) return menu_view_item::start;
-  if (there == menu_view_item::about) return menu_view_item::options;
-  assert(there == menu_view_item::quit);
-  return menu_view_item::about;
-  */
 }
 
 void test_menu_view_item()
