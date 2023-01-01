@@ -83,8 +83,6 @@ private:
 
   /// The time
   delta_t m_t;
-
-  friend void test_game();
 };
 
 /// Add zero, one or more user_inputs
