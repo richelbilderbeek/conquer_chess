@@ -4,12 +4,16 @@
 #include "delta_t.h"
 
 #include <iosfwd>
+#include <vector>
 
 /// The game speed
 enum class game_speed
 {
-  slowest, slow, normal, fast, fastest
+  slowest, slower, slow, normal, fast, faster, fastest
 };
+
+/// Get all the game_speeds
+std::vector<game_speed> get_all_game_speeds() noexcept;
 
 /// Get the default game speed
 constexpr game_speed get_default_game_speed() { return game_speed::slowest; }

@@ -1,13 +1,35 @@
 #include "game_speed.h"
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <sstream>
 
 #include "../magic_enum/include/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
+std::vector<game_speed> get_all_game_speeds() noexcept
+{
+  const auto a{magic_enum::enum_values<game_speed>()};
+  std::vector<game_speed> v;
+  v.reserve(a.size());
+  std::copy(std::begin(a), std::end(a), std::back_inserter(v));
+  assert(a.size() == v.size());
+  return v;
+}
+
 game_speed get_next(const game_speed speed) noexcept
 {
+  const auto v{get_all_game_speeds()};
+  auto there{std::find(std::begin(v), std::end(v), speed)};
+  assert(there != std::end(v));
+  if (there == std::end(v) - 1)
+  {
+    assert(!v.empty());
+    const auto t{v.front()};
+    return t;
+  }
+  return *(++there);
+  /*
   switch (speed)
   {
     case game_speed::fastest: return game_speed::slowest;
@@ -19,10 +41,22 @@ game_speed get_next(const game_speed speed) noexcept
       assert(speed == game_speed::slowest);
       return game_speed::slow;
   }
+  */
 }
 
 game_speed get_previous(const game_speed speed) noexcept
 {
+  const auto v{get_all_game_speeds()};
+  auto there{std::find(std::begin(v), std::end(v), speed)};
+  assert(there != std::end(v));
+  if (there == std::begin(v))
+  {
+    assert(!v.empty());
+    const auto t{v.back()};
+    return t;
+  }
+  return *(--there);
+  /*
   switch (speed)
   {
     case game_speed::fastest: return game_speed::fast;
@@ -34,6 +68,7 @@ game_speed get_previous(const game_speed speed) noexcept
       assert(speed == game_speed::slowest);
       return game_speed::fastest;
   }
+  */
 }
 
 void test_game_speed()
@@ -41,10 +76,7 @@ void test_game_speed()
 #ifndef NDEBUG
   // get_next
   {
-    assert(get_next(game_speed::slowest) == game_speed::slow);
-    assert(get_next(game_speed::slow) == game_speed::normal);
-    assert(get_next(game_speed::normal) == game_speed::fast);
-    assert(get_next(game_speed::fast) == game_speed::fastest);
+    assert(get_next(game_speed::slowest) == game_speed::slower);
     assert(get_next(game_speed::fastest) == game_speed::slowest);
   }
   // get_previous
@@ -57,15 +89,13 @@ void test_game_speed()
   }
   // to_delta_t
   {
-    const auto dt_fastest{to_delta_t(game_speed::fastest)};
-    const auto dt_fast{to_delta_t(game_speed::fast)};
-    const auto dt_normal{to_delta_t(game_speed::normal)};
-    const auto dt_slow{to_delta_t(game_speed::slow)};
-    const auto dt_slowest{to_delta_t(game_speed::slowest)};
-    assert(dt_fastest > dt_fast);
-    assert(dt_fast > dt_normal);
-    assert(dt_normal > dt_slow);
-    assert(dt_slow > dt_slowest);
+    delta_t last_game_speed{0.0};
+    for (const game_speed s: get_all_game_speeds())
+    {
+      const auto new_speed{to_delta_t(s)};
+      assert(new_speed > last_game_speed);
+      last_game_speed = new_speed;
+    }
   }
   // to_str
   {
@@ -89,14 +119,16 @@ delta_t to_delta_t(const game_speed speed) noexcept
 {
   switch (speed)
   {
-    case game_speed::fastest: return delta_t(5.0);
+    case game_speed::fastest: return delta_t(8.0);
+    case game_speed::faster: return delta_t(4.0);
     case game_speed::fast: return delta_t(2.0);
     case game_speed::normal: return delta_t(1.0);
     case game_speed::slow: return delta_t(0.5);
+    case game_speed::slower: return delta_t(0.25);
     default:
     case game_speed::slowest:
       assert(speed == game_speed::slowest);
-      return delta_t(0.25);
+      return delta_t(0.125);
   }
 }
 
