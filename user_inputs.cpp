@@ -334,7 +334,12 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square cursor{square(get_cursor_pos(g, player_side))};
+  const game_coordinat cursor_pos{get_cursor_pos(g, player_side)};
+  if (!is_coordinat_on_board(cursor_pos))
+  {
+    return;
+  }
+  const square cursor{square(cursor_pos)};
   const bool is_promotion_to_queen{
        is_piece_at(g, cursor)
     && get_piece_at(g, cursor).get_color() == player_color
