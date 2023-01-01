@@ -19,9 +19,6 @@ class game_view
 public:
   explicit game_view(const game& game = get_default_game());
 
-  /// Get the controller for a player
-  const auto& get_controller(const side player) const noexcept;
-
   /// Run the game, until the user quits
   void exec();
 
@@ -45,9 +42,6 @@ private:
 
   /// The game clock, to measure the elapsed time
   sf::Clock m_clock;
-
-  /// The controllers, e.g. a keyboard and a mouse player
-  std::vector<physical_controller> m_controllers;
 
   /// The FPS clock
   fps_clock m_fps_clock;

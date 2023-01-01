@@ -9,7 +9,8 @@
 #include <iostream>
 #include <sstream>
 
-user_inputs::user_inputs()
+user_inputs::user_inputs(const std::vector<user_input>& inputs)
+  : m_user_inputs{inputs}
 {
 
 }

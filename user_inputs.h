@@ -23,7 +23,9 @@
 class user_inputs
 {
 public:
-  user_inputs();
+  user_inputs(
+    const std::vector<user_input>& user_inputs = {}
+  );
 
   /// Add a new user actions
   void add(const user_input& action);

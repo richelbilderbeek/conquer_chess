@@ -24,7 +24,7 @@
 #include <sstream>
 
 game_view::game_view(const game& game)
-  : m_controllers{create_default_controllers()},
+  : //m_controllers{create_default_controllers()},
     m_game{game},
     m_log{game.get_options().get_message_display_time_secs()}
 {
@@ -90,6 +90,7 @@ void game_view::exec()
   std::clog << collect_action_history(m_game) << '\n';
 }
 
+/*
 const auto& game_view::get_controller(const side player) const noexcept
 {
   if (player == side::lhs)
@@ -103,6 +104,7 @@ const auto& game_view::get_controller(const side player) const noexcept
   assert(m_controllers[1].get_player() == player);
   return m_controllers[1];
 }
+*/
 
 const physical_controller& get_physical_controller(const game_view& view, const side player_side)
 {
@@ -371,10 +373,10 @@ void show_controls(game_view& view, const side player)
   }
   else
   {
-    key_descriptions[0] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(1)));
-    key_descriptions[1] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(2)));
-    key_descriptions[2] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(3)));
-    key_descriptions[3] = to_one_char_str(view.get_controller(player).get_key_bindings().get_key_for_action(action_number(4)));
+    key_descriptions[0] = to_one_char_str(get_physical_controller(view, player).get_key_bindings().get_key_for_action(action_number(1)));
+    key_descriptions[1] = to_one_char_str(get_physical_controller(view, player).get_key_bindings().get_key_for_action(action_number(2)));
+    key_descriptions[2] = to_one_char_str(get_physical_controller(view, player).get_key_bindings().get_key_for_action(action_number(3)));
+    key_descriptions[3] = to_one_char_str(get_physical_controller(view, player).get_key_bindings().get_key_for_action(action_number(4)));
   }
 
   for (const auto& number: get_all_action_numbers())

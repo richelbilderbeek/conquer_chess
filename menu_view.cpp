@@ -200,6 +200,11 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::F1)
       {
+        std::clog
+          << "=============================================\n"
+          << "= NOW                                       =\n"
+          << "=============================================\n"
+        ;
         exec_replay();
       }
       else if (key_pressed == sf::Keyboard::Key::F2)
