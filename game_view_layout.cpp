@@ -306,7 +306,15 @@ screen_rect game_view_layout::get_controls_key_icon(
   const screen_rect corner{
     get_bottom_right_corner(full_rect)
   };
-  return corner;
+  // Make it square
+  const screen_rect square_corner(
+    screen_coordinat(
+      corner.get_br().get_x() - get_height(corner),
+      corner.get_tl().get_y()
+    ),
+    corner.get_br()
+  );
+  return square_corner;
 }
 
 screen_rect game_view_layout::get_controls_key_input(
@@ -318,7 +326,16 @@ screen_rect game_view_layout::get_controls_key_input(
   const screen_rect corner{
     get_bottom_left_corner(full_rect)
   };
-  return corner;
+  // Make it bigger to touch the icon square
+  const screen_rect icon_square{get_controls_key_icon(player, key)};
+  const screen_rect touching_rect{
+    corner.get_tl(),
+    screen_coordinat(
+      icon_square.get_tl().get_x(),
+      icon_square.get_br().get_y()
+    )
+  };
+  return touching_rect;
 }
 
 screen_rect game_view_layout::get_controls_key_name(
