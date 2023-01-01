@@ -90,22 +90,6 @@ void game_view::exec()
   std::clog << collect_action_history(m_game) << '\n';
 }
 
-/*
-const auto& game_view::get_controller(const side player) const noexcept
-{
-  if (player == side::lhs)
-  {
-    assert(m_controllers.size() >= 1);
-    assert(m_controllers[0].get_player() == player);
-    return m_controllers[0];
-  }
-  assert(player == side::rhs);
-  assert(m_controllers.size() >= 2);
-  assert(m_controllers[1].get_player() == player);
-  return m_controllers[1];
-}
-*/
-
 const physical_controller& get_physical_controller(const game_view& view, const side player_side)
 {
   return get_physical_controller(view.get_game(), player_side);
