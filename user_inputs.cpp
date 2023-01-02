@@ -598,7 +598,7 @@ void process_press_action_4(game& g, const user_input& action)
   }
 }
 
-void user_inputs::process(game& g)
+void user_inputs::apply_user_inputs_to_game(game& g)
 {
   for (const auto& action: m_user_inputs)
   {
@@ -757,7 +757,7 @@ void test_user_inputs()
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_up_action(side::lhs));
-    c.process(g);
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
@@ -767,7 +767,7 @@ void test_user_inputs()
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_right_action(side::lhs));
-    c.process(g);
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
@@ -777,7 +777,7 @@ void test_user_inputs()
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_down_action(side::lhs));
-    c.process(g);
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
@@ -787,7 +787,7 @@ void test_user_inputs()
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
     user_inputs c;
     c.add(create_press_left_action(side::lhs));
-    c.process(g);
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }

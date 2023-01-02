@@ -1833,7 +1833,7 @@ void game::tick(const delta_t& dt)
   m_replayer.do_move(*this);
 
   // Convert user_inputs to piece_actions instantaneous
-  m_controller.get_user_inputs().process(*this);
+  m_controller.get_user_inputs().apply_user_inputs_to_game(*this);
 
   assert(count_dead_pieces(m_pieces) == 0);
 

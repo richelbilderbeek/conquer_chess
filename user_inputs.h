@@ -33,7 +33,7 @@ public:
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
   /// Process all actions and apply these on the game
-  void process(game& g);
+  void apply_user_inputs_to_game(game& g);
 
 private:
 
