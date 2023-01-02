@@ -435,12 +435,11 @@ void show_controls(game_view& view, const side player)
 
       // The text there
       sf::Text text;
-      //text.setFont(view.get_resources().get_futuristic_font());
       text.setFont(view.get_resources().get_arial_font());
       text.setFillColor(colors[key - 1]);
       if (maybe_action)
       {
-        const std::string s{to_str(maybe_action.value())};
+        const std::string s{to_human_str(maybe_action.value())};
         text.setString(s);
         const int font_size{
           get_height(half_rect) * 2 / 3

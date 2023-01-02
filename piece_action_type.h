@@ -2,6 +2,7 @@
 #define PIECE_ACTION_TYPE_H
 
 #include <iosfwd>
+#include <vector>
 
 /// The type of actions a piece can do
 enum class piece_action_type
@@ -19,14 +20,17 @@ enum class piece_action_type
   unselect  // as the GUI can suggest these as the default (piece) action
 };
 
-/// Convert to short, 3 character, string
-std::string to_three_char_str(const piece_action_type t) noexcept;
-
-/// Convert to string
-std::string to_str(const piece_action_type t) noexcept;
+/// Get all the \link{piece_action_type}s
+std::vector<piece_action_type> get_all_piece_action_types() noexcept;
 
 /// Test the piece_action_type functions
 void test_piece_action_type();
+
+/// Convert to short, human-readable, string
+std::string to_human_str(const piece_action_type t) noexcept;
+
+/// Convert to string
+std::string to_str(const piece_action_type t) noexcept;
 
 std::ostream& operator<<(std::ostream& os, const piece_action_type& p) noexcept;
 
