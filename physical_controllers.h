@@ -5,7 +5,17 @@
 #include "physical_controller.h"
 #include <vector>
 
-// Work on more physical controllers
+/// All the physical controllers
+class physical_controllers
+{
+  physical_controllers(
+    const std::vector<physical_controller> controllers = {}
+  );
+
+  private:
+
+  std::vector<physical_controller> m_physical_controllers;
+};
 
 /// Count the number of controllers that use the keyboard
 int count_keyboard_controllers(const std::vector<physical_controller>& controllers) noexcept;

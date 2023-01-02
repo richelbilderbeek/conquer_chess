@@ -3,6 +3,13 @@
 #include <algorithm>
 #include <cassert>
 
+physical_controllers::physical_controllers(
+  const std::vector<physical_controller> controllers
+) : m_physical_controllers{controllers}
+{
+
+}
+
 int count_keyboard_controllers(const std::vector<physical_controller>& controllers) noexcept
 {
   return std::count_if(
