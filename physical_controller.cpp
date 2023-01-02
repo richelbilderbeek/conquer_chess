@@ -10,11 +10,9 @@
 
 physical_controller::physical_controller(
   const physical_controller_type type,
-  //const side player,
   const key_bindings& ks
 )
   : m_key_bindings{ks},
-    //m_player{player},
     m_type{type}
 {
 
@@ -29,7 +27,6 @@ physical_controller create_default_mouse_controller(/* const side player */) noe
 {
   return physical_controller(
     physical_controller_type::mouse,
-    //player,
     create_right_keyboard_key_bindings()
   );
 }
@@ -161,7 +158,7 @@ std::string get_text_for_action(
 user_inputs physical_controller::process_input(
   const sf::Event& event,
   const side player_side,
-  const game& g
+  const game_view_layout& layout
 ) const
 {
   if (m_type == physical_controller_type::keyboard)
@@ -176,7 +173,7 @@ user_inputs physical_controller::process_input(
     assert(m_type == physical_controller_type::mouse);
     if (event.type == sf::Event::MouseMoved)
     {
-      return process_mouse_moved(event, player_side, g);
+      return process_mouse_moved(event, player_side, layout);
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
@@ -229,7 +226,7 @@ user_inputs physical_controller::process_mouse_pressed(
 user_inputs physical_controller::process_mouse_moved(
   const sf::Event& event,
   const side player_side,
-  const game& g
+  const game_view_layout& layout
 ) const
 {
   assert(event.type == sf::Event::MouseMoved);
@@ -239,7 +236,7 @@ user_inputs physical_controller::process_mouse_moved(
   const auto mouse_game_pos{
     convert_to_game_coordinat(
       mouse_screen_pos,
-      g.get_layout()
+      layout
     )
   };
   return user_inputs(
@@ -262,14 +259,14 @@ void test_controller()
   }
   // controller::process_input, mouse moved
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_default_mouse_controller()};
     const user_inputs inputs(
       {
         c.process_input(
           create_mouse_moved_event(screen_coordinat()),
           side::lhs,
-          g
+          layout
         )
       }
     );
@@ -277,14 +274,14 @@ void test_controller()
   }
   // controller::process_input, LMB mouse pressed
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_default_mouse_controller()};
     const user_inputs inputs(
       {
         c.process_input(
           create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Left),
           side::lhs,
-          g
+          layout
         )
       }
     );
@@ -292,14 +289,14 @@ void test_controller()
   }
   // controller::process_input, RMB mouse pressed
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_default_mouse_controller()};
     const user_inputs inputs(
       {
         c.process_input(
           create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Right),
           side::lhs,
-          g
+          layout
         )
       }
     );
@@ -350,121 +347,122 @@ void test_controller()
   }
   // press up does nothing with a mouse
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_default_mouse_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_up()
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(is_empty(actions));
   }
   // press up works with a keyboard
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_up()
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(!is_empty(actions));
   }
   // press right works with a keyboard
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_right()
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(!is_empty(actions));
   }
   // press down works with a keyboard
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_down()
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(!is_empty(actions));
   }
   // press left works with a keyboard
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_left()
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(!is_empty(actions));
   }
   // press action 1 works with a keyboard
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(action_number(1))
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(!is_empty(actions));
   }
   // press action 2 works with a keyboard
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(action_number(2))
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(!is_empty(actions));
   }
   // press action 3 works with a keyboard
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(action_number(3))
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{c.process_input(event, side::lhs, layout)};
     assert(!is_empty(actions));
   }
   // press action 4 works
   {
     const game g;
-
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         get_key_for_action(g, side::lhs, action_number(4))
       )
     };
-    const auto actions{c.process_input(event, side::lhs, g)};
+    const auto actions{
+      c.process_input(event, side::lhs, g.get_layout())
+    };
     assert(!is_empty(actions));
   }
   //
   {
-    const game g;
+    const game_view_layout layout;
     const physical_controller c{create_default_mouse_controller()};
     sf::Event e;
     e.type = sf::Event::KeyPressed;
     assert(c.get_type() == physical_controller_type::mouse);
-    assert(is_empty(c.process_input(e, side::lhs, g)));
+    assert(is_empty(c.process_input(e, side::lhs, layout)));
   }
   // operator==
   {

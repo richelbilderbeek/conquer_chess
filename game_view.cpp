@@ -251,7 +251,7 @@ void process_event(game& g, const sf::Event& event)
   for (const auto s: get_all_sides())
   {
     const physical_controller& p{get_physical_controller(g, s)};
-    const user_inputs& inputs{p.process_input(event, s, g)};
+    const user_inputs& inputs{p.process_input(event, s, g.get_layout())};
     for (const auto& a: inputs.get_user_inputs())
     {
       add_user_input(g, a);

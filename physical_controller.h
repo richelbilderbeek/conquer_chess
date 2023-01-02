@@ -30,7 +30,7 @@ public:
   user_inputs process_input(
     const sf::Event& event,
     const side player_side,
-    const game& g
+    const game_view_layout& layout
   ) const;
 
   void set_type(const physical_controller_type t) noexcept { m_type = t; }
@@ -58,7 +58,7 @@ private:
   user_inputs process_mouse_moved(
     const sf::Event& event,
     const side player_side,
-    const game& g
+    const game_view_layout& layout
   ) const;
 };
 
