@@ -27,8 +27,8 @@ public:
     const std::vector<user_input>& user_inputs = {}
   );
 
-  /// Add a new user actions
-  void add(const user_input& action);
+  /// Add a new user input
+  void add(const user_input& input);
 
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
@@ -39,6 +39,9 @@ private:
 
   std::vector<user_input> m_user_inputs;
 };
+
+/// Add new user inputs
+void add(user_inputs& current, const user_inputs& to_be_added);
 
 /// Count the total number of control actions to be done by the game,
 /// which should be zero after each tick
@@ -115,7 +118,7 @@ user_input get_user_input_to_select(
 );
 
 /// Create the user inputs to move the cursor to a target square
-std::vector<user_input> get_user_inputs_to_move_cursor_to(
+user_inputs get_user_inputs_to_move_cursor_to(
   const game& g,
   const square& to,
   const side player_side
@@ -126,13 +129,14 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
 /// This is useful for creating future 'user_input's,
 /// e.g. for white doing e4, the cursor must be moved to e2
 /// to select a pawn, then to e4 to select the target.
-std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
+user_inputs get_user_inputs_to_move_cursor_from_to(
   const game& g,
   const square& from,
   const square& to,
   const side player_side
 );
 
+/// See if the \link{user_inputs} holds zero elements
 bool is_empty(const user_inputs& inputs) noexcept;
 
 /// Respond to action 1

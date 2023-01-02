@@ -161,7 +161,7 @@ std::string get_text_for_action(
 }
 
 
-std::vector<user_input> physical_controller::process_input(
+user_inputs physical_controller::process_input(
   const sf::Event& event,
   const game& g
 ) const
@@ -189,7 +189,7 @@ std::vector<user_input> physical_controller::process_input(
   return {};
 }
 
-std::vector<user_input> physical_controller::process_key_press(
+user_inputs physical_controller::process_key_press(
   const sf::Event& event
 ) const
 {
@@ -203,26 +203,30 @@ std::vector<user_input> physical_controller::process_key_press(
   return v;
 }
 
-std::vector<user_input> physical_controller::process_mouse_pressed(
+user_inputs physical_controller::process_mouse_pressed(
   const sf::Event& event
 ) const
 {
   assert(event.type == sf::Event::MouseButtonPressed);
   if (event.mouseButton.button == sf::Mouse::Left)
   {
-    return {
-      create_press_lmb_action(
-        m_player
-      )
-    };
+    return user_inputs(
+      {
+        create_press_lmb_action(
+          m_player
+        )
+      }
+    );
   }
   assert(event.mouseButton.button == sf::Mouse::Right);
-  return {
-    create_press_rmb_action(m_player)
-  };
+  return user_inputs(
+    {
+      create_press_rmb_action(m_player)
+    }
+  );
 }
 
-std::vector<user_input> physical_controller::process_mouse_moved(
+user_inputs physical_controller::process_mouse_moved(
   const sf::Event& event,
   const game& g
 ) const
@@ -237,7 +241,9 @@ std::vector<user_input> physical_controller::process_mouse_moved(
       g.get_layout()
     )
   };
-  return { create_mouse_move_action(mouse_game_pos, m_player) };
+  return user_inputs(
+    { create_mouse_move_action(mouse_game_pos, m_player) }
+  );
 }
 
 void test_controller()
@@ -269,39 +275,45 @@ void test_controller()
   }
   // controller::process_input, mouse moved
   {
-    game g;
+    const game g;
     const physical_controller c{create_default_mouse_controller(side::lhs)};
-    std::vector<user_input> actions{
-      c.process_input(
-        create_mouse_moved_event(screen_coordinat()),
-        g
-      )
-    };
-    assert(!actions.empty());
+    const user_inputs inputs(
+      {
+        c.process_input(
+          create_mouse_moved_event(screen_coordinat()),
+          g
+        )
+      }
+    );
+    assert(!is_empty(inputs));
   }
   // controller::process_input, LMB mouse pressed
   {
-    game g;
+    const game g;
     const physical_controller c{create_default_mouse_controller(side::lhs)};
-    std::vector<user_input> actions{
-      c.process_input(
-        create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Left),
-        g
-      )
-    };
-    assert(!actions.empty());
+    const user_inputs inputs(
+      {
+        c.process_input(
+          create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Left),
+          g
+        )
+      }
+    );
+    assert(!is_empty(inputs));
   }
   // controller::process_input, RMB mouse pressed
   {
-    game g;
+    const game g;
     const physical_controller c{create_default_mouse_controller(side::lhs)};
-    std::vector<user_input> actions{
-      c.process_input(
-        create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Right),
-        g
-      )
-    };
-    assert(!actions.empty());
+    const user_inputs inputs(
+      {
+        c.process_input(
+          create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Right),
+          g
+        )
+      }
+    );
+    assert(!is_empty(inputs));
   }
   // create_left_keyboard_controller
   {
@@ -362,7 +374,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(actions.empty());
+    assert(is_empty(actions));
   }
   // press up works with a keyboard
   {
@@ -374,7 +386,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   // press right works with a keyboard
   {
@@ -386,7 +398,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   // press down works with a keyboard
   {
@@ -398,7 +410,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   // press left works with a keyboard
   {
@@ -410,7 +422,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   // press action 1 works with a keyboard
   {
@@ -422,7 +434,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   // press action 2 works with a keyboard
   {
@@ -434,7 +446,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   // press action 3 works with a keyboard
   {
@@ -446,7 +458,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   // press action 4 works
   {
@@ -459,7 +471,7 @@ void test_controller()
       )
     };
     const auto actions{c.process_input(event, g)};
-    assert(!actions.empty());
+    assert(!is_empty(actions));
   }
   //
   {
@@ -468,7 +480,7 @@ void test_controller()
     sf::Event e;
     e.type = sf::Event::KeyPressed;
     assert(c.get_type() == physical_controller_type::mouse);
-    assert(c.process_input(e, g).empty());
+    assert(is_empty(c.process_input(e, g)));
   }
   // operator==
   {

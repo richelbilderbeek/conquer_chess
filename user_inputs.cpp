@@ -20,6 +20,14 @@ void user_inputs::add(const user_input& action)
   m_user_inputs.push_back(action);
 }
 
+void add(user_inputs& current, const user_inputs& to_be_added)
+{
+  for (const auto& i: to_be_added.get_user_inputs())
+  {
+    current.add(i);
+  }
+}
+
 int count_user_inputs(const user_inputs& a)
 {
   return static_cast<int>(a.get_user_inputs().size());
@@ -239,7 +247,7 @@ user_input get_user_input_to_select(
   }
 }
 
-std::vector<user_input> get_user_inputs_to_move_cursor_to(
+user_inputs get_user_inputs_to_move_cursor_to(
   const game& g,
   const square& to,
   const side player_side
@@ -249,12 +257,14 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
   {
     // A mouse user 'just' moves its mouse at the correct position,
     // regardless of the current cursors' position
-     return {
-       create_mouse_move_action(
-         to_coordinat(to),
-         player_side
-       )
-     };
+    return user_inputs(
+      {
+        create_mouse_move_action(
+          to_coordinat(to),
+          player_side
+        )
+      }
+    );
   }
   else
   {
@@ -270,7 +280,7 @@ std::vector<user_input> get_user_inputs_to_move_cursor_to(
   }
 }
 
-std::vector<user_input> get_user_inputs_to_move_cursor_from_to(
+user_inputs get_user_inputs_to_move_cursor_from_to(
   const game& g,
   const square& from,
   const square& to,
@@ -805,7 +815,7 @@ void test_user_inputs()
     const auto inputs{
       get_user_inputs_to_move_cursor_to(g, square("e2"), side::lhs)
     };
-    assert(!inputs.empty());
+    assert(!is_empty(inputs));
     add_user_inputs(g, inputs);
     g.tick(delta_t(0.0));
     assert(square(get_cursor_pos(g, side::lhs)) == square("e2"));

@@ -89,7 +89,7 @@ private:
 void add_user_input(game& g, const user_input& input) noexcept;
 
 /// Add zero, one or more user_inputs
-void add_user_inputs(game& g, const std::vector<user_input>& inputs) noexcept;
+void add_user_inputs(game& g, const user_inputs& inputs) noexcept;
 
 /// Can this piece castle kingside?
 bool can_castle_kingside(const piece& p, const game& g) noexcept;
@@ -273,7 +273,7 @@ std::vector<message> collect_messages(const game& g) noexcept;
 
 /// Convert a chess move, e.g. e4,
 /// to the right user inputs
-std::vector<user_input> convert_move_to_user_inputs(
+user_inputs convert_move_to_user_inputs(
   const game& g,
   const chess_move& move
 );

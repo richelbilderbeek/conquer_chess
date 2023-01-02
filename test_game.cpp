@@ -166,7 +166,7 @@ void test_game_functions()
   {
     game g;
     assert(is_empty(get_user_inputs(g)));
-    add_user_inputs(g, { create_press_action_1(side::lhs) } );
+    add_user_inputs(g, user_inputs( { create_press_action_1(side::lhs) } ) );
     assert(!is_empty(get_user_inputs(g)));
   }
   // can_castle_kingside
@@ -887,17 +887,17 @@ void test_game_functions()
     game g;
     move_cursor_to(g, "e1", side::lhs);
     const chess_move m("e4", chess_color::white);
-    const std::vector<user_input> user_inputs{
+    const user_inputs inputs{
       convert_move_to_user_inputs(g, m)
     };
-    assert(!user_inputs.empty());
-    assert(user_inputs.size() == 5);
-    assert(user_inputs[0].get_user_input_type() == user_input_type::press_right);
-    assert(user_inputs[1].get_user_input_type() == user_input_type::press_action_1);
-    assert(user_inputs[2].get_user_input_type() == user_input_type::press_right);
-    assert(user_inputs[3].get_user_input_type() == user_input_type::press_right);
-    assert(user_inputs[4].get_user_input_type() == user_input_type::press_action_1);
-    add_user_inputs(g, user_inputs);
+    assert(!is_empty(inputs));
+    assert(count_user_inputs(inputs) == 5);
+    assert(inputs.get_user_inputs()[0].get_user_input_type() == user_input_type::press_right);
+    assert(inputs.get_user_inputs()[1].get_user_input_type() == user_input_type::press_action_1);
+    assert(inputs.get_user_inputs()[2].get_user_input_type() == user_input_type::press_right);
+    assert(inputs.get_user_inputs()[3].get_user_input_type() == user_input_type::press_right);
+    assert(inputs.get_user_inputs()[4].get_user_input_type() == user_input_type::press_action_1);
+    add_user_inputs(g, inputs);
     #ifdef FIX_ISSUE_64_NO_ACTION
     assert(is_piece_at(g, "e2"));
     g.tick();

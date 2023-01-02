@@ -35,9 +35,9 @@ void add_user_input(game& g, const user_input& input) noexcept
   g.get_controller().add_user_input(input);
 }
 
-void add_user_inputs(game& g, const std::vector<user_input>& inputs) noexcept
+void add_user_inputs(game& g, const user_inputs& inputs) noexcept
 {
-  for (const auto& input: inputs)
+  for (const auto& input: inputs.get_user_inputs())
   {
     add_user_input(g, input);
   }
@@ -971,7 +971,7 @@ std::vector<piece_action> collect_all_rook_actions(
   return actions;
 }
 
-std::vector<user_input> convert_move_to_user_inputs(
+user_inputs convert_move_to_user_inputs(
   const game& g,
   const chess_move& m
 )
@@ -979,16 +979,17 @@ std::vector<user_input> convert_move_to_user_inputs(
   const auto player_side{get_player_side(g, m.get_color())};
   const square from{get_from(g, m)};
 
-  std::vector<user_input> inputs;
+  user_inputs inputs;
   // Move the cursor to piece's square
   {
     const auto v{get_user_inputs_to_move_cursor_to(g, from, player_side)};
-    std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
+    add(inputs, v);
+    //std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
   }
   // Select the piece
   {
     const auto i{get_user_input_to_select(g, player_side)};
-    inputs.push_back(i);
+    inputs.add(i);
   }
   // Move the cursor to target's square
   {
@@ -1001,12 +1002,12 @@ std::vector<user_input> convert_move_to_user_inputs(
         player_side
       )
     };
-    std::copy(std::begin(v), std::end(v), std::back_inserter(inputs));
+    add(inputs, v);
   }
   // Do the action
   {
     const auto i{get_user_input_to_do_action_1(g, player_side)};
-    inputs.push_back(i);
+    inputs.add(i);
   }
   return inputs;
 }

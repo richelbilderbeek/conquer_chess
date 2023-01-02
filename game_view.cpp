@@ -255,7 +255,7 @@ void process_event(game& g, const sf::Event& event)
     }
   )
   {
-     for (const auto a: controller.process_input(event, g))
+     for (const auto& a: controller.process_input(event, g).get_user_inputs())
      {
        add_user_input(g, a);
      }

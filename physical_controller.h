@@ -32,7 +32,7 @@ public:
   /// Process the input for this controller.
   /// Returns an an empty vector if this controller is uneffected by the event
 
-  std::vector<user_input> process_input(
+  user_inputs process_input(
    const sf::Event& event,
    const game& g
  ) const;
@@ -49,17 +49,17 @@ private:
   physical_controller_type m_type;
 
   /// Process a key press from a keyboard
-  std::vector<user_input> process_key_press(
+  user_inputs process_key_press(
     const sf::Event& event
   ) const;
 
   /// Process the input from a mouse button press
-  std::vector<user_input> process_mouse_pressed(
+  user_inputs process_mouse_pressed(
     const sf::Event& event
   ) const;
 
   /// Process the input from a mouse movement
-  std::vector<user_input> process_mouse_moved(
+  user_inputs process_mouse_moved(
     const sf::Event& event,
     const game& g
   ) const;
