@@ -6,7 +6,7 @@
 #include <cassert>
 
 game_controller::game_controller(
-  const std::vector<physical_controller>& physical_controllers
+  const physical_controllers& physical_controllers
 )
   : m_lhs_cursor_pos{0.5, 4.5},
     m_mouse_user_selector{},
@@ -44,12 +44,9 @@ side get_mouse_user_player_side(const game_controller& c)
   return side::rhs;
 }
 
-const physical_controller& game_controller::get_physical_controller(const side player) const noexcept
+const physical_controller& game_controller::get_physical_controller(const side player_side) const noexcept
 {
-  assert(m_physical_controllers.size() == 2);
-  if (player == side::lhs) return m_physical_controllers[0];
-  assert(player == side::rhs);
-  return m_physical_controllers[1];
+  return m_physical_controllers.get_controller(player_side);
 }
 
 const physical_controller& get_physical_controller(

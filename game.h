@@ -455,7 +455,7 @@ std::optional<piece_action_type> get_default_piece_action(
 
 /// Create a game with all default settings
 /// and a specific set of controllers
-game get_game_with_controllers(const std::vector<physical_controller>& c) noexcept;
+game get_game_with_controllers(const physical_controllers& c) noexcept;
 
 /// Create a game with all default settings
 /// and a specific starting position

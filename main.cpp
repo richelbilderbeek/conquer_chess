@@ -53,7 +53,7 @@ void test()
   test_user_inputs();
   test_controller();
   test_physical_controller_type();
-  test_controllers();
+  test_physical_controllers();
   test_controls_view_item();
   test_controls_view_layout();
   test_delta_t();

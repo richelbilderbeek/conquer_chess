@@ -1418,7 +1418,7 @@ std::optional<piece_action_type> get_default_piece_action(
   return std::optional<piece_action_type>();
 }
 
-game get_game_with_controllers(const std::vector<physical_controller>& c) noexcept
+game get_game_with_controllers(const physical_controllers& c) noexcept
 {
   const game_options options(
     get_default_screen_size(),

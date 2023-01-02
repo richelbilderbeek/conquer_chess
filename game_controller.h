@@ -4,6 +4,7 @@
 #include "ccfwd.h"
 #include "action_number.h"
 
+#include "physical_controllers.h"
 #include "game_coordinat.h"
 #include "side.h"
 #include "user_inputs.h"
@@ -15,7 +16,7 @@ class game_controller
 {
 public:
   game_controller(
-    const std::vector<physical_controller>& physical_controllers
+    const physical_controllers& controllers
   );
 
   /// Add a user input. These will be processed in 'game::tick'
@@ -56,7 +57,7 @@ private:
   std::optional<action_number> m_mouse_user_selector;
 
   /// The physical controllers the players use
-  std::vector<physical_controller> m_physical_controllers;
+  physical_controllers m_physical_controllers;
 
   /// The in-game coordinat of the RHS user's cursor
   game_coordinat m_rhs_cursor_pos;

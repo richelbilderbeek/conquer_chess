@@ -1,7 +1,8 @@
 #ifndef GAME_OPTIONS_H
 #define GAME_OPTIONS_H
 
-#include "physical_controller.h"
+#include "ccfwd.h"
+#include "physical_controllers.h"
 #include "physical_controller_type.h"
 #include "delta_t.h"
 #include "piece.h"
@@ -20,7 +21,7 @@ class game_options
 public:
   explicit game_options(
     const screen_coordinat& screen_size,
-    const std::vector<physical_controller>& controllers,
+    const physical_controllers& controllers,
     const starting_position_type starting_position,
     const game_speed speed,
     const int margin_width
@@ -99,7 +100,7 @@ private:
   /// for a click to connect to a piece
   double m_click_distance;
 
-  std::vector<physical_controller> m_physical_controllers;
+  physical_controllers m_physical_controllers;
 
   /// The game speed
   game_speed m_game_speed;
@@ -132,7 +133,7 @@ game_options create_default_game_options() noexcept;
 
 /// Create the default game options, yet for different controllers
 game_options create_default_game_options_with_controllers(
-  const std::vector<physical_controller>& controllers
+  const physical_controllers& controllers
 );
 
 /// Are selected squares shown on-screen?
@@ -145,7 +146,7 @@ const physical_controller& get_physical_controller(const game_options& options, 
 physical_controller_type get_physical_controller_type(const game_options& options, const side player);
 
 /// Get the physical controllers
-const std::vector<physical_controller>& get_physical_controllers(const game_options& options);
+const physical_controllers& get_physical_controllers(const game_options& options);
 
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard

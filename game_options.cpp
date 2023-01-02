@@ -10,7 +10,7 @@
 
 game_options::game_options(
   const screen_coordinat& screen_size,
-  const std::vector<physical_controller>& controllers,
+  const physical_controllers& controllers,
   const starting_position_type starting_position,
   const game_speed speed,
   const int margin_width
@@ -43,7 +43,7 @@ game_options create_default_game_options() noexcept
 }
 
 game_options create_default_game_options_with_controllers(
-  const std::vector<physical_controller>& controllers
+  const physical_controllers& controllers
 )
 {
   return game_options(
@@ -62,16 +62,7 @@ bool do_show_selected(const game_options& options) noexcept
 
 const physical_controller& game_options::get_physical_controller(const side& player) const
 {
-  if (player == side::lhs)
-  {
-    assert(m_physical_controllers.size() >= 1);
-    assert(m_physical_controllers[0].get_player() == player);
-    return m_physical_controllers[0];
-  }
-  assert(player == side::rhs);
-  assert(m_physical_controllers.size() >= 2);
-  assert(m_physical_controllers[1].get_player() == player);
-  return m_physical_controllers[1];
+  return m_physical_controllers.get_controller(player);
 }
 
 const physical_controller& get_physical_controller(const game_options& options, const side player)
@@ -84,7 +75,7 @@ physical_controller_type get_physical_controller_type(const game_options& option
   return options.get_physical_controller(player).get_type();
 }
 
-const std::vector<physical_controller>& get_physical_controllers(const game_options& options)
+const physical_controllers& get_physical_controllers(const game_options& options)
 {
   return options.get_physical_controllers();
 }
@@ -118,9 +109,7 @@ chess_color get_left_player_color(const game_options& options) noexcept
 
 physical_controller_type get_left_player_controller(const game_options& options) noexcept
 {
-  assert(options.get_physical_controllers().size() >= 1);
-  assert(options.get_physical_controllers()[0].get_player() == side::lhs);
-  return options.get_physical_controllers()[0].get_type();
+  return get_physical_controller(options, side::lhs).get_type();
 }
 
 chess_color get_mouse_user_player_color(const game_options& options)
@@ -174,9 +163,7 @@ chess_color get_right_player_color(const game_options& options) noexcept
 
 physical_controller_type get_right_player_controller(const game_options& options) noexcept
 {
-  assert(options.get_physical_controllers().size() >= 2);
-  assert(options.get_physical_controllers()[1].get_player() == side::rhs);
-  return options.get_physical_controllers()[1].get_type();
+  return get_physical_controller(options, side::rhs).get_type();
 }
 
 bool has_keyboard_controller(const game_options& options) noexcept
@@ -213,19 +200,9 @@ starting_position_type get_starting_position(const game_options& options) noexce
   return options.get_starting_position();
 }
 
-void game_options::set_controller(const physical_controller& c, const side player)
+void game_options::set_controller(const physical_controller& c, const side player_side)
 {
-  if (player == side::lhs)
-  {
-    assert(m_physical_controllers.size() >= 1);
-    assert(m_physical_controllers[0].get_player() == player);
-    m_physical_controllers[0] = c;
-    return;
-  }
-  assert(player == side::rhs);
-  assert(m_physical_controllers.size() >= 2);
-  assert(m_physical_controllers[1].get_player() == player);
-  m_physical_controllers[1] = c;
+  m_physical_controllers.set(player_side, c);
 }
 void test_game_options()
 {
