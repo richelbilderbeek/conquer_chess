@@ -42,3 +42,18 @@ Sound              |Description                                            |URL
 Game                |Description                                            |URL
 --------------------|-------------------------------------------------------|--------------------------------------------------------------------------------------
 `garry_kasparov.pgn`|Downloaded all first ?50 games                         |https://www.chess.com/games/garry-kasparov
+
+## Stable Diffusion images
+
+From [https://huggingface.co/spaces/stabilityai/stable-diffusion](https://huggingface.co/spaces/stabilityai/stable-diffusion):
+
+Filename                 |Search terms
+-------------------------|---------------------------------------------------------
+`protoss_black_rook.jpeg`|`black rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
+`protoss_white_rook.jpeg`|`white rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
+`terran_black_rook.jpeg` |`black rook, chess, symbol, terran, starcraft 2, simple`
+`terran_white_rook.jpeg` |`white rook, chess, symbol, terran, starcraft 2, simple`
+`zerg_black_rook.jpeg`   |`black rook, chess, symbol, zerg, starcraft 2, simple, cells`
+`zerg_white_rook.jpeg`   |`white rook, chess, symbol, zerg, starcraft 2, simple, biology`
+
+
