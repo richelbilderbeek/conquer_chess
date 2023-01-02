@@ -47,13 +47,21 @@ Game                |Description                                            |URL
 
 From [https://huggingface.co/spaces/stabilityai/stable-diffusion](https://huggingface.co/spaces/stabilityai/stable-diffusion):
 
-Image                        |Filename                 |Search terms
------------------------------|-------------------------|---------------------------------------------------------------------
-![](protoss_black_rook.jpeg) |`protoss_black_rook.jpeg`|`black rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
-![](protoss_white_rook.jpeg) |`protoss_white_rook.jpeg`|`white rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
-![](terran_black_rook.jpeg)  |`terran_black_rook.jpeg` |`black rook, chess, symbol, terran, starcraft 2, simple`
-![](terran_white_rook.jpeg)  |`terran_white_rook.jpeg` |`white rook, chess, symbol, terran, starcraft 2, simple`
-![](zerg_black_rook.jpeg)    |`zerg_black_rook.jpeg`   |`black rook, chess, symbol, zerg, starcraft 2, simple, cells`
-![](zerg_white_rook.jpeg)    |`zerg_white_rook.jpeg`   |`white rook, chess, symbol, zerg, starcraft 2, simple, biology`
+Image                          |Filename                   |Search terms
+-------------------------------|---------------------------|---------------------------------------------------------------------
+![](protoss_black_rook.jpeg)   |`protoss_black_rook.jpeg`  |`black rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
+![](protoss_white_rook.jpeg)   |`protoss_white_rook.jpeg`  |`white rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
+![](terran_black_rook.jpeg)    |`terran_black_rook.jpeg`   |`black rook, chess, symbol, terran, starcraft 2, simple`
+![](terran_white_rook.jpeg)    |`terran_white_rook.jpeg`   |`white rook, chess, symbol, terran, starcraft 2, simple`
+![](zerg_black_rook.jpeg)      |`zerg_black_rook.jpeg`     |`black rook, chess, symbol, zerg, starcraft 2, simple, cells`
+![](zerg_white_rook.jpeg)      |`zerg_white_rook.jpeg`     |`white rook, chess, symbol, zerg, starcraft 2, simple, biology`
+![](protoss_black_knight.jpeg) |`protoss_black_knight.jpeg`|`black knight, chess, protoss, starcraft 2, symbol`
+![](protoss_white_knight.jpeg) |`protoss_white_knight.jpeg`|`white knight, chess, protoss, starcraft 2, symbol, full body view, simple`
+![](terran_black_knight.jpeg)  |`terran_black_knight.jpeg` |`black knight, chess, terran, starcraft 2, symbol, human, full body view, simple`
+![](terran_white_knight.jpeg)  |`terran_white_knight.jpeg` |`white knight, chess, terran, starcraft 2, symbol`
+![](zerg_black_knight.jpeg)    |`zerg_black_knight.jpeg`   |`black knight, chess, zerg, starcraft 2, symbol`
+![](zerg_white_knight.jpeg)    |`zerg_white_knight.jpeg`   |`white knight, chess, zerg, starcraft 2, symbol, full body view`
+
+
 
 
