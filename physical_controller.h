@@ -31,11 +31,10 @@ public:
 
   /// Process the input for this controller.
   /// Returns an an empty vector if this controller is uneffected by the event
-
   user_inputs process_input(
-   const sf::Event& event,
-   const game& g
- ) const;
+    const sf::Event& event,
+    const game& g
+  ) const;
 
   void set_type(const physical_controller_type t) noexcept { m_type = t; }
 

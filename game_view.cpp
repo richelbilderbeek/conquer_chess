@@ -247,7 +247,6 @@ bool game_view::process_events()
 
 void process_event(game& g, const sf::Event& event)
 {
-  #ifdef CORRECTLY_PROCESS_EVENTS
   for (const auto s: get_all_sides())
   {
     const physical_controller& p{get_physical_controller(g, s)};
@@ -257,20 +256,6 @@ void process_event(game& g, const sf::Event& event)
       add_user_input(g, a);
     }
   }
-  #else
-  for (const auto& controller:
-    {
-      get_physical_controller(g, side::lhs),
-      get_physical_controller(g, side::rhs),
-    }
-  )
-  {
-     for (const auto& a: controller.process_input(event, g).get_user_inputs())
-     {
-       add_user_input(g, a);
-     }
-  }
-  #endif
 }
 
 void game_view::process_piece_messages()

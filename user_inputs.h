@@ -20,6 +20,8 @@
 /// The control_actions processes user actions
 /// and passes the into the pieces it concerns, as 'piece_actions'.
 /// There, the pieces take over.
+///
+/// Goal: SFML events converted to user inputs
 class user_inputs
 {
 public:
