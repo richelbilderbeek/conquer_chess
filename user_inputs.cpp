@@ -59,6 +59,7 @@ user_inputs create_control_actions(
 
 void do_select(
   game& g,
+  game_controller& /* c */,
   const game_coordinat& coordinat,
   const chess_color player_color
 )
@@ -120,6 +121,7 @@ void do_select(
 
 void do_select(
   game& g,
+  game_controller& /* c */,
   const square& coordinat,
   const chess_color player_color
 )
@@ -181,35 +183,40 @@ void do_select(
 
 void do_select(
   game& g,
+  game_controller& c,
   const std::string& square_str,
   const chess_color player_color
 )
 {
-  do_select(g, square(square_str), player_color);
+  do_select(g, c, square(square_str), player_color);
 }
 
 void do_select(
   game& g,
+  game_controller& c,
   const std::string& square_str,
   const side player_side
 )
 {
-  do_select(g, square_str, get_player_color(g, player_side));
+  do_select(g, c, square_str, get_player_color(g, player_side));
 }
 
 void do_select_and_move_piece(
   game& g,
+  game_controller& c,
   const std::string& from_square_str,
   const std::string& to_square_str,
   const side player_side
 )
 {
-  do_select(g, from_square_str, player_side);
-  move_cursor_to(g, to_square_str, player_side);
+  do_select(g, c, from_square_str, player_side);
+  move_cursor_to(g, c, to_square_str, player_side);
   add_user_input(
-    g,
+    c,
     get_user_input_to_select(g, player_side)
   );
+  user_inputs inputs{c.get_user_inputs()};
+  inputs.apply_user_inputs_to_game(c, g); //TODO: fix architecture
   g.tick(delta_t(0.0));
   for (int i{0}; i!=2; ++i)
   {
@@ -319,12 +326,20 @@ bool is_empty(const user_inputs& inputs) noexcept
   return inputs.get_user_inputs().empty();
 }
 
-void process_press_action_1(game& g, const user_input& action)
+void process_press_action_1(
+  game& g,
+  game_controller& c,
+  const user_input& action
+)
 {
-  process_press_action_1_or_lmb_down(g, action);
+  process_press_action_1_or_lmb_down(g, c, action);
 }
 
-void process_press_action_1_or_lmb_down(game& g, const user_input& action)
+void process_press_action_1_or_lmb_down(
+  game& g,
+  game_controller& c,
+  const user_input& action
+)
 {
   assert(action.get_user_input_type() == user_input_type::press_action_1
     || action.get_user_input_type() == user_input_type::lmb_down
@@ -453,12 +468,17 @@ void process_press_action_1_or_lmb_down(game& g, const user_input& action)
   // 'start_move_unit' will check for piece, color, etc.
   start_move_unit(
     g,
+    c,
     get_cursor_pos(g, action.get_player()),
     get_player_color(g, action.get_player())
   );
 }
 
-void process_press_action_2(game& g, const user_input& action)
+void process_press_action_2(
+  game& g,
+  game_controller& c,
+  const user_input& action
+)
 {
   assert(action.get_user_input_type() == user_input_type::press_action_2);
   // press_action_2 can be
@@ -493,12 +513,17 @@ void process_press_action_2(game& g, const user_input& action)
   }
   start_attack(
     g,
+    c,
     get_cursor_pos(g, action.get_player()),
     get_player_color(g, action.get_player())
   );
 }
 
-void process_press_action_3(game& g, const user_input& action)
+void process_press_action_3(
+  game& g,
+  game_controller& /* c */,
+  const user_input& action
+)
 {
   assert(action.get_user_input_type() == user_input_type::press_action_3);
   // press_action_3 can be
@@ -548,7 +573,11 @@ void process_press_action_3(game& g, const user_input& action)
   }
 }
 
-void process_press_action_4(game& g, const user_input& action)
+void process_press_action_4(
+  game& g,
+  game_controller& /* c */,
+  const user_input& action
+)
 {
   assert(action.get_user_input_type() == user_input_type::press_action_4);
   // press_action_3 can be
@@ -598,52 +627,55 @@ void process_press_action_4(game& g, const user_input& action)
   }
 }
 
-void user_inputs::apply_user_inputs_to_game(game& g)
+void user_inputs::apply_user_inputs_to_game(
+  game_controller& c,
+  game& g
+)
 {
   for (const auto& action: m_user_inputs)
   {
     if (action.get_user_input_type() == user_input_type::press_action_1)
     {
-      process_press_action_1(g, action);
+      process_press_action_1(g, c, action);
     }
     else if (action.get_user_input_type() == user_input_type::press_action_2)
     {
-      process_press_action_2(g, action);
+      process_press_action_2(g, c, action);
     }
     else if (action.get_user_input_type() == user_input_type::press_action_3)
     {
-      process_press_action_3(g, action);
+      process_press_action_3(g, c, action);
     }
     else if (action.get_user_input_type() == user_input_type::press_action_4)
     {
-      process_press_action_4(g, action);
+      process_press_action_4(g, c, action);
     }
     else if (action.get_user_input_type() == user_input_type::press_down)
     {
       const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, get_below(pos), action.get_player());
+      set_player_pos(g, c, get_below(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_left)
     {
       const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, get_left(pos), action.get_player());
+      set_player_pos(g, c, get_left(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_right)
     {
       const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, get_right(pos), action.get_player());
+      set_player_pos(g, c, get_right(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_up)
     {
       const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, get_above(pos), action.get_player());
+      set_player_pos(g, c, get_above(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::mouse_move)
     {
       if (has_mouse_controller(g.get_options()))
       {
         assert(action.get_coordinat());
-        set_player_pos(g, action.get_coordinat().value(), action.get_player());
+        set_player_pos(g, c, action.get_coordinat().value(), action.get_player());
       }
     }
     #ifdef FIX_ISSUE_46
@@ -654,7 +686,7 @@ void user_inputs::apply_user_inputs_to_game(game& g)
     else if (action.get_user_input_type() == user_input_type::lmb_down)
     {
       if (!has_mouse_controller(g.get_options())) return;
-      process_press_action_1_or_lmb_down(g, action);
+      process_press_action_1_or_lmb_down(g, c, action);
 
     }
     else if (action.get_user_input_type() == user_input_type::rmb_down)
@@ -673,6 +705,7 @@ void user_inputs::apply_user_inputs_to_game(game& g)
 
 void start_attack(
   game& g,
+  game_controller& /* c */,
   const game_coordinat& coordinat,
   const chess_color player_color
 )
@@ -710,6 +743,7 @@ void start_attack(
 
 void start_move_unit(
   game& g,
+  game_controller& /* c */,
   const game_coordinat& coordinat,
   const chess_color player_color
 )
@@ -754,20 +788,22 @@ void test_user_inputs()
   // Move up does something
   {
     game g;
+    game_controller c;
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
-    user_inputs c;
-    c.add(create_press_up_action(side::lhs));
-    c.apply_user_inputs_to_game(g);
+    user_inputs inputs;
+    inputs.add(create_press_up_action(side::lhs));
+    inputs.apply_user_inputs_to_game(c, g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move right does something
   {
     game g;
+    game_controller c;
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
-    user_inputs c;
-    c.add(create_press_right_action(side::lhs));
-    c.apply_user_inputs_to_game(g);
+    user_inputs input;
+    input.add(create_press_right_action(side::lhs));
+    input.apply_user_inputs_to_game(c, g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
@@ -775,19 +811,21 @@ void test_user_inputs()
   {
     game g;
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
-    user_inputs c;
-    c.add(create_press_down_action(side::lhs));
-    c.apply_user_inputs_to_game(g);
+    user_inputs inputs;
+    game_controller c;
+    inputs.add(create_press_down_action(side::lhs));
+    inputs.apply_user_inputs_to_game(c, g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
   // Move left does something
   {
     game g;
+    game_controller c;
     const game_coordinat before{get_cursor_pos(g, side::lhs)};
-    user_inputs c;
-    c.add(create_press_left_action(side::lhs));
-    c.apply_user_inputs_to_game(g);
+    user_inputs inputs;
+    inputs.add(create_press_left_action(side::lhs));
+    inputs.apply_user_inputs_to_game(c, g);
     const game_coordinat after{get_cursor_pos(g, side::lhs)};
     assert(before != after);
   }
@@ -811,22 +849,24 @@ void test_user_inputs()
   // 64: move white's cursor to e2
   {
     game g;
+    game_controller c;
     assert(square(get_cursor_pos(g, side::lhs)) != square("e2"));
     const auto inputs{
       get_user_inputs_to_move_cursor_to(g, square("e2"), side::lhs)
     };
     assert(!is_empty(inputs));
-    add_user_inputs(g, inputs);
+    add_user_inputs(c, inputs);
     g.tick(delta_t(0.0));
     assert(square(get_cursor_pos(g, side::lhs)) == square("e2"));
   }
   // 64: move white's cursor to e2 and select the pawn
   {
     game g;
-    move_cursor_to(g, "e2", side::lhs);
+    game_controller c;
+    move_cursor_to(g, c, "e2", side::lhs);
     assert(!get_piece_at(g, "e2").is_selected());
     const user_input input{get_user_input_to_select(g, side::lhs)};
-    add_user_input(g, input);
+    add_user_input(c, input);
     g.tick(delta_t(0.0));
     assert(get_piece_at(g, "e2").is_selected());
   }

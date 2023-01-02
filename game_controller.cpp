@@ -22,8 +22,20 @@ game_controller::game_controller(
 
 void game_controller::add_user_input(const user_input& a)
 {
-  // These will be processed in 'tick'
   m_user_inputs.add(a);
+}
+
+void add_user_input(game_controller& c, const user_input& input)
+{
+  c.add_user_input(input);
+}
+
+void add_user_inputs(game_controller& c, const user_inputs& inputs)
+{
+  for (const auto i: inputs.get_user_inputs())
+  {
+    add_user_input(c, i);
+  }
 }
 
 const game_coordinat& game_controller::get_cursor_pos(const side player) const noexcept
@@ -109,23 +121,26 @@ void test_game_controller_keyboard_use()
   // Keyboard: select white king
   {
     game g;
+    game_controller c;
     const auto white_king{find_pieces(g, piece_type::king, chess_color::white).at(0)};
-    set_player_pos(g, to_coordinat(white_king.get_current_square()), side::lhs);
+    set_player_pos(g, c, to_coordinat(white_king.get_current_square()), side::lhs);
     assert(count_selected_units(g, chess_color::white) == 0);
-    add_user_input(g, create_press_action_1(side::lhs));
+    add_user_input(c, create_press_action_1(side::lhs));
+    c.get_user_inputs().apply_user_inputs_to_game(c, g);
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
   }
   // 60: selectedness is transferred, for white
   {
     game g;
-    move_cursor_to(g, "e1", side::lhs);
+    game_controller c;
+    move_cursor_to(g, c, "e1", side::lhs);
     assert(count_selected_units(g, chess_color::white) == 0);
-    add_user_input(g, create_press_action_1(side::lhs));
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::white) == 1);
-    move_cursor_to(g, "d1", side::lhs);
-    add_user_input(g, create_press_action_1(side::lhs));
+    move_cursor_to(g, c, "d1", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::white) != 2);
     assert(count_selected_units(g, chess_color::white) != 0);
@@ -136,13 +151,14 @@ void test_game_controller_keyboard_use()
     game g{
       get_game_with_controllers(create_two_keyboard_controllers())
     };
-    move_cursor_to(g, "e8", side::rhs);
+    game_controller c;
+    move_cursor_to(g, c, "e8", side::rhs);
     assert(count_selected_units(g, chess_color::black) == 0);
-    add_user_input(g, create_press_action_1(side::rhs));
+    add_user_input(c, create_press_action_1(side::rhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::black) == 1);
-    move_cursor_to(g, "d8", side::rhs);
-    add_user_input(g, create_press_action_1(side::rhs));
+    move_cursor_to(g, c, "d8", side::rhs);
+    add_user_input(c, create_press_action_1(side::rhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::black) != 2);
     assert(count_selected_units(g, chess_color::black) != 0);
@@ -151,28 +167,30 @@ void test_game_controller_keyboard_use()
   // Selecting a unit twice with action 1 selects and unselects it
   {
     game g;
+    game_controller c;
     assert(count_selected_units(g, chess_color::white) == 0);
-    move_cursor_to(g, "e1", side::lhs);
-    add_user_input(g, create_press_action_1(side::lhs));
+    move_cursor_to(g, c, "e1", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) != 2);
     assert(count_selected_units(g, chess_color::white) != 0);
     assert(count_selected_units(g, chess_color::white) == 1);
-    add_user_input(g, create_press_action_1(side::lhs));
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 0);
   }
   // Keyboard: can move pawn forward
   {
     game g;
-    move_cursor_to(g, "e2", side::lhs);
+    game_controller c;
+    move_cursor_to(g, c, "e2", side::lhs);
     assert(count_selected_units(g, chess_color::white) == 0);
-    add_user_input(g, create_press_action_1(side::lhs));
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick();
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
-    move_cursor_to(g, "e4", side::lhs);
-    add_user_input(g, create_press_action_1(side::lhs));
+    move_cursor_to(g, c, "e4", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
     g.tick(delta_t(0.25)); // Moves it to e3, unselects piece
@@ -186,14 +204,15 @@ void test_game_controller_keyboard_use()
   // Keyboard: cannot move pawn backward
   {
     game g = get_game_with_starting_position(starting_position_type::pawn_all_out_assault);
-    move_cursor_to(g, "e4", side::lhs);
+    game_controller c;
+    move_cursor_to(g, c, "e4", side::lhs);
     assert(count_selected_units(g, chess_color::white) == 0);
-    add_user_input(g, create_press_action_1(side::lhs));
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick(delta_t(0.01));
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
-    move_cursor_to(g, "e3", side::lhs);
-    add_user_input(g, create_press_action_1(side::lhs));
+    move_cursor_to(g, c, "e3", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick(delta_t(0.01)); // Ignores invalid action, adds sound effect
     assert(count_selected_units(g, chess_color::white) == 0);
     assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
@@ -202,13 +221,14 @@ void test_game_controller_keyboard_use()
   // 3: white castles kingside
   {
     game g = get_game_with_starting_position(starting_position_type::ready_to_castle);
-    move_cursor_to(g, "e1", side::lhs);
-    add_user_input(g, create_press_action_1(side::lhs));
+    game_controller c;
+    move_cursor_to(g, c, "e1", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick(delta_t(0.0));
     assert(count_selected_units(g, chess_color::white) == 1);
     assert(collect_messages(g).at(0).get_message_type() == message_type::select);
-    move_cursor_to(g, "g1", side::lhs);
-    add_user_input(g, create_press_action_1(side::lhs));
+    move_cursor_to(g, c, "g1", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs));
     g.tick(delta_t(0.0));
     assert(count_selected_units(g, chess_color::white) == 0);
     assert(get_closest_piece_to(g, to_coordinat("e4")).get_type() == piece_type::pawn);
@@ -220,10 +240,11 @@ void test_game_controller_keyboard_use()
   // 47: set_keyboard_player_pos for RHS player
   {
     game g;
+    game_controller c;
     assert(get_keyboard_user_player_color(g) == chess_color::white);
     assert(get_keyboard_user_player_side(g) == side::lhs);
     const square s("a1");
-    set_keyboard_player_pos(g, s);
+    set_keyboard_player_pos(g, c, s);
     assert(s == square(get_cursor_pos(g, get_keyboard_user_player_side(g))));
   }
   // 47: set_keyboard_player_pos for RHS player
@@ -233,10 +254,11 @@ void test_game_controller_keyboard_use()
         create_mouse_keyboard_controllers()
       )
     };
+    game_controller c;
     assert(get_keyboard_user_player_color(g) == chess_color::black);
     assert(get_keyboard_user_player_side(g) == side::rhs);
     const square s("a1");
-    set_keyboard_player_pos(g, s);
+    set_keyboard_player_pos(g, c, s);
     assert(s == square(get_cursor_pos(g, get_keyboard_user_player_side(g))));
   }
 #endif // NDEBUG // no tests in release
@@ -270,21 +292,23 @@ void test_game_controller_mouse_use()
   // Clicking a unit once with LMB selects it
   {
     game g;
+    game_controller c;
     assert(count_selected_units(g, chess_color::black) == 0);
-    move_cursor_to(g, "e8", side::rhs);
-    add_user_input(g, create_press_lmb_action(side::rhs));
+    move_cursor_to(g, c, "e8", side::rhs);
+    add_user_input(c, create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
   }
   // Clicking a unit twice with LMB selects and unselects it
   {
     game g;
+    game_controller c;
     assert(count_selected_units(g, chess_color::black) == 0);
-    move_cursor_to(g, "e8", side::rhs);
-    add_user_input(g, create_press_lmb_action(side::rhs));
+    move_cursor_to(g, c, "e8", side::rhs);
+    add_user_input(c, create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
-    add_user_input(g, create_press_lmb_action(side::rhs));
+    add_user_input(c, create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 0);
   }
@@ -293,13 +317,14 @@ void test_game_controller_mouse_use()
   // then another unit with LMB, only the last unit is selected
   {
     game g;
+    game_controller c;
     assert(count_selected_units(g, chess_color::black) == 0);
-    move_cursor_to(g, "d8", side::rhs);
-    add_user_input(g, create_press_lmb_action(side::rhs));
+    move_cursor_to(g, c, "d8", side::rhs);
+    add_user_input(c, create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) == 1);
-    move_cursor_to(g, "e8", side::rhs);
-    add_user_input(g, create_press_lmb_action(side::rhs));
+    move_cursor_to(g, c, "e8", side::rhs);
+    add_user_input(c, create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_selected_units(g, chess_color::black) != 2);
     assert(count_selected_units(g, chess_color::black) != 0);
@@ -308,12 +333,13 @@ void test_game_controller_mouse_use()
   // Ke8e7 works by LMB, LMB
   {
     game g = get_kings_only_game();
-    move_cursor_to(g, "e8", side::rhs);
-    add_user_input(g, create_press_lmb_action(side::rhs));
+    game_controller c;
+    move_cursor_to(g, c, "e8", side::rhs);
+    add_user_input(c, create_press_lmb_action(side::rhs));
     g.tick();
     assert(count_piece_actions(g, chess_color::black) == 0);
-    move_cursor_to(g, "e7", side::rhs);
-    add_user_input(g, create_press_lmb_action(side::rhs));
+    move_cursor_to(g, c, "e7", side::rhs);
+    add_user_input(c, create_press_lmb_action(side::rhs));
     g.tick(delta_t(0.01));
     assert(count_piece_actions(g, chess_color::black) >= 1);
   }

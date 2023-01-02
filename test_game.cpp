@@ -24,8 +24,9 @@ void test_game_class()
   // game::add_user_input
   {
     game g;
+    game_controller c;
     assert(is_empty(get_user_inputs(g)));
-    add_user_input(g, create_press_action_1(side::lhs));
+    add_user_input(c, create_press_action_1(side::lhs));
     assert(!is_empty(get_user_inputs(g)));
   }
   // game::get_layout, const
@@ -56,18 +57,19 @@ void test_game_class()
     // #27: a2-a4 takes as long as b2-b3
     {
       game g;
+      game_controller c;
       assert(is_piece_at(g, square("a2")));
       assert(is_piece_at(g, square("b2")));
       assert(!is_piece_at(g, square("a4")));
       assert(!is_piece_at(g, square("a3")));
       assert(!is_piece_at(g, square("b3")));
       assert(count_selected_units(g, chess_color::white) == 0);
-      do_select_for_keyboard_player(g, square("a2"));
+      do_select_for_keyboard_player(g, c, square("a2"));
       assert(count_selected_units(g, chess_color::white) == 1);
-      do_move_keyboard_player_piece(g, square("a4"));
+      do_move_keyboard_player_piece(g, c, square("a4"));
       assert(count_selected_units(g, chess_color::white) == 0);
-      do_select_for_keyboard_player(g, square("b2"));
-      do_move_keyboard_player_piece(g, square("b3"));
+      do_select_for_keyboard_player(g, c, square("b2"));
+      do_move_keyboard_player_piece(g, c, square("b3"));
       for (int i{0}; i!=5; ++i)
       {
         g.tick(delta_t(0.25));
@@ -80,6 +82,7 @@ void test_game_class()
     }
     // A piece under attack must have decreasing health
     {
+      game_controller c;
       game_options options{create_default_game_options()};
       options.set_starting_position(starting_position_type::bishop_and_knight_end_game);
       game g(options);
@@ -88,6 +91,7 @@ void test_game_class()
       assert(get_piece_at(g, square("d2")).get_color() == chess_color::black);
       do_select_and_start_attack_keyboard_player_piece(
         g,
+        c,
         square("c4"),
         square("d2")
       );
@@ -100,10 +104,12 @@ void test_game_class()
     // Cannot attack a piece of one's own color
     {
       game g;
+      game_controller c;
       const double health_before{get_piece_at(g, square("e1")).get_health()};
       // Let the white queen at d1 attack the white king at e1
       do_select_and_start_attack_keyboard_player_piece(
         g,
+        c,
         square("d1"),
         square("e1")
       );
@@ -113,11 +119,13 @@ void test_game_class()
     }
     // When a piece is killed, the queen attacker moves to that square
     {
+      game_controller c;
       game_options options{create_default_game_options()};
       options.set_starting_position(starting_position_type::before_scholars_mate);
       game g(options);
       do_select_and_start_attack_keyboard_player_piece(
         g,
+        c,
         square("h5"),
         square("f7")
       );
@@ -136,9 +144,11 @@ void test_game_class()
     // #20: A queen cannot attack over pieces
     {
       game g;
+      game_controller c;
       assert(is_piece_at(g, square("d1")));
       do_select_and_start_attack_keyboard_player_piece(
         g,
+        c,
         square("d1"),
         square("d8")
       );
@@ -165,8 +175,9 @@ void test_game_functions()
   // add_user_inputs
   {
     game g;
+    game_controller c;
     assert(is_empty(get_user_inputs(g)));
-    add_user_inputs(g, user_inputs( { create_press_action_1(side::lhs) } ) );
+    add_user_inputs(c, user_inputs( { create_press_action_1(side::lhs) } ) );
     assert(!is_empty(get_user_inputs(g)));
   }
   // can_castle_kingside
@@ -188,8 +199,9 @@ void test_game_functions()
   // clear_sound_effects
   {
     game g;
-    move_cursor_to(g, "e8", side::rhs);
-    add_user_input(g, create_press_action_1(side::rhs));
+    game_controller c;
+    move_cursor_to(g, c, "e8", side::rhs);
+    add_user_input(c, create_press_action_1(side::rhs));
     assert(collect_messages(g).empty());
     g.tick();
     assert(!collect_messages(g).empty());
@@ -199,13 +211,14 @@ void test_game_functions()
   // collect_action_history
   {
     game g;
+    game_controller c;
     assert(!has_actions(collect_action_history(g)));
-    do_select_and_move_keyboard_player_piece(g, "e2", "e4");
+    do_select_and_move_keyboard_player_piece(g, c, "e2", "e4");
     assert(has_actions(collect_action_history(g)));
     g.tick(delta_t(0.25));
     g.tick(delta_t(0.25));
     g.tick(delta_t(0.25));
-    do_select_and_move_keyboard_player_piece(g, "d2", "d4");
+    do_select_and_move_keyboard_player_piece(g, c, "d2", "d4");
   }
   // collect_all_piece_actions
   {
@@ -524,7 +537,8 @@ void test_game_functions()
       game g{
         get_game_with_starting_position(starting_position_type::before_en_passant)
       };
-      do_select_and_move_keyboard_player_piece(g, "g2", "g4");
+      game_controller c;
+      do_select_and_move_keyboard_player_piece(g, c, "g2", "g4");
       // It takes 1 time unit to move,
       // aim at halfway to window of opportunity for en-passant
       for (int i{0}; i!=6; ++i) g.tick(delta_t(0.25));
@@ -568,29 +582,33 @@ void test_game_functions()
     // do_select_and_move_piece e2-e3
     {
       game g;
+      game_controller c;
       assert(is_piece_at(g, "e2"));
-      do_select_and_move_piece(g, "e2", "e3", side::lhs);
+      do_select_and_move_piece(g, c, "e2", "e3", side::lhs);
       assert(!is_piece_at(g, "e2"));
     }
     // do_select_and_move_piece e2-e4
     {
       game g;
+      game_controller c;
       assert(is_piece_at(g, "e2"));
-      do_select_and_move_piece(g, "e2", "e4", side::lhs);
+      do_select_and_move_piece(g, c, "e2", "e4", side::lhs);
       assert(!is_piece_at(g, "e2"));
     }
     // do_select_and_move_piece: e7-e6
     {
       game g;
+      game_controller c;
       assert(is_piece_at(g, "e7"));
-      do_select_and_move_piece(g, "e7", "e6", side::rhs);
+      do_select_and_move_piece(g, c, "e7", "e6", side::rhs);
       assert(!is_piece_at(g, "e7"));
     }
     // do_select_and_move_piece: e7-e5
     {
       game g;
+      game_controller c;
       assert(is_piece_at(g, "e7"));
-      do_select_and_move_piece(g, "e7", "e5", side::rhs);
+      do_select_and_move_piece(g, c, "e7", "e5", side::rhs);
       assert(!is_piece_at(g, "e7"));
     }
     #endif // FIX_ISSUE_DOUBLE_MOVE_BLACK
@@ -665,32 +683,36 @@ void test_game_functions()
     // 55: move cursor
     {
       game g;
-      move_cursor_to(g, "d1", side::lhs);
+      game_controller c;
+      move_cursor_to(g, c, "d1", side::lhs);
       assert(get_cursor_pos(g, side::lhs) == to_coordinat(square("d1")));
-      move_cursor_to(g, "f6", side::rhs);
+      move_cursor_to(g, c, "f6", side::rhs);
       assert(get_cursor_pos(g, side::rhs) == to_coordinat(square("f6")));
     }
     // 53: nothing selected, cursor at empty square -> no action
     {
       game g;
-      move_cursor_to(g, "d4", side::lhs);
-      move_cursor_to(g, "d5", side::rhs);
+      game_controller c;
+      move_cursor_to(g, c, "d4", side::lhs);
+      move_cursor_to(g, c, "d5", side::rhs);
       assert(!get_default_piece_action(g, side::lhs));
       assert(!get_default_piece_action(g, side::rhs));
     }
     // 53: nothing selected, cursor at square with opponent piece -> no action
     {
       game g;
-      move_cursor_to(g, "d8", side::lhs);
-      move_cursor_to(g, "d1", side::rhs);
+      game_controller c;
+      move_cursor_to(g, c, "d8", side::lhs);
+      move_cursor_to(g, c, "d1", side::rhs);
       assert(!get_default_piece_action(g, side::lhs));
       assert(!get_default_piece_action(g, side::rhs));
     }
     // 53: nothing selected, cursor at square of own color -> select
     {
       game g;
-      move_cursor_to(g, "d1", side::lhs);
-      move_cursor_to(g, "d8", side::rhs);
+      game_controller c;
+      move_cursor_to(g, c, "d1", side::lhs);
+      move_cursor_to(g, c, "d8", side::rhs);
       assert(get_default_piece_action(g, side::lhs));
       assert(get_default_piece_action(g, side::rhs));
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::select);
@@ -699,10 +721,11 @@ void test_game_functions()
     // 53: selected piece, cursor still there -> unselect
     {
       game g;
-      move_cursor_to(g, "d1", side::lhs);
-      move_cursor_to(g, "d8", side::rhs);
-      add_user_input(g, create_press_action_1(side::lhs));
-      add_user_input(g, create_press_action_1(side::rhs));
+      game_controller c;
+      move_cursor_to(g, c, "d1", side::lhs);
+      move_cursor_to(g, c, "d8", side::rhs);
+      add_user_input(c, create_press_action_1(side::lhs));
+      add_user_input(c, create_press_action_1(side::rhs));
       g.tick(delta_t(0.0));
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::unselect);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::unselect);
@@ -710,10 +733,11 @@ void test_game_functions()
     // 53: Piece selected, cursor at valid target square -> move
     {
       game g;
-      do_select(g, "d2", side::lhs);
-      do_select(g, "d7", side::rhs);
-      move_cursor_to(g, "d3", side::lhs);
-      move_cursor_to(g, "d5", side::rhs);
+      game_controller c;
+      do_select(g, c, "d2", side::lhs);
+      do_select(g, c, "d7", side::rhs);
+      move_cursor_to(g, c, "d3", side::lhs);
+      move_cursor_to(g, c, "d5", side::rhs);
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::move);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::move);
     }
@@ -722,10 +746,11 @@ void test_game_functions()
       game g{
         get_game_with_starting_position(starting_position_type::queen_end_game)
       };
-      do_select(g, "d1", side::lhs);
-      do_select(g, "d8", side::rhs);
-      move_cursor_to(g, "d8", side::lhs);
-      move_cursor_to(g, "d1", side::rhs);
+      game_controller c;
+      do_select(g, c, "d1", side::lhs);
+      do_select(g, c, "d8", side::rhs);
+      move_cursor_to(g, c, "d8", side::lhs);
+      move_cursor_to(g, c, "d1", side::rhs);
       assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::attack);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::attack);
@@ -752,10 +777,11 @@ void test_game_functions()
       game g{
         get_game_with_starting_position(starting_position_type::ready_to_castle)
       };
-      do_select(g, "e1", side::lhs);
-      do_select(g, "e8", side::rhs);
-      move_cursor_to(g, "g1", side::lhs);
-      move_cursor_to(g, "g8", side::rhs);
+      game_controller c;
+      do_select(g, c, "e1", side::lhs);
+      do_select(g, c, "e8", side::rhs);
+      move_cursor_to(g, c, "g1", side::lhs);
+      move_cursor_to(g, c, "g8", side::rhs);
       assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::castle_kingside);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::castle_kingside);
@@ -765,10 +791,11 @@ void test_game_functions()
       game g{
         get_game_with_starting_position(starting_position_type::ready_to_castle)
       };
-      do_select(g, "e1", side::lhs);
-      do_select(g, "e8", side::rhs);
-      move_cursor_to(g, "c1", side::lhs);
-      move_cursor_to(g, "c8", side::rhs);
+      game_controller c;
+      do_select(g, c, "e1", side::lhs);
+      do_select(g, c, "e8", side::rhs);
+      move_cursor_to(g, c, "c1", side::lhs);
+      move_cursor_to(g, c, "c8", side::rhs);
       assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::move);
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::castle_queenside);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::castle_queenside);
@@ -778,10 +805,11 @@ void test_game_functions()
       game g{
         get_game_with_starting_position(starting_position_type::pawns_near_promotion)
       };
-      do_select(g, "a7", side::lhs);
-      do_select(g, "h2", side::rhs);
-      move_cursor_to(g, "a8", side::lhs);
-      move_cursor_to(g, "h1", side::rhs);
+      game_controller c;
+      do_select(g, c, "a7", side::lhs);
+      do_select(g, c, "h2", side::rhs);
+      move_cursor_to(g, c, "a8", side::lhs);
+      move_cursor_to(g, c, "h1", side::rhs);
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::move);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::move);
     }
@@ -790,10 +818,11 @@ void test_game_functions()
       game g{
         get_game_with_starting_position(starting_position_type::pawns_at_promotion)
       };
-      do_select(g, "a8", side::lhs);
-      do_select(g, "h1", side::rhs);
-      move_cursor_to(g, "a8", side::lhs);
-      move_cursor_to(g, "h1", side::rhs);
+      game_controller c;
+      do_select(g, c, "a8", side::lhs);
+      do_select(g, c, "h1", side::rhs);
+      move_cursor_to(g, c, "a8", side::lhs);
+      move_cursor_to(g, c, "h1", side::rhs);
       assert(get_default_piece_action(g, side::lhs).value() != piece_action_type::unselect);
       assert(get_default_piece_action(g, side::lhs).value() == piece_action_type::promote_to_queen);
       assert(get_default_piece_action(g, side::rhs).value() == piece_action_type::promote_to_queen);
@@ -885,7 +914,8 @@ void test_game_functions()
   // To do e2-e4, from e1, it takes 5 key presses
   {
     game g;
-    move_cursor_to(g, "e1", side::lhs);
+    game_controller c;
+    move_cursor_to(g, c, "e1", side::lhs);
     const chess_move m("e4", chess_color::white);
     const user_inputs inputs{
       convert_move_to_user_inputs(g, m)
@@ -897,7 +927,7 @@ void test_game_functions()
     assert(inputs.get_user_inputs()[2].get_user_input_type() == user_input_type::press_right);
     assert(inputs.get_user_inputs()[3].get_user_input_type() == user_input_type::press_right);
     assert(inputs.get_user_inputs()[4].get_user_input_type() == user_input_type::press_action_1);
-    add_user_inputs(g, inputs);
+    add_user_inputs(c, inputs);
     #ifdef FIX_ISSUE_64_NO_ACTION
     assert(is_piece_at(g, "e2"));
     g.tick();
@@ -949,10 +979,11 @@ void test_game_functions()
   // get_keyboard_player_pos, non-const, white == lhs == keyboard
   {
     game g;
+    game_controller c;
     assert(get_keyboard_user_player_color(g) == chess_color::white);
     const auto pos_before{get_cursor_pos(g, side::lhs)};
     const auto pos = get_cursor_pos(g, side::lhs);
-    set_player_pos(g, pos + game_coordinat(0.1, 0.1), side::lhs);
+    set_player_pos(g, c, pos + game_coordinat(0.1, 0.1), side::lhs);
     const auto pos_after{get_cursor_pos(g, side::lhs)};
     assert(pos_before != pos_after);
   }
@@ -1072,9 +1103,10 @@ void test_game_functions()
   // get_mouse_player_pos
   {
     game g;
+    game_controller c;
     const auto pos_before{get_cursor_pos(g, side::rhs)};
     const auto pos = get_cursor_pos(g, side::rhs);
-    set_player_pos(g, pos + game_coordinat(0.1, 0.1), side::rhs);
+    set_player_pos(g, c, pos + game_coordinat(0.1, 0.1), side::rhs);
     const auto pos_after{get_cursor_pos(g, side::rhs)};
     assert(pos_before != pos_after);
   }

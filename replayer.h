@@ -14,7 +14,10 @@ public:
   explicit replayer(const replay& r = replay(""));
 
   /// Do a move or do nothing
-  void do_move(game& g);
+  void do_move(
+    game_controller& c,
+    const game& g
+  );
 
   /// Get the last time a move was done
   const auto& get_last_time() const noexcept { return m_last_time; }

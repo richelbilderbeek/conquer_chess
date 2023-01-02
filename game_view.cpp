@@ -241,20 +241,24 @@ bool game_view::process_events()
         return true;
       }
     }
-    process_event(m_game, event);
+    process_event(m_game_controller, event, m_game.get_layout());
   }
   return false; // if no events proceed with tick
 }
 
-void process_event(game& g, const sf::Event& event)
+void process_event(
+  game_controller& c,
+  const sf::Event& event,
+  const game_view_layout& layout
+)
 {
   for (const auto s: get_all_sides())
   {
-    const physical_controller& p{get_physical_controller(g, s)};
-    const user_inputs& inputs{p.process_input(event, s, g.get_layout())};
+    const physical_controller& p{get_physical_controller(c, s)};
+    const user_inputs& inputs{p.process_input(event, s, layout)};
     for (const auto& a: inputs.get_user_inputs())
     {
-      add_user_input(g, a);
+      add_user_input(c, a);
     }
   }
 }

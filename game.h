@@ -85,11 +85,13 @@ private:
   delta_t m_t;
 };
 
+/*
 /// Add zero, one or more user_inputs
 void add_user_input(game& g, const user_input& input) noexcept;
 
 /// Add zero, one or more user_inputs
 void add_user_inputs(game& g, const user_inputs& inputs) noexcept;
+*/
 
 /// Can this piece castle kingside?
 bool can_castle_kingside(const piece& p, const game& g) noexcept;
@@ -316,16 +318,25 @@ game create_randomly_played_game(
 /// from the current selected square to a new target
 /// @see 'do_select_and_move_keyboard_player_piece' does both
 /// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
-void do_move_keyboard_player_piece(game& g, const square& s);
+void do_move_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& s
+);
 
 /// Let the mouse player move a piece
 /// from the current selected square to a new target
 /// @see 'do_select_and_move_mouse_player_piece' does both
 /// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
-void do_move_mouse_player_piece(game& g, const square& s);
+void do_move_mouse_player_piece(
+  game& g,
+  game_controller& c,
+  const square& s
+);
 
 void do_promote_keyboard_player_piece(
   game& g,
+  game_controller& c,
   const square& pawn_location,
   const piece_type promote_to
 );
@@ -337,12 +348,14 @@ void do_promote_keyboard_player_piece(
 /// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
 void do_select_and_move_keyboard_player_piece(
   game& g,
+  game_controller& c,
   const square& from,
   const square& to
 );
 
 void do_select_and_move_keyboard_player_piece(
   game& g,
+  game_controller& c,
   const std::string& from_str,
   const std::string& to_str
 );
@@ -354,12 +367,14 @@ void do_select_and_move_keyboard_player_piece(
 /// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
 void do_select_and_move_mouse_player_piece(
   game& g,
+  game_controller& c,
   const square& from,
   const square& to
 );
 
 void do_select_and_move_mouse_player_piece(
   game& g,
+  game_controller& c,
   const std::string& from_str,
   const std::string& to_str
 );
@@ -370,6 +385,7 @@ void do_select_and_move_mouse_player_piece(
 /// and let it promote to another type
 void do_select_and_promote_keyboard_player_piece(
   game& g,
+  game_controller& c,
   const square& pawn_location,
   const piece_type promote_to
 );
@@ -381,6 +397,7 @@ void do_select_and_promote_keyboard_player_piece(
 /// 'do_select_for_keyboard_player' and 'do_start_attack_keyboard_player_piece'
 void do_select_and_start_attack_keyboard_player_piece(
   game& g,
+  game_controller& c,
   const square& from,
   const square& to
 );
@@ -389,13 +406,21 @@ void do_select_and_start_attack_keyboard_player_piece(
 /// Assumes that a piece of the right color is there
 /// @see 'do_select_and_move_keyboard_player_piece' does both
 /// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
-void do_select_for_keyboard_player(game& g, const square& s);
+void do_select_for_keyboard_player(
+  game& g,
+  game_controller& c,
+  const square& s
+);
 
 /// Let the mouse player select the square
 /// Assumes that a piece of the right color is there
 /// @see 'do_select_and_move_mouse_player_piece' does both
 /// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
-void do_select_for_mouse_player(game& g, const square& s);
+void do_select_for_mouse_player(
+  game& g,
+  game_controller& c,
+  const square& s
+);
 
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game& g) noexcept;
@@ -404,7 +429,11 @@ bool do_show_selected(const game& g) noexcept;
 /// from the current selected square to a new target
 /// @see 'do_select_and_start_attack_keyboard_player_piece' does both
 /// 'do_select_for_keyboard_player' and 'do_start_attack_keyboard_player_piece'
-void do_start_attack_keyboard_player_piece(game& g, const square& s);
+void do_start_attack_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& s
+);
 
 /// Find zero, one or more chess pieces of the specified type and color
 std::vector<piece> find_pieces(
@@ -628,6 +657,7 @@ bool is_piece_at(
 /// at the desired square
 void move_cursor_to(
   game& g,
+  game_controller& c,
   const std::string& square_str,
   const side player_side
 );
@@ -637,6 +667,7 @@ void move_cursor_to(
 /// Does not select the square where the cursor is.
 void move_cursor_to(
   game& g,
+  game_controller& c,
   const square& s,
   const side player_side
 );
@@ -646,6 +677,7 @@ void move_cursor_to(
 /// @see \link{move_cursor_to} is more general
 void move_keyboard_cursor_to(
   game& g,
+  game_controller& c,
   const square& s,
   const side player_side
 );
@@ -655,6 +687,7 @@ void move_keyboard_cursor_to(
 /// @see \link{move_cursor_to} is more general
 void move_mouse_cursor_to(
   game& g,
+  game_controller& c,
   const square& s,
   const side player_side
 );
@@ -669,17 +702,24 @@ bool piece_with_id_is_at(
 /// The the cursor of the keyboard player to the desired square
 void set_keyboard_player_pos(
   game& g,
+  game_controller& c,
   const square& s
 );
 
 /// The the cursor of the mouse player to the desired square
 void set_mouse_player_pos(
   game& g,
+  game_controller& c,
   const square& s
 );
 
 /// Set the cursor's position
-void set_player_pos(game& g, const game_coordinat& pos, const side player) noexcept;
+void set_player_pos(
+  game& g,
+  game_controller& c,
+  const game_coordinat& pos,
+  const side player
+) noexcept;
 
 /// Call game::tick until all pieces are idle
 void tick_until_idle(game& g);

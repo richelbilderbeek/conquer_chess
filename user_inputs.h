@@ -35,7 +35,10 @@ public:
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
   /// Process all actions and apply these on the game
-  void apply_user_inputs_to_game(game& g);
+  void apply_user_inputs_to_game(
+    game_controller& c,
+    game& g
+  );
 
 private:
 
@@ -74,6 +77,7 @@ user_inputs create_control_actions(
 /// Process a left-mouse-button, hence a game_coordinat as a coordinat
 void do_select(
   game& g,
+  game_controller& c,
   const game_coordinat& coordinat,
   const chess_color player_color
 );
@@ -81,6 +85,7 @@ void do_select(
 /// Process a space, hence a square as a coordinat
 void do_select(
   game& g,
+  game_controller& c,
   const square& coordinat,
   const chess_color player_color
 );
@@ -88,6 +93,7 @@ void do_select(
 /// Select a piece
 void do_select(
   game& g,
+  game_controller& c,
   const std::string& square_str,
   const chess_color player_color
 );
@@ -95,6 +101,7 @@ void do_select(
 /// Select a piece
 void do_select(
   game& g,
+  game_controller& c,
   const std::string& square_str,
   const side player_side
 );
@@ -102,6 +109,7 @@ void do_select(
 /// Select a piece and move it to a target square
 void do_select_and_move_piece(
   game& g,
+  game_controller& c,
   const std::string& from_square_str,
   const std::string& to_square_str,
   const side player_side
@@ -142,23 +150,44 @@ user_inputs get_user_inputs_to_move_cursor_from_to(
 bool is_empty(const user_inputs& inputs) noexcept;
 
 /// Respond to action 1
-void process_press_action_1(game& g, const user_input& action);
+void process_press_action_1(
+  game& g,
+  game_controller& c,
+  const user_input& action
+);
 
 /// Respond to action 1 or LMB down
-void process_press_action_1_or_lmb_down(game& g, const user_input& action);
+void process_press_action_1_or_lmb_down(
+  game& g,
+  game_controller& c,
+  const user_input& action
+);
 
 /// Respond to action 2
-void process_press_action_2(game& g, const user_input& action);
+void process_press_action_2(
+  game& g,
+  game_controller& c,
+  const user_input& action
+);
 
 /// Respond to action 3
-void process_press_action_3(game& g, const user_input& action);
+void process_press_action_3(
+  game& g,
+  game_controller& c,
+  const user_input& action
+);
 
 /// Respond to action 4
-void process_press_action_4(game& g, const user_input& action);
+void process_press_action_4(
+  game& g,
+  game_controller& c,
+  const user_input& action
+);
 
 /// Process an A or right-mouse-button down
 void start_attack(
   game& g,
+  game_controller& c,
   const game_coordinat& coordinat,
   const chess_color player_color
 );
@@ -166,6 +195,7 @@ void start_attack(
 /// Process an M or right-mouse-button down
 void start_move_unit(
   game& g,
+  game_controller& c,
   const game_coordinat& coordinat,
   const chess_color player_color
 );

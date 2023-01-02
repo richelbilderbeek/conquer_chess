@@ -1,5 +1,6 @@
 #include "replayer.h"
 #include "game.h"
+#include "game_controller.h"
 
 #include <cassert>
 #include <iostream>
@@ -13,7 +14,10 @@ replayer::replayer(const replay& r)
 }
 
 
-void replayer::do_move(game& g)
+void replayer::do_move(
+  game_controller& c,
+  const game& g
+)
 {
   // Do one move per chess move
   if (g.get_time() - m_last_time < delta_t(1.0)) return;
@@ -29,7 +33,7 @@ void replayer::do_move(game& g)
   std::clog << g.get_time() << ": replayer doing " << move << '\n';
   const auto inputs{convert_move_to_user_inputs(g, move)};
   std::clog << g.get_time() << ": replayer doing inputs:\n" << user_inputs(inputs) << '\n';
-  add_user_inputs(g, inputs);
+  add_user_inputs(c, inputs);
 }
 
 int get_n_moves(const replayer& r) noexcept
@@ -50,18 +54,20 @@ void test_replayer()
   {
     replayer r;
     game g;
+    game_controller c;
     assert(r.get_last_time() == delta_t(-1.0));
-    r.do_move(g);
+    r.do_move(c, g);
     assert(r.get_last_time() == delta_t(0.0));
   }
   // replayer::do_move does not increase last_time in 0.1 interval
   {
     replayer r;
     game g;
-    r.do_move(g);
+    game_controller c;
+    r.do_move(c, g);
     assert(r.get_last_time() == delta_t(0.0));
     g.tick(delta_t(0.1));
-    r.do_move(g);
+    r.do_move(c, g);
     assert(r.get_last_time() == delta_t(0.0));
   }
   // replayer::do_move on one move does it
@@ -69,9 +75,10 @@ void test_replayer()
     replayer r(replay("1. e4"));
     assert(get_n_moves(r) == 1);
     game g;
+    game_controller c;
     assert(is_piece_at(g, square("e2")));
     assert(!is_piece_at(g, square("e4")));
-    r.do_move(g);
+    r.do_move(c, g);
     #ifdef FIX_ISSUE_64_ANOTHER
     assert(!is_piece_at(g, square("e2")));
     assert(is_piece_at(g, square("e4")));

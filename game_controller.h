@@ -16,7 +16,7 @@ class game_controller
 {
 public:
   game_controller(
-    const physical_controllers& controllers
+    const physical_controllers& controllers = physical_controllers()
   );
 
   /// Add a user input. These will be processed in 'game::tick'
@@ -65,6 +65,12 @@ private:
   /// The user inputs that need to be processed
   user_inputs m_user_inputs;
 };
+
+/// Add a user input. These will be processed in 'game::tick'
+void add_user_input(game_controller& c, const user_input& input);
+
+/// Add a user_inputs. These will be processed in 'game::tick'
+void add_user_inputs(game_controller& c, const user_inputs& input);
 
 /// What side does the player with the mouse control?
 side get_mouse_user_player_side(const game_controller& c);
