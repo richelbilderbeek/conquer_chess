@@ -41,3 +41,4 @@ game
 *.gcno
 *.bz2
 *.pgn
+doc/
