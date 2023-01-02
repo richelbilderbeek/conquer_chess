@@ -242,9 +242,8 @@ void test_game_options()
   // game_options::get_sontroller
   {
     auto options{create_default_game_options()};
-    // TODO: this is double
-    options.set_controller(create_right_keyboard_controller(side::lhs), side::lhs);
-    options.set_controller(create_left_keyboard_controller(side::rhs), side::rhs);
+    options.set_controller(create_right_keyboard_controller(), side::lhs);
+    options.set_controller(create_left_keyboard_controller(), side::rhs);
   }
   // game_options::set_music_volume
   {

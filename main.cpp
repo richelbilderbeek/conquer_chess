@@ -132,7 +132,7 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   else
   {
     #ifndef LOGIC_ONLY
-    controls_view v(create_left_keyboard_controller(side::lhs));
+    controls_view v(create_left_keyboard_controller());
     v.exec();
     #endif // LOGIC_ONLY
   }

@@ -171,13 +171,13 @@ const game_coordinat& get_cursor_pos(const game_view& view, const side player) n
 
 std::string get_text_for_action(
   const game_view& view,
-  const physical_controller& c,
+  const physical_controller& /* c */,
   const int key
 )
 {
   const auto& g{view.get_game()};
   const auto default_action{
-    get_default_piece_action(g, c.get_player())
+    get_default_piece_action(g, side::lhs)
   };
   if (!default_action) return "";
   if (key == 1)
@@ -251,7 +251,7 @@ void process_event(game& g, const sf::Event& event)
   for (const auto s: get_all_sides())
   {
     const physical_controller& p{get_physical_controller(g, s)};
-    const user_inputs& inputs{p.process_input(event, g)};
+    const user_inputs& inputs{p.process_input(event, s, g)};
     for (const auto& a: inputs.get_user_inputs())
     {
       add_user_input(g, a);

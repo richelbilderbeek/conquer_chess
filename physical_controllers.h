@@ -20,6 +20,13 @@ public:
   /// Get the physical controllers
   const std::vector<physical_controller>& get_controllers() const noexcept;
 
+  /// Process the input for this controller.
+  /// Returns an an empty vector if this controller is uneffected by the event
+  //user_inputs process_input(
+  //  const sf::Event& event,
+  //  const game& g
+  //) const;
+
   /// Set a controller
   void set(const side player_side, const physical_controller& controller);
 

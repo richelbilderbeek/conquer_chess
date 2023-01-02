@@ -17,15 +17,11 @@ class physical_controller
 public:
   explicit physical_controller(
     const physical_controller_type type,
-    const side player,
     const key_bindings& ks
   );
 
   /// Key binding, only used when the type is a keyboard
   const auto& get_key_bindings() const noexcept { return m_key_bindings; }
-
-  /// Get the side this controller is on
-  side get_player() const noexcept { return m_player; }
 
   const physical_controller_type& get_type() const noexcept { return m_type; }
 
@@ -33,6 +29,7 @@ public:
   /// Returns an an empty vector if this controller is uneffected by the event
   user_inputs process_input(
     const sf::Event& event,
+    const side player_side,
     const game& g
   ) const;
 
@@ -43,40 +40,41 @@ private:
   /// Key binding, only used when the type is a keyboard
   key_bindings m_key_bindings;
 
-  side m_player;
-
   physical_controller_type m_type;
 
   /// Process a key press from a keyboard
   user_inputs process_key_press(
-    const sf::Event& event
+    const sf::Event& event,
+    const side player_side
   ) const;
 
   /// Process the input from a mouse button press
   user_inputs process_mouse_pressed(
-    const sf::Event& event
+    const sf::Event& event,
+    const side player_side
   ) const;
 
   /// Process the input from a mouse movement
   user_inputs process_mouse_moved(
     const sf::Event& event,
+    const side player_side,
     const game& g
   ) const;
 };
 
 /// Create a default keyboard controller,
 /// which is the left keyboard controller
-physical_controller create_default_keyboard_controller(const side player) noexcept;
+physical_controller create_default_keyboard_controller() noexcept;
 
 /// Create a mouse controller
-physical_controller create_default_mouse_controller(const side player) noexcept;
+physical_controller create_default_mouse_controller() noexcept;
 
 /// Create an sf::Event with type sf::Event::KeyPressed
 sf::Event create_key_pressed_event(const sf::Keyboard::Key k);
 
 /// Create a keyboard controller
 /// for a user at the left side of the keyboard
-physical_controller create_left_keyboard_controller(const side player) noexcept;
+physical_controller create_left_keyboard_controller() noexcept;
 
 /// Create an sf::Event with type sf::Event::MouseButtonPressed
 sf::Event create_mouse_button_pressed_event(
@@ -90,7 +88,7 @@ sf::Event create_mouse_moved_event(const screen_coordinat& cursor_pos);
 
 /// Create a keyboard controller
 /// for a user at the right side of the keyboard
-physical_controller create_right_keyboard_controller(const side player) noexcept;
+physical_controller create_right_keyboard_controller() noexcept;
 
 /// Get the key for a action 1, 2, 3 or 4 for a controller
 sf::Keyboard::Key get_key_for_action(const physical_controller& c, const action_number& action);

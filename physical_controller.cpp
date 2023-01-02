@@ -10,26 +10,26 @@
 
 physical_controller::physical_controller(
   const physical_controller_type type,
-  const side player,
+  //const side player,
   const key_bindings& ks
 )
   : m_key_bindings{ks},
-    m_player{player},
+    //m_player{player},
     m_type{type}
 {
 
 }
 
-physical_controller create_default_keyboard_controller(const side player) noexcept
+physical_controller create_default_keyboard_controller() noexcept
 {
-  return create_left_keyboard_controller(player);
+  return create_left_keyboard_controller();
 }
 
-physical_controller create_default_mouse_controller(const side player) noexcept
+physical_controller create_default_mouse_controller(/* const side player */) noexcept
 {
   return physical_controller(
     physical_controller_type::mouse,
-    player,
+    //player,
     create_right_keyboard_key_bindings()
   );
 }
@@ -42,11 +42,10 @@ sf::Event create_key_pressed_event(const sf::Keyboard::Key k)
   return e;
 }
 
-physical_controller create_left_keyboard_controller(const side player) noexcept
+physical_controller create_left_keyboard_controller() noexcept
 {
   return physical_controller(
     physical_controller_type::keyboard,
-    player,
     create_left_keyboard_key_bindings()
   );
 }
@@ -73,11 +72,10 @@ sf::Event create_mouse_moved_event(const screen_coordinat& cursor_pos)
   return e;
 }
 
-physical_controller create_right_keyboard_controller(const side player) noexcept
+physical_controller create_right_keyboard_controller() noexcept
 {
   return physical_controller(
     physical_controller_type::keyboard,
-    player,
     create_right_keyboard_key_bindings()
   );
 }
@@ -160,9 +158,9 @@ std::string get_text_for_action(
   }
 }
 
-
 user_inputs physical_controller::process_input(
   const sf::Event& event,
+  const side player_side,
   const game& g
 ) const
 {
@@ -170,7 +168,7 @@ user_inputs physical_controller::process_input(
   {
     if (event.type == sf::Event::KeyPressed)
     {
-      return process_key_press(event);
+      return process_key_press(event, player_side);
     }
   }
   else
@@ -178,11 +176,11 @@ user_inputs physical_controller::process_input(
     assert(m_type == physical_controller_type::mouse);
     if (event.type == sf::Event::MouseMoved)
     {
-      return process_mouse_moved(event, g);
+      return process_mouse_moved(event, player_side, g);
     }
     if (event.type == sf::Event::MouseButtonPressed)
     {
-      return process_mouse_pressed(event);
+      return process_mouse_pressed(event, player_side);
     }
   }
   // Ignore the rest
@@ -190,7 +188,8 @@ user_inputs physical_controller::process_input(
 }
 
 user_inputs physical_controller::process_key_press(
-  const sf::Event& event
+  const sf::Event& event,
+  const side player_side
 ) const
 {
   assert(event.type == sf::Event::KeyPressed);
@@ -198,13 +197,14 @@ user_inputs physical_controller::process_key_press(
   const auto actions_types{m_key_bindings.create_actions(event.key.code)};
   for (const auto t: actions_types)
   {
-     v.push_back(user_input(t, m_player));
+     v.push_back(user_input(t, player_side));
   }
   return v;
 }
 
 user_inputs physical_controller::process_mouse_pressed(
-  const sf::Event& event
+  const sf::Event& event,
+  const side player_side
 ) const
 {
   assert(event.type == sf::Event::MouseButtonPressed);
@@ -213,7 +213,7 @@ user_inputs physical_controller::process_mouse_pressed(
     return user_inputs(
       {
         create_press_lmb_action(
-          m_player
+          player_side
         )
       }
     );
@@ -221,13 +221,14 @@ user_inputs physical_controller::process_mouse_pressed(
   assert(event.mouseButton.button == sf::Mouse::Right);
   return user_inputs(
     {
-      create_press_rmb_action(m_player)
+      create_press_rmb_action(player_side)
     }
   );
 }
 
 user_inputs physical_controller::process_mouse_moved(
   const sf::Event& event,
+  const side player_side,
   const game& g
 ) const
 {
@@ -242,45 +243,32 @@ user_inputs physical_controller::process_mouse_moved(
     )
   };
   return user_inputs(
-    { create_mouse_move_action(mouse_game_pos, m_player) }
+    { create_mouse_move_action(mouse_game_pos, player_side) }
   );
 }
+
 
 void test_controller()
 {
 #ifndef NDEBUG
-  // create_default_keyboard_controller
-  {
-    const physical_controller c{create_default_keyboard_controller(side::lhs)};
-    assert(c.get_player() == side::lhs);
-    const physical_controller d{create_default_keyboard_controller(side::rhs)};
-    assert(d.get_player() == side::rhs);
-    assert(c != d);
-  }
-  // controller::get_player
-  {
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
-    assert(c.get_player() == side::lhs);
-    const physical_controller d{create_left_keyboard_controller(side::rhs)};
-    assert(d.get_player() == side::rhs);
-  }
   // controller::get_type
   {
-    const physical_controller c{create_default_mouse_controller(side::lhs)};
+    const physical_controller c{create_default_mouse_controller()};
     assert(c.get_type() == physical_controller_type::mouse);
-    const physical_controller d{create_left_keyboard_controller(side::lhs)};
+    const physical_controller d{create_left_keyboard_controller()};
     assert(d.get_type() == physical_controller_type::keyboard);
-    const physical_controller e{create_right_keyboard_controller(side::lhs)};
+    const physical_controller e{create_right_keyboard_controller()};
     assert(e.get_type() == physical_controller_type::keyboard);
   }
   // controller::process_input, mouse moved
   {
     const game g;
-    const physical_controller c{create_default_mouse_controller(side::lhs)};
+    const physical_controller c{create_default_mouse_controller()};
     const user_inputs inputs(
       {
         c.process_input(
           create_mouse_moved_event(screen_coordinat()),
+          side::lhs,
           g
         )
       }
@@ -290,11 +278,12 @@ void test_controller()
   // controller::process_input, LMB mouse pressed
   {
     const game g;
-    const physical_controller c{create_default_mouse_controller(side::lhs)};
+    const physical_controller c{create_default_mouse_controller()};
     const user_inputs inputs(
       {
         c.process_input(
           create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Left),
+          side::lhs,
           g
         )
       }
@@ -304,11 +293,12 @@ void test_controller()
   // controller::process_input, RMB mouse pressed
   {
     const game g;
-    const physical_controller c{create_default_mouse_controller(side::lhs)};
+    const physical_controller c{create_default_mouse_controller()};
     const user_inputs inputs(
       {
         c.process_input(
           create_mouse_button_pressed_event(screen_coordinat(), sf::Mouse::Right),
+          side::lhs,
           g
         )
       }
@@ -317,182 +307,176 @@ void test_controller()
   }
   // create_left_keyboard_controller
   {
-    const auto c{create_left_keyboard_controller(side::lhs)};
+    const auto c{create_left_keyboard_controller()};
     assert(c.get_type() == physical_controller_type::keyboard);
-    assert(c.get_player() == side::lhs);
-    const auto d{create_left_keyboard_controller(side::rhs)};
-    assert(d.get_type() == physical_controller_type::keyboard);
-    assert(d.get_player() == side::rhs);
   }
   // create_right_keyboard_controller
   {
-    const auto c{create_right_keyboard_controller(side::lhs)};
+    const auto c{create_right_keyboard_controller()};
     assert(c.get_type() == physical_controller_type::keyboard);
-    assert(c.get_player() == side::lhs);
-    const auto d{create_right_keyboard_controller(side::rhs)};
+    const auto d{create_right_keyboard_controller()};
     assert(d.get_type() == physical_controller_type::keyboard);
-    assert(d.get_player() == side::rhs);
   }
   // get_text_for_action
   {
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, action_number(1)) == "Q\nSelect");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, action_number(2)) == "E");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, action_number(3)) == "Z");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), false, false, false, false, action_number(4)) == "C");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, action_number(1)) == "Q\nMove");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, action_number(2)) == "E\nAttack");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, action_number(3)) == "Z");
-    assert(get_text_for_action(create_left_keyboard_controller(side::lhs), true, false, false, false, action_number(4)) == "C");
+    assert(get_text_for_action(create_left_keyboard_controller(), false, false, false, false, action_number(1)) == "Q\nSelect");
+    assert(get_text_for_action(create_left_keyboard_controller(), false, false, false, false, action_number(2)) == "E");
+    assert(get_text_for_action(create_left_keyboard_controller(), false, false, false, false, action_number(3)) == "Z");
+    assert(get_text_for_action(create_left_keyboard_controller(), false, false, false, false, action_number(4)) == "C");
+    assert(get_text_for_action(create_left_keyboard_controller(), true, false, false, false, action_number(1)) == "Q\nMove");
+    assert(get_text_for_action(create_left_keyboard_controller(), true, false, false, false, action_number(2)) == "E\nAttack");
+    assert(get_text_for_action(create_left_keyboard_controller(), true, false, false, false, action_number(3)) == "Z");
+    assert(get_text_for_action(create_left_keyboard_controller(), true, false, false, false, action_number(4)) == "C");
 
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, action_number(1)) == "1\nSelect");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, action_number(2)) == "2");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, action_number(3)) == "3");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), false, false, false, false, action_number(4)) == "4");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, action_number(1)) == "1\nMove");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, action_number(2)) == "2\nAttack");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, action_number(3)) == "3");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, false, action_number(4)) == "4");
+    assert(get_text_for_action(create_default_mouse_controller(), false, false, false, false, action_number(1)) == "1\nSelect");
+    assert(get_text_for_action(create_default_mouse_controller(), false, false, false, false, action_number(2)) == "2");
+    assert(get_text_for_action(create_default_mouse_controller(), false, false, false, false, action_number(3)) == "3");
+    assert(get_text_for_action(create_default_mouse_controller(), false, false, false, false, action_number(4)) == "4");
+    assert(get_text_for_action(create_default_mouse_controller(), true, false, false, false, action_number(1)) == "1\nMove");
+    assert(get_text_for_action(create_default_mouse_controller(), true, false, false, false, action_number(2)) == "2\nAttack");
+    assert(get_text_for_action(create_default_mouse_controller(), true, false, false, false, action_number(3)) == "3");
+    assert(get_text_for_action(create_default_mouse_controller(), true, false, false, false, action_number(4)) == "4");
 
     // Castling
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, true, false, action_number(3)) == "3\nCastle\nkingside");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, false, false, true, action_number(4)) == "4\nCastle\nqueenside");
+    assert(get_text_for_action(create_default_mouse_controller(), true, false, true, false, action_number(3)) == "3\nCastle\nkingside");
+    assert(get_text_for_action(create_default_mouse_controller(), true, false, false, true, action_number(4)) == "4\nCastle\nqueenside");
 
     // Promotion
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, action_number(1)) == "1\nPromote\nto\nqueen");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, action_number(2)) == "2\nPromote\nto\nrook");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, action_number(3)) == "3\nPromote\nto\nbishop");
-    assert(get_text_for_action(create_default_mouse_controller(side::lhs), true, true, false, false, action_number(4)) == "4\nPromote\nto\nknight");
+    assert(get_text_for_action(create_default_mouse_controller(), true, true, false, false, action_number(1)) == "1\nPromote\nto\nqueen");
+    assert(get_text_for_action(create_default_mouse_controller(), true, true, false, false, action_number(2)) == "2\nPromote\nto\nrook");
+    assert(get_text_for_action(create_default_mouse_controller(), true, true, false, false, action_number(3)) == "3\nPromote\nto\nbishop");
+    assert(get_text_for_action(create_default_mouse_controller(), true, true, false, false, action_number(4)) == "4\nPromote\nto\nknight");
 
   }
   // press up does nothing with a mouse
   {
     const game g;
-    const physical_controller c{create_default_mouse_controller(side::lhs)};
+    const physical_controller c{create_default_mouse_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_up()
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(is_empty(actions));
   }
   // press up works with a keyboard
   {
     const game g;
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_up()
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   // press right works with a keyboard
   {
     const game g;
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_right()
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   // press down works with a keyboard
   {
     const game g;
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_down()
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   // press left works with a keyboard
   {
     const game g;
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_move_left()
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   // press action 1 works with a keyboard
   {
     const game g;
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(action_number(1))
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   // press action 2 works with a keyboard
   {
     const game g;
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(action_number(2))
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   // press action 3 works with a keyboard
   {
     const game g;
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         c.get_key_bindings().get_key_for_action(action_number(3))
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   // press action 4 works
   {
     const game g;
 
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
         get_key_for_action(g, side::lhs, action_number(4))
       )
     };
-    const auto actions{c.process_input(event, g)};
+    const auto actions{c.process_input(event, side::lhs, g)};
     assert(!is_empty(actions));
   }
   //
   {
     const game g;
-    const physical_controller c{create_default_mouse_controller(side::lhs)};
+    const physical_controller c{create_default_mouse_controller()};
     sf::Event e;
     e.type = sf::Event::KeyPressed;
     assert(c.get_type() == physical_controller_type::mouse);
-    assert(is_empty(c.process_input(e, g)));
+    assert(is_empty(c.process_input(e, side::lhs, g)));
   }
   // operator==
   {
-    const physical_controller a{create_left_keyboard_controller(side::lhs)};
-    const physical_controller b{create_left_keyboard_controller(side::lhs)};
-    const physical_controller c{create_right_keyboard_controller(side::lhs)};
+    const physical_controller a{create_left_keyboard_controller()};
+    const physical_controller b{create_left_keyboard_controller()};
+    const physical_controller c{create_right_keyboard_controller()};
     assert(a == b);
     assert(!(a == c));
   }
   // 41: operator<<
   {
-    const physical_controller c{create_left_keyboard_controller(side::lhs)};
+    const physical_controller c{create_left_keyboard_controller()};
     std::stringstream s;
     s << c;
     assert(!s.str().empty());
@@ -503,7 +487,6 @@ void test_controller()
 bool operator==(const physical_controller& lhs, const physical_controller& rhs) noexcept
 {
   return lhs.get_key_bindings() == rhs.get_key_bindings()
-    && lhs.get_player() == rhs.get_player()
     && lhs.get_type() == rhs.get_type()
   ;
 }
@@ -517,7 +500,6 @@ std::ostream& operator<<(std::ostream& os, const physical_controller& c) noexcep
 {
   os
     << "Key bindings: " << c.get_key_bindings() << '\n'
-    << "Player: " << c.get_player() << '\n'
     << "Type: " << c.get_type()
   ;
   return os;

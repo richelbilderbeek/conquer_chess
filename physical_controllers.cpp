@@ -50,8 +50,8 @@ physical_controllers create_keyboard_mouse_controllers() noexcept
 {
   return physical_controllers(
     {
-      create_left_keyboard_controller(side::lhs),
-      create_default_mouse_controller(side::rhs)
+      create_left_keyboard_controller(),
+      create_default_mouse_controller()
     }
   );
 }
@@ -60,8 +60,8 @@ physical_controllers create_mouse_keyboard_controllers() noexcept
 {
   return physical_controllers(
     {
-      create_default_mouse_controller(side::lhs),
-      create_right_keyboard_controller(side::rhs)
+      create_default_mouse_controller(),
+      create_right_keyboard_controller()
     }
   );
 }
@@ -70,8 +70,8 @@ physical_controllers create_two_keyboard_controllers() noexcept
 {
   return physical_controllers(
     {
-      create_left_keyboard_controller(side::lhs),
-      create_right_keyboard_controller(side::rhs)
+      create_left_keyboard_controller(),
+      create_right_keyboard_controller()
     }
   );
 }
@@ -81,49 +81,33 @@ const physical_controller& physical_controllers::get_controller(const side playe
   if (player_side == side::lhs)
   {
     assert(count_n_controllers(m_physical_controllers) >= 1);
-    assert(m_physical_controllers[0].get_player() == player_side);
     return m_physical_controllers[0];
   }
   assert(player_side == side::rhs);
   assert(count_n_controllers(m_physical_controllers) >= 2);
-  assert(m_physical_controllers[1].get_player() == player_side);
   return m_physical_controllers[1];
 }
 
 side get_keyboard_user_player_side(const physical_controllers& controllers)
 {
-  assert(has_keyboard_controller(controllers));
   const auto& cs{controllers.get_controllers()};
-  const auto i{
-    std::find_if(
-      std::begin(cs),
-      std::end(cs),
-      [](const auto& c)
-      {
-        return c.get_type() == physical_controller_type::keyboard;
-      }
-    )
-  };
-  assert(i != std::end(cs));
-  return (*i).get_player();
+  if (cs[0].get_type() == physical_controller_type::keyboard)
+  {
+    return side::lhs;
+  }
+  assert(cs[1].get_type() == physical_controller_type::keyboard);
+  return side::rhs;
 }
 
 side get_mouse_user_player_side(const physical_controllers& controllers)
 {
-  assert(has_mouse_controller(controllers));
   const auto& cs{controllers.get_controllers()};
-  const auto i{
-    std::find_if(
-      std::begin(cs),
-      std::end(cs),
-      [](const auto& c)
-      {
-        return c.get_type() == physical_controller_type::mouse;
-      }
-    )
-  };
-  assert(i != std::end(cs));
-  return (*i).get_player();
+  if (cs[0].get_type() == physical_controller_type::mouse)
+  {
+    return side::lhs;
+  }
+  assert(cs[1].get_type() == physical_controller_type::mouse);
+  return side::rhs;
 }
 
 bool has_keyboard_controller(const physical_controllers& controllers) noexcept
@@ -146,13 +130,11 @@ void physical_controllers::set(const side player_side, const physical_controller
   if (player_side == side::lhs)
   {
     assert(m_physical_controllers.size() >= 1);
-    assert(m_physical_controllers[0].get_player() == player_side);
     m_physical_controllers[0] = controller;
     return;
   }
   assert(player_side == side::rhs);
   assert(m_physical_controllers.size() >= 2);
-  assert(m_physical_controllers[1].get_player() == player_side);
   m_physical_controllers[1] = controller;
 }
 
