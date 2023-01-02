@@ -41,10 +41,6 @@ public:
 
   auto& get_window() noexcept { return m_window; }
 
-  /// Set a timer when the window will close.
-  /// This is useful in debugging
-  void set_auto_close_timer_msecs(const double t_msecs);
-
 private:
 
   /// The game clock, to measure the elapsed time
@@ -61,8 +57,6 @@ private:
 
   /// The text log
   game_log m_log;
-
-  std::optional<double> m_auto_close_timer_msecs;
 
   /// The window to draw to
   sf::RenderWindow m_window;

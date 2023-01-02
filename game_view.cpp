@@ -85,14 +85,6 @@ void game_view::exec()
 
     // Show the new state
     show();
-
-    // Auto-close, useful in debugging
-    if (m_auto_close_timer_msecs)
-    {
-      const auto elapsed{m_clock.getElapsedTime().asMilliseconds()};
-      const auto when{m_auto_close_timer_msecs.value()};
-      if (elapsed > when) break;
-    }
   }
 
   std::clog << collect_action_history(m_game) << '\n';
@@ -292,11 +284,6 @@ void game_view::process_piece_messages()
   play_pieces_sound_effects();
 
   clear_piece_messages(m_game);
-}
-
-void game_view::set_auto_close_timer_msecs(const double t_msecs)
-{
-  m_auto_close_timer_msecs = t_msecs;
 }
 
 void game_view::show()
@@ -1003,11 +990,6 @@ void show_unit_sprites(game_view& view, const side player_side)
 void test_game_view() //!OCLINT tests may be many
 {
   #ifndef NDEBUG // no tests in release
-  {
-    game_view v;
-    v.set_auto_close_timer_msecs(0.0);
-    v.exec();
-  }
   #endif //NDEBUG
 }
 
