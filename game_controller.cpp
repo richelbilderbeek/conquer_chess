@@ -104,7 +104,7 @@ void test_game_controller_keyboard_use()
 #ifndef NDEBUG // no tests in release
   // has_mouse_controller
   {
-    game_controller g(
+    const game_controller g(
       create_two_keyboard_controllers()
     );
     assert(!has_mouse_controller(g));

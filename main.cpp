@@ -12,6 +12,7 @@
 #include "physical_controllers.h"
 #include "fps_clock.h"
 #include "game.h"
+#include "game_controller.h"
 #include "game_log.h"
 #include "game_rect.h"
 #include "game_resources.h"
@@ -58,6 +59,7 @@ void test()
   test_delta_t();
   test_fps_clock();
   test_game();
+  test_game_controller();
   test_game_coordinat();
   test_game_options();
   test_game_rect();
