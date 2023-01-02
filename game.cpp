@@ -1298,7 +1298,7 @@ piece& get_closest_piece_to(
 
 const physical_controller& get_physical_controller(const game& g, const side player)
 {
-  return ::get_physical_controller(g.get_options(), player);
+  return ::get_physical_controller(g.get_controller(), player);
 }
 
 physical_controller_type get_physical_controller_type(const game& g, const side player)
