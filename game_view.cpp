@@ -24,8 +24,9 @@
 #include <sstream>
 
 game_view::game_view(const game& game)
-  : //m_controllers{create_default_controllers()},
+  :
     m_game{game},
+    m_game_controller{game.get_options().get_physical_controllers()},
     m_log{game.get_options().get_message_display_time_secs()}
 {
   m_game_resources.get_ninja_gods().setVolume(

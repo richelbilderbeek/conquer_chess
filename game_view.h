@@ -52,6 +52,9 @@ private:
   /// The game logic
   game m_game;
 
+  /// The game controller, interacts with game
+  game_controller m_game_controller;
+
   /// The resources (images, sounds, etc.) of the game
   game_resources m_game_resources;
 
