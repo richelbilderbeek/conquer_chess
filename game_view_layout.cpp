@@ -507,6 +507,22 @@ void test_game_view_layout()
     s << layout;
     assert(!s.str().empty());
   }
+  // get_controls_key_input
+  {
+    const game_view_layout layout;
+    for (const auto& n: get_all_action_numbers())
+    {
+      for (const auto& s: get_all_sides())
+      {
+        assert(
+          is_in(
+            get_center(layout.get_controls_key(s, n)),
+            layout.get_controls(s)
+          )
+        );
+      }
+    }
+  }
   #endif
 }
 
