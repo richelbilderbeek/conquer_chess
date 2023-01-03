@@ -789,44 +789,44 @@ void test_user_inputs()
   {
     game g;
     game_controller c;
-    const game_coordinat before{get_cursor_pos(g, side::lhs)};
+    const game_coordinat before{get_cursor_pos(c, side::lhs)};
     user_inputs inputs;
     inputs.add(create_press_up_action(side::lhs));
     inputs.apply_user_inputs_to_game(c, g);
-    const game_coordinat after{get_cursor_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
   // Move right does something
   {
     game g;
     game_controller c;
-    const game_coordinat before{get_cursor_pos(g, side::lhs)};
+    const game_coordinat before{get_cursor_pos(c, side::lhs)};
     user_inputs input;
     input.add(create_press_right_action(side::lhs));
     input.apply_user_inputs_to_game(c, g);
-    const game_coordinat after{get_cursor_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
   // Move down does something
   {
     game g;
-    const game_coordinat before{get_cursor_pos(g, side::lhs)};
-    user_inputs inputs;
     game_controller c;
+    const game_coordinat before{get_cursor_pos(c, side::lhs)};
+    user_inputs inputs;
     inputs.add(create_press_down_action(side::lhs));
     inputs.apply_user_inputs_to_game(c, g);
-    const game_coordinat after{get_cursor_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
   // Move left does something
   {
     game g;
     game_controller c;
-    const game_coordinat before{get_cursor_pos(g, side::lhs)};
+    const game_coordinat before{get_cursor_pos(c, side::lhs)};
     user_inputs inputs;
     inputs.add(create_press_left_action(side::lhs));
     inputs.apply_user_inputs_to_game(c, g);
-    const game_coordinat after{get_cursor_pos(g, side::lhs)};
+    const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
   // 37: operator<< for no actions
@@ -850,14 +850,16 @@ void test_user_inputs()
   {
     game g;
     game_controller c;
-    assert(square(get_cursor_pos(g, side::lhs)) != square("e2"));
-    const auto inputs{
-      get_user_inputs_to_move_cursor_to(g, square("e2"), side::lhs)
+    assert(square(get_cursor_pos(c, side::lhs)) != square("e2"));
+    auto inputs{
+      get_user_inputs_to_move_cursor_to(c, square("e2"), side::lhs)
     };
     assert(!is_empty(inputs));
     add_user_inputs(c, inputs);
+
+    inputs.apply_user_inputs_to_game(c, g);
     g.tick(delta_t(0.0));
-    assert(square(get_cursor_pos(g, side::lhs)) == square("e2"));
+    assert(square(get_cursor_pos(c, side::lhs)) == square("e2"));
   }
   // 64: move white's cursor to e2 and select the pawn
   {

@@ -23,7 +23,7 @@ public:
   void add_user_input(const user_input& a);
 
   /// Get the a player's cursor position
-  const game_coordinat& get_cursor_pos(const side player) const noexcept;
+  const game_coordinat& get_cursor_pos(const side player_side) const noexcept;
 
   /// A mouse user selects one of the four actions by using RMB
   /// and scrollwheel. The mouse user selector stores
@@ -35,7 +35,7 @@ public:
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
   /// Get a player's physical controller
-  const physical_controller& get_physical_controller(const side player) const noexcept;
+  const physical_controller& get_physical_controller(const side player_side) const noexcept;
 
   /// Get the game users' inputs
   auto& get_user_inputs() noexcept { return m_user_inputs; }
@@ -71,6 +71,9 @@ void add_user_input(game_controller& c, const user_input& input);
 
 /// Add a user_inputs. These will be processed in 'game::tick'
 void add_user_inputs(game_controller& c, const user_inputs& input);
+
+/// Get the a player's cursor position
+const game_coordinat& get_cursor_pos(const game_controller& c, const side player_side) noexcept;
 
 /// What side does the player with the mouse control?
 side get_mouse_user_player_side(const game_controller& c);

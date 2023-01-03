@@ -45,6 +45,11 @@ const game_coordinat& game_controller::get_cursor_pos(const side player) const n
   return m_rhs_cursor_pos;
 }
 
+const game_coordinat& get_cursor_pos(const game_controller&c, const side player_side) noexcept
+{
+  return c.get_cursor_pos(player_side);
+}
+
 side get_mouse_user_player_side(const game_controller& c)
 {
   assert(has_mouse_controller(c));
