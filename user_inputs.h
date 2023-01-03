@@ -115,36 +115,6 @@ void do_select_and_move_piece(
   const side player_side
 );
 
-/// Create the user inputs to do action_1 at the square at the cursor
-user_input get_user_input_to_do_action_1(
-  const game& g,
-  const side player_side
-);
-
-/// Create the user inputs to select the square at the cursor
-user_input get_user_input_to_select(
-  const game& g,
-  const side player_side
-);
-
-/// Create the user inputs to move the cursor to a target square
-user_inputs get_user_inputs_to_move_cursor_to(
-  const game& g,
-  const square& to,
-  const side player_side
-);
-
-/// Create the user inputs to move the cursor to a target square
-/// knowing it will be at the 'from' square.
-/// This is useful for creating future 'user_input's,
-/// e.g. for white doing e4, the cursor must be moved to e2
-/// to select a pawn, then to e4 to select the target.
-user_inputs get_user_inputs_to_move_cursor_from_to(
-  const game& g,
-  const square& from,
-  const square& to,
-  const side player_side
-);
 
 /// See if the \link{user_inputs} holds zero elements
 bool is_empty(const user_inputs& inputs) noexcept;
@@ -204,7 +174,11 @@ void start_move_unit(
 void test_user_inputs();
 
 /// Convert a 'piece_action' to a 'control_actions'
-user_inputs to_user_inputs(const piece_action& pa, const game& g);
+user_inputs to_user_inputs(
+  const piece_action& pa,
+  const game& g,
+  const game_controller& c
+);
 
 std::ostream& operator<<(std::ostream& os, const user_inputs& actions) noexcept;
 bool operator==(const user_inputs& lhs, const user_inputs& rhs) noexcept;

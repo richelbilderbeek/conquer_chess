@@ -170,7 +170,8 @@ bool can_do_promote(
 /// Can the player select a piece at the current mouse position?
 bool can_player_select_piece_at_cursor_pos(
   const game& g,
-  const chess_color player
+  const game_controller& c,
+  const chess_color cursor_color
 );
 
 /// Clear the sound effects to be processed,
@@ -185,7 +186,10 @@ action_history collect_action_history(const game& g);
 /// Each 'user_inputs' equals one 'piece_action'
 /// @see use 'collect_all_piece_actions'
 /// to get all the 'piece_action's from a game
-std::vector<user_inputs> collect_all_user_inputses(const game& g);
+std::vector<user_inputs> collect_all_user_inputses(
+  const game& g,
+  const game_controller& c
+);
 
 /// Collect all valid moves and attackes at a board
 /// for all pieces
@@ -448,18 +452,22 @@ const piece& get_closest_piece_to(const game& g, const game_coordinat& coordinat
 /// Get the piece that is closest to the coordinat
 piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
 
+/*
 /// Get the controller for a certain side
 const physical_controller& get_physical_controller(const game& g, const side player);
 
 /// Get the controller type for a certain side
 physical_controller_type get_physical_controller_type(const game& g, const side player);
+*/
 
 /// Get the cursor position for a chess color
 const game_coordinat& get_cursor_pos(
   const game& g,
-  const chess_color c
+  const game_controller& c,
+  const chess_color cursor_color
 );
 
+/*
 /// Get the cursor position for a player
 const game_coordinat& get_cursor_pos(
   const game& g,
@@ -471,6 +479,7 @@ square get_cursor_square(
   const game& g,
   const side player_side
 );
+*/
 
 game get_default_game() noexcept;
 
@@ -479,13 +488,15 @@ game get_default_game() noexcept;
 /// cannot result in an action
 std::optional<piece_action_type> get_default_piece_action(
   const game& g,
+  const game_controller& c,
   const side player_side
 ) noexcept;
 
+/*
 /// Create a game with all default settings
 /// and a specific set of controllers
 game get_game_with_controllers(const physical_controllers& c) noexcept;
-
+*/
 /// Create a game with all default settings
 /// and a specific starting position
 game get_game_with_starting_position(starting_position_type t) noexcept;
@@ -504,10 +515,6 @@ int get_index_of_closest_piece_to(
 /// Will throw if no user uses a keyboard
 chess_color get_keyboard_user_player_color(const game& g);
 
-/// Get the side of the controller that uses the keyboard.
-/// Assumes there is one controller that uses the keyboard
-side get_keyboard_user_player_side(const game& g);
-
 /// Get the key for action 1, 2, 3 or 4 for a player
 sf::Keyboard::Key get_key_for_action(const game& g, const side player, const action_number& action);
 
@@ -520,11 +527,15 @@ const game_view_layout& get_layout(const game& g) noexcept;
 
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse
-chess_color get_mouse_user_player_color(const game& g);
+chess_color get_mouse_user_player_color(
+  const game& g
+);
 
+/*
 /// Get the side of the controller that uses the mouse.
 /// Assumes there is one controller that uses the mouse
 side get_mouse_user_player_side(const game& g);
+*/
 
 /// Get the music volume as a percentage
 double get_music_volume_as_percentage(const game& g) noexcept;
@@ -714,11 +725,10 @@ void set_mouse_player_pos(
 );
 
 /// Set the cursor's position
-void set_player_pos(
-  game& g,
+void set_cursor_pos(
   game_controller& c,
   const game_coordinat& pos,
-  const side player
+  const side player_side
 ) noexcept;
 
 /// Call game::tick until all pieces are idle

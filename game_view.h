@@ -34,6 +34,8 @@ public:
 
   const auto& get_game() const noexcept { return m_game; }
 
+  const auto& get_game_controller() const noexcept { return m_game_controller; }
+
   auto& get_resources() noexcept { return m_game_resources; }
 
   /// Get the text log, i.e. things pieces have to say
@@ -102,7 +104,7 @@ physical_controller_type get_physical_controller_type(const game_view& view, con
 /// Get the controls text for a player with a controller
 std::string get_controls_text(
   const game_view& view,
-  const physical_controller& c,
+  const game_controller& c,
   const int key
 );
 
@@ -131,7 +133,10 @@ chess_color get_player_color(
 ) noexcept;
 
 /// Get the player position
-const game_coordinat& get_cursor_pos(const game_view& view, const side player) noexcept;
+const game_coordinat& get_cursor_pos(
+  const game_view& view,
+  const side player
+) noexcept;
 
 /// Get the text for an action, e.g.
 /// 'Q\nSelect' for a keyboard player that has nothing selected
@@ -139,7 +144,7 @@ const game_coordinat& get_cursor_pos(const game_view& view, const side player) n
 /// 'LMB\nSelect' for a mouse player that has nothing selected'
 std::string get_text_for_action(
   const game_view& view,
-  const physical_controller& c,
+  const game_controller& c,
   const int key
 );
 
@@ -189,7 +194,10 @@ void show_sidebar(game_view& view, const side player_side);
 void show_squares(game_view& view);
 
 /// Show the highlighted square under the cursor on-screen for a player
-void show_square_under_cursor(game_view& view, const side player);
+void show_square_under_cursor(
+  game_view& view,
+  const side player
+);
 
 /// Show the pieces' health bars on-screen
 void show_unit_health_bars(game_view& view);

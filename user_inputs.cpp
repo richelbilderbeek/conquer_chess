@@ -1,5 +1,6 @@
 #include "user_inputs.h"
 
+#include "asserts.h"
 #include "game.h"
 #include "square.h"
 #include "game_coordinat.h"
@@ -213,7 +214,7 @@ void do_select_and_move_piece(
   move_cursor_to(g, c, to_square_str, player_side);
   add_user_input(
     c,
-    get_user_input_to_select(g, player_side)
+    get_user_input_to_select(c, player_side)
   );
   user_inputs inputs{c.get_user_inputs()};
   inputs.apply_user_inputs_to_game(c, g); //TODO: fix architecture
@@ -221,103 +222,6 @@ void do_select_and_move_piece(
   for (int i{0}; i!=2; ++i)
   {
     g.tick(delta_t(0.5));
-  }
-}
-
-user_input get_user_input_to_do_action_1(
-  const game& g,
-  const side player_side
-)
-{
-  if (get_physical_controller_type(g, player_side) == physical_controller_type::keyboard)
-  {
-    return create_press_action_1(player_side);
-  }
-  else
-  {
-    return create_press_lmb_action(player_side);
-  }
-}
-
-user_input get_user_input_to_select(
-  const game& g,
-  const side player_side
-)
-{
-  if (get_physical_controller_type(g, player_side) == physical_controller_type::keyboard)
-  {
-    return create_press_action_1(player_side);
-  }
-  else
-  {
-    return create_press_lmb_action(player_side);
-  }
-}
-
-user_inputs get_user_inputs_to_move_cursor_to(
-  const game& g,
-  const square& to,
-  const side player_side
-)
-{
-  if (get_physical_controller_type(g, player_side) == physical_controller_type::mouse)
-  {
-    // A mouse user 'just' moves its mouse at the correct position,
-    // regardless of the current cursors' position
-    return user_inputs(
-      {
-        create_mouse_move_action(
-          to_coordinat(to),
-          player_side
-        )
-      }
-    );
-  }
-  else
-  {
-    assert(get_physical_controller_type(g, player_side) == physical_controller_type::keyboard);
-    // A keyboard user must move the cursor from its existing position
-    const square from{get_cursor_pos(g, player_side)};
-    return get_user_inputs_to_move_cursor_from_to(
-      g,
-      from,
-      to,
-      player_side
-    );
-  }
-}
-
-user_inputs get_user_inputs_to_move_cursor_from_to(
-  const game& g,
-  const square& from,
-  const square& to,
-  const side player_side
-)
-{
-  if (get_physical_controller_type(g, player_side) == physical_controller_type::mouse)
-  {
-    // A mouse user 'just' moves its mouse at the correct position,
-    // regardless of the current cursors' position
-    return get_user_inputs_to_move_cursor_to(g, to, player_side);
-  }
-  else
-  {
-    assert(
-      get_physical_controller_type(g, player_side)
-      == physical_controller_type::keyboard
-    );
-    const int n_right{(to.get_x() - from.get_x() + 8) % 8};
-    const int n_down{(to.get_y() - from.get_y() + 8) % 8};
-    std::vector<user_input> inputs;
-    for (int i{0}; i!=n_right; ++i)
-    {
-      inputs.push_back(create_press_right_action(player_side));
-    }
-    for (int i{0}; i!=n_down; ++i)
-    {
-      inputs.push_back(create_press_down_action(player_side));
-    }
-    return inputs;
   }
 }
 
@@ -360,7 +264,7 @@ void process_press_action_1_or_lmb_down(
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const game_coordinat cursor_pos{get_cursor_pos(g, player_side)};
+  const game_coordinat cursor_pos{get_cursor_pos(c, player_side)};
   if (!is_coordinat_on_board(cursor_pos))
   {
     return;
@@ -469,7 +373,7 @@ void process_press_action_1_or_lmb_down(
   start_move_unit(
     g,
     c,
-    get_cursor_pos(g, action.get_player()),
+    get_cursor_pos(c, action.get_player()),
     get_player_color(g, action.get_player())
   );
 }
@@ -487,7 +391,7 @@ void process_press_action_2(
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square to{square(get_cursor_pos(g, player_side))};
+  const square to{square(get_cursor_pos(c, player_side))};
 
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
@@ -514,14 +418,14 @@ void process_press_action_2(
   start_attack(
     g,
     c,
-    get_cursor_pos(g, action.get_player()),
+    get_cursor_pos(c, action.get_player()),
     get_player_color(g, action.get_player())
   );
 }
 
 void process_press_action_3(
   game& g,
-  game_controller& /* c */,
+  game_controller& c,
   const user_input& action
 )
 {
@@ -532,7 +436,7 @@ void process_press_action_3(
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square to{square(get_cursor_pos(g, player_side))};
+  const square to{square(get_cursor_pos(c, player_side))};
 
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
@@ -575,7 +479,7 @@ void process_press_action_3(
 
 void process_press_action_4(
   game& g,
-  game_controller& /* c */,
+  game_controller& c,
   const user_input& action
 )
 {
@@ -586,7 +490,7 @@ void process_press_action_4(
 
   const side player_side{action.get_player()};
   const chess_color player_color{get_player_color(g, player_side)};
-  const square to{square(get_cursor_pos(g, player_side))};
+  const square to{square(get_cursor_pos(c, player_side))};
 
   if (is_piece_at(g, to) && get_piece_at(g, to).get_color() == player_color)
   {
@@ -652,30 +556,32 @@ void user_inputs::apply_user_inputs_to_game(
     }
     else if (action.get_user_input_type() == user_input_type::press_down)
     {
-      const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, c, get_below(pos), action.get_player());
+      const auto pos{get_cursor_pos(c, action.get_player())};
+      set_cursor_pos(c, get_below(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_left)
     {
-      const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, c, get_left(pos), action.get_player());
+      const auto pos{get_cursor_pos(c, action.get_player())};
+      set_cursor_pos(c, get_left(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_right)
     {
-      const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, c, get_right(pos), action.get_player());
+      const auto pos{get_cursor_pos(c, action.get_player())};
+      set_cursor_pos(c, get_right(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::press_up)
     {
-      const auto pos{get_cursor_pos(g, action.get_player())};
-      set_player_pos(g, c, get_above(pos), action.get_player());
+      const auto pos{get_cursor_pos(c, action.get_player())};
+      set_cursor_pos(c, get_above(pos), action.get_player());
     }
     else if (action.get_user_input_type() == user_input_type::mouse_move)
     {
       if (has_mouse_controller(g.get_options()))
       {
         assert(action.get_coordinat());
-        set_player_pos(g, c, action.get_coordinat().value(), action.get_player());
+        set_cursor_pos(c, action.get_coordinat().value(), action.get_player());
+        assert_eq(get_cursor_pos(c, action.get_player()), action.get_coordinat().value());
+        assert_eq(square(get_cursor_pos(c, action.get_player())), square(action.get_coordinat().value()));
       }
     }
     #ifdef FIX_ISSUE_46
@@ -867,8 +773,9 @@ void test_user_inputs()
     game_controller c;
     move_cursor_to(g, c, "e2", side::lhs);
     assert(!get_piece_at(g, "e2").is_selected());
-    const user_input input{get_user_input_to_select(g, side::lhs)};
+    const user_input input{get_user_input_to_select(c, side::lhs)};
     add_user_input(c, input);
+    c.get_user_inputs().apply_user_inputs_to_game(c, g);
     g.tick(delta_t(0.0));
     assert(get_piece_at(g, "e2").is_selected());
   }
@@ -876,13 +783,17 @@ void test_user_inputs()
 #endif // NDEBUG
 }
 
-user_inputs to_user_inputs(const piece_action& pa, const game& g)
+user_inputs to_user_inputs(
+  const piece_action& pa,
+  const game& g,
+  const game_controller& c
+)
 {
   const auto player_color{pa.get_color()};
   const side player_side{get_player_side(g, player_color)};
-  const physical_controller c{get_physical_controller(g, player_side)};
+  const physical_controller pc{get_physical_controller(c, player_side)};
   const user_input_type select_action_type{
-    c.get_type() == physical_controller_type::mouse ?
+    pc.get_type() == physical_controller_type::mouse ?
     user_input_type::lmb_down :
     user_input_type::press_down
   };

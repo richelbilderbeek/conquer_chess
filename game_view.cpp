@@ -93,7 +93,7 @@ void game_view::exec()
 
 const physical_controller& get_physical_controller(const game_view& view, const side player_side)
 {
-  return get_physical_controller(view.get_game(), player_side);
+  return get_physical_controller(view.get_game_controller(), player_side);
 }
 
 physical_controller_type get_physical_controller_type(const game_view& view, const side player_side)
@@ -103,7 +103,7 @@ physical_controller_type get_physical_controller_type(const game_view& view, con
 
 std::string get_controls_text(
   const game_view& view,
-  const physical_controller& c,
+  const game_controller& c,
   const int key
 )
 {
@@ -166,18 +166,18 @@ chess_color get_player_color(
 
 const game_coordinat& get_cursor_pos(const game_view& view, const side player) noexcept
 {
-  return get_cursor_pos(view.get_game(), player);
+  return get_cursor_pos(view.get_game_controller(), player);
 }
 
 std::string get_text_for_action(
   const game_view& view,
-  const physical_controller& /* c */,
+  const game_controller& c,
   const int key
 )
 {
   const auto& g{view.get_game()};
   const auto default_action{
-    get_default_piece_action(g, side::lhs)
+    get_default_piece_action(g, c, side::lhs)
   };
   if (!default_action) return "";
   if (key == 1)
@@ -313,7 +313,10 @@ void show_board(game_view& view)
   show_unit_health_bars(view);
 }
 
-void show_controls(game_view& view, const side player)
+void show_controls(
+  game_view& view,
+  const side player
+)
 {
   const auto& layout = view.get_game().get_layout();
   const auto player_color{get_player_color(view, player)};
@@ -337,7 +340,11 @@ void show_controls(game_view& view, const side player)
   {
     // The default action at key 1
     const std::optional<piece_action_type> maybe_first_action{
-      get_default_piece_action(view.get_game(), player)
+      get_default_piece_action(
+        view.get_game(),
+        view.get_game_controller(),
+        player
+      )
     };
     if (maybe_first_action)
     {
@@ -471,12 +478,13 @@ void show_controls(game_view& view, const side player)
 
 void show_debug(game_view& view, const side player_side)
 {
-  const auto& game{view.get_game()};
-  const auto& layout{game.get_layout()};
+  const auto& g{view.get_game()};
+  const auto& c{view.get_game_controller()};
+  const auto& layout{g.get_layout()};
   sf::Text text;
   text.setFont(view.get_resources().get_arial_font());
   const piece& closest_piece{
-    get_closest_piece_to(game, get_cursor_pos(game, player_side))
+    get_closest_piece_to(g, get_cursor_pos(c, player_side))
   };
 
   const auto color{get_player_color(view, player_side)};
@@ -484,20 +492,20 @@ void show_debug(game_view& view, const side player_side)
   s << "Color: " << color << '\n'
     << "Controller type: " << get_physical_controller_type(view, player_side) << '\n'
     << "Game position: "
-    << to_notation(get_cursor_pos(game, player_side))
+    << to_notation(get_cursor_pos(c, player_side))
     << " "
-    << get_cursor_pos(game, player_side)
+    << get_cursor_pos(c, player_side)
     << '\n'
     << "Screen position: "
-    << convert_to_screen_coordinat(get_cursor_pos(game, player_side), layout)
+    << convert_to_screen_coordinat(get_cursor_pos(c, player_side), layout)
     << '\n'
     << "Is there a piece here: "
-    << bool_to_str(is_piece_at(game, get_cursor_pos(game, player_side), 0.5))
+    << bool_to_str(is_piece_at(g, get_cursor_pos(c, player_side), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << to_coordinat(closest_piece.get_current_square()) << '\n'
-    << "Number of game actions: " << count_user_inputs(game) << '\n'
-    << "Number of selected units: " << count_selected_units(game, color) << '\n'
-    << "Number of piece actions: " << count_piece_actions(game, color) << '\n'
+    << "Number of game actions: " << count_user_inputs(g) << '\n'
+    << "Number of selected units: " << count_selected_units(g, color) << '\n'
+    << "Number of piece actions: " << count_piece_actions(g, color) << '\n'
   ;
 
   // Specific things
@@ -529,7 +537,7 @@ void game_view::show_mouse_cursor()
   cursor.setOrigin(16.0, 16.0);
   const screen_coordinat cursor_pos{
     convert_to_screen_coordinat(
-      get_cursor_pos(m_game, side::rhs),
+      get_cursor_pos(m_game_controller, side::rhs),
       layout
     )
   };
@@ -710,13 +718,19 @@ void show_squares(game_view& view)
 
 void show_square_under_cursor(
   game_view& view,
-  const side player)
+  const side player
+)
 {
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
-  const int x{static_cast<int>(std::trunc(get_cursor_pos(game, player).get_x()))};
+  const auto& g{view.get_game()};
+  const auto& c{view.get_game_controller()};
+  const auto& layout{g.get_layout()};
+  const int x{
+    static_cast<int>(std::trunc(get_cursor_pos(c, player).get_x()))
+  };
   if (x < 0 || x >= 8) return;
-  const int y{static_cast<int>(std::trunc(get_cursor_pos(game, player).get_y()))};
+  const int y{
+    static_cast<int>(std::trunc(get_cursor_pos(c, player).get_y()))
+  };
   if (y < 0 || y >= 8) return;
 
   assert(x >= 0 && x < 8 && y >= 0 && y < 8);
@@ -735,7 +749,7 @@ void show_square_under_cursor(
   const auto old_fill_color = s.getFillColor();
   const auto old_outline_color = s.getOutlineColor();
   const auto old_thickness = s.getOutlineThickness();
-  const auto player_color{get_player_color(game.get_options(), player)};
+  const auto player_color{get_player_color(g.get_options(), player)};
   s.setOutlineColor(to_sfml_color(player_color));
   s.setFillColor(sf::Color::Transparent);
   const bool valid{would_be_valid(view, player_color)};
@@ -994,7 +1008,8 @@ bool would_be_valid(
 )
 {
   const auto& game{view.get_game()};
-  return can_player_select_piece_at_cursor_pos(game, player_color);
+  const auto& c{view.get_game_controller()};
+  return can_player_select_piece_at_cursor_pos(game, c, player_color);
 }
 
 #endif // LOGIC_ONLY

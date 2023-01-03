@@ -44,8 +44,8 @@ public:
   /// Assumes there is a mouse user
   void set_mouse_user_selector(const action_number& number);
 
-  /// Set a player's position
-  void set_player_pos(const game_coordinat& pos, const side player) noexcept;
+  /// Set a player's cursor's position
+  void set_cursor_pos(const game_coordinat& pos, const side player_side) noexcept;
 
 private:
 
@@ -72,8 +72,25 @@ void add_user_input(game_controller& c, const user_input& input);
 /// Add a user_inputs. These will be processed in 'game::tick'
 void add_user_inputs(game_controller& c, const user_inputs& input);
 
+/// Count the total number of \link{user_input}s
+/// to be done by the \link{game_controller}.
+int count_user_inputs(const game_controller& c) noexcept;
+
 /// Get the a player's cursor position
-const game_coordinat& get_cursor_pos(const game_controller& c, const side player_side) noexcept;
+const game_coordinat& get_cursor_pos(
+  const game_controller& c,
+  const side player_side
+) noexcept;
+
+/// Get the a player's cursor position, as a \link{square}
+square get_cursor_square(
+  const game_controller& c,
+  const side player_side
+);
+
+/// Get the side of the controller that uses the keyboard.
+/// Assumes there is one controller that uses the keyboard
+side get_keyboard_user_player_side(const game_controller& c);
 
 /// What side does the player with the mouse control?
 side get_mouse_user_player_side(const game_controller& c);
@@ -84,8 +101,51 @@ const physical_controller& get_physical_controller(
   const side player_side
 ) noexcept;
 
+/// Get the physical controller type
+physical_controller_type get_physical_controller_type(
+  const game_controller& c,
+  const side player_side
+) noexcept;
+
+/// Create the user inputs to do action_1 at the square at the cursor
+user_input get_user_input_to_do_action_1(
+  const game_controller& c,
+  const side player_side
+);
+
+/// Get the game users' inputs
+const user_inputs& get_user_inputs(const game_controller& c) noexcept;
+
+/// Create the user inputs to move the cursor to a target square
+/// knowing it will be at the 'from' square.
+/// This is useful for creating future 'user_input's,
+/// e.g. for white doing e4, the cursor must be moved to e2
+/// to select a pawn, then to e4 to select the target.
+user_inputs get_user_inputs_to_move_cursor_from_to(
+  const game_controller& c,
+  const square& from,
+  const square& to,
+  const side player_side
+);
+
+/// Create the user inputs to move the cursor to a target square
+user_inputs get_user_inputs_to_move_cursor_to(
+  const game_controller& c,
+  const square& to,
+  const side player_side
+);
+
+/// Create the user inputs to select the square at the cursor
+user_input get_user_input_to_select(
+  const game_controller& c,
+  const side player_side
+);
+
 /// Is there a player that uses the mouse?
 bool has_mouse_controller(const game_controller& c);
+
+/// The the player at that side a mouse user?
+bool is_mouse_user(const game_controller& c, const side player_side) noexcept;
 
 /// Test this class and its free functions
 void test_game_controller();
