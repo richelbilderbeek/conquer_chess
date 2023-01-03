@@ -985,12 +985,12 @@ std::vector<piece_action> collect_all_rook_actions(
 
 user_inputs convert_move_to_user_inputs(
   const game& g,
+  const game_controller& c,
   const chess_move& m
 )
 {
   const auto player_side{get_player_side(g, m.get_color())};
   const square from{get_from(g, m)};
-  const game_controller c(g.get_options().get_physical_controllers());
 
   user_inputs inputs;
   // Move the cursor to piece's square
@@ -1095,7 +1095,7 @@ void do_move_keyboard_player_piece(
 )
 {
   assert(has_keyboard_controller(g.get_options()));
-  assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
+  assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
   set_keyboard_player_pos(g, c, s);
 
   assert(s
@@ -1122,7 +1122,7 @@ void do_move_mouse_player_piece(
 )
 {
   assert(has_mouse_controller(g.get_options()));
-  assert(count_selected_units(g, get_mouse_user_player_color(g)) == 1);
+  assert(count_selected_units(g, get_mouse_user_player_color(g, c)) == 1);
   set_mouse_player_pos(g, c, s);
   assert(square(get_cursor_pos(c, get_mouse_user_player_side(c))) == s);
 
@@ -1223,7 +1223,7 @@ void do_select_for_keyboard_player(
   const square& s
 )
 {
-  return do_select(g, c, s, get_keyboard_user_player_color(g));
+  return do_select(g, c, s, get_keyboard_user_player_color(g, c));
 }
 
 void do_select_for_mouse_player(
@@ -1261,7 +1261,7 @@ void do_promote_keyboard_player_piece(
 )
 {
   assert(has_keyboard_controller(g.get_options()));
-  assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
+  assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
   set_keyboard_player_pos(g, c, pawn_location);
   assert(square(get_cursor_pos(c, side::lhs)) == pawn_location);
   assert(get_piece_at(g, pawn_location).get_type() == piece_type::pawn);
@@ -1300,7 +1300,7 @@ void do_start_attack_keyboard_player_piece(
 )
 {
   assert(has_keyboard_controller(g.get_options()));
-  assert(count_selected_units(g, get_keyboard_user_player_color(g)) == 1);
+  assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
   set_keyboard_player_pos(g, c, s);
   assert(square(get_cursor_pos(c, side::lhs)) == s);
   add_user_input(c, create_press_action_2(get_keyboard_user_player_side(c)));
@@ -1520,14 +1520,19 @@ int get_index_of_closest_piece_to(
   return index;
 }
 
-chess_color get_keyboard_user_player_color(const game& g)
+chess_color get_keyboard_user_player_color(
+  const game& g,
+  const game_controller& c
+)
 {
-  return get_keyboard_user_player_color(g.get_options());
+  return get_player_color(g, get_keyboard_user_player_side(c));
 }
 
-
-
-sf::Keyboard::Key get_key_for_action(const game& g, const side player, const action_number& action)
+sf::Keyboard::Key get_key_for_action(
+  const game& g,
+  const side player,
+  const action_number& action
+)
 {
   return get_key_for_action(g.get_options(), player, action);
 }
@@ -1543,18 +1548,12 @@ const game_view_layout& get_layout(const game& g) noexcept
 }
 
 chess_color get_mouse_user_player_color(
-  const game& g
+  const game& g,
+  const game_controller& c
 )
 {
-  return get_mouse_user_player_color(g.get_options());
+  return get_player_color(g, get_mouse_user_player_side(c));
 }
-
-/*
-side get_mouse_user_player_side(const game& g)
-{
-  return get_mouse_user_player_side(g.get_options());
-}
-*/
 
 double get_music_volume_as_percentage(const game& g) noexcept
 {
@@ -1706,13 +1705,6 @@ const delta_t& get_time(const game& g) noexcept
 {
   return g.get_time();
 }
-
-/*
-const user_inputs& get_user_inputs(const game& g) noexcept
-{
-  return g.get_controller().get_user_inputs();
-}
-*/
 
 bool has_selected_pieces(const game& g, const chess_color player)
 {
@@ -1894,8 +1886,6 @@ void set_mouse_player_pos(
       get_mouse_user_player_side(c)
     )
   );
-  std::clog << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << '\n';
-  std::clog << c.get_user_inputs() << '\n';
   c.get_user_inputs().apply_user_inputs_to_game(c, g); //
   g.tick(delta_t(0.0));
   assert(count_user_inputs(c) == 0);
@@ -1909,11 +1899,6 @@ void game::tick(const delta_t& dt)
   #ifdef FIX_ISSUE_REPLAYER_BACK
   m_replayer.do_move(m_controller, *this); // TODO: fix architecture
   #endif
-
-  // Convert user_inputs to piece_actions instantaneous
-  /*
-  m_controller.get_user_inputs().apply_user_inputs_to_game(m_controller, *this); //TODO: fix architecture
-  */
 
   assert(count_dead_pieces(m_pieces) == 0);
 
@@ -1978,8 +1963,6 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
-    //<< "Conroller: " << g.get_controller() << '\n'
-    //<< "Control actions: " << get_user_inputs(g) << '\n'
     << "Layout: " << g.get_layout() << '\n'
     << "Options: " << g.get_options() << '\n'
     << "Replayer: " << g.get_replayer()

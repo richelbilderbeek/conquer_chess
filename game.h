@@ -29,14 +29,6 @@ public:
     const game_options& options = create_default_game_options()
   );
 
-  /*
-  /// Get the Controller of game.
-  const game_controller& get_controller() const noexcept { return m_controller; }
-
-  /// Get the Controller of game.
-  game_controller& get_controller() noexcept { return m_controller; }
-  */
-
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
@@ -68,11 +60,6 @@ public:
 
 private:
 
-  /*
-  /// The Controller of game
-  game_controller m_controller;
-  */
-
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
 
@@ -88,14 +75,6 @@ private:
   /// The time
   delta_t m_t;
 };
-
-/*
-/// Add zero, one or more user_inputs
-void add_user_input(game& g, const user_input& input) noexcept;
-
-/// Add zero, one or more user_inputs
-void add_user_inputs(game& g, const user_inputs& inputs) noexcept;
-*/
 
 /// Can this piece castle kingside?
 bool can_castle_kingside(const piece& p, const game& g) noexcept;
@@ -285,14 +264,9 @@ std::vector<message> collect_messages(const game& g) noexcept;
 /// to the right user inputs
 user_inputs convert_move_to_user_inputs(
   const game& g,
+  const game_controller& c,
   const chess_move& move
 );
-
-/*
-/// Count the total number of actions to be done by the game,
-/// which should be zero after each tick
-int count_user_inputs(const game& g);
-*/
 
 /// Count the total number of actions to be done by pieces of both players
 int count_piece_actions(const game& g);
@@ -458,34 +432,12 @@ const piece& get_closest_piece_to(const game& g, const game_coordinat& coordinat
 /// Get the piece that is closest to the coordinat
 piece& get_closest_piece_to(game& g, const game_coordinat& coordinat);
 
-/*
-/// Get the controller for a certain side
-const physical_controller& get_physical_controller(const game& g, const side player);
-
-/// Get the controller type for a certain side
-physical_controller_type get_physical_controller_type(const game& g, const side player);
-*/
-
 /// Get the cursor position for a chess color
 const game_coordinat& get_cursor_pos(
   const game& g,
   const game_controller& c,
   const chess_color cursor_color
 );
-
-/*
-/// Get the cursor position for a player
-const game_coordinat& get_cursor_pos(
-  const game& g,
-  const side player_side
-);
-
-/// Get the square of the cursor position for a player
-square get_cursor_square(
-  const game& g,
-  const side player_side
-);
-*/
 
 game get_default_game() noexcept;
 
@@ -498,11 +450,6 @@ std::optional<piece_action_type> get_default_piece_action(
   const side player_side
 ) noexcept;
 
-/*
-/// Create a game with all default settings
-/// and a specific set of controllers
-game get_game_with_controllers(const physical_controllers& c) noexcept;
-*/
 /// Create a game with all default settings
 /// and a specific starting position
 game get_game_with_starting_position(starting_position_type t) noexcept;
@@ -519,7 +466,10 @@ int get_index_of_closest_piece_to(
 
 /// Get the color of the keyboard using player
 /// Will throw if no user uses a keyboard
-chess_color get_keyboard_user_player_color(const game& g);
+chess_color get_keyboard_user_player_color(
+  const game& g,
+  const game_controller& c
+);
 
 /// Get the key for action 1, 2, 3 or 4 for a player
 sf::Keyboard::Key get_key_for_action(const game& g, const side player, const action_number& action);
@@ -534,7 +484,8 @@ const game_view_layout& get_layout(const game& g) noexcept;
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse
 chess_color get_mouse_user_player_color(
-  const game& g
+  const game& g,
+  const game_controller& c
 );
 
 /*

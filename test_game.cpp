@@ -921,7 +921,7 @@ void test_game_functions()
     move_cursor_to(g, c, "e1", side::lhs);
     const chess_move m("e4", chess_color::white);
     const user_inputs inputs{
-      convert_move_to_user_inputs(g, m)
+      convert_move_to_user_inputs(g, c, m)
     };
     assert(!is_empty(inputs));
     assert(count_user_inputs(inputs) == 5);
@@ -977,7 +977,7 @@ void test_game_functions()
   {
     game g;
     game_controller c;
-    assert(get_keyboard_user_player_color(g) == chess_color::white);
+    assert(get_keyboard_user_player_color(g, c) == chess_color::white);
     const auto pos_before{get_cursor_pos(c, side::lhs)};
     const auto pos{get_cursor_pos(c, side::lhs)};
     set_cursor_pos(c, pos + game_coordinat(0.1, 0.1), side::lhs);

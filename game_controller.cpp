@@ -406,7 +406,7 @@ void test_game_controller_keyboard_use()
   {
     game g;
     game_controller c;
-    assert(get_keyboard_user_player_color(g) == chess_color::white);
+    assert(get_keyboard_user_player_color(g, c) == chess_color::white);
     assert(get_keyboard_user_player_side(c) == side::lhs);
     const square s("a1");
     set_keyboard_player_pos(g, c, s);
@@ -422,7 +422,7 @@ void test_game_controller_keyboard_use()
     game_controller c{
       create_mouse_keyboard_controllers()
     };
-    assert(get_keyboard_user_player_color(g) == chess_color::black);
+    assert(get_keyboard_user_player_color(g, c) == chess_color::black);
     assert(get_keyboard_user_player_side(c) == side::rhs);
     const square s("a1");
     set_keyboard_player_pos(g, c, s);
