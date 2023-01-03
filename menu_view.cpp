@@ -5,6 +5,7 @@
 #include "about_view.h"
 #include "screen_coordinat.h"
 #include "game_view.h"
+#include "lobby_view.h"
 #include "played_game_view.h"
 #include "options_view.h"
 
@@ -69,6 +70,16 @@ void menu_view::exec_game()
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
   game_view view{game(m_options)};
+  view.exec();
+  m_window.setVisible(true);
+  m_window.setPosition(cur_pos);
+}
+
+void menu_view::exec_lobby()
+{
+  const auto cur_pos{m_window.getPosition()};
+  m_window.setVisible(false);
+  lobby_view view;
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
@@ -215,6 +226,10 @@ bool menu_view::process_events()
       {
         // debug
         std::clog << "Debug";
+      }
+      else if (key_pressed == sf::Keyboard::Key::F4)
+      {
+        exec_lobby();
       }
     }
     if (event.type == sf::Event::MouseMoved)

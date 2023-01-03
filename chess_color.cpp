@@ -17,6 +17,11 @@ std::vector<chess_color> get_all_chess_colors() noexcept
   return v;
 }
 
+chess_color get_next(const chess_color c) noexcept
+{
+  return get_other_color(c);
+}
+
 chess_color get_other_color(const chess_color c) noexcept
 {
   if (c == chess_color::white) return chess_color::black;

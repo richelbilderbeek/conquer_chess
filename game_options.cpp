@@ -10,12 +10,10 @@
 
 game_options::game_options(
   const screen_coordinat& screen_size,
-  //const physical_controllers& controllers,
   const starting_position_type starting_position,
   const game_speed speed,
   const int margin_width
 ) : m_click_distance{0.5},
-    //m_physical_controllers{controllers},
     m_game_speed{speed},
     m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
@@ -35,7 +33,6 @@ game_options create_default_game_options() noexcept
 {
   return game_options(
     get_default_screen_size(),
-    //create_default_controllers(),
     get_default_starting_position(),
     get_default_game_speed(),
     get_default_margin_width()

@@ -28,6 +28,8 @@ HEADERS += \
     $$PWD/id.h \
     $$PWD/key_bindings.h \
     $$PWD/layout.h \
+    $$PWD/lobby_view_item.h \
+    $$PWD/lobby_view_layout.h \
     $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
     $$PWD/message.h \
@@ -45,6 +47,7 @@ HEADERS += \
     $$PWD/piece_type.h \
     $$PWD/pieces.h \
     $$PWD/played_game_view_layout.h \
+    $$PWD/race.h \
     $$PWD/replay.h \
     $$PWD/replayer.h \
     $$PWD/screen_coordinat.h \
@@ -89,6 +92,8 @@ SOURCES += \
     $$PWD/id.cpp \
     $$PWD/key_bindings.cpp \
     $$PWD/layout.cpp \
+    $$PWD/lobby_view_item.cpp \
+    $$PWD/lobby_view_layout.cpp \
     $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \
     $$PWD/message.cpp \
@@ -106,6 +111,7 @@ SOURCES += \
     $$PWD/piece_type.cpp \
     $$PWD/pieces.cpp \
     $$PWD/played_game_view_layout.cpp \
+    $$PWD/race.cpp \
     $$PWD/replay.cpp \
     $$PWD/replayer.cpp \
     $$PWD/screen_coordinat.cpp \

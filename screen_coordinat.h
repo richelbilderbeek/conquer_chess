@@ -46,6 +46,9 @@ screen_coordinat get_default_about_screen_size() noexcept;
 /// Get the default controls screen size, where x is the width and y is the height
 screen_coordinat get_default_controls_screen_size() noexcept;
 
+/// Get the default lobby screen size, where x is the width and y is the height
+screen_coordinat get_default_lobby_screen_size() noexcept;
+
 /// Get the default main menu screen size, where x is the width and y is the height
 screen_coordinat get_default_main_menu_screen_size() noexcept;
 

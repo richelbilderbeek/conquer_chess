@@ -55,6 +55,9 @@ private:
   /// Run the game
   void exec_game();
 
+  /// Run the lobby
+  void exec_lobby();
+
   /// Run the options screen
   void exec_options();
 

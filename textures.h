@@ -7,6 +7,7 @@
 #include "chess_color.h"
 #include "piece_type.h"
 #include "piece_action_type.h"
+#include "race.h"
 
 /// The games' textures
 /// The raw game resources
@@ -28,6 +29,9 @@ public:
   ) noexcept;
 
   sf::Texture& get_all_races_1() noexcept { return m_all_races_1; }
+  sf::Texture& get_all_races_2() noexcept { return m_all_races_2; }
+  sf::Texture& get_all_races_3() noexcept { return m_all_races_3; }
+  sf::Texture& get_all_races_4() noexcept { return m_all_races_4; }
 
   /// Get texture of a piece
   sf::Texture& get_piece(
@@ -40,6 +44,9 @@ public:
     const chess_color color,
     const piece_type type
   );
+
+  /// Get the head of a representative of the race
+  sf::Texture& get_head(const race r) noexcept;
 
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
@@ -56,6 +63,9 @@ public:
 private:
 
   sf::Texture m_all_races_1;
+  sf::Texture m_all_races_2;
+  sf::Texture m_all_races_3;
+  sf::Texture m_all_races_4;
 
   sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;
@@ -92,7 +102,11 @@ private:
   sf::Texture m_light_square;
   sf::Texture m_light_white_square;
   sf::Texture m_light_strip;
+
+  sf::Texture m_protoss_head;
+
   sf::Texture m_subtitle;
+  sf::Texture m_terran_head;
   sf::Texture m_title;
   sf::Texture m_white_bishop;
   sf::Texture m_white_bishop_portrait;
@@ -112,6 +126,7 @@ private:
   sf::Texture m_white_rook;
   sf::Texture m_white_rook_portrait;
   sf::Texture m_white_rook_with_contour;
+  sf::Texture m_zerg_head;
 };
 
 /// Get a picture of a black/dark square

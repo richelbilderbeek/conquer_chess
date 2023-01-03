@@ -12,6 +12,9 @@ textures::textures()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
     std::make_pair(std::ref(m_all_races_1), "all_races_1.jpeg"),
+    std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
+    std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
+    std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
     std::make_pair(std::ref(m_black_bishop), "bb.png"),
     std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
     std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),
@@ -45,7 +48,10 @@ textures::textures()
     std::make_pair(std::ref(m_light_black_square), "l_black.png"),
     std::make_pair(std::ref(m_light_square), "l.png"),
     std::make_pair(std::ref(m_light_white_square), "l_white.png"),
+    std::make_pair(std::ref(m_protoss_head), "protoss_head.jpeg"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
+    std::make_pair(std::ref(m_terran_head), "terran_head.jpeg"),
+    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg"),
     std::make_pair(std::ref(m_title), "title.png"),
     std::make_pair(std::ref(m_white_bishop), "bw.png"),
     std::make_pair(std::ref(m_white_bishop_portrait), "bw_portrait.png"),
@@ -116,6 +122,19 @@ sf::Texture& textures::get_action_icon(
 sf::Texture& get_black_square(textures& t) noexcept
 {
   return t.get_square(chess_color::black);
+}
+
+sf::Texture& textures::get_head(const race r) noexcept
+{
+  switch (r)
+  {
+    case race::protoss: return m_protoss_head;
+    case race::terran: return m_terran_head;
+    default:
+    case race::zerg:
+      assert(r == race::zerg);
+      return m_zerg_head;
+  }
 }
 
 sf::Texture& textures::get_occupied_square(
