@@ -20,15 +20,15 @@
 game::game(
   const game_options& options
 )
-  : m_controller{options.get_physical_controllers()},
+  : //m_controller{options.get_physical_controllers()},
     m_layout{options.get_screen_size(), options.get_margin_width()},
     m_options{options},
     m_pieces{get_starting_pieces(options)},
     m_replayer{options.get_replayer()},
     m_t{0.0}
 {
-  assert(get_physical_controller(m_options, side::lhs) == get_physical_controller(m_controller, side::lhs));
-  assert(get_physical_controller(m_options, side::rhs) == get_physical_controller(m_controller, side::rhs));
+  //assert(get_physical_controller(m_options, side::lhs) == get_physical_controller(m_controller, side::lhs));
+  //assert(get_physical_controller(m_options, side::rhs) == get_physical_controller(m_controller, side::rhs));
 }
 
 /*
@@ -1024,10 +1024,12 @@ user_inputs convert_move_to_user_inputs(
   return inputs;
 }
 
+/*
 int count_user_inputs(const game& g)
 {
   return count_user_inputs(get_user_inputs(g));
 }
+*/
 
 int count_piece_actions(const game& g)
 {
@@ -1705,10 +1707,12 @@ const delta_t& get_time(const game& g) noexcept
   return g.get_time();
 }
 
+/*
 const user_inputs& get_user_inputs(const game& g) noexcept
 {
   return g.get_controller().get_user_inputs();
 }
+*/
 
 bool has_selected_pieces(const game& g, const chess_color player)
 {
@@ -1902,10 +1906,14 @@ void set_mouse_player_pos(
 void game::tick(const delta_t& dt)
 {
   // Let the replayer do its move
+  #ifdef FIX_ISSUE_REPLAYER_BACK
   m_replayer.do_move(m_controller, *this); // TODO: fix architecture
+  #endif
 
   // Convert user_inputs to piece_actions instantaneous
+  /*
   m_controller.get_user_inputs().apply_user_inputs_to_game(m_controller, *this); //TODO: fix architecture
+  */
 
   assert(count_dead_pieces(m_pieces) == 0);
 
@@ -1970,8 +1978,8 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
-    << "Conroller: " << g.get_controller() << '\n'
-    << "Control actions: " << get_user_inputs(g) << '\n'
+    //<< "Conroller: " << g.get_controller() << '\n'
+    //<< "Control actions: " << get_user_inputs(g) << '\n'
     << "Layout: " << g.get_layout() << '\n'
     << "Options: " << g.get_options() << '\n'
     << "Replayer: " << g.get_replayer()

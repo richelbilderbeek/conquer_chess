@@ -329,10 +329,10 @@ void show_controls(
   // Determine maybe_mouse_user_selector
   std::optional<action_number> maybe_mouse_user_selector;
   {
-    if (has_mouse_controller(view.get_game().get_controller())
-      && player == get_mouse_user_player_side(view.get_game().get_controller()))
+    if (has_mouse_controller(view.get_game_controller())
+      && player == get_mouse_user_player_side(view.get_game_controller()))
     {
-      maybe_mouse_user_selector = view.get_game().get_controller().get_mouse_user_selector();
+      maybe_mouse_user_selector = view.get_game_controller().get_mouse_user_selector();
     }
   }
   const bool is_mouse_user{maybe_mouse_user_selector.has_value()};
@@ -503,7 +503,7 @@ void show_debug(game_view& view, const side player_side)
     << bool_to_str(is_piece_at(g, get_cursor_pos(c, player_side), 0.5))
     << '\n'
     << "Closest piece: " << closest_piece.get_type() << ": " << to_coordinat(closest_piece.get_current_square()) << '\n'
-    << "Number of game actions: " << count_user_inputs(g) << '\n'
+    << "Number of game actions: " << count_user_inputs(c) << '\n'
     << "Number of selected units: " << count_selected_units(g, color) << '\n'
     << "Number of piece actions: " << count_piece_actions(g, color) << '\n'
   ;

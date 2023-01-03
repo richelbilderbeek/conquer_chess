@@ -938,13 +938,6 @@ void test_game_functions()
     #endif // FIX_ISSUE_64_NO_ACTION
   }
   #endif // FIX_ISSUE_64
-  // count_user_inputs
-  {
-    const auto g{get_kings_only_game()};
-    // No game actions at start
-    assert(count_user_inputs(g) == 0);
-    // TODO: add action
-  }
   // count_piece_actions: actions in pieces accumulate
   {
     game g = get_kings_only_game();

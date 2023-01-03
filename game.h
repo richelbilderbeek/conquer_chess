@@ -29,11 +29,13 @@ public:
     const game_options& options = create_default_game_options()
   );
 
+  /*
   /// Get the Controller of game.
   const game_controller& get_controller() const noexcept { return m_controller; }
 
   /// Get the Controller of game.
   game_controller& get_controller() noexcept { return m_controller; }
+  */
 
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
@@ -66,8 +68,10 @@ public:
 
 private:
 
+  /*
   /// The Controller of game
   game_controller m_controller;
+  */
 
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
@@ -284,9 +288,11 @@ user_inputs convert_move_to_user_inputs(
   const chess_move& move
 );
 
+/*
 /// Count the total number of actions to be done by the game,
 /// which should be zero after each tick
 int count_user_inputs(const game& g);
+*/
 
 /// Count the total number of actions to be done by pieces of both players
 int count_piece_actions(const game& g);
@@ -611,8 +617,10 @@ const std::vector<piece>& get_pieces(const game& g) noexcept;
 /// Get the time in the game
 const delta_t& get_time(const game& g) noexcept;
 
+/*
 /// Get the game users' inputs
 const user_inputs& get_user_inputs(const game& g) noexcept;
+*/
 
 /// See if there is at least 1 piece selected
 /// @param g a game

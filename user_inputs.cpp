@@ -598,10 +598,10 @@ void user_inputs::apply_user_inputs_to_game(
     else if (action.get_user_input_type() == user_input_type::rmb_down)
     {
       const auto maybe_index{
-        g.get_controller().get_mouse_user_selector()
+        c.get_mouse_user_selector()
       };
       assert(maybe_index);
-      g.get_controller().set_mouse_user_selector(
+      c.set_mouse_user_selector(
         get_next(maybe_index.value())
       );
     }
