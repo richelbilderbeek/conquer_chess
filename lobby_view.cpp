@@ -218,6 +218,13 @@ void show_color_panel(lobby_view& v, const side player_side)
     )
   );
   v.get_window().draw(rectangle);
+
+  sf::Text text;
+  text.setString(to_str(v.get_color(player_side)));
+  v.set_text_style(text);
+  set_text_position(text, get_lower_half(screen_rect));
+  text.setFillColor(sf::Color::Black);
+  v.get_window().draw(text);
 }
 
 void show_race_panel(lobby_view& v, const side player_side)
@@ -231,6 +238,22 @@ void show_race_panel(lobby_view& v, const side player_side)
     )
   );
   v.get_window().draw(rectangle);
+
+  // Text
+  sf::Text text;
+  const auto text_rect{
+    get_lower_half(screen_rect)
+  };
+  text.setString(to_str(v.get_race(player_side)));
+  v.set_text_style(text);
+  set_text_position(text, text_rect);
+  v.get_window().draw(text);
+
+  // Smaller
+  text.setCharacterSize(text.getCharacterSize() - 2);
+  set_text_position(text, text_rect);
+  text.setFillColor(sf::Color::White);
+  v.get_window().draw(text);
 }
 
 void show_image_panel(lobby_view& v)
