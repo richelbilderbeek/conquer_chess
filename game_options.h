@@ -103,8 +103,6 @@ private:
   /// for a click to connect to a piece
   double m_click_distance;
 
-  //physical_controllers m_physical_controllers;
-
   /// The game speed
   game_speed m_game_speed;
 
