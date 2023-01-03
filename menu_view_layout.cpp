@@ -9,9 +9,13 @@ menu_view_layout::menu_view_layout(
 ) : m_font_size{64},
     m_window_size{window_size}
 {
+  const int n_vertical_units{10};
+  const int n_margins{n_vertical_units + 1}; // margins are above, below and between panels
   const int panel_height{
     static_cast<int>(
-      static_cast<double>(window_size.get_y() - (9 * margin_width)) / 8.0
+      static_cast<double>(
+        window_size.get_y() - (n_margins * margin_width))
+        / static_cast<double>(n_vertical_units)
     )
   };
   const int panel_width{window_size.get_x() - (2 * margin_width)};
@@ -22,14 +26,16 @@ menu_view_layout::menu_view_layout(
   const int y2{y1 + panel_height + margin_width + panel_height};
   const int y3{y2 + margin_width};
   const int y4{y3 + panel_height};
-  const int y5{y4 + margin_width + panel_height + margin_width};
-  const int y6{y5 + panel_height};
+  const int y5{y4 + margin_width};
+  const int y6{y5 + panel_height + panel_height + margin_width + panel_height + margin_width};
   const int y7{y6 + margin_width};
   const int y8{y7 + panel_height};
   const int y9{y8 + margin_width};
   const int y10{y9 + panel_height};
   const int y11{y10 + margin_width};
   const int y12{y11 + panel_height};
+  const int y13{y12 + margin_width};
+  const int y14{y13 + panel_height};
 
   m_title = screen_rect(
     screen_coordinat(x1, y1),
@@ -39,21 +45,25 @@ menu_view_layout::menu_view_layout(
     screen_coordinat(x1, y3),
     screen_coordinat(x2, y4)
   );
-  m_start = screen_rect(
+  m_image = screen_rect(
     screen_coordinat(x1, y5),
     screen_coordinat(x2, y6)
   );
-  m_options = screen_rect(
+  m_start = screen_rect(
     screen_coordinat(x1, y7),
     screen_coordinat(x2, y8)
   );
-  m_about = screen_rect(
+  m_options = screen_rect(
     screen_coordinat(x1, y9),
     screen_coordinat(x2, y10)
   );
-  m_quit = screen_rect(
+  m_about = screen_rect(
     screen_coordinat(x1, y11),
     screen_coordinat(x2, y12)
+  );
+  m_quit = screen_rect(
+    screen_coordinat(x1, y13),
+    screen_coordinat(x2, y14)
   );
 
   m_font_size = std::min(

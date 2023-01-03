@@ -23,25 +23,29 @@
 /// | | subtitle | |
 /// | +----------+ | y4
 /// |              |
-/// | +----------+ |
-/// | | empty    | |
-/// | +----------+ |
-/// |              |
 /// | +----------+ | y5
-/// | | start    | |
+/// | |          | |
+/// | |          | |
+/// | | image    | |
+/// | |          | |
+/// | |          | |
 /// | +----------+ | y6
 /// |              |
 /// | +----------+ | y7
-/// | | options  | |
+/// | | start    | |
 /// | +----------+ | y8
 /// |              |
 /// | +----------+ | y9
-/// | | about    | |
+/// | | options  | |
 /// | +----------+ | y10
 /// |              |
 /// | +----------+ | y11
-/// | | quit     | |
+/// | | about    | |
 /// | +----------+ | y12
+/// |              |
+/// | +----------+ | y13
+/// | | quit     | |
+/// | +----------+ | y14
 /// |              |
 /// +--------------+
 ///
@@ -63,6 +67,7 @@ public:
 
   const auto& get_title() const noexcept { return m_title; }
   const auto& get_subtitle() const noexcept { return m_subtitle; }
+  const auto& get_image() const noexcept { return m_image; }
   const auto& get_start() const noexcept { return m_start; }
   const auto& get_about() const noexcept { return m_about; }
   const auto& get_options() const noexcept { return m_options; }
@@ -78,6 +83,7 @@ private:
 
   screen_rect m_title;
   screen_rect m_subtitle;
+  screen_rect m_image;
   screen_rect m_start;
   screen_rect m_options;
   screen_rect m_about;

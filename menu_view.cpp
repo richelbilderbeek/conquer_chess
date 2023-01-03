@@ -274,6 +274,7 @@ void menu_view::show()
 
   show_title_panel(*this);
   show_subtitle_panel(*this);
+  show_image_panel(*this);
   show_start_panel(*this);
   show_options_panel(*this);
   show_about_panel(*this);
@@ -300,6 +301,17 @@ void show_about_panel(menu_view& v)
   v.set_text_style(text);
   set_text_position(text, screen_rect);
   v.get_window().draw(text);
+}
+
+void show_image_panel(menu_view& v)
+{
+  const auto screen_rect{v.get_layout().get_image()};
+  sf::RectangleShape rectangle;
+  set_rect(rectangle, screen_rect);
+  rectangle.setTexture(
+    &v.get_resources().get_textures().get_all_races_1()
+  );
+  v.get_window().draw(rectangle);
 }
 
 void show_options_panel(menu_view& v)

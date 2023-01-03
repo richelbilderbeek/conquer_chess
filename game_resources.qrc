@@ -94,5 +94,9 @@
         <file>resources/icon_select.png</file>
         <file>resources/icon_unselect.png</file>
         <file>resources/16114_FuturistFixed-width.ttf</file>
+        <file>resources/all_races_1.jpeg</file>
+        <file>resources/all_races_2.jpeg</file>
+        <file>resources/all_races_3.jpeg</file>
+        <file>resources/all_races_4.jpeg</file>
     </qresource>
 </RCC>

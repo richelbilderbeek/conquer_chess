@@ -11,6 +11,7 @@
 textures::textures()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
+    std::make_pair(std::ref(m_all_races_1), "all_races_1.jpeg"),
     std::make_pair(std::ref(m_black_bishop), "bb.png"),
     std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
     std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),

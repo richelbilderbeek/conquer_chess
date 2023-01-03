@@ -73,6 +73,7 @@ private:
 };
 
 void show_about_panel(menu_view& v);
+void show_image_panel(menu_view& v);
 void show_options_panel(menu_view& v);
 
 /// Show where the panels will be drawn

@@ -27,6 +27,7 @@ public:
     const piece_action_type t
   ) noexcept;
 
+  sf::Texture& get_all_races_1() noexcept { return m_all_races_1; }
 
   /// Get texture of a piece
   sf::Texture& get_piece(
@@ -53,6 +54,8 @@ public:
   sf::Texture& get_title() noexcept { return m_title; }
 
 private:
+
+  sf::Texture m_all_races_1;
 
   sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;
