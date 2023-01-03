@@ -59,6 +59,7 @@ Image                     |Filename              |Search terms
 ![](all_races_3.jpeg)     |`all_races_3.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cubism`
 ![](all_races_4.jpeg)     |`all_races_4.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cartoon`
 ![](zerg_chessboard.jpeg) |`zerg_chessboard.jpeg`|`starcraft 2, zerg, chessboard, cubism, chess square`
+![](speed.png)            |`speed.png`           |`starcraft 2, speed, symbol, simple, cartoon`
 
 ### Chess color
 

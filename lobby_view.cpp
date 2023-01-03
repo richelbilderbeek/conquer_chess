@@ -144,12 +144,20 @@ bool lobby_view::process_events()
       {
         switch (m_lhs_selected)
         {
-          case lobby_view_item::color: m_lhs_color = get_next(m_lhs_color); break;
-          case lobby_view_item::race: m_lhs_race = get_next(m_lhs_race); break;
+          case lobby_view_item::color:
+            m_lhs_color = get_next(m_lhs_color);
+            m_lhs_start = false;
+            m_rhs_start = false;
+            break;
+          case lobby_view_item::race:
+            m_lhs_race = get_next(m_lhs_race);
+            m_lhs_start = false;
+            m_rhs_start = false;
+            break;
           default:
           case lobby_view_item::start:
             assert(m_lhs_selected == lobby_view_item::start);
-            m_lhs_start = !m_lhs_start;
+            m_lhs_start = true;
             break;
         }
       }
@@ -168,6 +176,27 @@ bool lobby_view::process_events()
       else if (key_pressed == sf::Keyboard::Key::L)
       {
         m_rhs_selected = get_previous(m_rhs_selected);
+      }
+      else if (key_pressed == sf::Keyboard::Key::I)
+      {
+        switch (m_rhs_selected)
+        {
+          case lobby_view_item::color:
+            m_rhs_color = get_next(m_rhs_color);
+            m_lhs_start = false;
+            m_rhs_start = false;
+            break;
+          case lobby_view_item::race:
+            m_rhs_race = get_next(m_rhs_race);
+            m_lhs_start = false;
+            m_rhs_start = false;
+            break;
+          default:
+          case lobby_view_item::start:
+            assert(m_rhs_selected == lobby_view_item::start);
+            m_rhs_start = true;
+            break;
+        }
       }
       else if (key_pressed == sf::Keyboard::Key::Q)
       {
