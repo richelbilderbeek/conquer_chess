@@ -141,6 +141,9 @@ user_input get_user_input_to_select(
   const side player_side
 );
 
+/// Is there a player that uses the keyboard?
+bool has_keyboard_controller(const game_controller& c);
+
 /// Is there a player that uses the mouse?
 bool has_mouse_controller(const game_controller& c);
 

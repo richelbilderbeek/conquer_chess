@@ -447,7 +447,7 @@ void test_controller()
     const physical_controller c{create_left_keyboard_controller()};
     const auto event{
       create_key_pressed_event(
-        get_key_for_action(g, side::lhs, action_number(4))
+        c.get_key_bindings().get_key_for_action(action_number(4))
       )
     };
     const auto actions{

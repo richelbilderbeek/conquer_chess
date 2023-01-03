@@ -22,6 +22,8 @@ public:
 
   const auto& get_options() const noexcept { return m_options; }
 
+  const auto& get_physical_controllers() const noexcept { return m_physical_controllers; }
+
   auto& get_resources() noexcept { return m_resources; }
 
   options_view_item get_selected() const noexcept { return m_selected; }
@@ -45,6 +47,8 @@ private:
   game_options m_options;
 
   game_resources m_resources;
+
+  physical_controllers m_physical_controllers;
 
   /// The selected item
   options_view_item m_selected;

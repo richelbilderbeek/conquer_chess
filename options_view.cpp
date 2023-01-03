@@ -50,10 +50,10 @@ void options_view::decrease_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::lhs};
-      controls_view v(m_options.get_physical_controller(player));
+      controls_view v(m_physical_controllers.get_controller(player));
       m_window.setVisible(false);
       v.exec();
-      m_options.set_controller(v.get_controller(), player);
+      m_physical_controllers.set(player, v.get_controller());
       m_window.setVisible(true);
       m_window.setPosition(cur_pos);
     }
@@ -62,10 +62,10 @@ void options_view::decrease_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::rhs};
-      controls_view v(m_options.get_physical_controller(player));
+      controls_view v(m_physical_controllers.get_controller(player));
       m_window.setVisible(false);
       v.exec();
-      m_options.set_controller(v.get_controller(), player);
+      m_physical_controllers.set(player, v.get_controller());
       m_window.setVisible(true);
       m_window.setPosition(cur_pos);
     }
@@ -100,10 +100,10 @@ void options_view::increase_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::lhs};
-      controls_view v(m_options.get_physical_controller(player));
+      controls_view v(m_physical_controllers.get_controller(player));
       m_window.setVisible(false);
       v.exec();
-      m_options.set_controller(v.get_controller(), player);
+      m_physical_controllers.set(player, v.get_controller());
       m_window.setVisible(true);
       m_window.setPosition(cur_pos);
     }
@@ -112,10 +112,10 @@ void options_view::increase_selected()
     {
       const auto cur_pos{m_window.getPosition()};
       const side player{side::rhs};
-      controls_view v(m_options.get_physical_controller(player));
+      controls_view v(m_physical_controllers.get_controller(player));
       m_window.setVisible(false);
       v.exec();
-      m_options.set_controller(v.get_controller(), player);
+      m_physical_controllers.set(player, v.get_controller());
       m_window.setVisible(true);
       m_window.setPosition(cur_pos);
     }
@@ -170,7 +170,7 @@ void options_view::exec()
 
 physical_controller_type get_physical_controller_type(const options_view& v, const side player)
 {
-  return get_physical_controller_type(v.get_options(), player);
+  return get_physical_controller_type(v.get_physical_controllers(), player);
 }
 
 starting_position_type get_starting_position(const options_view& v) noexcept

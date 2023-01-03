@@ -576,7 +576,7 @@ void user_inputs::apply_user_inputs_to_game(
     }
     else if (action.get_user_input_type() == user_input_type::mouse_move)
     {
-      if (has_mouse_controller(g.get_options()))
+      if (has_mouse_controller(c))
       {
         assert(action.get_coordinat());
         set_cursor_pos(c, action.get_coordinat().value(), action.get_player());
@@ -591,7 +591,7 @@ void user_inputs::apply_user_inputs_to_game(
     #endif // FIX_ISSUE_46
     else if (action.get_user_input_type() == user_input_type::lmb_down)
     {
-      if (!has_mouse_controller(g.get_options())) return;
+      if (!has_mouse_controller(c)) return;
       process_press_action_1_or_lmb_down(g, c, action);
 
     }

@@ -213,6 +213,14 @@ user_input get_user_input_to_select(
   }
 }
 
+bool has_keyboard_controller(const game_controller& c)
+{
+  return
+       c.get_physical_controller(side::lhs).get_type() == physical_controller_type::keyboard
+    || c.get_physical_controller(side::rhs).get_type() == physical_controller_type::keyboard
+  ;
+}
+
 bool has_mouse_controller(const game_controller& c)
 {
   return
@@ -414,11 +422,7 @@ void test_game_controller_keyboard_use()
   }
   // 47: set_keyboard_player_pos for RHS player
   {
-    game g{
-      create_default_game_options_with_controllers(
-        create_mouse_keyboard_controllers()
-      )
-    };
+    game g;
     game_controller c{
       create_mouse_keyboard_controllers()
     };

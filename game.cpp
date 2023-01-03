@@ -1094,7 +1094,7 @@ void do_move_keyboard_player_piece(
   const square& s
 )
 {
-  assert(has_keyboard_controller(g.get_options()));
+  assert(has_keyboard_controller(c));
   assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
   set_keyboard_player_pos(g, c, s);
 
@@ -1121,7 +1121,7 @@ void do_move_mouse_player_piece(
 
 )
 {
-  assert(has_mouse_controller(g.get_options()));
+  assert(has_mouse_controller(c));
   assert(count_selected_units(g, get_mouse_user_player_color(g, c)) == 1);
   set_mouse_player_pos(g, c, s);
   assert(square(get_cursor_pos(c, get_mouse_user_player_side(c))) == s);
@@ -1232,7 +1232,7 @@ void do_select_for_mouse_player(
   const square& s
 )
 {
-  assert(has_mouse_controller(g.get_options()));
+  assert(has_mouse_controller(c));
   assert(is_piece_at(g, s));
   assert(!get_piece_at(g, s).is_selected());
   set_mouse_player_pos(g, c, s);
@@ -1260,7 +1260,7 @@ void do_promote_keyboard_player_piece(
   const piece_type promote_to
 )
 {
-  assert(has_keyboard_controller(g.get_options()));
+  assert(has_keyboard_controller(c));
   assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
   set_keyboard_player_pos(g, c, pawn_location);
   assert(square(get_cursor_pos(c, side::lhs)) == pawn_location);
@@ -1299,7 +1299,7 @@ void do_start_attack_keyboard_player_piece(
   const square& s
 )
 {
-  assert(has_keyboard_controller(g.get_options()));
+  assert(has_keyboard_controller(c));
   assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
   set_keyboard_player_pos(g, c, s);
   assert(square(get_cursor_pos(c, side::lhs)) == s);
@@ -1493,7 +1493,7 @@ game get_game_with_starting_position(starting_position_type t) noexcept
 {
   const game_options options(
     get_default_screen_size(),
-    create_default_controllers(),
+    //create_default_controllers(),
     t,
     get_default_game_speed(),
     get_default_margin_width()
@@ -1528,6 +1528,7 @@ chess_color get_keyboard_user_player_color(
   return get_player_color(g, get_keyboard_user_player_side(c));
 }
 
+/*
 sf::Keyboard::Key get_key_for_action(
   const game& g,
   const side player,
@@ -1536,6 +1537,7 @@ sf::Keyboard::Key get_key_for_action(
 {
   return get_key_for_action(g.get_options(), player, action);
 }
+*/
 
 game get_kings_only_game() noexcept
 {
@@ -1615,12 +1617,13 @@ piece get_piece_with_id(
   return get_piece_with_id(g.get_pieces(), i);
 }
 
+
 chess_color get_player_color(
   const game& g,
-  const side player
+  const side player_side
 ) noexcept
 {
-  return get_player_color(g.get_options(), player);
+  return get_player_color(g.get_options(), player_side);
 }
 
 side get_player_side(const game& g, const chess_color& color) noexcept
@@ -1862,7 +1865,7 @@ void set_keyboard_player_pos(
   const square& s
 )
 {
-  assert(has_keyboard_controller(g.get_options()));
+  assert(has_keyboard_controller(c));
   const auto player_side{get_keyboard_user_player_side(c)};
   move_cursor_to(g, c, s, player_side);
 
