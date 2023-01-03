@@ -58,7 +58,7 @@ private:
   chess_color m_lhs_color;
   chess_color m_rhs_color;
 
-  /// The selected color
+  /// The selected race
   race m_lhs_race;
   race m_rhs_race;
 
