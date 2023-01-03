@@ -18,6 +18,8 @@ textures::textures()
     std::make_pair(std::ref(m_black_bishop), "bb.png"),
     std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
     std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),
+    std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
+    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
     std::make_pair(std::ref(m_black_king), "kb.png"),
     std::make_pair(std::ref(m_black_king_portrait), "kb_portrait.png"),
     std::make_pair(std::ref(m_black_king_with_contour), "kb_with_contour.png"),
@@ -122,6 +124,18 @@ sf::Texture& textures::get_action_icon(
 sf::Texture& get_black_square(textures& t) noexcept
 {
   return t.get_square(chess_color::black);
+}
+
+sf::Texture& textures::get_color(const chess_color color) noexcept
+{
+  switch (color)
+  {
+    case chess_color::black: return m_black_chess_color;
+    default:
+    case chess_color::white:
+      assert(color == chess_color::white);
+      return m_white_chess_color;
+  }
 }
 
 sf::Texture& textures::get_head(const race r) noexcept

@@ -213,17 +213,26 @@ void show_color_panel(lobby_view& v, const side player_side)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &v.get_resources().get_textures().get_strip(
+    &v.get_resources().get_textures().get_color(
       v.get_color(player_side)
     )
   );
   v.get_window().draw(rectangle);
 
+  // Text
   sf::Text text;
+  const auto text_rect{
+    get_lower_half(screen_rect)
+  };
   text.setString(to_str(v.get_color(player_side)));
   v.set_text_style(text);
-  set_text_position(text, get_lower_half(screen_rect));
-  text.setFillColor(sf::Color::Black);
+  set_text_position(text, text_rect);
+  v.get_window().draw(text);
+
+  // Smaller
+  text.setCharacterSize(text.getCharacterSize() - 2);
+  set_text_position(text, text_rect);
+  text.setFillColor(sf::Color::White);
   v.get_window().draw(text);
 }
 
@@ -262,7 +271,7 @@ void show_image_panel(lobby_view& v)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &v.get_resources().get_textures().get_all_races_1()
+    &v.get_resources().get_textures().get_all_races_2()
   );
   v.get_window().draw(rectangle);
 }

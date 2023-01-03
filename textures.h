@@ -33,6 +33,9 @@ public:
   sf::Texture& get_all_races_3() noexcept { return m_all_races_3; }
   sf::Texture& get_all_races_4() noexcept { return m_all_races_4; }
 
+  /// Get an abstract chess color
+  sf::Texture& get_color(const chess_color color) noexcept;
+
   /// Get texture of a piece
   sf::Texture& get_piece(
     const chess_color color,
@@ -66,6 +69,9 @@ private:
   sf::Texture m_all_races_2;
   sf::Texture m_all_races_3;
   sf::Texture m_all_races_4;
+
+  sf::Texture m_black_chess_color;
+  sf::Texture m_white_chess_color;
 
   sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;

@@ -94,6 +94,8 @@
         <file>resources/icon_select.png</file>
         <file>resources/icon_unselect.png</file>
         <file>resources/16114_FuturistFixed-width.ttf</file>
+        <file>resources/black_chess_color.png</file>
+        <file>resources/white_chess_color.png</file>
         <file>resources/protoss_head.jpeg</file>
         <file>resources/terran_head.jpeg</file>
         <file>resources/zerg_head.jpeg</file>
