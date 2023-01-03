@@ -47,6 +47,20 @@ Game                |Description                                            |URL
 
 From [https://huggingface.co/spaces/stabilityai/stable-diffusion](https://huggingface.co/spaces/stabilityai/stable-diffusion):
 
+### General artwork
+
+Image                 |Filename           |Search terms
+----------------------|-------------------|---------------------------------------------------------------------
+![](protoss.jpeg)     |`protoss.jpeg`     |`starcraft 2, protoss, chess, simple, profile`
+![](terran.jpeg)      |`terran.jpeg`      |`starcraft 2, terran, chess, face, chess piece, simple`
+![](zerg.jpeg)        |`zerg.jpeg`        |`starcraft 2, zerg, chess piece, face, simple, teeth`
+![](all_races_1.jpeg) |`all_races_1.jpeg` |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, cubism`
+![](all_races_2.jpeg) |`all_races_2.jpeg` |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces`
+![](all_races_3.jpeg) |`all_races_3.jpeg` |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cubism`
+![](all_races_4.jpeg) |`all_races_4.jpeg` |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cartoon`
+
+### Chess pieces
+
 Image                          |Filename                   |Search terms
 -------------------------------|---------------------------|---------------------------------------------------------------------
 ![](protoss_black_rook.jpeg)   |`protoss_black_rook.jpeg`  |`black rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
