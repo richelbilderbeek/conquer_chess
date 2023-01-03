@@ -51,6 +51,9 @@ public:
   /// Get the head of a representative of the race
   sf::Texture& get_head(const race r) noexcept;
 
+  /// Get a texture to state if the person is ready yes/no
+  sf::Texture& get_ready(const bool is_ready) noexcept;
+
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
 
@@ -72,6 +75,10 @@ private:
 
   sf::Texture m_black_chess_color;
   sf::Texture m_white_chess_color;
+
+  /// Ready to start
+  sf::Texture m_ready_no;
+  sf::Texture m_ready_yes;
 
   sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;

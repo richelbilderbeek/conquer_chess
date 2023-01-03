@@ -62,13 +62,13 @@ private:
   race m_lhs_race;
   race m_rhs_race;
 
-  /// Ready to start?
-  bool m_lhs_start;
-  bool m_rhs_start;
-
   /// The selected item
   lobby_view_item m_lhs_selected;
   lobby_view_item m_rhs_selected;
+
+  /// Ready to start?
+  bool m_lhs_start;
+  bool m_rhs_start;
 
   /// The window to draw to
   sf::RenderWindow m_window;

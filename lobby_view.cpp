@@ -19,7 +19,9 @@ lobby_view::lobby_view()
     m_lhs_race{race::terran},
     m_rhs_race{race::terran},
     m_lhs_selected{lobby_view_item::color},
-    m_rhs_selected{lobby_view_item::color}
+    m_rhs_selected{lobby_view_item::color},
+    m_lhs_start{false},
+    m_rhs_start{false}
 {
 
 }
@@ -147,7 +149,7 @@ bool lobby_view::process_events()
           default:
           case lobby_view_item::start:
             assert(m_lhs_selected == lobby_view_item::start);
-            // Do nothing for now
+            m_lhs_start = !m_lhs_start;
             break;
         }
       }
@@ -314,14 +316,33 @@ void show_start_panel(lobby_view& v, const side player_side)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &get_strip(v.get_resources(), chess_color::white)
+    &v.get_resources().get_textures().get_ready(
+      v.get_start(player_side)
+    )
   );
   v.get_window().draw(rectangle);
 
+  // Text
   sf::Text text;
-  text.setString("Start");
+  const auto text_rect{
+    get_lower_half(screen_rect)
+  };
+  if (v.get_start(player_side))
+  {
+    text.setString("Ready");
+  }
+  else
+  {
+    text.setString("Not ready");
+  }
   v.set_text_style(text);
-  set_text_position(text, screen_rect);
+  set_text_position(text, text_rect);
+  v.get_window().draw(text);
+
+  // Smaller
+  text.setCharacterSize(text.getCharacterSize() - 2);
+  set_text_position(text, text_rect);
+  text.setFillColor(sf::Color::White);
   v.get_window().draw(text);
 }
 

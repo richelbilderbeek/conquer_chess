@@ -20,6 +20,8 @@ textures::textures()
     std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),
     std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
     std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
+    std::make_pair(std::ref(m_ready_no), "ready_no.png"),
+    std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
     std::make_pair(std::ref(m_black_king), "kb.png"),
     std::make_pair(std::ref(m_black_king_portrait), "kb_portrait.png"),
     std::make_pair(std::ref(m_black_king_with_contour), "kb_with_contour.png"),
@@ -234,6 +236,12 @@ sf::Texture& textures::get_piece_portrait(
 sf::Texture& get_white_square(textures& t) noexcept
 {
   return t.get_square(chess_color::white);
+}
+
+sf::Texture& textures::get_ready(const bool is_ready) noexcept
+{
+  if (is_ready) return m_ready_yes;
+  return m_ready_no;
 }
 
 sf::Texture& textures::get_square(const chess_color color) noexcept
