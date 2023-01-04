@@ -40,6 +40,7 @@ void loading_view::exec()
     const bool must_quit{process_events()};
     if (must_quit) return;
 
+    sf::sleep(sf::seconds(1));
     if (m_resource_loader.is_done())
     {
       exec_menu();
@@ -100,7 +101,7 @@ void loading_view::set_text_style(sf::Text& text)
 {
   text.setFont(get_arial_font(get_resources()));
   text.setStyle(sf::Text::Bold);
-  text.setCharacterSize(48);
+  text.setCharacterSize(44);
   text.setFillColor(sf::Color::White);
 }
 
@@ -133,8 +134,7 @@ void loading_view::show()
       get_upper_half(get_lower_eighth(window_rect))
     };
     set_text_style(text);
-    std::string s{std::string("Loading ") + m_resource_loader.get_current()};
-    text.setString(s);
+    text.setString(m_resource_loader.get_current());
     set_text_position(text, text_rect);
     get_window().draw(text);
   }

@@ -9,6 +9,8 @@ class songs
 public:
   songs();
 
+  int get_n_songs() const noexcept { return sizeof(*this) / sizeof(m_ninja_gods); };
+
   sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
 
 private:

@@ -9,6 +9,8 @@ class fonts
 public:
   fonts();
 
+  int get_n_fonts() const noexcept { return sizeof(*this) / sizeof(m_arial_font); };
+
   /// Get an Arial font
   sf::Font& get_arial_font() noexcept { return m_arial_font; }
 

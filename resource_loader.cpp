@@ -4,7 +4,7 @@
 #include "game_resources.h"
 
 resource_loader::resource_loader()
-  : m_index{0}
+  : m_index{-1}
 {
 
 }
@@ -22,7 +22,31 @@ bool resource_loader::is_done() const noexcept
   return m_index == get_n_items();
 }
 
-void resource_loader::process_next(game_resources& /* resources */)
+void resource_loader::process_next(game_resources& resources)
 {
+  if (is_done()) return;
+  switch (m_index)
+  {
+    case -1:
+      m_descriptor = "Start loading";
+      break;
+    case 0:
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_fonts().get_n_fonts())
+        + " fonts";
+      break;
+    case 1:
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_songs().get_n_songs())
+        + " songs";
+      break;
+    default:
+    case 2:
+      assert(m_index == 2);
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_textures().get_n_textures())
+        + " textures";
+      break;
+  }
   ++m_index;
 }

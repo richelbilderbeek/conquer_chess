@@ -10,9 +10,9 @@ class resource_loader
 public:
   resource_loader();
 
-  int get_n_items() const noexcept { return 1000; }
+  int get_n_items() const noexcept { return 3; }
 
-  std::string get_current() const noexcept { return "resources"; }
+  std::string get_current() const noexcept { return m_descriptor; }
 
   int get_index() const noexcept { return m_index; }
 
@@ -21,6 +21,8 @@ public:
   void process_next(game_resources& resources);
 
 private:
+
+  std::string m_descriptor;
 
   int m_index;
 };

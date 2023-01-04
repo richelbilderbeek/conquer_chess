@@ -16,6 +16,8 @@ class textures
 public:
   textures();
 
+  int get_n_textures() const noexcept { return sizeof(*this) / sizeof(m_all_races_1); };
+
   /// Get an occupied chess board square
   sf::Texture& get_occupied_square(
     const chess_color square_color,
