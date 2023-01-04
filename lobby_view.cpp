@@ -244,7 +244,9 @@ void show_color_panel(lobby_view& v, const side player_side)
   const auto text_rect{
     get_lower_half(screen_rect)
   };
-  text.setString(to_str(v.get_options().get_color(player_side)));
+  std::string s{to_str(v.get_options().get_color(player_side))};
+  s[0] = std::toupper(s[0]);
+  text.setString(s);
   v.set_text_style(text);
   set_text_position(text, text_rect);
   v.get_window().draw(text);
@@ -273,7 +275,9 @@ void show_race_panel(lobby_view& v, const side player_side)
   const auto text_rect{
     get_lower_half(screen_rect)
   };
-  text.setString(to_str(v.get_options().get_race(player_side)));
+  std::string s{to_str(v.get_options().get_race(player_side))};
+  s[0] = std::toupper(s[0]);
+  text.setString(s);
   v.set_text_style(text);
   set_text_position(text, text_rect);
   v.get_window().draw(text);
