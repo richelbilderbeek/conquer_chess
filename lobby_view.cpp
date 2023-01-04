@@ -145,22 +145,27 @@ bool lobby_view::process_events()
             m_lhs_start = !m_lhs_start;
             break;
         }
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::W)
       {
         m_lhs_cursor = get_previous(m_lhs_cursor);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::S)
       {
         m_lhs_cursor = get_next(m_lhs_cursor);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::O)
       {
         m_rhs_cursor = get_previous(m_rhs_cursor);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::L)
       {
         m_rhs_cursor = get_next(m_rhs_cursor);
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::I)
       {
@@ -188,6 +193,7 @@ bool lobby_view::process_events()
             m_rhs_start = !m_rhs_start;
             break;
         }
+        m_resources.get_sound_effects().play_hide();
       }
       else if (key_pressed == sf::Keyboard::Key::Q)
       {
