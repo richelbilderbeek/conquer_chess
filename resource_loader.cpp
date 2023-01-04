@@ -1,5 +1,7 @@
 #include "resource_loader.h"
 
+#ifndef LOGIC_ONLY
+
 #include "fonts.h"
 #include "game_resources.h"
 #include "songs.h"
@@ -61,3 +63,5 @@ void resource_loader::process_next(game_resources& resources)
   }
   ++m_index;
 }
+
+#endif // LOGIC_ONLY

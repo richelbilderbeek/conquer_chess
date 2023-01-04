@@ -1,6 +1,8 @@
 #ifndef RESOURCE_LOADER_H
 #define RESOURCE_LOADER_H
 
+#ifndef LOGIC_ONLY
+
 #include <string>
 
 class game_resources;
@@ -29,5 +31,7 @@ private:
 };
 
 double get_progress(const resource_loader& loader) noexcept;
+
+#endif // LOGIC_ONLY
 
 #endif // RESOURCE_LOADER_H
