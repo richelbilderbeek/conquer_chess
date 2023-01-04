@@ -153,14 +153,6 @@ bool is_mouse_user(const game_controller& c, const side player_side) noexcept;
 /// Test this class and its free functions
 void test_game_controller();
 
-/// Test the \link{game_controller} class
-/// and its free functions, for keyboard use
-void test_game_controller_keyboard_use();
-
-/// Test the \link{game_controller} class
-/// and its free functions, for mouse use
-void test_game_controller_mouse_use();
-
 std::ostream& operator<<(std::ostream& os, const game_controller& g) noexcept;
 
 #endif // GAME_CONTROLLER_H

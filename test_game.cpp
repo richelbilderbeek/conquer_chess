@@ -22,14 +22,6 @@ void test_game_class()
   ////////////////////////////////////////////////////////////////////////////
   // Member functions
   ////////////////////////////////////////////////////////////////////////////
-  // game::add_user_input
-  {
-    game g;
-    game_controller c;
-    assert(is_empty(get_user_inputs(c)));
-    add_user_input(c, create_press_action_1(side::lhs));
-    assert(!is_empty(get_user_inputs(c)));
-  }
   // game::get_layout, const
   {
     const auto g{get_default_game()};

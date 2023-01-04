@@ -262,15 +262,13 @@ void test_game_controller() //!OCLINT tests may be many
 {
 
 #ifndef NDEBUG // no tests in release
-  test_game_controller_keyboard_use();
-  test_game_controller_mouse_use();
-#endif // no tests in release
-}
-
-/// Test keyboard use
-void test_game_controller_keyboard_use()
-{
-#ifndef NDEBUG // no tests in release
+  // game::add_user_input
+  {
+    game_controller c;
+    assert(is_empty(get_user_inputs(c)));
+    add_user_input(c, create_press_action_1(side::lhs));
+    assert(!is_empty(get_user_inputs(c)));
+  }
   // has_mouse_controller
   {
     const game_controller g(
@@ -432,13 +430,6 @@ void test_game_controller_keyboard_use()
     set_keyboard_player_pos(g, c, s);
     assert(s == square(get_cursor_pos(c, get_keyboard_user_player_side(c))));
   }
-#endif // NDEBUG // no tests in release
-}
-
-/// Test mouse use
-void test_game_controller_mouse_use()
-{
-#ifndef NDEBUG // no tests in release
   // has_mouse_controller
   {
     const game_controller g(
