@@ -121,17 +121,18 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   {
     #ifndef LOGIC_ONLY
 
-    //#define USE_TWO_KEYBOARDS
+    #define USE_TWO_KEYBOARDS
     #ifdef USE_TWO_KEYBOARDS
-    const auto options{
-      create_default_game_options_with_controllers(
-        create_two_keyboard_controllers()
-      )
-    };
+    menu_view v(
+      create_default_game_options(),
+      create_two_keyboard_controllers()
+    );
     #else
-    const auto options{create_default_game_options()};
+    menu_view v(
+      create_default_game_options(),
+      create_keyboard_mouse_controllers()
+    );
     #endif
-    menu_view v(options);
     v.exec();
     #endif // LOGIC_ONLY
   }

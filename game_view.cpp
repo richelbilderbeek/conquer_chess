@@ -245,6 +245,7 @@ bool game_view::process_events()
       }
     }
     process_event(m_game_controller, event, m_layout);
+    m_game_controller.apply_user_inputs_to_game(m_game);
   }
   return false; // if no events proceed with tick
 }

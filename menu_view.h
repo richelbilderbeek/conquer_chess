@@ -12,7 +12,10 @@
 class menu_view
 {
 public:
-  menu_view(const game_options& options);
+  menu_view(
+    const game_options& options,
+    const physical_controllers& controllers
+  );
 
   /// Run the menu, until the user quits
   void exec();
@@ -42,6 +45,8 @@ private:
 
   /// The game options
   game_options m_options;
+
+  physical_controllers m_physical_controllers;
 
   /// Resources
   game_resources m_resources;

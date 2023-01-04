@@ -14,8 +14,12 @@
 #include <cmath>
 #include <iostream>
 
-menu_view::menu_view(const game_options& options)
-  : m_options{options},
+menu_view::menu_view(
+  const game_options& options,
+  const physical_controllers& controllers
+) :
+    m_options{options},
+    m_physical_controllers{controllers},
     m_selected{menu_view_item::start}
 {
 #ifdef DEMO_REPLAYER_ISSUE_22
@@ -69,7 +73,10 @@ void menu_view::exec_game()
 {
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
-  game_view view{game(m_options)};
+  game_view view{
+    game(m_options),
+    game_controller(m_physical_controllers)
+  };
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
