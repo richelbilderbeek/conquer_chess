@@ -1,7 +1,12 @@
 #include "resource_loader.h"
 
-#include <cassert>
+#include "fonts.h"
 #include "game_resources.h"
+#include "songs.h"
+#include "sound_effects.h"
+#include "textures.h"
+
+#include <cassert>
 
 resource_loader::resource_loader()
   : m_index{-1}
