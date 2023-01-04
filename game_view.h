@@ -39,6 +39,8 @@ public:
 
   const auto& get_game_controller() const noexcept { return m_game_controller; }
 
+  const auto& get_layout() const noexcept { return m_layout; }
+
   auto& get_resources() noexcept { return m_game_resources; }
 
   /// Get the text log, i.e. things pieces have to say
@@ -59,6 +61,9 @@ private:
 
   /// The game controller, interacts with game
   game_controller m_game_controller;
+
+  /// The game logic
+  game_view_layout m_layout;
 
   /// The resources (images, sounds, etc.) of the game
   game_resources m_game_resources;

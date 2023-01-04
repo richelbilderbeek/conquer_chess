@@ -29,6 +29,7 @@ public:
     const game_options& options = create_default_game_options()
   );
 
+  /*
   /// Get the layout of the screen
   const auto& get_layout() const noexcept { return m_layout; }
 
@@ -36,6 +37,7 @@ public:
   /// If the screen is resized by the operating system,
   /// this member needs to be updated.
   auto& get_layout() noexcept { return m_layout; }
+  */
 
   /// Get the game options
   auto& get_options() noexcept { return m_options; }
@@ -60,8 +62,10 @@ public:
 
 private:
 
+  /*
   /// The layout of the screen, e.g. the top-left of the sidebar
   game_view_layout m_layout;
+  */
 
   /// The game options
   game_options m_options;
@@ -478,8 +482,10 @@ sf::Keyboard::Key get_key_for_action(const game& g, const side player, const act
 /// to be used in debugging
 game get_kings_only_game() noexcept;
 
+/*
 /// Get the layout
 const game_view_layout& get_layout(const game& g) noexcept;
+*/
 
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse

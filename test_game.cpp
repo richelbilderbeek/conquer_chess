@@ -22,11 +22,13 @@ void test_game_class()
   ////////////////////////////////////////////////////////////////////////////
   // Member functions
   ////////////////////////////////////////////////////////////////////////////
+  /*
   // game::get_layout, const
   {
     const auto g{get_default_game()};
     assert(get_width(g.get_layout().get_board()) > 0);
   }
+  */
   // game::get_options, const
   {
     const auto g{get_default_game()};
@@ -42,7 +44,7 @@ void test_game_class()
   }
   // game::get_time
   {
-    const auto g{get_kings_only_game()};
+    const game g;
     assert(g.get_time() == delta_t(0.0));
   }
   // game::tick
@@ -165,14 +167,6 @@ void test_game_class()
 void test_game_functions()
 {
 #ifndef NDEBUG // no tests in release
-  // add_user_inputs
-  {
-    game g;
-    game_controller c;
-    assert(is_empty(get_user_inputs(c)));
-    add_user_inputs(c, user_inputs( { create_press_action_1(side::lhs) } ) );
-    assert(!is_empty(get_user_inputs(c)));
-  }
   // can_castle_kingside
   {
     const game g{
@@ -976,11 +970,13 @@ void test_game_functions()
     const auto pos_after{get_cursor_pos(c, side::lhs)};
     assert(pos_before != pos_after);
   }
+  /*
   // get_layout
   {
     const auto g{get_default_game()};
     assert(get_width(get_layout(g).get_board()) > 0);
   }
+  */
   // get_music_volume_as_percentage
   {
     const game g;

@@ -56,8 +56,8 @@ void game_view::exec()
   // Open window
   m_window.create(
     sf::VideoMode(
-      m_game.get_layout().get_window_size().get_x(),
-      m_game.get_layout().get_window_size().get_y()
+      m_layout.get_window_size().get_x(),
+      m_layout.get_window_size().get_y()
     ),
     "Conquer Chess"
   );
@@ -138,7 +138,7 @@ std::string get_last_log_messages(
 
 const game_view_layout& get_layout(const game_view& v) noexcept
 {
-  return get_layout(v.get_game());
+  return v.get_layout();
 }
 
 const game_options& get_options(const game_view& v) noexcept
@@ -221,7 +221,7 @@ bool game_view::process_events()
       // From https://www.sfml-dev.org/tutorials/2.2/graphics-view.php#showing-more-when-the-window-is-resized
       const sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
       m_window.setView(sf::View(visibleArea));
-      m_game.get_layout() = game_view_layout(
+      m_layout = game_view_layout(
         screen_coordinat(
           static_cast<int>(event.size.width),
           static_cast<int>(event.size.height)
@@ -244,7 +244,7 @@ bool game_view::process_events()
         return true;
       }
     }
-    process_event(m_game_controller, event, m_game.get_layout());
+    process_event(m_game_controller, event, m_layout);
   }
   return false; // if no events proceed with tick
 }
@@ -321,7 +321,7 @@ void show_controls(
   const side player
 )
 {
-  const auto& layout = view.get_game().get_layout();
+  const auto& layout{view.get_layout()};
   const auto player_color{get_player_color(view, player)};
   const std::vector<sf::Color> colors{
     sf::Color(255,  0,  0),
@@ -483,7 +483,7 @@ void show_debug(game_view& view, const side player_side)
 {
   const auto& g{view.get_game()};
   const auto& c{view.get_game_controller()};
-  const auto& layout{g.get_layout()};
+  const auto& layout{view.get_layout()};
   sf::Text text;
   text.setFont(view.get_resources().get_arial_font());
   const piece& closest_piece{
@@ -529,7 +529,7 @@ void show_debug(game_view& view, const side player_side)
 
 void game_view::show_mouse_cursor()
 {
-  const auto& layout = m_game.get_layout();
+  const auto& layout = m_layout;
 
   sf::CircleShape cursor;
   cursor.setRadius(16.0);
@@ -553,8 +553,7 @@ void game_view::show_mouse_cursor()
 
 void show_layout(game_view& view)
 {
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
+  const auto& layout{view.get_layout()};
   for (const auto& panel: get_panels(layout))
   {
     sf::RectangleShape rectangle;
@@ -568,7 +567,7 @@ void show_layout(game_view& view)
 
 void show_log(game_view& view, const side player)
 {
-  const auto& layout = view.get_game().get_layout();
+  const auto& layout = view.get_layout();
   sf::Text text;
   text.setFont(view.get_resources().get_arial_font());
   std::stringstream s;
@@ -623,7 +622,7 @@ void show_occupied_squares(game_view& view)
 void show_pieces(game_view& view)
 {
   const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
+  const auto& layout = view.get_layout();
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
   for (const auto& piece: game.get_pieces())
@@ -678,7 +677,7 @@ void show_pieces(game_view& view)
 void show_possible_moves(game_view& view)
 {
   const auto& g{view.get_game()};
-  const auto& layout{g.get_layout()};
+  const auto& layout{view.get_layout()};
   const auto actions{collect_all_piece_actions(g)};
   for (const auto& action: actions)
   {
@@ -714,7 +713,7 @@ void show_squares(game_view& view)
 {
   show_squares(
     view.get_window(),
-    view.get_game().get_layout().get_board(),
+    view.get_layout().get_board(),
     view.get_resources()
   );
 }
@@ -726,7 +725,7 @@ void show_square_under_cursor(
 {
   const auto& g{view.get_game()};
   const auto& c{view.get_game_controller()};
-  const auto& layout{g.get_layout()};
+  const auto& layout{view.get_layout()};
   const int x{
     static_cast<int>(std::trunc(get_cursor_pos(c, player).get_x()))
   };
@@ -772,8 +771,8 @@ void show_square_under_cursor(
 
 void show_unit_health_bars(game_view& view)
 {
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
+  const auto& game{view.get_game()};
+  const auto& layout{view.get_layout()};
   for (const auto& piece: game.get_pieces())
   {
     // Black box around it
@@ -818,8 +817,8 @@ void show_unit_health_bars(game_view& view)
 
 void show_unit_paths(game_view& view)
 {
-  const auto& game = view.get_game();
-  const auto& layout = game.get_layout();
+  const auto& game{view.get_game()};
+  const auto& layout{view.get_layout()};
   for (const auto& piece: get_pieces(game))
   {
     if (is_idle(piece)) continue;
@@ -946,7 +945,7 @@ void show_unit_paths(game_view& view)
 
 void show_unit_sprites(game_view& view, const side player_side)
 {
-  const auto& layout = view.get_game().get_layout();
+  const auto& layout = view.get_layout();
   const double square_width{get_square_width(layout)};
   const double square_height{get_square_height(layout)};
   const auto player_color{get_player_color(view, player_side)};

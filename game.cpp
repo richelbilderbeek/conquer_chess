@@ -20,15 +20,13 @@
 game::game(
   const game_options& options
 )
-  : //m_controller{options.get_physical_controllers()},
-    m_layout{options.get_screen_size(), options.get_margin_width()},
+  : //m_layout{options.get_screen_size(), options.get_margin_width()},
     m_options{options},
     m_pieces{get_starting_pieces(options)},
     m_replayer{options.get_replayer()},
     m_t{0.0}
 {
-  //assert(get_physical_controller(m_options, side::lhs) == get_physical_controller(m_controller, side::lhs));
-  //assert(get_physical_controller(m_options, side::rhs) == get_physical_controller(m_controller, side::rhs));
+
 }
 
 /*
@@ -1544,10 +1542,12 @@ game get_kings_only_game() noexcept
   return get_game_with_starting_position(starting_position_type::kings_only);
 }
 
+/*
 const game_view_layout& get_layout(const game& g) noexcept
 {
   return g.get_layout();
 }
+*/
 
 chess_color get_mouse_user_player_color(
   const game& g,
@@ -1966,7 +1966,7 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
-    << "Layout: " << g.get_layout() << '\n'
+    //<< "Layout: " << g.get_layout() << '\n'
     << "Options: " << g.get_options() << '\n'
     << "Replayer: " << g.get_replayer()
   ;
