@@ -28,6 +28,7 @@ HEADERS += \
     $$PWD/id.h \
     $$PWD/key_bindings.h \
     $$PWD/layout.h \
+    $$PWD/lobby_options.h \
     $$PWD/lobby_view_item.h \
     $$PWD/lobby_view_layout.h \
     $$PWD/menu_view_item.h \
@@ -92,6 +93,7 @@ SOURCES += \
     $$PWD/id.cpp \
     $$PWD/key_bindings.cpp \
     $$PWD/layout.cpp \
+    $$PWD/lobby_options.cpp \
     $$PWD/lobby_view_item.cpp \
     $$PWD/lobby_view_layout.cpp \
     $$PWD/menu_view_item.cpp \

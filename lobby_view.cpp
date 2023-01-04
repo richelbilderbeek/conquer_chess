@@ -14,12 +14,8 @@
 #include <iostream>
 
 lobby_view::lobby_view()
-  : m_lhs_color{chess_color::white},
-    m_rhs_color{chess_color::black},
-    m_lhs_race{race::terran},
-    m_rhs_race{race::terran},
-    m_lhs_selected{lobby_view_item::color},
-    m_rhs_selected{lobby_view_item::color},
+  : m_lhs_cursor{lobby_view_item::color},
+    m_rhs_cursor{lobby_view_item::color},
     m_lhs_start{false},
     m_rhs_start{false}
 {
@@ -70,34 +66,15 @@ void lobby_view::exec_game()
   */
 }
 
-chess_color lobby_view::get_color(const side player_side) const noexcept
-{
-  if (player_side == side::lhs)
-  {
-    return m_lhs_color;
-  }
-  assert(player_side == side::rhs);
-  return m_rhs_color;
-}
-
-race lobby_view::get_race(const side player_side) const noexcept
-{
-  if (player_side == side::lhs)
-  {
-    return m_lhs_race;
-  }
-  assert(player_side == side::rhs);
-  return m_rhs_race;
-}
 
 lobby_view_item lobby_view::get_selected(const side player_side) const noexcept
 {
   if (player_side == side::lhs)
   {
-    return m_lhs_selected;
+    return m_lhs_cursor;
   }
   assert(player_side == side::rhs);
-  return m_rhs_selected;
+  return m_rhs_cursor;
 }
 
 bool lobby_view::get_start(const side player_side) const noexcept
@@ -142,58 +119,70 @@ bool lobby_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Q)
       {
-        switch (m_lhs_selected)
+        switch (m_lhs_cursor)
         {
           case lobby_view_item::color:
-            m_lhs_color = get_next(m_lhs_color);
+            m_options.set_color(
+              get_next(m_options.get_color(side::lhs)),
+              side::lhs
+            );
             m_lhs_start = false;
             m_rhs_start = false;
             break;
           case lobby_view_item::race:
-            m_lhs_race = get_next(m_lhs_race);
+            m_options.set_race(
+              get_next(m_options.get_race(side::lhs)),
+              side::lhs
+            );
             m_lhs_start = false;
             m_rhs_start = false;
             break;
           default:
           case lobby_view_item::start:
-            assert(m_lhs_selected == lobby_view_item::start);
+            assert(m_lhs_cursor == lobby_view_item::start);
             m_lhs_start = true;
             break;
         }
       }
       else if (key_pressed == sf::Keyboard::Key::W)
       {
-        m_lhs_selected = get_previous(m_lhs_selected);
+        m_lhs_cursor = get_previous(m_lhs_cursor);
       }
       else if (key_pressed == sf::Keyboard::Key::S)
       {
-        m_lhs_selected = get_next(m_lhs_selected);
+        m_lhs_cursor = get_next(m_lhs_cursor);
       }
       else if (key_pressed == sf::Keyboard::Key::O)
       {
-        m_rhs_selected = get_previous(m_rhs_selected);
+        m_rhs_cursor = get_previous(m_rhs_cursor);
       }
       else if (key_pressed == sf::Keyboard::Key::L)
       {
-        m_rhs_selected = get_previous(m_rhs_selected);
+        m_rhs_cursor = get_previous(m_rhs_cursor);
       }
       else if (key_pressed == sf::Keyboard::Key::I)
       {
-        switch (m_rhs_selected)
+        switch (m_rhs_cursor)
         {
           case lobby_view_item::color:
-            m_rhs_color = get_next(m_rhs_color);
+            m_options.set_color(
+              get_next(m_options.get_color(side::rhs)),
+              side::rhs
+            );
             m_lhs_start = false;
             m_rhs_start = false;
             break;
           case lobby_view_item::race:
-            m_rhs_race = get_next(m_rhs_race);
+            m_options.set_race(
+              get_next(m_options.get_race(side::rhs)),
+              side::rhs
+            );
             m_lhs_start = false;
             m_rhs_start = false;
             break;
           default:
           case lobby_view_item::start:
-            assert(m_rhs_selected == lobby_view_item::start);
+            assert(m_rhs_cursor == lobby_view_item::start);
             m_rhs_start = true;
             break;
         }
@@ -245,7 +234,7 @@ void show_color_panel(lobby_view& v, const side player_side)
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &v.get_resources().get_textures().get_color(
-      v.get_color(player_side)
+      v.get_options().get_color(player_side)
     )
   );
   v.get_window().draw(rectangle);
@@ -255,7 +244,7 @@ void show_color_panel(lobby_view& v, const side player_side)
   const auto text_rect{
     get_lower_half(screen_rect)
   };
-  text.setString(to_str(v.get_color(player_side)));
+  text.setString(to_str(v.get_options().get_color(player_side)));
   v.set_text_style(text);
   set_text_position(text, text_rect);
   v.get_window().draw(text);
@@ -274,7 +263,7 @@ void show_race_panel(lobby_view& v, const side player_side)
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
     &v.get_resources().get_textures().get_head(
-      v.get_race(player_side)
+      v.get_options().get_race(player_side)
     )
   );
   v.get_window().draw(rectangle);
@@ -284,7 +273,7 @@ void show_race_panel(lobby_view& v, const side player_side)
   const auto text_rect{
     get_lower_half(screen_rect)
   };
-  text.setString(to_str(v.get_race(player_side)));
+  text.setString(to_str(v.get_options().get_race(player_side)));
   v.set_text_style(text);
   set_text_position(text, text_rect);
   v.get_window().draw(text);

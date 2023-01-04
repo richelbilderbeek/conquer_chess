@@ -60,6 +60,11 @@ Image                     |Filename              |Search terms
 ![](all_races_4.jpeg)     |`all_races_4.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cartoon`
 ![](zerg_chessboard.jpeg) |`zerg_chessboard.jpeg`|`starcraft 2, zerg, chessboard, cubism, chess square`
 ![](speed.png)            |`speed.png`           |`starcraft 2, speed, symbol, simple, cartoon`
+![](mouse.png)            |`mouse.png`           |`starcraft 2, computer mouse, protoss, simple`
+![](keyboard.png)         |`keyboard.png`        |`starcraft 2, computer keyboard, terran`
+
+
+
 
 ### Chess color
 
@@ -91,3 +96,6 @@ Image                          |Filename                   |Search terms
 ![](terran_white_knight.jpeg)  |`terran_white_knight.jpeg` |`white knight, chess, terran, starcraft 2, symbol`
 ![](zerg_black_knight.jpeg)    |`zerg_black_knight.jpeg`   |`black knight, chess, zerg, starcraft 2, symbol`
 ![](zerg_white_knight.jpeg)    |`zerg_white_knight.jpeg`   |`white knight, chess, zerg, starcraft 2, symbol, full body view`
+
+
+

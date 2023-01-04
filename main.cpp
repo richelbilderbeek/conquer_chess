@@ -21,6 +21,9 @@
 #include "helper.h"
 #include "id.h"
 #include "key_bindings.h"
+#include "lobby_options.h"
+#include "lobby_view_item.h"
+#include "lobby_view_layout.h"
 #include "menu_view.h"
 #include "menu_view_item.h"
 #include "menu_view_layout.h"
@@ -68,6 +71,9 @@ void test()
   test_helper();
   test_id();
   test_key_bindings();
+  test_lobby_options();
+  test_lobby_view_item();
+  test_lobby_view_layout();
   test_log();
   test_menu_view_item();
   test_menu_view_layout();
