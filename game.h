@@ -29,16 +29,6 @@ public:
     const game_options& options = create_default_game_options()
   );
 
-  /*
-  /// Get the layout of the screen
-  const auto& get_layout() const noexcept { return m_layout; }
-
-  /// Get the layout of the screen.
-  /// If the screen is resized by the operating system,
-  /// this member needs to be updated.
-  auto& get_layout() noexcept { return m_layout; }
-  */
-
   /// Get the game options
   auto& get_options() noexcept { return m_options; }
 
@@ -61,11 +51,6 @@ public:
   void tick(const delta_t& dt = delta_t(1.0));
 
 private:
-
-  /*
-  /// The layout of the screen, e.g. the top-left of the sidebar
-  game_view_layout m_layout;
-  */
 
   /// The game options
   game_options m_options;
@@ -445,12 +430,13 @@ const game_coordinat& get_cursor_pos(
 
 game get_default_game() noexcept;
 
+
 /// Get the default, primary, most likely piece action
 /// Returns an empty optional if the current setup
 /// cannot result in an action
 std::optional<piece_action_type> get_default_piece_action(
   const game& g,
-  const game_controller& c,
+  const square& cursor_square,
   const side player_side
 ) noexcept;
 
@@ -629,72 +615,12 @@ bool is_piece_at(
   const std::string& square_str
 );
 
-/// Put the cursor (i.e. the selector, not the mouse pointer)
-/// at the desired square
-void move_cursor_to(
-  game& g,
-  game_controller& c,
-  const std::string& square_str,
-  const side player_side
-);
-
-/// Put the cursor (i.e. the selector, not the mouse pointer)
-/// at the desired square.
-/// Does not select the square where the cursor is.
-void move_cursor_to(
-  game& g,
-  game_controller& c,
-  const square& s,
-  const side player_side
-);
-
-/// Put the cursor (i.e. the selector)
-/// at the desired square
-/// @see \link{move_cursor_to} is more general
-void move_keyboard_cursor_to(
-  game& g,
-  game_controller& c,
-  const square& s,
-  const side player_side
-);
-
-/// Put the cursor (i.e. the selector, not the mouse pointer)
-/// at the desired square
-/// @see \link{move_cursor_to} is more general
-void move_mouse_cursor_to(
-  game& g,
-  game_controller& c,
-  const square& s,
-  const side player_side
-);
-
 /// See if there is a piece with a certain ID at a certain square
 bool piece_with_id_is_at(
   game& g,
   const id& i,
   const square& s
 );
-
-/// The the cursor of the keyboard player to the desired square
-void set_keyboard_player_pos(
-  game& g,
-  game_controller& c,
-  const square& s
-);
-
-/// The the cursor of the mouse player to the desired square
-void set_mouse_player_pos(
-  game& g,
-  game_controller& c,
-  const square& s
-);
-
-/// Set the cursor's position
-void set_cursor_pos(
-  game_controller& c,
-  const game_coordinat& pos,
-  const side player_side
-) noexcept;
 
 /// Call game::tick until all pieces are idle
 void tick_until_idle(game& g);

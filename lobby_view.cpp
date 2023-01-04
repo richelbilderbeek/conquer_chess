@@ -295,7 +295,7 @@ void show_image_panel(lobby_view& v)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &v.get_resources().get_textures().get_all_races_2()
+    &v.get_resources().get_textures().get_all_races_1()
   );
   v.get_window().draw(rectangle);
 }

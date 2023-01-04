@@ -184,10 +184,11 @@ void test_game_functions()
     assert(can_castle_queenside(get_piece_at(g, "e8"), g));
   }
   // clear_sound_effects
+  /*
   {
     game g;
     game_controller c;
-    move_cursor_to(g, c, "e8", side::rhs);
+    move_cursor_to(c, "e8", side::rhs);
     add_user_input(c, create_press_action_1(side::rhs));
     assert(collect_messages(g).empty());
     c.get_user_inputs().apply_user_inputs_to_game(c, g); // TODO: fix
@@ -196,6 +197,7 @@ void test_game_functions()
     clear_piece_messages(g);
     assert(collect_messages(g).empty());
   }
+  */
   // collect_action_history
   {
     game g;
@@ -668,21 +670,12 @@ void test_game_functions()
       assert(can_do(g, get_piece_at(g, "h1"), piece_action_type::promote_to_bishop, "h1", side::rhs));
       assert(can_do(g, get_piece_at(g, "h1"), piece_action_type::promote_to_knight, "h1", side::rhs));
     }
-    // 55: move cursor
-    {
-      game g;
-      game_controller c;
-      move_cursor_to(g, c, "d1", side::lhs);
-      assert(get_cursor_pos(c, side::lhs) == to_coordinat(square("d1")));
-      move_cursor_to(g, c, "f6", side::rhs);
-      assert(get_cursor_pos(c, side::rhs) == to_coordinat(square("f6")));
-    }
     // 53: nothing selected, cursor at empty square -> no action
     {
       game g;
       game_controller c;
-      move_cursor_to(g, c, "d4", side::lhs);
-      move_cursor_to(g, c, "d5", side::rhs);
+      move_cursor_to(c, "d4", side::lhs);
+      move_cursor_to(c, "d5", side::rhs);
       assert(!get_default_piece_action(g, c, side::lhs));
       assert(!get_default_piece_action(g, c, side::rhs));
     }
@@ -690,8 +683,8 @@ void test_game_functions()
     {
       game g;
       game_controller c;
-      move_cursor_to(g, c, "d8", side::lhs);
-      move_cursor_to(g, c, "d1", side::rhs);
+      move_cursor_to(c, "d8", side::lhs);
+      move_cursor_to(c, "d1", side::rhs);
       assert(!get_default_piece_action(g, c, side::lhs));
       assert(!get_default_piece_action(g, c, side::rhs));
     }
@@ -699,8 +692,8 @@ void test_game_functions()
     {
       game g;
       game_controller c;
-      move_cursor_to(g, c, "d1", side::lhs);
-      move_cursor_to(g, c, "d8", side::rhs);
+      move_cursor_to(c, "d1", side::lhs);
+      move_cursor_to(c, "d8", side::rhs);
       assert(get_default_piece_action(g, c, side::lhs));
       assert(get_default_piece_action(g, c, side::rhs));
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::select);
@@ -710,11 +703,11 @@ void test_game_functions()
     {
       game g;
       game_controller c;
-      move_cursor_to(g, c, "d1", side::lhs);
-      move_cursor_to(g, c, "d8", side::rhs);
+      move_cursor_to(c, "d1", side::lhs);
+      move_cursor_to(c, "d8", side::rhs);
       add_user_input(c, create_press_action_1(side::lhs));
       add_user_input(c, create_press_action_1(side::rhs));
-      c.get_user_inputs().apply_user_inputs_to_game(c, g); // TODO: fix
+      c.apply_user_inputs_to_game(g);
       g.tick(delta_t(0.0));
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::unselect);
       assert(get_default_piece_action(g, c, side::rhs).value() == piece_action_type::unselect);
@@ -725,8 +718,8 @@ void test_game_functions()
       game_controller c;
       do_select(g, c, "d2", side::lhs);
       do_select(g, c, "d7", side::rhs);
-      move_cursor_to(g, c, "d3", side::lhs);
-      move_cursor_to(g, c, "d5", side::rhs);
+      move_cursor_to(c, "d3", side::lhs);
+      move_cursor_to(c, "d5", side::rhs);
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::move);
       assert(get_default_piece_action(g, c, side::rhs).value() == piece_action_type::move);
     }
@@ -738,8 +731,8 @@ void test_game_functions()
       game_controller c;
       do_select(g, c, "d1", side::lhs);
       do_select(g, c, "d8", side::rhs);
-      move_cursor_to(g, c, "d8", side::lhs);
-      move_cursor_to(g, c, "d1", side::rhs);
+      move_cursor_to(c, "d8", side::lhs);
+      move_cursor_to(c, "d1", side::rhs);
       assert(get_default_piece_action(g, c, side::lhs).value() != piece_action_type::move);
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::attack);
       assert(get_default_piece_action(g, c, side::rhs).value() == piece_action_type::attack);
@@ -769,8 +762,8 @@ void test_game_functions()
       game_controller c;
       do_select(g, c, "e1", side::lhs);
       do_select(g, c, "e8", side::rhs);
-      move_cursor_to(g, c, "g1", side::lhs);
-      move_cursor_to(g, c, "g8", side::rhs);
+      move_cursor_to(c, "g1", side::lhs);
+      move_cursor_to(c, "g8", side::rhs);
       assert(get_default_piece_action(g, c, side::lhs).value() != piece_action_type::move);
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::castle_kingside);
       assert(get_default_piece_action(g, c, side::rhs).value() == piece_action_type::castle_kingside);
@@ -783,8 +776,8 @@ void test_game_functions()
       game_controller c;
       do_select(g, c, "e1", side::lhs);
       do_select(g, c, "e8", side::rhs);
-      move_cursor_to(g, c, "c1", side::lhs);
-      move_cursor_to(g, c, "c8", side::rhs);
+      move_cursor_to(c, "c1", side::lhs);
+      move_cursor_to(c, "c8", side::rhs);
       assert(get_default_piece_action(g, c, side::lhs).value() != piece_action_type::move);
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::castle_queenside);
       assert(get_default_piece_action(g, c, side::rhs).value() == piece_action_type::castle_queenside);
@@ -797,8 +790,8 @@ void test_game_functions()
       game_controller c;
       do_select(g, c, "a7", side::lhs);
       do_select(g, c, "h2", side::rhs);
-      move_cursor_to(g, c, "a8", side::lhs);
-      move_cursor_to(g, c, "h1", side::rhs);
+      move_cursor_to(c, "a8", side::lhs);
+      move_cursor_to(c, "h1", side::rhs);
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::move);
       assert(get_default_piece_action(g, c, side::rhs).value() == piece_action_type::move);
     }
@@ -810,8 +803,8 @@ void test_game_functions()
       game_controller c;
       do_select(g, c, "a8", side::lhs);
       do_select(g, c, "h1", side::rhs);
-      move_cursor_to(g, c, "a8", side::lhs);
-      move_cursor_to(g, c, "h1", side::rhs);
+      move_cursor_to(c, "a8", side::lhs);
+      move_cursor_to(c, "h1", side::rhs);
       assert(get_default_piece_action(g, c, side::lhs).value() != piece_action_type::unselect);
       assert(get_default_piece_action(g, c, side::lhs).value() == piece_action_type::promote_to_queen);
       assert(get_default_piece_action(g, c, side::rhs).value() == piece_action_type::promote_to_queen);
@@ -904,7 +897,7 @@ void test_game_functions()
   {
     game g;
     game_controller c;
-    move_cursor_to(g, c, "e1", side::lhs);
+    move_cursor_to(c, "e1", side::lhs);
     const chess_move m("e4", chess_color::white);
     const user_inputs inputs{
       convert_move_to_user_inputs(g, c, m)

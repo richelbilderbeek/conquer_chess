@@ -34,12 +34,6 @@ public:
 
   const auto& get_user_inputs() const noexcept { return m_user_inputs; }
 
-  /// Process all actions and apply these on the game
-  void apply_user_inputs_to_game(
-    game_controller& c,
-    game& g
-  );
-
 private:
 
   std::vector<user_input> m_user_inputs;

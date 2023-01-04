@@ -211,13 +211,13 @@ void do_select_and_move_piece(
 )
 {
   do_select(g, c, from_square_str, player_side);
-  move_cursor_to(g, c, to_square_str, player_side);
+  move_cursor_to(c, to_square_str, player_side);
   add_user_input(
     c,
     get_user_input_to_select(c, player_side)
   );
   user_inputs inputs{c.get_user_inputs()};
-  inputs.apply_user_inputs_to_game(c, g); //TODO: fix architecture
+  c.apply_user_inputs_to_game(g);
   g.tick(delta_t(0.0));
   for (int i{0}; i!=2; ++i)
   {
@@ -531,84 +531,6 @@ void process_press_action_4(
   }
 }
 
-void user_inputs::apply_user_inputs_to_game(
-  game_controller& c,
-  game& g
-)
-{
-  for (const auto& action: m_user_inputs)
-  {
-    if (action.get_user_input_type() == user_input_type::press_action_1)
-    {
-      process_press_action_1(g, c, action);
-    }
-    else if (action.get_user_input_type() == user_input_type::press_action_2)
-    {
-      process_press_action_2(g, c, action);
-    }
-    else if (action.get_user_input_type() == user_input_type::press_action_3)
-    {
-      process_press_action_3(g, c, action);
-    }
-    else if (action.get_user_input_type() == user_input_type::press_action_4)
-    {
-      process_press_action_4(g, c, action);
-    }
-    else if (action.get_user_input_type() == user_input_type::press_down)
-    {
-      const auto pos{get_cursor_pos(c, action.get_player())};
-      set_cursor_pos(c, get_below(pos), action.get_player());
-    }
-    else if (action.get_user_input_type() == user_input_type::press_left)
-    {
-      const auto pos{get_cursor_pos(c, action.get_player())};
-      set_cursor_pos(c, get_left(pos), action.get_player());
-    }
-    else if (action.get_user_input_type() == user_input_type::press_right)
-    {
-      const auto pos{get_cursor_pos(c, action.get_player())};
-      set_cursor_pos(c, get_right(pos), action.get_player());
-    }
-    else if (action.get_user_input_type() == user_input_type::press_up)
-    {
-      const auto pos{get_cursor_pos(c, action.get_player())};
-      set_cursor_pos(c, get_above(pos), action.get_player());
-    }
-    else if (action.get_user_input_type() == user_input_type::mouse_move)
-    {
-      if (has_mouse_controller(c))
-      {
-        assert(action.get_coordinat());
-        set_cursor_pos(c, action.get_coordinat().value(), action.get_player());
-        assert_eq(get_cursor_pos(c, action.get_player()), action.get_coordinat().value());
-        assert_eq(square(get_cursor_pos(c, action.get_player())), square(action.get_coordinat().value()));
-      }
-    }
-    #ifdef FIX_ISSUE_46
-    // Below you see that LMB selects and RMB moves
-    // Instead, the mouse controller has an active action
-    // triggered by LMB, and RMB goes to the next
-    #endif // FIX_ISSUE_46
-    else if (action.get_user_input_type() == user_input_type::lmb_down)
-    {
-      if (!has_mouse_controller(c)) return;
-      process_press_action_1_or_lmb_down(g, c, action);
-
-    }
-    else if (action.get_user_input_type() == user_input_type::rmb_down)
-    {
-      const auto maybe_index{
-        c.get_mouse_user_selector()
-      };
-      assert(maybe_index);
-      c.set_mouse_user_selector(
-        get_next(maybe_index.value())
-      );
-    }
-  }
-  m_user_inputs = std::vector<user_input>();
-}
-
 void start_attack(
   game& g,
   game_controller& /* c */,
@@ -696,9 +618,8 @@ void test_user_inputs()
     game g;
     game_controller c;
     const game_coordinat before{get_cursor_pos(c, side::lhs)};
-    user_inputs inputs;
-    inputs.add(create_press_up_action(side::lhs));
-    inputs.apply_user_inputs_to_game(c, g);
+    c.add_user_input(create_press_up_action(side::lhs));
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
@@ -707,9 +628,8 @@ void test_user_inputs()
     game g;
     game_controller c;
     const game_coordinat before{get_cursor_pos(c, side::lhs)};
-    user_inputs input;
-    input.add(create_press_right_action(side::lhs));
-    input.apply_user_inputs_to_game(c, g);
+    c.add_user_input(create_press_right_action(side::lhs));
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
@@ -718,9 +638,8 @@ void test_user_inputs()
     game g;
     game_controller c;
     const game_coordinat before{get_cursor_pos(c, side::lhs)};
-    user_inputs inputs;
-    inputs.add(create_press_down_action(side::lhs));
-    inputs.apply_user_inputs_to_game(c, g);
+    c.add_user_input(create_press_down_action(side::lhs));
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
@@ -729,9 +648,8 @@ void test_user_inputs()
     game g;
     game_controller c;
     const game_coordinat before{get_cursor_pos(c, side::lhs)};
-    user_inputs inputs;
-    inputs.add(create_press_left_action(side::lhs));
-    inputs.apply_user_inputs_to_game(c, g);
+    c.add_user_input(create_press_left_action(side::lhs));
+    c.apply_user_inputs_to_game(g);
     const game_coordinat after{get_cursor_pos(c, side::lhs)};
     assert(before != after);
   }
@@ -762,8 +680,7 @@ void test_user_inputs()
     };
     assert(!is_empty(inputs));
     add_user_inputs(c, inputs);
-
-    inputs.apply_user_inputs_to_game(c, g);
+    c.apply_user_inputs_to_game(g);
     g.tick(delta_t(0.0));
     assert(square(get_cursor_pos(c, side::lhs)) == square("e2"));
   }
@@ -771,11 +688,11 @@ void test_user_inputs()
   {
     game g;
     game_controller c;
-    move_cursor_to(g, c, "e2", side::lhs);
+    move_cursor_to(c, "e2", side::lhs);
     assert(!get_piece_at(g, "e2").is_selected());
     const user_input input{get_user_input_to_select(c, side::lhs)};
     add_user_input(c, input);
-    c.get_user_inputs().apply_user_inputs_to_game(c, g);
+    c.apply_user_inputs_to_game(g);
     g.tick(delta_t(0.0));
     assert(get_piece_at(g, "e2").is_selected());
   }

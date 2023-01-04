@@ -12,6 +12,9 @@
 #include <iosfwd>
 
 /// The class that acts as a controller for \link{game}.
+/// A \link{game_controller} receives \link{user_inputs}.
+/// It will use those \link{user_inputs}
+/// to move the cursors and to do chess moves on the \link{game}.
 class game_controller
 {
 public:
@@ -21,6 +24,9 @@ public:
 
   /// Add a user input. These will be processed in 'game::tick'
   void add_user_input(const user_input& a);
+
+  /// Process all actions and apply these on the game
+  void apply_user_inputs_to_game(game& g);
 
   /// Get the a player's cursor position
   const game_coordinat& get_cursor_pos(const side player_side) const noexcept;
@@ -38,7 +44,7 @@ public:
   const physical_controller& get_physical_controller(const side player_side) const noexcept;
 
   /// Get the game users' inputs
-  auto& get_user_inputs() noexcept { return m_user_inputs; }
+  //auto& get_user_inputs() noexcept { return m_user_inputs; }
 
   /// Set the selected action for the mouse user.
   /// Assumes there is a mouse user
@@ -87,6 +93,15 @@ square get_cursor_square(
   const game_controller& c,
   const side player_side
 );
+
+/// Get the default, primary, most likely piece action
+/// Returns an empty optional if the current setup
+/// cannot result in an action
+std::optional<piece_action_type> get_default_piece_action(
+  const game& g,
+  const game_controller& c,
+  const side player_side
+) noexcept;
 
 /// Get the side of the controller that uses the keyboard.
 /// Assumes there is one controller that uses the keyboard
@@ -149,6 +164,68 @@ bool has_mouse_controller(const game_controller& c);
 
 /// The the player at that side a mouse user?
 bool is_mouse_user(const game_controller& c, const side player_side) noexcept;
+
+
+/// Put the cursor (i.e. the selector, not the mouse pointer)
+/// at the desired square
+void move_cursor_to(
+  game_controller& c,
+  const std::string& square_str,
+  const side player_side
+);
+
+/// Put the cursor (i.e. the selector, not the mouse pointer)
+/// at the desired square.
+/// Does not select the square where the cursor is.
+void move_cursor_to(
+  game_controller& c,
+  const square& s,
+  const side player_side
+);
+
+/// Put the cursor (i.e. the selector)
+/// at the desired square
+/// @see \link{move_cursor_to} is more general
+void move_keyboard_cursor_to(
+  game_controller& c,
+  const square& s,
+  const side player_side
+);
+
+/// Put the cursor (i.e. the selector, not the mouse pointer)
+/// at the desired square
+/// @see \link{move_cursor_to} is more general
+void move_mouse_cursor_to(
+  game_controller& c,
+  const square& s,
+  const side player_side
+);
+
+/// Set the cursor's position to the target position
+void set_cursor_pos(
+  game_controller& c,
+  const game_coordinat& pos,
+  const side player_side
+) noexcept;
+
+/// Set the cursor's position to the target square
+void set_cursor_pos(
+  game_controller& c,
+  const square& s,
+  const side player_side
+) noexcept;
+
+/// The the cursor of the keyboard player to the desired square
+void set_keyboard_player_pos(
+  game_controller& c,
+  const square& s
+);
+
+/// The the cursor of the mouse player to the desired square
+void set_mouse_player_pos(
+  game_controller& c,
+  const square& s
+);
 
 /// Test this class and its free functions
 void test_game_controller();
