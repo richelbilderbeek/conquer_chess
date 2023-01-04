@@ -241,7 +241,7 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::F4)
       {
-        exec_start();
+        exec_game();
       }
     }
     if (event.type == sf::Event::MouseMoved)
