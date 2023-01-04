@@ -56,6 +56,7 @@ HEADERS += \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
+    $$PWD/songs.h \
     $$PWD/sound_effects.h \
     $$PWD/square.h \
     $$PWD/starting_position_type.h \
@@ -123,6 +124,7 @@ SOURCES += \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \
+    $$PWD/songs.cpp \
     $$PWD/sound_effects.cpp \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \

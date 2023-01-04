@@ -32,10 +32,10 @@ game_view::game_view(
     m_game_controller{c},
     m_log{game.get_options().get_message_display_time_secs()}
 {
-  m_game_resources.get_ninja_gods().setVolume(
+  m_game_resources.get_songs().get_ninja_gods().setVolume(
     get_music_volume_as_percentage(m_game)
   );
-  m_game_resources.get_ninja_gods().play();
+  m_game_resources.get_songs().get_ninja_gods().play();
   m_game_resources.get_sound_effects().set_master_volume(
     m_game.get_options().get_sound_effects_volume()
   );

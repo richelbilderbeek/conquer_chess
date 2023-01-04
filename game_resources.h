@@ -9,6 +9,7 @@
 #include "sound_effects.h"
 #include "message.h"
 #include "fonts.h"
+#include "songs.h"
 
 /// The raw game resources,
 /// implemented as a Singleton.
@@ -25,6 +26,8 @@ public:
 
   fonts& get_fonts() noexcept { return m_fonts; }
 
+  songs& get_songs() noexcept { return m_songs; }
+
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
 
@@ -40,10 +43,7 @@ public:
     const piece_type type
   );
 
-  sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
-
   auto& get_sound_effects() noexcept { return m_sound_effects; }
-
 
   /// Play a sound effect
   void play(
@@ -55,11 +55,9 @@ public:
 private:
 
   fonts m_fonts;
+  songs m_songs;
   sound_effects m_sound_effects;
   textures m_textures;
-
-
-  sf::Music m_ninja_gods;
 
   /// Singleton
   //friend game_resources& create_game_resources();
