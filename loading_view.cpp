@@ -40,7 +40,6 @@ void loading_view::exec()
     const bool must_quit{process_events()};
     if (must_quit) return;
 
-    sf::sleep(sf::seconds(1));
     if (m_resource_loader.is_done())
     {
       exec_menu();
@@ -52,6 +51,8 @@ void loading_view::exec()
 
     // Show the new state
     show();
+
+    sf::sleep(sf::seconds(0.1));
 
   }
 }

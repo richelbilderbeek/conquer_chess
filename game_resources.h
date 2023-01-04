@@ -11,22 +11,18 @@
 #include "fonts.h"
 #include "songs.h"
 
+#include <optional>
+
 /// The raw game resources,
-/// implemented as a Singleton.
-/// Use \link{get_game_resources} to get access to
-/// \link{game_resources} class.
 class game_resources
 {
 public:
 
-  /// A Singleton \todo{not yet}.
-  /// Only \link{create_game_resources} can construct
-  /// this class
   game_resources();
 
-  fonts& get_fonts() noexcept { return m_fonts; }
+  fonts& get_fonts() noexcept;
 
-  songs& get_songs() noexcept { return m_songs; }
+  songs& get_songs() noexcept;
 
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
@@ -43,32 +39,31 @@ public:
     const piece_type type
   );
 
-  auto& get_sound_effects() noexcept { return m_sound_effects; }
+  sound_effects& get_sound_effects() noexcept;
 
   /// Play a sound effect
   void play(
     const message& effect
   );
 
-  textures& get_textures() noexcept { return m_textures; }
+  textures& get_textures() noexcept;
 
 private:
 
-  fonts m_fonts;
-  songs m_songs;
-  sound_effects m_sound_effects;
-  textures m_textures;
+  /// Lazy loading
+  static std::optional<fonts> m_fonts;
 
-  /// Singleton
-  //friend game_resources& create_game_resources();
+  /// Cannot do lazy loading here
+  static songs m_songs;
+
+  /// Lazy loading
+  static std::optional<sound_effects> m_sound_effects;
+
+  /// Lazy loading
+  static std::optional<textures> m_textures;
 };
 
 sf::Texture& get_about(game_resources& r) noexcept;
-
-/// Get the one and only \link{game_resources}
-/// to work one.
-/// Singleton pattern
-//game_resources& create_game_resources();
 
 /// Get the Arial font
 sf::Font& get_arial_font(game_resources& r) noexcept;

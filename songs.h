@@ -15,7 +15,6 @@ public:
 
 private:
   sf::Music m_ninja_gods;
-
 };
 
 #endif // SONGS_H
