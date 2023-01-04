@@ -13,6 +13,7 @@ std::optional<textures> game_resources::m_textures = {};
 
 game_resources::game_resources()
 {
+
 }
 
 sf::Texture& get_black_square(game_resources& r) noexcept
@@ -36,6 +37,27 @@ fonts& game_resources::get_fonts() noexcept
   assert(m_fonts);
   return m_fonts.value();
 }
+
+int game_resources::get_n_fonts() noexcept
+{
+  return get_fonts().get_n_fonts();
+}
+
+int game_resources::get_n_songs() noexcept
+{
+  return get_songs().get_n_songs();
+}
+
+int game_resources::get_n_sound_effects() noexcept
+{
+  return get_sound_effects().get_n_sound_effects();
+}
+
+int game_resources::get_n_textures() noexcept
+{
+  return get_textures().get_n_textures();
+}
+
 
 sf::Texture& game_resources::get_piece(
   const chess_color color,

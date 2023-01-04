@@ -22,7 +22,13 @@ public:
 
   fonts& get_fonts() noexcept;
 
+  int get_n_fonts() noexcept;
+  int get_n_songs() noexcept;
+  int get_n_sound_effects() noexcept;
+  int get_n_textures() noexcept;
+
   songs& get_songs() noexcept;
+
 
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
@@ -40,6 +46,7 @@ public:
   );
 
   sound_effects& get_sound_effects() noexcept;
+
 
   /// Play a sound effect
   void play(

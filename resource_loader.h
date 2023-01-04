@@ -2,7 +2,8 @@
 #define RESOURCE_LOADER_H
 
 #include <string>
-#include "ccfwd.h"
+
+class game_resources;
 
 /// Loads resources
 class resource_loader
@@ -10,7 +11,7 @@ class resource_loader
 public:
   resource_loader();
 
-  int get_n_items() const noexcept { return 3; }
+  int get_n_items() const noexcept { return 4; }
 
   std::string get_current() const noexcept { return m_descriptor; }
 

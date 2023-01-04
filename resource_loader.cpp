@@ -32,19 +32,25 @@ void resource_loader::process_next(game_resources& resources)
       break;
     case 0:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_fonts().get_n_fonts())
+        + std::to_string(resources.get_n_fonts())
         + " fonts";
       break;
     case 1:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_songs().get_n_songs())
+        + std::to_string(resources.get_n_songs())
         + " songs";
       break;
-    default:
     case 2:
-      assert(m_index == 2);
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_textures().get_n_textures())
+        + std::to_string(resources.get_n_sound_effects())
+        + " sound effects";
+      break;
+
+    default:
+    case 3:
+      assert(m_index == 3);
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_textures())
         + " textures";
       break;
   }
