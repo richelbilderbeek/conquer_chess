@@ -50,6 +50,11 @@ screen_coordinat get_default_screen_size() noexcept
   return screen_coordinat(1024 + 400, 576 + 400);
 }
 
+screen_coordinat get_default_loading_screen_size() noexcept
+{
+  return screen_coordinat(1024 + 400, 576 + 400);
+}
+
 screen_coordinat get_default_lobby_screen_size() noexcept
 {
   return screen_coordinat(600, 900);

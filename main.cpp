@@ -21,6 +21,7 @@
 #include "helper.h"
 #include "id.h"
 #include "key_bindings.h"
+#include "loading_view.h"
 #include "lobby_options.h"
 #include "lobby_view_item.h"
 #include "lobby_view_layout.h"
@@ -120,7 +121,11 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   if (args.size() == 1)
   {
     #ifndef LOGIC_ONLY
-
+    {
+      loading_view v;
+      v.exec();
+      return 0;
+    }
     #define USE_TWO_KEYBOARDS
     #ifdef USE_TWO_KEYBOARDS
     menu_view v(

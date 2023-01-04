@@ -9,10 +9,17 @@
 #include "sound_effects.h"
 #include "message.h"
 
-/// The raw game resources
+/// The raw game resources,
+/// implemented as a Singleton.
+/// Use \link{get_game_resources} to get access to
+/// \link{game_resources} class.
 class game_resources
 {
 public:
+
+  /// A Singleton \todo{not yet}.
+  /// Only \link{create_game_resources} can construct
+  /// this class
   game_resources();
 
   /// Get a chess board square
@@ -53,6 +60,7 @@ public:
   textures& get_textures() noexcept { return m_textures; }
 
 private:
+
   sound_effects m_sound_effects;
   textures m_textures;
 
@@ -61,9 +69,17 @@ private:
   sf::Font m_futuristic_font;
 
   sf::Music m_ninja_gods;
+
+  /// Singleton
+  //friend game_resources& create_game_resources();
 };
 
 sf::Texture& get_about(game_resources& r) noexcept;
+
+/// Get the one and only \link{game_resources}
+/// to work one.
+/// Singleton pattern
+//game_resources& create_game_resources();
 
 /// Get the Arial font
 sf::Font& get_arial_font(game_resources& r) noexcept;

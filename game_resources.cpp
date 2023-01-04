@@ -4,6 +4,7 @@
 
 #include <QFile>
 #include <cassert>
+#include <optional>
 
 game_resources::game_resources()
 {

@@ -54,6 +54,16 @@ int get_height(const screen_rect& r) noexcept
   return r.get_br().get_y() - r.get_tl().get_y();
 }
 
+screen_rect get_lower_eighth(const screen_rect& r) noexcept
+{
+  return get_lower_half(get_lower_fourth(r));
+}
+
+screen_rect get_lower_fourth(const screen_rect& r) noexcept
+{
+  return get_lower_half(get_lower_half(r));
+}
+
 screen_rect get_lower_half(const screen_rect& r) noexcept
 {
   const screen_coordinat top_left(

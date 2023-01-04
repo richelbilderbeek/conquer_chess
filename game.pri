@@ -51,6 +51,7 @@ HEADERS += \
     $$PWD/race.h \
     $$PWD/replay.h \
     $$PWD/replayer.h \
+    $$PWD/resource_loader.h \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
@@ -116,6 +117,7 @@ SOURCES += \
     $$PWD/race.cpp \
     $$PWD/replay.cpp \
     $$PWD/replayer.cpp \
+    $$PWD/resource_loader.cpp \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \

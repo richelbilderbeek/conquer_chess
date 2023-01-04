@@ -33,6 +33,13 @@ screen_rect get_bottom_right_corner(const screen_rect& r) noexcept;
 
 int get_height(const screen_rect& r) noexcept;
 
+/// Get the lower eighth (i.e. 12.5% of the rect,
+/// half of the half of the lower half)
+screen_rect get_lower_eighth(const screen_rect& r) noexcept;
+
+/// Get the lower fourth (i.e. 25% of the rect, half of the lower half)
+screen_rect get_lower_fourth(const screen_rect& r) noexcept;
+
 /// Get the lower half (i.e. 50% of the rect)
 screen_rect get_lower_half(const screen_rect& r) noexcept;
 
