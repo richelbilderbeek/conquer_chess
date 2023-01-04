@@ -6,7 +6,7 @@
 
 # On GHA, this DEFINE is added in the .yaml script
 #
-DEFINES += LOGIC_ONLY
+#DEFINES += LOGIC_ONLY
 
 # All files are in here, the rest are just settings
 include(game.pri)
