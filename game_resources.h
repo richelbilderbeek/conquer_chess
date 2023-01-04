@@ -8,6 +8,7 @@
 #include "textures.h"
 #include "sound_effects.h"
 #include "message.h"
+#include "fonts.h"
 
 /// The raw game resources,
 /// implemented as a Singleton.
@@ -21,6 +22,8 @@ public:
   /// Only \link{create_game_resources} can construct
   /// this class
   game_resources();
+
+  fonts& get_fonts() noexcept { return m_fonts; }
 
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
@@ -37,16 +40,6 @@ public:
     const piece_type type
   );
 
-  /// Get an Arial font
-  sf::Font& get_arial_font() noexcept {return m_arial_font; }
-
-  /// Get the Code Squared font
-  sf::Font& get_code_squared_font() noexcept {return m_code_squared_font; }
-
-  /// Get the Futuristic Fixed-Width font
-  sf::Font& get_futuristic_font() noexcept {return m_futuristic_font; }
-
-
   sf::Music& get_ninja_gods() noexcept { return m_ninja_gods; }
 
   auto& get_sound_effects() noexcept { return m_sound_effects; }
@@ -61,12 +54,10 @@ public:
 
 private:
 
+  fonts m_fonts;
   sound_effects m_sound_effects;
   textures m_textures;
 
-  sf::Font m_arial_font;
-  sf::Font m_code_squared_font;
-  sf::Font m_futuristic_font;
 
   sf::Music m_ninja_gods;
 
