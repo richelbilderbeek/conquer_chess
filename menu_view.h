@@ -44,7 +44,7 @@ private:
   sf::RenderWindow m_window;
 
   /// The game options
-  game_options m_options;
+  game_options m_game_options;
 
   physical_controllers m_physical_controllers;
 
@@ -71,6 +71,9 @@ private:
 
   /// Run the game with a replay
   void exec_replay();
+
+  /// Run the dialog under 'Start'
+  void exec_start();
 
   /// Process all events
   /// @return if the user wants to quit

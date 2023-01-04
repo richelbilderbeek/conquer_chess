@@ -18,7 +18,7 @@ menu_view::menu_view(
   const game_options& options,
   const physical_controllers& controllers
 ) :
-    m_options{options},
+    m_game_options{options},
     m_physical_controllers{controllers},
     m_selected{menu_view_item::start}
 {
@@ -74,7 +74,7 @@ void menu_view::exec_game()
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
   game_view view{
-    game(m_options),
+    game(m_game_options),
     game_controller(m_physical_controllers)
   };
   view.exec();
@@ -86,7 +86,7 @@ void menu_view::exec_lobby()
 {
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
-  lobby_view view;
+  lobby_view view(m_game_options);
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
@@ -96,11 +96,11 @@ void menu_view::exec_options()
 {
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
-  options_view view(m_options);
+  options_view view(m_game_options);
   assert(!to_str(get_starting_position(view)).empty());
   view.exec();
   assert(!to_str(get_starting_position(view)).empty());
-  m_options = view.get_options();
+  m_game_options = view.get_options();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
 }
@@ -116,7 +116,7 @@ void menu_view::exec_replay()
 {
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
-  game_options options{m_options};
+  game_options options{m_game_options};
   options.set_game_speed(game_speed::slowest);
   options.set_replayer(
     replayer(
@@ -129,6 +129,11 @@ void menu_view::exec_replay()
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
+}
+
+void menu_view::exec_start()
+{
+  exec_lobby();
 }
 
 bool menu_view::process_events()
@@ -190,7 +195,7 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::Space)
       {
-        if (m_selected == menu_view_item::start) exec_game();
+        if (m_selected == menu_view_item::start) exec_start();
         else if (m_selected == menu_view_item::options) exec_options();
         else if (m_selected == menu_view_item::about) exec_about();
         else if (m_selected == menu_view_item::quit)
@@ -209,7 +214,7 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::S)
       {
-        exec_game();
+        exec_start();
       }
       else if (key_pressed == sf::Keyboard::Key::Q)
       {
@@ -236,7 +241,7 @@ bool menu_view::process_events()
       }
       else if (key_pressed == sf::Keyboard::Key::F4)
       {
-        exec_lobby();
+        exec_start();
       }
     }
     if (event.type == sf::Event::MouseMoved)
@@ -256,7 +261,7 @@ bool menu_view::process_events()
         const auto mouse_screen_pos{
           screen_coordinat(event.mouseButton.x, event.mouseButton.y)
         };
-        if (is_in(mouse_screen_pos, m_layout.get_start())) exec_game();
+        if (is_in(mouse_screen_pos, m_layout.get_start())) exec_start();
         else if (is_in(mouse_screen_pos, m_layout.get_options())) exec_options();
         else if (is_in(mouse_screen_pos, m_layout.get_about())) exec_about();
         else if (is_in(mouse_screen_pos, m_layout.get_quit()))

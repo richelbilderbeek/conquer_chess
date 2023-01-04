@@ -13,7 +13,7 @@
 class lobby_view
 {
 public:
-  lobby_view();
+  lobby_view(const game_options& go);
 
   /// Run the menu, until the user quits
   void exec();
@@ -26,7 +26,7 @@ public:
 
   const auto& get_layout() const noexcept { return m_layout; }
 
-  const auto& get_options() const noexcept { return m_options; }
+  const auto& get_options() const noexcept { return m_lobby_options; }
 
   auto& get_resources() noexcept { return m_resources; }
 
@@ -41,11 +41,14 @@ public:
 
 private:
 
+  /// The options set earlier
+  game_options m_game_options;
+
   /// The layout of this window
   lobby_view_layout m_layout;
 
   /// The options set in this lobby
-  lobby_options m_options;
+  lobby_options m_lobby_options;
 
   /// The physical controllers
   physical_controllers m_physical_controllers;

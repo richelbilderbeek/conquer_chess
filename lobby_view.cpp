@@ -13,8 +13,9 @@
 #include <cmath>
 #include <iostream>
 
-lobby_view::lobby_view()
-  : m_lhs_cursor{lobby_view_item::color},
+lobby_view::lobby_view(const game_options& go)
+  : m_game_options{go},
+    m_lhs_cursor{lobby_view_item::color},
     m_rhs_cursor{lobby_view_item::color},
     m_lhs_start{false},
     m_rhs_start{false}
@@ -56,14 +57,15 @@ void lobby_view::exec()
 
 void lobby_view::exec_game()
 {
- /*
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
-  game_view view{game(m_options)};
+  game_view view{
+    game(m_game_options),
+    game_controller(m_physical_controllers)
+  };
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
-  */
 }
 
 
@@ -122,16 +124,16 @@ bool lobby_view::process_events()
         switch (m_lhs_cursor)
         {
           case lobby_view_item::color:
-            m_options.set_color(
-              get_next(m_options.get_color(side::lhs)),
+            m_lobby_options.set_color(
+              get_next(m_lobby_options.get_color(side::lhs)),
               side::lhs
             );
             m_lhs_start = false;
             m_rhs_start = false;
             break;
           case lobby_view_item::race:
-            m_options.set_race(
-              get_next(m_options.get_race(side::lhs)),
+            m_lobby_options.set_race(
+              get_next(m_lobby_options.get_race(side::lhs)),
               side::lhs
             );
             m_lhs_start = false;
@@ -165,16 +167,16 @@ bool lobby_view::process_events()
         switch (m_rhs_cursor)
         {
           case lobby_view_item::color:
-            m_options.set_color(
-              get_next(m_options.get_color(side::rhs)),
+            m_lobby_options.set_color(
+              get_next(m_lobby_options.get_color(side::rhs)),
               side::rhs
             );
             m_lhs_start = false;
             m_rhs_start = false;
             break;
           case lobby_view_item::race:
-            m_options.set_race(
-              get_next(m_options.get_race(side::rhs)),
+            m_lobby_options.set_race(
+              get_next(m_lobby_options.get_race(side::rhs)),
               side::rhs
             );
             m_lhs_start = false;
