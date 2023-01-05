@@ -13,7 +13,7 @@ options_view_layout::options_view_layout(
   const int n_vertical_margins{4};
   const int n_vus_top{4}; // vus: vertical units
   const int n_vus_chessboard{2};
-  const int n_vus_controls{3};
+  const int n_vus_controls{2};
   const int n_vus{
     n_vus_top
     + n_vus_chessboard
@@ -29,7 +29,7 @@ options_view_layout::options_view_layout(
   };
   // Total panel width
   const int top_panel_width{
-    2 * panel_height
+    width - (2 * margin_size)
   };
   const int max_chess_board_height{
     height
@@ -55,10 +55,10 @@ options_view_layout::options_view_layout(
     (width - (2 * margin_size)) / 2
   };
   const int controller_height{
-    std::min(max_controller_height, max_controller_width)
+    max_controller_height
   };
   const int controller_width{
-    controller_height
+    max_controller_width
   };
   /*
   const int bottom_panel_height{
@@ -77,7 +77,7 @@ options_view_layout::options_view_layout(
   // Top panel
 
   const int x1{x_mid - (top_panel_width / 2)};
-  const int x3{x1 + panel_height};
+  const int x3{x_mid};
   const int x5{x_mid + (top_panel_width / 2)};
 
 

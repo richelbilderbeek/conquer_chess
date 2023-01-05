@@ -340,6 +340,15 @@ void show_bottom_header(options_view& v)
         options_view_item::left_controls
       )
     );
+    // Zoom in
+    rectangle.setTextureRect(
+      sf::IntRect(
+        0,
+        rectangle.getTexture()->getSize().y / 4,
+        rectangle.getTexture()->getSize().x,
+        rectangle.getTexture()->getSize().y / 2
+      )
+    );
     v.get_window().draw(rectangle);
 
     sf::Text text;
@@ -374,6 +383,15 @@ void show_bottom_row(options_view& v, const side player_side)
     rectangle.setTexture(
       &v.get_resources().get_textures().get_controller_type(t)
     );
+    // Zoom in
+    rectangle.setTextureRect(
+      sf::IntRect(
+        0,
+        rectangle.getTexture()->getSize().y / 4,
+        rectangle.getTexture()->getSize().x,
+        rectangle.getTexture()->getSize().y / 2
+      )
+    );
     v.get_window().draw(rectangle);
 
     // Text
@@ -405,13 +423,25 @@ void show_game_speed(options_view& v)
         options_view_item::game_speed
       )
     );
+    // Zoom in
+    rectangle.setTextureRect(
+      sf::IntRect(
+        0,
+        rectangle.getTexture()->getSize().y / 4,
+        rectangle.getTexture()->getSize().x,
+        rectangle.getTexture()->getSize().y / 2
+      )
+    );
     v.get_window().draw(rectangle);
 
     sf::Text text;
     v.set_text_style(text);
-    text.setCharacterSize(24);
     text.setString("Game speed");
     set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+
+    text.setCharacterSize(text.getCharacterSize() - 2);
+    text.setFillColor(sf::Color::White);
     v.get_window().draw(text);
   }
   // game speed value
@@ -459,12 +489,25 @@ void show_starting_position(options_view& v)
       )
     );
     set_rect(rectangle, screen_rect);
+    // Zoom in
+    rectangle.setTextureRect(
+      sf::IntRect(
+        0,
+        rectangle.getTexture()->getSize().y / 4,
+        rectangle.getTexture()->getSize().x,
+        rectangle.getTexture()->getSize().y / 2
+      )
+    );
     v.get_window().draw(rectangle);
 
     sf::Text text;
     v.set_text_style(text);
     text.setString("Starting position");
     set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+
+    text.setCharacterSize(text.getCharacterSize() - 2);
+    text.setFillColor(sf::Color::White);
     v.get_window().draw(text);
   }
   // starting pos value
@@ -524,12 +567,25 @@ void show_music_volume(options_view& v)
       )
     );
     set_rect(rectangle, screen_rect);
+    // Zoom in
+    rectangle.setTextureRect(
+      sf::IntRect(
+        0,
+        rectangle.getTexture()->getSize().y / 4,
+        rectangle.getTexture()->getSize().x,
+        rectangle.getTexture()->getSize().y / 2
+      )
+    );
     v.get_window().draw(rectangle);
 
     sf::Text text;
     v.set_text_style(text);
     text.setString("Music volume");
     set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+
+    text.setCharacterSize(text.getCharacterSize() - 2);
+    text.setFillColor(sf::Color::White);
     v.get_window().draw(text);
   }
   // music volume value
@@ -583,6 +639,15 @@ void show_sound_effects_volume(options_view& v)
         options_view_item::sound_effects_volume
       )
     );
+    // Zoom in
+    rectangle.setTextureRect(
+      sf::IntRect(
+        0,
+        rectangle.getTexture()->getSize().y / 4,
+        rectangle.getTexture()->getSize().x,
+        rectangle.getTexture()->getSize().y / 2
+      )
+    );
     set_rect(rectangle, screen_rect);
     v.get_window().draw(rectangle);
 
@@ -590,6 +655,10 @@ void show_sound_effects_volume(options_view& v)
     v.set_text_style(text);
     text.setString("Sound effects volume");
     set_text_position(text, screen_rect);
+    v.get_window().draw(text);
+
+    text.setCharacterSize(text.getCharacterSize() - 2);
+    text.setFillColor(sf::Color::White);
     v.get_window().draw(text);
   }
   // sound effects volume value
