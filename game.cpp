@@ -18,11 +18,14 @@
 #include <sstream>
 
 game::game(
-  const game_options& options
+  const game_options& go,
+  const lobby_options& lo
+
 )
-  : m_options{options},
-    m_pieces{get_starting_pieces(options)},
-    m_replayer{options.get_replayer()},
+  : m_game_options{go},
+    m_lobby_options{lo},
+    m_pieces{get_starting_pieces(go)},
+    m_replayer{go.get_replayer()},
     m_t{0.0}
 {
 
@@ -281,7 +284,7 @@ bool can_player_select_piece_at_cursor_pos(
     !is_piece_at(
       g,
       cursor_pos,
-      g.get_options().get_click_distance()
+      g.get_game_options().get_click_distance()
     )
   )
   {
@@ -1073,7 +1076,7 @@ game create_randomly_played_game(
 
 bool do_show_selected(const game& g) noexcept
 {
-  return do_show_selected(g.get_options());
+  return do_show_selected(g.get_game_options());
 }
 
 void do_promote_keyboard_player_piece(
@@ -1361,7 +1364,7 @@ chess_color get_mouse_user_player_color(
 
 double get_music_volume_as_percentage(const game& g) noexcept
 {
-  return get_music_volume_as_percentage(g.get_options());
+  return get_music_volume_as_percentage(g.get_game_options());
 }
 
 std::vector<square> get_occupied_squares(const game& g) noexcept
@@ -1371,7 +1374,7 @@ std::vector<square> get_occupied_squares(const game& g) noexcept
 
 const game_options& get_options(const game& g)
 {
-  return g.get_options();
+  return g.get_game_options();
 }
 
 std::vector<piece>& get_pieces(game& g) noexcept
@@ -1425,7 +1428,7 @@ chess_color get_player_color(
   const side player_side
 ) noexcept
 {
-  return get_player_color(g.get_options(), player_side);
+  return get_player_color(g.get_game_options(), player_side);
 }
 
 side get_player_side(const game& g, const chess_color& color) noexcept
@@ -1661,7 +1664,7 @@ void tick_until_idle(game& g)
 
 void toggle_left_player_color(game& g)
 {
-  toggle_left_player_color(g.get_options());
+  toggle_left_player_color(g.get_game_options());
 }
 
 std::string to_pgn(const game& g)
@@ -1675,7 +1678,7 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
     //<< "Layout: " << g.get_layout() << '\n'
-    << "Options: " << g.get_options() << '\n'
+    << "Options: " << g.get_game_options() << '\n'
     << "Replayer: " << g.get_replayer()
   ;
   return os;

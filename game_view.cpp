@@ -30,14 +30,14 @@ game_view::game_view(
   :
     m_game{game},
     m_game_controller{c},
-    m_log{game.get_options().get_message_display_time_secs()}
+    m_log{game.get_game_options().get_message_display_time_secs()}
 {
   m_game_resources.get_songs().get_ninja_gods().setVolume(
     get_music_volume_as_percentage(m_game)
   );
   m_game_resources.get_songs().get_ninja_gods().play();
   m_game_resources.get_sound_effects().set_master_volume(
-    m_game.get_options().get_sound_effects_volume()
+    m_game.get_game_options().get_sound_effects_volume()
   );
 }
 
@@ -81,7 +81,7 @@ void game_view::exec()
     // Do a tick, so that one delta_t equals one second under normal game speed
     m_game.tick(
       delta_t(1.0 / m_fps_clock.get_fps())
-      * to_delta_t(m_game.get_options().get_game_speed())
+      * to_delta_t(m_game.get_game_options().get_game_speed())
     );
 
     // Read the pieces' messages and play their sounds
@@ -751,7 +751,7 @@ void show_square_under_cursor(
   const auto old_fill_color = s.getFillColor();
   const auto old_outline_color = s.getOutlineColor();
   const auto old_thickness = s.getOutlineThickness();
-  const auto player_color{get_player_color(g.get_options(), player)};
+  const auto player_color{get_player_color(g.get_game_options(), player)};
   s.setOutlineColor(to_sfml_color(player_color));
   s.setFillColor(sf::Color::Transparent);
   const bool valid{would_be_valid(view, player_color)};

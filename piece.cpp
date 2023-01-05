@@ -1052,7 +1052,7 @@ void tick_attack(
     return;
   }
   assert(p.get_color() != target.get_color());
-  const auto damage{g.get_options().get_damage_per_chess_move() * dt.get()};
+  const auto damage{g.get_game_options().get_damage_per_chess_move() * dt.get()};
   target.receive_damage(damage);
   // Capture the piece if destroyed
   if (is_dead(target))

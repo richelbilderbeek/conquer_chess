@@ -10,6 +10,7 @@
 #include "pieces.h"
 #include "message.h"
 #include "replayer.h"
+#include "lobby_options.h"
 
 #include <iosfwd>
 #include <optional>
@@ -26,14 +27,15 @@ class game
 {
 public:
   explicit game(
-    const game_options& options = create_default_game_options()
+    const game_options& go = create_default_game_options(),
+    const lobby_options& lo = lobby_options()
   );
 
   /// Get the game options
-  auto& get_options() noexcept { return m_options; }
+  auto& get_game_options() noexcept { return m_game_options; }
 
   /// Get the game options
-  const auto& get_options() const noexcept { return m_options; }
+  const auto& get_game_options() const noexcept { return m_game_options; }
 
   /// Get all the pieces
   auto& get_pieces() noexcept { return m_pieces; }
@@ -53,7 +55,10 @@ public:
 private:
 
   /// The game options
-  game_options m_options;
+  game_options m_game_options;
+
+  /// The game options
+  lobby_options m_lobby_options;
 
   /// All pieces in the game
   std::vector<piece> m_pieces;

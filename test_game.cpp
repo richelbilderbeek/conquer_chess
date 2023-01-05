@@ -29,18 +29,18 @@ void test_game_class()
     assert(get_width(g.get_layout().get_board()) > 0);
   }
   */
-  // game::get_options, const
+  // game::get_game_options, const
   {
     const auto g{get_default_game()};
-    assert(g.get_options().get_left_player_color() == chess_color::white);
+    assert(g.get_game_options().get_left_player_color() == chess_color::white);
   }
   // game::get_options, non-const
   {
     auto g{get_kings_only_game()};
-    auto& options = g.get_options();
-    assert(g.get_options().get_left_player_color() == chess_color::white);
+    auto& options = g.get_game_options();
+    assert(g.get_game_options().get_left_player_color() == chess_color::white);
     toggle_left_player_color(options);
-    assert(g.get_options().get_left_player_color() == chess_color::black);
+    assert(g.get_game_options().get_left_player_color() == chess_color::black);
   }
   // game::get_time
   {
@@ -983,7 +983,7 @@ void test_game_functions()
   // get_options
   {
     const game g;
-    assert(get_options(g) == g.get_options());
+    assert(get_options(g) == g.get_game_options());
   }
   // get_piece_at, const
   {
@@ -1091,9 +1091,9 @@ void test_game_functions()
   // toggle_left_player_color
   {
     game g;
-    const auto color_before{get_left_player_color(g.get_options())};
+    const auto color_before{get_left_player_color(g.get_game_options())};
     toggle_left_player_color(g);
-    const auto color_after{get_left_player_color(g.get_options())};
+    const auto color_after{get_left_player_color(g.get_game_options())};
     assert(color_after != color_before);
   }
   // operator<<
