@@ -16,7 +16,10 @@ class sound_effects
 public:
   sound_effects();
 
-  int get_n_sound_effects() const noexcept { return sizeof(*this) / sizeof(m_attacking_high); };
+  int get_n_sound_effects() const noexcept {
+    return sizeof(*this)
+    / (sizeof(m_attacking_high) + sizeof(m_attacking_high_buffer));
+  }
 
   /// Play a sound effect
   void play(const message& effect);
