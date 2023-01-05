@@ -42,22 +42,16 @@ public:
   /// Get the game speed
   auto get_game_speed() const noexcept { return m_game_speed; }
 
+  /*
   /// Color of the left player
   auto get_left_player_color() const noexcept { return m_left_player_color; }
+  */
 
   /// Get the width of the margin in pixels
   auto get_margin_width() const noexcept { return m_margin_width; }
 
   /// How long log messages are displayed
   double get_message_display_time_secs() const noexcept { return 5.0; }
-
-  /*
-  /// Get the physical controllers
-  const auto& get_physical_controllers() const noexcept { return m_physical_controllers; }
-
-  /// Get the physical controller of a player at a certain side
-  const physical_controller& get_physical_controller(const side& player) const;
-  */
 
   /// Get the replay of a match
   const auto& get_replayer() const noexcept { return m_replayer; }
@@ -74,16 +68,13 @@ public:
   /// Get the sound effects volume
   const volume& get_sound_effects_volume() const noexcept { return m_sound_effects_volume; }
 
-  /*
-  /// Set the controller for a player
-  void set_controller(const physical_controller& c, const side player);
-  */
-
   /// Set the game speed
   void set_game_speed(const game_speed speed) noexcept { m_game_speed = speed; }
 
+  /*
   /// Set the color of the player
   void set_left_player_color(const chess_color c) noexcept;
+  */
 
   /// Set the replayer
   void set_replayer(const replayer& r) noexcept { m_replayer = r; }
@@ -106,8 +97,10 @@ private:
   /// The game speed
   game_speed m_game_speed;
 
+  /*
   /// Color of the left player
   chess_color m_left_player_color;
+  */
 
   /// The width of the margin in pixels
   int m_margin_width;
@@ -132,53 +125,12 @@ private:
 /// Create the default game options
 game_options create_default_game_options() noexcept;
 
-/*
-/// Create the default game options, yet for different controllers
-game_options create_default_game_options_with_controllers(
-  const physical_controllers& controllers
-);
-*/
-
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& options) noexcept;
 
 /*
-/// Get the controller for a certain side
-const physical_controller& get_physical_controller(const game_options& options, const side player);
-
-/// Get the controller for a certain side
-physical_controller_type get_physical_controller_type(const game_options& options, const side player);
-
-/// Get the physical controllers
-const physical_controllers& get_physical_controllers(const game_options& options);
-
-/// Get the color of the keyboard using player
-/// Will throw if no user uses a keyboard
-chess_color get_keyboard_user_player_color(const game_options& options);
-
-/// Get the side of the controller that uses the keyboard.
-/// Assumes there is one controller that uses the keyboard
-side get_keyboard_user_player_side(const game_options& options);
-
-/// Get the key for a action 1, 2, 3 or 4 for a player
-sf::Keyboard::Key get_key_for_action(const game_options& options, const side player, const action_number& action);
-*/
-
 /// Get the color of the left player
 chess_color get_left_player_color(const game_options& options) noexcept;
-
-/*
-/// Get the controller of the left player
-physical_controller_type get_left_player_controller(const game_options& options) noexcept;
-
-/// Get the color of the mouse using player
-/// Will throw if no user uses a mouse
-chess_color get_mouse_user_player_color(const game_options& options);
-
-
-/// Get the side of the controller that uses the mouse.
-/// Assumes there is one controller that uses the mouse
-side get_mouse_user_player_side(const game_options& options);
 */
 
 /// Get the music volume
@@ -187,27 +139,17 @@ const volume& get_music_volume(const game_options& options) noexcept;
 /// Get the music volume as a percentage
 double get_music_volume_as_percentage(const game_options& options) noexcept;
 
+/*
 /// Get the color of a player
 chess_color get_player_color(
   const game_options& options,
   const side player
 ) noexcept;
 
-/*
-/// Get the controller of a player
-physical_controller_type get_player_controller(
-  const game_options& options,
-  const side player
-) noexcept;
-*/
-
 /// Get the color of the right player
 chess_color get_right_player_color(const game_options& options) noexcept;
-
-/*
-/// Get the controller of the right player
-physical_controller_type get_right_player_controller(const game_options& options) noexcept;
 */
+
 /// Get the sound effects volume
 const volume& get_sound_effects_volume(const game_options& options) noexcept;
 
@@ -219,19 +161,13 @@ std::vector<piece> get_starting_pieces(
 /// Get the starting position
 starting_position_type get_starting_position(const game_options& options) noexcept;
 
-/*
-/// Determine if there is at least one controller that use the keyboard
-bool has_keyboard_controller(const game_options& options) noexcept;
-
-/// Is there at least one controller with the mouse?
-bool has_mouse_controller(const game_options& options) noexcept;
-*/
-
 /// Test this class and its free functions
 void test_game_options();
 
+/*
 /// Toggle the color of the active player
 void toggle_left_player_color(game_options& options);
+*/
 
 bool operator==(const game_options& lhs, const game_options& rhs) noexcept;
 

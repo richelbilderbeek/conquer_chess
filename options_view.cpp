@@ -44,7 +44,8 @@ void options_view::decrease_selected()
     break;
     case options_view_item::left_color:
     case options_view_item::right_color:
-      m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
+      // m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
+      std::clog << "TODO: remove\n";
     break;
     case options_view_item::left_controls:
     {
@@ -94,7 +95,8 @@ void options_view::increase_selected()
     break;
     case options_view_item::left_color:
     case options_view_item::right_color:
-      m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
+      //m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
+      std::clog << "TODO: remove\n";
     break;
     case options_view_item::left_controls:
     {
@@ -397,9 +399,11 @@ void show_bottom_left(options_view& v)
   {
     draw_panel(v, layout.get_left_label(), "Left", chess_color::black);
   }
+  /*
   {
     draw_panel(v, layout.get_left_color_value(), to_str(get_left_player_color(v.get_options())), chess_color::white);
   }
+  */
   {
     draw_panel(
       v,
@@ -428,6 +432,7 @@ void show_bottom_right(options_view& v)
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
+  /*
   // color
   {
     draw_panel(
@@ -437,6 +442,7 @@ void show_bottom_right(options_view& v)
       chess_color::black
     );
   }
+  */
   // controller
   {
     draw_panel(

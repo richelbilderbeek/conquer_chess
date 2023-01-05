@@ -37,6 +37,9 @@ public:
   /// Get the game options
   const auto& get_game_options() const noexcept { return m_game_options; }
 
+  /// Get the game options
+  const auto& get_lobby_options() const noexcept { return m_lobby_options; }
+
   /// Get all the pieces
   auto& get_pieces() noexcept { return m_pieces; }
 
@@ -630,8 +633,10 @@ bool piece_with_id_is_at(
 /// Call game::tick until all pieces are idle
 void tick_until_idle(game& g);
 
+/*
 /// Toggle the color of the active player
 void toggle_left_player_color(game& g);
+*/
 
 /// Convert the played game to pseudo-PGN notation
 /// Returns one string with newlines

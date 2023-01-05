@@ -32,15 +32,14 @@ void test_game_class()
   // game::get_game_options, const
   {
     const auto g{get_default_game()};
-    assert(g.get_game_options().get_left_player_color() == chess_color::white);
+    assert(g.get_game_options().get_margin_width() >= 0);
   }
   // game::get_options, non-const
   {
     auto g{get_kings_only_game()};
     auto& options = g.get_game_options();
-    assert(g.get_game_options().get_left_player_color() == chess_color::white);
-    toggle_left_player_color(options);
-    assert(g.get_game_options().get_left_player_color() == chess_color::black);
+    options.set_starting_position(starting_position_type::before_en_passant);
+    assert(options.get_starting_position() == starting_position_type::before_en_passant);
   }
   // game::get_time
   {
@@ -997,27 +996,22 @@ void test_game_functions()
     assert(piece.get_type() == piece_type::king);
     piece.set_selected(true); // Just needs to compile
   }
-  // get_player_color
-  {
-    const game g;
-    assert(get_player_color(g, side::lhs) == chess_color::white);
-    assert(get_player_color(g, side::rhs) == chess_color::black);
-    game_options options{create_default_game_options()};
-    options.set_left_player_color(chess_color::black);
-    const game h(options);
-    assert(get_player_color(h, side::lhs) == chess_color::black);
-    assert(get_player_color(h, side::rhs) == chess_color::white);
-  }
   // get_player_side
   {
-    const game g;
-    assert(get_player_side(g, chess_color::white) == side::lhs);
-    assert(get_player_side(g, chess_color::black) == side::rhs);
-    game_options options{create_default_game_options()};
-    options.set_left_player_color(chess_color::black);
-    const game h(options);
-    assert(get_player_side(h, chess_color::white) == side::rhs);
-    assert(get_player_side(h, chess_color::black) == side::lhs);
+    const game_options go{create_default_game_options()};
+    lobby_options lo;
+    // default
+    {
+      const game g(go, lo);
+      assert(get_player_side(g, chess_color::white) == side::lhs);
+      assert(get_player_side(g, chess_color::black) == side::rhs);
+    }
+    lo.set_color(chess_color::black, side::lhs);
+    {
+      const game g(go, lo);
+      assert(get_player_side(g, chess_color::white) == side::rhs);
+      assert(get_player_side(g, chess_color::black) == side::lhs);
+    }
   }
   // get_possible_moves
   {
@@ -1088,6 +1082,7 @@ void test_game_functions()
     const auto pos_after{get_cursor_pos(c, side::rhs)};
     assert(pos_before != pos_after);
   }
+  /*
   // toggle_left_player_color
   {
     game g;
@@ -1096,6 +1091,7 @@ void test_game_functions()
     const auto color_after{get_left_player_color(g.get_game_options())};
     assert(color_after != color_before);
   }
+  */
   // operator<<
   {
     game g;

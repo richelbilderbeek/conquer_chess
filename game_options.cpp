@@ -15,7 +15,7 @@ game_options::game_options(
   const int margin_width
 ) : m_click_distance{0.5},
     m_game_speed{speed},
-    m_left_player_color{chess_color::white},
+    //m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
     m_replayer(replay("")),
     m_screen_size{screen_size},
@@ -39,93 +39,15 @@ game_options create_default_game_options() noexcept
   );
 }
 
-/*
-game_options create_default_game_options_with_controllers(
-  const physical_controllers& controllers
-)
-{
-  return game_options(
-    get_default_screen_size(),
-    controllers,
-    get_default_starting_position(),
-    get_default_game_speed(),
-    get_default_margin_width()
-  );
-}
-*/
-
 bool do_show_selected(const game_options& options) noexcept
 {
   return options.do_show_selected();
 }
 
 /*
-const physical_controller& game_options::get_physical_controller(const side& player) const
-{
-  return m_physical_controllers.get_controller(player);
-}
-
-const physical_controller& get_physical_controller(const game_options& options, const side player)
-{
-  return options.get_physical_controller(player);
-}
-
-physical_controller_type get_physical_controller_type(const game_options& options, const side player)
-{
-  return options.get_physical_controller(player).get_type();
-}
-
-const physical_controllers& get_physical_controllers(const game_options& options)
-{
-  return options.get_physical_controllers();
-}
-
-chess_color get_keyboard_user_player_color(const game_options& options)
-{
-  return get_player_color(
-    options,
-    get_keyboard_user_player_side(options.get_physical_controllers())
-  );
-}
-
-side get_keyboard_user_player_side(const game_options& options)
-{
-  return get_keyboard_user_player_side(options.get_physical_controllers());
-}
-
-sf::Keyboard::Key get_key_for_action(
-  const game_options& options,
-  const side player,
-  const action_number& action
-)
-{
-  return get_key_for_action(options.get_physical_controller(player), action);
-}
-*/
-
 chess_color get_left_player_color(const game_options& options) noexcept
 {
   return options.get_left_player_color();
-}
-
-/*
-physical_controller_type get_left_player_controller(const game_options& options) noexcept
-{
-  return get_physical_controller(options, side::lhs).get_type();
-}
-
-chess_color get_mouse_user_player_color(const game_options& options)
-{
-  assert(has_mouse_controller(options));
-  return get_player_color(
-    options,
-    get_mouse_user_player_side(options.get_physical_controllers())
-  );
-}
-
-side get_mouse_user_player_side(const game_options& options)
-{
-  return get_mouse_user_player_side(options.get_physical_controllers());
 }
 */
 
@@ -139,6 +61,7 @@ double get_music_volume_as_percentage(const game_options& options) noexcept
   return get_music_volume(options).get_percentage();
 }
 
+/*
 chess_color get_player_color(
   const game_options& options,
   const side player
@@ -149,44 +72,16 @@ chess_color get_player_color(
   return get_right_player_color(options);
 }
 
-/*
-physical_controller_type get_player_controller(
-  const game_options& options,
-  const side player
-) noexcept
-{
-  if (player == side::lhs) return get_left_player_controller(options);
-  assert(player == side::rhs);
-  return get_right_player_controller(options);
-}
-*/
-
 chess_color get_right_player_color(const game_options& options) noexcept
 {
   return get_other_color(options.get_left_player_color());
 }
 
-/*
-physical_controller_type get_right_player_controller(const game_options& options) noexcept
-{
-  return get_physical_controller(options, side::rhs).get_type();
-}
-
-bool has_keyboard_controller(const game_options& options) noexcept
-{
-  return has_keyboard_controller(options.get_physical_controllers());
-}
-
-bool has_mouse_controller(const game_options& options) noexcept
-{
-  return has_mouse_controller(options.get_physical_controllers());
-}
-*/
-
 void game_options::set_left_player_color(const chess_color c) noexcept
 {
   m_left_player_color = c;
 }
+*/
 
 const volume& get_sound_effects_volume(const game_options& options) noexcept
 {
@@ -207,13 +102,6 @@ starting_position_type get_starting_position(const game_options& options) noexce
   return options.get_starting_position();
 }
 
-/*
-void game_options::set_controller(const physical_controller& c, const side player_side)
-{
-  m_physical_controllers.set(player_side, c);
-}
-*/
-
 void test_game_options()
 {
 #ifndef NDEBUG
@@ -222,15 +110,6 @@ void test_game_options()
     const auto options{create_default_game_options()};
     assert(options.get_starting_position() == get_starting_position(options));
   }
-  /*
-  // game_options::get_controller
-  {
-    const auto options{create_default_game_options()};
-    const auto left_controller{options.get_physical_controller(side::lhs)};
-    const auto right_controller{options.get_physical_controller(side::rhs)};
-    assert(left_controller != right_controller);
-  }
-  */
   // game_options::get_music_volume
   {
     const auto options{create_default_game_options()};
@@ -251,72 +130,12 @@ void test_game_options()
     const auto options{create_default_game_options()};
     assert(options.get_starting_position() == get_starting_position(options));
   }
-  /*
-  // game_options::get_sontroller
-  {
-    auto options{create_default_game_options()};
-    options.set_controller(create_right_keyboard_controller(), side::lhs);
-    options.set_controller(create_left_keyboard_controller(), side::rhs);
-  }
-  */
   // game_options::set_music_volume
   {
     auto options{create_default_game_options()};
     const volume v(31);
     options.set_volume(v);
     assert(options.get_music_volume() == v);
-  }
-  // create_default_game_options
-  {
-    const auto options{create_default_game_options()};
-    assert(get_left_player_color(options) == chess_color::white);
-    assert(get_right_player_color(options) == chess_color::black);
-    /*
-    assert(get_left_player_controller(options) == physical_controller_type::keyboard);
-    assert(get_right_player_controller(options) == physical_controller_type::mouse);
-    assert(get_keyboard_user_player_color(options) == chess_color::white);
-    assert(get_mouse_user_player_color(options) == chess_color::black);
-    */
-    assert(options.do_show_selected() || !options.do_show_selected());
-    assert(options.get_click_distance() > 0.0);
-    /*
-    assert(get_player_controller(options, side::lhs) == physical_controller_type::keyboard);
-    assert(get_player_controller(options, side::rhs) == physical_controller_type::mouse);
-    */
-    assert(get_player_color(options, side::lhs) == chess_color::white);
-    assert(get_player_color(options, side::rhs) == chess_color::black);
-  }
-  /*
-  // create_default_game_options_with_controllers
-  {
-    const auto controllers{create_two_keyboard_controllers()};
-    const auto options{create_default_game_options_with_controllers(controllers)};
-    assert(options.get_physical_controllers() == controllers);
-  }
-  */
-  // game_options with left/keyboard player being black
-  {
-    auto options{create_default_game_options()};
-    options.set_left_player_color(chess_color::black);
-    assert(get_left_player_color(options) == chess_color::black);
-    assert(get_right_player_color(options) == chess_color::white);
-    /*
-    assert(get_keyboard_user_player_color(options) == chess_color::black);
-    assert(get_mouse_user_player_color(options) == chess_color::white);
-    */
-    assert(get_player_color(options, side::lhs) == chess_color::black);
-    assert(get_player_color(options, side::rhs) == chess_color::white);
-  }
-  // game_options with left player being black and using mouse
-  {
-    auto options{create_default_game_options()};
-    options.set_left_player_color(chess_color::black);
-    assert(get_left_player_color(options) == chess_color::black);
-    assert(get_right_player_color(options) == chess_color::white);
-    /*
-    assert(get_keyboard_user_player_color(options) == chess_color::black);
-    assert(get_mouse_user_player_color(options) == chess_color::white);
-    */
   }
   // 40: operator<<
   {
@@ -328,22 +147,23 @@ void test_game_options()
 #endif // NDEBUG
 }
 
+/*
 void toggle_left_player_color(game_options& options)
 {
   options.set_left_player_color(
     get_other_color(options.get_left_player_color())
   );
 }
+*/
 
 bool operator==(const game_options& lhs, const game_options& rhs) noexcept
 {
   return lhs.do_show_occupied() == rhs.do_show_occupied()
     && lhs.do_show_selected() == rhs.do_show_selected()
     && lhs.get_click_distance() == rhs.get_click_distance()
-    //&& lhs.get_physical_controllers() == rhs.get_physical_controllers()
     && lhs.get_damage_per_chess_move() == rhs.get_damage_per_chess_move()
     && lhs.get_game_speed() == rhs.get_game_speed()
-    && lhs.get_left_player_color() == rhs.get_left_player_color()
+    // && lhs.get_left_player_color() == rhs.get_left_player_color()
     && lhs.get_margin_width() == rhs.get_margin_width()
     && lhs.get_message_display_time_secs() == rhs.get_message_display_time_secs()
     && lhs.get_replayer() == rhs.get_replayer()
@@ -362,7 +182,7 @@ std::ostream& operator<<(std::ostream& os, const game_options& options) noexcept
     //<< "RHS controller: " << options.get_physical_controller(side::rhs) << '\n'
     << "damage per chess move: " << options.get_damage_per_chess_move() << '\n'
     << "game speed: " << options.get_game_speed() << '\n'
-    << "LHS color: " << options.get_left_player_color() << '\n'
+    //<< "LHS color: " << options.get_left_player_color() << '\n'
     << "Margin width: " << options.get_margin_width() << '\n'
     << "Message display time (sec): " << options.get_message_display_time_secs() << '\n'
     << "Replayer: " << options.get_replayer() << '\n'

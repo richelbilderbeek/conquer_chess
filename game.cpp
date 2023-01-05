@@ -1428,7 +1428,7 @@ chess_color get_player_color(
   const side player_side
 ) noexcept
 {
-  return get_player_color(g.get_game_options(), player_side);
+  return get_color(g.get_lobby_options(), player_side);
 }
 
 side get_player_side(const game& g, const chess_color& color) noexcept
@@ -1662,10 +1662,12 @@ void tick_until_idle(game& g)
   }
 }
 
+/*
 void toggle_left_player_color(game& g)
 {
   toggle_left_player_color(g.get_game_options());
 }
+*/
 
 std::string to_pgn(const game& g)
 {

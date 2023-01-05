@@ -20,6 +20,11 @@ chess_color lobby_options::get_color(const side player_side) const noexcept
   return get_other_color(m_lhs_color);
 }
 
+chess_color get_color(const lobby_options& options, const side player_side) noexcept
+{
+  return options.get_color(player_side);
+}
+
 race lobby_options::get_race(const side player_side) const noexcept
 {
   if (player_side == side::lhs)
@@ -98,6 +103,12 @@ void test_lobby_options()
     options.set_color(chess_color::black, side::rhs);
     assert(options.get_color(side::lhs) == chess_color::white);
     assert(options.get_color(side::rhs) == chess_color::black);
+  }
+  // ::get_color
+  {
+    const lobby_options options;
+    assert(get_color(options, side::lhs) == chess_color::white);
+    assert(get_color(options, side::rhs) == chess_color::black);
   }
   #endif
 }

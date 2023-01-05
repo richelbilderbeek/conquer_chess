@@ -751,7 +751,7 @@ void show_square_under_cursor(
   const auto old_fill_color = s.getFillColor();
   const auto old_outline_color = s.getOutlineColor();
   const auto old_thickness = s.getOutlineThickness();
-  const auto player_color{get_player_color(g.get_game_options(), player)};
+  const auto player_color{get_color(g.get_lobby_options(), player)};
   s.setOutlineColor(to_sfml_color(player_color));
   s.setFillColor(sf::Color::Transparent);
   const bool valid{would_be_valid(view, player_color)};
@@ -999,10 +999,12 @@ void test_game_view() //!OCLINT tests may be many
   #endif //NDEBUG
 }
 
+/*
 void toggle_left_player_color(game_view& view)
 {
   toggle_left_player_color(view.get_game());
 }
+*/
 
 bool would_be_valid(
   const game_view& view,
