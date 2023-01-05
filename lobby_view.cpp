@@ -202,6 +202,15 @@ bool lobby_view::process_events()
       }
     }
   }
+  if (m_lhs_start && m_rhs_start && !m_clock.has_value())
+  {
+    m_clock = sf::Clock();
+  }
+  else if (!(m_lhs_start && m_rhs_start) && m_clock.has_value())
+  {
+    m_clock = {};
+  }
+
   return false; // Do not close the lobby :-)
 }
 
@@ -229,6 +238,17 @@ void lobby_view::show()
   show_start_panel(*this, side::rhs);
   show_selected_panel(*this, side::lhs);
   show_selected_panel(*this, side::rhs);
+  if (m_clock)
+  {
+    const int countdown_secs{5};
+    const int n_left{
+      countdown_secs
+      - static_cast<int>(
+        m_clock.value().getElapsedTime().asSeconds()
+      )
+    };
+    show_countdown(*this, n_left);
+  }
 
   // Display all shapes
   m_window.display();
@@ -264,6 +284,29 @@ void show_color_panel(lobby_view& v, const side player_side)
   set_text_position(text, text_rect);
   text.setFillColor(sf::Color::White);
   v.get_window().draw(text);
+}
+
+void show_countdown(lobby_view& v, const int n_left_secs)
+{
+  // Text
+  const screen_rect window_rect{
+    screen_coordinat(0, 0),
+    v.get_layout().get_window_size()
+  };
+  sf::Text text;
+  std::string s{std::to_string(n_left_secs)};
+  text.setString(s);
+  v.set_text_style(text);
+  text.setCharacterSize(512);
+  set_text_position(text, window_rect);
+  v.get_window().draw(text);
+
+  // Smaller
+  text.setCharacterSize(512 - 2);
+  set_text_position(text, window_rect);
+  text.setFillColor(sf::Color::White);
+  v.get_window().draw(text);
+
 }
 
 void show_race_panel(lobby_view& v, const side player_side)
