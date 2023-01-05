@@ -15,13 +15,12 @@ game_options::game_options(
   const int margin_width
 ) : m_click_distance{0.5},
     m_game_speed{speed},
-    //m_left_player_color{chess_color::white},
     m_margin_width{margin_width},
     m_replayer(replay("")),
     m_screen_size{screen_size},
     m_starting_position{starting_position},
-    m_music_volume{0},
-    m_sound_effects_volume{10} // percent
+    m_music_volume{10},
+    m_sound_effects_volume{20} // percent
 {
   assert(m_click_distance > 0.0);
   assert(m_margin_width >= 0);
