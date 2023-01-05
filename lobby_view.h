@@ -45,6 +45,9 @@ private:
   /// When both are ready, the countdown will start
   std::optional<sf::Clock> m_clock;
 
+  /// How long the countdown will take
+  const int m_countdown_secs{3};
+
   /// The options set earlier
   game_options m_game_options;
 

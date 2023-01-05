@@ -52,6 +52,17 @@ void lobby_view::exec()
     // Show the new state
     show();
 
+    if (m_clock)
+    {
+      if (m_clock.value().getElapsedTime().asSeconds() > m_countdown_secs)
+      {
+        m_clock = {};
+        exec_game();
+        m_lhs_start = false;
+        m_rhs_start = false;
+      }
+    }
+
   }
 }
 
@@ -240,9 +251,8 @@ void lobby_view::show()
   show_selected_panel(*this, side::rhs);
   if (m_clock)
   {
-    const int countdown_secs{5};
     const int n_left{
-      countdown_secs
+      m_countdown_secs
       - static_cast<int>(
         m_clock.value().getElapsedTime().asSeconds()
       )
