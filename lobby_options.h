@@ -5,6 +5,8 @@
 #include "race.h"
 #include "side.h"
 
+#include <iosfwd>
+
 /// The options that are set in the lobby
 class lobby_options
 {
@@ -38,5 +40,7 @@ chess_color get_color(const lobby_options& options, const side player_side) noex
 
 /// Test this class and its free functions
 void test_lobby_options();
+
+std::ostream& operator<<(std::ostream& os, const lobby_options& options) noexcept;
 
 #endif // LOBBY_OPTIONS_H

@@ -2,8 +2,11 @@
 
 #include "action_number.h"
 #include "game.h"
+#include "game_controller.h"
+#include "game_view_layout.h"
+#include "game_coordinat.h"
 #include "sfml_helper.h"
-
+#include "user_inputs.h"
 #include <cassert>
 #include <iostream>
 #include <sstream>

@@ -2,6 +2,7 @@
 
 #include "asserts.h"
 #include "game.h"
+#include "game_controller.h"
 #include "square.h"
 #include "game_coordinat.h"
 #include "piece_actions.h"

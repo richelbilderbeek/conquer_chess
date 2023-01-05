@@ -4,7 +4,6 @@
 #ifndef LOGIC_ONLY
 
 #include <SFML/Graphics.hpp>
-//#include "game_options.h"
 #include "game_resources.h"
 #include "resource_loader.h"
 

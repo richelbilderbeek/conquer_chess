@@ -1,6 +1,8 @@
 #include "lobby_options.h"
 
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 lobby_options::lobby_options()
   : m_lhs_color{chess_color::white},
@@ -110,5 +112,23 @@ void test_lobby_options()
     assert(get_color(options, side::lhs) == chess_color::white);
     assert(get_color(options, side::rhs) == chess_color::black);
   }
+  // operator<<
+  {
+    const lobby_options options;
+    std::stringstream s;
+    s << options;
+    assert(!s.str().empty());
+  }
   #endif
+}
+
+std::ostream& operator<<(std::ostream& os, const lobby_options& options) noexcept
+{
+  os
+    << "LHS color: " << options.get_color(side::lhs) << '\n'
+    << "RHS color: " << options.get_color(side::rhs) << '\n'
+    << "LHS race: " << options.get_race(side::lhs) << '\n'
+    << "RHS race: " << options.get_race(side::rhs)
+  ;
+  return os;
 }

@@ -3,9 +3,10 @@
 #include "asserts.h"
 #include "game_options.h"
 #include "piece_actions.h"
-#include "physical_controllers.h"
+#include "game_view_layout.h"
 #include "id.h"
 #include "sound_effects.h"
+#include "screen_rect.h"
 #include "square.h"
 #include "user_inputs.h"
 
@@ -25,7 +26,6 @@ game::game(
   : m_game_options{go},
     m_lobby_options{lo},
     m_pieces{get_starting_pieces(go)},
-    m_replayer{go.get_replayer()},
     m_t{0.0}
 {
 
@@ -268,31 +268,7 @@ bool can_do_promote(
   return can_promote(selected_piece);
 }
 
-bool can_player_select_piece_at_cursor_pos(
-  const game& g,
-  const game_controller& c,
-  const chess_color cursor_color
-)
-{
-  const auto& cursor_pos{
-    get_cursor_pos(
-      c,
-      get_player_side(g, cursor_color)
-    )
-  };
-  if (
-    !is_piece_at(
-      g,
-      cursor_pos,
-      g.get_game_options().get_click_distance()
-    )
-  )
-  {
-    return false;
-  }
-  const auto& piece{get_closest_piece_to(g, cursor_pos)};
-  return !piece.is_selected() && piece.get_color() == cursor_color;
-}
+
 
 void clear_piece_messages(game& g) noexcept
 {
@@ -303,22 +279,6 @@ action_history collect_action_history(const game& g)
 {
   return collect_action_history(g.get_pieces());
 }
-
-std::vector<user_inputs> collect_all_user_inputses(
-  const game& g,
-  const game_controller& c
-)
-{
-  std::vector<user_inputs> user_inputs;
-
-  const auto piece_actions{collect_all_piece_actions(g)};
-  user_inputs.reserve(piece_actions.size());
-  for (const auto& piece_action: piece_actions) {
-    user_inputs.push_back(to_user_inputs(piece_action, g, c));
-  }
-  return user_inputs;
-}
-
 
 std::vector<piece_action> collect_all_piece_actions(const game& g)
 {
@@ -968,47 +928,6 @@ std::vector<piece_action> collect_all_rook_actions(
   return actions;
 }
 
-user_inputs convert_move_to_user_inputs(
-  const game& g,
-  const game_controller& c,
-  const chess_move& m
-)
-{
-  const auto player_side{get_player_side(g, m.get_color())};
-  const square from{get_from(g, m)};
-
-  user_inputs inputs;
-  // Move the cursor to piece's square
-  {
-    const auto v{get_user_inputs_to_move_cursor_to(c, from, player_side)};
-    add(inputs, v);
-  }
-  // Select the piece
-  {
-    const auto i{get_user_input_to_select(c, player_side)};
-    inputs.add(i);
-  }
-  // Move the cursor to target's square
-  {
-    assert(m.get_to().has_value());
-    const auto v{
-      get_user_inputs_to_move_cursor_from_to(
-        c,
-        from,
-        m.get_to().value(),
-        player_side
-      )
-    };
-    add(inputs, v);
-  }
-  // Do the action
-  {
-    const auto i{get_user_input_to_do_action_1(c, player_side)};
-    inputs.add(i);
-  }
-  return inputs;
-}
-
 int count_piece_actions(const game& g)
 {
   return count_piece_actions(g, chess_color::white)
@@ -1052,15 +971,17 @@ game create_randomly_played_game(
   const int seed
 )
 {
+  // TODO: does nothing
   game g;
-  game_controller c;
   std::default_random_engine generator(seed);
   for (int i{0}; i!=n_moves; ++i)
   {
+    /*
     const user_input action{
       create_random_user_input(generator)
     };
     add_user_input(c, action);
+    */
     g.tick(delta_t(0.1));
   }
   return g;
@@ -1070,63 +991,6 @@ game create_randomly_played_game(
 bool do_show_selected(const game& g) noexcept
 {
   return do_show_selected(g.get_game_options());
-}
-
-void do_promote_keyboard_player_piece(
-  game& g,
-  game_controller& c,
-  const square& pawn_location,
-  const piece_type promote_to
-)
-{
-  assert(has_keyboard_controller(c));
-  assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
-  set_keyboard_player_pos(c, pawn_location);
-  assert(square(get_cursor_pos(c, side::lhs)) == pawn_location);
-  assert(get_piece_at(g, pawn_location).get_type() == piece_type::pawn);
-  switch (promote_to)
-  {
-    case piece_type::bishop:
-      add_user_input(c, create_press_action_3(get_keyboard_user_player_side(c)));
-      break;
-    case piece_type::knight:
-      add_user_input(c, create_press_action_4(get_keyboard_user_player_side(c)));
-      break;
-    case piece_type::king:
-    case piece_type::pawn:
-    case piece_type::queen:
-      assert(promote_to == piece_type::queen);
-      add_user_input(
-        c,
-        create_press_action_1(
-          get_keyboard_user_player_side(c)
-        )
-      );
-      break;
-    case piece_type::rook:
-      add_user_input(c, create_press_action_2(get_keyboard_user_player_side(c)));
-      break;
-  }
-  c.apply_user_inputs_to_game(g);
-  g.tick(delta_t(0.0));
-  assert(count_user_inputs(c) == 0);
-}
-
-void do_start_attack_keyboard_player_piece(
-  game& g,
-  game_controller& c,
-  const square& s
-)
-{
-  assert(has_keyboard_controller(c));
-  assert(count_selected_units(g, get_keyboard_user_player_color(g, c)) == 1);
-  set_keyboard_player_pos(c, s);
-  assert(square(get_cursor_pos(c, side::lhs)) == s);
-  add_user_input(c, create_press_action_2(get_keyboard_user_player_side(c)));
-  assert(count_user_inputs(c) != 0);
-  c.apply_user_inputs_to_game(g);
-  g.tick(delta_t(0.0));
-  assert(count_user_inputs(c) == 0);
 }
 
 std::vector<piece> find_pieces(
@@ -1163,15 +1027,6 @@ piece& get_closest_piece_to(
 )
 {
   return g.get_pieces()[get_index_of_closest_piece_to(g, coordinat)];
-}
-
-const game_coordinat& get_cursor_pos(
-  const game& g,
-  const game_controller& c,
-  const chess_color cursor_color
-)
-{
-  return get_cursor_pos(c, get_player_side(g, cursor_color));
 }
 
 game get_default_game() noexcept
@@ -1283,25 +1138,9 @@ int get_index_of_closest_piece_to(
   return index;
 }
 
-chess_color get_keyboard_user_player_color(
-  const game& g,
-  const game_controller& c
-)
-{
-  return get_player_color(g, get_keyboard_user_player_side(c));
-}
-
 game get_kings_only_game() noexcept
 {
   return get_game_with_starting_position(starting_position_type::kings_only);
-}
-
-chess_color get_mouse_user_player_color(
-  const game& g,
-  const game_controller& c
-)
-{
-  return get_player_color(g, get_mouse_user_player_side(c));
 }
 
 double get_music_volume_as_percentage(const game& g) noexcept
@@ -1542,11 +1381,6 @@ bool piece_with_id_is_at(
 
 void game::tick(const delta_t& dt)
 {
-  // Let the replayer do its move
-  #ifdef FIX_ISSUE_REPLAYER_BACK
-  m_replayer.do_move(m_controller, *this); // TODO: fix architecture
-  #endif
-
   assert(count_dead_pieces(m_pieces) == 0);
 
   // Do those piece_actions
@@ -1575,23 +1409,6 @@ void unselect_all_pieces(
   return unselect_all_pieces(g.get_pieces(), color);
 }
 
-void set_cursor_pos(
-  game_controller& c,
-  const game_coordinat& pos,
-  const side player_side
-) noexcept
-{
-  c.set_cursor_pos(pos, player_side);
-}
-
-void set_cursor_pos(
-  game_controller& c,
-  const square& s,
-  const side player_side
-) noexcept
-{
-  set_cursor_pos(c, to_coordinat(s), player_side);
-}
 
 void tick_until_idle(game& g)
 {
@@ -1614,8 +1431,8 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
-    << "Options: " << g.get_game_options() << '\n'
-    << "Replayer: " << g.get_replayer()
+    << "Lobby options: " << g.get_lobby_options() << '\n'
+    << "Game options: " << g.get_game_options();
   ;
   return os;
 }

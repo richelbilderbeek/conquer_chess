@@ -78,15 +78,164 @@ void add_user_input(game_controller& c, const user_input& input);
 /// Add a user_inputs. These will be processed in 'game::tick'
 void add_user_inputs(game_controller& c, const user_inputs& input);
 
+/// Can the player select a piece at the current mouse position?
+bool can_player_select_piece_at_cursor_pos(
+  const game& g,
+  const game_controller& c,
+  const chess_color cursor_color
+);
+
+/// Collect all valid 'user_input' for all players.
+/// Each 'user_inputs' equals one 'piece_action'
+/// @see use 'collect_all_piece_actions'
+/// to get all the 'piece_action's from a game
+std::vector<user_inputs> collect_all_user_inputses(
+  const game& g,
+  const game_controller& c
+);
+
+/// Convert a chess move, e.g. e4,
+/// to the right user inputs
+user_inputs convert_move_to_user_inputs(
+  const game& g,
+  const game_controller& c,
+  const chess_move& move
+);
+
 /// Count the total number of \link{user_input}s
 /// to be done by the \link{game_controller}.
 int count_user_inputs(const game_controller& c) noexcept;
+
+/// Let the keyboard player move a piece
+/// from the current selected square to a new target
+/// @see 'do_select_and_move_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
+void do_move_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& s
+);
+
+/// Let the mouse player move a piece
+/// from the current selected square to a new target
+/// @see 'do_select_and_move_mouse_player_piece' does both
+/// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
+void do_move_mouse_player_piece(
+  game& g,
+  game_controller& c,
+  const square& s
+);
+
+void do_promote_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& pawn_location,
+  const piece_type promote_to
+);
+
+/// Let the keyboard player select a square
+/// (assuming that a piece of the right color is there)
+/// and let it move to another square
+/// @see 'do_select_and_move_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
+void do_select_and_move_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& from,
+  const square& to
+);
+
+void do_select_and_move_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const std::string& from_str,
+  const std::string& to_str
+);
+
+/// Let the mouse player select a square
+/// (assuming that a piece of the right color is there)
+/// and let it move to another square
+/// @see 'do_select_and_move_mouse_player_piece' does both
+/// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
+void do_select_and_move_mouse_player_piece(
+  game& g,
+  game_controller& c,
+  const square& from,
+  const square& to
+);
+
+void do_select_and_move_mouse_player_piece(
+  game& g,
+  game_controller& c,
+  const std::string& from_str,
+  const std::string& to_str
+);
+
+
+/// Let the keyboard player select a square
+/// (assuming that a pawn of the right color is there)
+/// and let it promote to another type
+void do_select_and_promote_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& pawn_location,
+  const piece_type promote_to
+);
+
+/// Let the keyboard player select a square
+/// (assuming that a piece of the right color is there)
+/// and let it start an attack on another square
+/// @see 'do_select_and_start_attack_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_start_attack_keyboard_player_piece'
+void do_select_and_start_attack_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& from,
+  const square& to
+);
+
+/// Let the keyboard player select the square
+/// Assumes that a piece of the right color is there
+/// @see 'do_select_and_move_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_move_keyboard_player_piece'
+void do_select_for_keyboard_player(
+  game& g,
+  game_controller& c,
+  const square& s
+);
+
+/// Let the mouse player select the square
+/// Assumes that a piece of the right color is there
+/// @see 'do_select_and_move_mouse_player_piece' does both
+/// 'do_select_for_mouse_player' and 'do_move_mouse_player_piece'
+void do_select_for_mouse_player(
+  game& g,
+  game_controller& c,
+  const square& s
+);
+
+/// Let the keyboard player attack a piece
+/// from the current selected square to a new target
+/// @see 'do_select_and_start_attack_keyboard_player_piece' does both
+/// 'do_select_for_keyboard_player' and 'do_start_attack_keyboard_player_piece'
+void do_start_attack_keyboard_player_piece(
+  game& g,
+  game_controller& c,
+  const square& s
+);
 
 /// Get the a player's cursor position
 const game_coordinat& get_cursor_pos(
   const game_controller& c,
   const side player_side
 ) noexcept;
+
+/// Get the cursor position for a chess color
+const game_coordinat& get_cursor_pos(
+  const game& g,
+  const game_controller& c,
+  const chess_color cursor_color
+);
 
 /// Get the a player's cursor position, as a \link{square}
 square get_cursor_square(
@@ -103,9 +252,23 @@ std::optional<piece_action_type> get_default_piece_action(
   const side player_side
 ) noexcept;
 
+/// Get the color of the keyboard using player
+/// Will throw if no user uses a keyboard
+chess_color get_keyboard_user_player_color(
+  const game& g,
+  const game_controller& c
+);
+
 /// Get the side of the controller that uses the keyboard.
 /// Assumes there is one controller that uses the keyboard
 side get_keyboard_user_player_side(const game_controller& c);
+
+/// Get the color of the mouse using player
+/// Will throw if no user uses a mouse
+chess_color get_mouse_user_player_color(
+  const game& g,
+  const game_controller& c
+);
 
 /// What side does the player with the mouse control?
 side get_mouse_user_player_side(const game_controller& c);

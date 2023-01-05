@@ -8,6 +8,7 @@
 #include "game.h"
 #include "fps_clock.h"
 #include "game_log.h"
+#include "game_controller.h"
 #include "game_resources.h"
 #include "game_view_layout.h"
 
