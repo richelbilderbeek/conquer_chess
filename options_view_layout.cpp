@@ -12,8 +12,8 @@ options_view_layout::options_view_layout(
 {
   const int n_vertical_margins{4};
   const int n_vus_top{4}; // vus: vertical units
-  const int n_vus_chessboard{3};
-  const int n_vus_controls{4};
+  const int n_vus_chessboard{2};
+  const int n_vus_controls{3};
   const int n_vus{
     n_vus_top
     + n_vus_chessboard
@@ -27,12 +27,9 @@ options_view_layout::options_view_layout(
       / static_cast<double>(n_vus)
     )
   };
+  // Total panel width
   const int top_panel_width{
-    static_cast<int>(
-      static_cast<double>(
-        width - (2 * margin_size)
-      ) / 2.0
-    )
+    2 * panel_height
   };
   const int max_chess_board_height{
     height
@@ -72,10 +69,17 @@ options_view_layout::options_view_layout(
     controller_width * 2
   };
 
+  // General
+  //const int x_left{margin_size};
+  const int x_mid{width / 2};
+  //const int x_right{width - margin_size};
+
   // Top panel
-  const int x1{margin_size};
-  const int x3{x1 + top_panel_width};
-  const int x5{x3 + top_panel_width};
+
+  const int x1{x_mid - (top_panel_width / 2)};
+  const int x3{x1 + panel_height};
+  const int x5{x_mid + (top_panel_width / 2)};
+
 
   // Center panel
   const int chess_board_tl_x{
@@ -140,6 +144,7 @@ options_view_layout::options_view_layout(
     screen_coordinat(x5, y5)
   );
 
+
   m_chess_board = screen_rect(
     screen_coordinat(chess_board_tl_x, y6),
     screen_coordinat(chess_board_br_x, y7)
@@ -151,10 +156,10 @@ options_view_layout::options_view_layout(
   );
   m_left_controls_value = screen_rect(
     screen_coordinat(x2, y9),
-    screen_coordinat(x3, y10)
+    screen_coordinat(x_mid, y10)
   );
   m_right_controls_value = screen_rect(
-    screen_coordinat(x3, y9),
+    screen_coordinat(x_mid, y9),
     screen_coordinat(x4, y10)
   );
 

@@ -292,7 +292,7 @@ void options_view::set_text_style(sf::Text& text)
 {
   text.setFont(get_arial_font(get_resources()));
   text.setStyle(sf::Text::Bold);
-  //text.setCharacterSize(64);
+  text.setCharacterSize(24);
   text.setCharacterSize(m_layout.get_font_size());
   text.setFillColor(sf::Color::Black);
 }
@@ -325,7 +325,6 @@ void show_bottom(options_view& v)
   show_bottom_header(v);
   show_bottom_row(v, side::lhs);
   show_bottom_row(v, side::rhs);
-  //show_rhs_row(v);
 }
 
 void show_bottom_header(options_view& v)
@@ -410,6 +409,7 @@ void show_game_speed(options_view& v)
 
     sf::Text text;
     v.set_text_style(text);
+    text.setCharacterSize(24);
     text.setString("Game speed");
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
