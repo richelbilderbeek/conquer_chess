@@ -58,13 +58,19 @@ Image                     |Filename              |Search terms
 ![](all_races_2.jpeg)     |`all_races_2.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces`
 ![](all_races_3.jpeg)     |`all_races_3.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cubism`
 ![](all_races_4.jpeg)     |`all_races_4.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cartoon`
-![](zerg_chessboard.jpeg) |`zerg_chessboard.jpeg`|`starcraft 2, zerg, chessboard, cubism, chess square`
-![](speed.png)            |`speed.png`           |`starcraft 2, speed, symbol, simple, cartoon`
-![](mouse.png)            |`mouse.png`           |`starcraft 2, computer mouse, protoss, simple`
-![](keyboard.png)         |`keyboard.png`        |`starcraft 2, computer keyboard, terran`
 
 
+## Options screen artwork
 
+Image                        |Filename                  |Search terms
+-----------------------------|--------------------------|---------------------------------------------------------------------
+![](game_speed.png)          |`game_speed.png`          |`starcraft 2, speed, symbol, simple, cartoon`
+![](controls.png)            |`controls.png`            |`starcraft 2, zerg claw holding a joystick, terran hand holding a keyboard, protoss glove holding a controller`
+![](mouse.png)               |`mouse.png`               |`starcraft 2, computer mouse, protoss, simple`
+![](keyboard.png)            |`keyboard.png`            |`starcraft 2, computer keyboard, terran`
+![](music_volume.png)        |`music_volume.png`        |`starcraft 2, music volume, simple, sound, volume, close-up on ear, music`
+![](sound_effects_volume.png)|`sound_effects_volume.png`|`starcraft 2, sound, close-up on ear, zerg`
+![](starting_position.jpeg)  |`starting_position.jpeg`  |`starcraft 2, zerg, chessboard, cubism, chess square`
 
 ### Chess color
 

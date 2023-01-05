@@ -95,12 +95,6 @@ void show_bottom_header(options_view& v);
 /// i.e. 'Left' and the LHS controller
 void show_bottom_row(options_view& v, const side player_side);
 
-/*
-/// Show the right player's settings of the bottom part,
-/// i.e. 'Right' and the RHS controller
-void show_rhs_row(options_view& v);
-*/
-
 /// Show the game speed label and value
 void show_game_speed(options_view& v);
 

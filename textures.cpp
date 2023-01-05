@@ -15,8 +15,13 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
+    std::make_pair(std::ref(m_game_speed), "game_speed.png"),
+    std::make_pair(std::ref(m_controls), "controls.png"),
     std::make_pair(std::ref(m_mouse), "mouse.png"),
     std::make_pair(std::ref(m_keyboard), "keyboard.png"),
+    std::make_pair(std::ref(m_music_volume), "music_volume.png"),
+    std::make_pair(std::ref(m_sound_effects_volume), "sound_effects_volume.png"),
+    std::make_pair(std::ref(m_starting_position), "starting_position.jpeg"),
     std::make_pair(std::ref(m_black_bishop), "bb.png"),
     std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
     std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),
@@ -150,6 +155,27 @@ sf::Texture& textures::get_controller_type(const physical_controller_type t) noe
   }
   assert(t == physical_controller_type::mouse);
   return m_mouse;
+}
+
+sf::Texture& textures::get_game_option_icon(const options_view_item i) noexcept
+{
+  switch (i)
+  {
+    case options_view_item::game_speed:
+      return m_game_speed;
+    case options_view_item::left_controls:
+      return m_controls;
+    case options_view_item::right_controls:
+      return m_controls;
+    case options_view_item::music_volume:
+      return m_music_volume;
+    case options_view_item::sound_effects_volume:
+      return m_sound_effects_volume;
+    case options_view_item::starting_position:
+    default:
+      assert(i == options_view_item::starting_position);
+      return m_starting_position;
+  }
 }
 
 sf::Texture& textures::get_head(const race r) noexcept

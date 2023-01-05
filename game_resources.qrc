@@ -102,6 +102,11 @@
         <file>resources/terran_head.jpeg</file>
         <file>resources/zerg_head.jpeg</file>
         <file>resources/keyboard.png</file>
+        <file>resources/game_speed.png</file>
+        <file>resources/controls.png</file>
+        <file>resources/music_volume.png</file>
+        <file>resources/sound_effects_volume.png</file>
+        <file>resources/starting_position.jpeg</file>
         <file>resources/mouse.png</file>
         <file>resources/all_races_1.jpeg</file>
         <file>resources/all_races_2.jpeg</file>

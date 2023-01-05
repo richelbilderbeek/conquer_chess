@@ -330,13 +330,16 @@ void show_bottom(options_view& v)
 
 void show_bottom_header(options_view& v)
 {
-  const auto& layout = v.get_layout();
+  const auto& layout{v.get_layout()};
   {
     const auto& screen_rect = layout.get_controls_label();
     sf::RectangleShape rectangle;
+
     set_rect(rectangle, screen_rect);
     rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
+      &v.get_resources().get_textures().get_game_option_icon(
+        options_view_item::left_controls
+      )
     );
     v.get_window().draw(rectangle);
 
@@ -345,6 +348,13 @@ void show_bottom_header(options_view& v)
     text.setString("Controls");
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
+
+    // Smaller
+    text.setCharacterSize(text.getCharacterSize() - 2);
+    set_text_position(text, screen_rect);
+    text.setFillColor(sf::Color::White);
+    v.get_window().draw(text);
+
   }
 }
 
@@ -383,38 +393,6 @@ void show_bottom_row(options_view& v, const side player_side)
   }
 }
 
-/*
-void show_rhs_row(options_view& v)
-{
-  const auto& layout = v.get_layout();
-  // Label
-  {
-    const auto& screen_rect = layout.get_right_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Right");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  // controller
-  {
-    draw_panel(
-      v,
-      layout.get_right_controls_value(),
-      to_str(get_physical_controller_type(v, side::rhs)),
-      chess_color::black
-    );
-  }
-}
-*/
-
 void show_game_speed(options_view& v)
 {
   const auto& layout = v.get_layout();
@@ -424,7 +402,9 @@ void show_game_speed(options_view& v)
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
     rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
+      &v.get_resources().get_textures().get_game_option_icon(
+        options_view_item::game_speed
+      )
     );
     v.get_window().draw(rectangle);
 
@@ -474,7 +454,9 @@ void show_starting_position(options_view& v)
     const auto& screen_rect = layout.get_starting_pos_label();
     sf::RectangleShape rectangle;
     rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
+      &v.get_resources().get_textures().get_game_option_icon(
+        options_view_item::starting_position
+      )
     );
     set_rect(rectangle, screen_rect);
     v.get_window().draw(rectangle);
@@ -537,7 +519,9 @@ void show_music_volume(options_view& v)
     const auto& screen_rect = layout.get_music_volume_label();
     sf::RectangleShape rectangle;
     rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
+      &v.get_resources().get_textures().get_game_option_icon(
+        options_view_item::music_volume
+      )
     );
     set_rect(rectangle, screen_rect);
     v.get_window().draw(rectangle);
@@ -595,7 +579,9 @@ void show_sound_effects_volume(options_view& v)
     const auto& screen_rect = layout.get_sound_effects_volume_label();
     sf::RectangleShape rectangle;
     rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
+      &v.get_resources().get_textures().get_game_option_icon(
+        options_view_item::sound_effects_volume
+      )
     );
     set_rect(rectangle, screen_rect);
     v.get_window().draw(rectangle);

@@ -9,6 +9,7 @@
 #include "piece_action_type.h"
 #include "physical_controller_type.h"
 #include "race.h"
+#include "options_view_item.h"
 
 /// The games' textures
 /// The raw game resources
@@ -41,6 +42,10 @@ public:
 
   /// Get an image for a controller type, i.e. mouse or keyboard
   sf::Texture& get_controller_type(const physical_controller_type t) noexcept;
+
+  /// Get an icon that accompanies a game option,
+  /// to be used in the Options screen
+  sf::Texture& get_game_option_icon(const options_view_item i) noexcept;
 
   /// Get texture of a piece
   sf::Texture& get_piece(
@@ -82,8 +87,14 @@ private:
   sf::Texture m_black_chess_color;
   sf::Texture m_white_chess_color;
 
+  // Options screen textures
+  sf::Texture m_game_speed;
+  sf::Texture m_controls;
+  sf::Texture m_music_volume;
+  sf::Texture m_sound_effects_volume;
   sf::Texture m_mouse;
   sf::Texture m_keyboard;
+  sf::Texture m_starting_position;
 
   /// Ready to start
   sf::Texture m_ready_no;
