@@ -7,6 +7,8 @@
 #include <optional>
 
 std::optional<fonts> game_resources::m_fonts;
+std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
+std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
 songs game_resources::m_songs = songs();
 std::optional<sound_effects> game_resources::m_sound_effects = {};
 std::optional<textures> game_resources::m_textures = {};
@@ -41,6 +43,30 @@ fonts& game_resources::get_fonts() noexcept
 int game_resources::get_n_fonts() noexcept
 {
   return get_fonts().get_n_fonts();
+}
+
+loading_screen_fonts& game_resources::get_loading_screen_fonts() noexcept
+{
+  if (!m_loading_screen_fonts) m_loading_screen_fonts = loading_screen_fonts();
+  assert(m_loading_screen_fonts);
+  return m_loading_screen_fonts.value();
+}
+
+loading_screen_textures& game_resources::get_loading_screen_textures() noexcept
+{
+  if (!m_loading_screen_textures) m_loading_screen_textures = loading_screen_textures();
+  assert(m_loading_screen_textures);
+  return m_loading_screen_textures.value();
+}
+
+int game_resources::get_n_loading_screen_fonts() noexcept
+{
+  return get_loading_screen_fonts().get_n_fonts();
+}
+
+int game_resources::get_n_loading_screen_textures() noexcept
+{
+  return get_loading_screen_textures().get_n_textures();
 }
 
 int game_resources::get_n_songs() noexcept

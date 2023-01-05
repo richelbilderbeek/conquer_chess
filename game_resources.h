@@ -10,6 +10,8 @@
 #include "message.h"
 #include "fonts.h"
 #include "songs.h"
+#include "loading_screen_fonts.h"
+#include "loading_screen_textures.h"
 
 #include <optional>
 
@@ -20,13 +22,24 @@ public:
 
   game_resources();
 
+  // Lazy loading
   fonts& get_fonts() noexcept;
 
+  // Lazy loading
+  loading_screen_fonts& get_loading_screen_fonts() noexcept;
+
+  // Lazy loading
+  loading_screen_textures& get_loading_screen_textures() noexcept;
+
+
   int get_n_fonts() noexcept;
+  int get_n_loading_screen_fonts() noexcept;
+  int get_n_loading_screen_textures() noexcept;
   int get_n_songs() noexcept;
   int get_n_sound_effects() noexcept;
   int get_n_textures() noexcept;
 
+  // Lazy loading
   songs& get_songs() noexcept;
 
 
@@ -45,6 +58,7 @@ public:
     const piece_type type
   );
 
+  // Lazy loading
   sound_effects& get_sound_effects() noexcept;
 
 
@@ -53,12 +67,19 @@ public:
     const message& effect
   );
 
+  // Lazy loading
   textures& get_textures() noexcept;
 
 private:
 
   /// Lazy loading
   static std::optional<fonts> m_fonts;
+
+  /// Lazy loading
+  static std::optional<loading_screen_fonts> m_loading_screen_fonts;
+
+  /// Lazy loading
+  static std::optional<loading_screen_textures> m_loading_screen_textures;
 
   /// Cannot do lazy loading here
   static songs m_songs;

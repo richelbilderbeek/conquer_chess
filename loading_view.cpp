@@ -124,7 +124,7 @@ void loading_view::show()
     sf::RectangleShape rectangle;
     set_rect(rectangle, window_rect);
     rectangle.setTexture(
-      &m_resources.get_textures().get_all_races_1()
+      &m_resources.get_loading_screen_textures().get_all_races_1()
     );
     get_window().draw(rectangle);
   }
