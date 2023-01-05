@@ -238,7 +238,7 @@ void lobby_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  show_panels(*this);
+  show_layout_panels(*this);
 
   show_image_panel(*this);
   show_color_panel(*this, side::lhs);
@@ -361,7 +361,7 @@ void show_image_panel(lobby_view& v)
   v.get_window().draw(rectangle);
 }
 
-void show_panels(lobby_view& v)
+void show_layout_panels(lobby_view& v)
 {
   for (const auto& screen_rect: get_panels(v.get_layout()))
   {

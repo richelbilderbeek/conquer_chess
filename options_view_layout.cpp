@@ -136,6 +136,26 @@ options_view_layout::options_view_layout(
   );
 }
 
+const screen_rect& options_view_layout::get_player_side_label(const side player_side) const noexcept
+{
+  if (player_side == side::lhs)
+  {
+    return m_left_label;
+  }
+  assert(player_side == side::rhs);
+  return m_right_label;
+}
+
+const screen_rect& options_view_layout::get_controller_type_value(const side player_side) const noexcept
+{
+  if (player_side == side::lhs)
+  {
+    return m_left_controls_value;
+  }
+  assert(player_side == side::rhs);
+  return m_right_controls_value;
+}
+
 const screen_rect& options_view_layout::get_selectable_rect(const options_view_item item) const noexcept
 {
   switch (item)
@@ -167,10 +187,10 @@ std::vector<screen_rect> get_panels(const options_view_layout& layout)
     layout.get_chess_board(),
     layout.get_player_label(),
     layout.get_controls_label(),
-    layout.get_left_label(),
-    layout.get_right_label(),
-    layout.get_left_controls_value(),
-    layout.get_right_controls_value()
+    layout.get_player_side_label(side::lhs),
+    layout.get_player_side_label(side::rhs),
+    layout.get_controller_type_value(side::lhs),
+    layout.get_controller_type_value(side::rhs)
   };
 }
 
@@ -189,8 +209,8 @@ void test_options_view_layout()
     assert(layout.get_selectable_rect(options_view_item::music_volume) == layout.get_music_volume_value());
     assert(layout.get_selectable_rect(options_view_item::sound_effects_volume) == layout.get_sound_effects_volume_value());
     assert(layout.get_selectable_rect(options_view_item::starting_position) == layout.get_starting_pos_value());
-    assert(layout.get_selectable_rect(options_view_item::left_controls) == layout.get_left_controls_value());
-    assert(layout.get_selectable_rect(options_view_item::right_controls) == layout.get_right_controls_value());
+    assert(layout.get_selectable_rect(options_view_item::left_controls) == layout.get_controller_type_value(side::lhs));
+    assert(layout.get_selectable_rect(options_view_item::right_controls) == layout.get_controller_type_value(side::rhs));
   }
   // get_selectable_rect on all items
   {

@@ -236,7 +236,7 @@ void controls_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  show_panels(*this);
+  show_layout_panels(*this);
 
   show_type_panel(*this);
   show_keyboard_panel(*this);
@@ -322,7 +322,7 @@ void show_mouse_panel(controls_view& v)
   }
 }
 
-void show_panels(controls_view& v)
+void show_layout_panels(controls_view& v)
 {
   for (const auto& screen_rect: get_panels(v.get_layout()))
   {

@@ -15,6 +15,8 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
+    std::make_pair(std::ref(m_mouse), "mouse.png"),
+    std::make_pair(std::ref(m_keyboard), "keyboard.png"),
     std::make_pair(std::ref(m_black_bishop), "bb.png"),
     std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
     std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),
@@ -138,6 +140,16 @@ sf::Texture& textures::get_color(const chess_color color) noexcept
       assert(color == chess_color::white);
       return m_white_chess_color;
   }
+}
+
+sf::Texture& textures::get_controller_type(const physical_controller_type t) noexcept
+{
+  if (t == physical_controller_type::keyboard)
+  {
+    return m_keyboard;
+  }
+  assert(t == physical_controller_type::mouse);
+  return m_mouse;
 }
 
 sf::Texture& textures::get_head(const race r) noexcept

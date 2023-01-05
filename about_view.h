@@ -53,7 +53,7 @@ private:
 };
 
 /// Show where the panels will be drawn
-void show_panels(about_view& v);
+void show_layout_panels(about_view& v);
 
 void show_subtitle_panel(about_view& v);
 void show_text_panel(about_view& v);

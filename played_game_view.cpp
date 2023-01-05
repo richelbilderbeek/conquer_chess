@@ -103,7 +103,7 @@ void played_game_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  show_panels(*this);
+  show_layout_panels(*this);
 
   show_text_panel(*this);
 
@@ -112,7 +112,7 @@ void played_game_view::show()
 
 }
 
-void show_panels(played_game_view& v)
+void show_layout_panels(played_game_view& v)
 {
   for (const auto& screen_rect: get_panels(v.get_layout()))
   {

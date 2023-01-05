@@ -297,7 +297,7 @@ void menu_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  show_panels(*this);
+  show_layout_panels(*this);
 
   show_title_panel(*this);
   show_subtitle_panel(*this);
@@ -358,7 +358,7 @@ void show_options_panel(menu_view& v)
   v.get_window().draw(text);
 }
 
-void show_panels(menu_view& v)
+void show_layout_panels(menu_view& v)
 {
   for (const auto& screen_rect: get_panels(v.get_layout()))
   {

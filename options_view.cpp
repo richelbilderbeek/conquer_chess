@@ -265,9 +265,9 @@ bool options_view::process_events()
       };
       if (is_in(mouse_screen_pos, m_layout.get_chess_board())) set_selected(options_view_item::starting_position);
       else if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) set_selected(options_view_item::game_speed);
-      else if (is_in(mouse_screen_pos, m_layout.get_left_controls_value())) set_selected(options_view_item::left_controls);
+      else if (is_in(mouse_screen_pos, m_layout.get_controller_type_value(side::lhs))) set_selected(options_view_item::left_controls);
       else if (is_in(mouse_screen_pos, m_layout.get_music_volume_value())) set_selected(options_view_item::music_volume);
-      else if (is_in(mouse_screen_pos, m_layout.get_right_controls_value())) set_selected(options_view_item::right_controls);
+      else if (is_in(mouse_screen_pos, m_layout.get_controller_type_value(side::rhs))) set_selected(options_view_item::right_controls);
       else if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) set_selected(options_view_item::sound_effects_volume);
       else if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) set_selected(options_view_item::starting_position);
     }
@@ -302,7 +302,7 @@ void options_view::show()
   // Start drawing the new frame, by clearing the screen
   m_window.clear();
 
-  show_panels(*this);
+  show_layout_panels(*this);
 
   assert(!to_str(get_starting_position(*this)).empty());
   show_top(*this);
@@ -323,8 +323,9 @@ void options_view::show()
 void show_bottom(options_view& v)
 {
   show_bottom_header(v);
-  show_lhs_row(v);
-  show_rhs_row(v);
+  show_bottom_row(v, side::lhs);
+  show_bottom_row(v, side::rhs);
+  //show_rhs_row(v);
 }
 
 void show_bottom_header(options_view& v)
@@ -362,22 +363,51 @@ void show_bottom_header(options_view& v)
   }
 }
 
-void show_lhs_row(options_view& v)
+void show_bottom_row(options_view& v, const side player_side)
 {
-  const auto& layout = v.get_layout();
-  {
-    draw_panel(v, layout.get_left_label(), "Left", chess_color::black);
-  }
+  const auto& layout{v.get_layout()};
+  // The label, i.e. 'Left' or 'Right'
   {
     draw_panel(
       v,
-      layout.get_left_controls_value(),
-      to_str(get_physical_controller_type(v, side::lhs)),
-      chess_color::white
+      layout.get_player_side_label(player_side),
+      to_str(player_side),
+      chess_color::black
     );
+  }
+  // The icon
+  {
+
+    const auto screen_rect{
+      layout.get_controller_type_value(player_side)
+    };
+    const physical_controller_type t{
+      v.get_physical_controllers().get_controller(player_side).get_type()
+    };
+    sf::RectangleShape rectangle;
+    set_rect(rectangle, screen_rect);
+    rectangle.setTexture(
+      &v.get_resources().get_textures().get_controller_type(t)
+    );
+    v.get_window().draw(rectangle);
+
+    // Text
+    sf::Text text;
+    const auto text_rect{screen_rect};
+    text.setString(to_str(t));
+    v.set_text_style(text);
+    set_text_position(text, text_rect);
+    v.get_window().draw(text);
+
+    // Smaller
+    text.setCharacterSize(text.getCharacterSize() - 2);
+    set_text_position(text, text_rect);
+    text.setFillColor(sf::Color::White);
+    v.get_window().draw(text);
   }
 }
 
+/*
 void show_rhs_row(options_view& v)
 {
   const auto& layout = v.get_layout();
@@ -407,6 +437,7 @@ void show_rhs_row(options_view& v)
     );
   }
 }
+*/
 
 void show_game_speed(options_view& v)
 {
@@ -511,7 +542,7 @@ void show_top(options_view& v)
 }
 
 
-void show_panels(options_view& v)
+void show_layout_panels(options_view& v)
 {
   for (const auto& screen_rect: get_panels(v.get_layout()))
   {

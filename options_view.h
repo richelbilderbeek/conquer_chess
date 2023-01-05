@@ -93,11 +93,13 @@ void show_bottom_header(options_view& v);
 
 /// Show the left player's settings of the bottom part,
 /// i.e. 'Left' and the LHS controller
-void show_lhs_row(options_view& v);
+void show_bottom_row(options_view& v, const side player_side);
 
+/*
 /// Show the right player's settings of the bottom part,
 /// i.e. 'Right' and the RHS controller
 void show_rhs_row(options_view& v);
+*/
 
 /// Show the game speed label and value
 void show_game_speed(options_view& v);
@@ -106,7 +108,7 @@ void show_game_speed(options_view& v);
 void show_music_volume(options_view& v);
 
 /// Show all the layout panels
-void show_panels(options_view& v);
+void show_layout_panels(options_view& v);
 
 /// Show all the pieces in the initial position
 void show_pieces(options_view& view);

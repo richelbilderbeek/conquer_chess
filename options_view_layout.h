@@ -4,6 +4,7 @@
 #include "screen_rect.h"
 #include "layout.h"
 #include "options_view_item.h"
+#include "side.h"
 
 #include <vector>
 
@@ -72,11 +73,12 @@ public:
 
   const screen_rect& get_player_label() const noexcept { return m_player_label; }
   const screen_rect& get_controls_label() const noexcept { return m_controls_label; }
-  const screen_rect& get_left_label() const noexcept { return m_left_label; }
-  const screen_rect& get_right_label() const noexcept { return m_right_label; }
 
-  const screen_rect& get_left_controls_value() const noexcept { return m_left_controls_value; }
-  const screen_rect& get_right_controls_value() const noexcept { return m_right_controls_value; }
+  /// Get where it should say 'Left' or 'Right'
+  const screen_rect& get_player_side_label(const side player_side) const noexcept;
+
+  /// The chosen type of controller for the LHS or RHS player
+  const screen_rect& get_controller_type_value(const side player_side) const noexcept;
 
   /// Get the size of the font that would fit nicely
   int get_font_size() const noexcept { return m_font_size; }

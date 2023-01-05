@@ -7,6 +7,7 @@
 #include "chess_color.h"
 #include "piece_type.h"
 #include "piece_action_type.h"
+#include "physical_controller_type.h"
 #include "race.h"
 
 /// The games' textures
@@ -37,6 +38,9 @@ public:
 
   /// Get an abstract chess color
   sf::Texture& get_color(const chess_color color) noexcept;
+
+  /// Get an image for a controller type, i.e. mouse or keyboard
+  sf::Texture& get_controller_type(const physical_controller_type t) noexcept;
 
   /// Get texture of a piece
   sf::Texture& get_piece(
@@ -77,6 +81,9 @@ private:
 
   sf::Texture m_black_chess_color;
   sf::Texture m_white_chess_color;
+
+  sf::Texture m_mouse;
+  sf::Texture m_keyboard;
 
   /// Ready to start
   sf::Texture m_ready_no;

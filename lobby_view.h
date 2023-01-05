@@ -95,7 +95,7 @@ void show_countdown(lobby_view& v, const int n_left_secs);
 void show_image_panel(lobby_view& v);
 
 /// Show where the panels will be drawn
-void show_panels(lobby_view& v);
+void show_layout_panels(lobby_view& v);
 
 /// Draw the cursor on the selected panel
 void show_selected_panel(lobby_view& v, const side player_side);

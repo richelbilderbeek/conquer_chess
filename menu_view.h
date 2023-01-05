@@ -88,7 +88,7 @@ void show_image_panel(menu_view& v);
 void show_options_panel(menu_view& v);
 
 /// Show where the panels will be drawn
-void show_panels(menu_view& v);
+void show_layout_panels(menu_view& v);
 
 void show_quit_panel(menu_view& v);
 void show_selected_panel(menu_view& v);
