@@ -87,14 +87,17 @@ starting_position_type get_starting_position(const options_view& v) noexcept;
 /// Show the bottom part
 void show_bottom(options_view& v);
 
-/// Show the header of the bottom part
+/// Show the header of the bottom part,
+/// i.e. 'Side' and 'Controller'
 void show_bottom_header(options_view& v);
 
-/// Show the left player's settings of the bottom part
-void show_bottom_left(options_view& v);
+/// Show the left player's settings of the bottom part,
+/// i.e. 'Left' and the LHS controller
+void show_lhs_row(options_view& v);
 
-/// Show the right player's settings of the bottom part
-void show_bottom_right(options_view& v);
+/// Show the right player's settings of the bottom part,
+/// i.e. 'Right' and the RHS controller
+void show_rhs_row(options_view& v);
 
 /// Show the game speed label and value
 void show_game_speed(options_view& v);

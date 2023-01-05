@@ -8,10 +8,8 @@
 enum class options_view_item
 {
   game_speed,
-  left_color,
   left_controls,
   music_volume,
-  right_color,
   right_controls,
   sound_effects_volume,
   starting_position,

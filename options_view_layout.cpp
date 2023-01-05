@@ -42,9 +42,7 @@ options_view_layout::options_view_layout(
   };
 
   const int x1{margin_width};
-  const int x2{x1 + bottom_panel_width};
   const int x3{x1 + top_panel_width};
-  const int x4{x2 + bottom_panel_width};
   const int x5{x3 + top_panel_width};
 
   const int chess_board_tl_x{
@@ -109,40 +107,26 @@ options_view_layout::options_view_layout(
 
   m_player_label = screen_rect(
     screen_coordinat(x1, y8),
-    screen_coordinat(x2, y9)
-  );
-  m_color_label = screen_rect(
-    screen_coordinat(x2, y8),
-    screen_coordinat(x4, y9)
+    screen_coordinat(x3, y9)
   );
   m_controls_label = screen_rect(
-    screen_coordinat(x4, y8),
+    screen_coordinat(x3, y8),
     screen_coordinat(x5, y9)
   );
   m_left_label = screen_rect(
     screen_coordinat(x1, y9),
-    screen_coordinat(x2, y10)
+    screen_coordinat(x3, y10)
   );
   m_right_label = screen_rect(
     screen_coordinat(x1, y10),
-    screen_coordinat(x2, y11)
+    screen_coordinat(x3, y11)
   );
-
-  m_left_color_value = screen_rect(
-    screen_coordinat(x2, y9),
-    screen_coordinat(x4, y10)
-  );
-  m_right_color_value = screen_rect(
-    screen_coordinat(x2, y10),
-    screen_coordinat(x4, y11)
-  );
-
   m_left_controls_value = screen_rect(
-    screen_coordinat(x4, y9),
+    screen_coordinat(x3, y9),
     screen_coordinat(x5, y10)
   );
   m_right_controls_value = screen_rect(
-    screen_coordinat(x4, y10),
+    screen_coordinat(x3, y10),
     screen_coordinat(x5, y11)
   );
 
@@ -160,8 +144,6 @@ const screen_rect& options_view_layout::get_selectable_rect(const options_view_i
     case options_view_item::music_volume: return m_music_volume_value;
     case options_view_item::sound_effects_volume: return m_sound_effects_volume_value;
     case options_view_item::starting_position: return m_starting_pos_value;
-    case options_view_item::left_color: return m_left_color_value;
-    case options_view_item::right_color: return m_right_color_value;
     case options_view_item::left_controls: return m_left_controls_value;
     default:
     case options_view_item::right_controls:
@@ -184,12 +166,9 @@ std::vector<screen_rect> get_panels(const options_view_layout& layout)
     layout.get_starting_pos_value(),
     layout.get_chess_board(),
     layout.get_player_label(),
-    layout.get_color_label(),
     layout.get_controls_label(),
     layout.get_left_label(),
     layout.get_right_label(),
-    layout.get_left_color_value(),
-    layout.get_right_color_value(),
     layout.get_left_controls_value(),
     layout.get_right_controls_value()
   };
@@ -210,9 +189,7 @@ void test_options_view_layout()
     assert(layout.get_selectable_rect(options_view_item::music_volume) == layout.get_music_volume_value());
     assert(layout.get_selectable_rect(options_view_item::sound_effects_volume) == layout.get_sound_effects_volume_value());
     assert(layout.get_selectable_rect(options_view_item::starting_position) == layout.get_starting_pos_value());
-    assert(layout.get_selectable_rect(options_view_item::left_color) == layout.get_left_color_value());
     assert(layout.get_selectable_rect(options_view_item::left_controls) == layout.get_left_controls_value());
-    assert(layout.get_selectable_rect(options_view_item::right_color) == layout.get_right_color_value());
     assert(layout.get_selectable_rect(options_view_item::right_controls) == layout.get_right_controls_value());
   }
   // get_selectable_rect on all items

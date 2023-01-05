@@ -9,8 +9,8 @@
 
 /// The layout of the options view
 ///
-///   x               x         x       x               x
-///   1               2         3       4               5
+///   x                         x                       x
+///   1                         3                       5
 ///
 /// +------------------------------------------------------+
 /// |                                                      |
@@ -32,13 +32,13 @@
 /// |                     |             |                  |
 /// |                     +-------------+                  | y7
 /// |                                                      |
-/// | +----------------+----------------+----------------+ | y8
-/// | | player         | color          | controls       | |
-/// | +----------------+----------------+----------------+ | y9
-/// | | left           | left_color     | left_controls  | |
-/// | +----------------+----------------+----------------+ | y10
-/// | | right          | right_color    | right_controls | |
-/// | +----------------+----------------+----------------+ | y11
+/// | +-------------------------+------------------------+ | y8
+/// | | player                  | controls               | |
+/// | +-------------------------+------------------------+ | y9
+/// | | left                    | left_controls          | |
+/// | +-------------------------+------------------------+ | y10
+/// | | right                   | right_controls         | |
+/// | +-------------------------+------------------------+ | y11
 /// |                                                      |
 /// +------------------------------------------------------+
 ///
@@ -71,13 +71,9 @@ public:
 
 
   const screen_rect& get_player_label() const noexcept { return m_player_label; }
-  const screen_rect& get_color_label() const noexcept { return m_color_label; }
   const screen_rect& get_controls_label() const noexcept { return m_controls_label; }
   const screen_rect& get_left_label() const noexcept { return m_left_label; }
   const screen_rect& get_right_label() const noexcept { return m_right_label; }
-
-  const screen_rect& get_left_color_value() const noexcept { return m_left_color_value; }
-  const screen_rect& get_right_color_value() const noexcept { return m_right_color_value; }
 
   const screen_rect& get_left_controls_value() const noexcept { return m_left_controls_value; }
   const screen_rect& get_right_controls_value() const noexcept { return m_right_controls_value; }

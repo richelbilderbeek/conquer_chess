@@ -42,11 +42,6 @@ void options_view::decrease_selected()
       m_options.set_starting_position(get_previous(get_starting_position(m_options)));
       assert(!to_str(get_starting_position(*this)).empty());
     break;
-    case options_view_item::left_color:
-    case options_view_item::right_color:
-      // m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
-      std::clog << "TODO: remove\n";
-    break;
     case options_view_item::left_controls:
     {
       const auto cur_pos{m_window.getPosition()};
@@ -92,11 +87,6 @@ void options_view::increase_selected()
       assert(!to_str(get_starting_position(*this)).empty());
       m_options.set_starting_position(get_next(get_starting_position(m_options)));
       assert(!to_str(get_starting_position(*this)).empty());
-    break;
-    case options_view_item::left_color:
-    case options_view_item::right_color:
-      //m_options.set_left_player_color(get_other_color(m_options.get_left_player_color()));
-      std::clog << "TODO: remove\n";
     break;
     case options_view_item::left_controls:
     {
@@ -230,9 +220,7 @@ bool options_view::process_events()
           case options_view_item::starting_position:
             increase_selected();
           break;
-          case options_view_item::left_color:
           case options_view_item::left_controls:
-          case options_view_item::right_color:
           case options_view_item::right_controls:
             set_selected(get_right_of(m_selected));
           break;
@@ -254,9 +242,7 @@ bool options_view::process_events()
           case options_view_item::starting_position:
             decrease_selected();
           break;
-          case options_view_item::left_color:
           case options_view_item::left_controls:
-          case options_view_item::right_color:
           case options_view_item::right_controls:
             set_selected(get_left_of(m_selected));
           break;
@@ -279,10 +265,8 @@ bool options_view::process_events()
       };
       if (is_in(mouse_screen_pos, m_layout.get_chess_board())) set_selected(options_view_item::starting_position);
       else if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) set_selected(options_view_item::game_speed);
-      else if (is_in(mouse_screen_pos, m_layout.get_left_color_value())) set_selected(options_view_item::left_color);
       else if (is_in(mouse_screen_pos, m_layout.get_left_controls_value())) set_selected(options_view_item::left_controls);
       else if (is_in(mouse_screen_pos, m_layout.get_music_volume_value())) set_selected(options_view_item::music_volume);
-      else if (is_in(mouse_screen_pos, m_layout.get_right_color_value())) set_selected(options_view_item::right_color);
       else if (is_in(mouse_screen_pos, m_layout.get_right_controls_value())) set_selected(options_view_item::right_controls);
       else if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) set_selected(options_view_item::sound_effects_volume);
       else if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) set_selected(options_view_item::starting_position);
@@ -339,8 +323,8 @@ void options_view::show()
 void show_bottom(options_view& v)
 {
   show_bottom_header(v);
-  show_bottom_left(v);
-  show_bottom_right(v);
+  show_lhs_row(v);
+  show_rhs_row(v);
 }
 
 void show_bottom_header(options_view& v)
@@ -362,26 +346,11 @@ void show_bottom_header(options_view& v)
     v.get_window().draw(text);
   }
   {
-    const auto& screen_rect = layout.get_color_label();
-    sf::RectangleShape rectangle;
-    set_rect(rectangle, screen_rect);
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::black)
-    );
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Color");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  {
     const auto& screen_rect = layout.get_controls_label();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
     rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
+      &get_strip(v.get_resources(), chess_color::black)
     );
     v.get_window().draw(rectangle);
 
@@ -393,27 +362,23 @@ void show_bottom_header(options_view& v)
   }
 }
 
-void show_bottom_left(options_view& v)
+void show_lhs_row(options_view& v)
 {
   const auto& layout = v.get_layout();
   {
     draw_panel(v, layout.get_left_label(), "Left", chess_color::black);
   }
-  /*
-  {
-    draw_panel(v, layout.get_left_color_value(), to_str(get_left_player_color(v.get_options())), chess_color::white);
-  }
-  */
   {
     draw_panel(
       v,
       layout.get_left_controls_value(),
-      to_str(get_physical_controller_type(v, side::lhs)), chess_color::black
+      to_str(get_physical_controller_type(v, side::lhs)),
+      chess_color::white
     );
   }
 }
 
-void show_bottom_right(options_view& v)
+void show_rhs_row(options_view& v)
 {
   const auto& layout = v.get_layout();
   // Label
@@ -432,23 +397,13 @@ void show_bottom_right(options_view& v)
     set_text_position(text, screen_rect);
     v.get_window().draw(text);
   }
-  /*
-  // color
-  {
-    draw_panel(
-      v,
-      layout.get_right_color_value(),
-      to_str(get_right_player_color(v.get_options())),
-      chess_color::black
-    );
-  }
-  */
   // controller
   {
     draw_panel(
       v,
       layout.get_right_controls_value(),
-      to_str(get_physical_controller_type(v, side::rhs)), chess_color::white
+      to_str(get_physical_controller_type(v, side::rhs)),
+      chess_color::black
     );
   }
 }
