@@ -332,21 +332,6 @@ void show_bottom_header(options_view& v)
 {
   const auto& layout = v.get_layout();
   {
-    const auto& screen_rect = layout.get_player_label();
-    sf::RectangleShape rectangle;
-    rectangle.setTexture(
-      &get_strip(v.get_resources(), chess_color::white)
-    );
-    set_rect(rectangle, screen_rect);
-    v.get_window().draw(rectangle);
-
-    sf::Text text;
-    v.set_text_style(text);
-    text.setString("Player");
-    set_text_position(text, screen_rect);
-    v.get_window().draw(text);
-  }
-  {
     const auto& screen_rect = layout.get_controls_label();
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
@@ -366,15 +351,6 @@ void show_bottom_header(options_view& v)
 void show_bottom_row(options_view& v, const side player_side)
 {
   const auto& layout{v.get_layout()};
-  // The label, i.e. 'Left' or 'Right'
-  {
-    draw_panel(
-      v,
-      layout.get_player_side_label(player_side),
-      to_str(player_side),
-      chess_color::black
-    );
-  }
   // The icon
   {
 

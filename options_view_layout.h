@@ -10,8 +10,8 @@
 
 /// The layout of the options view
 ///
-///   x                         x                       x
-///   1                         3                       5
+///   x   x                     x                    x  x
+///   1   2                     3                    4  5
 ///
 /// +------------------------------------------------------+
 /// |                                                      |
@@ -33,13 +33,13 @@
 /// |                     |             |                  |
 /// |                     +-------------+                  | y7
 /// |                                                      |
-/// | +-------------------------+------------------------+ | y8
-/// | | player                  | controls               | |
-/// | +-------------------------+------------------------+ | y9
-/// | | left                    | left_controls          | |
-/// | +-------------------------+------------------------+ | y10
-/// | | right                   | right_controls         | |
-/// | +-------------------------+------------------------+ | y11
+/// |     +------------------------------------------+     | y8
+/// |     |                 controls                 |     |
+/// |     +------------------------------------------+     | y9
+/// |     |                     |                    |     |
+/// |     |    left_controls    |   right_controls   |     |
+/// |     |                     |                    |     |
+/// |     +------------------------------------------+     | y10
 /// |                                                      |
 /// +------------------------------------------------------+
 ///
@@ -70,12 +70,8 @@ public:
 
   const screen_rect& get_chess_board() const noexcept { return m_chess_board; }
 
-
-  const screen_rect& get_player_label() const noexcept { return m_player_label; }
+  /// The word 'Controls'
   const screen_rect& get_controls_label() const noexcept { return m_controls_label; }
-
-  /// Get where it should say 'Left' or 'Right'
-  const screen_rect& get_player_side_label(const side player_side) const noexcept;
 
   /// The chosen type of controller for the LHS or RHS player
   const screen_rect& get_controller_type_value(const side player_side) const noexcept;
@@ -101,15 +97,7 @@ private:
 
   screen_rect m_chess_board;
 
-  screen_rect m_player_label;
-  screen_rect m_color_label;
   screen_rect m_controls_label;
-  screen_rect m_left_label;
-  screen_rect m_right_label;
-
-  screen_rect m_left_color_value;
-  screen_rect m_right_color_value;
-
   screen_rect m_left_controls_value;
   screen_rect m_right_controls_value;
 
