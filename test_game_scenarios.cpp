@@ -4,6 +4,10 @@
 #include <cassert>
 #include <iostream>
 
+#ifdef GAME_CONTROLLER_H
+#error 'game' must know nothing about 'game_controller'
+#endif
+
 /// Test scenarios expressed in chess notation
 void test_game_scenarios()
 {

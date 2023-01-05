@@ -10,6 +10,10 @@
 #include <iostream>
 #include <sstream>
 
+#ifdef GAME_CONTROLLER_H
+#error 'game' must know nothing about 'game_controller'
+#endif
+
 /// Test the game class
 void test_game_class()
 {

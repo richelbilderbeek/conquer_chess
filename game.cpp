@@ -18,6 +18,10 @@
 #include <random>
 #include <sstream>
 
+#ifdef GAME_CONTROLLER_H
+#error 'game' must know nothing about 'game_controller'
+#endif
+
 game::game(
   const game_options& go,
   const lobby_options& lo
