@@ -9,7 +9,6 @@
 std::optional<fonts> game_resources::m_fonts;
 std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
-songs game_resources::m_songs = songs();
 std::optional<sound_effects> game_resources::m_sound_effects = {};
 std::optional<textures> game_resources::m_textures = {};
 

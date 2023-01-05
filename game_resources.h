@@ -82,7 +82,7 @@ private:
   static std::optional<loading_screen_textures> m_loading_screen_textures;
 
   /// Cannot do lazy loading here
-  static songs m_songs;
+  songs m_songs;
 
   /// Lazy loading
   static std::optional<sound_effects> m_sound_effects;
