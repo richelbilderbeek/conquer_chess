@@ -999,13 +999,6 @@ void test_game_view() //!OCLINT tests may be many
   #endif //NDEBUG
 }
 
-/*
-void toggle_left_player_color(game_view& view)
-{
-  toggle_left_player_color(view.get_game());
-}
-*/
-
 bool would_be_valid(
   const game_view& view,
   chess_color player_color

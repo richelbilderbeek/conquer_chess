@@ -644,16 +644,6 @@ void set_mouse_player_pos(
   assert(has_mouse_controller(c));
   const side player_side{get_mouse_user_player_side(c)};
   set_cursor_pos(c, s, player_side);
-  /*
-  add_user_input(
-    c,
-    create_mouse_move_action(
-      to_coordinat(s),
-      get_mouse_user_player_side(c)
-    )
-  );
-  assert(count_user_inputs(c) == 0);
-  */
   assert_eq(square(get_cursor_square(c, get_mouse_user_player_side(c))), s);
   assert(square(get_cursor_square(c, get_mouse_user_player_side(c))) == s);
 }

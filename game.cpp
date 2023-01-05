@@ -1009,13 +1009,6 @@ user_inputs convert_move_to_user_inputs(
   return inputs;
 }
 
-/*
-int count_user_inputs(const game& g)
-{
-  return count_user_inputs(get_user_inputs(g));
-}
-*/
-
 int count_piece_actions(const game& g)
 {
   return count_piece_actions(g, chess_color::white)
@@ -1172,19 +1165,6 @@ piece& get_closest_piece_to(
   return g.get_pieces()[get_index_of_closest_piece_to(g, coordinat)];
 }
 
-/*
-
-const physical_controller& get_physical_controller(const game& g, const side player)
-{
-  return ::get_physical_controller(g.get_controller(), player);
-}
-
-physical_controller_type get_physical_controller_type(const game& g, const side player)
-{
-  return get_physical_controller(g, player).get_type();
-}
-*/
-
 const game_coordinat& get_cursor_pos(
   const game& g,
   const game_controller& c,
@@ -1193,26 +1173,6 @@ const game_coordinat& get_cursor_pos(
 {
   return get_cursor_pos(c, get_player_side(g, cursor_color));
 }
-
-/*
-const game_coordinat& get_cursor_pos(
-  const game& g,
-  const side player_side
-)
-{
-  return g.get_controller().get_cursor_pos(player_side);
-}
-
-square get_cursor_square(
-  const game& g,
-  const side player_side
-)
-{
-  const game_coordinat cursor_pos{get_cursor_pos(g, player_side)};
-  assert(is_coordinat_on_board(cursor_pos));
-  return square(cursor_pos);
-}
-*/
 
 game get_default_game() noexcept
 {
@@ -1331,28 +1291,10 @@ chess_color get_keyboard_user_player_color(
   return get_player_color(g, get_keyboard_user_player_side(c));
 }
 
-/*
-sf::Keyboard::Key get_key_for_action(
-  const game& g,
-  const side player,
-  const action_number& action
-)
-{
-  return get_key_for_action(g.get_options(), player, action);
-}
-*/
-
 game get_kings_only_game() noexcept
 {
   return get_game_with_starting_position(starting_position_type::kings_only);
 }
-
-/*
-const game_view_layout& get_layout(const game& g) noexcept
-{
-  return g.get_layout();
-}
-*/
 
 chess_color get_mouse_user_player_color(
   const game& g,
@@ -1662,13 +1604,6 @@ void tick_until_idle(game& g)
   }
 }
 
-/*
-void toggle_left_player_color(game& g)
-{
-  toggle_left_player_color(g.get_game_options());
-}
-*/
-
 std::string to_pgn(const game& g)
 {
   return to_pgn(g.get_pieces());
@@ -1679,7 +1614,6 @@ std::ostream& operator<<(std::ostream& os, const game& g) noexcept
   os
     << "Time: " << g.get_time() << " ticks\n"
     << to_board_str(g.get_pieces(), board_to_text_options(true, true)) << '\n'
-    //<< "Layout: " << g.get_layout() << '\n'
     << "Options: " << g.get_game_options() << '\n'
     << "Replayer: " << g.get_replayer()
   ;

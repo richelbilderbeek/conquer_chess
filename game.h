@@ -32,9 +32,6 @@ public:
   );
 
   /// Get the game options
-  auto& get_game_options() noexcept { return m_game_options; }
-
-  /// Get the game options
   const auto& get_game_options() const noexcept { return m_game_options; }
 
   /// Get the game options
@@ -476,23 +473,12 @@ sf::Keyboard::Key get_key_for_action(const game& g, const side player, const act
 /// to be used in debugging
 game get_kings_only_game() noexcept;
 
-/*
-/// Get the layout
-const game_view_layout& get_layout(const game& g) noexcept;
-*/
-
 /// Get the color of the mouse using player
 /// Will throw if no user uses a mouse
 chess_color get_mouse_user_player_color(
   const game& g,
   const game_controller& c
 );
-
-/*
-/// Get the side of the controller that uses the mouse.
-/// Assumes there is one controller that uses the mouse
-side get_mouse_user_player_side(const game& g);
-*/
 
 /// Get the music volume as a percentage
 double get_music_volume_as_percentage(const game& g) noexcept;
@@ -568,11 +554,6 @@ const std::vector<piece>& get_pieces(const game& g) noexcept;
 /// Get the time in the game
 const delta_t& get_time(const game& g) noexcept;
 
-/*
-/// Get the game users' inputs
-const user_inputs& get_user_inputs(const game& g) noexcept;
-*/
-
 /// See if there is at least 1 piece selected
 /// @param g a game
 /// @param player the color of the player, which is white for player 1
@@ -632,11 +613,6 @@ bool piece_with_id_is_at(
 
 /// Call game::tick until all pieces are idle
 void tick_until_idle(game& g);
-
-/*
-/// Toggle the color of the active player
-void toggle_left_player_color(game& g);
-*/
 
 /// Convert the played game to pseudo-PGN notation
 /// Returns one string with newlines

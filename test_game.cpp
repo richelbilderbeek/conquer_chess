@@ -22,24 +22,10 @@ void test_game_class()
   ////////////////////////////////////////////////////////////////////////////
   // Member functions
   ////////////////////////////////////////////////////////////////////////////
-  /*
-  // game::get_layout, const
-  {
-    const auto g{get_default_game()};
-    assert(get_width(g.get_layout().get_board()) > 0);
-  }
-  */
-  // game::get_game_options, const
+  // game::get_game_options
   {
     const auto g{get_default_game()};
     assert(g.get_game_options().get_margin_width() >= 0);
-  }
-  // game::get_options, non-const
-  {
-    auto g{get_kings_only_game()};
-    auto& options = g.get_game_options();
-    options.set_starting_position(starting_position_type::before_en_passant);
-    assert(options.get_starting_position() == starting_position_type::before_en_passant);
   }
   // game::get_time
   {

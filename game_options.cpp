@@ -44,13 +44,6 @@ bool do_show_selected(const game_options& options) noexcept
   return options.do_show_selected();
 }
 
-/*
-chess_color get_left_player_color(const game_options& options) noexcept
-{
-  return options.get_left_player_color();
-}
-*/
-
 const volume& get_music_volume(const game_options& options) noexcept
 {
   return options.get_music_volume();
@@ -60,28 +53,6 @@ double get_music_volume_as_percentage(const game_options& options) noexcept
 {
   return get_music_volume(options).get_percentage();
 }
-
-/*
-chess_color get_player_color(
-  const game_options& options,
-  const side player
-) noexcept
-{
-  if (player == side::lhs) return get_left_player_color(options);
-  assert(player == side::rhs);
-  return get_right_player_color(options);
-}
-
-chess_color get_right_player_color(const game_options& options) noexcept
-{
-  return get_other_color(options.get_left_player_color());
-}
-
-void game_options::set_left_player_color(const chess_color c) noexcept
-{
-  m_left_player_color = c;
-}
-*/
 
 const volume& get_sound_effects_volume(const game_options& options) noexcept
 {
@@ -146,15 +117,6 @@ void test_game_options()
   }
 #endif // NDEBUG
 }
-
-/*
-void toggle_left_player_color(game_options& options)
-{
-  options.set_left_player_color(
-    get_other_color(options.get_left_player_color())
-  );
-}
-*/
 
 bool operator==(const game_options& lhs, const game_options& rhs) noexcept
 {

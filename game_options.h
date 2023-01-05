@@ -42,11 +42,6 @@ public:
   /// Get the game speed
   auto get_game_speed() const noexcept { return m_game_speed; }
 
-  /*
-  /// Color of the left player
-  auto get_left_player_color() const noexcept { return m_left_player_color; }
-  */
-
   /// Get the width of the margin in pixels
   auto get_margin_width() const noexcept { return m_margin_width; }
 
@@ -71,11 +66,6 @@ public:
   /// Set the game speed
   void set_game_speed(const game_speed speed) noexcept { m_game_speed = speed; }
 
-  /*
-  /// Set the color of the player
-  void set_left_player_color(const chess_color c) noexcept;
-  */
-
   /// Set the replayer
   void set_replayer(const replayer& r) noexcept { m_replayer = r; }
 
@@ -96,11 +86,6 @@ private:
 
   /// The game speed
   game_speed m_game_speed;
-
-  /*
-  /// Color of the left player
-  chess_color m_left_player_color;
-  */
 
   /// The width of the margin in pixels
   int m_margin_width;
@@ -128,27 +113,11 @@ game_options create_default_game_options() noexcept;
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& options) noexcept;
 
-/*
-/// Get the color of the left player
-chess_color get_left_player_color(const game_options& options) noexcept;
-*/
-
 /// Get the music volume
 const volume& get_music_volume(const game_options& options) noexcept;
 
 /// Get the music volume as a percentage
 double get_music_volume_as_percentage(const game_options& options) noexcept;
-
-/*
-/// Get the color of a player
-chess_color get_player_color(
-  const game_options& options,
-  const side player
-) noexcept;
-
-/// Get the color of the right player
-chess_color get_right_player_color(const game_options& options) noexcept;
-*/
 
 /// Get the sound effects volume
 const volume& get_sound_effects_volume(const game_options& options) noexcept;
@@ -163,11 +132,6 @@ starting_position_type get_starting_position(const game_options& options) noexce
 
 /// Test this class and its free functions
 void test_game_options();
-
-/*
-/// Toggle the color of the active player
-void toggle_left_player_color(game_options& options);
-*/
 
 bool operator==(const game_options& lhs, const game_options& rhs) noexcept;
 

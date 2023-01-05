@@ -23,7 +23,7 @@ physical_controller create_default_keyboard_controller() noexcept
   return create_left_keyboard_controller();
 }
 
-physical_controller create_default_mouse_controller(/* const side player */) noexcept
+physical_controller create_default_mouse_controller() noexcept
 {
   return physical_controller(
     physical_controller_type::mouse,
