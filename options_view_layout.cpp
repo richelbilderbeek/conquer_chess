@@ -10,13 +10,9 @@ options_view_layout::options_view_layout(
   const int margin_size
 ) : m_window_size{window_size}
 {
-  // There are 7 panels
-  // the chessboard is aimed to be 4 panels high
-  // the bottom is aimed to be 4 panels high
   const int n_vertical_margins{4};
-  // vus: vertical units
-  const int n_vus_top{4};
-  const int n_vus_chessboard{4};
+  const int n_vus_top{4}; // vus: vertical units
+  const int n_vus_chessboard{3};
   const int n_vus_controls{4};
   const int n_vus{
     n_vus_top
