@@ -1265,6 +1265,116 @@ void test_game_controller() //!OCLINT tests may be many
     const auto pos_after{get_cursor_pos(c, side::rhs)};
     assert(pos_before != pos_after);
   }
+  // #27: a2-a4 takes as long as b2-b3
+  {
+    game g;
+    game_controller c;
+    assert(is_piece_at(g, square("a2")));
+    assert(is_piece_at(g, square("b2")));
+    assert(!is_piece_at(g, square("a4")));
+    assert(!is_piece_at(g, square("a3")));
+    assert(!is_piece_at(g, square("b3")));
+    assert(count_selected_units(g, chess_color::white) == 0);
+    do_select_for_keyboard_player(g, c, square("a2"));
+    assert(count_selected_units(g, chess_color::white) == 1);
+    do_move_keyboard_player_piece(g, c, square("a4"));
+    assert(count_selected_units(g, chess_color::white) == 0);
+    do_select_for_keyboard_player(g, c, square("b2"));
+    do_move_keyboard_player_piece(g, c, square("b3"));
+    for (int i{0}; i!=5; ++i)
+    {
+      g.tick(delta_t(0.25));
+    }
+    assert(!is_piece_at(g, square("a2")));
+    assert(!is_piece_at(g, square("b2")));
+    assert(is_piece_at(g, square("a4")));
+    assert(!is_piece_at(g, square("a3")));
+    assert(is_piece_at(g, square("b3")));
+  }
+  // A piece under attack must have decreasing health
+  {
+    game_controller c;
+    game_options options{create_default_game_options()};
+    options.set_starting_position(starting_position_type::bishop_and_knight_end_game);
+    game g(options);
+    const double health_before{get_piece_at(g, square("d2")).get_health()};
+    // Let the white knight at c4 attack the black king at d2
+    assert(get_piece_at(g, square("d2")).get_color() == chess_color::black);
+    do_select_and_start_attack_keyboard_player_piece(
+      g,
+      c,
+      square("c4"),
+      square("d2")
+    );
+    assert(get_piece_at(g, square("d2")).get_color() == chess_color::black);
+    g.tick(delta_t(0.1));
+    assert(get_piece_at(g, square("d2")).get_color() == chess_color::black);
+    const double health_after{get_piece_at(g, square("d2")).get_health()};
+    assert(health_after < health_before);
+  }
+  // Cannot attack a piece of one's own color
+  {
+    game g;
+    game_controller c;
+    const double health_before{get_piece_at(g, square("e1")).get_health()};
+    // Let the white queen at d1 attack the white king at e1
+    do_select_and_start_attack_keyboard_player_piece(
+      g,
+      c,
+      square("d1"),
+      square("e1")
+    );
+    g.tick(delta_t(0.1));
+    const double health_after{get_piece_at(g, square("d2")).get_health()};
+    assert(health_after == health_before);
+  }
+  // When a piece is killed, the queen attacker moves to that square
+  {
+    game_controller c;
+    game_options options{create_default_game_options()};
+    options.set_starting_position(starting_position_type::before_scholars_mate);
+    game g(options);
+    do_select_and_start_attack_keyboard_player_piece(
+      g,
+      c,
+      square("h5"),
+      square("f7")
+    );
+    int cnt{0};
+    while (is_piece_at(g, square("f7"))
+      && get_piece_at(g, square("f7")).get_color() == chess_color::black
+    )
+    {
+      g.tick(delta_t(0.1));
+      ++cnt;
+      assert(cnt < 1000);
+    }
+    // Must be captured
+    assert(get_piece_at(g, square("f7")).get_color() == chess_color::white);
+  }
+  // #20: A queen cannot attack over pieces
+  {
+    game g;
+    game_controller c;
+    assert(is_piece_at(g, square("d1")));
+    do_select_and_start_attack_keyboard_player_piece(
+      g,
+      c,
+      square("d1"),
+      square("d8")
+    );
+    assert(is_piece_at(g, square("d1")));
+    const auto white_queen_id{get_piece_at(g, square("d1")).get_id()};
+    for (int i{0}; i!=10; ++i)
+    {
+      g.tick(delta_t(0.25));
+    }
+    const piece& p{get_piece_with_id(g, white_queen_id)};
+    assert(is_piece_at(g, square("d1")));
+    assert(p.get_messages().back() == message_type::cannot);
+    const auto messages{get_piece_at(g, square("d1")).get_messages()};
+    assert(messages.back() == message_type::cannot);
+  }
 
   #endif // NDEBUG // no tests in release
 }

@@ -1289,6 +1289,11 @@ piece& get_piece_at(game& g, const square& coordinat)
   return get_piece_at(g.get_pieces(), coordinat);
 }
 
+piece& get_piece_at(game& g, const std::string& square_str)
+{
+  return get_piece_at(g, square(square_str));
+}
+
 const piece& get_piece_at(const game& g, const std::string& coordinat_str)
 {
   return get_piece_at(g, square(coordinat_str));

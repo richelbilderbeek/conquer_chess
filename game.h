@@ -320,11 +320,15 @@ const piece& get_piece_at(const game& g, const square& coordinat);
 
 /// Get the piece that at that square,
 /// will throw if there is no piece
-const piece& get_piece_at(const game& g, const std::string& coordinat_str);
+const piece& get_piece_at(const game& g, const std::string& square_str);
 
 /// Get the piece that at that square,
 /// will throw if there is no piece
 piece& get_piece_at(game& g, const square& coordinat);
+
+/// Get the piece that at that square,
+/// will throw if there is no piece
+piece& get_piece_at(game& g, const std::string& square_str);
 
 /// Get the piece that moves
 piece& get_piece_that_moves(game& g, const chess_move& move);

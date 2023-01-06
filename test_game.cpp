@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include "asserts.h"
 #include "physical_controllers.h"
 #include "helper.h"
 #include "id.h"
@@ -37,86 +38,111 @@ void test_game_class()
   }
   // game::tick
   {
-    #ifdef FIX_ISSUE_78
-    // Rewrite to game test, without using the game_controller
     // #27: a2-a4 takes as long as b2-b3
     {
       game g;
-      game_controller c;
-      assert(is_piece_at(g, square("a2")));
-      assert(is_piece_at(g, square("b2")));
-      assert(!is_piece_at(g, square("a4")));
-      assert(!is_piece_at(g, square("a3")));
-      assert(!is_piece_at(g, square("b3")));
-      assert(count_selected_units(g, chess_color::white) == 0);
-      do_select_for_keyboard_player(g, c, square("a2"));
-      assert(count_selected_units(g, chess_color::white) == 1);
-      do_move_keyboard_player_piece(g, c, square("a4"));
-      assert(count_selected_units(g, chess_color::white) == 0);
-      do_select_for_keyboard_player(g, c, square("b2"));
-      do_move_keyboard_player_piece(g, c, square("b3"));
+      piece& first_pawn{get_piece_at(g, "a2")};
+      piece& second_pawn{get_piece_at(g, "b2")};
+      first_pawn.add_action(
+        piece_action(
+          chess_color::white,
+          piece_type::pawn,
+          piece_action_type::move,
+          "a2",
+          "a4"
+        )
+      );
+      second_pawn.add_action(
+        piece_action(
+          chess_color::white,
+          piece_type::pawn,
+          piece_action_type::move,
+          "b2",
+          "b3"
+        )
+      );
       for (int i{0}; i!=5; ++i)
       {
         g.tick(delta_t(0.25));
+        const bool at_start_1{first_pawn.get_current_square() == square("a2")};
+        const bool at_start_2{second_pawn.get_current_square() == square("b2")};
+        const bool at_goal_1{first_pawn.get_current_square() == square("a4")};
+        const bool at_goal_2{second_pawn.get_current_square() == square("b3")};
+        assert_eq(at_start_1, at_start_2);
+        assert_eq(at_goal_1, at_goal_2);
       }
-      assert(!is_piece_at(g, square("a2")));
-      assert(!is_piece_at(g, square("b2")));
       assert(is_piece_at(g, square("a4")));
-      assert(!is_piece_at(g, square("a3")));
       assert(is_piece_at(g, square("b3")));
     }
-    // A piece under attack must have decreasing health
+    // A piece under attack has decreasing health
     {
-      game_controller c;
       game_options options{create_default_game_options()};
       options.set_starting_position(starting_position_type::bishop_and_knight_end_game);
       game g(options);
-      const double health_before{get_piece_at(g, square("d2")).get_health()};
-      // Let the white knight at c4 attack the black king at d2
-      assert(get_piece_at(g, square("d2")).get_color() == chess_color::black);
-      do_select_and_start_attack_keyboard_player_piece(
-        g,
-        c,
-        square("c4"),
-        square("d2")
+      // Let the white knight at c4
+      // attack the black king at d2
+      const square from{"c4"};
+      const square to{"d2"};
+      assert(get_piece_at(g, from).get_color() == chess_color::white);
+      assert(get_piece_at(g, from).get_type() == piece_type::knight);
+      assert(get_piece_at(g, to).get_color() == chess_color::black);
+      assert(get_piece_at(g, to).get_type() == piece_type::king);
+      const double health_before{get_piece_at(g, to).get_health()};
+      piece& attacker{get_piece_at(g, from)};
+      attacker.add_action(
+        piece_action(
+          chess_color::white,
+          piece_type::knight,
+          piece_action_type::attack,
+          from,
+          to
+        )
       );
-      assert(get_piece_at(g, square("d2")).get_color() == chess_color::black);
-      g.tick(delta_t(0.1));
-      assert(get_piece_at(g, square("d2")).get_color() == chess_color::black);
-      const double health_after{get_piece_at(g, square("d2")).get_health()};
+      g.tick(delta_t(0.5));
+      const double health_after{get_piece_at(g, to).get_health()};
       assert(health_after < health_before);
     }
     // Cannot attack a piece of one's own color
     {
       game g;
-      game_controller c;
-      const double health_before{get_piece_at(g, square("e1")).get_health()};
-      // Let the white queen at d1 attack the white king at e1
-      do_select_and_start_attack_keyboard_player_piece(
-        g,
-        c,
-        square("d1"),
-        square("e1")
+      const square from{"e1"}; // White king
+      const square to{"d1"};   // White queen
+      const double health_before{get_piece_at(g, to).get_health()};
+      piece& attacker{get_piece_at(g, from)};
+      attacker.add_action(
+        piece_action(
+          chess_color::white,
+          piece_type::king,
+          piece_action_type::attack,
+          from,
+          to
+        )
       );
-      g.tick(delta_t(0.1));
-      const double health_after{get_piece_at(g, square("d2")).get_health()};
+      g.tick(delta_t(0.5));
+      const double health_after{get_piece_at(g, to).get_health()};
       assert(health_after == health_before);
     }
     // When a piece is killed, the queen attacker moves to that square
     {
-      game_controller c;
       game_options options{create_default_game_options()};
       options.set_starting_position(starting_position_type::before_scholars_mate);
       game g(options);
-      do_select_and_start_attack_keyboard_player_piece(
-        g,
-        c,
-        square("h5"),
-        square("f7")
+
+      const square from{"h5"}; // White queen
+      const square to{"f7"};   // Black pawn
+      piece& attacker{get_piece_at(g, from)};
+      attacker.add_action(
+        piece_action(
+          chess_color::white,
+          piece_type::queen,
+          piece_action_type::attack,
+          from,
+          to
+        )
       );
       int cnt{0};
-      while (is_piece_at(g, square("f7"))
-        && get_piece_at(g, square("f7")).get_color() == chess_color::black
+      while (is_piece_at(g, to)
+        && get_piece_at(g, to).get_color() == chess_color::black
       )
       {
         g.tick(delta_t(0.1));
@@ -124,32 +150,30 @@ void test_game_class()
         assert(cnt < 1000);
       }
       // Must be captured
-      assert(get_piece_at(g, square("f7")).get_color() == chess_color::white);
+      assert(get_piece_at(g, square(to)).get_color() == chess_color::white);
     }
+    #ifdef FIX_ISSUE_20
     // #20: A queen cannot attack over pieces
     {
       game g;
-      game_controller c;
-      assert(is_piece_at(g, square("d1")));
-      do_select_and_start_attack_keyboard_player_piece(
-        g,
-        c,
-        square("d1"),
-        square("d8")
+      const square from{"d1"}; // White queen
+      const square to{"d8"};   // Black queen
+      piece& attacker{get_piece_at(g, from)};
+      attacker.add_action(
+        piece_action(
+          chess_color::white,
+          piece_type::queen,
+          piece_action_type::attack,
+          from,
+          to
+        )
       );
-      assert(is_piece_at(g, square("d1")));
-      const auto white_queen_id{get_piece_at(g, square("d1")).get_id()};
-      for (int i{0}; i!=10; ++i)
-      {
-        g.tick(delta_t(0.25));
-      }
-      const piece& p{get_piece_with_id(g, white_queen_id)};
-      assert(is_piece_at(g, square("d1")));
-      assert(p.get_messages().back() == message_type::cannot);
-      const auto messages{get_piece_at(g, square("d1")).get_messages()};
+      g.tick(delta_t(0.1));
+      const auto messages{get_piece_at(g, from).get_messages()};
+      assert(!messages.empty());
       assert(messages.back() == message_type::cannot);
     }
-    #endif // FIX_ISSUE_78
+    #endif // FIX_ISSUE_20
   }
 #endif // NDEBUG // no tests in release
 }
