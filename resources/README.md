@@ -40,9 +40,9 @@ Image                                   |Image                                |T
 ![](protoss_white_pawn_portrait.png)    |`protoss_white_pawn_portrait.png`    |`starcraft_2__terran__a_white_pawn__symbol__symbolic__pawn`
 ![](protoss_black_queen_portrait.png)   |`protoss_black_queen_portrait.png`   |``
 ![](protoss_white_bishop_portrait.png)  |`protoss_white_bishop_portrait.png`  |`2328029875_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
-![](protoss_white_king_portrait.png)    |`protoss_white_king_portrait.png`    |``
+![](protoss_white_king_portrait.png)    |`protoss_white_king_portrait.png`    |.
 ![](protoss_white_knight_portrait.png)  |`protoss_white_knight_portrait.png`  |`3187757143_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
-![](protoss_white_pawn_portrait.png)    |`protoss_white_pawn_portrait.png`    |``
+![](protoss_white_pawn_portrait.png)    |`protoss_white_pawn_portrait.png`    |`3707600805_starcraft_2__terran__a_white_pawn__symbol__symbolic__pawn`
 ![](protoss_white_queen_portrait.png)   |`protoss_white_queen_portrait.png`   |`4196204352_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
 ![](protoss_white_rook_portrait.png)    |`protoss_white_rook_portrait.png`    |`758402339_starcraft_2__terran__a_white_bishop__symbol__symbolic__full_view__single_piece`
 ![](terran_black_bishop_portrait.png)   |`terran_black_bishop_portrait.png`  |``
