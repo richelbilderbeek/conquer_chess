@@ -10,6 +10,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+#include "textures.h"
 
 about_view::about_view()
 {
@@ -134,16 +135,20 @@ void show_subtitle_panel(about_view& v)
 void show_text_panel(about_view& v)
 {
   const auto screen_rect{v.get_layout().get_text()};
-  show_squares(
-    v.get_window(),
-    screen_rect,
-    v.get_resources()
+  sf::RectangleShape rectangle;
+  set_rect(rectangle, screen_rect);
+  rectangle.setTexture(
+    &v.get_resources().get_textures().get_game_option_icon(
+      options_view_item::starting_position
+    )
   );
+  rectangle.setFillColor(sf::Color(255, 255, 255, 128));
+  v.get_window().draw(rectangle);
   std::stringstream s;
   s
     << "Conquer Chess\n"
     << "\n"
-    << "(C) 2022 Richel Bilderbeek\n"
+    << "(C) 2022-2023 Richel Bilderbeek\n"
     << "\n"
     << "https://github.com/\n"
     << "  richelbilderbeek/\n"
@@ -158,8 +163,7 @@ void show_text_panel(about_view& v)
   text.setString(s.str().c_str());
   v.set_text_style(text);
   set_text_position(text, screen_rect);
-  text.setFillColor(sf::Color::Black);
-  text.setRotation(v.get_rotation());
+  text.setFillColor(sf::Color::White);
   v.get_window().draw(text);
 }
 
