@@ -72,9 +72,14 @@ void resource_loader::process_next(game_resources& resources)
         + std::to_string(resources.get_n_sound_effects())
         + " sound effects";
       break;
-    default:
     case 7:
-      assert(m_index == 7);
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_piece_textures())
+        + " piece textures";
+      break;
+    default:
+    case 8:
+      assert(m_index == 8);
       assert(m_index + 1 == get_n_items()); // If not, update get_m_items
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_textures())

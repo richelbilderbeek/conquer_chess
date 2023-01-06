@@ -11,77 +11,57 @@
 textures::textures()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
-    std::make_pair(std::ref(m_all_races_1), "all_races_1.jpeg"),
-    std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
-    std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
-    std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
-    std::make_pair(std::ref(m_game_speed), "game_speed.png"),
-    std::make_pair(std::ref(m_controls), "controls.png"),
-    std::make_pair(std::ref(m_mouse), "mouse.png"),
-    std::make_pair(std::ref(m_keyboard), "keyboard.png"),
-    std::make_pair(std::ref(m_music_volume), "music_volume.png"),
-    std::make_pair(std::ref(m_sound_effects_volume), "sound_effects_volume.png"),
-    std::make_pair(std::ref(m_starting_position), "starting_position.jpeg"),
-    std::make_pair(std::ref(m_black_bishop), "bb.png"),
-    std::make_pair(std::ref(m_black_bishop_portrait), "bb_portrait.png"),
-    std::make_pair(std::ref(m_black_bishop_with_contour), "bb_with_contour.png"),
-    std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
-    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
-    std::make_pair(std::ref(m_ready_no), "ready_no.png"),
-    std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
-    std::make_pair(std::ref(m_black_king), "kb.png"),
-    std::make_pair(std::ref(m_black_king_portrait), "kb_portrait.png"),
-    std::make_pair(std::ref(m_black_king_with_contour), "kb_with_contour.png"),
-    std::make_pair(std::ref(m_black_knight), "nb.png"),
-    std::make_pair(std::ref(m_black_knight_portrait), "nb_portrait.png"),
-    std::make_pair(std::ref(m_black_knight_with_contour), "nb_with_contour.png"),
-    std::make_pair(std::ref(m_black_pawn), "pb.png"),
-    std::make_pair(std::ref(m_black_pawn_portrait), "pb_portrait.png"),
-    std::make_pair(std::ref(m_black_pawn_with_contour), "pb_with_contour.png"),
-    std::make_pair(std::ref(m_black_queen), "qb.png"),
-    std::make_pair(std::ref(m_black_queen_portrait), "qb_portrait.png"),
-    std::make_pair(std::ref(m_black_queen_with_contour), "qb_with_contour.png"),
-    std::make_pair(std::ref(m_black_rook), "rb.png"),
-    std::make_pair(std::ref(m_black_rook_portrait), "rb_portrait_2.png"),
-    std::make_pair(std::ref(m_black_rook_with_contour), "rb_with_contour.png"),
-    std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
-    std::make_pair(std::ref(m_dark_square), "d.png"),
-    std::make_pair(std::ref(m_dark_white_square), "d_white.png"),
-    std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
     std::make_pair(std::ref(m_action_attack), "icon_attack.png"),
     std::make_pair(std::ref(m_action_castle_kingside), "icon_castle_kingside.png"),
     std::make_pair(std::ref(m_action_castle_queenside), "icon_castle_queenside.png"),
     std::make_pair(std::ref(m_action_en_passant), "icon_attack.png"),
     std::make_pair(std::ref(m_action_move), "icon_move.png"),
+    std::make_pair(std::ref(m_action_promote_to_bishop), "icon_promote_to_bishop.png"),
+    std::make_pair(std::ref(m_action_promote_to_knight), "icon_promote_to_knight.png"),
+    std::make_pair(std::ref(m_action_promote_to_queen), "icon_promote_to_queen.png"),
+    std::make_pair(std::ref(m_action_promote_to_rook), "icon_promote_to_rook.png"),
     std::make_pair(std::ref(m_action_select), "icon_select.png"),
     std::make_pair(std::ref(m_action_unselect), "icon_unselect.png"),
-    std::make_pair(std::ref(m_light_strip), "light_strip.png"),
+    std::make_pair(std::ref(m_all_races_1), "all_races_1.jpeg"),
+    std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
+    std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
+    std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
+    std::make_pair(std::ref(m_black_bishop_portrait), "classic_black_bishop_portrait.png"),
+    std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
+    std::make_pair(std::ref(m_black_king_portrait), "classic_black_king_portrait.png"),
+    std::make_pair(std::ref(m_black_knight_portrait), "classic_black_knight_portrait.png"),
+    std::make_pair(std::ref(m_black_pawn_portrait), "classic_black_pawn_portrait.png"),
+    std::make_pair(std::ref(m_black_queen_portrait), "classic_black_queen_portrait.png"),
+    std::make_pair(std::ref(m_black_rook_portrait), "classic_black_rook_portrait_2.png"),
+    std::make_pair(std::ref(m_controls), "controls.png"),
+    std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
+    std::make_pair(std::ref(m_dark_square), "d.png"),
+    std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
+    std::make_pair(std::ref(m_dark_white_square), "d_white.png"),
+    std::make_pair(std::ref(m_game_speed), "game_speed.png"),
+    std::make_pair(std::ref(m_keyboard), "keyboard.png"),
     std::make_pair(std::ref(m_light_black_square), "l_black.png"),
     std::make_pair(std::ref(m_light_square), "l.png"),
+    std::make_pair(std::ref(m_light_strip), "light_strip.png"),
     std::make_pair(std::ref(m_light_white_square), "l_white.png"),
+    std::make_pair(std::ref(m_mouse), "mouse.png"),
+    std::make_pair(std::ref(m_music_volume), "music_volume.png"),
     std::make_pair(std::ref(m_protoss_head), "protoss_head.jpeg"),
+    std::make_pair(std::ref(m_ready_no), "ready_no.png"),
+    std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
+    std::make_pair(std::ref(m_sound_effects_volume), "sound_effects_volume.png"),
+    std::make_pair(std::ref(m_starting_position), "starting_position.jpeg"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
     std::make_pair(std::ref(m_terran_head), "terran_head.jpeg"),
-    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg"),
     std::make_pair(std::ref(m_title), "title.png"),
-    std::make_pair(std::ref(m_white_bishop), "bw.png"),
-    std::make_pair(std::ref(m_white_bishop_portrait), "bw_portrait.png"),
-    std::make_pair(std::ref(m_white_bishop_with_contour), "bw_with_contour.png"),
-    std::make_pair(std::ref(m_white_king), "kw.png"),
-    std::make_pair(std::ref(m_white_king_portrait), "kw_portrait.png"),
-    std::make_pair(std::ref(m_white_king_with_contour), "kw_with_contour.png"),
-    std::make_pair(std::ref(m_white_knight), "nw.png"),
-    std::make_pair(std::ref(m_white_knight_portrait), "nw_portrait.png"),
-    std::make_pair(std::ref(m_white_knight_with_contour), "nw_with_contour.png"),
-    std::make_pair(std::ref(m_white_pawn), "pw.png"),
-    std::make_pair(std::ref(m_white_pawn_portrait), "pw_portrait.png"),
-    std::make_pair(std::ref(m_white_pawn_with_contour), "pw_with_contour.png"),
-    std::make_pair(std::ref(m_white_queen), "qw.png"),
-    std::make_pair(std::ref(m_white_queen_portrait), "qw_portrait.png"),
-    std::make_pair(std::ref(m_white_queen_with_contour), "qw_with_contour.png"),
-    std::make_pair(std::ref(m_white_rook), "rw.png"),
-    std::make_pair(std::ref(m_white_rook_portrait), "rw_portrait.png"),
-    std::make_pair(std::ref(m_white_rook_with_contour), "rw_with_contour.png")
+    std::make_pair(std::ref(m_white_bishop_portrait), "classic_white_bishop_portrait.png"),
+    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
+    std::make_pair(std::ref(m_white_king_portrait), "classic_white_king_portrait.png"),
+    std::make_pair(std::ref(m_white_knight_portrait), "classic_white_knight_portrait.png"),
+    std::make_pair(std::ref(m_white_pawn_portrait), "classic_white_pawn_portrait.png"),
+    std::make_pair(std::ref(m_white_queen_portrait), "classic_white_queen_portrait.png"),
+    std::make_pair(std::ref(m_white_rook_portrait), "classic_white_rook_portrait.png"),
+    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg")
   };
   for (const auto& p: v)
   {
@@ -96,10 +76,7 @@ textures::textures()
   }
 }
 
-sf::Texture& textures::get_action_icon(
-  const chess_color color,
-  const piece_action_type t
-) noexcept
+sf::Texture& textures::get_action_icon(const piece_action_type t) noexcept
 {
   switch(t)
   {
@@ -114,13 +91,13 @@ sf::Texture& textures::get_action_icon(
     case piece_action_type::move:
       return m_action_move;
     case piece_action_type::promote_to_bishop:
-      return get_piece(color, piece_type::bishop);
+      return m_action_promote_to_bishop;
     case piece_action_type::promote_to_knight:
-      return get_piece(color, piece_type::knight);
+      return m_action_promote_to_knight;
     case piece_action_type::promote_to_queen:
-      return get_piece(color, piece_type::queen);
+      return m_action_promote_to_queen;
     case piece_action_type::promote_to_rook:
-      return get_piece(color, piece_type::rook);
+      return m_action_promote_to_rook;
     case piece_action_type::select:
       return m_action_select;
     case piece_action_type::unselect:
@@ -214,6 +191,7 @@ sf::Texture& textures::get_occupied_square(
   return m_dark_black_square;
 }
 
+/*
 sf::Texture& textures::get_piece(
   const chess_color color,
   const piece_type type
@@ -241,6 +219,7 @@ sf::Texture& textures::get_piece(
     return m_white_rook_with_contour;
   }
 }
+*/
 
 sf::Texture& textures::get_piece_portrait(
   const chess_color color,
@@ -305,13 +284,4 @@ sf::Texture& textures::get_strip(const chess_color color) noexcept
       return m_light_strip;
   }
 }
-
-void test_textures()
-{
-  #ifndef NDEBUG // no tests in release
-  textures t;
-  assert(t.get_square(chess_color::black).getSize().x > 0.0);
-  #endif
-}
-
 #endif // LOGIC_ONLY

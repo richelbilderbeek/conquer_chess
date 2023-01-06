@@ -1,13 +1,67 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/countdown.ogg</file>
+        <file>resources/16114_FuturistFixed-width.ttf</file>
+        <file>resources/all_races_1.jpeg</file>
+        <file>resources/all_races_2.jpeg</file>
+        <file>resources/all_races_3.jpeg</file>
+        <file>resources/all_races_4.jpeg</file>
+        <file>resources/arial.ttf</file>
         <file>resources/attacking_high.ogg</file>
         <file>resources/attacking_low.ogg</file>
         <file>resources/attacking_mid.ogg</file>
+        <file>resources/aura.ogg</file>
+        <file>resources/black_chess_color.png</file>
+        <file>resources/bliss.ogg</file>
+        <file>resources/classic_black_bishop.png</file>
+        <file>resources/classic_black_bishop_portrait.png</file>
+        <file>resources/classic_black_bishop_with_contour.png</file>
+        <file>resources/classic_black_king.png</file>
+        <file>resources/classic_black_king_portrait.png</file>
+        <file>resources/classic_black_king_with_contour.png</file>
+        <file>resources/classic_black_knight.png</file>
+        <file>resources/classic_black_knight_portrait.png</file>
+        <file>resources/classic_black_knight_with_contour.png</file>
+        <file>resources/classic_black_pawn.png</file>
+        <file>resources/classic_black_pawn_portrait.png</file>
+        <file>resources/classic_black_pawn_with_contour.png</file>
+        <file>resources/classic_black_queen.png</file>
+        <file>resources/classic_black_queen_portrait.png</file>
+        <file>resources/classic_black_queen_with_contour.png</file>
+        <file>resources/classic_black_rook.png</file>
+        <file>resources/classic_black_rook_portrait_1.png</file>
+        <file>resources/classic_black_rook_portrait_2.png</file>
+        <file>resources/classic_black_rook_with_contour.png</file>
+        <file>resources/classic_white_bishop.png</file>
+        <file>resources/classic_white_bishop_portrait.png</file>
+        <file>resources/classic_white_bishop_with_contour.png</file>
+        <file>resources/classic_white_king.png</file>
+        <file>resources/classic_white_king_portrait.png</file>
+        <file>resources/classic_white_king_with_contour.png</file>
+        <file>resources/classic_white_knight.png</file>
+        <file>resources/classic_white_knight_portrait.png</file>
+        <file>resources/classic_white_knight_with_contour.png</file>
+        <file>resources/classic_white_pawn.png</file>
+        <file>resources/classic_white_pawn_portrait.png</file>
+        <file>resources/classic_white_pawn_with_contour.png</file>
+        <file>resources/classic_white_queen.png</file>
+        <file>resources/classic_white_queen_portrait.png</file>
+        <file>resources/classic_white_queen_with_contour.png</file>
+        <file>resources/classic_white_rook.png</file>
+        <file>resources/classic_white_rook_portrait.png</file>
+        <file>resources/classic_white_rook_with_contour.png</file>
+        <file>resources/CodeSquaredRegular-AYRg.ttf</file>
+        <file>resources/controls.png</file>
+        <file>resources/countdown.ogg</file>
+        <file>resources/d.png</file>
+        <file>resources/d_black.png</file>
+        <file>resources/d_white.png</file>
+        <file>resources/dark_strip.png</file>
         <file>resources/done_high.ogg</file>
         <file>resources/done_low.ogg</file>
         <file>resources/done_mid.ogg</file>
         <file>resources/faring_into_battle.ogg</file>
+        <file>resources/game_speed.png</file>
+        <file>resources/heroes.ogg</file>
         <file>resources/heu_high.ogg</file>
         <file>resources/heu_low.ogg</file>
         <file>resources/heu_mid.ogg</file>
@@ -21,102 +75,52 @@
         <file>resources/i_cant_high.ogg</file>
         <file>resources/i_cant_low.ogg</file>
         <file>resources/i_cant_mid.ogg</file>
+        <file>resources/icon_attack.png</file>
+        <file>resources/icon_castle_kingside.png</file>
+        <file>resources/icon_castle_queenside.png</file>
+        <file>resources/icon_move.png</file>
+        <file>resources/icon_promote_to_bishop.png</file>
+        <file>resources/icon_promote_to_knight.png</file>
+        <file>resources/icon_promote_to_queen.png</file>
+        <file>resources/icon_promote_to_rook.png</file>
+        <file>resources/icon_select.png</file>
+        <file>resources/icon_unselect.png</file>
         <file>resources/its_time_to_rock.ogg</file>
         <file>resources/jumping_into_battle.ogg</file>
+        <file>resources/keyboard.png</file>
+        <file>resources/l.png</file>
+        <file>resources/l_black.png</file>
+        <file>resources/l_white.png</file>
         <file>resources/lets_rule.ogg</file>
+        <file>resources/light_strip.png</file>
+        <file>resources/mouse.png</file>
         <file>resources/moving_forward.ogg</file>
-        <file>resources/aura.ogg</file>
-        <file>resources/bliss.ogg</file>
-        <file>resources/heroes.ogg</file>
-        <file>resources/silence.ogg</file>
-        <file>resources/soothing.ogg</file>
-        <file>resources/wonderful_time.ogg</file>
+        <file>resources/music_volume.png</file>
         <file>resources/no_high.ogg</file>
         <file>resources/no_low.ogg</file>
         <file>resources/no_mid.ogg</file>
         <file>resources/nope_high.ogg</file>
         <file>resources/nope_low.ogg</file>
         <file>resources/nope_mid.ogg</file>
+        <file>resources/protoss_head.jpeg</file>
+        <file>resources/qm.png</file>
+        <file>resources/quit.png</file>
+        <file>resources/ready_no.png</file>
+        <file>resources/ready_yes.png</file>
+        <file>resources/silence.ogg</file>
+        <file>resources/soothing.ogg</file>
+        <file>resources/sound_effects_volume.png</file>
+        <file>resources/starting_position.jpeg</file>
+        <file>resources/subtitle.png</file>
+        <file>resources/t.png</file>
+        <file>resources/terran_head.jpeg</file>
+        <file>resources/title.png</file>
         <file>resources/to_rule_is_to_act.ogg</file>
+        <file>resources/white_chess_color.png</file>
+        <file>resources/wonderful_time.ogg</file>
         <file>resources/yes_high.ogg</file>
         <file>resources/yes_low.ogg</file>
         <file>resources/yes_mid.ogg</file>
-        <file>resources/bb.png</file>
-        <file>resources/bb_portrait.png</file>
-        <file>resources/bb_with_contour.png</file>
-        <file>resources/bw.png</file>
-        <file>resources/bw_portrait.png</file>
-        <file>resources/bw_with_contour.png</file>
-        <file>resources/d_black.png</file>
-        <file>resources/d.png</file>
-        <file>resources/d_white.png</file>
-        <file>resources/dark_strip.png</file>
-        <file>resources/kb.png</file>
-        <file>resources/kb_portrait.png</file>
-        <file>resources/kb_with_contour.png</file>
-        <file>resources/kw.png</file>
-        <file>resources/kw_portrait.png</file>
-        <file>resources/kw_with_contour.png</file>
-        <file>resources/l_black.png</file>
-        <file>resources/l.png</file>
-        <file>resources/l_white.png</file>
-        <file>resources/light_strip.png</file>
-        <file>resources/nb.png</file>
-        <file>resources/nb_portrait.png</file>
-        <file>resources/nb_with_contour.png</file>
-        <file>resources/nw.png</file>
-        <file>resources/nw_portrait.png</file>
-        <file>resources/nw_with_contour.png</file>
-        <file>resources/pb.png</file>
-        <file>resources/pb_portrait.png</file>
-        <file>resources/pb_with_contour.png</file>
-        <file>resources/pw.png</file>
-        <file>resources/pw_portrait.png</file>
-        <file>resources/pw_with_contour.png</file>
-        <file>resources/qb.png</file>
-        <file>resources/qb_portrait.png</file>
-        <file>resources/qb_with_contour.png</file>
-        <file>resources/qm.png</file>
-        <file>resources/quit.png</file>
-        <file>resources/qw.png</file>
-        <file>resources/qw_portrait.png</file>
-        <file>resources/qw_with_contour.png</file>
-        <file>resources/rb.png</file>
-        <file>resources/rb_portrait_1.png</file>
-        <file>resources/rb_portrait_2.png</file>
-        <file>resources/rb_with_contour.png</file>
-        <file>resources/rw.png</file>
-        <file>resources/rw_portrait.png</file>
-        <file>resources/rw_with_contour.png</file>
-        <file>resources/subtitle.png</file>
-        <file>resources/t.png</file>
-        <file>resources/title.png</file>
-        <file>resources/arial.ttf</file>
-        <file>resources/CodeSquaredRegular-AYRg.ttf</file>
-        <file>resources/icon_attack.png</file>
-        <file>resources/icon_castle_kingside.png</file>
-        <file>resources/icon_castle_queenside.png</file>
-        <file>resources/icon_move.png</file>
-        <file>resources/icon_select.png</file>
-        <file>resources/icon_unselect.png</file>
-        <file>resources/16114_FuturistFixed-width.ttf</file>
-        <file>resources/ready_yes.png</file>
-        <file>resources/ready_no.png</file>
-        <file>resources/black_chess_color.png</file>
-        <file>resources/white_chess_color.png</file>
-        <file>resources/protoss_head.jpeg</file>
-        <file>resources/terran_head.jpeg</file>
         <file>resources/zerg_head.jpeg</file>
-        <file>resources/keyboard.png</file>
-        <file>resources/game_speed.png</file>
-        <file>resources/controls.png</file>
-        <file>resources/music_volume.png</file>
-        <file>resources/sound_effects_volume.png</file>
-        <file>resources/starting_position.jpeg</file>
-        <file>resources/mouse.png</file>
-        <file>resources/all_races_1.jpeg</file>
-        <file>resources/all_races_2.jpeg</file>
-        <file>resources/all_races_3.jpeg</file>
-        <file>resources/all_races_4.jpeg</file>
     </qresource>
 </RCC>

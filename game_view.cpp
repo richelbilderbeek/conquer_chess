@@ -325,7 +325,6 @@ void show_controls(
 )
 {
   const auto& layout{view.get_layout()};
-  const auto player_color{get_player_color(view, player)};
   const std::vector<sf::Color> colors{
     sf::Color(255,  0,  0),
     sf::Color(255,128,  0),
@@ -401,7 +400,7 @@ void show_controls(
       {
         const piece_action_type action{maybe_action.value()};
         sprite.setTexture(
-          &view.get_resources().get_textures().get_action_icon(player_color, action)
+          &view.get_resources().get_textures().get_action_icon(action)
         );
         view.get_window().draw(sprite);
       }

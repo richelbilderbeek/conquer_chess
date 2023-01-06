@@ -13,6 +13,7 @@
 #include "loading_screen_fonts.h"
 #include "loading_screen_textures.h"
 #include "loading_screen_songs.h"
+#include "piece_textures.h"
 
 #include <optional>
 
@@ -39,9 +40,13 @@ public:
   int get_n_loading_screen_fonts() noexcept;
   int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
+  int get_n_piece_textures() noexcept;
   int get_n_songs() noexcept;
   int get_n_sound_effects() noexcept;
   int get_n_textures() noexcept;
+
+  // Lazy loading
+  piece_textures& get_piece_textures() noexcept;
 
   // Lazy loading
   songs& get_songs() noexcept;
@@ -65,6 +70,9 @@ private:
 
   /// Lazy loading
   static std::optional<loading_screen_textures> m_loading_screen_textures;
+
+  /// Lazy loading
+  static std::optional<piece_textures> m_piece_textures;
 
   /// Lazy loading
   static songs * m_songs;

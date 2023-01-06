@@ -10,6 +10,7 @@ std::optional<fonts> game_resources::m_fonts;
 std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
+std::optional<piece_textures> game_resources::m_piece_textures = {};
 songs * game_resources::m_songs{nullptr};
 sound_effects * game_resources::m_sound_effects{nullptr};
 std::optional<textures> game_resources::m_textures = {};
@@ -85,6 +86,11 @@ int game_resources::get_n_loading_screen_textures() noexcept
   return get_loading_screen_textures().get_n_textures();
 }
 
+int game_resources::get_n_piece_textures() noexcept
+{
+  return get_piece_textures().get_n_textures();
+}
+
 int game_resources::get_n_songs() noexcept
 {
   return get_songs().get_n_songs();
@@ -106,7 +112,7 @@ sf::Texture& get_piece(
   const piece_type type
 )
 {
-  return r.get_textures().get_piece(color, type);
+  return r.get_piece_textures().get_piece(color, type);
 }
 
 sf::Texture& get_piece_portrait(
@@ -116,6 +122,13 @@ sf::Texture& get_piece_portrait(
 )
 {
   return r.get_textures().get_piece_portrait(color, type);
+}
+
+piece_textures& game_resources::get_piece_textures() noexcept
+{
+  if (!m_piece_textures) m_piece_textures = piece_textures();
+  assert(m_piece_textures);
+  return m_piece_textures.value();
 }
 
 songs& game_resources::get_songs() noexcept

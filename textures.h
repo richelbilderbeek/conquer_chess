@@ -27,10 +27,7 @@ public:
   ) noexcept;
 
   /// Get the icon for an action
-  sf::Texture& get_action_icon(
-    const chess_color color,
-    const piece_action_type t
-  ) noexcept;
+  sf::Texture& get_action_icon(const piece_action_type t) noexcept;
 
   sf::Texture& get_all_races_1() noexcept { return m_all_races_1; }
   sf::Texture& get_all_races_2() noexcept { return m_all_races_2; }
@@ -46,12 +43,6 @@ public:
   /// Get an icon that accompanies a game option,
   /// to be used in the Options screen
   sf::Texture& get_game_option_icon(const options_view_item i) noexcept;
-
-  /// Get texture of a piece
-  sf::Texture& get_piece(
-    const chess_color color,
-    const piece_type type
-  );
 
   /// Get texture of a portrait of a piece
   sf::Texture& get_piece_portrait(
@@ -87,7 +78,6 @@ private:
   sf::Texture m_black_chess_color;
   sf::Texture m_white_chess_color;
 
-  // Options screen textures
   sf::Texture m_game_speed;
   sf::Texture m_controls;
   sf::Texture m_music_volume;
@@ -100,24 +90,12 @@ private:
   sf::Texture m_ready_no;
   sf::Texture m_ready_yes;
 
-  sf::Texture m_black_bishop;
   sf::Texture m_black_bishop_portrait;
-  sf::Texture m_black_bishop_with_contour;
-  sf::Texture m_black_king;
   sf::Texture m_black_king_portrait;
-  sf::Texture m_black_king_with_contour;
-  sf::Texture m_black_knight;
   sf::Texture m_black_knight_portrait;
-  sf::Texture m_black_knight_with_contour;
-  sf::Texture m_black_pawn;
   sf::Texture m_black_pawn_portrait;
-  sf::Texture m_black_pawn_with_contour;
-  sf::Texture m_black_queen;
   sf::Texture m_black_queen_portrait;
-  sf::Texture m_black_queen_with_contour;
-  sf::Texture m_black_rook;
   sf::Texture m_black_rook_portrait;
-  sf::Texture m_black_rook_with_contour;
   sf::Texture m_dark_black_square;
   sf::Texture m_dark_square;
   sf::Texture m_dark_white_square;
@@ -128,6 +106,10 @@ private:
   sf::Texture m_action_castle_queenside;
   sf::Texture m_action_en_passant;
   sf::Texture m_action_move;
+  sf::Texture m_action_promote_to_bishop;
+  sf::Texture m_action_promote_to_knight;
+  sf::Texture m_action_promote_to_queen;
+  sf::Texture m_action_promote_to_rook;
   sf::Texture m_action_select;
   sf::Texture m_action_unselect;
 
@@ -141,24 +123,13 @@ private:
   sf::Texture m_subtitle;
   sf::Texture m_terran_head;
   sf::Texture m_title;
-  sf::Texture m_white_bishop;
   sf::Texture m_white_bishop_portrait;
-  sf::Texture m_white_bishop_with_contour;
-  sf::Texture m_white_king;
   sf::Texture m_white_king_portrait;
-  sf::Texture m_white_king_with_contour;
-  sf::Texture m_white_knight;
   sf::Texture m_white_knight_portrait;
-  sf::Texture m_white_knight_with_contour;
-  sf::Texture m_white_pawn;
   sf::Texture m_white_pawn_portrait;
-  sf::Texture m_white_pawn_with_contour;
-  sf::Texture m_white_queen;
   sf::Texture m_white_queen_portrait;
-  sf::Texture m_white_queen_with_contour;
-  sf::Texture m_white_rook;
   sf::Texture m_white_rook_portrait;
-  sf::Texture m_white_rook_with_contour;
+
   sf::Texture m_zerg_head;
 };
 

@@ -49,6 +49,7 @@ HEADERS += \
     $$PWD/piece_action.h \
     $$PWD/piece_action_type.h \
     $$PWD/piece_actions.h \
+    $$PWD/piece_textures.h \
     $$PWD/piece_type.h \
     $$PWD/pieces.h \
     $$PWD/played_game_view_layout.h \
@@ -120,6 +121,7 @@ SOURCES += \
     $$PWD/piece_action.cpp \
     $$PWD/piece_action_type.cpp \
     $$PWD/piece_actions.cpp \
+    $$PWD/piece_textures.cpp \
     $$PWD/piece_type.cpp \
     $$PWD/pieces.cpp \
     $$PWD/played_game_view_layout.cpp \
