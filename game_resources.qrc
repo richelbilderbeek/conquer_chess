@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>resources/countdown.ogg</file>
         <file>resources/attacking_high.ogg</file>
         <file>resources/attacking_low.ogg</file>
         <file>resources/attacking_mid.ogg</file>

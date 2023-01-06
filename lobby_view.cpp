@@ -23,6 +23,9 @@ lobby_view::lobby_view(const game_options& go)
   m_resources.get_songs().get_soothing().setVolume(
     get_music_volume_as_percentage(m_game_options)
   );
+  m_resources.get_sound_effects().set_master_volume(
+    m_game_options.get_sound_effects_volume()
+  );
   m_resources.get_songs().get_soothing().setLoop(true);
   m_resources.get_songs().get_soothing().play();
 
@@ -223,6 +226,8 @@ bool lobby_view::process_events()
   if (m_lhs_start && m_rhs_start && !m_clock.has_value())
   {
     m_clock = sf::Clock();
+    m_resources.get_sound_effects().play_countdown();
+
   }
   else if (!(m_lhs_start && m_rhs_start) && m_clock.has_value())
   {

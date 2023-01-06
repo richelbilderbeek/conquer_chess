@@ -25,6 +25,9 @@ menu_view::menu_view(
   m_resources.get_songs().get_bliss().setVolume(
     get_music_volume_as_percentage(m_game_options)
   );
+  m_resources.get_sound_effects().set_master_volume(
+    m_game_options.get_sound_effects_volume()
+  );
   m_resources.get_songs().get_bliss().setLoop(true);
   m_resources.get_songs().get_bliss().play();
 }
