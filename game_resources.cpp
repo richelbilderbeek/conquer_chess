@@ -11,7 +11,7 @@ std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
 songs * game_resources::m_songs{nullptr};
-std::optional<sound_effects> game_resources::m_sound_effects = {};
+sound_effects * game_resources::m_sound_effects{nullptr};
 std::optional<textures> game_resources::m_textures = {};
 
 game_resources::game_resources()
@@ -129,9 +129,9 @@ songs& game_resources::get_songs() noexcept
 
 sound_effects& game_resources::get_sound_effects() noexcept
 {
-  if (!m_sound_effects) m_sound_effects = sound_effects();
+  if (!m_sound_effects) m_sound_effects = new sound_effects();
   assert(m_sound_effects);
-  return m_sound_effects.value();
+  return *m_sound_effects;
 }
 
 textures& game_resources::get_textures() noexcept

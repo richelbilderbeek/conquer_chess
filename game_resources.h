@@ -92,7 +92,7 @@ private:
   static songs * m_songs;
 
   /// Lazy loading
-  static std::optional<sound_effects> m_sound_effects;
+  static sound_effects * m_sound_effects;
 
   /// Lazy loading
   static std::optional<textures> m_textures;
