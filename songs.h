@@ -9,7 +9,7 @@ class songs
 public:
   songs();
 
-  int get_n_songs() const noexcept { return sizeof(*this) / sizeof(m_ninja_gods); };
+  int get_n_songs() const noexcept { return sizeof(*this) / sizeof(m_bliss); };
 
   sf::Music& get_bliss() noexcept { return m_bliss; }
 
@@ -18,7 +18,6 @@ public:
 
 private:
   sf::Music m_bliss;
-  sf::Music m_ninja_gods;
   /*
   sf::Music m_aura;
   sf::Music m_heroes;
