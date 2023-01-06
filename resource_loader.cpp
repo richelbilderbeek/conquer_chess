@@ -39,23 +39,23 @@ void resource_loader::process_next(game_resources& resources)
       break;
     case 0:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_n_loading_screen_textures())
-        + " loading screen textures";
-      break;
-    case 1:
-      m_descriptor = "Loaded "
         + std::to_string(resources.get_n_loading_screen_fonts())
         + " loading screen fonts";
       break;
+    case 1:
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_loading_screen_songs())
+        + " loading screen songs";
+      break;
     case 2:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_n_fonts())
-        + " fonts";
+        + std::to_string(resources.get_n_loading_screen_textures())
+        + " loading screen textures";
       break;
     case 3:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_n_songs())
-        + " songs";
+        + std::to_string(resources.get_n_fonts())
+        + " fonts";
       break;
     case 4:
       m_descriptor = "Loaded "
@@ -64,12 +64,18 @@ void resource_loader::process_next(game_resources& resources)
       break;
     case 5:
       m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_songs())
+        + " songs";
+      break;
+    case 6:
+      m_descriptor = "Loaded "
         + std::to_string(resources.get_n_sound_effects())
         + " sound effects";
       break;
     default:
-    case 6:
-      assert(m_index == 6);
+    case 7:
+      assert(m_index == 7);
+      assert(m_index + 1 == get_n_items()); // If not, update get_m_items
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_textures())
         + " textures";

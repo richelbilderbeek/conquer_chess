@@ -11,6 +11,11 @@
 
 loading_view::loading_view()
 {
+  m_resources.get_loading_screen_songs().get_heroes().setVolume(
+    10
+  );
+  m_resources.get_loading_screen_songs().get_heroes().setLoop(true);
+  m_resources.get_loading_screen_songs().get_heroes().play();
 
 }
 
@@ -60,6 +65,7 @@ void loading_view::exec()
 void loading_view::exec_menu()
 {
   m_window.setVisible(false);
+  m_resources.get_loading_screen_songs().get_heroes().stop();
   menu_view v(
     create_default_game_options(),
     create_two_keyboard_controllers()

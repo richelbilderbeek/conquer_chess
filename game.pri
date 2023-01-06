@@ -30,6 +30,7 @@ HEADERS += \
     $$PWD/key_bindings.h \
     $$PWD/layout.h \
     $$PWD/loading_screen_fonts.h \
+    $$PWD/loading_screen_songs.h \
     $$PWD/loading_screen_textures.h \
     $$PWD/lobby_options.h \
     $$PWD/lobby_view_item.h \
@@ -100,6 +101,7 @@ SOURCES += \
     $$PWD/key_bindings.cpp \
     $$PWD/layout.cpp \
     $$PWD/loading_screen_fonts.cpp \
+    $$PWD/loading_screen_songs.cpp \
     $$PWD/loading_screen_textures.cpp \
     $$PWD/lobby_options.cpp \
     $$PWD/lobby_view_item.cpp \

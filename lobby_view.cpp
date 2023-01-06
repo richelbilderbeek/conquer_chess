@@ -20,6 +20,11 @@ lobby_view::lobby_view(const game_options& go)
     m_lhs_start{false},
     m_rhs_start{false}
 {
+  m_resources.get_songs().get_soothing().setVolume(
+    get_music_volume_as_percentage(m_game_options)
+  );
+  m_resources.get_songs().get_soothing().setLoop(true);
+  m_resources.get_songs().get_soothing().play();
 
 }
 
@@ -69,6 +74,7 @@ void lobby_view::exec()
 void lobby_view::exec_game()
 {
   const auto cur_pos{m_window.getPosition()};
+  m_resources.get_songs().get_soothing().stop();
   m_window.setVisible(false);
   game_view view{
     game(m_game_options),
@@ -77,6 +83,7 @@ void lobby_view::exec_game()
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
+  m_resources.get_songs().get_soothing().play();
 }
 
 

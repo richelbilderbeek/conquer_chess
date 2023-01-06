@@ -93,6 +93,7 @@ void game_view::exec()
   }
 
   std::clog << collect_action_history(m_game) << '\n';
+  m_game_resources.get_songs().get_wonderful_time().stop();
 }
 
 const physical_controller& get_physical_controller(const game_view& view, const side player_side)

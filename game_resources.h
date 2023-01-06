@@ -12,6 +12,7 @@
 #include "songs.h"
 #include "loading_screen_fonts.h"
 #include "loading_screen_textures.h"
+#include "loading_screen_songs.h"
 
 #include <optional>
 
@@ -31,9 +32,12 @@ public:
   // Lazy loading
   loading_screen_textures& get_loading_screen_textures() noexcept;
 
+  // Lazy loading
+  loading_screen_songs& get_loading_screen_songs() noexcept;
 
   int get_n_fonts() noexcept;
   int get_n_loading_screen_fonts() noexcept;
+  int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
   int get_n_songs() noexcept;
   int get_n_sound_effects() noexcept;
@@ -79,10 +83,11 @@ private:
   static std::optional<loading_screen_fonts> m_loading_screen_fonts;
 
   /// Lazy loading
+  static loading_screen_songs * m_loading_screen_songs;
+
+  /// Lazy loading
   static std::optional<loading_screen_textures> m_loading_screen_textures;
 
-  // Cannot do lazy loading like this
-  //songs m_songs;
   /// Lazy loading
   static songs * m_songs;
 
