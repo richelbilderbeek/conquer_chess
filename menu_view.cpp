@@ -22,9 +22,11 @@ menu_view::menu_view(
     m_physical_controllers{controllers},
     m_selected{menu_view_item::start}
 {
-#ifdef DEMO_REPLAYER_ISSUE_22
-  m_options.set_replayer(replayer(replay(get_scholars_mate_as_pgn_str())));
-#endif // DEMO_REPLAYER_ISSUE_22
+  m_resources.get_songs().get_bliss().setVolume(
+    get_music_volume_as_percentage(m_game_options)
+  );
+  m_resources.get_songs().get_bliss().setLoop(true);
+  m_resources.get_songs().get_bliss().play();
 }
 
 void menu_view::exec()
@@ -84,12 +86,14 @@ void menu_view::exec_game()
 
 void menu_view::exec_lobby()
 {
+  m_resources.get_songs().get_bliss().stop();
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
   lobby_view view(m_game_options);
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);
+  m_resources.get_songs().get_bliss().play();
 }
 
 void menu_view::exec_options()

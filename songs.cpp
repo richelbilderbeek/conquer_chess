@@ -6,6 +6,7 @@
 songs::songs()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Music>, std::string>> v = {
+    std::make_pair(std::ref(m_bliss), "bliss.ogg"),
     std::make_pair(std::ref(m_ninja_gods), "ninja_gods.ogg"),
     std::make_pair(std::ref(m_wonderful_time), "wonderful_time.ogg")
     /*,
