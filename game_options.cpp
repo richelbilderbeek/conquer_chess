@@ -3,6 +3,7 @@
 #include "physical_controllers.h"
 #include "game_view_layout.h"
 #include "pieces.h"
+#include "lobby_options.h"
 
 #include <cassert>
 #include <iostream>
@@ -56,15 +57,6 @@ double get_music_volume_as_percentage(const game_options& options) noexcept
 const volume& get_sound_effects_volume(const game_options& options) noexcept
 {
   return options.get_sound_effects_volume();
-}
-
-std::vector<piece> get_starting_pieces(
-  const game_options& options
-) noexcept
-{
-  return get_starting_pieces(
-    get_starting_position(options)
-  );
 }
 
 starting_position_type get_starting_position(const game_options& options) noexcept

@@ -2,8 +2,8 @@
 #define GAME_OPTIONS_H
 
 #include "ccfwd.h"
-#include "physical_controllers.h"
-#include "physical_controller_type.h"
+//#include "physical_controllers.h"
+//#include "physical_controller_type.h"
 #include "delta_t.h"
 #include "piece.h"
 #include "screen_coordinat.h"
@@ -121,11 +121,6 @@ double get_music_volume_as_percentage(const game_options& options) noexcept;
 
 /// Get the sound effects volume
 const volume& get_sound_effects_volume(const game_options& options) noexcept;
-
-/// Get all the pieces in the starting position type
-std::vector<piece> get_starting_pieces(
-  const game_options& options
-) noexcept;
 
 /// Get the starting position
 starting_position_type get_starting_position(const game_options& options) noexcept;

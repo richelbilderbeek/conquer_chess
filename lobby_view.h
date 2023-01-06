@@ -9,6 +9,7 @@
 #include "lobby_view_layout.h"
 #include "lobby_view_item.h"
 #include "lobby_options.h"
+#include "physical_controllers.h"
 
 class lobby_view
 {

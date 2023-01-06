@@ -158,9 +158,14 @@ int count_selected_units(
   );
 }
 
-std::vector<piece> get_kings_only_starting_pieces() noexcept
+std::vector<piece> get_kings_only_starting_pieces(
+  const race white_race,
+  const race black_race
+) noexcept
 {
-  const auto all_pieces{get_standard_starting_pieces()};
+  const auto all_pieces{
+    get_standard_starting_pieces(white_race, black_race)
+  };
   std::vector<piece> pieces;
   pieces.reserve(2);
   std::copy_if(
@@ -532,314 +537,354 @@ std::vector<piece> get_selected_pieces(
   return pieces;
 }
 
-std::vector<piece> get_pieces_before_en_passant() noexcept
+std::vector<piece> get_pieces_before_en_passant(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::white, piece_type::pawn,   square("a5")), // b7-b5, a5xb6 e.p.
-    piece(chess_color::white, piece_type::pawn,   square("c5")), // b7-b5, c5xb6 e.p.
-    piece(chess_color::white, piece_type::pawn,   square("g2")),
-    piece(chess_color::black, piece_type::king,   square("e8")),
-    piece(chess_color::black, piece_type::pawn,   square("b7")),
-    piece(chess_color::black, piece_type::pawn,   square("f4")), // g2-g4, f4xg3 e.p.
-    piece(chess_color::black, piece_type::pawn,   square("h4")) // g2-g4, h4xg3 e.p.
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a5"), white_race), // b7-b5, a5xb6 e.p.
+    piece(chess_color::white, piece_type::pawn,   square("c5"), white_race), // b7-b5, c5xb6 e.p.
+    piece(chess_color::white, piece_type::pawn,   square("g2"), white_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("b7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("f4"), black_race), // g2-g4, f4xg3 e.p.
+    piece(chess_color::black, piece_type::pawn,   square("h4"), black_race) // g2-g4, h4xg3 e.p.
   };
 }
 
-std::vector<piece> get_pieces_kasparov_vs_topalov() noexcept
+std::vector<piece> get_pieces_kasparov_vs_topalov(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::rook,   square("b7")),
-    piece(chess_color::white, piece_type::queen,  square("f6")),
-    piece(chess_color::white, piece_type::king,   square("b1")),
-    piece(chess_color::white, piece_type::bishop, square("h3")),
-    piece(chess_color::white, piece_type::pawn,   square("a3")),
-    piece(chess_color::white, piece_type::pawn,   square("b4")),
-    piece(chess_color::white, piece_type::pawn,   square("c2")),
-    piece(chess_color::white, piece_type::pawn,   square("f3")),
-    piece(chess_color::white, piece_type::pawn,   square("g3")),
-    piece(chess_color::white, piece_type::pawn,   square("h2")),
-    piece(chess_color::black, piece_type::rook,   square("d8")),
-    piece(chess_color::black, piece_type::queen,  square("c4")),
-    piece(chess_color::black, piece_type::king,   square("a4")),
-    piece(chess_color::black, piece_type::rook,   square("h8")),
-    piece(chess_color::black, piece_type::pawn,   square("a6")),
-    piece(chess_color::black, piece_type::pawn,   square("b5")),
-    piece(chess_color::black, piece_type::pawn,   square("f7")),
-    piece(chess_color::black, piece_type::pawn,   square("g6")),
-    piece(chess_color::black, piece_type::pawn,   square("h7"))
+    piece(chess_color::white, piece_type::rook,   square("b7"), white_race),
+    piece(chess_color::white, piece_type::queen,  square("f6"), white_race),
+    piece(chess_color::white, piece_type::king,   square("b1"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("h3"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a3"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("b4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("c2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("f3"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("g3"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("h2"), white_race),
+    piece(chess_color::black, piece_type::rook,   square("d8"), black_race),
+    piece(chess_color::black, piece_type::queen,  square("c4"), black_race),
+    piece(chess_color::black, piece_type::king,   square("a4"), black_race),
+    piece(chess_color::black, piece_type::rook,   square("h8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("a6"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("b5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("f7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("g6"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("h7"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_pawn_all_out_assault() noexcept
+std::vector<piece> get_pieces_pawn_all_out_assault(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::rook,   square("a1")),
-    piece(chess_color::white, piece_type::knight, square("b1")),
-    piece(chess_color::white, piece_type::bishop, square("c1")),
-    piece(chess_color::white, piece_type::queen,  square("d1")),
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::white, piece_type::bishop, square("f1")),
-    piece(chess_color::white, piece_type::knight, square("g1")),
-    piece(chess_color::white, piece_type::rook,   square("h1")),
-    piece(chess_color::white, piece_type::pawn,   square("a4")),
-    piece(chess_color::white, piece_type::pawn,   square("b4")),
-    piece(chess_color::white, piece_type::pawn,   square("c4")),
-    piece(chess_color::white, piece_type::pawn,   square("d4")),
-    piece(chess_color::white, piece_type::pawn,   square("e4")),
-    piece(chess_color::white, piece_type::pawn,   square("f4")),
-    piece(chess_color::white, piece_type::pawn,   square("g4")),
-    piece(chess_color::white, piece_type::pawn,   square("h4")),
-    piece(chess_color::black, piece_type::rook,   square("a8")),
-    piece(chess_color::black, piece_type::knight, square("b8")),
-    piece(chess_color::black, piece_type::bishop, square("c8")),
-    piece(chess_color::black, piece_type::queen,  square("d8")),
-    piece(chess_color::black, piece_type::king,   square("e8")),
-    piece(chess_color::black, piece_type::bishop, square("f8")),
-    piece(chess_color::black, piece_type::knight, square("g8")),
-    piece(chess_color::black, piece_type::rook,   square("h8")),
-    piece(chess_color::black, piece_type::pawn,   square("a5")),
-    piece(chess_color::black, piece_type::pawn,   square("b5")),
-    piece(chess_color::black, piece_type::pawn,   square("c5")),
-    piece(chess_color::black, piece_type::pawn,   square("d5")),
-    piece(chess_color::black, piece_type::pawn,   square("e5")),
-    piece(chess_color::black, piece_type::pawn,   square("f5")),
-    piece(chess_color::black, piece_type::pawn,   square("g5")),
-    piece(chess_color::black, piece_type::pawn,   square("h5"))
+    piece(chess_color::white, piece_type::rook,   square("a1"), white_race),
+    piece(chess_color::white, piece_type::knight, square("b1"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("c1"), white_race),
+    piece(chess_color::white, piece_type::queen,  square("d1"), white_race),
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("f1"), white_race),
+    piece(chess_color::white, piece_type::knight, square("g1"), white_race),
+    piece(chess_color::white, piece_type::rook,   square("h1"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("b4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("c4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("d4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("e4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("f4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("g4"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("h4"), white_race),
+    piece(chess_color::black, piece_type::rook,   square("a8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("b8"), black_race),
+    piece(chess_color::black, piece_type::bishop, square("c8"), black_race),
+    piece(chess_color::black, piece_type::queen,  square("d8"), black_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race),
+    piece(chess_color::black, piece_type::bishop, square("f8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("g8"), black_race),
+    piece(chess_color::black, piece_type::rook,   square("h8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("a5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("b5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("c5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("d5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("e5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("f5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("g5"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("h5"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_pawns_at_promotion() noexcept
+std::vector<piece> get_pieces_pawns_at_promotion(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::king, square("e1")),
-    piece(chess_color::white, piece_type::pawn, square("a8")),
-    piece(chess_color::black, piece_type::king, square("e8")),
-    piece(chess_color::black, piece_type::pawn, square("h1"))
+    piece(chess_color::white, piece_type::king, square("e1"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("a8"), white_race),
+    piece(chess_color::black, piece_type::king, square("e8"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("h1"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_pawns_near_promotion() noexcept
+std::vector<piece> get_pieces_pawns_near_promotion(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::white, piece_type::pawn,   square("a7")),
-    piece(chess_color::black, piece_type::king,   square("e8")),
-    piece(chess_color::black, piece_type::pawn,   square("h2"))
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a7"), white_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("h2"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_pawns_nearly_near_promotion() noexcept
+std::vector<piece> get_pieces_pawns_nearly_near_promotion(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::white, piece_type::pawn,   square("a6")),
-    piece(chess_color::black, piece_type::king,   square("e8")),
-    piece(chess_color::black, piece_type::pawn,   square("h3"))
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a6"), white_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("h3"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_before_scholars_mate() noexcept
+std::vector<piece> get_pieces_before_scholars_mate(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::rook,   square("a1")),
-    piece(chess_color::white, piece_type::knight, square("b1")),
-    piece(chess_color::white, piece_type::bishop, square("c1")),
-    piece(chess_color::white, piece_type::queen,  square("h5")), // 2. Qh5
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::white, piece_type::bishop, square("c4")), // 3. Bc4
-    piece(chess_color::white, piece_type::knight, square("g1")),
-    piece(chess_color::white, piece_type::rook,   square("h1")),
-    piece(chess_color::white, piece_type::pawn,   square("a2")),
-    piece(chess_color::white, piece_type::pawn,   square("b2")),
-    piece(chess_color::white, piece_type::pawn,   square("c2")),
-    piece(chess_color::white, piece_type::pawn,   square("d2")),
-    piece(chess_color::white, piece_type::pawn,   square("e4")), // 1. e2-e4
-    piece(chess_color::white, piece_type::pawn,   square("f2")),
-    piece(chess_color::white, piece_type::pawn,   square("g2")),
-    piece(chess_color::white, piece_type::pawn,   square("h2")),
-    piece(chess_color::black, piece_type::rook,   square("a8")),
-    piece(chess_color::black, piece_type::knight, square("c6")), // 2. ... Nc6
-    piece(chess_color::black, piece_type::bishop, square("c8")),
-    piece(chess_color::black, piece_type::queen,  square("d8")),
-    piece(chess_color::black, piece_type::king,   square("e8")),
-    piece(chess_color::black, piece_type::bishop, square("f8")),
-    piece(chess_color::black, piece_type::knight, square("f6")), // 3. ... Nf6??
-    piece(chess_color::black, piece_type::rook,   square("h8")),
-    piece(chess_color::black, piece_type::pawn,   square("a7")),
-    piece(chess_color::black, piece_type::pawn,   square("b7")),
-    piece(chess_color::black, piece_type::pawn,   square("c7")),
-    piece(chess_color::black, piece_type::pawn,   square("d7")),
-    piece(chess_color::black, piece_type::pawn,   square("e5")), //1. ... e7-e5
-    piece(chess_color::black, piece_type::pawn,   square("f7")),
-    piece(chess_color::black, piece_type::pawn,   square("g7")),
-    piece(chess_color::black, piece_type::pawn,   square("h7"))
+    piece(chess_color::white, piece_type::rook,   square("a1"), white_race),
+    piece(chess_color::white, piece_type::knight, square("b1"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("c1"), white_race),
+    piece(chess_color::white, piece_type::queen,  square("h5"), white_race), // 2. Qh5
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("c4"), white_race), // 3. Bc4
+    piece(chess_color::white, piece_type::knight, square("g1"), white_race),
+    piece(chess_color::white, piece_type::rook,   square("h1"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("b2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("c2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("d2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("e4"), white_race), // 1. e2-e4
+    piece(chess_color::white, piece_type::pawn,   square("f2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("g2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("h2"), white_race),
+    piece(chess_color::black, piece_type::rook,   square("a8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("c6"), black_race), // 2. ... Nc6
+    piece(chess_color::black, piece_type::bishop, square("c8"), black_race),
+    piece(chess_color::black, piece_type::queen,  square("d8"), black_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race),
+    piece(chess_color::black, piece_type::bishop, square("f8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("f6"), black_race), // 3. ... Nf6??
+    piece(chess_color::black, piece_type::rook,   square("h8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("a7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("b7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("c7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("d7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("e5"), black_race), //1. ... e7-e5
+    piece(chess_color::black, piece_type::pawn,   square("f7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("g7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("h7"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_bishop_and_knight_end_game() noexcept
+std::vector<piece> get_pieces_bishop_and_knight_end_game(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::knight, square("c4")),
-    piece(chess_color::white, piece_type::bishop, square("g4")),
-    piece(chess_color::white, piece_type::king,   square("e6")),
-    piece(chess_color::black, piece_type::king,   square("d2"))
+    piece(chess_color::white, piece_type::knight, square("c4"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("g4"), white_race),
+    piece(chess_color::white, piece_type::king,   square("e6"), white_race),
+    piece(chess_color::black, piece_type::king,   square("d2"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_queen_endgame() noexcept
+std::vector<piece> get_pieces_queen_endgame(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::queen,  square("d1")),
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::black, piece_type::queen,  square("d8")),
-    piece(chess_color::black, piece_type::king,   square("e8"))
+    piece(chess_color::white, piece_type::queen,  square("d1"), white_race),
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::black, piece_type::queen,  square("d8"), black_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_ready_to_castle() noexcept
+std::vector<piece> get_pieces_ready_to_castle(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::rook, square("a1")),
-    piece(chess_color::white, piece_type::king, square("e1")),
-    piece(chess_color::white, piece_type::rook, square("h1")),
-    piece(chess_color::white, piece_type::pawn, square("a2")),
-    piece(chess_color::white, piece_type::pawn, square("b2")),
-    piece(chess_color::white, piece_type::pawn, square("c2")),
-    piece(chess_color::white, piece_type::pawn, square("d2")),
-    piece(chess_color::white, piece_type::pawn, square("e2")),
-    piece(chess_color::white, piece_type::pawn, square("f2")),
-    piece(chess_color::white, piece_type::pawn, square("g2")),
-    piece(chess_color::white, piece_type::pawn, square("h2")),
-    piece(chess_color::black, piece_type::rook, square("a8")),
-    piece(chess_color::black, piece_type::king, square("e8")),
-    piece(chess_color::black, piece_type::rook, square("h8")),
-    piece(chess_color::black, piece_type::pawn, square("a7")),
-    piece(chess_color::black, piece_type::pawn, square("b7")),
-    piece(chess_color::black, piece_type::pawn, square("c7")),
-    piece(chess_color::black, piece_type::pawn, square("d7")),
-    piece(chess_color::black, piece_type::pawn, square("e7")),
-    piece(chess_color::black, piece_type::pawn, square("f7")),
-    piece(chess_color::black, piece_type::pawn, square("g7")),
-    piece(chess_color::black, piece_type::pawn, square("h7"))
+    piece(chess_color::white, piece_type::rook, square("a1"), white_race),
+    piece(chess_color::white, piece_type::king, square("e1"), white_race),
+    piece(chess_color::white, piece_type::rook, square("h1"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("a2"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("b2"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("c2"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("d2"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("e2"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("f2"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("g2"), white_race),
+    piece(chess_color::white, piece_type::pawn, square("h2"), white_race),
+    piece(chess_color::black, piece_type::rook, square("a8"), black_race),
+    piece(chess_color::black, piece_type::king, square("e8"), black_race),
+    piece(chess_color::black, piece_type::rook, square("h8"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("a7"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("b7"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("c7"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("d7"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("e7"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("f7"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("g7"), black_race),
+    piece(chess_color::black, piece_type::pawn, square("h7"), black_race)
   };
 }
 
-std::vector<piece> get_pieces_ready_to_not_castle() noexcept
+std::vector<piece> get_pieces_ready_to_not_castle(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::rook,   square("a1")),
-    piece(chess_color::white, piece_type::knight, square("c6")),
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::white, piece_type::knight, square("h6")),
-    piece(chess_color::white, piece_type::rook,   square("h1")),
-    piece(chess_color::white, piece_type::pawn,   square("a2")),
-    piece(chess_color::white, piece_type::pawn,   square("b2")),
-    piece(chess_color::white, piece_type::pawn,   square("c2")),
-    piece(chess_color::white, piece_type::pawn,   square("d2")),
-    piece(chess_color::white, piece_type::pawn,   square("e2")),
-    piece(chess_color::white, piece_type::pawn,   square("f2")),
-    piece(chess_color::white, piece_type::pawn,   square("g2")),
-    piece(chess_color::white, piece_type::pawn,   square("h2")),
-    piece(chess_color::black, piece_type::rook,   square("a8")),
-    piece(chess_color::black, piece_type::knight, square("c3")),
-    piece(chess_color::black, piece_type::king,   square("e8")),
-    piece(chess_color::black, piece_type::knight, square("h3")),
-    piece(chess_color::black, piece_type::rook,   square("h8")),
-    piece(chess_color::black, piece_type::pawn,   square("a7")),
-    piece(chess_color::black, piece_type::pawn,   square("b7")),
-    piece(chess_color::black, piece_type::pawn,   square("c7")),
-    piece(chess_color::black, piece_type::pawn,   square("d7")),
-    piece(chess_color::black, piece_type::pawn,   square("e7")),
-    piece(chess_color::black, piece_type::pawn,   square("f7")),
-    piece(chess_color::black, piece_type::pawn,   square("g7")),
-    piece(chess_color::black, piece_type::pawn,   square("h7"))
+    piece(chess_color::white, piece_type::rook,   square("a1"), white_race),
+    piece(chess_color::white, piece_type::knight, square("c6"), white_race),
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::white, piece_type::knight, square("h6"), white_race),
+    piece(chess_color::white, piece_type::rook,   square("h1"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("b2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("c2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("d2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("e2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("f2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("g2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("h2"), white_race),
+    piece(chess_color::black, piece_type::rook,   square("a8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("c3"), black_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("h3"), black_race),
+    piece(chess_color::black, piece_type::rook,   square("h8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("a7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("b7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("c7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("d7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("e7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("f7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("g7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("h7"), black_race)
   };
 }
 
 
-std::vector<piece> get_standard_starting_pieces() noexcept
+std::vector<piece> get_standard_starting_pieces(
+  const race white_race,
+  const race black_race
+) noexcept
 {
   return
   {
-    piece(chess_color::white, piece_type::rook,   square("a1")),
-    piece(chess_color::white, piece_type::knight, square("b1")),
-    piece(chess_color::white, piece_type::bishop, square("c1")),
-    piece(chess_color::white, piece_type::queen,  square("d1")),
-    piece(chess_color::white, piece_type::king,   square("e1")),
-    piece(chess_color::white, piece_type::bishop, square("f1")),
-    piece(chess_color::white, piece_type::knight, square("g1")),
-    piece(chess_color::white, piece_type::rook,   square("h1")),
-    piece(chess_color::white, piece_type::pawn,   square("a2")),
-    piece(chess_color::white, piece_type::pawn,   square("b2")),
-    piece(chess_color::white, piece_type::pawn,   square("c2")),
-    piece(chess_color::white, piece_type::pawn,   square("d2")),
-    piece(chess_color::white, piece_type::pawn,   square("e2")),
-    piece(chess_color::white, piece_type::pawn,   square("f2")),
-    piece(chess_color::white, piece_type::pawn,   square("g2")),
-    piece(chess_color::white, piece_type::pawn,   square("h2")),
-    piece(chess_color::black, piece_type::rook,   square("a8")),
-    piece(chess_color::black, piece_type::knight, square("b8")),
-    piece(chess_color::black, piece_type::bishop, square("c8")),
-    piece(chess_color::black, piece_type::queen,  square("d8")),
-    piece(chess_color::black, piece_type::king,   square("e8")),
-    piece(chess_color::black, piece_type::bishop, square("f8")),
-    piece(chess_color::black, piece_type::knight, square("g8")),
-    piece(chess_color::black, piece_type::rook,   square("h8")),
-    piece(chess_color::black, piece_type::pawn,   square("a7")),
-    piece(chess_color::black, piece_type::pawn,   square("b7")),
-    piece(chess_color::black, piece_type::pawn,   square("c7")),
-    piece(chess_color::black, piece_type::pawn,   square("d7")),
-    piece(chess_color::black, piece_type::pawn,   square("e7")),
-    piece(chess_color::black, piece_type::pawn,   square("f7")),
-    piece(chess_color::black, piece_type::pawn,   square("g7")),
-    piece(chess_color::black, piece_type::pawn,   square("h7"))
+    piece(chess_color::white, piece_type::rook,   square("a1"), white_race),
+    piece(chess_color::white, piece_type::knight, square("b1"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("c1"), white_race),
+    piece(chess_color::white, piece_type::queen,  square("d1"), white_race),
+    piece(chess_color::white, piece_type::king,   square("e1"), white_race),
+    piece(chess_color::white, piece_type::bishop, square("f1"), white_race),
+    piece(chess_color::white, piece_type::knight, square("g1"), white_race),
+    piece(chess_color::white, piece_type::rook,   square("h1"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("a2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("b2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("c2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("d2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("e2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("f2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("g2"), white_race),
+    piece(chess_color::white, piece_type::pawn,   square("h2"), white_race),
+    piece(chess_color::black, piece_type::rook,   square("a8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("b8"), black_race),
+    piece(chess_color::black, piece_type::bishop, square("c8"), black_race),
+    piece(chess_color::black, piece_type::queen,  square("d8"), black_race),
+    piece(chess_color::black, piece_type::king,   square("e8"), black_race),
+    piece(chess_color::black, piece_type::bishop, square("f8"), black_race),
+    piece(chess_color::black, piece_type::knight, square("g8"), black_race),
+    piece(chess_color::black, piece_type::rook,   square("h8"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("a7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("b7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("c7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("d7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("e7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("f7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("g7"), black_race),
+    piece(chess_color::black, piece_type::pawn,   square("h7"), black_race)
   };
 }
 
-std::vector<piece> get_starting_pieces(const starting_position_type t) noexcept
+std::vector<piece> get_starting_pieces(
+  const starting_position_type t,
+  const race white_race,
+  const race black_race
+) noexcept
 {
   switch (t)
   {
     case starting_position_type::before_en_passant:
-      return get_pieces_before_en_passant();
+      return get_pieces_before_en_passant(white_race, black_race);
     case starting_position_type::before_scholars_mate:
-      return get_pieces_before_scholars_mate();
+      return get_pieces_before_scholars_mate(white_race, black_race);
     case starting_position_type::bishop_and_knight_end_game:
-      return get_pieces_bishop_and_knight_end_game();
+      return get_pieces_bishop_and_knight_end_game(white_race, black_race);
     case starting_position_type::kasparov_vs_topalov:
-      return get_pieces_kasparov_vs_topalov();
+      return get_pieces_kasparov_vs_topalov(white_race, black_race);
     case starting_position_type::kings_only:
-      return get_kings_only_starting_pieces();
+      return get_kings_only_starting_pieces(white_race, black_race);
     case starting_position_type::pawn_all_out_assault:
-      return get_pieces_pawn_all_out_assault();
+      return get_pieces_pawn_all_out_assault(white_race, black_race);
     case starting_position_type::pawns_at_promotion:
-      return get_pieces_pawns_at_promotion();
+      return get_pieces_pawns_at_promotion(white_race, black_race);
     case starting_position_type::pawns_near_promotion:
-      return get_pieces_pawns_near_promotion();
+      return get_pieces_pawns_near_promotion(white_race, black_race);
     case starting_position_type::pawns_nearly_near_promotion:
-      return get_pieces_pawns_nearly_near_promotion();
+      return get_pieces_pawns_nearly_near_promotion(white_race, black_race);
     case starting_position_type::queen_end_game:
-      return get_pieces_queen_endgame();
+      return get_pieces_queen_endgame(white_race, black_race);
     case starting_position_type::ready_to_castle:
-      return get_pieces_ready_to_castle();
+      return get_pieces_ready_to_castle(white_race, black_race);
     case starting_position_type::ready_to_not_castle:
-      return get_pieces_ready_to_not_castle();
+      return get_pieces_ready_to_not_castle(white_race, black_race);
     case starting_position_type::standard:
     default:
       assert(t == starting_position_type::standard);
-      return get_standard_starting_pieces();
+      return get_standard_starting_pieces(white_race, black_race);
   }
 }
 

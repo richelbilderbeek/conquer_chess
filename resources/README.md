@@ -68,6 +68,7 @@ Image                     |Filename              |Search terms
 ![](protoss_head.jpeg)    |`protoss_head.jpeg`   |`starcraft 2, protoss, chess, simple, profile`
 ![](terran_head.jpeg)     |`terran_head.jpeg`    |`starcraft 2, terran, chess, face, chess piece, simple`
 ![](zerg_head.jpeg)       |`zerg_head.jpeg`      |`starcraft 2, zerg, chess piece, face, simple, teeth`
+![](classic_head.jpeg)    |`classic_head.jpeg`   |`chess, classic, head, chesspiece, face, profile, close-up, human, statue`
 ![](all_races_1.jpeg)     |`all_races_1.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, cubism`
 ![](all_races_2.jpeg)     |`all_races_2.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces`
 ![](all_races_3.jpeg)     |`all_races_3.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cubism`

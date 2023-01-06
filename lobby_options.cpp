@@ -37,6 +37,13 @@ race lobby_options::get_race(const side player_side) const noexcept
   return m_rhs_race;
 }
 
+race get_race_of_color(const lobby_options& options, const chess_color c) noexcept
+{
+  if (options.get_color(side::lhs) == c) return options.get_race(side::lhs);
+  assert(options.get_color(side::rhs) == c);
+  return options.get_race(side::rhs);
+}
+
 void lobby_options::set_color(const chess_color color, const side player_side) noexcept
 {
   if (player_side == side::lhs)

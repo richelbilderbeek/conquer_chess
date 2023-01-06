@@ -284,6 +284,12 @@ std::optional<piece_action_type> get_default_piece_action(
   const side player_side
 ) noexcept;
 
+/// Get all the pieces in the starting position type
+std::vector<piece> get_starting_pieces(
+  const game_options& go,
+  const lobby_options& lo
+) noexcept;
+
 /// Create a game with all default settings
 /// and a specific starting position
 game get_game_with_starting_position(starting_position_type t) noexcept;
@@ -297,9 +303,6 @@ int get_index_of_closest_piece_to(
   const game& g,
   const game_coordinat& coordinat
 );
-
-/// Get the key for action 1, 2, 3 or 4 for a player
-sf::Keyboard::Key get_key_for_action(const game& g, const side player, const action_number& action);
 
 /// Create a game in which it is only a king versus a king,
 /// to be used in debugging

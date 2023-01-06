@@ -119,6 +119,7 @@ private:
   sf::Texture m_light_strip;
 
   sf::Texture m_protoss_head;
+  sf::Texture m_classic_head;
 
   sf::Texture m_subtitle;
   sf::Texture m_terran_head;

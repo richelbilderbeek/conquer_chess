@@ -86,7 +86,14 @@ user_input create_press_up_action(const side player);
 user_input create_random_user_input(
   std::default_random_engine& rng_engine
 );
-
+/*
+/// Get the key for action 1, 2, 3 or 4 for a player
+sf::Keyboard::Key get_key_for_action(
+  const game& g,
+  const side player,
+  const action_number& action
+);
+*/
 /// Test the 'control_action' class and its free functions
 void test_user_input();
 

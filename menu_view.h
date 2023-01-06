@@ -4,10 +4,12 @@
 #ifndef LOGIC_ONLY
 
 #include <SFML/Graphics.hpp>
+#include "ccfwd.h"
 #include "game_options.h"
 #include "game_resources.h"
 #include "menu_view_layout.h"
 #include "menu_view_item.h"
+#include "physical_controllers.h"
 
 class menu_view
 {

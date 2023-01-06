@@ -82,7 +82,10 @@ int count_selected_units(
 );
 
 /// Get a king-versus-king starting position
-std::vector<piece> get_kings_only_starting_pieces() noexcept;
+std::vector<piece> get_kings_only_starting_pieces(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get all the squares that are occupied
 std::vector<square> get_occupied_squares(const std::vector<piece>& pieces) noexcept;
@@ -166,18 +169,27 @@ std::vector<piece> get_selected_pieces(
 );
 
 /// Get all the pieces in the starting position
-std::vector<piece> get_standard_starting_pieces() noexcept;
+std::vector<piece> get_standard_starting_pieces(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 
 /// Get the pieces before an en passant becomes possible
-std::vector<piece> get_pieces_before_en_passant() noexcept;
+std::vector<piece> get_pieces_before_en_passant(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces before a scholar's mate
 /// 1. e4 e5
 /// 2. Qh5 Nc6
 /// 3. Bc4 Nf6??
 /// (the checkmate is done by Qxf7#)
-std::vector<piece> get_pieces_before_scholars_mate() noexcept;
+std::vector<piece> get_pieces_before_scholars_mate(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces from a bishop and knight end game
 ///  * White king: e6
@@ -185,52 +197,81 @@ std::vector<piece> get_pieces_before_scholars_mate() noexcept;
 ///  * White bishop: g4
 ///  * Black king: d2 (note that it is in check)
 /// From https://www.thechesswebsite.com/bishop-and-knight-end-game/
-std::vector<piece> get_pieces_bishop_and_knight_end_game() noexcept;
+std::vector<piece> get_pieces_bishop_and_knight_end_game(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces for a Kasparov vs Topalov game,
 /// discovered at https://www.reddit.com/r/chess/comments/fmd7uh/this_is_a_position_from_the_famous_kasparov_vs/
-std::vector<piece> get_pieces_kasparov_vs_topalov() noexcept;
+std::vector<piece> get_pieces_kasparov_vs_topalov(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces from a standard game, with all pawns moved two
 /// squares forward
-std::vector<piece> get_pieces_pawn_all_out_assault() noexcept;
+std::vector<piece> get_pieces_pawn_all_out_assault(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces where pawns are at promotion
 ///  * White king: e1
 ///  * White pawn: a8
 ///  * Black king: e8
 ///  * Black pawn: h1
-std::vector<piece> get_pieces_pawns_at_promotion() noexcept;
+std::vector<piece> get_pieces_pawns_at_promotion(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces where pawns are near promotion
 ///  * White king: e1
 ///  * White pawn: a7
 ///  * Black king: e8
 ///  * Black pawn: h2
-std::vector<piece> get_pieces_pawns_near_promotion() noexcept;
+std::vector<piece> get_pieces_pawns_near_promotion(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces where pawns are nealy near promotion
 ///  * White king: e1
 ///  * White pawn: a6
 ///  * Black king: e8
 ///  * Black pawn: h3
-std::vector<piece> get_pieces_pawns_nearly_near_promotion() noexcept;
+std::vector<piece> get_pieces_pawns_nearly_near_promotion(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces for a queen endgame,
 /// which are having only the kings and queens left
 /// from a default setup
-std::vector<piece> get_pieces_queen_endgame() noexcept;
+std::vector<piece> get_pieces_queen_endgame(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces for a kings that are ready to castle
-std::vector<piece> get_pieces_ready_to_castle() noexcept;
+std::vector<piece> get_pieces_ready_to_castle(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get the pieces for a kings that are ready to castle,
 /// but cannot, as the king would go through check
-std::vector<piece> get_pieces_ready_to_not_castle() noexcept;
+std::vector<piece> get_pieces_ready_to_not_castle(
+  const race white_race = race::classic,
+  const race black_race = race::classic
+) noexcept;
 
 /// Get all the pieces in the starting position type
 std::vector<piece> get_starting_pieces(
-  const starting_position_type t
+  const starting_position_type t,
+  const race white_race = race::classic,
+  const race black_race = race::classic
 ) noexcept;
 
 /// Is there a piece with the ID among the pieces?

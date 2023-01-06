@@ -29,7 +29,7 @@ game::game(
 )
   : m_game_options{go},
     m_lobby_options{lo},
-    m_pieces{get_starting_pieces(go)},
+    m_pieces{get_starting_pieces(go, lo)},
     m_t{0.0}
 {
 
@@ -1312,6 +1312,18 @@ bool has_selected_pieces(const game& g, const chess_color player)
 bool has_selected_pieces(const game& g, const side player)
 {
   return !get_selected_pieces(g, player).empty();
+}
+
+std::vector<piece> get_starting_pieces(
+  const game_options& go,
+  const lobby_options& lo
+) noexcept
+{
+  return get_starting_pieces(
+    get_starting_position(go),
+    get_race_of_color(lo, chess_color::white),
+    get_race_of_color(lo, chess_color::black)
+  );
 }
 
 bool is_empty(const game& g, const square& s) noexcept

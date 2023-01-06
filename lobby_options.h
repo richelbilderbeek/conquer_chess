@@ -38,6 +38,9 @@ private:
 
 chess_color get_color(const lobby_options& options, const side player_side) noexcept;
 
+/// Get the race of a color
+race get_race_of_color(const lobby_options& options, const chess_color c) noexcept;
+
 /// Test this class and its free functions
 void test_lobby_options();
 

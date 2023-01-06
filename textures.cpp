@@ -33,6 +33,7 @@ textures::textures()
     std::make_pair(std::ref(m_black_pawn_portrait), "classic_black_pawn_portrait.png"),
     std::make_pair(std::ref(m_black_queen_portrait), "classic_black_queen_portrait.png"),
     std::make_pair(std::ref(m_black_rook_portrait), "classic_black_rook_portrait_2.png"),
+    std::make_pair(std::ref(m_classic_head), "classic_head.png"),
     std::make_pair(std::ref(m_controls), "controls.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
@@ -159,6 +160,7 @@ sf::Texture& textures::get_head(const race r) noexcept
 {
   switch (r)
   {
+    case race::classic: return m_classic_head;
     case race::protoss: return m_protoss_head;
     case race::terran: return m_terran_head;
     default:
