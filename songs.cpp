@@ -6,16 +6,12 @@
 songs::songs()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Music>, std::string>> v = {
+    std::make_pair(std::ref(m_aura), "aura.ogg"),
     std::make_pair(std::ref(m_bliss), "bliss.ogg"),
+    std::make_pair(std::ref(m_heroes), "heroes.ogg"),
+    std::make_pair(std::ref(m_silence), "silence.ogg"),
+    std::make_pair(std::ref(m_soothing), "soothing.ogg"),
     std::make_pair(std::ref(m_wonderful_time), "wonderful_time.ogg")
-    /*,
-    std::make_pair(std::ref(m_aura), "aura.mp3"),
-    std::make_pair(std::ref(m_bliss), "bliss.mp3"),
-    std::make_pair(std::ref(m_heroes), "heroes.mp3"),
-    std::make_pair(std::ref(m_silence), "silence.mp3"),
-    std::make_pair(std::ref(m_soothing), "soothing.mp3"),
-    std::make_pair(std::ref(m_wonderful_time), "wonderful_time.mp3")
-    */
   };
   for (const auto& p: v)
   {
@@ -26,7 +22,8 @@ songs::songs()
     {
       QString msg{
         "Cannot write sound file '" + filename + "'.\n"
-        "Tip: you cannot use resources in static initialization time"
+        "Tip 1: check the spelling of the filename\n"
+        "Tip 2: do not load resources in static initialization time"
       };
       throw std::runtime_error(msg.toStdString());
     }
