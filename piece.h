@@ -13,6 +13,7 @@
 #include "message.h"
 #include "message_type.h"
 #include "starting_position_type.h"
+#include "race.h"
 #include "side.h"
 
 #include <string>
@@ -25,12 +26,14 @@ public:
   explicit piece(
     const chess_color color,
     const piece_type type,
-    const square& coordinat
+    const square& coordinat,
+    const race r = race::classic
   );
   explicit piece(
     const chess_color color,
     const piece_type type,
-    const std::string& coordinat
+    const std::string& coordinat,
+    const race r = race::classic
   );
 
   /// Add an action for the piece to do
@@ -74,6 +77,9 @@ public:
 
   /// The things this piece wants to say
   const auto& get_messages() const noexcept { return m_messages; }
+
+  /// Get the race of piece, e.g class, protoss, terran or zerg
+  race get_race() const noexcept { return m_race; }
 
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
   piece_type get_type() const noexcept { return m_type; }
@@ -149,6 +155,9 @@ private:
 
   /// The things this piece wants to say
   std::vector<message_type> m_messages;
+
+  /// The race of this piece
+  race m_race;
 
   /// The time (in chess move time)
   delta_t m_time;

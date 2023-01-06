@@ -50,30 +50,40 @@ piece_textures::piece_textures()
 }
 
 sf::Texture& piece_textures::get_piece(
+  const race race,
   const chess_color color,
   const piece_type type
 )
 {
-  if (color == chess_color::black)
+  switch (race)
   {
-    if (type == piece_type::bishop) return m_black_bishop_with_contour;
-    if (type == piece_type::king) return m_black_king_with_contour;
-    if (type == piece_type::knight) return m_black_knight_with_contour;
-    if (type == piece_type::pawn) return m_black_pawn_with_contour;
-    if (type == piece_type::queen) return m_black_queen_with_contour;
-    assert(type == piece_type::rook);
-    return m_black_rook_with_contour;
-  }
-  else
-  {
-    assert(color == chess_color::white);
-    if (type == piece_type::bishop) return m_white_bishop_with_contour;
-    if (type == piece_type::king) return m_white_king_with_contour;
-    if (type == piece_type::knight) return m_white_knight_with_contour;
-    if (type == piece_type::pawn) return m_white_pawn_with_contour;
-    if (type == piece_type::queen) return m_white_queen_with_contour;
-    assert(type == piece_type::rook);
-    return m_white_rook_with_contour;
+    case race::classic:
+      if (color == chess_color::black)
+      {
+        if (type == piece_type::bishop) return m_black_bishop_with_contour;
+        if (type == piece_type::king) return m_black_king_with_contour;
+        if (type == piece_type::knight) return m_black_knight_with_contour;
+        if (type == piece_type::pawn) return m_black_pawn_with_contour;
+        if (type == piece_type::queen) return m_black_queen_with_contour;
+        assert(type == piece_type::rook);
+        return m_black_rook_with_contour;
+      }
+      else
+      {
+        assert(color == chess_color::white);
+        if (type == piece_type::bishop) return m_white_bishop_with_contour;
+        if (type == piece_type::king) return m_white_king_with_contour;
+        if (type == piece_type::knight) return m_white_knight_with_contour;
+        if (type == piece_type::pawn) return m_white_pawn_with_contour;
+        if (type == piece_type::queen) return m_white_queen_with_contour;
+        assert(type == piece_type::rook);
+        return m_white_rook_with_contour;
+      }
+    case race::protoss:
+    case race::terran:
+    case race::zerg:
+    default:
+      return get_piece(race::classic, color, type);
   }
 }
 

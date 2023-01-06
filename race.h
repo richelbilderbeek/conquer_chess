@@ -7,6 +7,7 @@
 
 enum class race
 {
+  classic,
   protoss,
   terran,
   zerg

@@ -73,6 +73,7 @@ void show_pieces(
     sprite.setTexture(
       &get_piece(
         resources,
+        piece.get_race(),
         piece.get_color(),
         piece.get_type()
       )

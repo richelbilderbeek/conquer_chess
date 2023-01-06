@@ -100,7 +100,8 @@ sf::Texture& get_options(game_resources& r) noexcept;
 
 /// Get texture of a piece
 sf::Texture& get_piece(
-  game_resources& r,
+  game_resources& gr,
+  const race r,
   const chess_color color,
   const piece_type type
 );

@@ -633,6 +633,7 @@ void show_pieces(game_view& view)
     sprite.setTexture(
       &get_piece(
         view.get_resources(),
+        piece.get_race(),
         piece.get_color(),
         piece.get_type()
       )

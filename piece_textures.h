@@ -19,6 +19,7 @@ public:
 
   /// Get texture of a piece
   sf::Texture& get_piece(
+    const race race,
     const chess_color color,
     const piece_type type
   );

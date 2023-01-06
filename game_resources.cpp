@@ -107,12 +107,13 @@ int game_resources::get_n_textures() noexcept
 }
 
 sf::Texture& get_piece(
-  game_resources& r,
+  game_resources& gr,
+  const race r,
   const chess_color color,
   const piece_type type
 )
 {
-  return r.get_piece_textures().get_piece(color, type);
+  return gr.get_piece_textures().get_piece(r, color, type);
 }
 
 sf::Texture& get_piece_portrait(

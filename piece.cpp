@@ -15,7 +15,8 @@
 piece::piece(
   const chess_color color,
   const piece_type type,
-  const square& coordinat
+  const square& coordinat,
+  const race r
 )
   : m_color{color},
     m_current_action_time{delta_t(0.0)},
@@ -26,6 +27,7 @@ piece::piece(
     m_is_selected{false},
     m_kill_count{0},
     m_max_health{::get_max_health(type)},
+    m_race{r},
     m_time{delta_t(0.0)},
     m_type{type}
 {
@@ -35,8 +37,9 @@ piece::piece(
 piece::piece(
   const chess_color color,
   const piece_type type,
-  const std::string& coordinat
-) : piece(color, type, square(coordinat)) {
+  const std::string& coordinat,
+  const race r
+) : piece(color, type, square(coordinat), r) {
 
 }
 
