@@ -116,6 +116,7 @@ Image                          |Filename                   |Search terms
 ![](terran_white_knight.jpeg)  |`terran_white_knight.jpeg` |`white knight, chess, terran, starcraft 2, symbol`
 ![](zerg_black_knight.jpeg)    |`zerg_black_knight.jpeg`   |`black knight, chess, zerg, starcraft 2, symbol`
 ![](zerg_white_knight.jpeg)    |`zerg_white_knight.jpeg`   |`white knight, chess, zerg, starcraft 2, symbol, full body view`
+![](protoss_black_bishop.png)  |`protoss_black_bishop.png` |`starcraft 2, chess, protoss, black bishop, symbol, simple, futuristic, single piece`
 
 
 
