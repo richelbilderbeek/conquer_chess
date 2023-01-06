@@ -117,6 +117,42 @@
         <file>resources/protoss_white_pawn.png</file>
         <file>resources/protoss_white_queen.png</file>
         <file>resources/protoss_white_rook.png</file>
+        <file>resources/protoss_black_bishop_portrait.png</file>
+        <file>resources/protoss_black_king_portrait.png</file>
+        <file>resources/protoss_black_knight_portrait.png</file>
+        <file>resources/protoss_black_pawn_portrait.png</file>
+        <file>resources/protoss_black_queen_portrait.png</file>
+        <file>resources/protoss_black_rook_portrait.png</file>
+        <file>resources/protoss_white_bishop_portrait.png</file>
+        <file>resources/protoss_white_king_portrait.png</file>
+        <file>resources/protoss_white_knight_portrait.png</file>
+        <file>resources/protoss_white_pawn_portrait.png</file>
+        <file>resources/protoss_white_queen_portrait.png</file>
+        <file>resources/protoss_white_rook_portrait.png</file>
+        <file>resources/terran_black_bishop_portrait.png</file>
+        <file>resources/terran_black_king_portrait.png</file>
+        <file>resources/terran_black_knight_portrait.png</file>
+        <file>resources/terran_black_pawn_portrait.png</file>
+        <file>resources/terran_black_queen_portrait.png</file>
+        <file>resources/terran_black_rook_portrait.png</file>
+        <file>resources/terran_white_bishop_portrait.png</file>
+        <file>resources/terran_white_king_portrait.png</file>
+        <file>resources/terran_white_knight_portrait.png</file>
+        <file>resources/terran_white_pawn_portrait.png</file>
+        <file>resources/terran_white_queen_portrait.png</file>
+        <file>resources/terran_white_rook_portrait.png</file>
+        <file>resources/zerg_black_bishop_portrait.png</file>
+        <file>resources/zerg_black_king_portrait.png</file>
+        <file>resources/zerg_black_knight_portrait.png</file>
+        <file>resources/zerg_black_pawn_portrait.png</file>
+        <file>resources/zerg_black_queen_portrait.png</file>
+        <file>resources/zerg_black_rook_portrait.png</file>
+        <file>resources/zerg_white_bishop_portrait.png</file>
+        <file>resources/zerg_white_king_portrait.png</file>
+        <file>resources/zerg_white_knight_portrait.png</file>
+        <file>resources/zerg_white_pawn_portrait.png</file>
+        <file>resources/zerg_white_queen_portrait.png</file>
+        <file>resources/zerg_white_rook_portrait.png</file>
         <file>resources/qm.png</file>
         <file>resources/quit.png</file>
         <file>resources/ready_no.png</file>
