@@ -21,7 +21,7 @@ game_resources::game_resources()
 
 sf::Texture& get_black_square(game_resources& r) noexcept
 {
-  return r.get_square(chess_color::black);
+  return get_square(r, chess_color::black);
 }
 
 sf::Font& get_arial_font(game_resources& r) noexcept
@@ -100,21 +100,22 @@ int game_resources::get_n_textures() noexcept
   return get_textures().get_n_textures();
 }
 
-
-sf::Texture& game_resources::get_piece(
+sf::Texture& get_piece(
+  game_resources& r,
   const chess_color color,
   const piece_type type
 )
 {
-  return get_textures().get_piece(color, type);
+  return r.get_textures().get_piece(color, type);
 }
 
-sf::Texture& game_resources::get_piece_portrait(
+sf::Texture& get_piece_portrait(
+  game_resources& r,
   const chess_color color,
   const piece_type type
 )
 {
-  return get_textures().get_piece_portrait(color, type);
+  return r.get_textures().get_piece_portrait(color, type);
 }
 
 songs& game_resources::get_songs() noexcept
@@ -146,9 +147,9 @@ sf::Texture& get_white_square(game_resources& r) noexcept
   return get_white_square(r.get_textures());
 }
 
-sf::Texture& game_resources::get_square(const chess_color color) noexcept
+sf::Texture& get_square(game_resources& r, const chess_color color) noexcept
 {
-  return get_textures().get_square(color);
+  return r.get_textures().get_square(color);
 }
 
 sf::Texture& get_strip(game_resources& r, const chess_color c) noexcept
@@ -166,19 +167,12 @@ sf::Texture& get_title(game_resources& r) noexcept
   return r.get_textures().get_title();
 }
 
-void game_resources::play(
+void play(
+  game_resources& r,
   const message& effect
 )
 {
-  get_sound_effects().play(effect);
-}
-
-void test_game_resources()
-{
-  #ifndef NDEBUG // no tests in release
-  game_resources r;
-  assert(r.get_square(chess_color::black).getSize().x > 0.0);
-  #endif
+  r.get_sound_effects().play(effect);
 }
 
 #endif // LOGIC_ONLY

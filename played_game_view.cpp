@@ -83,7 +83,7 @@ bool played_game_view::process_events()
       {
         std::ofstream file("replay.pgn");
         file << to_pgn(m_game) << '\n';
-        m_resources.play(message(message_type::done, chess_color::white, piece_type::king));
+        m_resources.get_sound_effects().play(message(message_type::done, chess_color::white, piece_type::king));
       }
     }
   }

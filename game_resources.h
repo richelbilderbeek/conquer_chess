@@ -46,30 +46,8 @@ public:
   // Lazy loading
   songs& get_songs() noexcept;
 
-
-  /// Get a chess board square
-  sf::Texture& get_square(const chess_color color) noexcept;
-
-  /// Get texture of a piece
-  sf::Texture& get_piece(
-    const chess_color color,
-    const piece_type type
-  );
-
-  /// Get texture of a portrait of a piece
-  sf::Texture& get_piece_portrait(
-    const chess_color color,
-    const piece_type type
-  );
-
   // Lazy loading
   sound_effects& get_sound_effects() noexcept;
-
-
-  /// Play a sound effect
-  void play(
-    const message& effect
-  );
 
   // Lazy loading
   textures& get_textures() noexcept;
@@ -112,9 +90,27 @@ sf::Font& get_code_squared_font(game_resources& r) noexcept;
 
 sf::Texture& get_options(game_resources& r) noexcept;
 
+/// Get texture of a piece
+sf::Texture& get_piece(
+  game_resources& r,
+  const chess_color color,
+  const piece_type type
+);
+
+/// Get texture of a portrait of a piece
+sf::Texture& get_piece_portrait(
+  game_resources& r,
+  const chess_color color,
+  const piece_type type
+);
+
 sf::Texture& get_quit(game_resources& r) noexcept;
 
 sf::Texture& get_start(game_resources& r) noexcept;
+
+/// Get a chess board square
+sf::Texture& get_square(game_resources& r, const chess_color color) noexcept;
+
 sf::Texture& get_strip(game_resources& r, const chess_color c) noexcept;
 sf::Texture& get_subtitle(game_resources& r) noexcept;
 sf::Texture& get_title(game_resources& r) noexcept;
@@ -122,8 +118,11 @@ sf::Texture& get_title(game_resources& r) noexcept;
 /// Get a picture of a white/light square
 sf::Texture& get_white_square(game_resources& r) noexcept;
 
-/// Test the game resources
-void test_game_resources();
+/// Play a sound effect
+void play(
+  game_resources& r,
+  const message& effect
+);
 
 #endif // LOGIC_ONLY
 

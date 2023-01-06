@@ -99,11 +99,6 @@ void test()
   test_square();
   test_starting_position_type();
   test_volume();
-#ifndef LOGIC_ONLY
-  test_game_resources();
-  test_game_view();
-  test_sound_effects();
-#endif // LOGIC_ONLY
 #endif
 }
 

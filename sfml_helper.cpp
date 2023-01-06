@@ -71,7 +71,8 @@ void show_pieces(
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(0.9 * square_width, 0.9 * square_height));
     sprite.setTexture(
-      &resources.get_piece(
+      &get_piece(
+        resources,
         piece.get_color(),
         piece.get_type()
       )
@@ -128,12 +129,12 @@ void show_squares(
   const int square_height{1 + (get_height(rect) / 8)};
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width, square_height));
-  black_square.setTexture(&resources.get_square(chess_color::black));
+  black_square.setTexture(&get_square(resources, chess_color::black));
   black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width, square_height));
-  white_square.setTexture(&resources.get_square(chess_color::white));
+  white_square.setTexture(&get_square(resources, chess_color::white));
   white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
 
   for (int x = 0; x != 8; ++x)

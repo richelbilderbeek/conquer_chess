@@ -157,7 +157,7 @@ void game_view::play_pieces_sound_effects()
 {
   for (const auto& sound_effect: collect_messages(m_game))
   {
-    m_game_resources.play(sound_effect);
+    m_game_resources.get_sound_effects().play(sound_effect);
   }
 }
 
@@ -632,7 +632,8 @@ void show_pieces(game_view& view)
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(0.9 * square_width, 0.9 * square_height));
     sprite.setTexture(
-      &view.get_resources().get_piece(
+      &get_piece(
+        view.get_resources(),
         piece.get_color(),
         piece.get_type()
       )
@@ -959,7 +960,8 @@ void show_unit_sprites(game_view& view, const side player_side)
     sf::RectangleShape sprite;
     sprite.setSize(sf::Vector2f(square_width, square_height));
     sprite.setTexture(
-      &view.get_resources().get_piece_portrait(
+      &get_piece_portrait(
+        view.get_resources(),
         piece.get_color(),
         piece.get_type()
       )
