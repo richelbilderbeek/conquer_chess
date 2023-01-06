@@ -18,11 +18,10 @@ File                           |License
 
 Image                                   |Image                                |Description                         |Adapted from picture at URL
 ----------------------------------------|-------------------------------------|------------------------------------|--------------------------------------------------------------------------------------
-![](classic_black_bishop_portait.png)   |`classic_black_bishop_portait.png`   |Joris Vercammen                     |https://commons.wikimedia.org/wiki/File:Abp.Joris_Vercammen.png
-![](classic_black_bishop_portait.png)   |`classic_black_knight_portrait.png`  |Dom Quichote                        |https://commons.wikimedia.org/wiki/File:Bronze_statues_of_Don_Quixote_and_Sancho_Panza.jpg
-![](classic_black_bishop_portrait.png)  |`classic_black_bishop_portrait.png`  |Prins Claus                         |https://commons.wikimedia.org/wiki/File:Prince_Claus_of_the_Netherlands_1986.jpg
-![](classic_black_knight_portrait_1.png)|`classic_black_knight_portrait_1.png`|De Waag at night                    |https://commons.wikimedia.org/wiki/File:De_Waag,_Amsterdam.jpg
-![](classic_black_knight_portrait_2.png)|`classic_black_knight_portrait_2.png`|De Waag at day                      |https://commons.wikimedia.org/wiki/File:Waag_Amsterdam_02.JPG
+![](classic_black_bishop_portrait.png)  |`classic_black_bishop_portrait.png`  |Joris Vercammen                     |https://commons.wikimedia.org/wiki/File:Abp.Joris_Vercammen.png
+![](classic_black_knight_portrait.png)  |`classic_black_knight_portrait.png`  |Dom Quichote                        |https://commons.wikimedia.org/wiki/File:Bronze_statues_of_Don_Quixote_and_Sancho_Panza.jpg
+![](classic_black_king_portrait.png)    |`classic_black_king_portrait.png`    |Prins Claus                         |https://commons.wikimedia.org/wiki/File:Prince_Claus_of_the_Netherlands_1986.jpg
+![](classic_black_rook_portrait.png)    |`classic_black_rook_portrait.png`    |De Waag at night                    |https://commons.wikimedia.org/wiki/File:De_Waag,_Amsterdam.jpg
 ![](classic_black_pawn_portrait.png)    |`classic_black_pawn_portrait.png`    |Axel Törneman's 'Farmer in Brittany'|https://commons.wikimedia.org/wiki/File:Farmer_in_Brittany_by_Axel_T%C3%B6rneman.jpg
 ![](classic_black_queen_portrait.png)   |`classic_black_queen_portrait.png`   |Queen Beatrix                       |https://commons.wikimedia.org/wiki/File:Queen_Beatrix_and_Wim_Pijbes.jpg
 ![](classic_white_bishop_portrait.png)  |`classic_white_bishop_portrait.png`  |Antje Jackeleen                     |https://commons.wikimedia.org/wiki/File:Biskopsvigning_2014-12-14_001.jpg
@@ -32,7 +31,44 @@ Image                                   |Image                                |D
 ![](classic_white_queen_portrait.png)   |`classic_white_queen_portrait.png`   |Silvia Renate Sommerlath            |https://commons.wikimedia.org/wiki/Category:Queen_Silvia_of_Sweden#/media/File:Queen_Silvia_of_Sweden_in_2018.jpg
 ![](classic_white_rook_portrait.png)    |`classic_white_rook_portrait.png`    |Uppsala Slott                       |https://commons.wikimedia.org/wiki/Category:Uppsala_slott#/media/File:Schloss_Uppsala.jpg
 
-<!-- 60620379_starcraft_2__terran__a_white_pawn__symbol__symbolic__pawn -->
+Image                                   |Image                                |Terms used
+----------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------
+![](protoss_black_bishop_portrait.png)  |`protoss_black_bishop_portrait.png`  |``
+![](protoss_black_knight_portrait.png)  |`protoss_black_knight_portrait.png`  |`3130037647_starcraft_2__protoss__a_black_pawn__chess__symbol__symbolic__full_view__single_piece`
+![](protoss_black_king_portrait.png)    |`protoss_black_king_portrait.png`    |``
+![](protoss_black_rook_portrait.png)    |`protoss_black_rook_portrait.png`    |``
+![](protoss_white_pawn_portrait.png)    |`protoss_white_pawn_portrait.png`    |`starcraft_2__terran__a_white_pawn__symbol__symbolic__pawn`
+![](protoss_black_queen_portrait.png)   |`protoss_black_queen_portrait.png`   |``
+![](protoss_white_bishop_portrait.png)  |`protoss_white_bishop_portrait.png`  |`2328029875_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
+![](protoss_white_king_portrait.png)    |`protoss_white_king_portrait.png`    |``
+![](protoss_white_knight_portrait.png)  |`protoss_white_knight_portrait.png`  |`3187757143_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
+![](protoss_white_pawn_portrait.png)    |`protoss_white_pawn_portrait.png`    |``
+![](protoss_white_queen_portrait.png)   |`protoss_white_queen_portrait.png`   |`4196204352_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
+![](protoss_white_rook_portrait.png)    |`protoss_white_rook_portrait.png`    |`758402339_starcraft_2__terran__a_white_bishop__symbol__symbolic__full_view__single_piece`
+![](terran_black_bishop_portrait.png)   |`terran_black_bishop_portrait.png`  |``
+![](terran_black_knight_portrait.png)   |`terran_black_knight_portrait.png`  |``
+![](terran_black_king_portrait.png)     |`terran_black_king_portrait.png`    |``
+![](terran_black_rook_portrait.png)     |`terran_black_rook_portrait.png`    |``
+![](terran_black_pawn_portrait.png)     |`terran_black_pawn_portrait.png`    |``
+![](terran_black_queen_portrait.png)    |`terran_black_queen_portrait.png`   |``
+![](terran_white_bishop_portrait.png)   |`terran_white_bishop_portrait.png`  |``
+![](terran_white_king_portrait.png)     |`terran_white_king_portrait.png`    |``
+![](terran_white_knight_portrait.png)   |`terran_white_knight_portrait.png`  |``
+![](terran_white_pawn_portrait.png)     |`terran_white_pawn_portrait.png`    |``
+![](terran_white_queen_portrait.png)    |`terran_white_queen_portrait.png`   |``
+![](terran_white_rook_portrait.png)     |`terran_white_rook_portrait.png`    |``
+![](zerg_black_bishop_portrait.png)     |`zerg_black_bishop_portrait.png`  |``
+![](zerg_black_knight_portrait.png)     |`zerg_black_knight_portrait.png`  |``
+![](zerg_black_king_portrait.png)       |`zerg_black_king_portrait.png`    |``
+![](zerg_black_rook_portrait.png)       |`zerg_black_rook_portrait.png`    |``
+![](zerg_black_pawn_portrait.png)       |`zerg_black_pawn_portrait.png`    |``
+![](zerg_black_queen_portrait.png)      |`zerg_black_queen_portrait.png`   |``
+![](zerg_white_bishop_portrait.png)     |`zerg_white_bishop_portrait.png`  |``
+![](zerg_white_king_portrait.png)       |`zerg_white_king_portrait.png`    |``
+![](zerg_white_knight_portrait.png)     |`zerg_white_knight_portrait.png`  |``
+![](zerg_white_pawn_portrait.png)       |`zerg_white_pawn_portrait.png`    |``
+![](zerg_white_queen_portrait.png)      |`zerg_white_queen_portrait.png`   |`220581649_starcraft_2__terran__a_black_queen__symbol__symbolic__pawn__full_view`
+![](zerg_white_rook_portrait.png)       |`zerg_white_rook_portrait.png`    |``
 
 ## Sounds
 
