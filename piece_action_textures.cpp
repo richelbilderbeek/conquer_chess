@@ -1,4 +1,4 @@
-#include "game_options_menu_textures.h"
+#include "piece_action_textures.h"
 
 #ifndef LOGIC_ONLY
 
@@ -9,13 +9,13 @@
 #include <cassert>
 #include <sstream>
 
-game_options_menu_textures::game_options_menu_textures()
+piece_action_textures::piece_action_textures()
 {
-  for (const auto r: get_all_options_view_items())
+  for (const auto r: get_all_piece_action_types())
   {
     const std::string filename_str{get_filename(r)};
     const QString filename{filename_str.c_str()};
-    QFile f(":/resources/textures/icons/" + filename);
+    QFile f(":/resources/textures/piece_actions/" + filename);
     f.copy(filename);
     if (!m_textures[r].loadFromFile(filename.toStdString()))
     {
@@ -25,20 +25,20 @@ game_options_menu_textures::game_options_menu_textures()
   }
 }
 
-std::string game_options_menu_textures::get_filename(
-  const options_view_item item
+std::string piece_action_textures::get_filename(
+  const piece_action_type t
 ) const noexcept
 {
   std::stringstream s;
-  s << item << ".jpg";
+  s << t << ".png";
   return s.str();
 }
 
-sf::Texture& game_options_menu_textures::get_texture(
-  const options_view_item item
+sf::Texture& piece_action_textures::get_texture(
+  const piece_action_type t
 ) noexcept
 {
-  return m_textures[item];
+  return m_textures[t];
 }
 
 #endif // LOGIC_ONLY

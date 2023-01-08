@@ -403,7 +403,7 @@ void show_controls(
       {
         const piece_action_type action{maybe_action.value()};
         sprite.setTexture(
-          &view.get_resources().get_textures().get_action_icon(action)
+          &get_action_icon(view.get_resources(), action)
         );
         view.get_window().draw(sprite);
       }

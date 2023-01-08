@@ -11,6 +11,7 @@
 textures::textures()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
+/*
     std::make_pair(std::ref(m_action_attack), "icon_attack.png"),
     std::make_pair(std::ref(m_action_castle_kingside), "icon_castle_kingside.png"),
     std::make_pair(std::ref(m_action_castle_queenside), "icon_castle_queenside.png"),
@@ -22,39 +23,36 @@ textures::textures()
     std::make_pair(std::ref(m_action_promote_to_rook), "icon_promote_to_rook.png"),
     std::make_pair(std::ref(m_action_select), "icon_select.png"),
     std::make_pair(std::ref(m_action_unselect), "icon_unselect.png"),
+*/
     std::make_pair(std::ref(m_all_races_1), "all_races_1.jpeg"),
     std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
     std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
     std::make_pair(std::ref(m_classic_head), "classic_head.png"),
-//    std::make_pair(std::ref(m_classic_map), "classic_map.png"),
-    std::make_pair(std::ref(m_controls), "controls.png"),
+//    std::make_pair(std::ref(m_controls), "controls.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
     std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
     std::make_pair(std::ref(m_dark_white_square), "d_white.png"),
-    std::make_pair(std::ref(m_game_speed), "game_speed.png"),
+//    std::make_pair(std::ref(m_game_speed), "game_speed.png"),
     std::make_pair(std::ref(m_keyboard), "keyboard.png"),
     std::make_pair(std::ref(m_light_black_square), "l_black.png"),
     std::make_pair(std::ref(m_light_square), "l.png"),
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
     std::make_pair(std::ref(m_light_white_square), "l_white.png"),
     std::make_pair(std::ref(m_mouse), "mouse.png"),
-    std::make_pair(std::ref(m_music_volume), "music_volume.png"),
+//    std::make_pair(std::ref(m_music_volume), "music_volume.png"),
     std::make_pair(std::ref(m_protoss_head), "protoss_head.jpeg"),
-//    std::make_pair(std::ref(m_protoss_map), "protoss_map.png"),
     std::make_pair(std::ref(m_ready_no), "ready_no.png"),
     std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
-    std::make_pair(std::ref(m_sound_effects_volume), "sound_effects_volume.png"),
-    std::make_pair(std::ref(m_starting_position), "starting_position.jpeg"),
+//    std::make_pair(std::ref(m_sound_effects_volume), "sound_effects_volume.png"),
+//    std::make_pair(std::ref(m_starting_position), "starting_position.jpeg"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
     std::make_pair(std::ref(m_terran_head), "terran_head.jpeg"),
-//    std::make_pair(std::ref(m_terran_map), "terran_map.png"),
     std::make_pair(std::ref(m_title), "title.png"),
     std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
     std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg")
-//    std::make_pair(std::ref(m_zerg_map), "zerg_map.png")
   };
   for (const auto& p: v)
   {
@@ -69,6 +67,7 @@ textures::textures()
   }
 }
 
+/*
 sf::Texture& textures::get_action_icon(const piece_action_type t) noexcept
 {
   switch(t)
@@ -99,6 +98,7 @@ sf::Texture& textures::get_action_icon(const piece_action_type t) noexcept
       return m_action_unselect;
   }
 }
+*/
 
 sf::Texture& get_black_square(textures& t) noexcept
 {

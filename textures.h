@@ -26,9 +26,6 @@ public:
     const chess_color occupant_color
   ) noexcept;
 
-  /// Get the icon for an action
-  sf::Texture& get_action_icon(const piece_action_type t) noexcept;
-
   sf::Texture& get_all_races_1() noexcept { return m_all_races_1; }
   sf::Texture& get_all_races_2() noexcept { return m_all_races_2; }
   sf::Texture& get_all_races_3() noexcept { return m_all_races_3; }
@@ -68,13 +65,15 @@ private:
   sf::Texture m_black_chess_color;
   sf::Texture m_white_chess_color;
 
+  /*
   sf::Texture m_game_speed;
   sf::Texture m_controls;
   sf::Texture m_music_volume;
   sf::Texture m_sound_effects_volume;
+  sf::Texture m_starting_position;
+  */
   sf::Texture m_mouse;
   sf::Texture m_keyboard;
-  sf::Texture m_starting_position;
 
   /// Ready to start
   sf::Texture m_ready_no;
@@ -85,6 +84,7 @@ private:
   sf::Texture m_dark_white_square;
   sf::Texture m_dark_strip;
 
+  /*
   sf::Texture m_action_attack;
   sf::Texture m_action_castle_kingside;
   sf::Texture m_action_castle_queenside;
@@ -96,6 +96,7 @@ private:
   sf::Texture m_action_promote_to_rook;
   sf::Texture m_action_select;
   sf::Texture m_action_unselect;
+  */
 
   sf::Texture m_light_black_square;
   sf::Texture m_light_square;
@@ -107,12 +108,6 @@ private:
   sf::Texture m_terran_head;
   sf::Texture m_zerg_head;
 
-  /*
-  sf::Texture m_classic_map;
-  sf::Texture m_protoss_map;
-  sf::Texture m_terran_map;
-  sf::Texture m_zerg_map;
-  */
   sf::Texture m_subtitle;
   sf::Texture m_title;
 

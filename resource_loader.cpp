@@ -89,12 +89,17 @@ void resource_loader::process_next(game_resources& resources)
       break;
     case 10:
       m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_piece_action_textures())
+        + " piece actions";
+      break;
+    case 11:
+      m_descriptor = "Loaded "
         + std::to_string(resources.get_n_piece_portrait_textures())
         + " piece portraits";
       break;
     default:
-    case 11:
-      assert(m_index == 11);
+    case 12:
+      assert(m_index == 12);
       assert(m_index + 1 == get_n_items()); // If not, update get_m_items
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_textures())

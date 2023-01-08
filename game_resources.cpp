@@ -12,6 +12,7 @@ std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
 std::optional<map_textures> game_resources::m_map_textures = {};
+std::optional<piece_action_textures> game_resources::m_piece_action_textures = {};
 std::optional<piece_textures> game_resources::m_piece_textures = {};
 std::optional<piece_portrait_textures> game_resources::m_piece_portrait_textures = {};
 songs * game_resources::m_songs{nullptr};
@@ -22,6 +23,15 @@ game_resources::game_resources()
 {
 
 }
+
+sf::Texture& get_action_icon(
+  game_resources& gr,
+  piece_action_type t
+) noexcept
+{
+  return gr.get_piece_action_textures().get_texture(t);
+}
+
 
 sf::Texture& get_black_square(game_resources& r) noexcept
 {
@@ -129,6 +139,10 @@ int game_resources::get_n_map_textures() noexcept
   return get_map_textures().get_n_textures();
 }
 
+int game_resources::get_n_piece_action_textures() noexcept
+{
+  return get_piece_action_textures().get_n_textures();
+}
 
 int game_resources::get_n_piece_portrait_textures() noexcept
 {
@@ -173,6 +187,13 @@ sf::Texture& get_piece_portrait(
 )
 {
   return gr.get_piece_portrait_textures().get_portrait(r, color, type);
+}
+
+piece_action_textures& game_resources::get_piece_action_textures() noexcept
+{
+  if (!m_piece_action_textures) m_piece_action_textures = piece_action_textures();
+  assert(m_piece_action_textures);
+  return m_piece_action_textures.value();
 }
 
 piece_portrait_textures& game_resources::get_piece_portrait_textures() noexcept

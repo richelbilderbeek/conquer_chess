@@ -12,8 +12,10 @@
 #include "map_textures.h"
 #include "message.h"
 #include "piece_portrait_textures.h"
+#include "piece_action_textures.h"
 #include "piece_textures.h"
 #include "piece_type.h"
+#include "piece_action_type.h"
 #include "songs.h"
 #include "sound_effects.h"
 #include "textures.h"
@@ -48,6 +50,7 @@ public:
   int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
   int get_n_map_textures() noexcept;
+  int get_n_piece_action_textures() noexcept;
   int get_n_piece_portrait_textures() noexcept;
   int get_n_piece_textures() noexcept;
   int get_n_songs() noexcept;
@@ -56,6 +59,9 @@ public:
 
   // Lazy loading
   map_textures& get_map_textures() noexcept;
+
+  // Lazy loading
+  piece_action_textures& get_piece_action_textures() noexcept;
 
   // Lazy loading
   piece_portrait_textures& get_piece_portrait_textures() noexcept;
@@ -93,6 +99,9 @@ private:
   static std::optional<map_textures> m_map_textures;
 
   /// Lazy loading
+  static std::optional<piece_action_textures> m_piece_action_textures;
+
+  /// Lazy loading
   static std::optional<piece_textures> m_piece_textures;
 
   /// Lazy loading
@@ -109,6 +118,11 @@ private:
 };
 
 sf::Texture& get_about(game_resources& r) noexcept;
+
+sf::Texture& get_action_icon(
+  game_resources& r,
+  piece_action_type t
+) noexcept;
 
 /// Get the Arial font
 sf::Font& get_arial_font(game_resources& r) noexcept;

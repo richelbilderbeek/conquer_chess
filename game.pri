@@ -49,6 +49,7 @@ HEADERS += \
     $$PWD/physical_controllers.h \
     $$PWD/piece.h \
     $$PWD/piece_action.h \
+    $$PWD/piece_action_textures.h \
     $$PWD/piece_action_type.h \
     $$PWD/piece_actions.h \
     $$PWD/piece_portrait_textures.h \
@@ -124,6 +125,7 @@ SOURCES += \
     $$PWD/physical_controllers.cpp \
     $$PWD/piece.cpp \
     $$PWD/piece_action.cpp \
+    $$PWD/piece_action_textures.cpp \
     $$PWD/piece_action_type.cpp \
     $$PWD/piece_actions.cpp \
     $$PWD/piece_portrait_textures.cpp \
