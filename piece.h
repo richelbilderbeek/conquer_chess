@@ -15,6 +15,7 @@
 #include "starting_position_type.h"
 #include "race.h"
 #include "side.h"
+#include "read_only.h"
 
 #include <string>
 #include <vector>
@@ -57,7 +58,7 @@ public:
   const auto& get_action_history() const noexcept { return m_action_history; }
 
   /// Get the color of the piece, i.e. white or black
-  chess_color get_color() const noexcept { return m_color; }
+  const auto& get_color() const noexcept { return m_color.get_value(); }
 
   const auto& get_current_action_time() const noexcept { return m_current_action_time; }
 
@@ -67,7 +68,7 @@ public:
   double get_health() const noexcept { return m_health; }
 
   /// Get the ID of the piece
-  const auto& get_id() const noexcept { return m_id; }
+  const auto& get_id() const noexcept { return m_id.get_value(); }
 
   /// Get the number of pieces this piece has killd
   int get_kill_count() const noexcept { return m_kill_count; }
@@ -79,10 +80,10 @@ public:
   const auto& get_messages() const noexcept { return m_messages; }
 
   /// Get the race of piece, e.g class, protoss, terran or zerg
-  race get_race() const noexcept { return m_race; }
+  const auto& get_race() const noexcept { return m_race.get_value(); }
 
   /// Get the type of piece, e.g. king, queen, rook, bishop, knight, pawn
-  piece_type get_type() const noexcept { return m_type; }
+  const auto& get_type() const noexcept { return m_type.get_value(); }
 
   /// Has this piece (attempted to) moved?
   bool has_moved() const noexcept { return m_has_moved; }
@@ -127,7 +128,7 @@ private:
   action_history m_action_history;
 
   /// The color of the piece, i.e. white or black
-  chess_color m_color;
+  read_only<chess_color> m_color;
 
   /// Time that the current action is taking
   delta_t m_current_action_time;
@@ -142,7 +143,7 @@ private:
   double m_health;
 
   /// The unique ID of this piece
-  id m_id;
+  read_only<id> m_id;
 
   /// Is this piece selected?
   bool m_is_selected;
@@ -157,13 +158,13 @@ private:
   std::vector<message_type> m_messages;
 
   /// The race of this piece
-  race m_race;
+  read_only<race> m_race;
 
   /// The time (in chess move time)
   delta_t m_time;
 
   /// The type of piece, e.g. king, queen, rook, bishop, knight, pawn
-  piece_type m_type;
+  read_only<piece_type> m_type;
 };
 
 /// Can a piece attack from 'from' to 'to'?

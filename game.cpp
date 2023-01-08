@@ -1123,7 +1123,7 @@ game get_game_with_starting_position(starting_position_type t) noexcept
   return game(options);
 }
 
-id get_id(const game& g, const square& s)
+read_only<id> get_id(const game& g, const square& s)
 {
   assert(is_piece_at(g, s));
   return get_piece_at(g, s).get_id();

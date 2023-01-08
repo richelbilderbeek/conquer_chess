@@ -46,8 +46,8 @@ piece::piece(
 
 void piece::add_action(const piece_action& action)
 {
-  assert(action.get_piece_type() == m_type || m_type == piece_type::pawn);
-  assert(action.get_color() == m_color);
+  assert(action.get_piece_type() == get_type() || get_type() == piece_type::pawn);
+  assert(action.get_color() == m_color.get_value());
   if (action.get_action_type() == piece_action_type::select)
   {
     assert(!m_is_selected);
@@ -62,8 +62,8 @@ void piece::add_action(const piece_action& action)
   {
     if (
       !can_move(
-        m_color,
-        m_type,
+        get_color(),
+        get_type(),
         square(action.get_from()),
         square(action.get_to())
       )
@@ -81,8 +81,8 @@ void piece::add_action(const piece_action& action)
   {
     if (
       !can_attack(
-        m_color,
-        m_type,
+        get_color(),
+        get_type(),
         square(action.get_from()),
         square(action.get_to())
       )
@@ -112,7 +112,7 @@ void piece::add_action(const piece_action& action)
       || action.get_action_type() == piece_action_type::promote_to_rook
       || action.get_action_type() == piece_action_type::promote_to_queen
     );
-    assert(can_promote(m_color, m_type, m_current_square));
+    assert(can_promote(get_color(), get_type(), m_current_square));
     m_actions.push_back(action);
     return;
   }
@@ -1018,7 +1018,7 @@ void piece::tick(
         || first_action.get_action_type() == piece_action_type::promote_to_rook
         || first_action.get_action_type() == piece_action_type::promote_to_queen
       );
-      assert(m_type == piece_type::pawn);
+      assert(get_type() == piece_type::pawn);
       add_message(message_type::done);
       m_type = first_action.get_piece_type();
       remove_first(m_actions);

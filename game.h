@@ -296,7 +296,7 @@ game get_game_with_starting_position(starting_position_type t) noexcept;
 
 /// Get the ID of a piece at a square
 /// Will throw if there is no piece there
-id get_id(const game& g, const square& s);
+read_only<id> get_id(const game& g, const square& s);
 
 /// Get the index of the piece that is closest to the coordinat
 int get_index_of_closest_piece_to(
