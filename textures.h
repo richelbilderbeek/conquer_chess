@@ -37,8 +37,6 @@ public:
   /// Get an image for a controller type, i.e. mouse or keyboard
   sf::Texture& get_controller_type(const physical_controller_type t) noexcept;
 
-  /// Get the head of a representative of the race
-  sf::Texture& get_head(const race r) noexcept;
 
   /// Get a texture to state if the person is ready yes/no
   sf::Texture& get_ready(const bool is_ready) noexcept;
@@ -82,13 +80,10 @@ private:
   sf::Texture m_light_white_square;
   sf::Texture m_light_strip;
 
-  sf::Texture m_classic_head;
-  sf::Texture m_protoss_head;
-  sf::Texture m_terran_head;
-  sf::Texture m_zerg_head;
 
   sf::Texture m_subtitle;
   sf::Texture m_title;
+
 
 };
 

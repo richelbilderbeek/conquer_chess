@@ -340,7 +340,7 @@ void show_race_panel(lobby_view& v, const side player_side)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &v.get_resources().get_textures().get_head(
+    &v.get_resources().get_lobby_menu_textures().get_head(
       v.get_options().get_race(player_side)
     )
   );

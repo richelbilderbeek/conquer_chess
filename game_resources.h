@@ -5,6 +5,7 @@
 
 #include "chess_color.h"
 #include "fonts.h"
+#include "lobby_menu_textures.h"
 #include "options_menu_textures.h"
 #include "loading_screen_fonts.h"
 #include "loading_screen_songs.h"
@@ -33,7 +34,10 @@ public:
   fonts& get_fonts() noexcept;
 
   // Lazy loading
-  options_menu_textures& get_game_options_menu_textures() noexcept;
+  lobby_menu_textures& get_lobby_menu_textures() noexcept;
+
+  // Lazy loading
+  options_menu_textures& get_options_menu_textures() noexcept;
 
   // Lazy loading
   loading_screen_fonts& get_loading_screen_fonts() noexcept;
@@ -45,7 +49,8 @@ public:
   loading_screen_songs& get_loading_screen_songs() noexcept;
 
   int get_n_fonts() noexcept;
-  int get_n_game_options_menu_textures() noexcept;
+  int get_n_lobby_menu_textures() noexcept;
+  int get_n_options_menu_textures() noexcept;
   int get_n_loading_screen_fonts() noexcept;
   int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
@@ -84,7 +89,10 @@ private:
   static std::optional<fonts> m_fonts;
 
   /// Lazy loading
-  static std::optional<options_menu_textures> m_game_options_menu_textures;
+  static std::optional<lobby_menu_textures> m_lobby_menu_textures;
+
+  /// Lazy loading
+  static std::optional<options_menu_textures> m_options_menu_textures;
 
   /// Lazy loading
   static std::optional<loading_screen_fonts> m_loading_screen_fonts;

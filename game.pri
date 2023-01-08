@@ -22,7 +22,6 @@ HEADERS += \
     $$PWD/game_log.h \
     $$PWD/game_options.h \
     $$PWD/game_rect.h \
-    $$PWD/game_resources.h \
     $$PWD/game_speed.h \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
@@ -86,7 +85,6 @@ SOURCES += \
     $$PWD/game_log.cpp \
     $$PWD/game_options.cpp \
     $$PWD/game_rect.cpp \
-    $$PWD/game_resources.cpp \
     $$PWD/game_speed.cpp \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \

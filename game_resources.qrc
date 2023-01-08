@@ -5,7 +5,6 @@
         <file>resources/all_races_3.jpg</file>
         <file>resources/all_races_4.jpg</file>
         <file>resources/black_chess_color.png</file>
-        <file>resources/classic_head.png</file>
         <file>resources/d.png</file>
         <file>resources/d_black.png</file>
         <file>resources/d_white.png</file>
@@ -13,24 +12,12 @@
         <file>resources/fonts/16114_FuturistFixed-width.ttf</file>
         <file>resources/fonts/arial.ttf</file>
         <file>resources/fonts/CodeSquaredRegular-AYRg.ttf</file>
-        <file>resources/textures/piece_actions/attack.png</file>
-        <file>resources/textures/piece_actions/en_passant.png</file>
-        <file>resources/textures/piece_actions/castle_kingside.png</file>
-        <file>resources/textures/piece_actions/castle_queenside.png</file>
-        <file>resources/textures/piece_actions/move.png</file>
-        <file>resources/textures/piece_actions/promote_to_bishop.png</file>
-        <file>resources/textures/piece_actions/promote_to_knight.png</file>
-        <file>resources/textures/piece_actions/promote_to_queen.png</file>
-        <file>resources/textures/piece_actions/promote_to_rook.png</file>
-        <file>resources/textures/piece_actions/select.png</file>
-        <file>resources/textures/piece_actions/unselect.png</file>
         <file>resources/keyboard.png</file>
         <file>resources/l.png</file>
         <file>resources/l_black.png</file>
         <file>resources/l_white.png</file>
         <file>resources/light_strip.png</file>
         <file>resources/mouse.png</file>
-        <file>resources/protoss_head.jpg</file>
         <file>resources/qm.png</file>
         <file>resources/quit.png</file>
         <file>resources/ready_no.png</file>
@@ -78,17 +65,31 @@
         <file>resources/sound_effects/yes_mid.ogg</file>
         <file>resources/subtitle.png</file>
         <file>resources/t.png</file>
-        <file>resources/terran_head.jpg</file>
-        <file>resources/textures/game_options_menu/left_controls.jpg</file>
-        <file>resources/textures/game_options_menu/right_controls.jpg</file>
-        <file>resources/textures/game_options_menu/game_speed.jpg</file>
-        <file>resources/textures/game_options_menu/music_volume.jpg</file>
-        <file>resources/textures/game_options_menu/sound_effects_volume.jpg</file>
-        <file>resources/textures/game_options_menu/starting_position.jpg</file>
+        <file>resources/textures/lobby_menu/classic_head.png</file>
+        <file>resources/textures/lobby_menu/protoss_head.jpg</file>
+        <file>resources/textures/lobby_menu/terran_head.jpg</file>
+        <file>resources/textures/lobby_menu/zerg_head.jpg</file>
         <file>resources/textures/maps/classic_map.jpg</file>
         <file>resources/textures/maps/protoss_map.jpg</file>
         <file>resources/textures/maps/terran_map.jpg</file>
         <file>resources/textures/maps/zerg_map.jpg</file>
+        <file>resources/textures/options_menu/game_speed.jpg</file>
+        <file>resources/textures/options_menu/left_controls.jpg</file>
+        <file>resources/textures/options_menu/music_volume.jpg</file>
+        <file>resources/textures/options_menu/right_controls.jpg</file>
+        <file>resources/textures/options_menu/sound_effects_volume.jpg</file>
+        <file>resources/textures/options_menu/starting_position.jpg</file>
+        <file>resources/textures/piece_actions/attack.png</file>
+        <file>resources/textures/piece_actions/castle_kingside.png</file>
+        <file>resources/textures/piece_actions/castle_queenside.png</file>
+        <file>resources/textures/piece_actions/en_passant.png</file>
+        <file>resources/textures/piece_actions/move.png</file>
+        <file>resources/textures/piece_actions/promote_to_bishop.png</file>
+        <file>resources/textures/piece_actions/promote_to_knight.png</file>
+        <file>resources/textures/piece_actions/promote_to_queen.png</file>
+        <file>resources/textures/piece_actions/promote_to_rook.png</file>
+        <file>resources/textures/piece_actions/select.png</file>
+        <file>resources/textures/piece_actions/unselect.png</file>
         <file>resources/textures/pieces/classic_black_bishop.jpg</file>
         <file>resources/textures/pieces/classic_black_bishop_with_contour.jpg</file>
         <file>resources/textures/pieces/classic_black_king.jpg</file>
@@ -199,6 +200,5 @@
         <file>resources/textures/portraits/zerg_white_rook_portrait.jpg</file>
         <file>resources/title.png</file>
         <file>resources/white_chess_color.png</file>
-        <file>resources/zerg_head.jpg</file>
     </qresource>
 </RCC>

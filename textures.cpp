@@ -16,7 +16,6 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpg"),
     std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
-    std::make_pair(std::ref(m_classic_head), "classic_head.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
     std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
@@ -27,14 +26,11 @@ textures::textures()
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
     std::make_pair(std::ref(m_light_white_square), "l_white.png"),
     std::make_pair(std::ref(m_mouse), "mouse.png"),
-    std::make_pair(std::ref(m_protoss_head), "protoss_head.jpg"),
     std::make_pair(std::ref(m_ready_no), "ready_no.png"),
     std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
-    std::make_pair(std::ref(m_terran_head), "terran_head.jpg"),
     std::make_pair(std::ref(m_title), "title.png"),
-    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
-    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpg")
+    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png")
   };
   for (const auto& p: v)
   {
@@ -74,20 +70,6 @@ sf::Texture& textures::get_controller_type(const physical_controller_type t) noe
   }
   assert(t == physical_controller_type::mouse);
   return m_mouse;
-}
-
-sf::Texture& textures::get_head(const race r) noexcept
-{
-  switch (r)
-  {
-    case race::classic: return m_classic_head;
-    case race::protoss: return m_protoss_head;
-    case race::terran: return m_terran_head;
-    default:
-    case race::zerg:
-      assert(r == race::zerg);
-      return m_zerg_head;
-  }
 }
 
 sf::Texture& textures::get_occupied_square(

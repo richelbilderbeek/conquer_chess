@@ -74,7 +74,7 @@ void resource_loader::process_next(game_resources& resources)
       break;
     case 7:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_n_game_options_menu_textures())
+        + std::to_string(resources.get_n_options_menu_textures())
         + " game options menu textures";
       break;
     case 8:
@@ -97,9 +97,14 @@ void resource_loader::process_next(game_resources& resources)
         + std::to_string(resources.get_n_piece_portrait_textures())
         + " piece portraits";
       break;
-    default:
     case 12:
-      assert(m_index == 12);
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_lobby_menu_textures())
+        + " lobby menu textures";
+      break;
+    default:
+    case 13:
+      assert(m_index == 13);
       assert(m_index + 1 == get_n_items()); // If not, update get_m_items
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_textures())
