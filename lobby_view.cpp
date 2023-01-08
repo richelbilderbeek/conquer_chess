@@ -13,8 +13,11 @@
 #include <cmath>
 #include <iostream>
 
-lobby_view::lobby_view(const game_options& go)
+lobby_view::lobby_view(
+  const game_options& go
+)
   : m_game_options{go},
+    m_lobby_options{create_default_lobby_options()},
     m_lhs_cursor{lobby_view_item::color},
     m_rhs_cursor{lobby_view_item::color},
     m_lhs_start{false},
@@ -80,7 +83,7 @@ void lobby_view::exec_game()
   m_resources.get_songs().get_soothing().stop();
   m_window.setVisible(false);
   game_view view{
-    game(m_game_options),
+    game(m_game_options, m_lobby_options),
     game_controller(m_physical_controllers)
   };
   view.exec();

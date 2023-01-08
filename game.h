@@ -22,7 +22,7 @@ class game
 public:
   explicit game(
     const game_options& go = create_default_game_options(),
-    const lobby_options& lo = lobby_options()
+    const lobby_options& lo = create_default_lobby_options()
   );
 
   /// Get the game options

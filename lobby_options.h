@@ -11,7 +11,11 @@
 class lobby_options
 {
 public:
-  lobby_options();
+  lobby_options(
+    const chess_color lhs_color,
+    const race lhs_race,
+    const race rhs_race
+  );
 
   /// Get the chess color of a player
   chess_color get_color(const side player_side) const noexcept;
@@ -35,6 +39,8 @@ private:
   race m_lhs_race;
   race m_rhs_race;
 };
+
+lobby_options create_default_lobby_options() noexcept;
 
 chess_color get_color(const lobby_options& options, const side player_side) noexcept;
 

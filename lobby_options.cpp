@@ -4,12 +4,21 @@
 #include <iostream>
 #include <sstream>
 
-lobby_options::lobby_options()
-  : m_lhs_color{chess_color::white},
-    m_lhs_race{race::terran},
-    m_rhs_race{race::terran}
+lobby_options::lobby_options(
+  const chess_color lhs_color,
+  const race lhs_race,
+  const race rhs_race
+)
+  : m_lhs_color{lhs_color},
+    m_lhs_race{lhs_race},
+    m_rhs_race{rhs_race}
 {
 
+}
+
+lobby_options create_default_lobby_options() noexcept
+{
+  return lobby_options(chess_color::white, race::classic, race::classic);
 }
 
 chess_color lobby_options::get_color(const side player_side) const noexcept
@@ -75,7 +84,7 @@ void test_lobby_options()
   #ifndef NDEBUG
   // get_color and set_color
   {
-    lobby_options options;
+    lobby_options options{create_default_lobby_options()};
     options.set_color(chess_color::white, side::lhs);
     assert(options.get_color(side::lhs) == chess_color::white);
     options.set_color(chess_color::black, side::lhs);
@@ -87,7 +96,7 @@ void test_lobby_options()
   }
   // get_race and set_race
   {
-    lobby_options options;
+    lobby_options options{create_default_lobby_options()};
     options.set_race(race::protoss, side::lhs);
     assert(options.get_race(side::lhs) == race::protoss);
     options.set_race(race::zerg, side::lhs);
@@ -99,7 +108,7 @@ void test_lobby_options()
   }
   // 76: set_color ensures the other player has the other color
   {
-    lobby_options options;
+    lobby_options options{create_default_lobby_options()};
     options.set_color(chess_color::white, side::lhs);
     assert(options.get_color(side::lhs) == chess_color::white);
     assert(options.get_color(side::rhs) == chess_color::black);
@@ -115,13 +124,21 @@ void test_lobby_options()
   }
   // ::get_color
   {
-    const lobby_options options;
+    const lobby_options options{create_default_lobby_options()};
     assert(get_color(options, side::lhs) == chess_color::white);
     assert(get_color(options, side::rhs) == chess_color::black);
   }
+  // get_race_of_color
+  {
+    const lobby_options options{create_default_lobby_options()};
+    assert(get_color(options, side::lhs) == chess_color::white);
+    assert(get_color(options, side::rhs) == chess_color::black);
+    assert(get_race_of_color(options, chess_color::white) == options.get_race(side::lhs));
+    assert(get_race_of_color(options, chess_color::black) == options.get_race(side::rhs));
+  }
   // operator<<
   {
-    const lobby_options options;
+    const lobby_options options{create_default_lobby_options()};
     std::stringstream s;
     s << options;
     assert(!s.str().empty());

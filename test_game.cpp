@@ -863,7 +863,7 @@ void test_game_functions()
   // get_player_side
   {
     const game_options go{create_default_game_options()};
-    lobby_options lo;
+    lobby_options lo = create_default_lobby_options();
     // default
     {
       const game g(go, lo);

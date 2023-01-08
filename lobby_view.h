@@ -14,7 +14,9 @@
 class lobby_view
 {
 public:
-  lobby_view(const game_options& go);
+  lobby_view(
+    const game_options& go
+  );
 
   /// Run the menu, until the user quits
   void exec();
