@@ -14,13 +14,15 @@
 #include <iostream>
 
 lobby_view::lobby_view(
-  const game_options& go
+  const game_options& go,
+  const physical_controllers& pcs
 )
   : m_game_options{go},
-    m_lobby_options{create_default_lobby_options()},
     m_lhs_cursor{lobby_view_item::color},
-    m_rhs_cursor{lobby_view_item::color},
     m_lhs_start{false},
+    m_lobby_options{create_default_lobby_options()},
+    m_physical_controllers{pcs},
+    m_rhs_cursor{lobby_view_item::color},
     m_rhs_start{false}
 {
   m_resources.get_songs().get_soothing().setVolume(

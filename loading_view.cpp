@@ -9,7 +9,11 @@
 #include <cmath>
 #include <iostream>
 
-loading_view::loading_view()
+loading_view::loading_view(
+  const game_options& go,
+  const physical_controllers& pcs
+) : m_game_options{go},
+    m_physical_controllers{pcs}
 {
   m_resources.get_loading_screen_songs().get_heroes().setVolume(
     10
@@ -67,8 +71,8 @@ void loading_view::exec_menu()
   m_window.setVisible(false);
   m_resources.get_loading_screen_songs().get_heroes().stop();
   menu_view v(
-    create_default_game_options(),
-    create_two_keyboard_controllers()
+    m_game_options,
+    m_physical_controllers
   );
   v.exec();
   m_window.close();

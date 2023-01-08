@@ -119,30 +119,20 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   {
     #ifndef LOGIC_ONLY
     {
-      loading_view v;
+      #define USE_TWO_KEYBOARDS
+      #ifdef USE_TWO_KEYBOARDS
+      loading_view v(
+        create_default_game_options(),
+        create_two_keyboard_controllers()
+      );
+      #else
+      loading_view v(
+        create_default_game_options(),
+        create_keyboard_mouse_controllers()
+      );
+      #endif
       v.exec();
-      return 0;
     }
-    #define USE_TWO_KEYBOARDS
-    #ifdef USE_TWO_KEYBOARDS
-    menu_view v(
-      create_default_game_options(),
-      create_two_keyboard_controllers()
-    );
-    #else
-    menu_view v(
-      create_default_game_options(),
-      create_keyboard_mouse_controllers()
-    );
-    #endif
-    v.exec();
-    #endif // LOGIC_ONLY
-  }
-  else
-  {
-    #ifndef LOGIC_ONLY
-    controls_view v(create_left_keyboard_controller());
-    v.exec();
     #endif // LOGIC_ONLY
   }
 }

@@ -92,7 +92,10 @@ void menu_view::exec_lobby()
   m_resources.get_songs().get_bliss().stop();
   const auto cur_pos{m_window.getPosition()};
   m_window.setVisible(false);
-  lobby_view view(m_game_options);
+  lobby_view view(
+    m_game_options,
+    m_physical_controllers
+  );
   view.exec();
   m_window.setVisible(true);
   m_window.setPosition(cur_pos);

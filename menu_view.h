@@ -48,6 +48,7 @@ private:
   /// The game options
   game_options m_game_options;
 
+  /// The current physical controllers
   physical_controllers m_physical_controllers;
 
   /// Resources

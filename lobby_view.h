@@ -15,7 +15,8 @@ class lobby_view
 {
 public:
   lobby_view(
-    const game_options& go
+    const game_options& go,
+    const physical_controllers& pcs
   );
 
   /// Run the menu, until the user quits
@@ -57,6 +58,12 @@ private:
   /// The layout of this window
   lobby_view_layout m_layout;
 
+  /// The selected item for LHS
+  lobby_view_item m_lhs_cursor;
+
+  /// Is LHS ready to start?
+  bool m_lhs_start;
+
   /// The options set in this lobby
   lobby_options m_lobby_options;
 
@@ -66,12 +73,10 @@ private:
   /// Resources
   game_resources m_resources;
 
-  /// The selected item
-  lobby_view_item m_lhs_cursor;
+  /// The selected item for RHS
   lobby_view_item m_rhs_cursor;
 
-  /// Ready to start?
-  bool m_lhs_start;
+  /// Is RHS ready to start?
   bool m_rhs_start;
 
   /// The window to draw to
