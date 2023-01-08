@@ -46,10 +46,10 @@ public:
 private:
 
   /// The game options
-  game_options m_game_options;
+  const game_options m_game_options;
 
   /// The game options
-  lobby_options m_lobby_options;
+  const lobby_options m_lobby_options;
 
   /// All pieces in the game
   std::vector<piece> m_pieces;
