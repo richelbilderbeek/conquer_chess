@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/all_races_1.jpeg</file>
-        <file>resources/all_races_2.jpeg</file>
-        <file>resources/all_races_3.jpeg</file>
-        <file>resources/all_races_4.jpeg</file>
+        <file>resources/all_races_1.jpg</file>
+        <file>resources/all_races_2.jpg</file>
+        <file>resources/all_races_3.jpg</file>
+        <file>resources/all_races_4.jpg</file>
         <file>resources/black_chess_color.png</file>
         <file>resources/classic_head.png</file>
         <file>resources/d.png</file>
@@ -30,7 +30,7 @@
         <file>resources/l_white.png</file>
         <file>resources/light_strip.png</file>
         <file>resources/mouse.png</file>
-        <file>resources/protoss_head.jpeg</file>
+        <file>resources/protoss_head.jpg</file>
         <file>resources/qm.png</file>
         <file>resources/quit.png</file>
         <file>resources/ready_no.png</file>
@@ -78,7 +78,7 @@
         <file>resources/sound_effects/yes_mid.ogg</file>
         <file>resources/subtitle.png</file>
         <file>resources/t.png</file>
-        <file>resources/terran_head.jpeg</file>
+        <file>resources/terran_head.jpg</file>
         <file>resources/textures/game_options_menu/left_controls.jpg</file>
         <file>resources/textures/game_options_menu/right_controls.jpg</file>
         <file>resources/textures/game_options_menu/game_speed.jpg</file>
@@ -199,6 +199,6 @@
         <file>resources/textures/portraits/zerg_white_rook_portrait.jpg</file>
         <file>resources/title.png</file>
         <file>resources/white_chess_color.png</file>
-        <file>resources/zerg_head.jpeg</file>
+        <file>resources/zerg_head.jpg</file>
     </qresource>
 </RCC>

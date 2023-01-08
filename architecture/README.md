@@ -7,18 +7,18 @@ use the keyboard. `user_inputs` only keeps the keys that are setup in the
 
 Input                   |Class                               |Output
 ------------------------|------------------------------------|---------------------------------------
-keyboard and mouse input|`user_inputs` ![](user_inputs.jpeg) |Store valid input, ignore invalid input
+keyboard and mouse input|`user_inputs` ![](user_inputs.jpg) |Store valid input, ignore invalid input
 
 `game_controller` gets all `user_inputs` and moves the right cursor (there is one cursor
 for each player) to the right spots. It can select a piece to do a chess move.
 
 Input                   |Class                                       |Output
 ------------------------|--------------------------------------------|---------------------------------------
-Valid input             |`game_controller` ![](game_controller.jpeg) |Moves the cursor, does chess moves
+Valid input             |`game_controller` ![](game_controller.jpg) |Moves the cursor, does chess moves
 
 The chess moves that `game_controller` suggests may not be valid and do not
 move pieces. `game` checks if the chess move is valid and if yes, does the move.
 
 Input                   |Class                                       |Output
 ------------------------|--------------------------------------------|-----------------------------------------------------------
-Chess  moves            |`game` ![](game.jpeg)                       |Performs the valid chess moves, ignores invalid chess moves
+Chess  moves            |`game` ![](game.jpg)                       |Performs the valid chess moves, ignores invalid chess moves
