@@ -57,7 +57,7 @@ void loading_view::exec()
     // Show the new state
     show();
 
-    sf::sleep(sf::seconds(0.1));
+    sf::sleep(sf::seconds(0.05));
 
   }
 }
