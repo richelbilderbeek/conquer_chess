@@ -184,6 +184,9 @@ void show_layout(game_view& view);
 /// Show the log on-screen, i.e. things the pieces say
 void show_log(game_view& view, const side player);
 
+/// Show the map of the window
+void show_map(game_view& view);
+
 /// Show the squares that are occupied on-screen
 /// Throws if this option is turned off
 void show_occupied_squares(game_view& view);

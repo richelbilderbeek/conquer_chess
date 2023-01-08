@@ -22,6 +22,17 @@ sf::Color f_health_to_color(const double f)
   return sf::Color::Green;
 }
 
+void set_rect(sf::RectangleShape& rectangle, const screen_coordinat& screen_size)
+{
+  set_rect(
+    rectangle,
+    screen_rect(
+      screen_coordinat(0, 0),
+      screen_size
+    )
+  );
+}
+
 void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect)
 {
   rectangle.setOrigin(

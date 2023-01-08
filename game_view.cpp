@@ -288,6 +288,9 @@ void game_view::show()
   m_window.clear();
 
   // Show the layout of the screen: board and sidebars
+  show_map(*this);
+
+  // Show the layout of the screen: board and sidebars
   show_layout(*this);
 
   // Show the board: squares, unit paths, pieces, health bars
@@ -581,6 +584,20 @@ void show_log(game_view& view, const side player)
   );
   view.get_window().draw(text);
 }
+
+void show_map(game_view& view)
+{
+  const auto& game{view.get_game()};
+  const auto& layout{view.get_layout()};
+  sf::RectangleShape sprite;
+  set_rect(sprite, layout.get_window_size());
+  const race r{get_race_of_color(game.get_lobby_options(), chess_color::white)};
+  sprite.setTexture(
+    &view.get_resources().get_textures().get_map(r)
+  );
+  view.get_window().draw(sprite);
+}
+
 
 void show_occupied_squares(game_view& view)
 {
