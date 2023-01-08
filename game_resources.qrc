@@ -78,11 +78,11 @@
         <file>resources/subtitle.png</file>
         <file>resources/t.png</file>
         <file>resources/terran_head.jpeg</file>
-        <file>resources/textures/game_options_menu/controls.png</file>
-        <file>resources/textures/game_options_menu/game_speed.png</file>
-        <file>resources/textures/game_options_menu/music_volume.png</file>
-        <file>resources/textures/game_options_menu/sound_effects_volume.png</file>
-        <file>resources/textures/game_options_menu/starting_position.jpeg</file>
+        <file>resources/textures/game_options_menu/controls.jpg</file>
+        <file>resources/textures/game_options_menu/game_speed.jpg</file>
+        <file>resources/textures/game_options_menu/music_volume.jpg</file>
+        <file>resources/textures/game_options_menu/sound_effects_volume.jpg</file>
+        <file>resources/textures/game_options_menu/starting_position.jpg</file>
         <file>resources/textures/maps/classic_map.jpg</file>
         <file>resources/textures/maps/protoss_map.jpg</file>
         <file>resources/textures/maps/terran_map.jpg</file>
