@@ -5,6 +5,7 @@
 
 #include "chess_color.h"
 #include "fonts.h"
+#include "icon_textures.h"
 #include "loading_screen_fonts.h"
 #include "loading_screen_songs.h"
 #include "loading_screen_textures.h"
@@ -30,6 +31,9 @@ public:
   fonts& get_fonts() noexcept;
 
   // Lazy loading
+  icon_textures& get_icon_textures() noexcept;
+
+  // Lazy loading
   loading_screen_fonts& get_loading_screen_fonts() noexcept;
 
   // Lazy loading
@@ -39,6 +43,7 @@ public:
   loading_screen_songs& get_loading_screen_songs() noexcept;
 
   int get_n_fonts() noexcept;
+  int get_n_icon_textures() noexcept;
   int get_n_loading_screen_fonts() noexcept;
   int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
@@ -71,6 +76,9 @@ private:
 
   /// Lazy loading
   static std::optional<fonts> m_fonts;
+
+  /// Lazy loading
+  static std::optional<icon_textures> m_icon_textures;
 
   /// Lazy loading
   static std::optional<loading_screen_fonts> m_loading_screen_fonts;
@@ -110,6 +118,13 @@ sf::Texture& get_black_square(game_resources& r) noexcept;
 
 /// Get the Arial font
 sf::Font& get_code_squared_font(game_resources& r) noexcept;
+
+/// Get an icon that accompanies a game option,
+/// to be used in the Options screen
+sf::Texture& get_game_option_icon(
+  game_resources& r,
+  const options_view_item item
+) noexcept;
 
 
 sf::Texture& get_options(game_resources& r) noexcept;

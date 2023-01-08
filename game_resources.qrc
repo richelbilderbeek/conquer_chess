@@ -15,16 +15,16 @@
         <file>resources/fonts/arial.ttf</file>
         <file>resources/fonts/CodeSquaredRegular-AYRg.ttf</file>
         <file>resources/game_speed.png</file>
-        <file>resources/icon_attack.png</file>
-        <file>resources/icon_castle_kingside.png</file>
-        <file>resources/icon_castle_queenside.png</file>
-        <file>resources/icon_move.png</file>
-        <file>resources/icon_promote_to_bishop.png</file>
-        <file>resources/icon_promote_to_knight.png</file>
-        <file>resources/icon_promote_to_queen.png</file>
-        <file>resources/icon_promote_to_rook.png</file>
-        <file>resources/icon_select.png</file>
-        <file>resources/icon_unselect.png</file>
+        <file>resources/icons/icon_attack.png</file>
+        <file>resources/icons/icon_castle_kingside.png</file>
+        <file>resources/icons/icon_castle_queenside.png</file>
+        <file>resources/icons/icon_move.png</file>
+        <file>resources/icons/icon_promote_to_bishop.png</file>
+        <file>resources/icons/icon_promote_to_knight.png</file>
+        <file>resources/icons/icon_promote_to_queen.png</file>
+        <file>resources/icons/icon_promote_to_rook.png</file>
+        <file>resources/icons/icon_select.png</file>
+        <file>resources/icons/icon_unselect.png</file>
         <file>resources/keyboard.png</file>
         <file>resources/l.png</file>
         <file>resources/l_black.png</file>

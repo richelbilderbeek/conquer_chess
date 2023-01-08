@@ -336,7 +336,8 @@ void show_bottom_header(options_view& v)
 
     set_rect(rectangle, screen_rect);
     rectangle.setTexture(
-      &v.get_resources().get_textures().get_game_option_icon(
+      &get_game_option_icon(
+        v.get_resources(),
         options_view_item::left_controls
       )
     );
@@ -419,7 +420,8 @@ void show_game_speed(options_view& v)
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
     rectangle.setTexture(
-      &v.get_resources().get_textures().get_game_option_icon(
+      &get_game_option_icon(
+        v.get_resources(),
         options_view_item::game_speed
       )
     );
@@ -484,7 +486,8 @@ void show_starting_position(options_view& v)
     const auto& screen_rect = layout.get_starting_pos_label();
     sf::RectangleShape rectangle;
     rectangle.setTexture(
-      &v.get_resources().get_textures().get_game_option_icon(
+      &get_game_option_icon(
+        v.get_resources(),
         options_view_item::starting_position
       )
     );
@@ -562,7 +565,8 @@ void show_music_volume(options_view& v)
     const auto& screen_rect = layout.get_music_volume_label();
     sf::RectangleShape rectangle;
     rectangle.setTexture(
-      &v.get_resources().get_textures().get_game_option_icon(
+      &get_game_option_icon(
+        v.get_resources(),
         options_view_item::music_volume
       )
     );
@@ -635,7 +639,8 @@ void show_sound_effects_volume(options_view& v)
     const auto& screen_rect = layout.get_sound_effects_volume_label();
     sf::RectangleShape rectangle;
     rectangle.setTexture(
-      &v.get_resources().get_textures().get_game_option_icon(
+      &get_game_option_icon(
+        v.get_resources(),
         options_view_item::sound_effects_volume
       )
     );

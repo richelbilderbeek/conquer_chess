@@ -138,7 +138,8 @@ void show_text_panel(about_view& v)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &v.get_resources().get_textures().get_game_option_icon(
+    &get_game_option_icon(
+      v.get_resources(),
       options_view_item::starting_position
     )
   );

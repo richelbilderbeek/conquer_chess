@@ -1,6 +1,7 @@
 #ifndef OPTIONS_VIEW_ITEM_H
 #define OPTIONS_VIEW_ITEM_H
 
+#include <iosfwd>
 #include <string>
 #include <vector>
 
@@ -38,5 +39,7 @@ std::string to_str(const options_view_item item) noexcept;
 
 /// Test this class and free functions
 void test_options_view_item();
+
+std::ostream& operator<<(std::ostream& os, const options_view_item i) noexcept;
 
 #endif // OPTIONS_VIEW_ITEM_H

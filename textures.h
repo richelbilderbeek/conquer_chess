@@ -40,10 +40,6 @@ public:
   /// Get an image for a controller type, i.e. mouse or keyboard
   sf::Texture& get_controller_type(const physical_controller_type t) noexcept;
 
-  /// Get an icon that accompanies a game option,
-  /// to be used in the Options screen
-  sf::Texture& get_game_option_icon(const options_view_item i) noexcept;
-
   /// Get the head of a representative of the race
   sf::Texture& get_head(const race r) noexcept;
 

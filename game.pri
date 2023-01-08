@@ -26,6 +26,7 @@ HEADERS += \
     $$PWD/game_speed.h \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
+    $$PWD/icon_textures.h \
     $$PWD/id.h \
     $$PWD/key_bindings.h \
     $$PWD/layout.h \
@@ -100,6 +101,7 @@ SOURCES += \
     $$PWD/game_speed.cpp \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \
+    $$PWD/icon_textures.cpp \
     $$PWD/id.cpp \
     $$PWD/key_bindings.cpp \
     $$PWD/layout.cpp \

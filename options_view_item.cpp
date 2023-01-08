@@ -4,6 +4,8 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
+#include <sstream>
 
 std::vector<options_view_item> get_all_options_view_items() noexcept
 {
@@ -160,6 +162,15 @@ void test_options_view_item()
       assert(!to_str(i).empty());
     }
   }
+  // operator<<
+  {
+    for (const auto i: get_all_options_view_items())
+    {
+      std::stringstream s;
+      s << i;
+      assert(!s.str().empty());
+    }
+  }
 #endif // NEDBUG
 }
 
@@ -168,3 +179,8 @@ std::string to_str(const options_view_item t) noexcept
   return std::string(magic_enum::enum_name(t));
 }
 
+std::ostream& operator<<(std::ostream& os, const options_view_item i) noexcept
+{
+  os << to_str(i);
+  return os;
+}

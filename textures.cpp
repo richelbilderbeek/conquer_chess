@@ -127,6 +127,7 @@ sf::Texture& textures::get_controller_type(const physical_controller_type t) noe
   return m_mouse;
 }
 
+/*
 sf::Texture& textures::get_game_option_icon(const options_view_item i) noexcept
 {
   switch (i)
@@ -147,6 +148,7 @@ sf::Texture& textures::get_game_option_icon(const options_view_item i) noexcept
       return m_starting_position;
   }
 }
+*/
 
 sf::Texture& textures::get_head(const race r) noexcept
 {
