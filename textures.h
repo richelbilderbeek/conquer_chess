@@ -44,16 +44,11 @@ public:
   /// to be used in the Options screen
   sf::Texture& get_game_option_icon(const options_view_item i) noexcept;
 
-  /// Get texture of a portrait of a piece
-  /*
-  sf::Texture& get_piece_portrait(
-    const chess_color color,
-    const piece_type type
-  );
-  */
-
   /// Get the head of a representative of the race
   sf::Texture& get_head(const race r) noexcept;
+
+  /// Get the map for a race
+  sf::Texture& get_map(const race r) noexcept;
 
   /// Get a texture to state if the person is ready yes/no
   sf::Texture& get_ready(const bool is_ready) noexcept;
@@ -92,14 +87,6 @@ private:
   sf::Texture m_ready_no;
   sf::Texture m_ready_yes;
 
-  /*
-  sf::Texture m_black_bishop_portrait;
-  sf::Texture m_black_king_portrait;
-  sf::Texture m_black_knight_portrait;
-  sf::Texture m_black_pawn_portrait;
-  sf::Texture m_black_queen_portrait;
-  sf::Texture m_black_rook_portrait;
-  */
   sf::Texture m_dark_black_square;
   sf::Texture m_dark_square;
   sf::Texture m_dark_white_square;
@@ -122,23 +109,19 @@ private:
   sf::Texture m_light_white_square;
   sf::Texture m_light_strip;
 
-  sf::Texture m_protoss_head;
   sf::Texture m_classic_head;
+  sf::Texture m_protoss_head;
+  sf::Texture m_terran_head;
+  sf::Texture m_zerg_head;
+
+  sf::Texture m_classic_map;
+  sf::Texture m_protoss_map;
+  sf::Texture m_terran_map;
+  sf::Texture m_zerg_map;
 
   sf::Texture m_subtitle;
-  sf::Texture m_terran_head;
   sf::Texture m_title;
 
-  /*
-  sf::Texture m_white_bishop_portrait;
-  sf::Texture m_white_king_portrait;
-  sf::Texture m_white_knight_portrait;
-  sf::Texture m_white_pawn_portrait;
-  sf::Texture m_white_queen_portrait;
-  sf::Texture m_white_rook_portrait;
-  */
-
-  sf::Texture m_zerg_head;
 };
 
 /// Get a picture of a black/dark square

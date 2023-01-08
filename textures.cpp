@@ -26,14 +26,9 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
-//    std::make_pair(std::ref(m_black_bishop_portrait), "classic_black_bishop_portrait.png"),
     std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
-//    std::make_pair(std::ref(m_black_king_portrait), "classic_black_king_portrait.png"),
-//    std::make_pair(std::ref(m_black_knight_portrait), "classic_black_knight_portrait.png"),
-//    std::make_pair(std::ref(m_black_pawn_portrait), "classic_black_pawn_portrait.png"),
-//    std::make_pair(std::ref(m_black_queen_portrait), "classic_black_queen_portrait.png"),
-//    std::make_pair(std::ref(m_black_rook_portrait), "classic_black_rook_portrait_2.png"),
     std::make_pair(std::ref(m_classic_head), "classic_head.png"),
+    std::make_pair(std::ref(m_classic_map), "classic_map.png"),
     std::make_pair(std::ref(m_controls), "controls.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
@@ -48,21 +43,18 @@ textures::textures()
     std::make_pair(std::ref(m_mouse), "mouse.png"),
     std::make_pair(std::ref(m_music_volume), "music_volume.png"),
     std::make_pair(std::ref(m_protoss_head), "protoss_head.jpeg"),
+    std::make_pair(std::ref(m_protoss_map), "protoss_map.png"),
     std::make_pair(std::ref(m_ready_no), "ready_no.png"),
     std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
     std::make_pair(std::ref(m_sound_effects_volume), "sound_effects_volume.png"),
     std::make_pair(std::ref(m_starting_position), "starting_position.jpeg"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
     std::make_pair(std::ref(m_terran_head), "terran_head.jpeg"),
+    std::make_pair(std::ref(m_terran_map), "terran_map.png"),
     std::make_pair(std::ref(m_title), "title.png"),
-//    std::make_pair(std::ref(m_white_bishop_portrait), "classic_white_bishop_portrait.png"),
     std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
-//    std::make_pair(std::ref(m_white_king_portrait), "classic_white_king_portrait.png"),
-//    std::make_pair(std::ref(m_white_knight_portrait), "classic_white_knight_portrait.png"),
-//    std::make_pair(std::ref(m_white_pawn_portrait), "classic_white_pawn_portrait.png"),
-//    std::make_pair(std::ref(m_white_queen_portrait), "classic_white_queen_portrait.png"),
-//    std::make_pair(std::ref(m_white_rook_portrait), "classic_white_rook_portrait.png"),
-    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg")
+    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg"),
+    std::make_pair(std::ref(m_zerg_map), "zerg_map.png")
   };
   for (const auto& p: v)
   {
@@ -193,39 +185,24 @@ sf::Texture& textures::get_occupied_square(
   return m_dark_black_square;
 }
 
-/*
-sf::Texture& textures::get_piece_portrait(
-  const chess_color color,
-  const piece_type type
-)
-{
-  if (color == chess_color::black)
-  {
-    if (type == piece_type::bishop) return m_black_bishop_portrait;
-    if (type == piece_type::king) return m_black_king_portrait;
-    if (type == piece_type::knight) return m_black_knight_portrait;
-    if (type == piece_type::pawn) return m_black_pawn_portrait;
-    if (type == piece_type::queen) return m_black_queen_portrait;
-    if (type == piece_type::rook) return m_black_rook_portrait;
-  }
-  else
-  {
-    if (type == piece_type::bishop) return m_white_bishop_portrait;
-    if (type == piece_type::king) return m_white_king_portrait;
-    if (type == piece_type::knight) return m_white_knight_portrait;
-    if (type == piece_type::pawn) return m_white_pawn_portrait;
-    if (type == piece_type::queen) return m_white_queen_portrait;
-    if (type == piece_type::rook) return m_white_rook_portrait;
-  }
-
-  assert(!"Should not get here");
-  return m_light_square;
-}
-*/
-
 sf::Texture& get_white_square(textures& t) noexcept
 {
   return t.get_square(chess_color::white);
+}
+
+sf::Texture& textures::get_map(const race r) noexcept
+{
+  switch (r)
+  {
+    case race::classic: return m_classic_map;
+    case race::protoss: return m_protoss_map;
+    case race::terran: return m_terran_map;
+    default:
+    case race::zerg:
+      assert(r == race::zerg);
+      return m_zerg_map;
+  }
+
 }
 
 sf::Texture& textures::get_ready(const bool is_ready) noexcept
