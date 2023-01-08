@@ -10,31 +10,7 @@
         <file>resources/attacking_low.ogg</file>
         <file>resources/attacking_mid.ogg</file>
         <file>resources/black_chess_color.png</file>
-        <file>resources/classic_black_bishop.png</file>
-        <file>resources/classic_black_bishop_with_contour.png</file>
-        <file>resources/classic_black_king.png</file>
-        <file>resources/classic_black_king_with_contour.png</file>
-        <file>resources/classic_black_knight.png</file>
-        <file>resources/classic_black_knight_with_contour.png</file>
-        <file>resources/classic_black_pawn.png</file>
-        <file>resources/classic_black_pawn_with_contour.png</file>
-        <file>resources/classic_black_queen.png</file>
-        <file>resources/classic_black_queen_with_contour.png</file>
-        <file>resources/classic_black_rook.png</file>
-        <file>resources/classic_black_rook_with_contour.png</file>
         <file>resources/classic_head.png</file>
-        <file>resources/classic_white_bishop.png</file>
-        <file>resources/classic_white_bishop_with_contour.png</file>
-        <file>resources/classic_white_king.png</file>
-        <file>resources/classic_white_king_with_contour.png</file>
-        <file>resources/classic_white_knight.png</file>
-        <file>resources/classic_white_knight_with_contour.png</file>
-        <file>resources/classic_white_pawn.png</file>
-        <file>resources/classic_white_pawn_with_contour.png</file>
-        <file>resources/classic_white_queen.png</file>
-        <file>resources/classic_white_queen_with_contour.png</file>
-        <file>resources/classic_white_rook.png</file>
-        <file>resources/classic_white_rook_with_contour.png</file>
         <file>resources/CodeSquaredRegular-AYRg.ttf</file>
         <file>resources/controls.png</file>
         <file>resources/countdown.ogg</file>
@@ -87,19 +63,7 @@
         <file>resources/nope_high.ogg</file>
         <file>resources/nope_low.ogg</file>
         <file>resources/nope_mid.ogg</file>
-        <file>resources/protoss_black_bishop.png</file>
-        <file>resources/protoss_black_king.png</file>
-        <file>resources/protoss_black_knight.png</file>
-        <file>resources/protoss_black_pawn.png</file>
-        <file>resources/protoss_black_queen.png</file>
-        <file>resources/protoss_black_rook.png</file>
         <file>resources/protoss_head.jpeg</file>
-        <file>resources/protoss_white_bishop.png</file>
-        <file>resources/protoss_white_king.png</file>
-        <file>resources/protoss_white_knight.png</file>
-        <file>resources/protoss_white_pawn.png</file>
-        <file>resources/protoss_white_queen.png</file>
-        <file>resources/protoss_white_rook.png</file>
         <file>resources/qm.png</file>
         <file>resources/quit.png</file>
         <file>resources/ready_no.png</file>
@@ -114,23 +78,71 @@
         <file>resources/starting_position.jpeg</file>
         <file>resources/subtitle.png</file>
         <file>resources/t.png</file>
-        <file>resources/terran_black_bishop.png</file>
-        <file>resources/terran_black_king.png</file>
-        <file>resources/terran_black_knight.png</file>
-        <file>resources/terran_black_pawn.png</file>
-        <file>resources/terran_black_queen.png</file>
-        <file>resources/terran_black_rook.png</file>
         <file>resources/terran_head.jpeg</file>
-        <file>resources/terran_white_bishop.png</file>
-        <file>resources/terran_white_king.png</file>
-        <file>resources/terran_white_knight.png</file>
-        <file>resources/terran_white_pawn.png</file>
-        <file>resources/terran_white_queen.png</file>
-        <file>resources/terran_white_rook.png</file>
         <file>resources/textures/maps/classic_map.jpg</file>
         <file>resources/textures/maps/protoss_map.jpg</file>
         <file>resources/textures/maps/terran_map.jpg</file>
         <file>resources/textures/maps/zerg_map.jpg</file>
+        <file>resources/textures/pieces/classic_black_bishop.jpg</file>
+        <file>resources/textures/pieces/classic_black_bishop_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_black_king.jpg</file>
+        <file>resources/textures/pieces/classic_black_king_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_black_knight.jpg</file>
+        <file>resources/textures/pieces/classic_black_knight_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_black_pawn.jpg</file>
+        <file>resources/textures/pieces/classic_black_pawn_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_black_queen.jpg</file>
+        <file>resources/textures/pieces/classic_black_queen_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_black_rook.jpg</file>
+        <file>resources/textures/pieces/classic_black_rook_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_white_bishop.jpg</file>
+        <file>resources/textures/pieces/classic_white_bishop_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_white_king.jpg</file>
+        <file>resources/textures/pieces/classic_white_king_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_white_knight.jpg</file>
+        <file>resources/textures/pieces/classic_white_knight_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_white_pawn.jpg</file>
+        <file>resources/textures/pieces/classic_white_pawn_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_white_queen.jpg</file>
+        <file>resources/textures/pieces/classic_white_queen_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_white_rook.jpg</file>
+        <file>resources/textures/pieces/classic_white_rook_with_contour.jpg</file>
+        <file>resources/textures/pieces/protoss_black_bishop.jpg</file>
+        <file>resources/textures/pieces/protoss_black_king.jpg</file>
+        <file>resources/textures/pieces/protoss_black_knight.jpg</file>
+        <file>resources/textures/pieces/protoss_black_pawn.jpg</file>
+        <file>resources/textures/pieces/protoss_black_queen.jpg</file>
+        <file>resources/textures/pieces/protoss_black_rook.jpg</file>
+        <file>resources/textures/pieces/protoss_white_bishop.jpg</file>
+        <file>resources/textures/pieces/protoss_white_king.jpg</file>
+        <file>resources/textures/pieces/protoss_white_knight.jpg</file>
+        <file>resources/textures/pieces/protoss_white_pawn.jpg</file>
+        <file>resources/textures/pieces/protoss_white_queen.jpg</file>
+        <file>resources/textures/pieces/protoss_white_rook.jpg</file>
+        <file>resources/textures/pieces/terran_black_bishop.jpg</file>
+        <file>resources/textures/pieces/terran_black_king.jpg</file>
+        <file>resources/textures/pieces/terran_black_knight.jpg</file>
+        <file>resources/textures/pieces/terran_black_pawn.jpg</file>
+        <file>resources/textures/pieces/terran_black_queen.jpg</file>
+        <file>resources/textures/pieces/terran_black_rook.jpg</file>
+        <file>resources/textures/pieces/terran_white_bishop.jpg</file>
+        <file>resources/textures/pieces/terran_white_king.jpg</file>
+        <file>resources/textures/pieces/terran_white_knight.jpg</file>
+        <file>resources/textures/pieces/terran_white_pawn.jpg</file>
+        <file>resources/textures/pieces/terran_white_queen.jpg</file>
+        <file>resources/textures/pieces/terran_white_rook.jpg</file>
+        <file>resources/textures/pieces/zerg_black_bishop.jpg</file>
+        <file>resources/textures/pieces/zerg_black_king.jpg</file>
+        <file>resources/textures/pieces/zerg_black_knight.jpg</file>
+        <file>resources/textures/pieces/zerg_black_pawn.jpg</file>
+        <file>resources/textures/pieces/zerg_black_queen.jpg</file>
+        <file>resources/textures/pieces/zerg_black_rook.jpg</file>
+        <file>resources/textures/pieces/zerg_white_bishop.jpg</file>
+        <file>resources/textures/pieces/zerg_white_king.jpg</file>
+        <file>resources/textures/pieces/zerg_white_knight.jpg</file>
+        <file>resources/textures/pieces/zerg_white_pawn.jpg</file>
+        <file>resources/textures/pieces/zerg_white_queen.jpg</file>
+        <file>resources/textures/pieces/zerg_white_rook.jpg</file>
         <file>resources/textures/portraits/classic_black_bishop_portrait.jpg</file>
         <file>resources/textures/portraits/classic_black_king_portrait.jpg</file>
         <file>resources/textures/portraits/classic_black_knight_portrait.jpg</file>
@@ -185,18 +197,6 @@
         <file>resources/yes_high.ogg</file>
         <file>resources/yes_low.ogg</file>
         <file>resources/yes_mid.ogg</file>
-        <file>resources/zerg_black_bishop.png</file>
-        <file>resources/zerg_black_king.png</file>
-        <file>resources/zerg_black_knight.png</file>
-        <file>resources/zerg_black_pawn.png</file>
-        <file>resources/zerg_black_queen.png</file>
-        <file>resources/zerg_black_rook.png</file>
         <file>resources/zerg_head.jpeg</file>
-        <file>resources/zerg_white_bishop.png</file>
-        <file>resources/zerg_white_king.png</file>
-        <file>resources/zerg_white_knight.png</file>
-        <file>resources/zerg_white_pawn.png</file>
-        <file>resources/zerg_white_queen.png</file>
-        <file>resources/zerg_white_rook.png</file>
     </qresource>
 </RCC>

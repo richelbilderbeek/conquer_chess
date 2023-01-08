@@ -19,7 +19,7 @@ piece_textures::piece_textures()
       {
         const std::string filename_str{get_filename(r, c, p)};
         const QString filename{filename_str.c_str()};
-        QFile f(":/resources/" + filename);
+        QFile f(":/resources/textures/pieces/" + filename);
         f.copy(filename);
         if (!m_textures[r][c][p].loadFromFile(filename.toStdString()))
         {
@@ -40,7 +40,7 @@ std::string piece_textures::get_filename(
   std::stringstream s;
   s << r << "_" << color << "_" << type;
   if (r == race::classic) s << "_with_contour";
-  s << ".png";
+  s << ".jpg";
   return s.str();
 }
 
