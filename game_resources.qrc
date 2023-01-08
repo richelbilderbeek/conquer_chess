@@ -1,41 +1,20 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/fonts/16114_FuturistFixed-width.ttf</file>
         <file>resources/all_races_1.jpeg</file>
         <file>resources/all_races_2.jpeg</file>
         <file>resources/all_races_3.jpeg</file>
         <file>resources/all_races_4.jpeg</file>
-        <file>resources/fonts/arial.ttf</file>
-        <file>resources/attacking_high.ogg</file>
-        <file>resources/attacking_low.ogg</file>
-        <file>resources/attacking_mid.ogg</file>
         <file>resources/black_chess_color.png</file>
         <file>resources/classic_head.png</file>
-        <file>resources/fonts/CodeSquaredRegular-AYRg.ttf</file>
         <file>resources/controls.png</file>
-        <file>resources/countdown.ogg</file>
         <file>resources/d.png</file>
         <file>resources/d_black.png</file>
         <file>resources/d_white.png</file>
         <file>resources/dark_strip.png</file>
-        <file>resources/done_high.ogg</file>
-        <file>resources/done_low.ogg</file>
-        <file>resources/done_mid.ogg</file>
-        <file>resources/faring_into_battle.ogg</file>
+        <file>resources/fonts/16114_FuturistFixed-width.ttf</file>
+        <file>resources/fonts/arial.ttf</file>
+        <file>resources/fonts/CodeSquaredRegular-AYRg.ttf</file>
         <file>resources/game_speed.png</file>
-        <file>resources/heu_high.ogg</file>
-        <file>resources/heu_low.ogg</file>
-        <file>resources/heu_mid.ogg</file>
-        <file>resources/hide.ogg</file>
-        <file>resources/hmm_high.ogg</file>
-        <file>resources/hmm_low.ogg</file>
-        <file>resources/hmm_mid.ogg</file>
-        <file>resources/i_cannot_high.ogg</file>
-        <file>resources/i_cannot_low.ogg</file>
-        <file>resources/i_cannot_mid.ogg</file>
-        <file>resources/i_cant_high.ogg</file>
-        <file>resources/i_cant_low.ogg</file>
-        <file>resources/i_cant_mid.ogg</file>
         <file>resources/icon_attack.png</file>
         <file>resources/icon_castle_kingside.png</file>
         <file>resources/icon_castle_queenside.png</file>
@@ -46,23 +25,13 @@
         <file>resources/icon_promote_to_rook.png</file>
         <file>resources/icon_select.png</file>
         <file>resources/icon_unselect.png</file>
-        <file>resources/its_time_to_rock.ogg</file>
-        <file>resources/jumping_into_battle.ogg</file>
         <file>resources/keyboard.png</file>
         <file>resources/l.png</file>
         <file>resources/l_black.png</file>
         <file>resources/l_white.png</file>
-        <file>resources/lets_rule.ogg</file>
         <file>resources/light_strip.png</file>
         <file>resources/mouse.png</file>
-        <file>resources/moving_forward.ogg</file>
         <file>resources/music_volume.png</file>
-        <file>resources/no_high.ogg</file>
-        <file>resources/no_low.ogg</file>
-        <file>resources/no_mid.ogg</file>
-        <file>resources/nope_high.ogg</file>
-        <file>resources/nope_low.ogg</file>
-        <file>resources/nope_mid.ogg</file>
         <file>resources/protoss_head.jpeg</file>
         <file>resources/qm.png</file>
         <file>resources/quit.png</file>
@@ -74,6 +43,41 @@
         <file>resources/songs/silence.ogg</file>
         <file>resources/songs/soothing.ogg</file>
         <file>resources/songs/wonderful_time.ogg</file>
+        <file>resources/sound_effects/attacking_high.ogg</file>
+        <file>resources/sound_effects/attacking_low.ogg</file>
+        <file>resources/sound_effects/attacking_mid.ogg</file>
+        <file>resources/sound_effects/countdown.ogg</file>
+        <file>resources/sound_effects/done_high.ogg</file>
+        <file>resources/sound_effects/done_low.ogg</file>
+        <file>resources/sound_effects/done_mid.ogg</file>
+        <file>resources/sound_effects/faring_into_battle.ogg</file>
+        <file>resources/sound_effects/heu_high.ogg</file>
+        <file>resources/sound_effects/heu_low.ogg</file>
+        <file>resources/sound_effects/heu_mid.ogg</file>
+        <file>resources/sound_effects/hide.ogg</file>
+        <file>resources/sound_effects/hmm_high.ogg</file>
+        <file>resources/sound_effects/hmm_low.ogg</file>
+        <file>resources/sound_effects/hmm_mid.ogg</file>
+        <file>resources/sound_effects/i_cannot_high.ogg</file>
+        <file>resources/sound_effects/i_cannot_low.ogg</file>
+        <file>resources/sound_effects/i_cannot_mid.ogg</file>
+        <file>resources/sound_effects/i_cant_high.ogg</file>
+        <file>resources/sound_effects/i_cant_low.ogg</file>
+        <file>resources/sound_effects/i_cant_mid.ogg</file>
+        <file>resources/sound_effects/its_time_to_rock.ogg</file>
+        <file>resources/sound_effects/jumping_into_battle.ogg</file>
+        <file>resources/sound_effects/lets_rule.ogg</file>
+        <file>resources/sound_effects/moving_forward.ogg</file>
+        <file>resources/sound_effects/no_high.ogg</file>
+        <file>resources/sound_effects/no_low.ogg</file>
+        <file>resources/sound_effects/no_mid.ogg</file>
+        <file>resources/sound_effects/nope_high.ogg</file>
+        <file>resources/sound_effects/nope_low.ogg</file>
+        <file>resources/sound_effects/nope_mid.ogg</file>
+        <file>resources/sound_effects/to_rule_is_to_act.ogg</file>
+        <file>resources/sound_effects/yes_high.ogg</file>
+        <file>resources/sound_effects/yes_low.ogg</file>
+        <file>resources/sound_effects/yes_mid.ogg</file>
         <file>resources/sound_effects_volume.png</file>
         <file>resources/starting_position.jpeg</file>
         <file>resources/subtitle.png</file>
@@ -192,11 +196,7 @@
         <file>resources/textures/portraits/zerg_white_queen_portrait.jpg</file>
         <file>resources/textures/portraits/zerg_white_rook_portrait.jpg</file>
         <file>resources/title.png</file>
-        <file>resources/to_rule_is_to_act.ogg</file>
         <file>resources/white_chess_color.png</file>
-        <file>resources/yes_high.ogg</file>
-        <file>resources/yes_low.ogg</file>
-        <file>resources/yes_mid.ogg</file>
         <file>resources/zerg_head.jpeg</file>
     </qresource>
 </RCC>

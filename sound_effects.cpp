@@ -13,7 +13,7 @@ sound_effects::sound_effects()
   for (const auto& p: v)
   {
     const QString filename{std::get<2>(p).c_str()};
-    QFile f(":/resources/" + filename);
+    QFile f(":/resources/sound_effects/" + filename);
     f.copy(filename);
     if (!std::get<1>(p).get().loadFromFile(filename.toStdString()))
     {
@@ -182,13 +182,6 @@ void sound_effects::set_master_volume(const volume& v)
   {
     std::get<0>(row).get().setVolume(v.get_percentage());
   }
-}
-
-void test_sound_effects()
-{
-#ifndef NDEBUG
-
-#endif
 }
 
 #endif // LOGIC_ONLY
