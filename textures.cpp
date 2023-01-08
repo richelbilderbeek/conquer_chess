@@ -15,7 +15,7 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_2), "all_races_2.jpg"),
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpg"),
-    std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
+//    std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
     std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
@@ -26,11 +26,11 @@ textures::textures()
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
     std::make_pair(std::ref(m_light_white_square), "l_white.png"),
     std::make_pair(std::ref(m_mouse), "mouse.png"),
-    std::make_pair(std::ref(m_ready_no), "ready_no.png"),
-    std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
+//    std::make_pair(std::ref(m_ready_no), "ready_no.png"),
+//    std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
-    std::make_pair(std::ref(m_title), "title.png"),
-    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png")
+    std::make_pair(std::ref(m_title), "title.png")
+//    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png")
   };
   for (const auto& p: v)
   {
@@ -50,6 +50,7 @@ sf::Texture& get_black_square(textures& t) noexcept
   return t.get_square(chess_color::black);
 }
 
+/*
 sf::Texture& textures::get_color(const chess_color color) noexcept
 {
   switch (color)
@@ -61,6 +62,7 @@ sf::Texture& textures::get_color(const chess_color color) noexcept
       return m_white_chess_color;
   }
 }
+*/
 
 sf::Texture& textures::get_controller_type(const physical_controller_type t) noexcept
 {
@@ -100,11 +102,13 @@ sf::Texture& get_white_square(textures& t) noexcept
   return t.get_square(chess_color::white);
 }
 
+/*
 sf::Texture& textures::get_ready(const bool is_ready) noexcept
 {
   if (is_ready) return m_ready_yes;
   return m_ready_no;
 }
+*/
 
 sf::Texture& textures::get_square(const chess_color color) noexcept
 {

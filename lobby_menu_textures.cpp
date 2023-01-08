@@ -23,6 +23,41 @@ lobby_menu_textures::lobby_menu_textures()
       throw std::runtime_error(msg.toStdString());
     }
   }
+
+  for (const auto r: get_all_chess_colors())
+  {
+    const std::string filename_str{get_color_filename(r)};
+    const QString filename{filename_str.c_str()};
+    QFile f(":/resources/textures/lobby_menu/" + filename);
+    f.copy(filename);
+    if (!m_color[r].loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+
+  for (const auto b: {true, false})
+  {
+    const std::string filename_str{get_ready_filename(b)};
+    const QString filename{filename_str.c_str()};
+    QFile f(":/resources/textures/lobby_menu/" + filename);
+    f.copy(filename);
+    if (!m_ready[b].loadFromFile(filename.toStdString()))
+    {
+      QString msg{"Cannot find image file '" + filename + "'"};
+      throw std::runtime_error(msg.toStdString());
+    }
+  }
+}
+
+std::string lobby_menu_textures::get_color_filename(
+  const chess_color c
+) const noexcept
+{
+  std::stringstream s;
+  s << c << "_chess_color.jpg";
+  return s.str();
 }
 
 std::string lobby_menu_textures::get_head_filename(
@@ -32,6 +67,14 @@ std::string lobby_menu_textures::get_head_filename(
   std::stringstream s;
   s << r << "_head.jpg";
   return s.str();
+}
+
+std::string lobby_menu_textures::get_ready_filename(
+  const bool is_ready
+) const noexcept
+{
+  if (is_ready) return "ready_yes.jpg";
+  return "ready_no.jpg";
 }
 
 sf::Texture& lobby_menu_textures::get_head(

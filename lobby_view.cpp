@@ -286,7 +286,7 @@ void show_color_panel(lobby_view& v, const side player_side)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &v.get_resources().get_textures().get_color(
+    &v.get_resources().get_lobby_menu_textures().get_color(
       v.get_options().get_color(player_side)
     )
   );
@@ -414,7 +414,7 @@ void show_start_panel(lobby_view& v, const side player_side)
   sf::RectangleShape rectangle;
   set_rect(rectangle, screen_rect);
   rectangle.setTexture(
-    &v.get_resources().get_textures().get_ready(
+    &v.get_resources().get_lobby_menu_textures().get_ready(
       v.get_start(player_side)
     )
   );

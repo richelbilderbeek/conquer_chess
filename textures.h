@@ -31,15 +31,9 @@ public:
   sf::Texture& get_all_races_3() noexcept { return m_all_races_3; }
   sf::Texture& get_all_races_4() noexcept { return m_all_races_4; }
 
-  /// Get an abstract chess color
-  sf::Texture& get_color(const chess_color color) noexcept;
 
   /// Get an image for a controller type, i.e. mouse or keyboard
   sf::Texture& get_controller_type(const physical_controller_type t) noexcept;
-
-
-  /// Get a texture to state if the person is ready yes/no
-  sf::Texture& get_ready(const bool is_ready) noexcept;
 
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
@@ -60,15 +54,9 @@ private:
   sf::Texture m_all_races_3;
   sf::Texture m_all_races_4;
 
-  sf::Texture m_black_chess_color;
-  sf::Texture m_white_chess_color;
 
   sf::Texture m_mouse;
   sf::Texture m_keyboard;
-
-  /// Ready to start
-  sf::Texture m_ready_no;
-  sf::Texture m_ready_yes;
 
   sf::Texture m_dark_black_square;
   sf::Texture m_dark_square;
