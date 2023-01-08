@@ -21,7 +21,6 @@ HEADERS += \
     $$PWD/game_coordinat.h \
     $$PWD/game_log.h \
     $$PWD/game_options.h \
-    $$PWD/game_options_menu_textures.h \
     $$PWD/game_rect.h \
     $$PWD/game_resources.h \
     $$PWD/game_speed.h \
@@ -30,13 +29,9 @@ HEADERS += \
     $$PWD/id.h \
     $$PWD/key_bindings.h \
     $$PWD/layout.h \
-    $$PWD/loading_screen_fonts.h \
-    $$PWD/loading_screen_songs.h \
-    $$PWD/loading_screen_textures.h \
     $$PWD/lobby_options.h \
     $$PWD/lobby_view_item.h \
     $$PWD/lobby_view_layout.h \
-    $$PWD/map_textures.h \
     $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
     $$PWD/message.h \
@@ -49,32 +44,25 @@ HEADERS += \
     $$PWD/physical_controllers.h \
     $$PWD/piece.h \
     $$PWD/piece_action.h \
-    $$PWD/piece_action_textures.h \
     $$PWD/piece_action_type.h \
     $$PWD/piece_actions.h \
-    $$PWD/piece_portrait_textures.h \
-    $$PWD/piece_textures.h \
     $$PWD/piece_type.h \
     $$PWD/pieces.h \
     $$PWD/played_game_view_layout.h \
     $$PWD/race.h \
     $$PWD/replay.h \
     $$PWD/replayer.h \
-    $$PWD/resource_loader.h \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
     $$PWD/songs.h \
-    $$PWD/sound_effects.h \
     $$PWD/square.h \
     $$PWD/starting_position_type.h \
     $$PWD/test_game.h \
-    $$PWD/textures.h \
     $$PWD/user_input.h \
     $$PWD/user_input_type.h \
     $$PWD/user_inputs.h \
     $$PWD/volume.h
-
 
 SOURCES += \
     $$PWD/about_view_item.cpp \
@@ -97,7 +85,6 @@ SOURCES += \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_log.cpp \
     $$PWD/game_options.cpp \
-    $$PWD/game_options_menu_textures.cpp \
     $$PWD/game_rect.cpp \
     $$PWD/game_resources.cpp \
     $$PWD/game_speed.cpp \
@@ -106,13 +93,9 @@ SOURCES += \
     $$PWD/id.cpp \
     $$PWD/key_bindings.cpp \
     $$PWD/layout.cpp \
-    $$PWD/loading_screen_fonts.cpp \
-    $$PWD/loading_screen_songs.cpp \
-    $$PWD/loading_screen_textures.cpp \
     $$PWD/lobby_options.cpp \
     $$PWD/lobby_view_item.cpp \
     $$PWD/lobby_view_layout.cpp \
-    $$PWD/map_textures.cpp \
     $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \
     $$PWD/message.cpp \
@@ -125,32 +108,24 @@ SOURCES += \
     $$PWD/physical_controllers.cpp \
     $$PWD/piece.cpp \
     $$PWD/piece_action.cpp \
-    $$PWD/piece_action_textures.cpp \
     $$PWD/piece_action_type.cpp \
     $$PWD/piece_actions.cpp \
-    $$PWD/piece_portrait_textures.cpp \
-    $$PWD/piece_textures.cpp \
     $$PWD/piece_type.cpp \
     $$PWD/pieces.cpp \
     $$PWD/played_game_view_layout.cpp \
     $$PWD/race.cpp \
     $$PWD/replay.cpp \
     $$PWD/replayer.cpp \
-    $$PWD/resource_loader.cpp \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \
     $$PWD/songs.cpp \
-    $$PWD/sound_effects.cpp \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \
     $$PWD/test_game.cpp \
     $$PWD/test_game_scenarios.cpp \
-    $$PWD/textures.cpp \
     $$PWD/user_input.cpp \
     $$PWD/user_input_type.cpp \
     $$PWD/user_inputs.cpp \
     $$PWD/volume.cpp
 
-RESOURCES += \
-    $$PWD/game_resources.qrc
