@@ -9,9 +9,9 @@
         <file>resources/attacking_high.ogg</file>
         <file>resources/attacking_low.ogg</file>
         <file>resources/attacking_mid.ogg</file>
-        <file>resources/aura.ogg</file>
+        <file>resources/songs/aura.ogg</file>
         <file>resources/black_chess_color.png</file>
-        <file>resources/bliss.ogg</file>
+        <file>resources/songs/bliss.ogg</file>
         <file>resources/classic_black_bishop.png</file>
         <file>resources/classic_black_bishop_portrait.png</file>
         <file>resources/classic_black_bishop_with_contour.png</file>
@@ -61,7 +61,7 @@
         <file>resources/done_mid.ogg</file>
         <file>resources/faring_into_battle.ogg</file>
         <file>resources/game_speed.png</file>
-        <file>resources/heroes.ogg</file>
+        <file>resources/songs/heroes.ogg</file>
         <file>resources/heu_high.ogg</file>
         <file>resources/heu_low.ogg</file>
         <file>resources/heu_mid.ogg</file>
@@ -159,8 +159,8 @@
         <file>resources/quit.png</file>
         <file>resources/ready_no.png</file>
         <file>resources/ready_yes.png</file>
-        <file>resources/silence.ogg</file>
-        <file>resources/soothing.ogg</file>
+        <file>resources/songs/silence.ogg</file>
+        <file>resources/songs/soothing.ogg</file>
         <file>resources/sound_effects_volume.png</file>
         <file>resources/starting_position.jpeg</file>
         <file>resources/subtitle.png</file>
@@ -181,7 +181,7 @@
         <file>resources/title.png</file>
         <file>resources/to_rule_is_to_act.ogg</file>
         <file>resources/white_chess_color.png</file>
-        <file>resources/wonderful_time.ogg</file>
+        <file>resources/songs/wonderful_time.ogg</file>
         <file>resources/yes_high.ogg</file>
         <file>resources/yes_low.ogg</file>
         <file>resources/yes_mid.ogg</file>
