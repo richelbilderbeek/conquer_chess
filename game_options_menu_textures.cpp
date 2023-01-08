@@ -15,7 +15,7 @@ game_options_menu_textures::game_options_menu_textures()
   {
     const std::string filename_str{get_filename(r)};
     const QString filename{filename_str.c_str()};
-    QFile f(":/resources/textures/icons/" + filename);
+    QFile f(":/resources/textures/game_options_menu/" + filename);
     f.copy(filename);
     if (!m_textures[r].loadFromFile(filename.toStdString()))
     {
