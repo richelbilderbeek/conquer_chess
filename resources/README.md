@@ -12,64 +12,6 @@ File                           |License
 `CodeSquaredRegular-AYRg.ttf`  |[CC-SA by GuyStruct](code_squared_font_license/license-1f93.txt)                 
 `16114_FuturistFixed-width.ttf`|None, from https://ttfonts.net/font/17388_FuturistFixed-width.htm
 
-## Images
-
-### Portraits
-
-Image                                   |Image                                |Description                         |Adapted from picture at URL
-----------------------------------------|-------------------------------------|------------------------------------|--------------------------------------------------------------------------------------
-![](classic_black_bishop_portrait.png)  |`classic_black_bishop_portrait.png`  |Joris Vercammen                     |https://commons.wikimedia.org/wiki/File:Abp.Joris_Vercammen.png
-![](classic_black_knight_portrait.png)  |`classic_black_knight_portrait.png`  |Dom Quichote                        |https://commons.wikimedia.org/wiki/File:Bronze_statues_of_Don_Quixote_and_Sancho_Panza.jpg
-![](classic_black_king_portrait.png)    |`classic_black_king_portrait.png`    |Prins Claus                         |https://commons.wikimedia.org/wiki/File:Prince_Claus_of_the_Netherlands_1986.jpg
-![](classic_black_rook_portrait.png)    |`classic_black_rook_portrait.png`    |De Waag at night                    |https://commons.wikimedia.org/wiki/File:De_Waag,_Amsterdam.jpg
-![](classic_black_pawn_portrait.png)    |`classic_black_pawn_portrait.png`    |Axel Törneman's 'Farmer in Brittany'|https://commons.wikimedia.org/wiki/File:Farmer_in_Brittany_by_Axel_T%C3%B6rneman.jpg
-![](classic_black_queen_portrait.png)   |`classic_black_queen_portrait.png`   |Queen Beatrix                       |https://commons.wikimedia.org/wiki/File:Queen_Beatrix_and_Wim_Pijbes.jpg
-![](classic_white_bishop_portrait.png)  |`classic_white_bishop_portrait.png`  |Antje Jackeleen                     |https://commons.wikimedia.org/wiki/File:Biskopsvigning_2014-12-14_001.jpg
-![](classic_white_king_portrait.png)    |`classic_white_king_portrait.png`    |Carl XVI Gustaf                     |https://commons.wikimedia.org/wiki/File:Carlos_Gustavo_da_Su%C3%A9cia_(meio_corpo).jpg
-![](classic_white_knight_portrait.png)  |`classic_white_knight_portrait.png`  |Streiff                             |https://sv.wikipedia.org/wiki/Streiff#/media/Fil:Streiff_-_Livrustkammaren_-_32931.tif
-![](classic_white_pawn_portrait.png)    |`classic_white_pawn_portrait.png`    |Else Berg's 'Portrait of a farmer'  |https://commons.wikimedia.org/wiki/File:Else_Berg_Portrait_of_a_farmer.jpg
-![](classic_white_queen_portrait.png)   |`classic_white_queen_portrait.png`   |Silvia Renate Sommerlath            |https://commons.wikimedia.org/wiki/Category:Queen_Silvia_of_Sweden#/media/File:Queen_Silvia_of_Sweden_in_2018.jpg
-![](classic_white_rook_portrait.png)    |`classic_white_rook_portrait.png`    |Uppsala Slott                       |https://commons.wikimedia.org/wiki/Category:Uppsala_slott#/media/File:Schloss_Uppsala.jpg
-
-Image                                   |Image                                |Terms used
-----------------------------------------|-------------------------------------|--------------------------------------------------------------------------------------------------------------------------
-![](protoss_black_bishop_portrait.png)  |`protoss_black_bishop_portrait.png`  |`starcraft 2, chesspiece, protoss, black bishop, face, close-up,  futuristic`
-![](protoss_black_knight_portrait.png)  |`protoss_black_knight_portrait.png`  |`3130037647_starcraft_2__protoss__a_black_pawn__chess__symbol__symbolic__full_view__single_piece`
-![](protoss_black_king_portrait.png)    |`protoss_black_king_portrait.png`    |`starcraft 2, chesspiece, protoss, black king, face, close-up`
-![](protoss_black_rook_portrait.png)    |`protoss_black_rook_portrait.png`    |`starcraft 2, chesspiece, protoss, black rook, face, close-up, beast`
-![](protoss_black_pawn_portrait.png)    |`protoss_black_pawn_portrait.png`    |`starcraft 2, chesspiece, protoss, black pawn, face, close-up,  futuristic` 
-![](protoss_black_queen_portrait.png)   |`protoss_black_queen_portrait.png`   |`starcraft 2, chesspiece, protoss, black queen, face, close-up, futuristic`
-![](protoss_white_bishop_portrait.png)  |`protoss_white_bishop_portrait.png`  |`2328029875_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
-![](protoss_white_king_portrait.png)    |`protoss_white_king_portrait.png`    |.
-![](protoss_white_knight_portrait.png)  |`protoss_white_knight_portrait.png`  |`3187757143_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
-![](protoss_white_pawn_portrait.png)    |`protoss_white_pawn_portrait.png`    |`starcraft_2__terran__a_white_pawn__symbol__symbolic__pawn` or `3707600805_starcraft_2__terran__a_white_pawn__symbol__symbolic__pawn`
-![](protoss_white_queen_portrait.png)   |`protoss_white_queen_portrait.png`   |`4196204352_starcraft_2__protoss__a_white_queen__symbol__symbolic__full_view__one_chesspiece__simple`
-![](protoss_white_rook_portrait.png)    |`protoss_white_rook_portrait.png`    |`758402339_starcraft_2__terran__a_white_bishop__symbol__symbolic__full_view__single_piece`
-![](terran_black_bishop_portrait.png)   |`terran_black_bishop_portrait.png`   |`starcraft 2, chesspiece, terran, black bishop, face, close-up, human`
-![](terran_black_knight_portrait.png)   |`terran_black_knight_portrait.png`   |`starcraft 2, chesspiece, black knight, face, human, close-up,  armour`
-![](terran_black_king_portrait.png)     |`terran_black_king_portrait.png`     |`starcraft 2, chesspiece, black king, face, human, close-up, king, wisdom, crown, armour`
-![](terran_black_rook_portrait.png)     |`terran_black_rook_portrait.png`     |`starcraft 2, chesspiece, terran, black rook, face, close-up, bulky, human, armour, clunky`
-![](terran_black_pawn_portrait.png)     |`terran_black_pawn_portrait.png`     |`starcraft 2, chesspiece, terran, black pawn, face, close-up, human, soldier, black`
-![](terran_black_queen_portrait.png)    |`terran_black_queen_portrait.png`    |`starcraft 2, chesspiece, terran, black queen, face, close-up, crown`
-![](terran_white_bishop_portrait.png)   |`terran_white_bishop_portrait.png`   |`starcraft 2, chesspiece, white bishop, face, human, close-up`
-![](terran_white_king_portrait.png)     |`terran_white_king_portrait.png`     |`starcraft 2, chesspiece, white king, face, human, close-up, king, wisdom, crown, soldier`
-![](terran_white_knight_portrait.png)   |`terran_white_knight_portrait.png`   |`starcraft 2, chesspiece, terran, white knight, face, close-up, human`
-![](terran_white_pawn_portrait.png)     |`terran_white_pawn_portrait.png`     |`starcraft 2, chesspiece, terran, white pawn, face, close-up, human, soldier`
-![](terran_white_queen_portrait.png)    |`terran_white_queen_portrait.png`    |`starcraft 2, chesspiece, terran, white queen, face, close-up, armour, strong`
-![](terran_white_rook_portrait.png)     |`terran_white_rook_portrait.png`     |`starcraft 2, chesspiece, terran, white rook, face, close-up, bulky, human, strong`
-![](zerg_black_bishop_portrait.png)     |`zerg_black_bishop_portrait.png`     |`starcraft 2, chesspiece, zerg, black bishop, face, close-up, predator, teeth`
-![](zerg_black_knight_portrait.png)     |`zerg_black_knight_portrait.png`     |`starcraft 2, chesspiece, zerg, black knight, face, close-up, predator`
-![](zerg_black_king_portrait.png)       |`zerg_black_king_portrait.png`       |`1985995000_starcraft_2__zerg__black_king__face__portrait.png`
-![](zerg_black_rook_portrait.png)       |`zerg_black_rook_portrait.png`       |`starcraft 2, chesspiece, zerg, black rook, face, close-up, predator, blocky`
-![](zerg_black_pawn_portrait.png)       |`zerg_black_pawn_portrait.png`       |`starcraft 2, chesspiece, zerg, black pawn, face, close-up, predator`
-![](zerg_black_queen_portrait.png)      |`zerg_black_queen_portrait.png`      |`220581649_starcraft_2__terran__a_black_queen__symbol__symbolic__pawn__full_view`
-![](zerg_white_bishop_portrait.png)     |`zerg_white_bishop_portrait.png`     |`starcraft 2, chesspiece, zerg, white bishop, face, close-up, predator, teeth`
-![](zerg_white_king_portrait.png)       |`zerg_white_king_portrait.png`       |`starcraft 2, chesspiece, zerg, white king, face, close-up`
-![](zerg_white_knight_portrait.png)     |`zerg_white_knight_portrait.png`     |`starcraft 2, chesspiece, zerg, white knight, face, close-up, beast`
-![](zerg_white_pawn_portrait.png)       |`zerg_white_pawn_portrait.png`       |`starcraft 2, chesspiece, zerg, white pawn, face, close-up, predator`
-![](zerg_white_queen_portrait.png)      |`zerg_white_queen_portrait.png`      |`starcraft 2, chesspiece, zerg, white queen, face, close-up, predator, female`
-![](zerg_white_rook_portrait.png)       |`zerg_white_rook_portrait.png`       |`starcraft 2, chesspiece, zerg, white rook, face, close-up, predator`
-
 ## Sounds
 
 Sound                        |Description                                               |URL
@@ -113,19 +55,6 @@ Image                     |Filename              |Search terms
 ![](all_races_3.jpeg)     |`all_races_3.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cubism`
 ![](all_races_4.jpeg)     |`all_races_4.jpeg`    |`starcraft 2, chess, 1 protoss,  1 terran, 1 zerg, close-up, oil painting, three faces, cartoon`
 
-
-## Options screen artwork
-
-Image                        |Filename                  |Search terms
------------------------------|--------------------------|---------------------------------------------------------------------
-![](game_speed.png)          |`game_speed.png`          |`starcraft 2, speed, symbol, simple, cartoon`
-![](controls.png)            |`controls.png`            |`starcraft 2, zerg claw holding a joystick, terran hand holding a keyboard, protoss glove holding a controller`
-![](mouse.png)               |`mouse.png`               |`starcraft 2, computer mouse, protoss, simple`
-![](keyboard.png)            |`keyboard.png`            |`starcraft 2, computer keyboard, terran`
-![](music_volume.png)        |`music_volume.png`        |`starcraft 2, music volume, simple, sound, volume, close-up on ear, music`
-![](sound_effects_volume.png)|`sound_effects_volume.png`|`starcraft 2, sound, close-up on ear, zerg`
-![](starting_position.jpeg)  |`starting_position.jpeg`  |`starcraft 2, zerg, chessboard, cubism, chess square`
-
 ### Chess color
 
 Image                     |Filename               |Search terms
@@ -133,60 +62,9 @@ Image                     |Filename               |Search terms
 ![](black_chess_color.png)|`black_chess_color.png`|`starcraft 2, black, landscape, desolate, terrain, cubism, cartoon`
 ![](white_chess_color.png)|`white_chess_color.png`|`starcraft 2, white, landscape, desolate, terrain, cubism, cartoon`
 
-### Maps
-
-Image                       |Filename              |Search terms
-----------------------------|----------------------|---------------------------------------------------------------------
-![](protoss_map.png)        |`protoss_map.png`     |`protoss, map, simple, landscape, terrain, desolate, empty, futuristic, sacred, flat, big`
-![](terran_map.png)         |`terran_map.png`      |`terran, map, simple, landscape, terrain, barren, steel, big, empty, satellite image`
-![](zerg_map.png)           |`zerg_map.png`        |`zerg, map, simple, landscape, terrain, desolate, empty, creepy, toxic`
-
-
 ### Being ready
 
 Image                          |Filename                   |Search terms
 -------------------------------|---------------------------|---------------------------------------------------------------------
 ![](ready_yes.png)             |`ready_yes.png`            |`starcraft 2, thumb up, hand, simple, close-up, OK, yes, ready, go, symbol`
 ![](ready_no.png)              |`ready_no.png`             |`starcraft 2, thumb down, hand, simple, close-up, no, symbol, red, wait`
-
-### Chess pieces
-
-Image                          |Filename                   |Search terms
--------------------------------|---------------------------|---------------------------------------------------------------------
-![](protoss_black_rook.jpeg)   |`protoss_black_rook.jpeg`  |`black rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
-![](protoss_white_rook.jpeg)   |`protoss_white_rook.jpeg`  |`white rook, chess, symbol, protoss, starcraft 2, simple, futuristic`
-![](terran_black_rook.jpeg)    |`terran_black_rook.jpeg`   |`black rook, chess, symbol, terran, starcraft 2, simple`
-![](terran_white_rook.jpeg)    |`terran_white_rook.jpeg`   |`white rook, chess, symbol, terran, starcraft 2, simple`
-![](zerg_black_rook.jpeg)      |`zerg_black_rook.jpeg`     |`black rook, chess, symbol, zerg, starcraft 2, simple, cells`
-![](zerg_white_rook.jpeg)      |`zerg_white_rook.jpeg`     |`white rook, chess, symbol, zerg, starcraft 2, simple, biology`
-![](protoss_black_knight.jpeg) |`protoss_black_knight.jpeg`|`black knight, chess, protoss, starcraft 2, symbol`
-![](protoss_white_knight.jpeg) |`protoss_white_knight.jpeg`|`white knight, chess, protoss, starcraft 2, symbol, full body view, simple`
-![](terran_black_knight.jpeg)  |`terran_black_knight.jpeg` |`black knight, chess, terran, starcraft 2, symbol, human, full body view, simple`
-![](terran_white_knight.jpeg)  |`terran_white_knight.jpeg` |`white knight, chess, terran, starcraft 2, symbol`
-![](zerg_black_knight.jpeg)    |`zerg_black_knight.jpeg`   |`black knight, chess, zerg, starcraft 2, symbol`
-![](zerg_white_knight.jpeg)    |`zerg_white_knight.jpeg`   |`white knight, chess, zerg, starcraft 2, symbol, full body view`
-![](protoss_black_bishop.png)  |`protoss_black_bishop.png` |`starcraft 2, chess, protoss, black bishop, symbol, simple, futuristic, single piece`
-![](terran_white_pawn.png)     |`terran_white_pawn.png`    |`starcraft 2, terran, a white pawn, symbol, symbolic, pawn, full view`
-![](terran_black_queen.png)    |`terran_black_queen.png`   |`starcraft 2, terran, a black queen, symbol, symbolic, pawn, full view, single piece`
-![](terran_black_king.png)     |`terran_black_king.png`    |`starcraft 2, terran, a black king, symbol, symbolic, full view, single piece`
-![](terran_white_bishop.png)   |`terran_white_bishop.png`  |`starcraft 2, terran, a white bishop, chess, symbol, symbolic, full view, single piece`
-![](terran_white_king.png)     |`terran_white_king.png`    |`starcraft 2, terran, a white king, chess, symbol, symbolic, full view, single piece, metal`
-![](protoss_white_bishop.png)  |`protoss_white_bishop.png` |`starcraft 2, protoss, a white bishop, chess, symbol, symbolic, full view, single piece`
-![](zerg_black_pawn.png)       |`zerg_black_pawn.png`      |`starcraft 2, zerg, a black pawn, chess, symbol, symbolic, full view, single piece, one chesspiece`
-![](protoss_white_pawn.png)    |`protoss_white_pawn.png`   |`starcraft 2, protoss, a white pawn, chess, symbol, symbolic, full view, single piece, one chesspiece, futuristic`
-![](zerg_white_pawn.png)       |`zerg_white_pawn.png`      |`starcraft 2, zerg, a white pawn, symbol, symbolic, full view, single piece, one chesspiece`
-![](protoss_black_king.png)    |`protoss_black_king.png`   |`starcraft 2, protoss, a black king, symbol, symbolic, full view, one chesspiece`
-![](zerg_white_bishop.png)     |`zerg_white_bishop.png`    |`starcraft 2, zerg, a white bishop, symbol, symbolic, full view, one chesspiece, simple`
-![](zerg_black_king.png)       |`zerg_black_king.png`      |`starcraft 2, zerg, a black king, symbol, symbolic, full view, one chesspiece, simple`
-![](protoss_white_queen.png)   |`protoss_white_queen.png`  |`starcraft 2, protoss, a white queen, symbol, symbolic, full view, one chesspiece, simple`
-![](zerg_white_queen.png)      |`zerg_white_queen.png`     |`starcraft 2, zerg, a white queen, symbol, symbolic, full view, one chesspiece, simple, sharp`
-![](terran_black_pawn.png)     |`terran_black_pawn.png`    |`starcraft 2, terran, a black pawn, symbol, symbolic, full view, one chesspiece, simple, bulky, metal`
-![](protoss_black_queen.png)   |`protoss_black_queen.png`  |`starcraft 2, protoss, a black queen, symbol, symbolic, full view, one chesspiece, simple`
-![](protoss_white_king.png)    |`protoss_white_king.png`   |`starcraft 2, protoss, a white king, symbol, symbolic, full view, one chesspiece, simple`
-![](zerg_black_queen.png)      |`zerg_black_queen.png`     |`starcraft 2, zerg, a black queen, symbol, symbolic, full view, one chesspiece, simple, toxic`
-![](terran_black_bishop.png)   |`terran_black_bishop.png`  |`starcraft 2, terran, a black bishop, symbol, symbolic, full view, one chesspiece, simple`
-![](zerg_white_king.png)       |`zerg_white_king.png`      |`starcraft 2, zerg, a white king, symbol, symbolic, full view, one chesspiece, simple, fearsome, big, strong`
-![](terran_white_queen.png)    |`terran_white_queen.png`   |`starcraft 2, terran, a white queen, symbol, symbolic, full view, one chesspiece, simple, bulky, metal`
-
-
-
