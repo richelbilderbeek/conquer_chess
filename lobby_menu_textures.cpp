@@ -51,6 +51,13 @@ lobby_menu_textures::lobby_menu_textures()
   }
 }
 
+sf::Texture& lobby_menu_textures::get_color(
+  const chess_color c
+) noexcept
+{
+  return m_color[c];
+}
+
 std::string lobby_menu_textures::get_color_filename(
   const chess_color c
 ) const noexcept
@@ -67,6 +74,13 @@ std::string lobby_menu_textures::get_head_filename(
   std::stringstream s;
   s << r << "_head.jpg";
   return s.str();
+}
+
+sf::Texture& lobby_menu_textures::get_ready(
+  const bool b
+) noexcept
+{
+  return m_ready[b];
 }
 
 std::string lobby_menu_textures::get_ready_filename(
