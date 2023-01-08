@@ -117,23 +117,21 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   const auto args = collect_args(argc, argv);
   if (args.size() == 1)
   {
-    #ifndef LOGIC_ONLY
-    {
-      game_options options{create_default_game_options()};
-      options.set_sound_effects_volume(volume(0));
-      options.set_volume(volume(0));
+    game_options options{create_default_game_options()};
+    options.set_sound_effects_volume(volume(0)); // 20 == default
+    options.set_volume(volume(0)); // 10 == default
 
-      #define USE_TWO_KEYBOARDS
-      physical_controllers pcs{
-        #ifdef USE_TWO_KEYBOARDS
-        create_two_keyboard_controllers()
-        #else
-        create_keyboard_mouse_controllers()
-        #endif
-      };
-      loading_view v(options, pcs);
-      v.exec();
-    }
+    #define USE_TWO_KEYBOARDS
+    physical_controllers pcs{
+      #ifdef USE_TWO_KEYBOARDS
+      create_two_keyboard_controllers()
+      #else
+      create_keyboard_mouse_controllers()
+      #endif
+    };
+    #ifndef LOGIC_ONLY
+    loading_view v(options, pcs);
+    v.exec();
     #endif // LOGIC_ONLY
   }
 }
