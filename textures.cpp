@@ -11,10 +11,10 @@
 textures::textures()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
-    std::make_pair(std::ref(m_all_races_1), "all_races_1.jpeg"),
-    std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
-    std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
-    std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
+    std::make_pair(std::ref(m_all_races_1), "all_races_1.jpg"),
+    std::make_pair(std::ref(m_all_races_2), "all_races_2.jpg"),
+    std::make_pair(std::ref(m_all_races_3), "all_races_3.jpg"),
+    std::make_pair(std::ref(m_all_races_4), "all_races_4.jpg"),
     std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
     std::make_pair(std::ref(m_classic_head), "classic_head.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
@@ -27,14 +27,14 @@ textures::textures()
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
     std::make_pair(std::ref(m_light_white_square), "l_white.png"),
     std::make_pair(std::ref(m_mouse), "mouse.png"),
-    std::make_pair(std::ref(m_protoss_head), "protoss_head.jpeg"),
+    std::make_pair(std::ref(m_protoss_head), "protoss_head.jpg"),
     std::make_pair(std::ref(m_ready_no), "ready_no.png"),
     std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
-    std::make_pair(std::ref(m_terran_head), "terran_head.jpeg"),
+    std::make_pair(std::ref(m_terran_head), "terran_head.jpg"),
     std::make_pair(std::ref(m_title), "title.png"),
     std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
-    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg")
+    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpg")
   };
   for (const auto& p: v)
   {

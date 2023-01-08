@@ -11,10 +11,10 @@
 loading_screen_textures::loading_screen_textures()
 {
   const std::vector<std::pair<std::reference_wrapper<sf::Texture>, std::string>> v = {
-    std::make_pair(std::ref(m_all_races_1), "all_races_1.jpeg"),
-    std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
-    std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
-    std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg")
+    std::make_pair(std::ref(m_all_races_1), "all_races_1.jpg"),
+    std::make_pair(std::ref(m_all_races_2), "all_races_2.jpg"),
+    std::make_pair(std::ref(m_all_races_3), "all_races_3.jpg"),
+    std::make_pair(std::ref(m_all_races_4), "all_races_4.jpg")
   };
   for (const auto& p: v)
   {
