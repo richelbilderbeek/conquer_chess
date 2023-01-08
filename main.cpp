@@ -32,6 +32,7 @@
 #include "pgn_string.h"
 #include "piece_actions.h"
 #include "sfml_helper.h"
+#include "read_only.h"
 #include "replay.h"
 #include "screen_coordinat.h"
 #include "test_game.h"
@@ -90,6 +91,7 @@ void test()
   test_piece_type();
   test_pieces();
   test_played_game_view_layout();
+  test_read_only();
   test_replay();
   test_replayer();
   test_screen_coordinat();

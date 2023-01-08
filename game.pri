@@ -49,6 +49,7 @@ HEADERS += \
     $$PWD/pieces.h \
     $$PWD/played_game_view_layout.h \
     $$PWD/race.h \
+    $$PWD/read_only.h \
     $$PWD/replay.h \
     $$PWD/replayer.h \
     $$PWD/screen_coordinat.h \
@@ -112,6 +113,7 @@ SOURCES += \
     $$PWD/pieces.cpp \
     $$PWD/played_game_view_layout.cpp \
     $$PWD/race.cpp \
+    $$PWD/read_only.cpp \
     $$PWD/replay.cpp \
     $$PWD/replayer.cpp \
     $$PWD/screen_coordinat.cpp \
