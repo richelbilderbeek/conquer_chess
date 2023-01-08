@@ -7,7 +7,7 @@
 #include <optional>
 
 std::optional<fonts> game_resources::m_fonts;
-std::optional<game_options_menu_textures> game_resources::m_game_options_menu_textures = {};
+std::optional<options_menu_textures> game_resources::m_game_options_menu_textures = {};
 std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
@@ -64,9 +64,9 @@ sf::Texture& get_game_option_icon(
   return gr.get_game_options_menu_textures().get_texture(item);
 }
 
-game_options_menu_textures& game_resources::get_game_options_menu_textures() noexcept
+options_menu_textures& game_resources::get_game_options_menu_textures() noexcept
 {
-  if (!m_game_options_menu_textures) m_game_options_menu_textures = game_options_menu_textures();
+  if (!m_game_options_menu_textures) m_game_options_menu_textures = options_menu_textures();
   assert(m_game_options_menu_textures);
   return m_game_options_menu_textures.value();
 }

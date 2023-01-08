@@ -1,5 +1,5 @@
-#ifndef GAME_OPTIONS_MENU_TEXTURES_H
-#define GAME_OPTIONS_MENU_TEXTURES_H
+#ifndef OPTIONS_MENU_TEXTURES_H
+#define OPTIONS_MENU_TEXTURES_H
 
 #ifndef LOGIC_ONLY
 
@@ -10,10 +10,10 @@
 
 /// The games' icon_textures
 /// The raw game resources
-class game_options_menu_textures
+class options_menu_textures
 {
 public:
-  game_options_menu_textures();
+  options_menu_textures();
 
   std::string get_filename(
     const options_view_item item

@@ -2,7 +2,6 @@
 HEADERS += \
     $$PWD/about_view.h \
     $$PWD/controls_view.h \
-    $$PWD/game_options_menu_textures.h \
     $$PWD/game_view.h \
     $$PWD/loading_screen_fonts.h \
     $$PWD/loading_screen_songs.h \
@@ -11,6 +10,7 @@ HEADERS += \
     $$PWD/lobby_view.h \
     $$PWD/map_textures.h \
     $$PWD/menu_view.h \
+    $$PWD/options_menu_textures.h \
     $$PWD/options_view.h \
     $$PWD/piece_action_textures.h \
     $$PWD/piece_portrait_textures.h \
@@ -23,7 +23,6 @@ HEADERS += \
 SOURCES += \
     $$PWD/about_view.cpp \
     $$PWD/controls_view.cpp \
-    $$PWD/game_options_menu_textures.cpp \
     $$PWD/game_view.cpp \
     $$PWD/loading_screen_fonts.cpp \
     $$PWD/loading_screen_songs.cpp \
@@ -33,6 +32,7 @@ SOURCES += \
     $$PWD/main.cpp \
     $$PWD/map_textures.cpp \
     $$PWD/menu_view.cpp \
+    $$PWD/options_menu_textures.cpp \
     $$PWD/options_view.cpp \
     $$PWD/piece_action_textures.cpp \
     $$PWD/piece_portrait_textures.cpp \
