@@ -15,6 +15,7 @@
 #include "loading_screen_songs.h"
 #include "piece_textures.h"
 #include "piece_portrait_textures.h"
+#include "map_textures.h"
 
 #include <optional>
 
@@ -41,11 +42,15 @@ public:
   int get_n_loading_screen_fonts() noexcept;
   int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
+  int get_n_map_textures() noexcept;
   int get_n_piece_portrait_textures() noexcept;
   int get_n_piece_textures() noexcept;
   int get_n_songs() noexcept;
   int get_n_sound_effects() noexcept;
   int get_n_textures() noexcept;
+
+  // Lazy loading
+  map_textures& get_map_textures() noexcept;
 
   // Lazy loading
   piece_portrait_textures& get_piece_portrait_textures() noexcept;
@@ -75,6 +80,9 @@ private:
 
   /// Lazy loading
   static std::optional<loading_screen_textures> m_loading_screen_textures;
+
+  /// Lazy loading
+  static std::optional<map_textures> m_map_textures;
 
   /// Lazy loading
   static std::optional<piece_textures> m_piece_textures;
@@ -123,6 +131,12 @@ sf::Texture& get_piece_portrait(
 );
 
 sf::Texture& get_quit(game_resources& r) noexcept;
+
+/// Get the map for a race
+sf::Texture& get_map(
+  game_resources& gr,
+  const race r
+) noexcept;
 
 sf::Texture& get_start(game_resources& r) noexcept;
 

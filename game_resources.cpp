@@ -10,6 +10,7 @@ std::optional<fonts> game_resources::m_fonts;
 std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
+std::optional<map_textures> game_resources::m_map_textures = {};
 std::optional<piece_textures> game_resources::m_piece_textures = {};
 std::optional<piece_portrait_textures> game_resources::m_piece_portrait_textures = {};
 songs * game_resources::m_songs{nullptr};
@@ -70,6 +71,20 @@ loading_screen_textures& game_resources::get_loading_screen_textures() noexcept
   if (!m_loading_screen_textures) m_loading_screen_textures = loading_screen_textures();
   assert(m_loading_screen_textures);
   return m_loading_screen_textures.value();
+}
+
+sf::Texture& get_map(
+  game_resources& gr,
+  const race r
+) noexcept
+{
+  return gr.get_map_textures().get_map(r);
+}
+map_textures& game_resources::get_map_textures() noexcept
+{
+  if (!m_map_textures) m_map_textures = map_textures();
+  assert(m_map_textures);
+  return m_map_textures.value();
 }
 
 int game_resources::get_n_loading_screen_fonts() noexcept

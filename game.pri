@@ -35,6 +35,7 @@ HEADERS += \
     $$PWD/lobby_options.h \
     $$PWD/lobby_view_item.h \
     $$PWD/lobby_view_layout.h \
+    $$PWD/map_textures.h \
     $$PWD/menu_view_item.h \
     $$PWD/menu_view_layout.h \
     $$PWD/message.h \
@@ -108,6 +109,7 @@ SOURCES += \
     $$PWD/lobby_options.cpp \
     $$PWD/lobby_view_item.cpp \
     $$PWD/lobby_view_layout.cpp \
+    $$PWD/map_textures.cpp \
     $$PWD/menu_view_item.cpp \
     $$PWD/menu_view_layout.cpp \
     $$PWD/message.cpp \

@@ -47,9 +47,6 @@ public:
   /// Get the head of a representative of the race
   sf::Texture& get_head(const race r) noexcept;
 
-  /// Get the map for a race
-  sf::Texture& get_map(const race r) noexcept;
-
   /// Get a texture to state if the person is ready yes/no
   sf::Texture& get_ready(const bool is_ready) noexcept;
 
@@ -114,11 +111,12 @@ private:
   sf::Texture m_terran_head;
   sf::Texture m_zerg_head;
 
+  /*
   sf::Texture m_classic_map;
   sf::Texture m_protoss_map;
   sf::Texture m_terran_map;
   sf::Texture m_zerg_map;
-
+  */
   sf::Texture m_subtitle;
   sf::Texture m_title;
 

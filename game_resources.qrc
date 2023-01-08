@@ -102,10 +102,10 @@
         <file>resources/nope_high.ogg</file>
         <file>resources/nope_low.ogg</file>
         <file>resources/nope_mid.ogg</file>
-        <file>resources/classic_map.png</file>
-        <file>resources/protoss_map.png</file>
-        <file>resources/terran_map.png</file>
-        <file>resources/zerg_map.png</file>
+        <file>resources/textures/maps/classic_map.png</file>
+        <file>resources/textures/maps/protoss_map.png</file>
+        <file>resources/textures/maps/terran_map.png</file>
+        <file>resources/textures/maps/zerg_map.png</file>
         <file>resources/protoss_black_bishop.png</file>
         <file>resources/protoss_black_king.png</file>
         <file>resources/protoss_black_knight.png</file>

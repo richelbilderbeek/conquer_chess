@@ -28,7 +28,7 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
     std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
     std::make_pair(std::ref(m_classic_head), "classic_head.png"),
-    std::make_pair(std::ref(m_classic_map), "classic_map.png"),
+//    std::make_pair(std::ref(m_classic_map), "classic_map.png"),
     std::make_pair(std::ref(m_controls), "controls.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
@@ -43,18 +43,18 @@ textures::textures()
     std::make_pair(std::ref(m_mouse), "mouse.png"),
     std::make_pair(std::ref(m_music_volume), "music_volume.png"),
     std::make_pair(std::ref(m_protoss_head), "protoss_head.jpeg"),
-    std::make_pair(std::ref(m_protoss_map), "protoss_map.png"),
+//    std::make_pair(std::ref(m_protoss_map), "protoss_map.png"),
     std::make_pair(std::ref(m_ready_no), "ready_no.png"),
     std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
     std::make_pair(std::ref(m_sound_effects_volume), "sound_effects_volume.png"),
     std::make_pair(std::ref(m_starting_position), "starting_position.jpeg"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
     std::make_pair(std::ref(m_terran_head), "terran_head.jpeg"),
-    std::make_pair(std::ref(m_terran_map), "terran_map.png"),
+//    std::make_pair(std::ref(m_terran_map), "terran_map.png"),
     std::make_pair(std::ref(m_title), "title.png"),
     std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
-    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg"),
-    std::make_pair(std::ref(m_zerg_map), "zerg_map.png")
+    std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg")
+//    std::make_pair(std::ref(m_zerg_map), "zerg_map.png")
   };
   for (const auto& p: v)
   {
@@ -190,6 +190,7 @@ sf::Texture& get_white_square(textures& t) noexcept
   return t.get_square(chess_color::white);
 }
 
+/*
 sf::Texture& textures::get_map(const race r) noexcept
 {
   switch (r)
@@ -204,6 +205,7 @@ sf::Texture& textures::get_map(const race r) noexcept
   }
 
 }
+*/
 
 sf::Texture& textures::get_ready(const bool is_ready) noexcept
 {

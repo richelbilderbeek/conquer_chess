@@ -593,7 +593,7 @@ void show_map(game_view& view)
   set_rect(sprite, layout.get_window_size());
   const race r{get_race_of_color(game.get_lobby_options(), chess_color::white)};
   sprite.setTexture(
-    &view.get_resources().get_textures().get_map(r)
+    &get_map(view.get_resources(), r)
   );
   view.get_window().draw(sprite);
 }
