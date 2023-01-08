@@ -962,6 +962,7 @@ void show_unit_sprites(game_view& view, const side player_side)
     sprite.setTexture(
       &get_piece_portrait(
         view.get_resources(),
+        piece.get_race(),
         piece.get_color(),
         piece.get_type()
       )

@@ -45,10 +45,12 @@ public:
   sf::Texture& get_game_option_icon(const options_view_item i) noexcept;
 
   /// Get texture of a portrait of a piece
+  /*
   sf::Texture& get_piece_portrait(
     const chess_color color,
     const piece_type type
   );
+  */
 
   /// Get the head of a representative of the race
   sf::Texture& get_head(const race r) noexcept;
@@ -90,12 +92,14 @@ private:
   sf::Texture m_ready_no;
   sf::Texture m_ready_yes;
 
+  /*
   sf::Texture m_black_bishop_portrait;
   sf::Texture m_black_king_portrait;
   sf::Texture m_black_knight_portrait;
   sf::Texture m_black_pawn_portrait;
   sf::Texture m_black_queen_portrait;
   sf::Texture m_black_rook_portrait;
+  */
   sf::Texture m_dark_black_square;
   sf::Texture m_dark_square;
   sf::Texture m_dark_white_square;
@@ -124,12 +128,15 @@ private:
   sf::Texture m_subtitle;
   sf::Texture m_terran_head;
   sf::Texture m_title;
+
+  /*
   sf::Texture m_white_bishop_portrait;
   sf::Texture m_white_king_portrait;
   sf::Texture m_white_knight_portrait;
   sf::Texture m_white_pawn_portrait;
   sf::Texture m_white_queen_portrait;
   sf::Texture m_white_rook_portrait;
+  */
 
   sf::Texture m_zerg_head;
 };

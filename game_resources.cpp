@@ -11,6 +11,7 @@ std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
 std::optional<piece_textures> game_resources::m_piece_textures = {};
+std::optional<piece_portrait_textures> game_resources::m_piece_portrait_textures = {};
 songs * game_resources::m_songs{nullptr};
 sound_effects * game_resources::m_sound_effects{nullptr};
 std::optional<textures> game_resources::m_textures = {};
@@ -86,6 +87,11 @@ int game_resources::get_n_loading_screen_textures() noexcept
   return get_loading_screen_textures().get_n_textures();
 }
 
+int game_resources::get_n_piece_portrait_textures() noexcept
+{
+  return get_piece_portrait_textures().get_n_textures();
+}
+
 int game_resources::get_n_piece_textures() noexcept
 {
   return get_piece_textures().get_n_textures();
@@ -117,12 +123,20 @@ sf::Texture& get_piece(
 }
 
 sf::Texture& get_piece_portrait(
-  game_resources& r,
+  game_resources& gr,
+  const race r,
   const chess_color color,
   const piece_type type
 )
 {
-  return r.get_textures().get_piece_portrait(color, type);
+  return gr.get_piece_portrait_textures().get_portrait(r, color, type);
+}
+
+piece_portrait_textures& game_resources::get_piece_portrait_textures() noexcept
+{
+  if (!m_piece_portrait_textures) m_piece_portrait_textures = piece_portrait_textures();
+  assert(m_piece_portrait_textures);
+  return m_piece_portrait_textures.value();
 }
 
 piece_textures& game_resources::get_piece_textures() noexcept

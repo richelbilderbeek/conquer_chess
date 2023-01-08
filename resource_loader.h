@@ -13,7 +13,7 @@ class resource_loader
 public:
   resource_loader();
 
-  int get_n_items() const noexcept { return 9; }
+  int get_n_items() const noexcept { return 10; }
 
   std::string get_current() const noexcept { return m_descriptor; }
 

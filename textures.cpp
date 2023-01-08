@@ -26,13 +26,13 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_2), "all_races_2.jpeg"),
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpeg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpeg"),
-    std::make_pair(std::ref(m_black_bishop_portrait), "classic_black_bishop_portrait.png"),
+//    std::make_pair(std::ref(m_black_bishop_portrait), "classic_black_bishop_portrait.png"),
     std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
-    std::make_pair(std::ref(m_black_king_portrait), "classic_black_king_portrait.png"),
-    std::make_pair(std::ref(m_black_knight_portrait), "classic_black_knight_portrait.png"),
-    std::make_pair(std::ref(m_black_pawn_portrait), "classic_black_pawn_portrait.png"),
-    std::make_pair(std::ref(m_black_queen_portrait), "classic_black_queen_portrait.png"),
-    std::make_pair(std::ref(m_black_rook_portrait), "classic_black_rook_portrait_2.png"),
+//    std::make_pair(std::ref(m_black_king_portrait), "classic_black_king_portrait.png"),
+//    std::make_pair(std::ref(m_black_knight_portrait), "classic_black_knight_portrait.png"),
+//    std::make_pair(std::ref(m_black_pawn_portrait), "classic_black_pawn_portrait.png"),
+//    std::make_pair(std::ref(m_black_queen_portrait), "classic_black_queen_portrait.png"),
+//    std::make_pair(std::ref(m_black_rook_portrait), "classic_black_rook_portrait_2.png"),
     std::make_pair(std::ref(m_classic_head), "classic_head.png"),
     std::make_pair(std::ref(m_controls), "controls.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
@@ -55,13 +55,13 @@ textures::textures()
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
     std::make_pair(std::ref(m_terran_head), "terran_head.jpeg"),
     std::make_pair(std::ref(m_title), "title.png"),
-    std::make_pair(std::ref(m_white_bishop_portrait), "classic_white_bishop_portrait.png"),
+//    std::make_pair(std::ref(m_white_bishop_portrait), "classic_white_bishop_portrait.png"),
     std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png"),
-    std::make_pair(std::ref(m_white_king_portrait), "classic_white_king_portrait.png"),
-    std::make_pair(std::ref(m_white_knight_portrait), "classic_white_knight_portrait.png"),
-    std::make_pair(std::ref(m_white_pawn_portrait), "classic_white_pawn_portrait.png"),
-    std::make_pair(std::ref(m_white_queen_portrait), "classic_white_queen_portrait.png"),
-    std::make_pair(std::ref(m_white_rook_portrait), "classic_white_rook_portrait.png"),
+//    std::make_pair(std::ref(m_white_king_portrait), "classic_white_king_portrait.png"),
+//    std::make_pair(std::ref(m_white_knight_portrait), "classic_white_knight_portrait.png"),
+//    std::make_pair(std::ref(m_white_pawn_portrait), "classic_white_pawn_portrait.png"),
+//    std::make_pair(std::ref(m_white_queen_portrait), "classic_white_queen_portrait.png"),
+//    std::make_pair(std::ref(m_white_rook_portrait), "classic_white_rook_portrait.png"),
     std::make_pair(std::ref(m_zerg_head), "zerg_head.jpeg")
   };
   for (const auto& p: v)
@@ -194,35 +194,6 @@ sf::Texture& textures::get_occupied_square(
 }
 
 /*
-sf::Texture& textures::get_piece(
-  const chess_color color,
-  const piece_type type
-)
-{
-  if (color == chess_color::black)
-  {
-    if (type == piece_type::bishop) return m_black_bishop_with_contour;
-    if (type == piece_type::king) return m_black_king_with_contour;
-    if (type == piece_type::knight) return m_black_knight_with_contour;
-    if (type == piece_type::pawn) return m_black_pawn_with_contour;
-    if (type == piece_type::queen) return m_black_queen_with_contour;
-    assert(type == piece_type::rook);
-    return m_black_rook_with_contour;
-  }
-  else
-  {
-    assert(color == chess_color::white);
-    if (type == piece_type::bishop) return m_white_bishop_with_contour;
-    if (type == piece_type::king) return m_white_king_with_contour;
-    if (type == piece_type::knight) return m_white_knight_with_contour;
-    if (type == piece_type::pawn) return m_white_pawn_with_contour;
-    if (type == piece_type::queen) return m_white_queen_with_contour;
-    assert(type == piece_type::rook);
-    return m_white_rook_with_contour;
-  }
-}
-*/
-
 sf::Texture& textures::get_piece_portrait(
   const chess_color color,
   const piece_type type
@@ -250,7 +221,7 @@ sf::Texture& textures::get_piece_portrait(
   assert(!"Should not get here");
   return m_light_square;
 }
-
+*/
 
 sf::Texture& get_white_square(textures& t) noexcept
 {

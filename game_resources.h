@@ -14,6 +14,7 @@
 #include "loading_screen_textures.h"
 #include "loading_screen_songs.h"
 #include "piece_textures.h"
+#include "piece_portrait_textures.h"
 
 #include <optional>
 
@@ -40,10 +41,14 @@ public:
   int get_n_loading_screen_fonts() noexcept;
   int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
+  int get_n_piece_portrait_textures() noexcept;
   int get_n_piece_textures() noexcept;
   int get_n_songs() noexcept;
   int get_n_sound_effects() noexcept;
   int get_n_textures() noexcept;
+
+  // Lazy loading
+  piece_portrait_textures& get_piece_portrait_textures() noexcept;
 
   // Lazy loading
   piece_textures& get_piece_textures() noexcept;
@@ -73,6 +78,9 @@ private:
 
   /// Lazy loading
   static std::optional<piece_textures> m_piece_textures;
+
+  /// Lazy loading
+  static std::optional<piece_portrait_textures> m_piece_portrait_textures;
 
   /// Lazy loading
   static songs * m_songs;
@@ -108,7 +116,8 @@ sf::Texture& get_piece(
 
 /// Get texture of a portrait of a piece
 sf::Texture& get_piece_portrait(
-  game_resources& r,
+  game_resources& gr,
+  const race r,
   const chess_color color,
   const piece_type type
 );
