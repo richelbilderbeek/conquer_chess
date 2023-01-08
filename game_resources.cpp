@@ -102,6 +102,12 @@ int game_resources::get_n_loading_screen_textures() noexcept
   return get_loading_screen_textures().get_n_textures();
 }
 
+int game_resources::get_n_map_textures() noexcept
+{
+  return get_map_textures().get_n_textures();
+}
+
+
 int game_resources::get_n_piece_portrait_textures() noexcept
 {
   return get_piece_portrait_textures().get_n_textures();

@@ -11,7 +11,7 @@ loading_screen_songs::loading_screen_songs()
   for (const auto& p: v)
   {
     const QString filename{p.second.c_str()};
-    QFile f(":/resources/" + filename);
+    QFile f(":/resources/songs/" + filename);
     f.copy(filename);
     if (!f.exists(filename))
     {

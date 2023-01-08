@@ -30,7 +30,7 @@ std::string map_textures::get_filename(
 ) const noexcept
 {
   std::stringstream s;
-  s << r << "_map.png";
+  s << r << "_map.jpg";
   return s.str();
 }
 

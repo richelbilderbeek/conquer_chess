@@ -38,7 +38,7 @@ std::string piece_portrait_textures::get_filename(
 ) const noexcept
 {
   std::stringstream s;
-  s << r << "_" << color << "_" << type << "_portrait.png";
+  s << r << "_" << color << "_" << type << "_portrait.jpg";
   return s.str();
 }
 

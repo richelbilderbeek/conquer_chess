@@ -4,18 +4,18 @@
 #ifndef LOGIC_ONLY
 
 #include "chess_color.h"
-#include "piece_type.h"
-#include "textures.h"
-#include "sound_effects.h"
-#include "message.h"
 #include "fonts.h"
-#include "songs.h"
 #include "loading_screen_fonts.h"
-#include "loading_screen_textures.h"
 #include "loading_screen_songs.h"
-#include "piece_textures.h"
-#include "piece_portrait_textures.h"
+#include "loading_screen_textures.h"
 #include "map_textures.h"
+#include "message.h"
+#include "piece_portrait_textures.h"
+#include "piece_textures.h"
+#include "piece_type.h"
+#include "songs.h"
+#include "sound_effects.h"
+#include "textures.h"
 
 #include <optional>
 
