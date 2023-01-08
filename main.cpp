@@ -119,18 +119,19 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   {
     #ifndef LOGIC_ONLY
     {
+      game_options options{create_default_game_options()};
+      options.set_sound_effects_volume(volume(0));
+      options.set_volume(volume(0));
+
       #define USE_TWO_KEYBOARDS
-      #ifdef USE_TWO_KEYBOARDS
-      loading_view v(
-        create_default_game_options(),
+      physical_controllers pcs{
+        #ifdef USE_TWO_KEYBOARDS
         create_two_keyboard_controllers()
-      );
-      #else
-      loading_view v(
-        create_default_game_options(),
+        #else
         create_keyboard_mouse_controllers()
-      );
-      #endif
+        #endif
+      };
+      loading_view v(options, pcs);
       v.exec();
     }
     #endif // LOGIC_ONLY

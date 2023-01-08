@@ -120,7 +120,6 @@ public:
 
 private:
 
-
   /// The actions the piece is doing, or about to do
   std::vector<piece_action> m_actions;
 
