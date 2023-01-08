@@ -1,17 +1,17 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/16114_FuturistFixed-width.ttf</file>
+        <file>resources/fonts/16114_FuturistFixed-width.ttf</file>
         <file>resources/all_races_1.jpeg</file>
         <file>resources/all_races_2.jpeg</file>
         <file>resources/all_races_3.jpeg</file>
         <file>resources/all_races_4.jpeg</file>
-        <file>resources/arial.ttf</file>
+        <file>resources/fonts/arial.ttf</file>
         <file>resources/attacking_high.ogg</file>
         <file>resources/attacking_low.ogg</file>
         <file>resources/attacking_mid.ogg</file>
         <file>resources/black_chess_color.png</file>
         <file>resources/classic_head.png</file>
-        <file>resources/CodeSquaredRegular-AYRg.ttf</file>
+        <file>resources/fonts/CodeSquaredRegular-AYRg.ttf</file>
         <file>resources/controls.png</file>
         <file>resources/countdown.ogg</file>
         <file>resources/d.png</file>
