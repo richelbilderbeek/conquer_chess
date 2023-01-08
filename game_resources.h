@@ -5,7 +5,7 @@
 
 #include "chess_color.h"
 #include "fonts.h"
-#include "icon_textures.h"
+#include "game_options_menu_textures.h"
 #include "loading_screen_fonts.h"
 #include "loading_screen_songs.h"
 #include "loading_screen_textures.h"
@@ -31,7 +31,7 @@ public:
   fonts& get_fonts() noexcept;
 
   // Lazy loading
-  icon_textures& get_icon_textures() noexcept;
+  game_options_menu_textures& get_game_options_menu_textures() noexcept;
 
   // Lazy loading
   loading_screen_fonts& get_loading_screen_fonts() noexcept;
@@ -43,7 +43,7 @@ public:
   loading_screen_songs& get_loading_screen_songs() noexcept;
 
   int get_n_fonts() noexcept;
-  int get_n_icon_textures() noexcept;
+  int get_n_game_options_menu_textures() noexcept;
   int get_n_loading_screen_fonts() noexcept;
   int get_n_loading_screen_songs() noexcept;
   int get_n_loading_screen_textures() noexcept;
@@ -78,7 +78,7 @@ private:
   static std::optional<fonts> m_fonts;
 
   /// Lazy loading
-  static std::optional<icon_textures> m_icon_textures;
+  static std::optional<game_options_menu_textures> m_game_options_menu_textures;
 
   /// Lazy loading
   static std::optional<loading_screen_fonts> m_loading_screen_fonts;

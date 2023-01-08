@@ -7,7 +7,7 @@
 #include <optional>
 
 std::optional<fonts> game_resources::m_fonts;
-std::optional<icon_textures> game_resources::m_icon_textures = {};
+std::optional<game_options_menu_textures> game_resources::m_game_options_menu_textures = {};
 std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
@@ -51,14 +51,14 @@ sf::Texture& get_game_option_icon(
   const options_view_item item
 ) noexcept
 {
-  return gr.get_icon_textures().get_game_option_icon(item);
+  return gr.get_game_options_menu_textures().get_texture(item);
 }
 
-icon_textures& game_resources::get_icon_textures() noexcept
+game_options_menu_textures& game_resources::get_game_options_menu_textures() noexcept
 {
-  if (!m_icon_textures) m_icon_textures = icon_textures();
-  assert(m_icon_textures);
-  return m_icon_textures.value();
+  if (!m_game_options_menu_textures) m_game_options_menu_textures = game_options_menu_textures();
+  assert(m_game_options_menu_textures);
+  return m_game_options_menu_textures.value();
 }
 
 int game_resources::get_n_fonts() noexcept
@@ -102,6 +102,11 @@ map_textures& game_resources::get_map_textures() noexcept
   if (!m_map_textures) m_map_textures = map_textures();
   assert(m_map_textures);
   return m_map_textures.value();
+}
+
+int game_resources::get_n_game_options_menu_textures() noexcept
+{
+  return get_game_options_menu_textures().get_n_textures();
 }
 
 int game_resources::get_n_loading_screen_fonts() noexcept

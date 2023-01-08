@@ -6,7 +6,6 @@
         <file>resources/all_races_4.jpeg</file>
         <file>resources/black_chess_color.png</file>
         <file>resources/classic_head.png</file>
-        <file>resources/controls.png</file>
         <file>resources/d.png</file>
         <file>resources/d_black.png</file>
         <file>resources/d_white.png</file>
@@ -14,7 +13,6 @@
         <file>resources/fonts/16114_FuturistFixed-width.ttf</file>
         <file>resources/fonts/arial.ttf</file>
         <file>resources/fonts/CodeSquaredRegular-AYRg.ttf</file>
-        <file>resources/game_speed.png</file>
         <file>resources/icons/icon_attack.png</file>
         <file>resources/icons/icon_castle_kingside.png</file>
         <file>resources/icons/icon_castle_queenside.png</file>
@@ -31,7 +29,6 @@
         <file>resources/l_white.png</file>
         <file>resources/light_strip.png</file>
         <file>resources/mouse.png</file>
-        <file>resources/music_volume.png</file>
         <file>resources/protoss_head.jpeg</file>
         <file>resources/qm.png</file>
         <file>resources/quit.png</file>
@@ -78,11 +75,14 @@
         <file>resources/sound_effects/yes_high.ogg</file>
         <file>resources/sound_effects/yes_low.ogg</file>
         <file>resources/sound_effects/yes_mid.ogg</file>
-        <file>resources/sound_effects_volume.png</file>
-        <file>resources/starting_position.jpeg</file>
         <file>resources/subtitle.png</file>
         <file>resources/t.png</file>
         <file>resources/terran_head.jpeg</file>
+        <file>resources/textures/game_options_menu/controls.png</file>
+        <file>resources/textures/game_options_menu/game_speed.png</file>
+        <file>resources/textures/game_options_menu/music_volume.png</file>
+        <file>resources/textures/game_options_menu/sound_effects_volume.png</file>
+        <file>resources/textures/game_options_menu/starting_position.jpeg</file>
         <file>resources/textures/maps/classic_map.jpg</file>
         <file>resources/textures/maps/protoss_map.jpg</file>
         <file>resources/textures/maps/terran_map.jpg</file>

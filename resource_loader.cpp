@@ -74,8 +74,8 @@ void resource_loader::process_next(game_resources& resources)
       break;
     case 7:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_n_icon_textures())
-        + " icon textures";
+        + std::to_string(resources.get_n_game_options_menu_textures())
+        + " game options menu textures";
       break;
     case 8:
       m_descriptor = "Loaded "

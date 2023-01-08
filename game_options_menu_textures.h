@@ -1,5 +1,5 @@
-#ifndef ICON_TEXTURES_H
-#define ICON_TEXTURES_H
+#ifndef GAME_OPTIONS_MENU_TEXTURES_H
+#define GAME_OPTIONS_MENU_TEXTURES_H
 
 #ifndef LOGIC_ONLY
 
@@ -10,10 +10,10 @@
 
 /// The games' icon_textures
 /// The raw game resources
-class icon_textures
+class game_options_menu_textures
 {
 public:
-  icon_textures();
+  game_options_menu_textures();
 
   std::string get_filename(
     const options_view_item item
@@ -28,7 +28,7 @@ public:
 
   /// Get an icon that accompanies a game option,
   /// to be used in the Options screen
-  sf::Texture& get_game_option_icon(
+  sf::Texture& get_texture(
     const options_view_item item
   ) noexcept;
 

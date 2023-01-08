@@ -21,12 +21,12 @@ HEADERS += \
     $$PWD/game_coordinat.h \
     $$PWD/game_log.h \
     $$PWD/game_options.h \
+    $$PWD/game_options_menu_textures.h \
     $$PWD/game_rect.h \
     $$PWD/game_resources.h \
     $$PWD/game_speed.h \
     $$PWD/game_view_layout.h \
     $$PWD/helper.h \
-    $$PWD/icon_textures.h \
     $$PWD/id.h \
     $$PWD/key_bindings.h \
     $$PWD/layout.h \
@@ -96,12 +96,12 @@ SOURCES += \
     $$PWD/game_coordinat.cpp \
     $$PWD/game_log.cpp \
     $$PWD/game_options.cpp \
+    $$PWD/game_options_menu_textures.cpp \
     $$PWD/game_rect.cpp \
     $$PWD/game_resources.cpp \
     $$PWD/game_speed.cpp \
     $$PWD/game_view_layout.cpp \
     $$PWD/helper.cpp \
-    $$PWD/icon_textures.cpp \
     $$PWD/id.cpp \
     $$PWD/key_bindings.cpp \
     $$PWD/layout.cpp \

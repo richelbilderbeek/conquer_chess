@@ -1,4 +1,4 @@
-#include "icon_textures.h"
+#include "game_options_menu_textures.h"
 
 #ifndef LOGIC_ONLY
 
@@ -9,7 +9,7 @@
 #include <cassert>
 #include <sstream>
 
-icon_textures::icon_textures()
+game_options_menu_textures::game_options_menu_textures()
 {
   for (const auto r: get_all_options_view_items())
   {
@@ -25,7 +25,7 @@ icon_textures::icon_textures()
   }
 }
 
-std::string icon_textures::get_filename(
+std::string game_options_menu_textures::get_filename(
   const options_view_item item
 ) const noexcept
 {
@@ -34,7 +34,7 @@ std::string icon_textures::get_filename(
   return s.str();
 }
 
-sf::Texture& icon_textures::get_game_option_icon(
+sf::Texture& game_options_menu_textures::get_texture(
   const options_view_item item
 ) noexcept
 {
