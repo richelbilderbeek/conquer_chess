@@ -2,7 +2,7 @@
 
 Image                                   |Image                                |Description                         |Adapted from picture at URL
 ----------------------------------------|-------------------------------------|------------------------------------|--------------------------------------------------------------------------------------
-![](classic_black_bishop_portrait.jpg)  |`classic_black_bishop_portrait.jpg`  |Joris Vercammen                     |https://commons.wikimedia.org/wiki/File:Abp.Joris Vercammen 01.jpg
+![](classic_black_bishop_portrait.jpg)  |`classic_black_bishop_portrait.jpg`  |Joris Vercammen                     |https://commons.wikimedia.org/wiki/File:Abp.Joris_Vercammen_01.jpg
 ![](classic_black_knight_portrait.jpg)  |`classic_black_knight_portrait.jpg`  |Dom Quichote                        |https://commons.wikimedia.org/wiki/File:Bronze_statues_of_Don_Quixote_and_Sancho_Panza.jpg
 ![](classic_black_king_portrait.jpg)    |`classic_black_king_portrait.jpg`    |Prins Claus                         |https://commons.wikimedia.org/wiki/File:Prince_Claus_of_the_Netherlands_1986.jpg
 ![](classic_black_rook_portrait.jpg)    |`classic_black_rook_portrait.jpg`    |De Waag at night                    |https://commons.wikimedia.org/wiki/File:De_Waag,_Amsterdam.jpg
