@@ -19,7 +19,7 @@ piece_portrait_textures::piece_portrait_textures()
       {
         const std::string filename_str{get_filename(r, c, p)};
         const QString filename{filename_str.c_str()};
-        QFile f(":/resources/" + filename);
+        QFile f(":/resources/textures/portraits/" + filename);
         f.copy(filename);
         if (!m_textures[r][c][p].loadFromFile(filename.toStdString()))
         {
