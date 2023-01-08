@@ -825,14 +825,6 @@ void test_game_functions()
     const auto g{get_kings_only_game()};
     assert(do_show_selected(g) || !do_show_selected(g));
   }
-
-  /*
-  // get_layout
-  {
-    const auto g{get_default_game()};
-    assert(get_width(get_layout(g).get_board()) > 0);
-  }
-  */
   // get_music_volume_as_percentage
   {
     const game g;
