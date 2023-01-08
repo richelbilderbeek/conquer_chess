@@ -128,10 +128,19 @@ Image                        |Filename                  |Search terms
 
 ### Chess color
 
-Image                     |Filename              |Search terms
---------------------------|----------------------|---------------------------------------------------------------------
-![](black_chess_color.png)|`black_chess_color`   |`starcraft 2, black, landscape, desolate, terrain, cubism, cartoon`
-![](white_chess_color.png)|`white_chess_color`   |`starcraft 2, white, landscape, desolate, terrain, cubism, cartoon`
+Image                     |Filename               |Search terms
+--------------------------|-----------------------|---------------------------------------------------------------------
+![](black_chess_color.png)|`black_chess_color.png`|`starcraft 2, black, landscape, desolate, terrain, cubism, cartoon`
+![](white_chess_color.png)|`white_chess_color.png`|`starcraft 2, white, landscape, desolate, terrain, cubism, cartoon`
+
+### Maps
+
+Image                       |Filename              |Search terms
+----------------------------|----------------------|---------------------------------------------------------------------
+![](protoss_map.png)        |`protoss_map.png`     |`protoss, map, simple, landscape, terrain, desolate, empty, futuristic, sacred, flat, big`
+![](terran_map.png)         |`terran_map.png`      |`terran, map, simple, landscape, terrain, barren, steel, big, empty, satellite image`
+![](zerg_map.png)           |`zerg_map.png`        |`zerg, map, simple, landscape, terrain, desolate, empty, creepy, toxic`
+
 
 ### Being ready
 
@@ -178,3 +187,6 @@ Image                          |Filename                   |Search terms
 ![](terran_black_bishop.png)   |`terran_black_bishop.png`  |`starcraft 2, terran, a black bishop, symbol, symbolic, full view, one chesspiece, simple`
 ![](zerg_white_king.png)       |`zerg_white_king.png`      |`starcraft 2, zerg, a white king, symbol, symbolic, full view, one chesspiece, simple, fearsome, big, strong`
 ![](terran_white_queen.png)    |`terran_white_queen.png`   |`starcraft 2, terran, a white queen, symbol, symbolic, full view, one chesspiece, simple, bulky, metal`
+
+
+
