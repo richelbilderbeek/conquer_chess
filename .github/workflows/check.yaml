@@ -36,7 +36,7 @@ jobs:
         run: qmake "DEFINES+=LOGIC_ONLY" game.pro
 
       - name: make
-        run: make debug --silent
+        run: make debug
 
       - name: run
         run: ./conquer_chess --test
