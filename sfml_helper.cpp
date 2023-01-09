@@ -142,12 +142,12 @@ void show_squares(
   sf::RectangleShape black_square;
   black_square.setSize(sf::Vector2f(square_width, square_height));
 
-  black_square.setTexture(&resources.get_textures().get_semitransparent_square(chess_color::black));
+  black_square.setTexture(&resources.get_textures().get_square(chess_color::black));
   black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
 
   sf::RectangleShape white_square;
   white_square.setSize(sf::Vector2f(square_width, square_height));
-  white_square.setTexture(&resources.get_textures().get_semitransparent_square(chess_color::white));
+  white_square.setTexture(&resources.get_textures().get_square(chess_color::white));
   white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
 
   for (int x = 0; x != 8; ++x)

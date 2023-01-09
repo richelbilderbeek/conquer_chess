@@ -131,8 +131,7 @@ sf::Texture& textures::get_occupied_square(
   const chess_color occupant_color
 ) noexcept
 {
-  return get_occupied_square_semitransparent(square_color, occupant_color);
-  //return m_occupied_squares[square_color][occupant_color];
+  return m_occupied_squares[square_color][occupant_color];
 }
 
 sf::Texture& textures::get_occupied_square_semitransparent(
@@ -174,8 +173,7 @@ sf::Texture& textures::get_square(
   const chess_color color
 ) noexcept
 {
-  return this->get_semitransparent_square(color);
-  //return m_squares[color];
+  return m_squares[color];
 }
 
 std::string textures::get_square_filename(
