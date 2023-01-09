@@ -37,6 +37,9 @@ public:
   /// Get a chess board square
   sf::Texture& get_square(const chess_color color) noexcept;
 
+  /// Get a semitransparent chess board square
+  sf::Texture& get_semitransparent_square(const chess_color color) noexcept;
+
   /// Get a strip of chess board squares
   sf::Texture& get_strip(const chess_color color) noexcept;
 
@@ -46,6 +49,19 @@ public:
   /// Get the title image
   sf::Texture& get_title() noexcept { return m_title; }
 
+
+  std::string get_square_filename(
+    const chess_color color
+  ) const noexcept;
+
+  std::string get_square_semitransparent_filename(
+    const chess_color color
+  ) const noexcept;
+
+  std::string get_strip_filename(
+    const chess_color color
+  ) const noexcept;
+
 private:
 
   sf::Texture m_all_races_1;
@@ -53,19 +69,22 @@ private:
   sf::Texture m_all_races_3;
   sf::Texture m_all_races_4;
 
+  std::map<chess_color, sf::Texture> m_squares;
+  std::map<chess_color, sf::Texture> m_semitransparent_squares;
+  std::map<chess_color, sf::Texture> m_strips;
 
   sf::Texture m_mouse;
   sf::Texture m_keyboard;
 
   sf::Texture m_dark_black_square;
-  sf::Texture m_dark_square;
+  //sf::Texture m_dark_square;
   sf::Texture m_dark_white_square;
-  sf::Texture m_dark_strip;
+  //sf::Texture m_dark_strip;
 
   sf::Texture m_light_black_square;
-  sf::Texture m_light_square;
+  //sf::Texture m_light_square;
   sf::Texture m_light_white_square;
-  sf::Texture m_light_strip;
+  //sf::Texture m_light_strip;
 
   sf::Texture m_subtitle;
   sf::Texture m_title;

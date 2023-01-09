@@ -48,15 +48,17 @@
         <file>resources/textures/all_races_2.jpg</file>
         <file>resources/textures/all_races_3.jpg</file>
         <file>resources/textures/all_races_4.jpg</file>
-        <file>resources/textures/d.png</file>
+        <file>resources/textures/black_square.png</file>
+        <file>resources/textures/black_square_semitransparent.png</file>
         <file>resources/textures/d_black.png</file>
         <file>resources/textures/d_white.png</file>
-        <file>resources/textures/dark_strip.png</file>
+        <file>resources/textures/black_strip.png</file>
         <file>resources/textures/keyboard.png</file>
-        <file>resources/textures/l.png</file>
+        <file>resources/textures/white_square.png</file>
+        <file>resources/textures/white_square_semitransparent.png</file>
         <file>resources/textures/l_black.png</file>
         <file>resources/textures/l_white.png</file>
-        <file>resources/textures/light_strip.png</file>
+        <file>resources/textures/white_strip.png</file>
         <file>resources/textures/lobby_menu/black_chess_color.jpg</file>
         <file>resources/textures/lobby_menu/classic_head.jpg</file>
         <file>resources/textures/lobby_menu/protoss_head.jpg</file>
