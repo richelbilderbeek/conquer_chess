@@ -49,6 +49,13 @@ void test_chess_color()
     assert(get_other_color(chess_color::white) == chess_color::black);
     assert(get_other_color(chess_color::black) == chess_color::white);
   }
+  // get_next
+  {
+    for (const auto c: get_all_chess_colors())
+    {
+      assert(get_other_color(c) == get_next(c));
+    }
+  }
   // operator<<
   {
     std::stringstream s;

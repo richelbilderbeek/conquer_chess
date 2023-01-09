@@ -12,12 +12,13 @@ enum class chess_color
 
 std::vector<chess_color> get_all_chess_colors() noexcept;
 
-/// Get the next color
+/// Get the next color.
+/// Identical to \link{get_other_color}.
 chess_color get_next(const chess_color c) noexcept;
 
 /// Get the other color
+/// Identical to \link{get_next}.
 chess_color get_other_color(const chess_color c) noexcept;
-
 
 /// Test the chess_color functions
 void test_chess_color();

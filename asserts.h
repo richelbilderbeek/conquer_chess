@@ -21,5 +21,8 @@ void assert_eq(const T& lhs, const T& rhs)
   }
 }
 
+/// Tests the asserts
+void test_asserts();
+
 
 #endif // ASSERTS_H
