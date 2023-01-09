@@ -558,7 +558,7 @@ void show_layout_panels(options_view& v)
   {
     sf::RectangleShape rectangle;
     set_rect(rectangle, screen_rect);
-    rectangle.setFillColor(sf::Color(32, 32, 32));
+    rectangle.setFillColor(sf::Color(255, 255, 255, 128));
     v.get_window().draw(rectangle);
   }
 }
