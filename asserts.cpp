@@ -4,6 +4,7 @@
 
 void test_asserts()
 {
+#ifndef NDEBUG
   // assert_eq: OK
   {
     const std::string s{"something irrelevant"};
@@ -26,5 +27,6 @@ void test_asserts()
     }
     assert(has_thrown);
   }
+#endif // NDEBUG
 }
 
