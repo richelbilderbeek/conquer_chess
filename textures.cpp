@@ -15,7 +15,6 @@ textures::textures()
     std::make_pair(std::ref(m_all_races_2), "all_races_2.jpg"),
     std::make_pair(std::ref(m_all_races_3), "all_races_3.jpg"),
     std::make_pair(std::ref(m_all_races_4), "all_races_4.jpg"),
-//    std::make_pair(std::ref(m_black_chess_color), "black_chess_color.png"),
     std::make_pair(std::ref(m_dark_black_square), "d_black.png"),
     std::make_pair(std::ref(m_dark_square), "d.png"),
     std::make_pair(std::ref(m_dark_strip), "dark_strip.png"),
@@ -26,16 +25,13 @@ textures::textures()
     std::make_pair(std::ref(m_light_strip), "light_strip.png"),
     std::make_pair(std::ref(m_light_white_square), "l_white.png"),
     std::make_pair(std::ref(m_mouse), "mouse.png"),
-//    std::make_pair(std::ref(m_ready_no), "ready_no.png"),
-//    std::make_pair(std::ref(m_ready_yes), "ready_yes.png"),
     std::make_pair(std::ref(m_subtitle), "subtitle.png"),
     std::make_pair(std::ref(m_title), "title.png")
-//    std::make_pair(std::ref(m_white_chess_color), "white_chess_color.png")
   };
   for (const auto& p: v)
   {
     const QString filename{p.second.c_str()};
-    QFile f(":/resources/" + filename);
+    QFile f(":/resources/textures/" + filename);
     f.copy(filename);
     if (!p.first.get().loadFromFile(filename.toStdString()))
     {

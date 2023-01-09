@@ -31,7 +31,6 @@ public:
   sf::Texture& get_all_races_3() noexcept { return m_all_races_3; }
   sf::Texture& get_all_races_4() noexcept { return m_all_races_4; }
 
-
   /// Get an image for a controller type, i.e. mouse or keyboard
   sf::Texture& get_controller_type(const physical_controller_type t) noexcept;
 
@@ -68,11 +67,8 @@ private:
   sf::Texture m_light_white_square;
   sf::Texture m_light_strip;
 
-
   sf::Texture m_subtitle;
   sf::Texture m_title;
-
-
 };
 
 /// Get a picture of a black/dark square
