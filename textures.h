@@ -48,9 +48,6 @@ public:
     const chess_color occupant_color
   ) noexcept;
 
-private:
-
-
   /// Get an occupied chess board square
   sf::Texture& get_occupied_square_semitransparent(
     const chess_color square_color,
@@ -60,7 +57,7 @@ private:
   /// Get a semitransparent chess board square
   sf::Texture& get_semitransparent_square(const chess_color color) noexcept;
 
-
+private:
 
   sf::Texture m_all_races_1;
   sf::Texture m_all_races_2;

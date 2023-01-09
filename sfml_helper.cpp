@@ -134,21 +134,28 @@ void show_pieces(
 void show_squares(
   sf::RenderWindow& window,
   const screen_rect& rect,
-  game_resources& resources
+  game_resources& resources,
+  const bool semi_transparent
 )
 {
   const int square_width{1 + (get_width(rect) / 8)};
   const int square_height{1 + (get_height(rect) / 8)};
   sf::RectangleShape black_square;
-  black_square.setSize(sf::Vector2f(square_width, square_height));
-
-  black_square.setTexture(&resources.get_textures().get_square(chess_color::black));
-  black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
-
   sf::RectangleShape white_square;
+  black_square.setSize(sf::Vector2f(square_width, square_height));
+  black_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
   white_square.setSize(sf::Vector2f(square_width, square_height));
-  white_square.setTexture(&resources.get_textures().get_square(chess_color::white));
   white_square.setOrigin(sf::Vector2f(square_width / 2.0, square_height / 2.0));
+  if (semi_transparent)
+  {
+    black_square.setTexture(&resources.get_textures().get_semitransparent_square(chess_color::black));
+    white_square.setTexture(&resources.get_textures().get_semitransparent_square(chess_color::white));
+  }
+  else
+  {
+    black_square.setTexture(&resources.get_textures().get_square(chess_color::black));
+    white_square.setTexture(&resources.get_textures().get_square(chess_color::white));
+  }
 
   for (int x = 0; x != 8; ++x)
   {

@@ -38,7 +38,8 @@ void show_pieces(
 void show_squares(
   sf::RenderWindow& window,
   const screen_rect& rect,
-  game_resources& resources
+  game_resources& resources,
+  const bool semi_transparent
 );
 
 /// Tes these function

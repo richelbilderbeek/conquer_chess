@@ -563,7 +563,7 @@ void show_layout(game_view& view)
   {
     sf::RectangleShape rectangle;
     set_rect(rectangle, panel);
-    rectangle.setFillColor(sf::Color::Black);
+    rectangle.setFillColor(sf::Color(0, 0, 0, 128));
     rectangle.setOutlineThickness(1);
     rectangle.setOutlineColor(sf::Color::White);
     view.get_window().draw(rectangle);
@@ -615,25 +615,12 @@ void show_occupied_squares(game_view& view)
     };
     sf::RectangleShape s;
     set_rect(s, square_rect);
-    if (1 + 1 == 2)
-    {
-      s.setTexture(
-        &view.get_resources().get_textures().get_occupied_square(
-          to_color(square),
-          piece.get_color()
-        )
-      );
-
-
-    }
-    else
-    {
-      s.rotate(45);
-      s.scale(0.375, 0.375);
-      s.setFillColor(to_sfml_color(piece.get_color()));
-      s.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
-      s.setOutlineThickness(1.0);
-    }
+    s.setTexture(
+      &view.get_resources().get_textures().get_occupied_square(
+        to_color(square),
+        piece.get_color()
+      )
+    );
     view.get_window().draw(s);
   }
 }
@@ -735,7 +722,8 @@ void show_squares(game_view& view)
   show_squares(
     view.get_window(),
     view.get_layout().get_board(),
-    view.get_resources()
+    view.get_resources(),
+    view.get_show_squares_semitransparent()
   );
 }
 

@@ -46,6 +46,8 @@ public:
 
   auto get_show_debug() const noexcept { return m_show_debug; }
 
+  bool get_show_squares_semitransparent() const noexcept { return true; }
+
   /// Get the text log, i.e. things pieces have to say
   const auto& get_log() const noexcept { return m_log; }
 

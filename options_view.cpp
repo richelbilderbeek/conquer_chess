@@ -311,7 +311,13 @@ void options_view::show()
   show_bottom(*this);
   show_selected_panel(*this);
 
-  show_squares(m_window, m_layout.get_chess_board(), m_resources);
+  const bool show_semitransparent{true};
+  show_squares(
+    m_window,
+    m_layout.get_chess_board(),
+    m_resources,
+    show_semitransparent
+  );
   show_pieces(*this);
 
   // Display all shapes
