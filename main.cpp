@@ -31,6 +31,7 @@
 #include "options_view_layout.h"
 #include "pgn_string.h"
 #include "piece_actions.h"
+#include "race.h"
 #include "sfml_helper.h"
 #include "read_only.h"
 #include "replay.h"
@@ -91,6 +92,7 @@ void test()
   test_piece_type();
   test_pieces();
   test_played_game_view_layout();
+  test_race();
   test_read_only();
   test_replay();
   test_replayer();
