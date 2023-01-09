@@ -135,9 +135,6 @@ sf::Texture& get_action_icon(
 /// Get the Arial font
 sf::Font& get_arial_font(game_resources& r) noexcept;
 
-/// Get a picture of a black/dark square
-sf::Texture& get_black_square(game_resources& r) noexcept;
-
 /// Get the Arial font
 sf::Font& get_code_squared_font(game_resources& r) noexcept;
 
@@ -177,15 +174,10 @@ sf::Texture& get_map(
 
 sf::Texture& get_start(game_resources& r) noexcept;
 
-/// Get a chess board square
-sf::Texture& get_square(game_resources& r, const chess_color color) noexcept;
-
 sf::Texture& get_strip(game_resources& r, const chess_color c) noexcept;
 sf::Texture& get_subtitle(game_resources& r) noexcept;
 sf::Texture& get_title(game_resources& r) noexcept;
 
-/// Get a picture of a white/light square
-sf::Texture& get_white_square(game_resources& r) noexcept;
 
 /// Play a sound effect
 void play(

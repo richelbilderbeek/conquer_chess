@@ -33,12 +33,6 @@ sf::Texture& get_action_icon(
   return gr.get_piece_action_textures().get_texture(t);
 }
 
-
-sf::Texture& get_black_square(game_resources& r) noexcept
-{
-  return get_square(r, chess_color::black);
-}
-
 sf::Font& get_arial_font(game_resources& r) noexcept
 {
   return r.get_fonts().get_arial_font();
@@ -245,16 +239,6 @@ textures& game_resources::get_textures() noexcept
   if (!m_textures) m_textures = textures();
   assert(m_textures);
   return m_textures.value();
-}
-
-sf::Texture& get_white_square(game_resources& r) noexcept
-{
-  return get_white_square(r.get_textures());
-}
-
-sf::Texture& get_square(game_resources& r, const chess_color color) noexcept
-{
-  return r.get_textures().get_square(color);
 }
 
 sf::Texture& get_strip(game_resources& r, const chess_color c) noexcept

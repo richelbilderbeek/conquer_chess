@@ -618,7 +618,7 @@ void show_occupied_squares(game_view& view)
     if (1 + 1 == 2)
     {
       s.setTexture(
-        &view.get_resources().get_textures().get_occupied_square(
+        &view.get_resources().get_textures().get_occupied_square_semitransparent(
           to_color(square),
           piece.get_color()
         )

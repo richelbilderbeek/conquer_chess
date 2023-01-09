@@ -19,7 +19,7 @@ loading_screen_textures::loading_screen_textures()
   for (const auto& p: v)
   {
     const QString filename{p.second.c_str()};
-    QFile f(":/resources/" + filename);
+    QFile f(":/resources/textures/" + filename);
     f.copy(filename);
     if (!p.first.get().loadFromFile(filename.toStdString()))
     {
