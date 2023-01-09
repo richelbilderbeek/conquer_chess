@@ -145,7 +145,10 @@ double get_square_height(const game_view_layout& layout) noexcept;
 double get_square_width(const game_view_layout& layout) noexcept;
 
 /// Get the panels in the layout
-std::vector<screen_rect> get_panels(const game_view_layout& layout);
+std::vector<screen_rect> get_panels(
+  const game_view_layout& layout,
+  const bool show_debug_panel = true
+);
 
 /// Test the game_view_layout class
 void test_game_view_layout();

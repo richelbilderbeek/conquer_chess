@@ -30,7 +30,8 @@ game_view::game_view(
   :
     m_game{game},
     m_game_controller{c},
-    m_log{game.get_game_options().get_message_display_time_secs()}
+    m_log{game.get_game_options().get_message_display_time_secs()},
+    m_show_debug{false}
 {
   m_game_resources.get_songs().get_wonderful_time().setVolume(
     get_music_volume_as_percentage(m_game)
@@ -429,7 +430,7 @@ void show_controls(
       text.setString(key_descriptions[key - 1]);
       text.setCharacterSize(get_height(corner_rect) * 2 / 3);
       text.setPosition(
-        corner_rect.get_tl().get_x() + 2,
+        corner_rect.get_tl().get_x() + 10,
         corner_rect.get_tl().get_y() + 2
       );
       view.get_window().draw(text);
@@ -463,7 +464,7 @@ void show_controls(
         text.setCharacterSize(font_size);
       }
       text.setPosition(
-        half_rect.get_tl().get_x() + 2,
+        half_rect.get_tl().get_x() + 10,
         half_rect.get_tl().get_y() + 2
       );
       view.get_window().draw(text);
@@ -558,7 +559,7 @@ void game_view::show_mouse_cursor()
 void show_layout(game_view& view)
 {
   const auto& layout{view.get_layout()};
-  for (const auto& panel: get_panels(layout))
+  for (const auto& panel: get_panels(layout, view.get_show_debug()))
   {
     sf::RectangleShape rectangle;
     set_rect(rectangle, panel);
@@ -726,7 +727,7 @@ void show_sidebar(game_view& view, const side player_side)
   show_unit_sprites(view, player_side);
   show_controls(view, player_side);
   show_log(view, player_side);
-  show_debug(view, player_side);
+  if (view.get_show_debug()) show_debug(view, player_side);
 }
 
 void show_squares(game_view& view)
@@ -965,11 +966,15 @@ void show_unit_paths(game_view& view)
 
 void show_unit_sprites(game_view& view, const side player_side)
 {
-  const auto& layout = view.get_layout();
-  const double square_width{get_square_width(layout)};
-  const double square_height{get_square_height(layout)};
+  const auto& layout{view.get_layout()};
+
+  const double square_width = get_width(layout.get_units(player_side));
+  const double square_height = square_width;
   const auto player_color{get_player_color(view, player_side)};
-  screen_coordinat screen_position = layout.get_units(player_side).get_tl();
+  screen_coordinat screen_position{
+    layout.get_units(player_side).get_tl()
+    + screen_coordinat(10, 0) // margin
+  };
 
   for (const auto& piece: get_selected_pieces(view.get_game(), player_color))
   {
@@ -1004,7 +1009,7 @@ void show_unit_sprites(game_view& view, const side player_side)
     text.setString(s.str());
     text.setCharacterSize(20);
     const auto text_position{
-      screen_position + screen_coordinat(square_width + 10, 0)
+      screen_position + screen_coordinat(0, square_height + 10)
     };
     text.setPosition(
       text_position.get_x(),

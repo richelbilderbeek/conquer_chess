@@ -16,7 +16,7 @@ game_view_layout::game_view_layout(
   const int margin_width
 ) : m_window_size{window_size}
 {
-  const int unit_panel_height{100};
+  const int unit_panel_height{400};
   const int control_panel_height{300};
   const int log_panel_height{
     (
@@ -365,20 +365,26 @@ const screen_rect& game_view_layout::get_log(const side player) const noexcept
   return m_log_rhs;
 }
 
-std::vector<screen_rect> get_panels(const game_view_layout& layout)
+std::vector<screen_rect> get_panels(
+  const game_view_layout& layout,
+  const bool show_debug_panel
+)
 {
-  return
-  {
+  std::vector<screen_rect> v{
     layout.get_board(),
     layout.get_controls(side::lhs),
     layout.get_controls(side::rhs),
-    layout.get_debug(side::lhs),
-    layout.get_debug(side::rhs),
     layout.get_log(side::lhs),
     layout.get_log(side::rhs),
     layout.get_units(side::lhs),
     layout.get_units(side::rhs)
   };
+  if (show_debug_panel)
+  {
+    v.push_back(layout.get_debug(side::lhs));
+    v.push_back(layout.get_debug(side::rhs));
+  }
+  return v;
 }
 
 double get_square_height(const game_view_layout& layout) noexcept

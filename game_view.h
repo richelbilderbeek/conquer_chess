@@ -44,6 +44,8 @@ public:
 
   auto& get_resources() noexcept { return m_game_resources; }
 
+  auto get_show_debug() const noexcept { return m_show_debug; }
+
   /// Get the text log, i.e. things pieces have to say
   const auto& get_log() const noexcept { return m_log; }
 
@@ -71,6 +73,9 @@ private:
 
   /// The text log
   game_log m_log;
+
+  /// Show the debug info
+  bool m_show_debug;
 
   /// The window to draw to
   sf::RenderWindow m_window;
