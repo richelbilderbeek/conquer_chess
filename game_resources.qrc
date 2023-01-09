@@ -87,30 +87,30 @@
         <file>resources/textures/piece_actions/promote_to_rook.png</file>
         <file>resources/textures/piece_actions/select.png</file>
         <file>resources/textures/piece_actions/unselect.png</file>
-        <file>resources/textures/pieces/classic_black_bishop.jpg</file>
-        <file>resources/textures/pieces/classic_black_bishop_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_black_king.jpg</file>
-        <file>resources/textures/pieces/classic_black_king_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_black_knight.jpg</file>
-        <file>resources/textures/pieces/classic_black_knight_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_black_pawn.jpg</file>
-        <file>resources/textures/pieces/classic_black_pawn_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_black_queen.jpg</file>
-        <file>resources/textures/pieces/classic_black_queen_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_black_rook.jpg</file>
-        <file>resources/textures/pieces/classic_black_rook_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_white_bishop.jpg</file>
-        <file>resources/textures/pieces/classic_white_bishop_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_white_king.jpg</file>
-        <file>resources/textures/pieces/classic_white_king_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_white_knight.jpg</file>
-        <file>resources/textures/pieces/classic_white_knight_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_white_pawn.jpg</file>
-        <file>resources/textures/pieces/classic_white_pawn_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_white_queen.jpg</file>
-        <file>resources/textures/pieces/classic_white_queen_with_contour.jpg</file>
-        <file>resources/textures/pieces/classic_white_rook.jpg</file>
-        <file>resources/textures/pieces/classic_white_rook_with_contour.jpg</file>
+        <file>resources/textures/pieces/classic_black_bishop.png</file>
+        <file>resources/textures/pieces/classic_black_bishop_with_contour.png</file>
+        <file>resources/textures/pieces/classic_black_king.png</file>
+        <file>resources/textures/pieces/classic_black_king_with_contour.png</file>
+        <file>resources/textures/pieces/classic_black_knight.png</file>
+        <file>resources/textures/pieces/classic_black_knight_with_contour.png</file>
+        <file>resources/textures/pieces/classic_black_pawn.png</file>
+        <file>resources/textures/pieces/classic_black_pawn_with_contour.png</file>
+        <file>resources/textures/pieces/classic_black_queen.png</file>
+        <file>resources/textures/pieces/classic_black_queen_with_contour.png</file>
+        <file>resources/textures/pieces/classic_black_rook.png</file>
+        <file>resources/textures/pieces/classic_black_rook_with_contour.png</file>
+        <file>resources/textures/pieces/classic_white_bishop.png</file>
+        <file>resources/textures/pieces/classic_white_bishop_with_contour.png</file>
+        <file>resources/textures/pieces/classic_white_king.png</file>
+        <file>resources/textures/pieces/classic_white_king_with_contour.png</file>
+        <file>resources/textures/pieces/classic_white_knight.png</file>
+        <file>resources/textures/pieces/classic_white_knight_with_contour.png</file>
+        <file>resources/textures/pieces/classic_white_pawn.png</file>
+        <file>resources/textures/pieces/classic_white_pawn_with_contour.png</file>
+        <file>resources/textures/pieces/classic_white_queen.png</file>
+        <file>resources/textures/pieces/classic_white_queen_with_contour.png</file>
+        <file>resources/textures/pieces/classic_white_rook.png</file>
+        <file>resources/textures/pieces/classic_white_rook_with_contour.png</file>
         <file>resources/textures/pieces/protoss_black_bishop.jpg</file>
         <file>resources/textures/pieces/protoss_black_king.jpg</file>
         <file>resources/textures/pieces/protoss_black_knight.jpg</file>

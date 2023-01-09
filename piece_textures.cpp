@@ -39,8 +39,14 @@ std::string piece_textures::get_filename(
 {
   std::stringstream s;
   s << r << "_" << color << "_" << type;
-  if (r == race::classic) s << "_with_contour";
-  s << ".jpg";
+  if (r == race::classic)
+  {
+    s << "_with_contour.png";
+  }
+  else
+  {
+    s << ".jpg";
+  }
   return s.str();
 }
 
