@@ -34,7 +34,10 @@ replay get_replay_1() noexcept;
 
 /// Play a replay, using \link{game} (not \link{game_controller})
 /// as the actor
-void play_game(const replay& r);
+void play_game(
+  const replay& r,
+  const bool verbose = false
+);
 
 /// Split the PGN string into its moves
 /// E.g. '1. e4 e5 2. Nc3' will be split into {'e4', 'e5', 'Nc3'}

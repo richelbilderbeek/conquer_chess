@@ -42,7 +42,7 @@ std::string get_scholars_mate_as_pgn_str() noexcept
   return "1. e4 e5 2. Qh5 Nc6 3. Bc4 Nf6?? Qxf7# 1-0";
 }
 
-void play_game(const replay& r)
+void play_game(const replay& r, const bool verbose)
 {
   game g;
   const auto& moves{r.get_moves()};
@@ -50,13 +50,25 @@ void play_game(const replay& r)
   for (int i{0}; i!=n_moves; ++i)
   {
     const auto& m{moves[i]};
-    std::clog << i << ": " << m << '\n';
+    if (verbose) std::clog << i << ": " << m << '\n';
     start_chess_move(g, m);
     for (int j{0}; j!=4; ++j) g.tick(delta_t(0.25));
-    std::clog << to_board_str(
+    if (verbose) std::clog << to_board_str(
       g.get_pieces(),
       board_to_text_options(true, true)
     ) << '\n';
+    const auto messages{collect_messages(g)};
+    const long n_cannot{
+      std::count_if(
+        std::begin(messages),
+        std::end(messages),
+        [](const auto& msg)
+        {
+          return msg.get_message_type() == message_type::cannot;
+        }
+      )
+    };
+    assert(n_cannot == 0);
   }
 }
 
