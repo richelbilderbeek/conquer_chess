@@ -417,6 +417,11 @@ void test_piece()
       assert(piece.get_messages().at(0) == message_type::cannot);
     }
   }
+  // piece::get_action_history
+  {
+    const auto piece{get_test_white_knight()};
+    assert(!has_actions(piece.get_action_history()));
+  }
   // piece::get_kill_count
   {
     const auto piece{get_test_white_knight()};

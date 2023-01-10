@@ -86,16 +86,22 @@ std::string to_str(const message& m) noexcept
     case message_type::select:
       s << m.get_color() << " " << m.get_piece_type() << " selected";
       break;
-    case message_type::unselect:
-      s << m.get_color() << " " << m.get_piece_type() << " unselected";
+    case message_type::start_attack:
+      s << m.get_color() << " " << m.get_piece_type() << " starts attacking";
+      break;
+    case message_type::start_castling_kingside:
+      s << m.get_color() << " starts castling kingside";
+      break;
+    case message_type::start_castling_queenside:
+      s << m.get_color() << " starts castling queenside";
       break;
     case message_type::start_move:
       s << m.get_color() << " " << m.get_piece_type() << " starts moving";
       break;
+    case message_type::unselect:
     default:
-    case message_type::start_attack:
-      assert(m.get_message_type() == message_type::start_attack);
-      s << m.get_color() << " " << m.get_piece_type() << " starts attacking";
+      assert(m.get_message_type() == message_type::unselect);
+      s << m.get_color() << " " << m.get_piece_type() << " unselected";
       break;
   }
   return s.str();

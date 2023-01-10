@@ -147,5 +147,30 @@ void test_lobby_view_layout()
     const lobby_view_layout layout;
     assert(!get_panels(layout).empty());
   }
+  // get_cursor_rect
+  {
+    const lobby_view_layout layout;
+    const auto r1{get_cursor_rect(layout, lobby_view_item::color, side::lhs)};
+    const auto r2{get_cursor_rect(layout, lobby_view_item::race, side::lhs)};
+    const auto r3{get_cursor_rect(layout, lobby_view_item::start, side::lhs)};
+    const auto r4{get_cursor_rect(layout, lobby_view_item::color, side::rhs)};
+    const auto r5{get_cursor_rect(layout, lobby_view_item::race, side::rhs)};
+    const auto r6{get_cursor_rect(layout, lobby_view_item::start, side::rhs)};
+    assert(r1 != r2);
+    assert(r1 != r3);
+    assert(r1 != r4);
+    assert(r1 != r5);
+    assert(r1 != r6);
+    assert(r2 != r3);
+    assert(r2 != r4);
+    assert(r2 != r5);
+    assert(r2 != r6);
+    assert(r3 != r4);
+    assert(r3 != r5);
+    assert(r3 != r6);
+    assert(r4 != r5);
+    assert(r4 != r6);
+    assert(r5 != r6);
+  }
   #endif
 }

@@ -1,19 +1,19 @@
 #include "message_type.h"
 
+#include "../magic_enum/include/magic_enum.hpp"
+
 #include <cassert>
 #include <iostream>
 #include <sstream>
 
 std::vector<message_type> get_all_message_types() noexcept
 {
-  return
-  {
-    message_type::cannot,
-    message_type::done,
-    message_type::select,
-    message_type::start_attack,
-    message_type::start_move
-  };
+  const auto a{magic_enum::enum_values<message_type>()};
+  std::vector<message_type> v;
+  v.reserve(a.size());
+  std::copy(std::begin(a), std::end(a), std::back_inserter(v));
+  assert(a.size() == v.size());
+  return v;
 }
 
 void test_message_type()
@@ -42,17 +42,7 @@ void test_message_type()
 
 std::string to_str(const message_type t) noexcept
 {
-  switch (t)
-  {
-    case message_type::cannot: return "cannot";
-    case message_type::done: return "done";
-    case message_type::select: return "select";
-    case message_type::start_attack: return "start_attack";
-    default:
-    case message_type::start_move:
-      assert(t == message_type::start_move);
-      return "start_move";
-  }
+  return std::string(magic_enum::enum_name(t));
 }
 
 std::string to_str(const std::vector<message_type>& message_types) noexcept

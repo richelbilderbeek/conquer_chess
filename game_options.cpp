@@ -99,6 +99,13 @@ void test_game_options()
     options.set_volume(v);
     assert(options.get_music_volume() == v);
   }
+  // game_options::set_sound_effects_volume
+  {
+    auto options{create_default_game_options()};
+    const volume v(31);
+    options.set_sound_effects_volume(v);
+    assert(options.get_sound_effects_volume() == v);
+  }
   // ::get_sound_effects_volume
   {
     const auto options{create_default_game_options()};

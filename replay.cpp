@@ -114,19 +114,22 @@ void test_replay()
     const replay r(get_replay_1_as_pgn_str());
     assert(get_n_moves(r) > 8);
   }
-  //#define FIX_ISSUE_22
-  #ifdef FIX_ISSUE_22
   // play replay of scholars mate
   {
     const replay r(get_scholars_mate_as_pgn_str());
     play_game(r);
+  }
+  // play replay of scholars mate, verbose
+  {
+    const replay r(get_scholars_mate_as_pgn_str());
+    const bool verbose{true};
+    play_game(r, verbose);
   }
   // play replay 1
   {
     const replay r(get_replay_1_as_pgn_str());
     play_game(r);
   }
-  #endif
   // 45: operator<<
   {
     const replay r(get_replay_1_as_pgn_str());

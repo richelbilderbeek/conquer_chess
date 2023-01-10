@@ -121,6 +121,15 @@ void test_key_bindings()
     const key_bindings k = create_left_keyboard_key_bindings();
     assert(k.create_actions(sf::Keyboard::X).empty());
   }
+  // get_key_for_action
+  {
+    const key_bindings k = create_left_keyboard_key_bindings();
+    assert(get_key_for_action(k, action_number(1)) == sf::Keyboard::Key::Q);
+    assert(get_key_for_action(k, action_number(2)) == sf::Keyboard::Key::E);
+    assert(get_key_for_action(k, action_number(3)) == sf::Keyboard::Key::Z);
+    assert(get_key_for_action(k, action_number(4)) == sf::Keyboard::Key::C);
+  }
+  // operator==
   {
     const auto a{create_left_keyboard_key_bindings()};
     const auto b{create_left_keyboard_key_bindings()};
