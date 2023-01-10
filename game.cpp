@@ -1430,6 +1430,54 @@ void unselect_all_pieces(
   return unselect_all_pieces(g.get_pieces(), color);
 }
 
+void start_chess_move(game& g, const chess_move& m)
+{
+  if (is_simple_move(m))
+  {
+    const square from{get_from(g, m)};
+    piece& p{get_piece_at(g, from)};
+    assert(p.get_color() == m.get_color());
+    assert(p.get_type() == m.get_type().value());
+    assert(m.get_to().has_value());
+    p.add_action(
+      piece_action(
+        p.get_color(),
+        p.get_type(),
+        piece_action_type::move,
+        from,
+        m.get_to().value()
+      )
+    );
+  }
+  else if (m.is_capture())
+  {
+    const square from{get_from(g, m)};
+    piece& p{get_piece_at(g, from)};
+    assert(p.get_color() == m.get_color());
+    assert(p.get_type() == m.get_type().value());
+    assert(m.get_to().has_value());
+    const square& to{m.get_to().value()};
+    assert(get_piece_at(g, to).get_color() != p.get_color());
+    p.add_action(
+      piece_action(
+        p.get_color(),
+        p.get_type(),
+        piece_action_type::attack,
+        from,
+        to
+      )
+    );
+  }
+  else if (!m.get_winner().empty())
+  {
+    return;
+  }
+  else
+  {
+    assert(!"TODO");
+  }
+}
+
 
 void tick_until_idle(game& g)
 {

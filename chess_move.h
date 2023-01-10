@@ -72,10 +72,12 @@ private:
 
   std::optional<piece_type> m_type;
 
+
   /// Can be
   ///  * No winner yet: empty
   ///  * One winner: one element
   ///  * Draw: two elements
+  // Yep, must be a vector, not an optional
   std::vector<chess_color> m_winner;
 
 };

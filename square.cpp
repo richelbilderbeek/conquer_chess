@@ -294,6 +294,32 @@ square get_behind(
   return square(pawn_square.get_x() + dx, pawn_square.get_y());
 }
 
+std::vector<square> get_besides(
+  const square& pawn_square
+)
+{
+  std::vector<square> squares;
+  if (pawn_square.get_y() > 0)
+  {
+    squares.push_back(
+      square(
+        pawn_square.get_x(),
+        pawn_square.get_y() - 1
+      )
+    );
+  }
+  if (pawn_square.get_y() < 7)
+  {
+    squares.push_back(
+      square(
+        pawn_square.get_x(),
+        pawn_square.get_y() + 1
+      )
+    );
+  }
+  return squares;
+}
+
 square get_default_king_square(const chess_color player_color) noexcept
 {
   if (player_color == chess_color::white) return square("e1");
@@ -321,6 +347,11 @@ square get_default_rook_square(
 char get_file(const square& s) noexcept
 {
   return 'a' + s.get_y();
+}
+
+char get_file_char(const square& s) noexcept
+{
+  return get_file(s);
 }
 
 std::vector<square> get_intermediate_squares(
@@ -495,6 +526,25 @@ void test_square()
   {
     assert(get_behind(square("e4"), chess_color::white) == square("e3"));
     assert(get_behind(square("e5"), chess_color::black) == square("e6"));
+  }
+  // get_besides, 2 squares
+  {
+    const auto squares{get_besides(square("e4"))};
+    assert(squares.size() == 2);
+    assert(1 == std::count(std::begin(squares), std::end(squares), square("d4")));
+    assert(1 == std::count(std::begin(squares), std::end(squares), square("f4")));
+  }
+  // get_besides, 1 square
+  {
+    const auto squares{get_besides(square("a7"))};
+    assert(squares.size() == 1);
+    assert(squares[0] == square("b7"));
+  }
+  // get_besides, 1 square
+  {
+    const auto squares{get_besides(square("h2"))};
+    assert(squares.size() == 1);
+    assert(squares[0] == square("g2"));
   }
   // get_default_king_square
   {

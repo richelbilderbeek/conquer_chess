@@ -115,6 +115,14 @@ square get_behind(
   const chess_color color
 );
 
+/// Get the square besides a pawn.
+/// Examples:
+///  * 'e4' would have 'd4' and 'f4'
+///  * 'h7' would have 'g7'
+std::vector<square> get_besides(
+  const square& pawn_square
+);
+
 /// Get the default king square.
 /// These are:
 ///  * e1 for white
@@ -135,6 +143,9 @@ square get_default_rook_square(
 
 /// Get the file of a square, e.g. 'd' from 'd4'
 char get_file(const square& s) noexcept;
+
+/// Get the file of a square, e.g. 'd' from 'd4'
+char get_file_char(const square& s) noexcept;
 
 /// Get the intermediate squares, in an inclusive way:
 /// the first square will be 'from',

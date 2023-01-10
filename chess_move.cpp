@@ -13,7 +13,8 @@ chess_move::chess_move(std::string s, const chess_color color)
 {
 
   // Simple 'go to there' move, no 'from'
-  if (std::regex_match(s, std::regex("^[BKNQR]?x?[a-h][1-8](=[BKNQR])?(\\?\\?|\\?|\\+|#)?$")))
+
+  if (std::regex_match(s, std::regex("^[BKNQR]?([a-h]?)x?[a-h][1-8](=[BKNQR])?(\\?\\?|\\?|\\+|#)?$")))
   {
     m_to = get_square(s);
     m_type = get_piece_type(s);
@@ -123,19 +124,49 @@ square get_from_for_pawn(const game& g, const chess_move& m)
 {
   assert(m.get_type().has_value());
   assert(m.get_type().value() == piece_type::pawn);
-  assert(!m.is_capture());
-  const square one_behind{
-    get_behind(m.get_to().value(), m.get_color())
-  };
-  if (is_piece_at(g, one_behind))
+  if (!m.is_capture())
   {
-    assert(get_piece_at(g, one_behind).get_type() == piece_type::pawn);
-    return one_behind;
+    const square one_behind{
+      get_behind(m.get_to().value(), m.get_color())
+    };
+    if (is_piece_at(g, one_behind))
+    {
+      assert(get_piece_at(g, one_behind).get_type() == piece_type::pawn);
+      return one_behind;
+    }
+    const square two_behind{get_behind(one_behind, m.get_color())};
+    assert(is_piece_at(g, two_behind));
+    assert(get_piece_at(g, two_behind).get_type() == piece_type::pawn);
+    return two_behind;
   }
-  const square two_behind{get_behind(one_behind, m.get_color())};
-  assert(is_piece_at(g, two_behind));
-  assert(get_piece_at(g, two_behind).get_type() == piece_type::pawn);
-  return two_behind;
+  else
+  {
+    const square one_behind{
+      get_behind(m.get_to().value(), m.get_color())
+    };
+    // 1 or 2 squares
+    const auto& squares{get_besides(one_behind)};
+    assert(!squares.empty());
+    if (squares.size() == 1) return squares[0];
+    assert(squares.size() == 2);
+    const bool is_piece_up{is_piece_at(g, squares[0])};
+    const bool is_piece_down{is_piece_at(g, squares[1])};
+    assert(is_piece_up || is_piece_down);
+    if (is_piece_up && !is_piece_down) return squares[0];
+    if (!is_piece_up && is_piece_down) return squares[1];
+    const std::string s{m.get_pgn_str()};
+    assert(s.find('x') != std::string::npos);
+
+    const auto xpos{s.find('x')};
+    assert(xpos > 0);
+    const char file_char{s[xpos - 1]};
+    if (get_file_char(squares[0]) == file_char)
+    {
+      return squares[0];
+    }
+    assert(get_file_char(squares[1]) == file_char);
+    return squares[1];
+  }
 }
 
 square get_from_for_queen(const game& g, const chess_move& m)
@@ -409,6 +440,16 @@ void test_chess_move()
     assert(!m.get_winner().empty());
     assert(m.get_winner().at(0) == chess_color::white);
     assert(!m.is_capture());
+  }
+  // gxh6
+  {
+    const chess_move m("gxh6", chess_color::white);
+    assert(is_capture(m));
+    assert(!is_win(m));
+    assert(!is_draw(m));
+    assert(!is_promotion(m));
+    assert(!is_castling(m));
+    assert(!is_simple_move(m));
   }
   // operator==
   {

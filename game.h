@@ -444,6 +444,9 @@ bool piece_with_id_is_at(
   const square& s
 );
 
+/// Start a chess move, e.g. start an attack
+void start_chess_move(game& g, const chess_move& m);
+
 /// Call game::tick until all pieces are idle
 void tick_until_idle(game& g);
 

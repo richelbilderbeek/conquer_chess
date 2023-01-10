@@ -1,7 +1,7 @@
 #include "replay.h"
 
 #include "helper.h"
-
+#include "game.h"
 #include <algorithm>
 #include <cassert>
 #include <iostream>
@@ -40,6 +40,24 @@ std::string get_replay_1_as_pgn_str() noexcept
 std::string get_scholars_mate_as_pgn_str() noexcept
 {
   return "1. e4 e5 2. Qh5 Nc6 3. Bc4 Nf6?? Qxf7# 1-0";
+}
+
+void play_game(const replay& r)
+{
+  game g;
+  const auto& moves{r.get_moves()};
+  const int n_moves = moves.size();
+  for (int i{0}; i!=n_moves; ++i)
+  {
+    const auto& m{moves[i]};
+    std::clog << i << ": " << m << '\n';
+    start_chess_move(g, m);
+    for (int j{0}; j!=4; ++j) g.tick(delta_t(0.25));
+    std::clog << to_board_str(
+      g.get_pieces(),
+      board_to_text_options(true, true)
+    ) << '\n';
+  }
 }
 
 std::vector<std::string> split_pgn_str(const std::string pgn_str)
@@ -84,6 +102,19 @@ void test_replay()
     const replay r(get_replay_1_as_pgn_str());
     assert(get_n_moves(r) > 8);
   }
+  #define FIX_ISSUE_22
+  #ifdef FIX_ISSUE_22
+  // play replay of scholars mate
+  {
+    const replay r(get_scholars_mate_as_pgn_str());
+    play_game(r);
+  }
+  // play replay 1
+  {
+    const replay r(get_replay_1_as_pgn_str());
+    play_game(r);
+  }
+  #endif
   // 45: operator<<
   {
     const replay r(get_replay_1_as_pgn_str());
