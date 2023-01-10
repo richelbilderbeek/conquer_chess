@@ -91,11 +91,6 @@ void game_controller::apply_user_inputs_to_game(
         assert_eq(square(get_cursor_pos(action.get_player())), square(action.get_coordinat().value()));
       }
     }
-    #ifdef FIX_ISSUE_46
-    // Below you see that LMB selects and RMB moves
-    // Instead, the mouse controller has an active action
-    // triggered by LMB, and RMB goes to the next
-    #endif // FIX_ISSUE_46
     else if (action.get_user_input_type() == user_input_type::lmb_down)
     {
       if (!has_mouse_controller(*this)) return;
@@ -1028,6 +1023,27 @@ void test_game_controller() //!OCLINT tests may be many
       create_keyboard_mouse_controllers()
     );
     assert(get_mouse_user_player_side(g) == side::rhs);
+  }
+  // Clicking nothing with LMB makes nothing happen
+  {
+    game g;
+    game_controller c;
+    assert(count_selected_units(g, chess_color::black) == 0);
+    move_cursor_to(c, "e4", side::rhs);
+    add_user_input(c, create_press_lmb_action(side::rhs));
+    c.apply_user_inputs_to_game(g);
+    g.tick();
+    assert(count_selected_units(g, chess_color::black) == 0);
+  }
+  // Clicking RMB makes selector move
+  {
+    game g;
+    game_controller c;
+    assert(c.get_mouse_user_selector().value() == action_number(1));
+    add_user_input(c, create_press_rmb_action(side::rhs));
+    c.apply_user_inputs_to_game(g);
+    g.tick();
+    assert(c.get_mouse_user_selector().value() == action_number(2));
   }
   // Clicking a unit once with LMB selects it
   {
