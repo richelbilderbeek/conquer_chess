@@ -170,8 +170,6 @@ void test_game_class()
       // Must be captured
       assert(get_piece_at(g, square(to)).get_color() == chess_color::white);
     }
-    #define FIX_ISSUE_20
-    #ifdef FIX_ISSUE_20
     // #20: A queen cannot attack over pieces
     {
       game g;
@@ -192,7 +190,6 @@ void test_game_class()
       assert(!messages.empty());
       assert(messages.back() == message_type::cannot);
     }
-    #endif // FIX_ISSUE_20
   }
 #endif // NDEBUG // no tests in release
 }
