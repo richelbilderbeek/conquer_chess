@@ -1037,6 +1037,33 @@ void tick_attack(
   assert(!p.get_actions().empty());
   const auto& first_action{p.get_actions()[0]};
   assert(first_action.get_action_type() == piece_action_type::attack);
+  if (
+    !can_attack(
+      p.get_color(),
+      p.get_type(),
+      p.get_current_square(),
+      first_action.get_to()
+    )
+  )
+  {
+    p.add_message(message_type::cannot);
+    remove_first(p.get_actions());
+    return;
+  }
+
+  if (!
+    can_attack(
+      g,
+      p,
+      first_action.get_to(),
+      get_player_side(g, p.get_color())
+    )
+  )
+  {
+    p.add_message(message_type::cannot);
+    remove_first(p.get_actions());
+    return;
+  }
   // Done if piece moved away
   if (!is_piece_at(g, first_action.get_to()))
   {
@@ -1046,6 +1073,7 @@ void tick_attack(
   }
   assert(is_piece_at(g, first_action.get_to()));
   piece& target{get_piece_at(g, first_action.get_to())};
+
 
   // Done if target is of own color
   if (p.get_color() == target.get_color())

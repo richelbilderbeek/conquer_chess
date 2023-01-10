@@ -95,7 +95,7 @@ bool can_do(
   }
   if (action == piece_action_type::attack)
   {
-    return can_do_attack(g, selected_piece, cursor_square, player_side);
+    return can_attack(g, selected_piece, cursor_square, player_side);
   }
   if (action == piece_action_type::castle_kingside)
   {
@@ -136,7 +136,7 @@ bool can_do(const game& g,
   );
 }
 
-bool can_do_attack(
+bool can_attack(
   const game& g,
   const piece& selected_piece,
   const square& cursor_square,

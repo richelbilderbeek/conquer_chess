@@ -65,7 +65,8 @@ bool can_castle_kingside(const piece& p, const game& g) noexcept;
 bool can_castle_queenside(const piece& p, const game& g) noexcept;
 
 /// Can an action be done?
-bool can_do(const game& g,
+bool can_do(
+  const game& g,
   const piece& selected_piece,
   const piece_action_type action,
   const square& cursor_square,
@@ -83,7 +84,7 @@ bool can_do(const game& g,
 /// Can a piece_action_type::attack action be done?
 /// This is not an en-passant
 /// @see use \link{can_do_en_passant} for an piece_action_type::en_passant
-bool can_do_attack(
+bool can_attack(
   const game& g,
   const piece& selected_piece,
   const square& cursor_square,

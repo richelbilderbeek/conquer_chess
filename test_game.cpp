@@ -23,20 +23,12 @@ void test_game_class()
   {
 
   }
-  ////////////////////////////////////////////////////////////////////////////
-  // Member functions
-  ////////////////////////////////////////////////////////////////////////////
-  // game::get_game_options
-  {
-    const auto g{get_default_game()};
-    assert(g.get_game_options().get_margin_width() >= 0);
-  }
   // game::get_time
   {
     const game g;
     assert(g.get_time() == delta_t(0.0));
   }
-  // game::tick
+  // game::tick, moving
   {
     // #27: a2-a4 takes as long as b2-b3
     {
@@ -74,6 +66,9 @@ void test_game_class()
       assert(is_piece_at(g, square("a4")));
       assert(is_piece_at(g, square("b3")));
     }
+  }
+  // game::tick, misc behavior
+  {
     // A piece under attack has decreasing health
     {
       game_options options{create_default_game_options()};
@@ -102,6 +97,9 @@ void test_game_class()
       const double health_after{get_piece_at(g, to).get_health()};
       assert(health_after < health_before);
     }
+  }
+  // game::tick, attack
+  {
     // Cannot attack a piece of one's own color
     {
       game g;
@@ -121,6 +119,26 @@ void test_game_class()
       g.tick(delta_t(0.5));
       const double health_after{get_piece_at(g, to).get_health()};
       assert(health_after == health_before);
+    }
+    // Cannot attack an empty square
+    {
+      game g;
+      const square from{"e1"}; // White king
+      const square to{"e2"};   // Empty square
+      piece& attacker{get_piece_at(g, from)};
+      attacker.add_action(
+        piece_action(
+          chess_color::white,
+          piece_type::king,
+          piece_action_type::attack,
+          from,
+          to
+        )
+      );
+      g.tick(delta_t(0.1));
+      const auto messages{get_piece_at(g, from).get_messages()};
+      assert(!messages.empty());
+      assert(messages.back() == message_type::cannot);
     }
     // When a piece is killed, the queen attacker moves to that square
     {
@@ -152,6 +170,7 @@ void test_game_class()
       // Must be captured
       assert(get_piece_at(g, square(to)).get_color() == chess_color::white);
     }
+    #define FIX_ISSUE_20
     #ifdef FIX_ISSUE_20
     // #20: A queen cannot attack over pieces
     {

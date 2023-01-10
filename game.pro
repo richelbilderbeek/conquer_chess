@@ -11,6 +11,7 @@
 # All files are in here, the rest are just settings
 include(game.pri)
 include(game_view.pri)
+include(test_game.pri)
 
 TARGET = conquer_chess
 

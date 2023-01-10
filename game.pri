@@ -58,7 +58,6 @@ HEADERS += \
     $$PWD/songs.h \
     $$PWD/square.h \
     $$PWD/starting_position_type.h \
-    $$PWD/test_game.h \
     $$PWD/user_input.h \
     $$PWD/user_input_type.h \
     $$PWD/user_inputs.h \
@@ -122,8 +121,6 @@ SOURCES += \
     $$PWD/songs.cpp \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \
-    $$PWD/test_game.cpp \
-    $$PWD/test_game_scenarios.cpp \
     $$PWD/user_input.cpp \
     $$PWD/user_input_type.cpp \
     $$PWD/user_inputs.cpp \
