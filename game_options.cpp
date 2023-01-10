@@ -99,6 +99,11 @@ void test_game_options()
     options.set_volume(v);
     assert(options.get_music_volume() == v);
   }
+  // ::get_sound_effects_volume
+  {
+    const auto options{create_default_game_options()};
+    assert(get_sound_effects_volume(options) == options.get_sound_effects_volume());
+  }
   // 40: operator<<
   {
     const auto options{create_default_game_options()};
@@ -116,7 +121,6 @@ bool operator==(const game_options& lhs, const game_options& rhs) noexcept
     && lhs.get_click_distance() == rhs.get_click_distance()
     && lhs.get_damage_per_chess_move() == rhs.get_damage_per_chess_move()
     && lhs.get_game_speed() == rhs.get_game_speed()
-    // && lhs.get_left_player_color() == rhs.get_left_player_color()
     && lhs.get_margin_width() == rhs.get_margin_width()
     && lhs.get_message_display_time_secs() == rhs.get_message_display_time_secs()
     && lhs.get_replayer() == rhs.get_replayer()
@@ -131,11 +135,8 @@ std::ostream& operator<<(std::ostream& os, const game_options& options) noexcept
 {
   os
     << "click distance: " << options.get_click_distance() << '\n'
-    //<< "LHS controller: " << options.get_physical_controller(side::lhs) << '\n'
-    //<< "RHS controller: " << options.get_physical_controller(side::rhs) << '\n'
     << "damage per chess move: " << options.get_damage_per_chess_move() << '\n'
     << "game speed: " << options.get_game_speed() << '\n'
-    //<< "LHS color: " << options.get_left_player_color() << '\n'
     << "Margin width: " << options.get_margin_width() << '\n'
     << "Message display time (sec): " << options.get_message_display_time_secs() << '\n'
     << "Replayer: " << options.get_replayer() << '\n'

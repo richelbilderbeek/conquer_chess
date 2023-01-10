@@ -565,6 +565,10 @@ void test_square()
     assert(get_file(square("g3")) == 'g');
     assert(get_file(square("h4")) == 'h');
   }
+  // get_file_char
+  {
+    assert(get_file_char(square("a1")) == get_file(square("a1")));
+  }
   // get_intermediate_squares
   {
     // Horizontally

@@ -193,13 +193,21 @@ void test_sfml_helper()
     assert(low != high);
     assert(mid != high);
   }
-  // set_rect
+  // set_rect, based on screen_rect
   {
     sf::RectangleShape r;
     const screen_rect screen_size{get_default_screen_size()};
     set_rect(r, screen_size);
     assert(r.getSize().x == get_width(screen_size));
     assert(r.getSize().y == get_height(screen_size));
+  }
+  // set_rect, based on screen_coordindat
+  {
+    sf::RectangleShape r;
+    const screen_coordinat screen_size{get_default_screen_size()};
+    set_rect(r, screen_size);
+    assert(r.getSize().x == screen_size.get_x());
+    assert(r.getSize().y == screen_size.get_y());
   }
   // set_text_position
   {

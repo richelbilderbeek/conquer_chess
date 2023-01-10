@@ -305,6 +305,11 @@ void test_controller()
     );
     assert(!is_empty(inputs));
   }
+  // create_default_keyboard_controller
+  {
+    assert(create_left_keyboard_controller() == create_left_keyboard_controller());
+
+  }
   // create_left_keyboard_controller
   {
     const auto c{create_left_keyboard_controller()};

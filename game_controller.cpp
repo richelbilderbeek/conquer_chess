@@ -751,6 +751,45 @@ void move_keyboard_cursor_to(
   );
 }
 
+void play_game_with_controller(
+  const physical_controllers& pcs,
+  const replay& r,
+  const bool verbose
+)
+{
+  game g;
+  game_controller c{pcs};
+  const auto& moves{r.get_moves()};
+  const int n_moves = moves.size();
+  for (int i{0}; i!=n_moves; ++i)
+  {
+    const auto& m{moves[i]};
+    if (verbose) std::clog << i << ": " << m << '\n';
+    const auto user_inputs{convert_move_to_user_inputs(g, c, m)};
+    if (verbose) std::clog << i << ": " << user_inputs << '\n';
+    add_user_inputs(c, user_inputs);
+    c.apply_user_inputs_to_game(g);
+    for (int j{0}; j!=4; ++j) g.tick(delta_t(0.25));
+    if (verbose) std::clog << to_board_str(
+      g.get_pieces(),
+      board_to_text_options(true, true)
+    ) << '\n';
+    const auto messages{collect_messages(g)};
+    const long n_cannot{
+      std::count_if(
+        std::begin(messages),
+        std::end(messages),
+        [](const auto& msg)
+        {
+          return msg.get_message_type() == message_type::cannot;
+        }
+      )
+    };
+    assert(n_cannot == 0);
+  }
+
+}
+
 void set_cursor_pos(
   game_controller& c,
   const game_coordinat& pos,
@@ -1391,6 +1430,24 @@ void test_game_controller() //!OCLINT tests may be many
     const auto messages{get_piece_at(g, square("d1")).get_messages()};
     assert(messages.back() == message_type::cannot);
   }
+  //#define FIX_ISSUE_22
+  #ifdef FIX_ISSUE_22
+  // play replay of scholars mate with two keyboards
+  {
+    const physical_controllers pcs{create_two_keyboard_controllers()};
+    const replay r(get_scholars_mate_as_pgn_str());
+    const bool verbose{true};
+    play_game_with_controller(pcs, r, verbose);
+  }
+  // play replay 1 with two keyboards
+  {
+    const physical_controllers pcs{create_two_keyboard_controllers()};
+    const replay r(get_replay_1_as_pgn_str());
+    const bool verbose{true};
+    play_game_with_controller(pcs, r, verbose);
+  }
+  assert(1==2);
+  #endif
 
   #endif // NDEBUG // no tests in release
 }

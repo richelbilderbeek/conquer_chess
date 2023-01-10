@@ -364,6 +364,15 @@ void move_mouse_cursor_to(
   const side player_side
 );
 
+/// Play a replay, using \link{game_controller} (not \link{game_controller})
+/// as the actor.
+/// Use\link{play_game} to replay a \link{game} directly.
+void play_game_with_controller(
+  const physical_controllers& pcs,
+  const replay& r,
+  const bool verbose = false
+);
+
 /// Set the cursor's position to the target position
 void set_cursor_pos(
   game_controller& c,

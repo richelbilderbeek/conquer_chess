@@ -90,6 +90,12 @@ void test_piece_action()
     const piece_action a(chess_color::white, piece_type::rook, piece_action_type::attack, square("d1"), square("d8"));
     assert(!describe_action(piece_action(a)).empty());
   }
+  // has_action_of_type
+  {
+    const piece_action a(chess_color::white, piece_type::rook, piece_action_type::attack, square("d1"), square("d8"));
+    assert(!has_action_of_type( { a }, piece_action_type::move));
+    assert(has_action_of_type( { a }, piece_action_type::attack));
+  }
   // is_atomic
   {
     const auto d1{game_coordinat(to_coordinat(square("d1")))};

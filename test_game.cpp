@@ -231,21 +231,25 @@ void test_game_functions()
     assert(collect_messages(g).empty());
   }
   */
-  #ifdef FIX_ISSUE_78
-  // Rewrite to game test, without using the game_controller
   // collect_action_history
   {
     game g;
-    game_controller c;
     assert(!has_actions(collect_action_history(g)));
-    do_select_and_move_keyboard_player_piece(g, c, "e2", "e4");
+    const square from{"e2"};
+    const square to{"e4"};
+    auto& p{get_piece_at(g, from)};
+    p.add_action(
+      piece_action(
+        p.get_color(),
+        p.get_type(),
+        piece_action_type::move,
+        from,
+        to
+      )
+    );
+    g.tick(delta_t(0.0));
     assert(has_actions(collect_action_history(g)));
-    g.tick(delta_t(0.25));
-    g.tick(delta_t(0.25));
-    g.tick(delta_t(0.25));
-    do_select_and_move_keyboard_player_piece(g, c, "d2", "d4");
   }
-  #endif // FIX_ISSUE_78
   // collect_all_piece_actions
   {
     // default start

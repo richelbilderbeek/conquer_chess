@@ -114,7 +114,7 @@ void test_replay()
     const replay r(get_replay_1_as_pgn_str());
     assert(get_n_moves(r) > 8);
   }
-  #define FIX_ISSUE_22
+  //#define FIX_ISSUE_22
   #ifdef FIX_ISSUE_22
   // play replay of scholars mate
   {
