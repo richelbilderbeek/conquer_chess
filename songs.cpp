@@ -1,5 +1,7 @@
 #include "songs.h"
 
+#ifndef LOGIC_ONLY
+
 #include <QFile>
 #include <QResource>
 
@@ -34,3 +36,5 @@ songs::songs()
     }
   }
 }
+
+#endif // LOGIC_ONLY

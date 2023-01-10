@@ -1,6 +1,8 @@
 #ifndef SONGS_H
 #define SONGS_H
 
+#ifndef LOGIC_ONLY
+
 #include <SFML/Audio/Music.hpp>
 
 /// Holds all the music
@@ -26,5 +28,7 @@ private:
   sf::Music m_soothing;
   sf::Music m_wonderful_time;
 };
+
+#endif // LOGIC_ONLY
 
 #endif // SONGS_H

@@ -1,5 +1,7 @@
 #include "fonts.h"
 
+#ifndef LOGIC_ONLY
+
 #include <QFile>
 
 fonts::fonts()
@@ -38,3 +40,6 @@ fonts::fonts()
     }
   }
 }
+
+#endif // LOGIC_ONLY
+

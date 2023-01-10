@@ -1,6 +1,8 @@
 #ifndef LOADING_SCREEN_SONGS_H
 #define LOADING_SCREEN_SONGS_H
 
+#ifndef LOGIC_ONLY
+
 #include <SFML/Audio/Music.hpp>
 
 /// All the songs in the loading screen
@@ -16,5 +18,7 @@ public:
 private:
   sf::Music m_heroes;
 };
+
+#endif // LOGIC_ONLY
 
 #endif // LOADING_SCREEN_SONGS_H

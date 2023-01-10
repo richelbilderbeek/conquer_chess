@@ -1,5 +1,7 @@
 #include "loading_screen_songs.h"
 
+#ifndef LOGIC_ONLY
+
 #include <QFile>
 #include <QResource>
 
@@ -29,3 +31,5 @@ loading_screen_songs::loading_screen_songs()
     }
   }
 }
+
+#endif // LOGIC_ONLY

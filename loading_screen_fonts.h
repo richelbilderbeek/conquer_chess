@@ -1,6 +1,8 @@
 #ifndef LOADING_SCREEN_FONTS_H
 #define LOADING_SCREEN_FONTS_H
 
+#ifndef LOGIC_ONLY
+
 #include <SFML/Graphics/Font.hpp>
 
 /// The loading_screen_fonts used in the loading screen
@@ -17,5 +19,7 @@ public:
 private:
   sf::Font m_arial_font;
 };
+
+#endif // LOGIC_ONLY
 
 #endif // LOADING_SCREEN_FONTS_H

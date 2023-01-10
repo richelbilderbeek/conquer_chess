@@ -55,6 +55,13 @@ void test_race()
     assert(to_str(race::protoss) == "protoss");
     assert(to_str(race::terran) == "terran");
   }
+  // get_next
+  {
+    for (const auto c: get_all_races())
+    {
+      assert(get_next(get_previous(c)) == c);
+    }
+  }
   // to_str, all
   {
     for (const auto c: get_all_races())

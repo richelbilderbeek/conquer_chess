@@ -14,7 +14,6 @@ HEADERS += \
     $$PWD/controls_view_item.h \
     $$PWD/controls_view_layout.h \
     $$PWD/delta_t.h \
-    $$PWD/fonts.h \
     $$PWD/fps_clock.h \
     $$PWD/game.h \
     $$PWD/game_controller.h \
@@ -55,7 +54,6 @@ HEADERS += \
     $$PWD/screen_coordinat.h \
     $$PWD/screen_rect.h \
     $$PWD/side.h \
-    $$PWD/songs.h \
     $$PWD/square.h \
     $$PWD/starting_position_type.h \
     $$PWD/user_input.h \
@@ -77,7 +75,6 @@ SOURCES += \
     $$PWD/controls_view_item.cpp \
     $$PWD/controls_view_layout.cpp \
     $$PWD/delta_t.cpp \
-    $$PWD/fonts.cpp \
     $$PWD/fps_clock.cpp \
     $$PWD/game.cpp \
     $$PWD/game_controller.cpp \
@@ -118,7 +115,6 @@ SOURCES += \
     $$PWD/screen_coordinat.cpp \
     $$PWD/screen_rect.cpp \
     $$PWD/side.cpp \
-    $$PWD/songs.cpp \
     $$PWD/square.cpp \
     $$PWD/starting_position_type.cpp \
     $$PWD/user_input.cpp \

@@ -1,5 +1,7 @@
 #include "loading_screen_fonts.h"
 
+#ifndef LOGIC_ONLY
+
 #include <QFile>
 
 loading_screen_fonts::loading_screen_fonts()
@@ -16,3 +18,5 @@ loading_screen_fonts::loading_screen_fonts()
     }
   }
 }
+
+#endif // LOGIC_ONLY

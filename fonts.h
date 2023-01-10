@@ -1,6 +1,8 @@
 #ifndef FONTS_H
 #define FONTS_H
 
+#ifndef LOGIC_ONLY
+
 #include <SFML/Graphics/Font.hpp>
 
 /// The fonts used by this game
@@ -25,5 +27,7 @@ private:
   sf::Font m_code_squared_font;
   sf::Font m_futuristic_font;
 };
+
+#endif // LOGIC_ONLY
 
 #endif // FONTS_H
