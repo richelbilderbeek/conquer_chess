@@ -32,6 +32,8 @@ std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper
     std::make_tuple(std::ref(m_attacking_high), std::ref(m_attacking_high_buffer), "attacking_high.ogg"),
     std::make_tuple(std::ref(m_attacking_low), std::ref(m_attacking_low_buffer), "attacking_low.ogg"),
     std::make_tuple(std::ref(m_attacking_mid), std::ref(m_attacking_mid_buffer), "attacking_mid.ogg"),
+    std::make_tuple(std::ref(m_castling_kingside), std::ref(m_castling_kingside_buffer), "castling_kingside.ogg"),
+    std::make_tuple(std::ref(m_castling_queenside), std::ref(m_castling_queenside_buffer), "castling_queenside.ogg"),
     std::make_tuple(std::ref(m_countdown), std::ref(m_countdown_buffer), "countdown.ogg"),
     std::make_tuple(std::ref(m_done_high), std::ref(m_done_high_buffer), "done_high.ogg"),
     std::make_tuple(std::ref(m_done_low), std::ref(m_done_low_buffer), "done_low.ogg"),
@@ -142,6 +144,16 @@ void sound_effects::play(const message& effect)
           m_its_time_to_rock.play();
           break;
       }
+      break;
+    }
+    case message_type::start_castling_kingside:
+    {
+      m_castling_kingside.play();
+      break;
+    }
+    case message_type::start_castling_queenside:
+    {
+      m_castling_queenside.play();
       break;
     }
     default:

@@ -12,6 +12,8 @@
         <file>resources/sound_effects/attacking_high.ogg</file>
         <file>resources/sound_effects/attacking_low.ogg</file>
         <file>resources/sound_effects/attacking_mid.ogg</file>
+        <file>resources/sound_effects/castling_kingside.ogg</file>
+        <file>resources/sound_effects/castling_queenside.ogg</file>
         <file>resources/sound_effects/countdown.ogg</file>
         <file>resources/sound_effects/done_high.ogg</file>
         <file>resources/sound_effects/done_low.ogg</file>

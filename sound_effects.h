@@ -37,6 +37,8 @@ private:
   sf::Sound m_attacking_high;
   sf::Sound m_attacking_low;
   sf::Sound m_attacking_mid;
+  sf::Sound m_castling_kingside;
+  sf::Sound m_castling_queenside;
   sf::Sound m_countdown;
   sf::Sound m_done_high;
   sf::Sound m_done_low;
@@ -73,6 +75,8 @@ private:
   sf::SoundBuffer m_attacking_high_buffer;
   sf::SoundBuffer m_attacking_low_buffer;
   sf::SoundBuffer m_attacking_mid_buffer;
+  sf::SoundBuffer m_castling_kingside_buffer;
+  sf::SoundBuffer m_castling_queenside_buffer;
   sf::SoundBuffer m_countdown_buffer;
   sf::SoundBuffer m_done_high_buffer;
   sf::SoundBuffer m_done_low_buffer;
