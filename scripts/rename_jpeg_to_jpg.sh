@@ -1,2 +1,2 @@
 #!/bin/bash
-rename 's/jpeg/jpg/' *.jpeg
+rename 's/jpeg/jpg/' ./*.jpeg

@@ -1,2 +1,2 @@
 #!/bin/bash
-mogrify -format png *.jpeg
+mogrify -format png ./*.jpeg
