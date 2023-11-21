@@ -4,7 +4,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "../magic_enum/include/magic_enum.hpp"
+#include <magic_enum/magic_enum.hpp> // https://github.com/Neargye/magic_enum
 
 std::vector<piece_action_type> get_all_piece_action_types() noexcept
 {

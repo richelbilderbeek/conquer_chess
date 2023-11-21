@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cassert>
 
-#include "../magic_enum/include/magic_enum.hpp"
+#include <magic_enum/magic_enum.hpp> // https://github.com/Neargye/magic_enum
 
 std::vector<controls_view_item> get_all_controls_view_items() noexcept
 {

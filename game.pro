@@ -44,5 +44,10 @@ QT += core gui widgets
 
 LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
-#INCLUDEPATH += ../magic_enum
-
+# magic_enum, from https://github.com/Neargye/magic_enum
+#
+# Must allow for:
+#
+#   include <magic_enum/magic_enum.hpp>
+#
+INCLUDEPATH += ../magic_enum/include
