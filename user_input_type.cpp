@@ -1,6 +1,6 @@
 #include "user_input_type.h"
 
-#include "../magic_enum/include/magic_enum.hpp"
+#include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 user_input_type create_random_user_input_type(
   std::default_random_engine& rng_engine

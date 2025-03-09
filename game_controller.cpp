@@ -523,7 +523,7 @@ std::optional<piece_action_type> get_default_piece_action(
     const auto cursor_pos{get_cursor_pos(c, player_side)};
     if (is_coordinat_on_board(cursor_pos) && is_piece_at(g, square(cursor_pos)))
     {
-      const piece& p{get_piece_at(g, square(cursor_pos))};
+      const auto p{get_piece_at(g, square(cursor_pos))};
       const auto player_color{get_player_color(g, player_side)};
       if (p.get_color() == player_color)
       {

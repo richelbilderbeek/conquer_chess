@@ -4,8 +4,7 @@
 #include <iostream>
 #include <sstream>
 
-
-#include "../magic_enum/include/magic_enum.hpp" // https://github.com/Neargye/magic_enum
+#include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 std::vector<chess_color> get_all_chess_colors() noexcept
 {
