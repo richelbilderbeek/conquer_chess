@@ -9,10 +9,10 @@
         "DepotPath" "."
         "Recursive" "0"
     }
-    "FileExclusion" "*.png"
-    "FileExclusion" "*.ogg"
-    "FileExclusion" "*.jpg"
-    "FileExclusion" "*.ttf"
-    "FileExclusion" "*.txt"
-    "FileExclusion" "*.csv"
+    "FileMapping"
+    {
+        "LocalPath" "resources"
+        "DepotPath" "."
+        "Recursive" "1"
+    }
 }

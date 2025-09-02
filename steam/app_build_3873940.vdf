@@ -3,7 +3,7 @@
   "AppID" "3873940" // your AppID
   "Desc" "Upload at Sun 31 Aug 17:33:28 CEST 2025"
 
-  "ContentRoot" "../build/Desktop-Debug/" // root content folder, relative to location of this file
+  "ContentRoot" "../" // root content folder, relative to location of this file
   "BuildOutput" "steam_output" // build output folder for build logs and build cache files
 
   "Depots"
