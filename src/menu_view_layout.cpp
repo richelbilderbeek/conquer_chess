@@ -15,9 +15,13 @@ menu_view_layout::menu_view_layout(
   const int x3{x2 + panel_width};
   const int x4{x3 + margin_width};
   const int x5{x4 + margin_width};
-  const int x6{get_width(r) - margin_width};
+  const int x6{x5 + margin_width};
+  const int x7{x6 + margin_width};
+  const int x8{x7 + panel_width};
+  const int x9{x8 + margin_width};
+  const int x10{get_width(r) - margin_width};
   assert(x4 < x5);
-  assert(x5 < x6);
+  assert(x5 < x10);
 
   const int y1{28 + margin_width};
   const int y2{y1 + margin_width};
@@ -64,6 +68,25 @@ menu_view_layout::menu_view_layout(
     screen_coordinate(x2, y14),
     screen_coordinate(x3, y15)
   );
+
+  // Options sub-menu
+  m_sub_menu_panel = screen_rect(
+    screen_coordinate(x6, y7),
+    screen_coordinate(x9, y16)
+  );
+  m_options_laws = screen_rect(
+    screen_coordinate(x7, y8),
+    screen_coordinate(x8, y9)
+  );
+  m_options_controls = screen_rect(
+    screen_coordinate(x7, y10),
+    screen_coordinate(x8, y11)
+  );
+  m_options_video_and_audio = screen_rect(
+    screen_coordinate(x7, y12),
+    screen_coordinate(x8, y13)
+  );
+
 }
 
 std::vector<screen_rect> get_panels(const menu_view_layout& layout)
@@ -102,6 +125,21 @@ void test_menu_view_layout()
   {
     const menu_view_layout layout;
     assert(!get_panels(layout).empty());
+
+    // Menu and submenu panel
+    assert(is_in(layout.get_menu_panel(), layout.get_background_image()));
+    assert(is_in(layout.get_sub_menu_panel(), layout.get_background_image()));
+
+    // Main menu panels
+    assert(is_in(layout.get_about(), layout.get_menu_panel()));
+    assert(is_in(layout.get_start(), layout.get_menu_panel()));
+    assert(is_in(layout.get_quit(), layout.get_menu_panel()));
+    assert(is_in(layout.get_options(), layout.get_menu_panel()));
+
+    // Sub menu panels
+    assert(is_in(layout.get_options_controls(), layout.get_sub_menu_panel()));
+    assert(is_in(layout.get_options_laws(), layout.get_sub_menu_panel()));
+    assert(is_in(layout.get_options_video_and_audio(), layout.get_sub_menu_panel()));
   }
   // get_selectable_rect
   {

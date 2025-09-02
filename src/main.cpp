@@ -90,10 +90,11 @@
 void test()
 {
 #ifndef NDEBUG
-  //test_board_layout();
+  //test_menu_view_layout();
   //return; // For now
   //test_game_view_layout();
   //test_rules();
+  //assert(!"YAY");
 
   test_about();
   test_about_view_layout();
