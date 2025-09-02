@@ -108,6 +108,9 @@ const screen_rect& menu_view_layout::get_selectable_rect(const menu_view_item it
 {
   switch (item)
   {
+    case menu_view_item::controls: return m_options_controls;
+    case menu_view_item::laws: return m_options_laws;
+    case menu_view_item::video_and_audio: return m_options_video_and_audio;
     case menu_view_item::start: return m_start;
     case menu_view_item::options: return m_options;
     case menu_view_item::about: return m_about;

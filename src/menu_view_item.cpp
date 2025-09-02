@@ -43,6 +43,14 @@ menu_view_item get_previous(const menu_view_item& item)
   return *(--there);
 }
 
+bool is_in_options_submenu(const menu_view_item i) noexcept
+{
+  return i == menu_view_item::laws
+    || i == menu_view_item::controls
+    || i == menu_view_item::video_and_audio
+  ;
+}
+
 void test_menu_view_item()
 {
   #ifndef NDEBUG
@@ -59,6 +67,16 @@ void test_menu_view_item()
     assert(get_previous(menu_view_item::options) == menu_view_item::start);
     assert(get_previous(menu_view_item::about) == menu_view_item::options);
     assert(get_previous(menu_view_item::quit) == menu_view_item::about);
+  }
+  // is_in_options_submenu
+  {
+    assert(is_in_options_submenu(menu_view_item::laws));
+    assert(is_in_options_submenu(menu_view_item::controls));
+    assert(is_in_options_submenu(menu_view_item::video_and_audio));
+    assert(!is_in_options_submenu(menu_view_item::start));
+    assert(!is_in_options_submenu(menu_view_item::options));
+    assert(!is_in_options_submenu(menu_view_item::about));
+    assert(!is_in_options_submenu(menu_view_item::quit));
   }
   #endif
 }

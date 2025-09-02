@@ -55,21 +55,10 @@ void menu_view::draw_impl()
   draw_title_panel(*this);
   draw_subtitle_panel(*this);
   draw_start_panel(*this);
-  draw_options_panel(*this);
+  draw_options_panel(*this); // Also draws the sub-menu if needed
   draw_about_panel(*this);
   draw_quit_panel(*this);
   m_controls_bar.draw();
-
-  switch (this->get_selected())
-  {
-    case menu_view_item::about: break;
-    case menu_view_item::options:
-      draw_options_sub_menu(*this);
-      break;
-    case menu_view_item::quit: break;
-    case menu_view_item::start: break;
-  }
-
   draw_selected_panel(*this);
 
 }
@@ -104,7 +93,7 @@ void draw_options_panel(menu_view& v)
 {
   draw_options_button(v.get_layout().get_options());
 
-  if (v.get_selected() == menu_view_item::options)
+  if (v.get_selected() == menu_view_item::options || is_in_options_submenu(v.get_selected()))
   {
     draw_outline(v.get_layout().get_sub_menu_panel());
     draw_options_controls_button(v.get_layout().get_options_controls());
