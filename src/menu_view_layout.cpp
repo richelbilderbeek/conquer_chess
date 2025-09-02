@@ -72,7 +72,7 @@ menu_view_layout::menu_view_layout(
   // Options sub-menu
   m_sub_menu_panel = screen_rect(
     screen_coordinate(x6, y7),
-    screen_coordinate(x9, y16)
+    screen_coordinate(x9, y14)
   );
   m_options_laws = screen_rect(
     screen_coordinate(x7, y8),

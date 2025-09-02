@@ -103,6 +103,25 @@ void draw_options_sub_menu(menu_view& )
 void draw_options_panel(menu_view& v)
 {
   draw_options_button(v.get_layout().get_options());
+
+  if (v.get_selected() == menu_view_item::options)
+  {
+    draw_outline(v.get_layout().get_sub_menu_panel());
+    draw_rectangle(
+      v.get_layout().get_options_controls()
+    );
+    draw_rectangle(
+      v.get_layout().get_options_laws()
+    );
+    draw_rectangle(
+      v.get_layout().get_options_video_and_audio()
+    );
+    /*
+    draw_options_controls_button();
+    draw_options_laws_button();
+    draw_options_controls_button();
+    */
+  }
 }
 
 void draw_layout_panels(menu_view& v)
