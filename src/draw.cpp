@@ -78,14 +78,10 @@ void draw_controls_label(const screen_rect& sr)
   // Zoom in
   rectangle.setTextureRect(
     sf::IntRect(
-      sf::Vector2i(
-        0,
-        rectangle.getTexture()->getSize().y / 4
-      ),
-      sf::Vector2i(
-        rectangle.getTexture()->getSize().x,
-        rectangle.getTexture()->getSize().y / 2
-      )
+      0,
+      rectangle.getTexture()->getSize().y / 4,
+      rectangle.getTexture()->getSize().x,
+      rectangle.getTexture()->getSize().y / 2
     )
   );
   get_render_window().draw(rectangle);
@@ -120,14 +116,10 @@ void draw_fancy_physical_controller_type(const physical_controller_type& t, cons
   // Zoom in
   rectangle.setTextureRect(
    sf::IntRect(
-     sf::Vector2i(
-       0,
-       rectangle.getTexture()->getSize().y / 4
-     ),
-     sf::Vector2i(
-       rectangle.getTexture()->getSize().x,
-       rectangle.getTexture()->getSize().y / 2
-     )
+     0,
+     rectangle.getTexture()->getSize().y / 4,
+     rectangle.getTexture()->getSize().x,
+     rectangle.getTexture()->getSize().y / 2
    )
   );
   get_render_window().draw(rectangle);

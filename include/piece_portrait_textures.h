@@ -9,8 +9,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <map>
-
 /// The textures of the portraits
 class piece_portrait_textures
 {

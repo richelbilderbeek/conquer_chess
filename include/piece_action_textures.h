@@ -7,8 +7,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <map>
-
 /// The textures for piece actions.
 class piece_action_textures
 {

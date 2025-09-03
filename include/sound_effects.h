@@ -17,7 +17,7 @@ public:
 
   int get_n_sound_effects() const noexcept {
     return sizeof(*this)
-    / (sizeof(m_bark_1) + sizeof(m_bark_1_buffer));
+    / (sizeof(m_attacking_high) + sizeof(m_attacking_high_buffer));
   }
 
   /// Play a sound effect
@@ -36,12 +36,10 @@ public:
   void set_master_volume(const volume& v);
 
 private:
-
-
-  /*
   sf::Sound m_attacking_high;
   sf::Sound m_attacking_low;
   sf::Sound m_attacking_mid;
+  sf::Sound m_bark_1;
   sf::Sound m_bark_2;
   sf::Sound m_countdown;
   sf::Sound m_done_high;
@@ -79,6 +77,7 @@ private:
   sf::SoundBuffer m_attacking_high_buffer;
   sf::SoundBuffer m_attacking_low_buffer;
   sf::SoundBuffer m_attacking_mid_buffer;
+  sf::SoundBuffer m_bark_1_buffer;
   sf::SoundBuffer m_bark_2_buffer;
   sf::SoundBuffer m_countdown_buffer;
   sf::SoundBuffer m_done_high_buffer;
@@ -115,10 +114,6 @@ private:
 
   /// Get the table that connects the sound and buffer and filename
   std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> get_table() noexcept;
-  */
-  sf::SoundBuffer m_bark_1_buffer;
-  sf::Sound m_bark_1{m_bark_1_buffer};
-
 };
 
 /// Test this class and its free functions

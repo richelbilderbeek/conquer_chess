@@ -16,7 +16,7 @@ artwork_textures::artwork_textures()
     const auto filename{filename_str.c_str()};
     QFile f(":/resources/textures/artwork/" + filename);
     
-    if (!m_all_races[i].openFromFile(filename))
+    if (!m_all_races[i].loadFromFile(filename))
     {
       auto msg{"Cannot find image file '" + filename + "'"};
       throw std::runtime_error(msg);

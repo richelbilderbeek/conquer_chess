@@ -36,11 +36,9 @@ physical_controller create_default_mouse_controller() noexcept
 
 sf::Event create_key_pressed_event(const sf::Keyboard::Key k)
 {
-  sf::Event::KeyPressed e;
-  e.code = k;
-  //sf::Event e;
-  //e.type = sf::Event::KeyPressed;
-  //e.key.code = k;
+  sf::Event e;
+  e.type = sf::Event::KeyPressed;
+  e.key.code = k;
   return e;
 }
 
@@ -58,27 +56,20 @@ sf::Event create_mouse_button_pressed_event(
   const sf::Mouse::Button mouse_button
 )
 {
-  sf::Event::MouseButtonPressed e;
-  e.position.x = cursor_pos.get_x();
-  e.position.y = cursor_pos.get_y();
-  e.button = mouse_button;
-  //e.type = sf::Event::MouseButtonPressed;
-  //e.mouseMove.x = cursor_pos.get_x();
-  //e.mouseMove.y = cursor_pos.get_y();
-  //e.mouseButton.button = mouse_button;
+  sf::Event e;
+  e.type = sf::Event::MouseButtonPressed;
+  e.mouseMove.x = cursor_pos.get_x();
+  e.mouseMove.y = cursor_pos.get_y();
+  e.mouseButton.button = mouse_button;
   return e;
 }
 
 sf::Event create_mouse_moved_event(const screen_coordinate& cursor_pos)
 {
-  sf::Event::MouseMoved e;
-  e.position.x = cursor_pos.get_x();
-  e.position.y = cursor_pos.get_y();
-
-  //sf::Event e;
-  //e.type = sf::Event::MouseMoved;
-  //e.mouseMove.x = cursor_pos.get_x();
-  //e.mouseMove.y = cursor_pos.get_y();
+  sf::Event e;
+  e.type = sf::Event::MouseMoved;
+  e.mouseMove.x = cursor_pos.get_x();
+  e.mouseMove.y = cursor_pos.get_y();
   return e;
 }
 
@@ -195,7 +186,7 @@ user_inputs physical_controller::process_input(
 {
   if (m_type == physical_controller_type::keyboard)
   {
-    if (event.is<sf::Event::KeyPressed>())
+    if (event.type == sf::Event::KeyPressed)
     {
       return process_key_press(event, player_side);
     }
@@ -203,11 +194,11 @@ user_inputs physical_controller::process_input(
   else
   {
     assert(m_type == physical_controller_type::mouse);
-    if (event.is<sf::Event::MouseMoved>())
+    if (event.type == sf::Event::MouseMoved)
     {
       return process_mouse_moved(event, player_side, layout);
     }
-    if (event.is<sf::Event::MouseButtonPressed>() )
+    if (event.type == sf::Event::MouseButtonPressed)
     {
       return process_mouse_pressed(event, player_side);
     }
@@ -221,10 +212,9 @@ user_inputs physical_controller::process_key_press(
   const side player_side
 ) const
 {
-  assert(event.is<sf::Event::KeyPressed>());
+  assert(event.type == sf::Event::KeyPressed);
   std::vector<user_input> v;
-  const auto actions_types{m_key_bindings.create_actions(event.getIf<sf::Event::KeyPressed>()->code)};
-  //const auto actions_types{m_key_bindings.create_actions(event.key.code)};
+  const auto actions_types{m_key_bindings.create_actions(event.key.code)};
   for (const auto t: actions_types)
   {
      v.push_back(user_input(t, player_side));
@@ -237,9 +227,8 @@ user_inputs physical_controller::process_mouse_pressed(
   const side player_side
 ) const
 {
-  assert(event.is<sf::Event::MouseButtonPressed>());
-  if (event.getIf<sf::Event::MouseButtonPressed>()->button == sf::Mouse::Button::Left)
-  //if (event.mouseButton.button == sf::Mouse::Button::Left)
+  assert(event.type == sf::Event::MouseButtonPressed);
+  if (event.mouseButton.button == sf::Mouse::Left)
   {
     return user_inputs(
       {
@@ -249,7 +238,7 @@ user_inputs physical_controller::process_mouse_pressed(
       }
     );
   }
-  assert(event.getIf<sf::Event::MouseButtonPressed>()->button == sf::Mouse::Button::Right);
+  assert(event.mouseButton.button == sf::Mouse::Right);
   return user_inputs(
     {
       create_press_rmb_action(player_side)
@@ -263,12 +252,9 @@ user_inputs physical_controller::process_mouse_moved(
   const game_view_layout& layout
 ) const
 {
-  assert(event.is<sf::Event::MouseMoved>() );
+  assert(event.type == sf::Event::MouseMoved);
   const auto mouse_screen_pos{
-    screen_coordinate(
-      event.getIf<sf::Event::MouseMoved>()->position.x,
-      event.getIf<sf::Event::MouseMoved>()->position.y
-    )
+    screen_coordinate(event.mouseMove.x, event.mouseMove.y)
   };
   const auto mouse_game_pos{
     convert_to_game_coordinate(
@@ -316,7 +302,7 @@ void test_controller()
     const user_inputs inputs(
       {
         c.process_input(
-          create_mouse_button_pressed_event(screen_coordinate(), sf::Mouse::Button::Left),
+          create_mouse_button_pressed_event(screen_coordinate(), sf::Mouse::Left),
           side::lhs,
           layout
         )
@@ -331,7 +317,7 @@ void test_controller()
     const user_inputs inputs(
       {
         c.process_input(
-          create_mouse_button_pressed_event(screen_coordinate(), sf::Mouse::Button::Right),
+          create_mouse_button_pressed_event(screen_coordinate(), sf::Mouse::Right),
           side::lhs,
           layout
         )
@@ -491,8 +477,8 @@ void test_controller()
   {
     const game_view_layout layout;
     const physical_controller c{create_default_mouse_controller()};
-    sf::Event::KeyPressed e;
-    //e.type = sf::Event::KeyPressed;
+    sf::Event e;
+    e.type = sf::Event::KeyPressed;
     assert(c.get_type() == physical_controller_type::mouse);
     assert(is_empty(c.process_input(e, side::lhs, layout)));
   }

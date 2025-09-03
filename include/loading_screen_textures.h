@@ -6,7 +6,6 @@
 #include <SFML/Graphics.hpp>
 
 #include <map>
-
 /// The textures used in the loading screen.
 ///
 /// This must a seperate class,

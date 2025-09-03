@@ -201,14 +201,12 @@ void draw_unit_paths(
       const double max_square_height{static_cast<double>(get_width(square_piece))};
       const double height{std::max(2.0, max_square_height * 0.05)};
       rect.setSize(sf::Vector2f(length, height));
-      rect.setOrigin(sf::Vector2f(length / 2, height / 2));
+      rect.setOrigin(length / 2, height / 2);
       rect.setPosition(
-        sf::Vector2f(
-          center_pixel.get_x(),
-          center_pixel.get_y()
-        )
+        center_pixel.get_x(),
+        center_pixel.get_y()
       );
-      rect.rotate(sf::degrees(-angle_degrees));
+      rect.rotate(-angle_degrees);
       rect.setOutlineColor(to_sfml_color(get_other_color(piece.get_color())));
       rect.setOutlineThickness(2);
       rect.setFillColor(to_sfml_color(piece.get_color()));
@@ -267,7 +265,7 @@ void draw_unit_paths(
       );
       circle.setFillColor(to_sfml_color(piece.get_color()));
       circle.setRadius(radius);
-      circle.setOrigin(sf::Vector2f(half_radius, half_radius));
+      circle.setOrigin(half_radius, half_radius);
       get_render_window().draw(circle);
     }
 
@@ -321,7 +319,7 @@ void draw_unit_paths(
       circle.setOutlineThickness(std::max(2.0, radius / 10.0));
       circle.setFillColor(to_sfml_color(piece.get_color()));
       circle.setRadius(radius);
-      circle.setOrigin(sf::Vector2f(half_radius, half_radius));
+      circle.setOrigin(half_radius, half_radius);
       get_render_window().draw(circle);
     }
   }

@@ -29,7 +29,7 @@ loading_screen_textures::loading_screen_textures()
     const auto filename{p.second.c_str()};
     QFile f(":/resources/textures/artwork/" + filename);
 
-    if (!p.first.get().openFromFile(filename))
+    if (!p.first.get().loadFromFile(filename))
     {
       auto msg{"Cannot find image file '" + filename + "'"};
       throw std::runtime_error(msg);

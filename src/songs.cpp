@@ -33,6 +33,6 @@ songs::songs()
       auto msg{"Cannot find song file '" + filename + "'"};
       throw std::runtime_error(msg);
     }
-    p.first.get().setLooping(true);
+    p.first.get().setLoop(true);
   }
 }

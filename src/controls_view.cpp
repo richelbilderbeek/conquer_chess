@@ -110,14 +110,14 @@ sf::Mouse::Button get_button_for_next(const controls_view& /* v */)
 
 bool controls_view::process_event_impl(sf::Event& event)
 {
-  if (event.is<sf::Event::Closed>())
+  if (event.type == sf::Event::Closed)
   {
     set_next_state(program_state::options);
     return false;
   }
-  else if (event.is<sf::Event::KeyPressed>())
+  else if (event.type == sf::Event::KeyPressed)
   {
-    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
+    sf::Keyboard::Key key_pressed = event.key.code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       set_next_state(program_state::options);
@@ -153,13 +153,10 @@ bool controls_view::process_event_impl(sf::Event& event)
       return false;
     }
   }
-  else if (event.is<sf::Event::MouseMoved>())
+  else if (event.type == sf::Event::MouseMoved)
   {
     const auto mouse_screen_pos{
-      screen_coordinate(
-        event.getIf<sf::Event::MouseMoved>()->position.x,
-        event.getIf<sf::Event::MouseMoved>()->position.y
-      )
+      screen_coordinate(event.mouseMove.x, event.mouseMove.y)
     };
     if (is_in(mouse_screen_pos, m_layout.get_action_1_value())) m_selected = controls_view_item::action_1;
     if (is_in(mouse_screen_pos, m_layout.get_action_2_value())) m_selected = controls_view_item::action_2;
@@ -173,7 +170,7 @@ bool controls_view::process_event_impl(sf::Event& event)
     if (is_in(mouse_screen_pos, m_layout.get_right_value())) m_selected = controls_view_item::right;
     if (is_in(mouse_screen_pos, m_layout.get_up_value())) m_selected = controls_view_item::up;
   }
-  else if (event.is<sf::Event::MouseButtonPressed>())
+  else if (event.type == sf::Event::MouseButtonPressed)
   {
     change_selected();
   }
@@ -182,13 +179,10 @@ bool controls_view::process_event_impl(sf::Event& event)
 
 void controls_view::process_resize_event_impl(sf::Event& event)
 {
-  assert(event.is<sf::Event::Resized>());
+  assert(event.type == sf::Event::Resized);
   const screen_rect w(
     screen_coordinate(0, 0),
-    screen_coordinate(
-      event.getIf<sf::Event::Resized>()->size.x,
-      event.getIf<sf::Event::Resized>()->size.y
-    )
+    screen_coordinate(event.size.width, event.size.height)
   );
   m_layout = controls_view_layout(
     w,

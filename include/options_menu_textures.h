@@ -7,8 +7,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <map>
-
 /// Textures in the Options menu.
 class options_menu_textures
 {
