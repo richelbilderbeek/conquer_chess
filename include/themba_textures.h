@@ -5,6 +5,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <map>
+
 /// Themba Textures
 class themba_textures
 {

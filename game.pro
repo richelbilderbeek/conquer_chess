@@ -19,8 +19,8 @@ include(game_view.pri)
 TARGET = conquer_chess
 
 # Use the C++ version that all team members can use
-CONFIG += c++17
-QMAKE_CXXFLAGS += -std=c++17
+CONFIG += c++20
+QMAKE_CXXFLAGS += -std=c++20
 
 # High warning levels
 QMAKE_CXXFLAGS += -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic
@@ -48,7 +48,13 @@ CONFIG(debug, debug|release) {
 }
 
 # SFML
-LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+# 3.0.0
+INCLUDEPATH += $$PWD/../SFML-3.0.0/include
+HEADERS += $$PWD/../SFML-3.0.0/include/SFML
+
+# 2.6.1
+# LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+
 
 win32 {
   LIBS += $$PWD/../SFML/lib

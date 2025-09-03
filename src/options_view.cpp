@@ -92,20 +92,20 @@ void draw_panel(
 
 bool options_view::process_event_impl(sf::Event& event)
 {
-  if (event.type == sf::Event::Closed)
+  if (event.is<sf::Event::Closed>())
   {
     set_next_state(program_state::main_menu);
     return false;
   }
-  else if (event.type == sf::Event::KeyPressed)
+  else if (event.is<sf::Event::KeyPressed>())
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       set_next_state(program_state::main_menu);
       return false;
     }
-    if (key_pressed == sf::Keyboard::Key::Return)
+    if (key_pressed == sf::Keyboard::Key::Enter)
     {
       m_has_accepted = true;
       set_next_state(program_state::main_menu);
@@ -223,10 +223,12 @@ bool options_view::process_event_impl(sf::Event& event)
       increase_selected();
     }
   }
-  else if (event.type == sf::Event::MouseMoved)
+  else if (event.is<sf::Event::MouseMoved>())
   {
+    const auto& position{event.getIf<sf::Event::MouseMoved>()->position};
+
     const auto mouse_screen_pos{
-      screen_coordinate(event.mouseMove.x, event.mouseMove.y)
+      screen_coordinate(position.x, position.y)
     };
     if (is_in(mouse_screen_pos, m_layout.get_chess_board().get_board())) set_selected(options_view_item::starting_position);
     else if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) set_selected(options_view_item::game_speed);
@@ -236,13 +238,13 @@ bool options_view::process_event_impl(sf::Event& event)
     else if (is_in(mouse_screen_pos, m_layout.get_sound_effects_volume_value())) set_selected(options_view_item::sound_effects_volume);
     else if (is_in(mouse_screen_pos, m_layout.get_starting_pos_value())) set_selected(options_view_item::starting_position);
   }
-  else if (event.type == sf::Event::MouseButtonPressed)
+  else if (event.is<sf::Event::MouseButtonPressed>())
   {
-    if (event.mouseButton.button == sf::Mouse::Button::Left)
+    if (event.getIf<sf::Event::MouseButtonPressed>().button == sf::Mouse::Button::Left)
     {
       increase_selected();
     }
-    else if (event.mouseButton.button == sf::Mouse::Button::Right)
+    else if (event.getIf<sf::Event::MouseButtonPressed>().button == sf::Mouse::Button::Right)
     {
       decrease_selected();
     }
@@ -253,7 +255,7 @@ bool options_view::process_event_impl(sf::Event& event)
 
 void options_view::process_resize_event_impl(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<>() == sf::Event::Resized);
   const screen_rect w(
     screen_coordinate(0, 0),
     screen_coordinate(event.size.width, event.size.height)

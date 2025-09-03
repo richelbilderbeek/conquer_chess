@@ -7,6 +7,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <map>
+
 /// The textures for the game maps.
 class map_textures
 {

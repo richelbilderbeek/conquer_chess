@@ -174,7 +174,7 @@ void controls_bar::draw()
   // Enter
   if (m_draw_enter)
   {
-      show_key(sf::Keyboard::Key::Return);
+      show_key(sf::Keyboard::Key::Enter);
       const int label_width{250};
       show_text("Accept and go back", label_width);
       show_spacer();

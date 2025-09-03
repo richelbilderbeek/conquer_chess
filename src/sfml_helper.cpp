@@ -135,12 +135,16 @@ void set_rect(sf::RectangleShape& rectangle, const screen_coordinate& screen_siz
 void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect)
 {
   rectangle.setOrigin(
-    get_width(screen_rect) / 2,
-    get_height(screen_rect) / 2
+    sf::Vector2f(
+      get_width(screen_rect) / 2,
+      get_height(screen_rect) / 2
+    )
   );
   rectangle.setPosition(
-    get_center(screen_rect).get_x(),
-    get_center(screen_rect).get_y()
+    sf::Vector2f(
+      get_center(screen_rect).get_x(),
+      get_center(screen_rect).get_y()
+    )
   );
   rectangle.setSize(
     sf::Vector2f(
@@ -155,11 +159,18 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
   assert(text.getString().getSize() > 0);
   // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
   text.setPosition(
-    get_center(screen_rect).get_x(),
-    get_center(screen_rect).get_y()
+    sf::Vector2f(
+      get_center(screen_rect).get_x(),
+      get_center(screen_rect).get_y()
+    )
   );
   // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  const double text_center_y{0.5 * static_cast<double>(text.getLocalBounds().height)};
+  const double text_center_y{
+    0.5 * static_cast<double>(
+      text.getLocalBounds().size.y
+      // text.getLocalBounds().height // Does not work in SFML 3.0.0
+    )
+  };
 
   // Text always seems to appear too low, move it somewhat up
   const double f_correction{0.08}; // Set to zero for no correction
@@ -167,7 +178,8 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
     text_center_y + (f_correction * get_height(screen_rect))
   };
   text.setOrigin(
-    0.5 * text.getLocalBounds().width,
+    0.5 * text.getLocalBounds().size.y,
+    //0.5 * text.getLocalBounds().width, // Does not work in SFML 3.0.0
     corrected_text_center_y
   );
 
@@ -301,7 +313,7 @@ void test_sfml_helper()
     assert(to_resource_name(sf::Keyboard::Key::F14) == "keyboard_question_outline");
     assert(to_resource_name(sf::Keyboard::Key::F15) == "keyboard_question_outline");
     assert(to_resource_name(sf::Keyboard::Key::Pause) == "keyboard_question_outline");
-    assert(to_resource_name(sf::Keyboard::Key::KeyCount) == "keyboard_question_outline");
+    //assert(to_resource_name(sf::Keyboard::Key::KeyCount) == "keyboard_question_outline"); // Does not work in SFML 3.0.0
     {
       const auto x{"keyboard_slash_back"};
       const auto r{to_resource_name(sf::Keyboard::Key::BackSlash)};
@@ -429,12 +441,14 @@ void test_sfml_helper()
     assert(to_str(sf::Keyboard::Key::T) == "T");
     assert(to_str(sf::Keyboard::Key::Tab) == "Tab");
     // Tilde is a deprecated value
+    /*
     {
       const std::string expected{"Grave"};
       const std::string created{to_str(sf::Keyboard::Key::Tilde)};
       assert(expected == created);
     }
     assert(to_str(sf::Keyboard::Key::Tilde) == "Grave"); // Deprecated value
+    */
     assert(to_str(sf::Keyboard::Key::U) == "U");
     assert(to_str(sf::Keyboard::Key::Unknown) == "Unknown");
     assert(to_str(sf::Keyboard::Key::Up) == "Up");

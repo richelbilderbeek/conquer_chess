@@ -18,6 +18,7 @@
 #include <SFML/System/String.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/Mouse.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 /// Draw an About menu button on the main window
 void draw_about_button(const screen_rect& sr);

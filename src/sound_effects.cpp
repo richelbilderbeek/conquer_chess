@@ -9,6 +9,10 @@
 
 sound_effects::sound_effects()
 {
+  const bool ok{m_bark_1_buffer.loadFromFile("resources/sound_effects/bark_1.ogg")};
+  assert(ok);
+
+  /*
   const std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> v = get_table();
 
   for (const auto& p: v)
@@ -26,8 +30,10 @@ sound_effects::sound_effects()
     std::get<0>(p).get().setBuffer(std::get<1>(p).get());
 
   }
+  */
 }
 
+/*
 std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> sound_effects::get_table() noexcept
 {
   const std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper<sf::SoundBuffer>, std::string>> v = {
@@ -71,9 +77,11 @@ std::vector<std::tuple<std::reference_wrapper<sf::Sound>, std::reference_wrapper
   };
   return v;
 }
+*/
 
-void sound_effects::play(const message& effect)
+void sound_effects::play(const message& /* effect */)
 {
+  /*
   const auto piece_type{effect.get_piece_type()};
   switch (effect.get_message_type())
   {
@@ -206,10 +214,13 @@ void sound_effects::play(const message& effect)
       break;
     }
   }
+  */
+  m_bark_1.play();
 }
 
-void sound_effects::play_bark(const int number)
+void sound_effects::play_bark(const int /* number */ )
 {
+  /*
   assert(number == 1 || number == 2);
   if (number == 1)
   {
@@ -220,25 +231,31 @@ void sound_effects::play_bark(const int number)
     assert(number == 2);
     m_bark_2.play();
   }
-
+  */
+  m_bark_1.play();
 }
 
 void sound_effects::play_countdown() noexcept
 {
-  m_countdown.play();
+  m_bark_1.play();
+  //m_countdown.play();
 }
 
 void sound_effects::play_hide() noexcept
 {
-  m_hide.play();
+  m_bark_1.play();
+  //m_hide.play();
 }
 
 void sound_effects::set_master_volume(const volume& v)
 {
+  m_bark_1.setVolume(v.get_percentage());
+  /*
   for (auto& row: get_table())
   {
     std::get<0>(row).get().setVolume(v.get_percentage());
   }
+  */
 }
 
 #endif // LOGIC_ONLY

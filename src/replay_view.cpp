@@ -21,14 +21,14 @@ replay_view::replay_view()
 
 bool replay_view::process_event_impl(sf::Event& event)
 {
-  if (event.type == sf::Event::Closed)
+  if (event.is<sf::Event::Closed>())
   {
     set_next_state(program_state::main_menu);
     return false;
   }
-  else if (event.type == sf::Event::KeyPressed)
+  else if (event.is<sf::Event::KeyPressed>() )
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       set_next_state(program_state::main_menu);

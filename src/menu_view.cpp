@@ -147,13 +147,13 @@ void draw_title_panel(menu_view& v)
 
 bool menu_view::process_event_impl(sf::Event& event)
 {
-  if (event.type == sf::Event::Closed)
+  if (event.is<sf::Event::Closed>())
   {
     return true; // Close the program
   }
-  if (event.type == sf::Event::KeyPressed)
+  if (event.is<sf::Event::KeyPressed>())
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       return true; // Close the program
@@ -164,7 +164,7 @@ bool menu_view::process_event_impl(sf::Event& event)
     }
   }
 
-  if (event.type == sf::Event::KeyPressed)
+  if (event.is<sf::Event::KeyPressed>())
   {
     sf::Keyboard::Key key_pressed = event.key.code;
     if (key_pressed == sf::Keyboard::Key::Up)
@@ -184,7 +184,7 @@ bool menu_view::process_event_impl(sf::Event& event)
       set_selected(get_left(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Space
-      || key_pressed == sf::Keyboard::Key::Return
+      || key_pressed == sf::Keyboard::Key::Enter
     )
     {
       if (m_selected == menu_view_item::start)
@@ -235,7 +235,7 @@ bool menu_view::process_event_impl(sf::Event& event)
       assert(1 == 2);
     }
   }
-  if (event.type == sf::Event::MouseMoved)
+  if (event.is<sf::Event::MouseMoved>())
   {
     const auto mouse_screen_pos{
       screen_coordinate(event.mouseMove.x, event.mouseMove.y)
@@ -247,7 +247,7 @@ bool menu_view::process_event_impl(sf::Event& event)
   }
   else if (event.type == sf::Event::MouseButtonPressed)
   {
-    if (event.mouseButton.button == sf::Mouse::Left)
+    if (event.mouseButton.button == sf::Mouse::Button::Left)
     {
       const auto mouse_screen_pos{
         screen_coordinate(event.mouseButton.x, event.mouseButton.y)
@@ -276,7 +276,7 @@ bool menu_view::process_event_impl(sf::Event& event)
 
 void menu_view::process_resize_event_impl(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<sf::Event::Resized>());
   const screen_rect w(
     screen_coordinate(0, 0),
     screen_coordinate(event.size.width, event.size.height)

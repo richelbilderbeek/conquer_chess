@@ -2,6 +2,8 @@
 
 #include "action_number.h"
 
+#include "sfml_helper.h"
+
 #include <cassert>
 #include <iostream>
 #include <sstream>
@@ -119,7 +121,7 @@ void test_key_bindings()
   // A key that is not in the bindings results in no actions
   {
     const key_bindings k = create_left_keyboard_key_bindings();
-    assert(k.create_actions(sf::Keyboard::X).empty());
+    assert(k.create_actions(sf::Keyboard::Key::X).empty());
   }
   {
     const auto a{create_left_keyboard_key_bindings()};
@@ -181,14 +183,14 @@ bool operator==(const key_bindings& lhs, const key_bindings& rhs) noexcept
 std::ostream& operator<<(std::ostream& os, const key_bindings& keys) noexcept
 {
   os
-    << "Key for move up: " << keys.get_key_for_move_up() << '\n'
-    << "Key for move right: " << keys.get_key_for_move_right() << '\n'
-    << "Key for move down: " << keys.get_key_for_move_down() << '\n'
-    << "Key for move left: " << keys.get_key_for_move_left() << '\n'
-    << "Key for action 1: " << keys.get_key_for_action(action_number(1)) << '\n'
-    << "Key for action 2: " << keys.get_key_for_action(action_number(2)) << '\n'
-    << "Key for action 3: " << keys.get_key_for_action(action_number(3)) << '\n'
-    << "Key for action 4: " << keys.get_key_for_action(action_number(4))
+    << "Key for move up: " << to_str(keys.get_key_for_move_up()) << '\n'
+    << "Key for move right: " << to_str(keys.get_key_for_move_right()) << '\n'
+    << "Key for move down: " << to_str(keys.get_key_for_move_down()) << '\n'
+    << "Key for move left: " << to_str(keys.get_key_for_move_left()) << '\n'
+    << "Key for action 1: " << to_str(keys.get_key_for_action(action_number(1))) << '\n'
+    << "Key for action 2: " << to_str(keys.get_key_for_action(action_number(2))) << '\n'
+    << "Key for action 3: " << to_str(keys.get_key_for_action(action_number(3))) << '\n'
+    << "Key for action 4: " << to_str(keys.get_key_for_action(action_number(4)))
   ;
   return os;
 }

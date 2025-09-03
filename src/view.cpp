@@ -41,7 +41,7 @@ bool view::process_event(sf::Event& e)
 
 void view::process_resize_event(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<sf::Event::Resized>());
   process_resize_event_impl(event);
 }
 

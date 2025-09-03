@@ -94,8 +94,9 @@ void main_window::exec()
 
 bool main_window::process_events()
 {
-  sf::Event event;
-  while (get_render_window().pollEvent(event))
+  //sf::Event event;
+  //while (get_render_window().pollEvent(event))
+  while (const std::optional event = window.pollEvent())
   {
     const bool stop_program{process_event(event)};
     if (stop_program == true) return true;
@@ -106,12 +107,12 @@ bool main_window::process_events()
 bool main_window::process_event(sf::Event& event)
 {
   // General events
-  if (event.type == sf::Event::Resized)
+  if (event.is<sf::Event::Resized>())
   {
     process_resize_event(event);
     return false; // Do not close the program
   }
-  if (event.type == sf::Event::KeyPressed)
+  if (event.is<sf::Event::KeyPressed>())
   {
     sf::Keyboard::Key key_pressed = event.key.code;
     if (key_pressed == sf::Keyboard::Key::F3)

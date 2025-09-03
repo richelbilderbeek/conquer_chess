@@ -26,14 +26,14 @@ void about_view::tick_impl(const delta_t)
 
 bool about_view::process_event_impl(sf::Event& event)
 {
-  if (event.type == sf::Event::Closed)
+  if (event.is<sf::Event::Closed>())
   {
     set_next_state(program_state::main_menu);
     return false;
   }
-  if (event.type == sf::Event::KeyPressed)
+  if (event.is<sf::Event::KeyPressed>())
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       set_next_state(program_state::main_menu);
@@ -46,7 +46,7 @@ bool about_view::process_event_impl(sf::Event& event)
 
 void about_view::process_resize_event_impl(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<sf::Event::Resized>());
   const screen_coordinate br(event.size.width, event.size.height);
 
   const screen_rect window_rect(screen_coordinate(0,0), br);

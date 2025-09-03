@@ -4,6 +4,8 @@
 
 #include "screen_rect.h"
 
+#include <SFML/Window/VideoMode.hpp>
+
 sf::RenderWindow& get_render_window() noexcept {
 
   // const auto modes = sf::VideoMode::getFullscreenModes();
@@ -11,11 +13,13 @@ sf::RenderWindow& get_render_window() noexcept {
 
   static sf::RenderWindow window{
     sf::VideoMode(
-      get_width(get_default_screen_rect()),
-      get_height(get_default_screen_rect())
+      sf::Vector2u(
+        get_width(get_default_screen_rect()),
+        get_height(get_default_screen_rect())
+      )
     ),
     "Conquer Chess",
-    sf::Style::Fullscreen
+    sf::State::Fullscreen
   };
 
   return window;

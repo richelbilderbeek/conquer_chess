@@ -2,9 +2,12 @@
 
 #include "action_number.h"
 
+#include "sfml_helper.h"
+
 #include <cassert>
 #include <iostream>
 #include <sstream>
+
 
 mouse_bindings::mouse_bindings(
   const sf::Mouse::Button button_1,
@@ -60,8 +63,8 @@ bool operator==(const mouse_bindings& lhs, const mouse_bindings& rhs) noexcept
 std::ostream& operator<<(std::ostream& os, const mouse_bindings& mbs) noexcept
 {
   os
-    << "Button 1: " << mbs.get_button_for_action(action_number(1)) << '\n'
-    << "Button 2: " << mbs.get_button_for_action(action_number(2)) << '\n'
+    << "Button 1: " << to_str(mbs.get_button_for_action(action_number(1))) << '\n'
+    << "Button 2: " << to_str(mbs.get_button_for_action(action_number(2))) << '\n'
   ;
   return os;
 }
