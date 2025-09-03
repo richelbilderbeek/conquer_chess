@@ -92,6 +92,7 @@
 void test()
 {
 #ifndef NDEBUG
+  test_menu_view_item();
   //test_menu_view_layout();
   //return; // For now
   //test_game_view_layout();

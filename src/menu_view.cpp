@@ -169,19 +169,19 @@ bool menu_view::process_event_impl(sf::Event& event)
     sf::Keyboard::Key key_pressed = event.key.code;
     if (key_pressed == sf::Keyboard::Key::Up)
     {
-      set_selected(get_previous(m_selected));
+      set_selected(get_up(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Right)
     {
-      set_selected(get_next(m_selected));
+      set_selected(get_right(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Down)
     {
-      set_selected(get_next(m_selected));
+      set_selected(get_down(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Left)
     {
-      set_selected(get_previous(m_selected));
+      set_selected(get_left(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Space
       || key_pressed == sf::Keyboard::Key::Return

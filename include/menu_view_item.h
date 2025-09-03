@@ -15,7 +15,22 @@ std::vector<menu_view_item> get_all_menu_view_items() noexcept;
 /// Is the item part of the options submenu?
 bool is_in_options_submenu(const menu_view_item i) noexcept;
 
+/// Get the item below this one
+menu_view_item get_down(const menu_view_item there) noexcept;
+
+/// Get the item left of this one
+menu_view_item get_left(const menu_view_item there) noexcept;
+
+/// Get the item right of this one
+menu_view_item get_right(const menu_view_item there) noexcept;
+
+/// Get the item above this one
+menu_view_item get_up(const menu_view_item there) noexcept;
+
+/// Go through the enum values
 menu_view_item get_next(const menu_view_item there);
+
+/// Go through the enum values
 menu_view_item get_previous(const menu_view_item& there);
 
 void test_menu_view_item();
