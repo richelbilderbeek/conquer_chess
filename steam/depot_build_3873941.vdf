@@ -1,7 +1,7 @@
 "DepotBuild"
 {
     "DepotID" "3873941"
-    "ContentRoot" "."
+    "ContentRoot" "../"
 
     "FileMapping"
     {
