@@ -11,8 +11,8 @@
     }
     "FileMapping"
     {
-        "LocalPath" "resources"
-        "DepotPath" "."
-        "Recursive" "1"
+        "LocalPath" "resources\*"
+        "DepotPath" "resources\"
+        "Recursive" "1" // include all subfolders
     }
 }

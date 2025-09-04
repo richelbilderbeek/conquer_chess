@@ -21,3 +21,8 @@ if [ ! -f ${cc_install_folder}/conquer_chess ]; then
   exit 43
 fi
 
+if [ ! -d ${cc_install_folder}/conquer_chess/resources ]; then
+  echo "ERROR: Conquer Chess resources are not found."
+  exit 43
+fi
+
