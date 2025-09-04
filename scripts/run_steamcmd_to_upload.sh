@@ -35,7 +35,10 @@ echo "Start the game via Steam."
 read -p "Press enter when done"
 
 echo "Checking Steam install."
-./scripts/check_steam_install.sh
+
+if ./scripts/check_steam_install.sh then
+  echo "Everything seems to work :-)" 
+fi
 
 
-echo "Everything seems to work :-)" 
+
