@@ -2,6 +2,7 @@
 #define SCREEN_COORDINATE_H
 
 #include <iosfwd>
+#include <string>
 
 /// The coordinate on a screen.
 ///

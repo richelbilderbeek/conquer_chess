@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <vector>
+#include <string>
 
 /// The type of chess piece.
 enum class piece_type

@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <vector>
+#include <string>
 
 /// The type of actions a piece can do.
 enum class piece_action_type

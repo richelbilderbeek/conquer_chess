@@ -4,6 +4,7 @@
 #include "ccfwd.h"
 
 #include <iosfwd>
+#include <string>
 
 /// The in-game time, in chess moves.
 ///

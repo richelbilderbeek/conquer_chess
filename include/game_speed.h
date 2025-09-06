@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <vector>
+#include <string>
 
 /// The game speed.
 ///
