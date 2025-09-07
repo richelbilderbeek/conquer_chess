@@ -85,8 +85,13 @@ void draw_game_statistics_widget(
     // Absolute
     for (const side s: get_all_sides())
     {
-      const double f{statistics.get(statistic, s)};
+      double f{statistics.get(statistic, s)};
       assert(f >= 0.0);
+      if (statistic == game_statistic_type::value)
+      {
+        // Piece value can go beyond 1.0 if a pawn promotes to a queen
+        if (f >= 1.0) f = 1.0;
+      }
       assert(f <= 1.0);
       const auto& r_border{layout.get_absolute(statistic, s)};
       try
