@@ -1,6 +1,7 @@
 #include "diagnostics_file.h"
 
 #include "cc_cli_options.h"
+#include "sfml_helper.h"
 
 #include <chrono>
 #include <fstream>
@@ -48,7 +49,7 @@ void diagnostics_file::add_header()
     << "Compile date: " << __DATE__ << '\n'
     << "Compile time: " << __TIME__ << '\n'
     << "Current time and date: " << std::ctime(&now_time) << '\n'
-    << "SFML version: " << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << "." << SFML_VERSION_PATCH << '\n'
+    << "SFML version: " << get_sfml_version() << '\n'
   ;
 }
 

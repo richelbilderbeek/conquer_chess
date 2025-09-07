@@ -30,11 +30,20 @@ public:
   auto get_do_assert_to_log() const noexcept{ return m_do_assert_to_log; }
 
   auto get_do_profile() const noexcept { return m_do_profile; }
+
+  /// Does the user want to see the help?
+  auto get_do_show_help() const noexcept { return m_do_show_help; }
+
   auto get_do_test() const noexcept { return m_do_test; }
   auto get_do_play_standard_random_game() const noexcept { return m_do_play_standard_random_game; }
 
   /// Show the in-game debug info at the start
   auto get_do_show_debug_info() const noexcept { return m_do_show_debug_info; }
+
+  /// Is the game in Virtual Bastard friendly mode?
+  auto get_is_vbf_mode() const noexcept { return m_is_vbf_mode; }
+
+
 
 
 private:
@@ -55,7 +64,9 @@ private:
   bool m_do_play_standard_random_game{false};
   bool m_do_profile{false};
   bool m_do_show_debug_info{false};
+  bool m_do_show_help{false};
   bool m_do_test{true};
+  bool m_is_vbf_mode{false};
 
   friend std::ostream& operator<<(std::ostream& os, const cc_cli_options& options) noexcept;
 
@@ -64,11 +75,17 @@ private:
 /// Get all the valid CLI arguments
 std::vector<std::string> get_all_cli_args() noexcept;
 
+/// Get all the valid CLI arguments and
+std::vector<std::pair<std::string, std::string>> get_all_cli_args_and_descriptions() noexcept;
+
 /// Is this a valid CLI argument?
 bool is_valid_cli_arg(const std::string& arg);
 
 /// Convert CLI arguments to string
 std::vector<std::string> collect_args(int argc, char **argv);
+
+/// Show the help
+void show_help(std::ostream& os);
 
 
 /// Test these functions

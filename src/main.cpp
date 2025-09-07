@@ -92,10 +92,7 @@
 void test()
 {
 #ifndef NDEBUG
-  //test_board_layout();
-  //return; // For now
-  //test_game_view_layout();
-  //test_game();
+  //test_cli_options();
   //assert(1 == 2);
 
   test_about();
@@ -257,6 +254,14 @@ int main(int argc, char **argv) //!OCLINT tests may be long
 {
 
   const auto options{cc_cli_options(collect_args(argc, argv))};
+
+  if (options.get_do_show_help())
+  {
+    show_help(std::cout);
+    return 0;
+  }
+
+
   diagnostics_file file;
 
   // Compile date, current time
