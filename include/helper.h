@@ -41,6 +41,14 @@ double calc_angle_radians(const double dx, const double dy);
 /// Calculate the Euclidean distance between two points.
 double calc_distance(const double dx, const double dy) noexcept;
 
+/// Get pi
+///
+/// Cannot use `M_PI`, as I have no bright ideas how
+/// to get it from MSVC's STL.
+///
+/// I copied the value from the GCC STL.
+constexpr double get_pi() noexcept { return 3.14159265358979323846; }
+
 /// Determine if the difference between two values is less
 /// than the maximum tolerated value.
 template <class T> bool is_close(const T& lhs, const T& rhs, const T& max)
