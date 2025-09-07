@@ -93,6 +93,7 @@ void test()
 {
 #ifndef NDEBUG
   //test_rules();
+  //test_game_controller();
   //assert(1 == 2);
 
   test_about();

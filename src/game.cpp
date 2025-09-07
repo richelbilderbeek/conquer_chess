@@ -1,17 +1,18 @@
 #include "game.h"
 
-//#include "game_options.h"
-#include "piece_actions.h"
-#include "square.h"
-#include "pieces.h"
 #include "chess_color.h"
+#include "helper.h"
+#include "piece_actions.h"
+#include "pieces.h"
+#include "square.h"
+
+#include <algorithm>
 #include <cassert>
 #include <cmath>
-#include <algorithm>
-#include <stdexcept>
-#include <iterator>
 #include <iostream>
+#include <iterator>
 #include <sstream>
+#include <stdexcept>
 
 #ifdef GAME_CONTROLLER_H
 #error 'game' must know nothing about 'game_controller'
@@ -1018,6 +1019,40 @@ game create_game_with_starting_position(
   return game(get_starting_pieces(t, lhs_race, rhs_race));
 }
 
+void game::do_captures()
+{
+  for (auto& p: m_pieces)
+  {
+    if (p.get_actions().empty()) continue;
+    const auto& first_action{p.get_actions()[0]};
+    if (
+         first_action.get_action_type() != piece_action_type::attack
+      && first_action.get_action_type() != piece_action_type::attack_en_passant
+    ) {
+      continue;
+    }
+    square attack_square{first_action.get_to()};
+    if (first_action.get_action_type() == piece_action_type::attack_en_passant) {
+      attack_square = get_en_passant_capture_square(first_action.get_from(), first_action.get_to());
+    }
+    // Piece can have moved away
+    if (!is_piece_at(*this, attack_square)) continue;
+
+    const piece& target{get_piece_at(*this, attack_square)};
+
+    // Capture the piece if destroyed
+    if (is_dead(target))
+    {
+      if (is_first_attacker(p, first_action.get_to(), *this))
+      {
+        p.increase_kill_count();
+        p.set_current_square(first_action.get_to()); // Capture
+      }
+      remove_first(p.get_actions());
+    }
+  }
+}
+
 
 int get_index_of_closest_piece_to(
   const game& g,
@@ -1041,13 +1076,6 @@ std::vector<square> get_occupied_squares(const game& g) noexcept
 {
   return get_occupied_squares(get_pieces(g));
 }
-
-/*
-const game_options& get_options(const game&)
-{
-  return game_options::get();
-}
-*/
 
 std::vector<piece>& get_pieces(game& g) noexcept
 {
@@ -1198,6 +1226,34 @@ bool is_empty_between(
   return is_empty_between(g, square(from_square_str), square(to_square_str));
 }
 
+bool is_first_attacker(const piece& focal_piece, const square& target, const game& g)
+{
+  std::vector<in_game_time> attack_start_times;
+  for (const auto& p: g.get_pieces())
+  {
+    const auto& actions{p.get_actions()};
+    if (actions.empty()) continue;
+    const auto& action{actions[0]};
+    if (
+         action.get_action_type() != piece_action_type::attack
+      && action.get_action_type() != piece_action_type::attack_en_passant
+    ) {
+      continue;
+    }
+    if (action.get_to() != target) continue;
+    assert(!p.get_action_history().get().empty());
+    assert(p.get_action_history().get().back().second == action);
+    const in_game_time t{p.get_action_history().get().back().first};
+    attack_start_times.push_back(t);
+  }
+  const in_game_time first{
+    *std::min_element(std::begin(attack_start_times), std::end(attack_start_times))
+  };
+
+  assert(!focal_piece.get_action_history().get().empty());
+  return first == focal_piece.get_action_history().get().back().first;
+}
+
 bool is_idle(const game& g) noexcept
 {
   return count_piece_actions(g) == 0;
@@ -1258,6 +1314,7 @@ void game::tick_impl(const delta_t& dt)
   check_all_occupied_squares_are_unique();
 
   // Do those piece_actions
+  // Attacks will kill a piece, but not move the attacker(s) yet
   for (auto& p: m_pieces)
   {
     const auto t_before = p.get_in_game_time();
@@ -1265,6 +1322,10 @@ void game::tick_impl(const delta_t& dt)
     const auto t_after = p.get_in_game_time();
     assert(t_before + dt == t_after);
   }
+
+  // Pieces may have been killed in tick
+  // Here, the attacker(s) are moved onto the square of the captured piece
+  do_captures();
 
   // Remove dead pieces
   m_pieces.erase(

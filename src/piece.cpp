@@ -1147,13 +1147,15 @@ void tick_attack(
   const double damage_per_chess_move{1.0};
   const auto damage{damage_per_chess_move * dt.get()};
   target.receive_damage(damage);
+  #ifdef DO_NOT_CAPTURE_HERE_ANYMORE_157
   // Capture the piece if destroyed
-  if (is_dead(target))
+  if (is_dead(target) && is_first_attacker(p, first_action.get_to(), g))
   {
     p.increase_kill_count();
     p.set_current_square(first_action.get_to()); // Capture
     remove_first(p.get_actions());
   }
+  #endif // DO_NOT_CAPTURE_HERE_ANYMORE_157
 }
 
 void tick_attack_en_passant(
@@ -1181,6 +1183,7 @@ void tick_attack_en_passant(
   const double damage_per_chess_move{1.0};
   const auto damage{damage_per_chess_move * dt.get()};
   target.receive_damage(damage);
+  #ifdef DO_NOT_CAPTURE_HERE_ANYMORE_157
   // Capture the piece if destroyed
   if (is_dead(target))
   {
@@ -1188,6 +1191,7 @@ void tick_attack_en_passant(
     p.set_current_square(first_action.get_to()); // Capture
     remove_first(p.get_actions());
   }
+  #endif // DO_NOT_CAPTURE_HERE_ANYMORE_157
 }
 void tick_castle_kingside(
   piece& p,

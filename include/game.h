@@ -77,6 +77,11 @@ private:
   /// Check if there is a winner
   void check_if_there_is_a_winner();
 
+  /// When damage has been done (in `tick`),
+  /// this method makes sure the first attacker will occupy the
+  /// target square.
+  void do_captures();
+
   /// Go to the next frame.
   ///
   /// The maximum timestep is 0.25 chess moves.
@@ -375,6 +380,12 @@ bool is_empty_between(
   const std::string& from_square_str,
   const std::string& to_square_str
 );
+
+/// Determine if piece p is the first piece
+/// to attack the target square.
+/// This is used for rule 3.1.CC.1, where the first attacker
+/// gets to capture the target
+bool is_first_attacker(const piece& p, const square& target, const game& g);
 
 /// Are all pieces idle?
 bool is_idle(const game& g) noexcept;

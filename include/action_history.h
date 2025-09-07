@@ -24,7 +24,9 @@ public:
   void add_action(const in_game_time& in_game_time, const piece_action& action) noexcept;
 
   /// Get the collected in-game times of actions,
-  /// in chrononical order
+  /// in chrononical order.
+  /// Or: the first action ever is at index 0,
+  /// where the most recent action is at the back
   const auto& get() const noexcept { return m_timed_actions; }
 
 private:
