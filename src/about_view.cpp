@@ -11,6 +11,7 @@
 
 #include <cassert>
 #include <cmath>
+#include <iterator>
 
 about_view::about_view()
 {

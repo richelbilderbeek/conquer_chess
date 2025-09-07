@@ -5,6 +5,8 @@
 
 #include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
+#include <iterator>
+
 std::vector<controls_view_item> get_all_controls_view_items() noexcept
 {
   const auto a{magic_enum::enum_values<controls_view_item>()};

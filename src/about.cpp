@@ -1,7 +1,8 @@
 #include "about.h"
 
 #include <cassert>
-
+#include <SFML/System/String.hpp>
+#include <vector>
 std::wstring get_author_name() noexcept
 {
   return L"Richèl Bilderbeek";

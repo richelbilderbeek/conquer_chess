@@ -1,6 +1,7 @@
 #include "program_state.h"
 
 #include <sstream>
+#include <iterator>
 #include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 std::vector<program_state> get_all_program_states() noexcept

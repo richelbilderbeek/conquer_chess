@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <iterator>
 #include <sstream>
 
 std::vector<std::pair<square, chess_color>>

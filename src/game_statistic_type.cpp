@@ -1,6 +1,7 @@
 #include "game_statistic_type.h"
 
 #include <cassert>
+#include <iterator>
 #include <iostream>
 #include <sstream>
 

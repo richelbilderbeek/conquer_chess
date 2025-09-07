@@ -1,6 +1,9 @@
 #include "helper.h"
 
 #include <cassert>
+
+// Allow Windows to find M_PI, thanks https://stackoverflow.com/a/26065595/3364162
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <fstream>
 #include <sstream>

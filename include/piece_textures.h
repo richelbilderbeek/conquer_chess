@@ -9,6 +9,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <map>
+
 /// Textures of the chess pieces
 class piece_textures
 {

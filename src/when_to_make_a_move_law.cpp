@@ -1,8 +1,11 @@
 #include "when_to_make_a_move_law.h"
 
-#include <cassert>
 
 #include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
+
+#include <cassert>
+#include <iterator>
+#include <iterator>
 
 std::vector<when_to_make_a_move_law> get_all_when_to_make_a_move_laws() noexcept
 {

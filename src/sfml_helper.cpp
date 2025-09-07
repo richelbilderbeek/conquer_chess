@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include <cassert>
+#include <iterator>
 #include <cmath>
 
 std::string button_str_to_resource_name(std::string button_str)

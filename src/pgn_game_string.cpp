@@ -3,6 +3,7 @@
 #include "helper.h"
 
 #include <cassert>
+#include <iterator>
 
 
 pgn_game_string::pgn_game_string(const std::string& pgn_str)

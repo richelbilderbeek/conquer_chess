@@ -6,6 +6,7 @@
 #include "game_statistic_type.h"
 
 #include <map>
+
 /// The layout of the widget that displays the in-game statistics.
 ///
 /// Use \link{game_statistics_view_layout} for the game statistics screen.

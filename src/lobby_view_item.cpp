@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iterator>
 
 #include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 

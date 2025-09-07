@@ -6,6 +6,7 @@
 #include <cassert>
 #include <iostream>
 #include <sstream>
+#include <iterator>
 
 std::vector<options_view_item> get_all_options_view_items() noexcept
 {

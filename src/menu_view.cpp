@@ -59,6 +59,17 @@ void menu_view::draw_impl()
   draw_about_panel(*this);
   draw_quit_panel(*this);
   m_controls_bar.draw();
+
+  switch (this->get_selected())
+  {
+    case menu_view_item::about: break;
+    case menu_view_item::options:
+      draw_options_sub_menu(*this);
+      break;
+    case menu_view_item::quit: break;
+    case menu_view_item::start: break;
+  }
+
   draw_selected_panel(*this);
 
 }

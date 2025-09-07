@@ -11,7 +11,9 @@
 #include "screen_coordinate.h"
 #include "sfml_helper.h"
 #include "render_window.h"
+
 #include <cassert>
+#include <iterator>
 
 void draw_pieces(
   const game_controller& c,

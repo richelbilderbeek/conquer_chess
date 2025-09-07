@@ -27,6 +27,7 @@
 
 #include <cassert>
 #include <cmath>
+#include <iterator>
 #include <string>
 #include <sstream>
 

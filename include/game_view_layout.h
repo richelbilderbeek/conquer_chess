@@ -12,6 +12,7 @@
 #include "game_statistics_widget_layout.h"
 #include "navigation_controls_layout.h"
 #include "in_game_controls_layout.h"
+
 #include <iosfwd>
 #include <map>
 #include <vector>

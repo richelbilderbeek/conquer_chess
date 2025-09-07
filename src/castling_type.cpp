@@ -2,6 +2,8 @@
 
 #include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
+#include <iterator>
+
 std::vector<castling_type> get_all_castling_types() noexcept
 {
   const auto a{magic_enum::enum_values<castling_type>()};
