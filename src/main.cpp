@@ -92,7 +92,7 @@
 void test()
 {
 #ifndef NDEBUG
-  //test_cli_options();
+  //test_rules();
   //assert(1 == 2);
 
   test_about();

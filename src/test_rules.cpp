@@ -318,6 +318,58 @@ void test_rule_3_1()
     // Must be captured
     assert(get_piece_at(c, square("f7")).get_color() == chess_color::white);
   }
+  /// 3.1.1.CC.1
+  /// If two pieces attack the same piece,
+  /// the piece that started the attack first, will end up
+  /// on the square of the captured piece.
+  //
+  #ifdef FIX_ISSUE_157
+  // scenario 1: a4xb5, beats c4xb5
+  {
+    game_controller c{
+      create_game_with_starting_position(starting_position_type::pawn_all_out_assault)
+    };
+
+
+    do_select(c, "a4", side::lhs);
+    move_cursor_to(c, "b5", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs)); // Attack
+    c.apply_user_inputs_to_game();
+    c.tick(delta_t(0.5));
+
+    do_select(c, "c4", side::lhs);
+    move_cursor_to(c, "b5", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs)); // Attack
+    c.apply_user_inputs_to_game();
+
+    c.tick(delta_t(1.0));
+
+    assert(!is_piece_at(c.get_game(), square("a4")));
+    assert(is_piece_at(c.get_game(), square("c4")));
+  }
+  // scenario 2: c4xb5, beats a4xb5
+  {
+    game_controller c{
+      create_game_with_starting_position(starting_position_type::pawn_all_out_assault)
+    };
+
+    do_select(c, "c4", side::lhs);
+    move_cursor_to(c, "b5", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs)); // Attack
+    c.apply_user_inputs_to_game();
+    c.tick(delta_t(0.5));
+
+    do_select(c, "a4", side::lhs);
+    move_cursor_to(c, "b5", side::lhs);
+    add_user_input(c, create_press_action_1(side::lhs)); // Attack
+    c.apply_user_inputs_to_game();
+
+    c.tick(delta_t(1.0));
+
+    assert(is_piece_at(c.get_game(), square("a4")));
+    assert(!is_piece_at(c.get_game(), square("c4")));
+  }
+  #endif // FIX_ISSUE_157
   /// `[3.1.2]` A piece is said to attack an opponent's piece
   /// if the piece could make a capture on that square according
   /// to Articles 3.2 to 3.8.
