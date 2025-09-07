@@ -1,7 +1,7 @@
 "DepotBuild"
 {
     "DepotID" "3873941"
-    "ContentRoot" "."
+    // No need to overwrite "ContentRoot" "../"
 
     "FileMapping"
     {
@@ -9,10 +9,10 @@
         "DepotPath" "."
         "Recursive" "0"
     }
-    "FileExclusion" "*.png"
-    "FileExclusion" "*.ogg"
-    "FileExclusion" "*.jpg"
-    "FileExclusion" "*.ttf"
-    "FileExclusion" "*.txt"
-    "FileExclusion" "*.csv"
+    "FileMapping"
+    {
+        "LocalPath" "resources\*"
+        "DepotPath" "resources\"
+        "Recursive" "1" // include all subfolders
+    }
 }

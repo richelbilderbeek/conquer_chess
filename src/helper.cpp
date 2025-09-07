@@ -2,8 +2,8 @@
 
 #include <cassert>
 
-// Allow Windows to find M_PI, thanks https://stackoverflow.com/a/26065595/3364162
-#define _USE_MATH_DEFINES
+// Allow Windows to find get_pi(), thanks https://stackoverflow.com/a/26065595/3364162
+//#define _USE_MATH_DEFINES
 #include <cmath>
 #include <fstream>
 #include <sstream>
@@ -16,12 +16,12 @@ std::string bool_to_str(const bool b) noexcept
 
 double calc_angle_degrees(const double dx, const double dy)
 {
-  return calc_angle_radians(dx, dy) * 360.0 / (2.0 * M_PI);
+  return calc_angle_radians(dx, dy) * 360.0 / (2.0 * get_pi());
 }
 
 double calc_angle_radians(const double dx, const double dy)
 {
-  return std::atan2(dx,dy) - (0.5 * M_PI);
+  return std::atan2(dx,dy) - (0.5 * get_pi());
 }
 
 double calc_distance(const double dx, const double dy) noexcept
@@ -130,25 +130,25 @@ void test_helper()
     const double tolerance{0.1};
     {
       // 3 o'clock
-      const double expected{0.0 * M_PI};
+      const double expected{0.0 * get_pi()};
       const double created{calc_angle_radians( 1.0,  0.0)};
       assert(is_close(expected, created, tolerance));
     }
     {
       // 6 o'clock
-      const double expected{(1.5 * M_PI) - (2.0 * M_PI)};
+      const double expected{(1.5 * get_pi()) - (2.0 * get_pi())};
       const double created{calc_angle_radians( 0.0,  1.0)};
       assert(is_close(expected, created, tolerance));
     }
     {
       // 9 o'clock
-      const double expected{(1.0 * M_PI) - (2.0 * M_PI)};
+      const double expected{(1.0 * get_pi()) - (2.0 * get_pi())};
       const double created{calc_angle_radians(-1.0,  0.0)};
       assert(is_close(expected, created, tolerance));
     }
     {
       // 12 o'clock
-      const double expected{(0.5 * M_PI) + (0.0 * M_PI)};
+      const double expected{(0.5 * get_pi()) + (0.0 * get_pi())};
       const double created{calc_angle_radians( 0.0, -1.0)};
       assert(is_close(expected, created, tolerance));
     }

@@ -10,6 +10,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <string>
+
 /// Convert a fraction of health (i.e. a value e [0.0, 1.0] to a color
 sf::Color f_health_to_color(const double f);
 
@@ -21,6 +23,9 @@ std::vector<sf::Mouse::Button> get_all_sfml_buttons() noexcept;
 
 /// Get all the SFML keys
 std::vector<sf::Keyboard::Key> get_all_sfml_keys() noexcept;
+
+/// Get the SFML version this code has been compiled with
+std::string get_sfml_version() noexcept;
 
 /// Determine if the left or right shift has been pressed
 bool is_shift_pressed() noexcept;

@@ -16,12 +16,11 @@ void game_log::add_message(
   const message& m
 ) noexcept
 {
-  m_timed_messages.push_back(
-    std::make_pair(
-      0.001 * m_clock.getElapsedTime().asMilliseconds(),
-      m
-    )
-  );
+  const std::pair<elapsed_time_secs, message> p{
+    0.001 * m_clock.getElapsedTime().asMilliseconds(),
+    m
+  };
+  m_timed_messages.push_back(p);
 }
 
 std::string get_last_log_messages(

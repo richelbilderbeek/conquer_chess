@@ -181,6 +181,15 @@ void draw_normal_texts(
 /// Draw an Options menu button on the main window
 void draw_options_button(const screen_rect& sr);
 
+/// Draw a 'Options | Controls' menu button on the main window
+void draw_options_controls_button(const screen_rect& sr);
+
+/// Draw a 'Options | Laws' menu button on the main window
+void draw_options_laws_button(const screen_rect& sr);
+
+/// Draw a 'Options | Video and Audio' menu button on the main window
+void draw_options_video_and_audio_button(const screen_rect& sr);
+
 /// Draw a thick, red outline at the edges of this rectangle
 void draw_outline(
   const screen_rect& sr,

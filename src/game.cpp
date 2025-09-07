@@ -11,7 +11,7 @@
 #include <stdexcept>
 #include <iterator>
 #include <iostream>
-//#include <random>
+#include <sstream>
 
 #ifdef GAME_CONTROLLER_H
 #error 'game' must know nothing about 'game_controller'
@@ -1061,24 +1061,24 @@ const std::vector<piece>& get_pieces(const game& g) noexcept
 
 const piece& get_piece_with_id(const game& g, const piece_id& id)
 {
-  assert(has_piece_with_id(g, id));
   for (const auto& p: g.get_pieces())
   {
     if (p.get_id() == id) return p;
   }
-  assert(!"Should never get here");
-  throw std::logic_error("get_piece_with_id: should never get here");
+  std::stringstream msg;
+  msg << "Cannot find piece with id " << id;
+  throw std::logic_error(msg.str());
 }
 
 piece& get_piece_with_id(game& g, const piece_id& id)
 {
-  assert(has_piece_with_id(g, id));
   for (auto& p: g.get_pieces())
   {
     if (p.get_id() == id) return p;
   }
-  assert(!"Should never get here");
-  throw std::logic_error("get_piece_with_id: should never get here");
+  std::stringstream msg;
+  msg << "Cannot find piece with id " << id;
+  throw std::logic_error(msg.str());
 }
 
 std::vector<message> collect_messages(const game& g) noexcept
