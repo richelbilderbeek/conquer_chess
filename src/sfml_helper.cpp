@@ -7,6 +7,7 @@
 #include <cassert>
 #include <iterator>
 #include <cmath>
+#include <sstream>
 
 std::string button_str_to_resource_name(std::string button_str)
 {
@@ -61,6 +62,16 @@ std::vector<sf::Keyboard::Key> get_all_sfml_keys() noexcept
   std::copy(std::begin(a), std::end(a), std::back_inserter(v));
   assert(a.size() == v.size());
   return v;
+}
+
+std::string get_sfml_version() noexcept
+{
+  std::stringstream s;
+  s << SFML_VERSION_MAJOR
+    << "." << SFML_VERSION_MINOR
+    << "." << SFML_VERSION_PATCH
+  ;
+  return s.str();
 }
 
 #ifndef LOGIC_ONLY
@@ -216,7 +227,10 @@ void test_sfml_helper()
     const auto v{get_all_sfml_keys()};
     assert(!v.empty());
   }
-
+  // get_sfml_version
+  {
+    assert(!get_sfml_version().empty());
+  }
   #ifndef LOGIC_ONLY
   // is_shift_pressed
   {

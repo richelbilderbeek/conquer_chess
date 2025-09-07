@@ -643,6 +643,36 @@ void test_game_functions()
     assert(piece.get_type() == piece_type::king);
     //piece.set_selected(true); // Just needs to compile
   }
+  // get_piece_with_id, const
+  {
+    const game g{create_game_with_standard_starting_position()};
+    const piece_id id{create_new_id()};
+    bool has_thrown{false};
+    try
+    {
+      get_piece_with_id(g, id);
+    }
+    catch (std::logic_error& )
+    {
+      has_thrown = true;
+    }
+    assert(has_thrown);
+  }
+  // get_piece_with_id, non const
+  {
+    game g{create_game_with_standard_starting_position()};
+    const piece_id id{create_new_id()};
+    bool has_thrown{false};
+    try
+    {
+      get_piece_with_id(g, id);
+    }
+    catch (std::logic_error& )
+    {
+      has_thrown = true;
+    }
+    assert(has_thrown);
+  }
   // is_empty
   {
     const game g{create_game_with_standard_starting_position()};

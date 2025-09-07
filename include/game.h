@@ -332,7 +332,7 @@ piece& get_piece_at(game& g, const square& coordinat);
 piece& get_piece_at(game& g, const std::string& square_str);
 
 /// Get the piece with a certain ID.
-/// Assumes that the piece is on the board
+/// Will throw an exception if that piece is not on the board
 const piece& get_piece_with_id(const game& g, const piece_id& id);
 
 /// Get the piece with a certain ID.
