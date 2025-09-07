@@ -80,7 +80,7 @@ void controls_bar::draw()
   };
 
   // Show text and move to the right
-  auto show_text = [&x, &w, y1, y2, font_size, semi_transparent](const sf::String& s, const int text_width)
+  auto show_text = [&x, &w, y1, y2, semi_transparent, font_size](const sf::String& s, const int text_width)
   {
     x += w;
     w = text_width;
