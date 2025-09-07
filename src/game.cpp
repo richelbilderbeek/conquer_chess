@@ -249,7 +249,7 @@ bool can_do_promote(
 void game::check_all_occupied_squares_are_unique() const
 {
   const auto squares{get_occupied_squares(*this)};
-  assert(are_all_unique(squares));
+  assert(are_all_unique(squares) && "#157");
 }
 
 
