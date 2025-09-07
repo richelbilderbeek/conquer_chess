@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cmath>
 #include <algorithm>
+#include <stdexcept>
 #include <iterator>
 #include <iostream>
 //#include <random>
@@ -1066,6 +1067,7 @@ const piece& get_piece_with_id(const game& g, const piece_id& id)
     if (p.get_id() == id) return p;
   }
   assert(!"Should never get here");
+  throw std::logic_error("get_piece_with_id: should never get here");
 }
 
 piece& get_piece_with_id(game& g, const piece_id& id)
@@ -1076,6 +1078,7 @@ piece& get_piece_with_id(game& g, const piece_id& id)
     if (p.get_id() == id) return p;
   }
   assert(!"Should never get here");
+  throw std::logic_error("get_piece_with_id: should never get here");
 }
 
 std::vector<message> collect_messages(const game& g) noexcept
