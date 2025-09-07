@@ -275,6 +275,10 @@ TODO: [Allow a user to seta 'when to make a move' rule](https://github.com/riche
   the captured piece is removed and the attacker is placed
   on its square instantaneous.
 
+- `[3.1.1.CC.1]` If two pieces attack the same piece,
+  the piece that started the attack first, will end up
+  on the square of the captured piece. 
+
 - `[3.1.2]` A piece is said to attack an opponent's piece
   if the piece could make a capture on that square according
   to Articles 3.2 to 3.8.
