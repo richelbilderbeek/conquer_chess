@@ -406,10 +406,10 @@ std::vector<piece_action> collect_all_piece_actions(
     case piece_type::queen:
       return collect_all_queen_actions(g, p);
     case piece_type::rook:
+    default:
       assert(p.get_type() == piece_type::rook);
       return collect_all_rook_actions(g, p);
   }
-  assert(!"Should never get here");
 }
 
 std::vector<piece_action> collect_all_bishop_actions(
