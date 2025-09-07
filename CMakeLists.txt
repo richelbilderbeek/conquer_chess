@@ -61,7 +61,7 @@ target_compile_definitions(conquer_chess PRIVATE
     USE_SFGRAPHING
 )
 # Tell CMake to use SFML from vcpkg
-find_package(SFML COMPONENTS system window graphics network CONFIG REQUIRED)
+find_package(SFML COMPONENTS system window graphics network audio CONFIG REQUIRED)
 
 
 
@@ -71,6 +71,7 @@ target_link_libraries(conquer_chess PRIVATE
     sfml-window
     sfml-graphics
     sfml-network
+    sfml-audio
 )
 
 

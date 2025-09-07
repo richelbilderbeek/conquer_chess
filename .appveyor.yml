@@ -14,10 +14,13 @@ cache:
 install:
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
+  - .\vcpkg install sfml[audio]:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
+
 build_script:
-  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
   - cmake --build build --config Release
+
 
 
 after_build:
