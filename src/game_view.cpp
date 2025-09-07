@@ -180,6 +180,10 @@ bool game_view::process_event_impl(sf::Event& event)
         )
       );
     }
+    if (key_pressed == sf::Keyboard::Key::F8)
+    {
+      reset();
+    }
   }
 
   // Become unresponsive when there is a winner

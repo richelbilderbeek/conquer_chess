@@ -199,6 +199,7 @@ void main_window::set_new_state(const program_state s)
       assert(p);
       p->set_game_options(m_game_options);
       p->set_lobby_options(m_lobby_options);
+      p->set_cli_options(m_cli_options);
     }
     // Re-/set the game options
     else if (s == program_state::options)
