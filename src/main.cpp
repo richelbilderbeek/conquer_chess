@@ -95,7 +95,8 @@ void test()
   //test_board_layout();
   //return; // For now
   //test_game_view_layout();
-  //test_rules();
+  //test_game();
+  //assert(1 == 2);
 
   test_about();
   test_about_view_layout();
