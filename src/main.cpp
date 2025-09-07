@@ -79,7 +79,9 @@
 #include "main_window.h"
 #endif // LOGIC_ONLY
 
+
 #include <SFML/Graphics.hpp>
+#include <SFML/Config.hpp>
 
 #include <cassert>
 #include <csignal>

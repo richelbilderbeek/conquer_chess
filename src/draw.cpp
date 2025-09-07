@@ -376,6 +376,69 @@ void draw_options_button(const screen_rect& sr)
   );
 }
 
+void draw_options_controls_button(const screen_rect& sr)
+{
+  draw_texture(get_strip_texture(chess_color::white), sr);
+  draw_big_text(sf::String("Controls"), sr);
+  const screen_rect key_rect{
+    screen_coordinate(
+      sr.get_tl().get_x() + 16,
+      sr.get_tl().get_y() + 16
+    ),
+    screen_coordinate(
+      sr.get_tl().get_x() + 16 + 64,
+      sr.get_tl().get_y() + 16 + 64
+    )
+  };
+  draw_input_prompt_symbol_on_background(
+    sf::Keyboard::Key::C,
+    key_rect,
+    sf::Color(128, 128, 128, 128)
+  );
+}
+
+void draw_options_laws_button(const screen_rect& sr)
+{
+  draw_texture(get_strip_texture(chess_color::black), sr);
+  draw_big_text(sf::String("Laws"), sr);
+  const screen_rect key_rect{
+    screen_coordinate(
+      sr.get_tl().get_x() + 16,
+      sr.get_tl().get_y() + 16
+    ),
+    screen_coordinate(
+      sr.get_tl().get_x() + 16 + 64,
+      sr.get_tl().get_y() + 16 + 64
+    )
+  };
+  draw_input_prompt_symbol_on_background(
+    sf::Keyboard::Key::L,
+    key_rect,
+    sf::Color(128, 128, 128, 128)
+  );
+}
+
+void draw_options_video_and_audio_button(const screen_rect& sr)
+{
+  draw_texture(get_strip_texture(chess_color::black), sr);
+  draw_big_text(sf::String("Video and audio"), sr);
+  const screen_rect key_rect{
+    screen_coordinate(
+      sr.get_tl().get_x() + 16,
+      sr.get_tl().get_y() + 16
+    ),
+    screen_coordinate(
+      sr.get_tl().get_x() + 16 + 64,
+      sr.get_tl().get_y() + 16 + 64
+    )
+  };
+  draw_input_prompt_symbol_on_background(
+    sf::Keyboard::Key::V,
+    key_rect,
+    sf::Color(128, 128, 128, 128)
+  );
+}
+
 void draw_outline(
   const screen_rect& sr,
   const sf::Color& outline_color,

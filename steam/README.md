@@ -13,6 +13,8 @@ between application and depot.
 
 These are to be used with the `steamcmd` tool.
 
+- [Steam documentation](https://partner.steamgames.com/doc/sdk/uploading#BuildingYourGameTutorial)
+
 Parameter|Value  |Script
 ---------|-------|------
 AppId    |3873940|[app_build_3873940.vdf](app_build_3873940.vdf)

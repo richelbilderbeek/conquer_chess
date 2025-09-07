@@ -82,7 +82,11 @@ private:
   /// The maximum timestep is 0.25 chess moves.
   void tick_impl(const delta_t& dt);
 
-  friend game create_game_with_starting_position(starting_position_type t) noexcept;
+  friend game create_game_with_starting_position(
+    starting_position_type t,
+    const race lhs_race,
+    const race rhs_race
+  ) noexcept;
 };
 
 /// Can this piece castle kingside?

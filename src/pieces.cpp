@@ -3,11 +3,19 @@
 #include "game_coordinate.h"
 #include "fen_string.h"
 
+// Ignore warnings on Windows, thanks https://stackoverflow.com/a/5850405/3364162
+#ifndef _MSC_VER
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wshadow"
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#endif
+
 #include "../chess-library/include/chess.hpp"
+
+// Ignore warnings on Windows, thanks https://stackoverflow.com/a/5850405/3364162
+#ifndef _MSC_VER
 #pragma GCC diagnostic pop
+#endif // _MSC_VER
 
 #include <algorithm>
 #include <cassert>
