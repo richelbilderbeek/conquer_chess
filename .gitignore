@@ -61,3 +61,7 @@ tmp.txt
 tmp.csv
 tmp_*.wkt
 tmp_read_lines_test.txt
+SFGraphing/
+SFML-2.6.1/
+chess-library/
+magic_enum/
