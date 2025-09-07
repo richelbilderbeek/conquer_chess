@@ -17,8 +17,8 @@ loading_screen_songs::loading_screen_songs()
     {
       auto msg{
         "Cannot write sound file '" + filename + "'.\n"
-        "Tip 1: check the spelling of the filename\n"
-        "Tip 2: do not load resources in static initialization time"
+        "Tip 1: check if the executable is at the project root. \n"
+        "Tip 2: check the spelling of the filename\n"
       };
       throw std::runtime_error(msg);
     }

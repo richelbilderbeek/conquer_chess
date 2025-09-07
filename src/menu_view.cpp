@@ -63,6 +63,9 @@ void menu_view::draw_impl()
   switch (this->get_selected())
   {
     case menu_view_item::about: break;
+    case menu_view_item::laws:
+    case menu_view_item::controls:
+    case menu_view_item::video_and_audio:
     case menu_view_item::options:
       draw_options_sub_menu(*this);
       break;
