@@ -10,12 +10,12 @@
 /// The layout of the Menu dialog
 ///
 /// ```text
-/// Margins      _          _ _                    _
-/// ..........0 x x        x x x                  x width
-/// ..........  1 2        3 4 5                  6
-/// ..........
+/// Margins      _          _ _ _ _            _       _
+/// ..........0 x x        x x x x x          x x     x width
+/// ..........  1 2        3 4 5 6 7          8 9     1
+/// ..........                                        0
 /// ..........+-----------------------------------------+
-/// ..........|                                         |
+/// ..........|   menu_panel                            |
 /// ..........| +--------------+                        | y1
 /// ..........| |              |                        |
 /// ..........| | +----------+ |                        | y2
@@ -27,7 +27,7 @@
 /// ..........| | +----------+ |                        | y5
 /// ..........| |              |                        |
 /// ..........| | +----------+ |                        | y6
-/// ..........| | |spaces    | |                        |
+/// ..........| | |spaces    | |  sub_menu_panel        |
 /// ..........| | +----------+ | +--------------+       | y7
 /// ..........| |              | |              |       |
 /// ..........| | +----------+ | | +----------+ |       | y8
@@ -88,6 +88,7 @@ public:
 
   const auto& get_quit() const noexcept { return m_quit; }
   const auto& get_start() const noexcept { return m_start; }
+  const auto& get_sub_menu_panel() const noexcept { return m_sub_menu_panel; }
   const auto& get_subtitle() const noexcept { return m_subtitle; }
   const auto& get_title() const noexcept { return m_title; }
 
@@ -103,6 +104,7 @@ private:
   screen_rect m_quit;
   screen_rect m_start;
   screen_rect m_subtitle;
+  screen_rect m_sub_menu_panel;
   screen_rect m_title;
 };
 

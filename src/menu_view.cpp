@@ -55,7 +55,7 @@ void menu_view::draw_impl()
   draw_title_panel(*this);
   draw_subtitle_panel(*this);
   draw_start_panel(*this);
-  draw_options_panel(*this);
+  draw_options_panel(*this); // Also draws the sub-menu if needed
   draw_about_panel(*this);
   draw_quit_panel(*this);
   m_controls_bar.draw();
@@ -103,6 +103,14 @@ void draw_options_sub_menu(menu_view& )
 void draw_options_panel(menu_view& v)
 {
   draw_options_button(v.get_layout().get_options());
+
+  if (v.get_selected() == menu_view_item::options || is_in_options_submenu(v.get_selected()))
+  {
+    draw_outline(v.get_layout().get_sub_menu_panel());
+    draw_options_controls_button(v.get_layout().get_options_controls());
+    draw_options_laws_button(v.get_layout().get_options_laws());
+    draw_options_video_and_audio_button(v.get_layout().get_options_video_and_audio());
+  }
 }
 
 void draw_layout_panels(menu_view& v)
@@ -172,19 +180,19 @@ bool menu_view::process_event_impl(sf::Event& event)
     sf::Keyboard::Key key_pressed = event.key.code;
     if (key_pressed == sf::Keyboard::Key::Up)
     {
-      set_selected(get_previous(m_selected));
+      set_selected(get_up(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Right)
     {
-      set_selected(get_next(m_selected));
+      set_selected(get_right(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Down)
     {
-      set_selected(get_next(m_selected));
+      set_selected(get_down(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Left)
     {
-      set_selected(get_previous(m_selected));
+      set_selected(get_left(m_selected));
     }
     else if (key_pressed == sf::Keyboard::Key::Space
       || key_pressed == sf::Keyboard::Key::Return
