@@ -54,11 +54,8 @@ add_executable(conquer_chess WIN32 MACOSX_BUNDLE
 
 target_include_directories(conquer_chess PRIVATE
     ../SFGraphing/include
-    ../SFGraphing
-    include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing
 )
+
 
 target_compile_definitions(conquer_chess PRIVATE
     USE_SFGRAPHING
