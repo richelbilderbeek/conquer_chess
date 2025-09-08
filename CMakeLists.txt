@@ -56,6 +56,13 @@ target_include_directories(conquer_chess PRIVATE
     ../SFGraphing/include
 )
 
+target_include_directories(conquer_chess PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../chess-library/include
+)
+
 
 target_compile_definitions(conquer_chess PRIVATE
     USE_SFGRAPHING
