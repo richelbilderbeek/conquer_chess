@@ -21,23 +21,8 @@ endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-set(SFGRAPHING_SRC
-    ../SFGraphing/src/PieChartDataSet.cpp
-    ../SFGraphing/src/PlotDataSet.cpp
-    ../SFGraphing/src/SFPieChart.cpp
-    ../SFGraphing/src/SFPlot.cpp
-)
+file(GLOB SFGRAPHING_SRC "../SFGraphing/src/*.cpp")
 
-# Get ALL SFGraphing source files recursively
-#file(GLOB SFGRAPHING_SRC
-#    "../SFGraphing/src/*.cpp"
- #   "../SFGraphing/src/*.cxx"
-  #  "../SFGraphing/src/*.cc"
-  #  "../SFGraphing/src/*.c"
-  #  "../SFGraphing/*.cpp"
-   # "../SFGraphing/*.cxx"
-   # "../SFGraphing/*.cc"
-#)
 
 # Debug: Print found SFGraphing files
 message(STATUS "Found SFGraphing files: ${SFGRAPHING_SRC}")
