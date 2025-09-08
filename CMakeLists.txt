@@ -590,16 +590,12 @@ endif()
 
 if(WIN32)
     target_include_directories(conquer_chess PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include
-    )
-    
-    target_include_directories(conquer_chess PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/../chess-library/include
-    )
+    ${CMAKE_CURRENT_SOURCE_DIR}/include                 # Your project headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing/include    # SFGraphing library headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include       # Other dependencies
+    ${CMAKE_CURRENT_SOURCE_DIR}/../chess-library/include
+)
 
-    target_include_directories(conquer_chess PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing/include
-    )
 endif()
 
 install(TARGETS conquer_chess
