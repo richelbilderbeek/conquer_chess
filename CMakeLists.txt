@@ -21,12 +21,12 @@ endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-#set(SFGRAPHING_SRC
-#    ../SFGraphing/src/PieChartDataSet.cpp
-#    ../SFGraphing/src/PlotDataSet.cpp
-#    ../SFGraphing/src/SFPieChart.cpp
-#    ../SFGraphing/src/SFPlot.cpp
-#)
+set(SFGRAPHING_SRC
+    ../SFGraphing/src/PieChartDataSet.cpp
+    ../SFGraphing/src/PlotDataSet.cpp
+    ../SFGraphing/src/SFPieChart.cpp
+    ../SFGraphing/src/SFPlot.cpp
+)
 
 
 # Debug: Print found SFGraphing files
