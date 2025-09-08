@@ -5,10 +5,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Static build settings
-set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-set(BUILD_SHARED_LIBS OFF)
-set(CMAKE_EXE_LINKER_FLAGS "-static")
+# Static build settings (only for non-MSVC)
+if(NOT MSVC)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+    set(BUILD_SHARED_LIBS OFF)
+    set(CMAKE_EXE_LINKER_FLAGS "-static")
+endif()
+
 
 # Set vcpkg toolchain if not set
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
