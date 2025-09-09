@@ -11,6 +11,7 @@ if(NOT MSVC)
     set(BUILD_SHARED_LIBS OFF)
     set(CMAKE_EXE_LINKER_FLAGS "-static")
 endif()
+add_subdirectory(../SFGraphing SFGraphing_build)
 
 
 # Set vcpkg toolchain if not set
@@ -21,12 +22,6 @@ endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
-set(SFGRAPHING_SRC
-    ../SFGraphing/src/PieChartDataSet.cpp
-    ../SFGraphing/src/PlotDataSet.cpp
-    ../SFGraphing/src/SFPieChart.cpp
-    ../SFGraphing/src/SFPlot.cpp
-)
 
 
 # Debug: Print found SFGraphing files
@@ -38,7 +33,6 @@ file(GLOB LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
 
 add_executable(conquer_chess WIN32 MACOSX_BUNDLE
-    ${SFGRAPHING_SRC}
     ${LOCAL_SRC}
 )
 
@@ -48,7 +42,6 @@ target_include_directories(conquer_chess PRIVATE
 
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing/include
     ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../chess-library/include
 )
@@ -63,7 +56,7 @@ find_package(SFML COMPONENTS system window graphics network audio main CONFIG RE
 
 
 # Link against SFML targets (vcpkg uses lowercase names)
-target_link_libraries(conquer_chess PRIVATE
+target_link_libraries(conquer_chess PRIVATE SFGraphing
     sfml-system
     sfml-window
     sfml-graphics
