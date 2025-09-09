@@ -54,7 +54,6 @@ target_compile_definitions(conquer_chess PRIVATE
 find_package(SFML COMPONENTS system window graphics network audio main CONFIG REQUIRED)
 
 
-
 # Link against SFML targets (vcpkg uses lowercase names)
 target_link_libraries(conquer_chess PRIVATE SFGraphing
     sfml-system
