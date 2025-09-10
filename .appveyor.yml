@@ -1,5 +1,4 @@
-# Build a Windows x64 Release exe with SFML via vcpkg and upload it as an artifact.
-
+# Build a Windows x64 Release exe with SFML 2.6.2 via vcpkg
 branches:
   only:
     - main
@@ -12,28 +11,23 @@ environment:
   VCPKG_DEFAULT_TRIPLET: x64-windows
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
 
-# Speed up repeat builds by caching vcpkg-installed packages.
+# Speed up repeat builds by caching vcpkg-installed packages
 cache:
   - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
-  - cmd: >
-      cd %VCPKG_ROOT% &&
-      git pull &&
-      .\bootstrap-vcpkg.bat
-  - cmd: >
-      %VCPKG_ROOT%\vcpkg.exe install sfml --triplet x64-windows
-  - cmd: cd %APPVEYOR_BUILD_FOLDER%
+  - cd %VCPKG_ROOT%
+  - .\bootstrap-vcpkg.bat
+  - .\vcpkg install sfml[audio]:x64-windows
+  - cd %APPVEYOR_BUILD_FOLDER%
 
 build_script:
-  - cmd: >
-      mkdir build && cd build &&
-      cmake -A x64 ..
-        -DCMAKE_BUILD_TYPE=Release
-        -DCMAKE_TOOLCHAIN_FILE=%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake
-        -DVCPKG_TARGET_TRIPLET=x64-windows
-        .. &&
-      cmake --build . --config Release
+  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
+  - cmake --build build --config Release
+
+before_build:
+  - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
+
 
 after_build:
   - ps: |
@@ -41,28 +35,34 @@ after_build:
       $out  = Join-Path $root 'dist'
       New-Item -ItemType Directory -Force -Path $out | Out-Null
 
-      # Grab the first Release exe produced (adjust here if you prefer a specific target)
+      # Grab the first Release exe produced
       $exe = Get-ChildItem -Recurse -Filter *.exe -Path "$root\build" |
              Where-Object { $_.FullName -match '\\Release\\' } |
              Sort-Object Length -Descending |
              Select-Object -First 1
 
       if (-not $exe) { throw "No exe found in the Release build." }
-
       Copy-Item $exe.FullName $out
 
-      # Copy typical SFML runtime DLLs and their deps from vcpkg
+      # Copy runtime DLLs (SFML + deps)
       $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
       $patterns = @(
-        'sfml-*.dll',
-        'openal32.dll',
-        'freetype*.dll',
-        'ogg*.dll',
-        'vorbis*.dll',
-        'vorbisfile*.dll',
-        'vorbisenc*.dll',
-        'zlib*.dll',
-        'brotli*.dll'
+      'sfml-system-2.dll',
+      'sfml-window-2.dll',
+      'sfml-graphics-2.dll',
+      'sfml-audio-2.dll',
+      'sfml-network-2.dll',
+      'openal32.dll',
+      'freetype*.dll',
+      'ogg*.dll',
+      'vorbis*.dll',
+      'vorbisfile*.dll',
+      'vorbisenc*.dll',
+      'zlib*.dll',
+      'brotli*.dll',
+      'bz2.dll',
+      'libpng16.dll',
+      'FLAC.dll'
       )
       foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
 
@@ -71,6 +71,7 @@ after_build:
         $src = Join-Path $root $folder
         if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
       }
+
 
 artifacts:
   - path: dist\**
