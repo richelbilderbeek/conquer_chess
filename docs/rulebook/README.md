@@ -26,7 +26,7 @@ one should assume that the rulebook is correct.
   multiple arenas of any shape added in the future.
 
 TODO: [Consider allowing multiple chessboards per match](https://github.com/richelbilderbeek/conquer_chess/issues/122).
-  
+
 - `[1.1.CC.0]` The time unit used in the game is a chess move.
 
   For example, one can say: 'It takes one chess move to move a piece'.
@@ -95,7 +95,7 @@ TODO: [Allow a user to seta 'when to make a move' rule](https://github.com/riche
   This means that when it has taken damage and given enough time,
   its health can gradually
   reach its maximum value again.
-  
+
   The regeneration rate per race are as follows:
 
   Race    |Healhh regeneration rate
@@ -114,7 +114,7 @@ TODO: [Allow a user to seta 'when to make a move' rule](https://github.com/riche
   This means that when its shield has taken damage and given enough time,
   its shield can gradually
   reach its maximum value again.
-  
+
   The shieled regeneration rate per race are as follows:
 
   Race    |Regeneration rate
@@ -274,6 +274,10 @@ TODO: [Allow a user to seta 'when to make a move' rule](https://github.com/riche
   piece under attack. When the health is reduced to zero,
   the captured piece is removed and the attacker is placed
   on its square instantaneous.
+
+- `[3.1.1.CC.1]` If two pieces attack the same piece,
+  the piece that started the attack first, will end up
+  on the square of the captured piece.
 
 - `[3.1.2]` A piece is said to attack an opponent's piece
   if the piece could make a capture on that square according

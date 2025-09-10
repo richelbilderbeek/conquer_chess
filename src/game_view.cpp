@@ -180,6 +180,10 @@ bool game_view::process_event_impl(sf::Event& event)
         )
       );
     }
+    if (key_pressed == sf::Keyboard::Key::F8)
+    {
+      reset();
+    }
   }
 
   // Become unresponsive when there is a winner
@@ -271,6 +275,12 @@ void game_view::draw_impl()
       m_layout.get_background(),
       200
     );
+
+    if (m_cli_options.get_is_vbf_mode())
+    {
+      reset();
+      assert(!m_game_controller.get_game().get_winner().has_value());
+    }
   }
   // General controls bar
   m_controls_bar.draw();
@@ -636,13 +646,7 @@ void draw_unit_info(game_view& view, const side player_side)
   draw_text(s.str(), text_rect, 20);
 }
 
-void game_view::set_lobby_options(const lobby_options& lo) noexcept
-{
-  m_lobby_options = lo;
-}
-
-
-void game_view::start_impl()
+void game_view::reset()
 {
   m_clock.restart();
   game_resources::get().get_songs().get_wonderful_time().setVolume(
@@ -659,6 +663,16 @@ void game_view::start_impl()
     ),
     m_lobby_options
   );
+}
+
+void game_view::set_lobby_options(const lobby_options& lo) noexcept
+{
+  m_lobby_options = lo;
+}
+
+void game_view::start_impl()
+{
+  reset();
   assert(!is_active());
   set_is_active(true);
 

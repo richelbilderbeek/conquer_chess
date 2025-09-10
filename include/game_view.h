@@ -4,6 +4,7 @@
 #ifndef LOGIC_ONLY
 
 #include "ccfwd.h"
+#include "cc_cli_options.h"
 #include "controls_bar.h"
 #include "physical_controller.h"
 //#include "game.h"
@@ -59,6 +60,11 @@ public:
   /// Process a resize events
   void process_resize_event_impl(sf::Event& event) override;
 
+  /// Reset the game
+  void reset();
+
+  void set_cli_options(const cc_cli_options& cli_options) noexcept { m_cli_options = cli_options; }
+
   void set_game_options(const game_options& go) noexcept { m_game_options = go; }
 
   void set_lobby_options(const lobby_options& lo) noexcept;
@@ -71,6 +77,8 @@ private:
 
   /// The game clock, to measure the elapsed time
   sf::Clock m_clock;
+
+  cc_cli_options m_cli_options;
 
   controls_bar m_controls_bar;
 

@@ -290,12 +290,19 @@ bool is_selected(const piece& p);
 void test_piece();
 
 /// Process a tick, when the current action is an attack
+///
+/// An attack only does damage, the actual capture is processed
+/// by game::do_captures
 void tick_attack(
   piece& p,
   const delta_t& dt,
   game& g
 );
 
+/// Process a tick, when the current action is an en-passant attack
+///
+/// An attack only does damage, the actual capture is processed
+/// by game::do_captures
 void tick_attack_en_passant(
   piece& p,
   const delta_t& dt,

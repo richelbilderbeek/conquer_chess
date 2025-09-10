@@ -155,10 +155,14 @@ The game shows what each button does in a certain context.
 
 ## Technical
 
+### How do you create the Windows executable?
+
+Using an AppVeyor script that uploads the executable and
+all required DLLs.
+
 ### How did you generate the FEN strings
 
 I often used <https://www.365chess.com/analysis_board.php>.
-
 
 ### How is the user input handled?
 

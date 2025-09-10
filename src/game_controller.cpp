@@ -119,6 +119,13 @@ void game_controller::apply_user_inputs_to_game()
           {
             continue;
           }
+          if (actions[0] == piece_action_type::attack_en_passant)
+          {
+            const auto selected_piece{get_selected_pieces(*this, s)[0]};
+            const auto selected_piece_type{selected_piece.get_type()};
+            assert(selected_piece_type == piece_type::pawn && "#156");
+          }
+
           apply_action_type_to_game(g, actions[0], s);
         }
         break;
@@ -153,7 +160,13 @@ void game_controller::apply_action_type_to_game(game& g, const piece_action_type
   switch (t)
   {
     case piece_action_type::attack: apply_action_type_attack_to_game(g, s); break;
-    case piece_action_type::attack_en_passant: apply_action_type_attack_en_passant_to_game(g, s); break;
+    case piece_action_type::attack_en_passant:
+    {
+      const auto selected_piece{get_selected_pieces(*this, s)[0]};
+      const auto selected_piece_type{selected_piece.get_type()};
+      assert(selected_piece_type == piece_type::pawn && "#156");
+      apply_action_type_attack_en_passant_to_game(g, s); break;
+    }
     case piece_action_type::castle_kingside: apply_action_type_castle_kingside_to_game(g, s); break;
     case piece_action_type::castle_queenside: apply_action_type_castle_queenside_to_game(g, s); break;
     case piece_action_type::move:
@@ -229,7 +242,7 @@ void game_controller::apply_action_type_attack_en_passant_to_game(game& g, const
   assert(get_selected_pieces(*this, s).size() == 1);
   const auto selected_piece{get_selected_pieces(*this, s)[0]};
   const auto selected_piece_type{selected_piece.get_type()};
-  assert(selected_piece_type == piece_type::pawn);
+  assert(selected_piece_type == piece_type::pawn && "#156");
 
   assert(can_attack_en_passant(*this, s));
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-./start_mashing_button.R
+./scripts/start_mashing_button.R
 
 exit 0
 
