@@ -5,6 +5,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(SFGRAPHING_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing)
+
+set(SFGRAPHING_SRC
+    ${SFGRAPHING_ROOT}/src/PieChartDataSet.cpp
+    ${SFGRAPHING_ROOT}/src/PlotDataSet.cpp
+    ${SFGRAPHING_ROOT}/src/SFPieChart.cpp
+    ${SFGRAPHING_ROOT}/src/SFPlot.cpp
+)
+
 # Static build settings (only for non-MSVC)
 if(NOT MSVC)
     set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
@@ -45,7 +54,7 @@ add_executable(conquer_chess WIN32 MACOSX_BUNDLE
 
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing/include
+    ${SFGRAPHING_ROOT}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../chess-library/include
 )
@@ -55,7 +64,7 @@ target_compile_definitions(conquer_chess PRIVATE
     USE_SFGRAPHING
 )
 # Tell CMake to use SFML from vcpkg
-find_package(SFML COMPONENTS system window graphics network audio main CONFIG REQUIRED)
+find_package(SFML 2.6.2 COMPONENTS system window graphics network audio main CONFIG REQUIRED)
 
 
 
