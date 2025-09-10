@@ -1,97 +1,82 @@
+# Build a Windows x64 Release exe with SFML 2.6.2 via vcpkg
+branches:
+  only:
+    - main
+
+version: '{build}'
 image: Visual Studio 2022
 
+environment:
+  VCPKG_ROOT: C:\Tools\vcpkg
+  VCPKG_DEFAULT_TRIPLET: x64-windows
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+
+# Speed up repeat builds by caching vcpkg-installed packages
+cache:
+  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
+
 install:
-  # g++
-  # Although cygwin looks cleaner, the Qt version 5.6.3 is compatible with
-  # MinGW 4.9.0
-  - set PATH=%PATH%;C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
-  # - set PATH=%PATH%;C:\cygwin\bin
-  # qmake
-  # This is the last documentated Qt version with a compatible MinWG version, 
-  #   https://www.appveyor.com/docs/windows-images-software/,
-  #   but it does not exist anymore :-/
-  # - set QTDIR=C:\Qt\5.6.3\mingw492_32
-  - set QTDIR=C:\Qt\6.8.1\mingw_64
-  - set PATH=%PATH%;%QTDIR%\bin
-  # Boost
-  - set PATH=%PATH%;C:\Libraries\boost_1_86_0
-  # SFML (TODO)
+  - cd %VCPKG_ROOT%
+  - .\bootstrap-vcpkg.bat
+  - .\vcpkg install sfml[audio]:x64-windows
+  - cd %APPVEYOR_BUILD_FOLDER%
 
 build_script:
-  # Explore the tools
-  - g++.exe --version
-  - g++ --version
-  # Explore file system
-  - echo %cd%
-  - dir C:\
-  - dir C:\mingw-w64
-  - dir C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0
-  - dir C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64
-  - dir C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
-  #- dir C:\mingw-w64
-  #- dir C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64
-  #- dir C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin
-  #- dir C:\cygwin
-  #- dir C:\cygwin\bin
-  - dir C:\Qt
-  - dir C:\Qt\6.8.1
-  - dir C:\Qt\6.8.1\mingw_64
-  - dir C:\Qt\6.8.1\mingw_64\bin
-  - dir C:\Libraries
-  - dir C:\Libraries\boost_1_86_0
-  # Find out current folder's content
-  - dir
-  # SFML
-  - cd ..
-  - curl https://www.sfml-dev.org/files/SFML-3.0.0-windows-gcc-14.2.0-mingw-32-bit.zip > SFML-3.0.0-windows-gcc-14.2.0-mingw-32-bit.zip
-  - unzip SFML-3.0.0-windows-gcc-14.2.0-mingw-32-bit.zip
-  - dir
-  - dir SFML-3.0.0
-  - rename SFML-3.0.0 SFML
-  - dir
-  - dir SFML
-  - dir SFML\include
-  - dir SFML\lib
-  # - move SFML-3.0.0 SFML
-  - cd conquer-chess
-  # - dir
-  # magic_enum, download
-  - echo "Download magic_enum"
-  - cd .. 
-  - git clone https://github.com/Neargye/magic_enum
-  - cd conquer-chess
-  # magic_enum, install
-  - echo "Install magic_enum"
-  - cd ../magic_enum
-  - cmake .
-  # Skip the make step
-  #- dir
-  #- dir cmake
-  #- dir CMakeFiles
-  #- dir example
-  #- make.exe
-  - cd ..\conquer-chess
-  # Disservin's chess-library, download
-  - echo "Disservin's chess-library"
-  - cd ..
-  - git clone https://github.com/Disservin/chess-library.git
-  - cd conquer-chess
-  # Jerrit Gläsker's SFGraphing library
-  - echo "Download Jerrit Gläsker's SFGraphing library"
-  - cd ..
-  - git clone https://github.com/richelbilderbeek/SFGraphing -b patch-1
-  - cd conquer-chess
-  # Conquer Chess
-  - echo "Building Conquer Chess"
-  - qmake game.pro
-  # No idea what 'mingw32-cd' does ...
-  # - mingw32-cd
-  # - make release
-  # - make.exe release
-  - mingw32-make.exe release
-  # - mingw32-make.exe release
-  - conquer_chess.exe --version
+  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
+  - cmake --build build --config Release
+
+before_build:
+  - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
+
+
+after_build:
+  - ps: |
+      $root = $env:APPVEYOR_BUILD_FOLDER
+      $out  = Join-Path $root 'dist'
+      New-Item -ItemType Directory -Force -Path $out | Out-Null
+
+      # Grab the first Release exe produced
+      $exe = Get-ChildItem -Recurse -Filter *.exe -Path "$root\build" |
+             Where-Object { $_.FullName -match '\\Release\\' } |
+             Sort-Object Length -Descending |
+             Select-Object -First 1
+
+      if (-not $exe) { throw "No exe found in the Release build." }
+      Copy-Item $exe.FullName $out
+
+      # Copy runtime DLLs (SFML + deps)
+      $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
+      $patterns = @(
+      'sfml-system-2.dll',
+      'sfml-window-2.dll',
+      'sfml-graphics-2.dll',
+      'sfml-audio-2.dll',
+      'sfml-network-2.dll',
+      'openal32.dll',
+      'freetype*.dll',
+      'ogg*.dll',
+      'vorbis*.dll',
+      'vorbisfile*.dll',
+      'vorbisenc*.dll',
+      'zlib*.dll',
+      'brotli*.dll',
+      'bz2.dll',
+      'libpng16.dll',
+      'FLAC.dll'
+      )
+      foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
+
+      # Ship game assets if present
+      foreach ($folder in @('resources','images')) {
+        $src = Join-Path $root $folder
+        if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
+      }
+
 
 artifacts:
-  # The goal of this CI script
-  - path: conquer_chess.exe
+  - path: dist\**
+    name: conquer_chess-win64
+    type: WebDeployPackage
+
+on_failure:
+  - ps: Get-ChildItem -Recurse "$env:APPVEYOR_BUILD_FOLDER\build" -ErrorAction SilentlyContinue | Out-String | Write-Host

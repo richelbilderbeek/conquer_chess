@@ -1,0 +1,20 @@
+"DepotBuild"
+{
+    // Windows build
+
+    "DepotID" "3873942"
+    // No need to overwrite "ContentRoot" "../"
+
+    "FileMapping"
+    {
+        "LocalPath" "windows_binaries\*"
+        "DepotPath" "."
+        "Recursive" "1"
+    }
+    "FileMapping"
+    {
+        "LocalPath" "resources\*"
+        "DepotPath" "resources\"
+        "Recursive" "1" // include all subfolders
+    }
+}

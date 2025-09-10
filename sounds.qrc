@@ -1,0 +1,48 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/songs/aura.ogg</file>
+        <file>resources/songs/bliss.ogg</file>
+        <file>resources/songs/heroes.ogg</file>
+        <file>resources/songs/silence.ogg</file>
+        <file>resources/songs/soothing.ogg</file>
+        <file>resources/songs/wonderful_time.ogg</file>
+        <file>resources/sound_effects/attacking_high.ogg</file>
+        <file>resources/sound_effects/attacking_low.ogg</file>
+        <file>resources/sound_effects/attacking_mid.ogg</file>
+        <file>resources/sound_effects/bark_1.ogg</file>
+        <file>resources/sound_effects/bark_2.ogg</file>
+        <file>resources/sound_effects/countdown.ogg</file>
+        <file>resources/sound_effects/done_high.ogg</file>
+        <file>resources/sound_effects/done_low.ogg</file>
+        <file>resources/sound_effects/done_mid.ogg</file>
+        <file>resources/sound_effects/faring_into_battle.ogg</file>
+        <file>resources/sound_effects/heu_high.ogg</file>
+        <file>resources/sound_effects/heu_low.ogg</file>
+        <file>resources/sound_effects/heu_mid.ogg</file>
+        <file>resources/sound_effects/hide.ogg</file>
+        <file>resources/sound_effects/hmm_high.ogg</file>
+        <file>resources/sound_effects/hmm_low.ogg</file>
+        <file>resources/sound_effects/hmm_mid.ogg</file>
+        <file>resources/sound_effects/i_cannot_high.ogg</file>
+        <file>resources/sound_effects/i_cannot_low.ogg</file>
+        <file>resources/sound_effects/i_cannot_mid.ogg</file>
+        <file>resources/sound_effects/i_cant_high.ogg</file>
+        <file>resources/sound_effects/i_cant_low.ogg</file>
+        <file>resources/sound_effects/i_cant_mid.ogg</file>
+        <file>resources/sound_effects/its_time_to_rock.ogg</file>
+        <file>resources/sound_effects/jumping_into_battle.ogg</file>
+        <file>resources/sound_effects/lets_rule.ogg</file>
+        <file>resources/sound_effects/moving_forward.ogg</file>
+        <file>resources/sound_effects/no_high.ogg</file>
+        <file>resources/sound_effects/no_low.ogg</file>
+        <file>resources/sound_effects/no_mid.ogg</file>
+        <file>resources/sound_effects/nope_high.ogg</file>
+        <file>resources/sound_effects/nope_low.ogg</file>
+        <file>resources/sound_effects/nope_mid.ogg</file>
+        <file>resources/sound_effects/to_rule_is_to_act.ogg</file>
+        <file>resources/sound_effects/yes_high.ogg</file>
+        <file>resources/sound_effects/yes_low.ogg</file>
+        <file>resources/sound_effects/yes_mid.ogg</file>
+       
+    </qresource>
+</RCC>
