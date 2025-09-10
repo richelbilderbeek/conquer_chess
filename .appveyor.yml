@@ -1,4 +1,9 @@
 # Build a Windows x64 Release exe with SFML via vcpkg and upload it as an artifact.
+
+branches:
+  only:
+    - main
+
 version: '{build}'
 image: Visual Studio 2022
 
