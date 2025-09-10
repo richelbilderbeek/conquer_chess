@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "SFGraphing/SFPieChart.h"
 
 using namespace csrc;
