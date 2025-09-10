@@ -9,7 +9,7 @@
     {
         "LocalPath" "windows_binaries\*"
         "DepotPath" "."
-        "Recursive" "0"
+        "Recursive" "1"
     }
     "FileMapping"
     {
