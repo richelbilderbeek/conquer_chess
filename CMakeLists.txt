@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(SFGRAPHING_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing)
+set(SFGRAPHING_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing)
 
 set(SFGRAPHING_SRC
     ${SFGRAPHING_ROOT}/src/PieChartDataSet.cpp
@@ -31,10 +31,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 
 set(SFGRAPHING_SRC
-    ../SFGraphing/src/PieChartDataSet.cpp
-    ../SFGraphing/src/PlotDataSet.cpp
-    ../SFGraphing/src/SFPieChart.cpp
-    ../SFGraphing/src/SFPlot.cpp
+    ${SFGRAPHING_ROOT}/src/PieChartDataSet.cpp
+    ${SFGRAPHING_ROOT}/src/PlotDataSet.cpp
+    ${SFGRAPHING_ROOT}/src/SFPieChart.cpp
+    ${SFGRAPHING_ROOT}/src/SFPlot.cpp
 )
 
 
@@ -64,7 +64,7 @@ target_compile_definitions(conquer_chess PRIVATE
     USE_SFGRAPHING
 )
 # Tell CMake to use SFML from vcpkg
-find_package(SFML 2.6.2 COMPONENTS system window graphics network audio main CONFIG REQUIRED)
+find_package(SFML COMPONENTS system window graphics network audio main CONFIG REQUIRED)
 
 
 
@@ -584,15 +584,6 @@ if(CMAKE_BUILD_TYPE STREQUAL Debug)
     )
 endif()
 
-if(WIN32)
-    target_include_directories(conquer_chess PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include                 # Your project headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/../SFGraphing/include    # SFGraphing library headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include       # Other dependencies
-    ${CMAKE_CURRENT_SOURCE_DIR}/../chess-library/include
-)
-
-endif()
 
 install(TARGETS conquer_chess
     BUNDLE DESTINATION .
