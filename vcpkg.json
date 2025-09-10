@@ -1,0 +1,15 @@
+{
+  "name": "conquer-chess",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name": "sfml",
+      "features": [
+        "graphics",
+        "window",
+        "network",
+        "audio"
+      ]
+    }
+  ]
+}
