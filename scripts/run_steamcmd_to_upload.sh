@@ -36,7 +36,7 @@ read -p "Press enter when done"
 
 echo "Checking Steam install."
 
-if ./scripts/check_steam_install.sh then
+if ./scripts/check_steam_install.sh ; then
   echo "Everything seems to work :-)" 
 fi
 
