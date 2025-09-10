@@ -43,18 +43,22 @@ after_build:
       # Copy runtime DLLs (SFML + deps)
       $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
       $patterns = @(
-        'sfml-*.dll',
-        'openal32.dll',
-        'freetype*.dll',
-        'ogg*.dll',
-        'vorbis*.dll',
-        'vorbisfile*.dll',
-        'vorbisenc*.dll',
-        'zlib*.dll',
-        'brotli*.dll',
-        'bz2.dll',
-        'libpng16.dll',
-        'FLAC.dll'
+      'sfml-system-2.dll',
+      'sfml-window-2.dll',
+      'sfml-graphics-2.dll',
+      'sfml-audio-2.dll',
+      'sfml-network-2.dll',
+      'openal32.dll',
+      'freetype*.dll',
+      'ogg*.dll',
+      'vorbis*.dll',
+      'vorbisfile*.dll',
+      'vorbisenc*.dll',
+      'zlib*.dll',
+      'brotli*.dll',
+      'bz2.dll',
+      'libpng16.dll',
+      'FLAC.dll'
       )
       foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
 
