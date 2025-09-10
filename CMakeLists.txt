@@ -42,9 +42,6 @@ add_executable(conquer_chess WIN32 MACOSX_BUNDLE
     ${LOCAL_SRC}
 )
 
-target_include_directories(conquer_chess PRIVATE
-    ../SFGraphing/include
-)
 
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
