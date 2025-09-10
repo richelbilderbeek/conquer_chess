@@ -51,7 +51,10 @@ after_build:
         'vorbisfile*.dll',
         'vorbisenc*.dll',
         'zlib*.dll',
-        'brotli*.dll'
+        'brotli*.dll',
+        'bz2.dll',
+        'libpng16.dll',
+        'FLAC.dll'
       )
       foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
 
@@ -60,6 +63,7 @@ after_build:
         $src = Join-Path $root $folder
         if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
       }
+
 
 artifacts:
   - path: dist\**
