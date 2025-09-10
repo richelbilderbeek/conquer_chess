@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(SFGRAPHING_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing)
+set(SFML_STATIC_LIBRARIES TRUE)
 
 set(SFGRAPHING_SRC
     ${SFGRAPHING_ROOT}/src/PieChartDataSet.cpp
@@ -64,7 +65,9 @@ target_compile_definitions(conquer_chess PRIVATE
     USE_SFGRAPHING
 )
 # Tell CMake to use SFML from vcpkg
-find_package(SFML COMPONENTS system window graphics network audio main CONFIG REQUIRED)
+find_package(SFML 2.6 COMPONENTS graphics audio network window system main REQUIRED)
+
+#find_package(SFML COMPONENTS system window graphics network audio main CONFIG REQUIRED)
 
 
 
