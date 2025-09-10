@@ -59,6 +59,11 @@ win32 {
   LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 }
 
+unix {
+  # Link SFML modules
+  LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+}
+
 
 
 # SFGraphing
