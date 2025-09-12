@@ -17,8 +17,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(FetchContent)
 
 # magic_enum (installed via vcpkg)
-find_path(MAGIC_ENUM_INCLUDE_DIRS "magic_enum.hpp")
-message(STATUS "magic_enum include dir: ${MAGIC_ENUM_INCLUDE_DIRS}")
+#find_path(MAGIC_ENUM_INCLUDE_DIRS "magic_enum.hpp")
+#message(STATUS "magic_enum include dir: ${MAGIC_ENUM_INCLUDE_DIRS}")
 
 
 # SFML (installed via vcpkg)
