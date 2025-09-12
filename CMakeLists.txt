@@ -5,59 +5,55 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(SFGRAPHING_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing)
-set(SFML_STATIC_LIBRARIES TRUE)
-
-set(SFGRAPHING_SRC
-    ${SFGRAPHING_ROOT}/src/PieChartDataSet.cpp
-    ${SFGRAPHING_ROOT}/src/PlotDataSet.cpp
-    ${SFGRAPHING_ROOT}/src/SFPieChart.cpp
-    ${SFGRAPHING_ROOT}/src/SFPlot.cpp
-)
-
-# Static build settings (only for non-MSVC)
-if(NOT MSVC)
-    set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-    set(BUILD_SHARED_LIBS OFF)
-    set(CMAKE_EXE_LINKER_FLAGS "-static")
-endif()
-
-
-# Set vcpkg toolchain if not set
+# Ensure vcpkg toolchain is used if available
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# ---- Dependencies ----
 
-set(SFGRAPHING_SRC
-    ${SFGRAPHING_ROOT}/src/PieChartDataSet.cpp
-    ${SFGRAPHING_ROOT}/src/PlotDataSet.cpp
-    ${SFGRAPHING_ROOT}/src/SFPieChart.cpp
-    ${SFGRAPHING_ROOT}/src/SFPlot.cpp
+include(FetchContent)
+
+# magic_enum (installed via vcpkg)
+find_package(magic_enum CONFIG REQUIRED)
+
+# SFML (installed via vcpkg)
+find_package(SFML 2.6 COMPONENTS graphics audio network window system main REQUIRED)
+
+# SFGraphing (from GitHub)
+FetchContent_Declare(
+  SFGraphing
+  GIT_REPOSITORY https://github.com/richelbilderbeek/SFGraphing.git
+  GIT_TAG main
 )
+FetchContent_MakeAvailable(SFGraphing)
 
+# chess-library (from GitHub)
+FetchContent_Declare(
+  chess_library
+  GIT_REPOSITORY https://github.com/richelbilderbeek/chess-library.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(chess_library)
 
-# Debug: Print found SFGraphing files
-message(STATUS "Found SFGraphing files: ${SFGRAPHING_SRC}")
+# ---- Sources ----
 
-# Get local source files
+# Collect your project source files
 file(GLOB LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
-
-
 add_executable(conquer_chess WIN32 MACOSX_BUNDLE
-    ${SFGRAPHING_SRC}
     ${LOCAL_SRC}
 )
 
-
+# ---- Include paths ----
+# If SFGraphing and chess_library don't export proper targets,
+# we add includes manually as fallback:
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${SFGRAPHING_ROOT}/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../chess-library/include
+    ${SFGraphing_SOURCE_DIR}/include
+    ${chess_library_SOURCE_DIR}/include
 )
 
 
@@ -70,6 +66,9 @@ find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQ
 
 # Link against SFML targets (vcpkg uses lowercase names)
 target_link_libraries(conquer_chess PRIVATE
+    magic_enum::magic_enum
+    SFGraphing
+    chess_library
     sfml-system
     sfml-window
     sfml-graphics
