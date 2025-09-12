@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(SFML_STATIC_LIBRARIES TRUE)
+set(SFML_DIR "${CMAKE_BINARY_DIR}/vcpkg_installed/x64-windows/share/sfml")
 
 # Static build settings (only for non-MSVC)
 if(NOT MSVC)
@@ -25,7 +26,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(FetchContent)
 
 # SFML (via vcpkg)
-find_package(SFML COMPONENTS graphics audio network window system main REQUIRED)
+find_package(SFML 2.6.2 EXACT COMPONENTS graphics audio network window system main REQUIRED)
 
 # SFGraphing (from GitHub)
 FetchContent_Declare(
