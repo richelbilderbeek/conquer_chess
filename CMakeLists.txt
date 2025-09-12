@@ -26,7 +26,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(FetchContent)
 
 # SFML (via vcpkg)
-find_package(SFML 2.6.2 EXACT COMPONENTS graphics audio network window system main REQUIRED)
+find_package(SFML COMPONENTS graphics audio network window system main REQUIRED)
 
 # SFGraphing (from GitHub)
 FetchContent_Declare(
