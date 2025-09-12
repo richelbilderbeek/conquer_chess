@@ -5,7 +5,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Ensure vcpkg toolchain is used if available
+set(SFML_STATIC_LIBRARIES TRUE)
+
+# Static build settings (only for non-MSVC)
+if(NOT MSVC)
+    set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
+    set(BUILD_SHARED_LIBS OFF)
+    set(CMAKE_EXE_LINKER_FLAGS "-static")
+endif()
+
+# Set vcpkg toolchain if not set
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 endif()
@@ -13,16 +22,10 @@ endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # ---- Dependencies ----
-
 include(FetchContent)
 
-# magic_enum (installed via vcpkg)
-#find_path(MAGIC_ENUM_INCLUDE_DIRS "magic_enum.hpp")
-#message(STATUS "magic_enum include dir: ${MAGIC_ENUM_INCLUDE_DIRS}")
-
-
-# SFML (installed via vcpkg)
-find_package(SFML 2.6 COMPONENTS graphics audio network window system main REQUIRED)
+# SFML (via vcpkg)
+find_package(SFML COMPONENTS graphics audio network window system main REQUIRED)
 
 # SFGraphing (from GitHub)
 FetchContent_Declare(
@@ -41,8 +44,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(chess_library)
 
 # ---- Sources ----
-
-# Collect your project source files
 file(GLOB LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
 add_executable(conquer_chess WIN32 MACOSX_BUNDLE
@@ -50,11 +51,9 @@ add_executable(conquer_chess WIN32 MACOSX_BUNDLE
 )
 
 # ---- Include paths ----
-# If SFGraphing and chess_library don't export proper targets,
-# we add includes manually as fallback:
+# Fallback include dirs in case targets don’t export properly
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${MAGIC_ENUM_INCLUDE_DIRS}
     ${SFGraphing_SOURCE_DIR}/include
     ${chess_library_SOURCE_DIR}/include
 )
@@ -69,7 +68,6 @@ find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQ
 
 # Link against SFML targets (vcpkg uses lowercase names)
 target_link_libraries(conquer_chess PRIVATE
-    magic_enum::magic_enum
     SFGraphing
     chess_library
     sfml-system
@@ -86,21 +84,16 @@ else()
     add_compile_options(-Wa,-mbig-obj)
 endif()
 
-# Add .qrc files
-# Copy resources (instead of Qt .qrc system)
+# Copy resources instead of using Qt .qrc
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-# Fixed compile options with proper scope
+# Compile definitions for release/debug
 if(CMAKE_BUILD_TYPE STREQUAL Release)
-    target_compile_definitions(conquer_chess PRIVATE
-        NDEBUG
-    )
+    target_compile_definitions(conquer_chess PRIVATE NDEBUG)
 endif()
 
-# Fixed compile options with proper scope
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
     target_link_libraries(conquer_chess PRIVATE gcov)
-
     target_compile_options(conquer_chess PRIVATE
         -Wall
         -Wextra
@@ -109,7 +102,6 @@ if(CMAKE_BUILD_TYPE STREQUAL Debug)
         -ftest-coverage
     )
 endif()
-
 
 install(TARGETS conquer_chess
     BUNDLE DESTINATION .
