@@ -17,7 +17,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(FetchContent)
 
 # magic_enum (installed via vcpkg)
-find_package(magic_enum CONFIG REQUIRED)
+find_path(MAGIC_ENUM_INCLUDE_DIRS "magic_enum.hpp")
+message(STATUS "magic_enum include dir: ${MAGIC_ENUM_INCLUDE_DIRS}")
+
 
 # SFML (installed via vcpkg)
 find_package(SFML 2.6 COMPONENTS graphics audio network window system main REQUIRED)
@@ -52,6 +54,7 @@ add_executable(conquer_chess WIN32 MACOSX_BUNDLE
 # we add includes manually as fallback:
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${MAGIC_ENUM_INCLUDE_DIRS}
     ${SFGraphing_SOURCE_DIR}/include
     ${chess_library_SOURCE_DIR}/include
 )
