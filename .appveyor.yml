@@ -29,6 +29,7 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
 
 
+
 before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
 
