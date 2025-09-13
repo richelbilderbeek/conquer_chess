@@ -1,13 +1,12 @@
 ﻿cmake_minimum_required(VERSION 3.18)
 project(conquer-chess VERSION 0.13.0 LANGUAGES C CXX)
 
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(SFML_STATIC_LIBRARIES TRUE)
-#set(SFML_DIR "${CMAKE_BINARY_DIR}/vcpkg_installed/x64-windows/share/sfml")
+set(SFML_DIR "${CMAKE_BINARY_DIR}/vcpkg_installed/x64-windows/share/sfml")
 
 # Static build settings (only for non-MSVC)
 if(NOT MSVC)
@@ -27,7 +26,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include(FetchContent)
 
 # SFML (via vcpkg)
-find_package(SFML 2.6.2 COMPONENTS Network Graphics Window Audio System REQUIRED)
+find_package(SFML 2.6.2 COMPONENTS graphics audio network window system REQUIRED)
 
 # SFGraphing (from GitHub)
 FetchContent_Declare(
