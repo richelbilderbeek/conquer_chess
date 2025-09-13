@@ -5,6 +5,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Set vcpkg toolchain if not set
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
+    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+endif()
+
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR "${CMAKE_BINARY_DIR}/vcpkg_installed/x64-windows/share/sfml")
 
@@ -15,20 +20,15 @@ if(NOT MSVC)
     set(CMAKE_EXE_LINKER_FLAGS "-static")
 endif()
 
-# Set vcpkg toolchain if not set
-if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
-    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
-endif()
+
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # ---- Dependencies ----
+# ---- External Dependencies ----
 include(FetchContent)
 
-# SFML (via vcpkg)
-find_package(SFML 2.6.2 COMPONENTS graphics audio network window system REQUIRED)
-
-# SFGraphing (from GitHub)
+# SFGraphing
 FetchContent_Declare(
   SFGraphing
   GIT_REPOSITORY https://github.com/richelbilderbeek/SFGraphing.git
@@ -36,13 +36,20 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFGraphing)
 
-# chess-library (from GitHub)
+# chess-library
 FetchContent_Declare(
   chess_library
   GIT_REPOSITORY https://github.com/richelbilderbeek/chess-library.git
   GIT_TAG main
 )
 FetchContent_MakeAvailable(chess_library)
+
+
+find_package(magic_enum CONFIG REQUIRED)
+
+
+# SFML (via vcpkg)
+find_package(SFML 2.6.2 COMPONENTS graphics audio network window system REQUIRED)
 
 # ---- Sources ----
 file(GLOB LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
@@ -55,8 +62,6 @@ add_executable(conquer_chess WIN32 MACOSX_BUNDLE
 # Fallback include dirs in case targets don’t export properly
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${SFGraphing_SOURCE_DIR}/include
-    ${chess_library_SOURCE_DIR}/include
 )
 
 
@@ -71,6 +76,7 @@ find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQ
 target_link_libraries(conquer_chess PRIVATE
     SFGraphing
     chess_library
+    magic_enum::magic_enum
     sfml-system
     sfml-window
     sfml-graphics
@@ -82,7 +88,7 @@ target_link_libraries(conquer_chess PRIVATE
 if(MSVC)
     add_compile_options(/bigobj)
 else()
-    add_compile_options(-Wa,-mbig-obj)
+    add_compile_options(-Wa,-mbig-obj -Wall -Wextra -Wshadow)
 endif()
 
 # Copy resources instead of using Qt .qrc

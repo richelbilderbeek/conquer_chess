@@ -11,9 +11,8 @@ environment:
   VCPKG_DEFAULT_TRIPLET: x64-windows
   APPVEYOR_SAVE_CACHE_ON_ERROR: false
 
-# Speed up repeat builds by caching vcpkg-installed packages
 cache:
-  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
+  - path: C:\Tools\vcpkg\installed
 
 install:
 
@@ -27,7 +26,7 @@ before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
 
 build_script:
-  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
+  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release
   - cmake --build build --config Release
 
 after_build:
@@ -45,29 +44,11 @@ after_build:
       if (-not $exe) { throw "No exe found in the Release build." }
       Copy-Item $exe.FullName $out
 
-      # Copy runtime DLLs (SFML + deps)
+      # Copy all DLLs from vcpkg bin
       $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
-      $patterns = @(
-        'sfml-system-2.dll',
-        'sfml-window-2.dll',
-        'sfml-graphics-2.dll',
-        'sfml-audio-2.dll',
-        'sfml-network-2.dll',
-        'openal32.dll',
-        'freetype*.dll',
-        'ogg*.dll',
-        'vorbis*.dll',
-        'vorbisfile*.dll',
-        'vorbisenc*.dll',
-        'zlib*.dll',
-        'brotli*.dll',
-        'bz2.dll',
-        'libpng16.dll',
-        'FLAC.dll'
-      )
-      foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
+      Copy-Item "$bin\*" $out -Filter "*.dll" -ErrorAction SilentlyContinue
 
-      # Ship game assets if present
+      # Ship game assets
       foreach ($folder in @('resources','images')) {
         $src = Join-Path $root $folder
         if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
