@@ -22,6 +22,9 @@ install:
   #- .\vcpkg x-update-baseline
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
+  # manifest mode will automatically install what's in vcpkg.json
+  - .\vcpkg install
+
 
 before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
