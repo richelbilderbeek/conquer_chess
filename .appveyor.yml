@@ -2,10 +2,8 @@
 branches:
   only:
     - main
-
 version: '{build}'
 image: Visual Studio 2022
-
 environment:
   VCPKG_ROOT: C:\Tools\vcpkg
   VCPKG_DEFAULT_TRIPLET: x64-windows
@@ -14,7 +12,6 @@ environment:
 # Speed up repeat builds by caching vcpkg-installed packages
 cache:
   - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
-
 install:
 
   - cd %VCPKG_ROOT%
@@ -22,37 +19,31 @@ install:
   #- .\vcpkg x-update-baseline
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
-
 before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
-
 build_script:
   - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
   - cmake --build build --config Release
-
 after_build:
   - ps: |
       $root = $env:APPVEYOR_BUILD_FOLDER
       $out  = Join-Path $root 'dist'
       New-Item -ItemType Directory -Force -Path $out | Out-Null
-
       # Grab the first Release exe produced
       $exe = Get-ChildItem -Recurse -Filter *.exe -Path "$root\build" |
              Where-Object { $_.FullName -match '\\Release\\' } |
              Sort-Object Length -Descending |
              Select-Object -First 1
-
       if (-not $exe) { throw "No exe found in the Release build." }
       Copy-Item $exe.FullName $out
-
-      # Copy runtime DLLs (SFML + deps)
+      # FIXED: Copy runtime DLLs for SFML 3.0+ (updated DLL names)
       $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
       $patterns = @(
-        'sfml-system-2.dll',
-        'sfml-window-2.dll',
-        'sfml-graphics-2.dll',
-        'sfml-audio-2.dll',
-        'sfml-network-2.dll',
+        'sfml-system-3.dll',
+        'sfml-window-3.dll', 
+        'sfml-graphics-3.dll',
+        'sfml-audio-3.dll',
+        'sfml-network-3.dll',
         'openal32.dll',
         'freetype*.dll',
         'ogg*.dll',
@@ -66,17 +57,14 @@ after_build:
         'FLAC.dll'
       )
       foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
-
       # Ship game assets if present
       foreach ($folder in @('resources','images')) {
         $src = Join-Path $root $folder
         if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
       }
-
 artifacts:
   - path: dist\**
     name: conquer-chess-win64
     type: WebDeployPackage
-
 on_failure:
   - ps: Get-ChildItem -Recurse "$env:APPVEYOR_BUILD_FOLDER\build" -ErrorAction SilentlyContinue | Out-String | Write-Host
