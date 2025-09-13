@@ -56,11 +56,11 @@ find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQ
 
 # Link against SFML targets (vcpkg uses lowercase names)
 target_link_libraries(conquer_chess PRIVATE
-    SFML::Graphics
-    SFML::Audio
-    SFML::Network
-    SFML::Window
-    SFML::System
+    sfml-system
+    sfml-window
+    sfml-graphics
+    sfml-network
+    sfml-audio
 )
 
 if(MSVC)
