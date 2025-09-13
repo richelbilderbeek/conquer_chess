@@ -12,21 +12,21 @@ environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: false
 
 # Speed up repeat builds by caching vcpkg-installed packages
-cache:
-  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
+#cache:
+# - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
 
   - cd %VCPKG_ROOT%
+  - rmdir /s /q buildtrees || echo no buildtrees
+  - rmdir /s /q packages || echo no packages
+  - rmdir /s /q installed || echo no installed
   - git fetch origin
   - git checkout df6921c0b6   # commit where SFML = 2.6.2
   - .\bootstrap-vcpkg.bat
   #- .\vcpkg x-update-baseline
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
-
-
-
 
 
 before_build:
