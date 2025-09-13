@@ -61,7 +61,6 @@ target_link_libraries(conquer_chess PRIVATE
     SFML::Network
     SFML::Window
     SFML::System
-    SFML::Main
 )
 
 if(MSVC)
