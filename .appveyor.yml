@@ -18,11 +18,12 @@ cache:
 install:
 
   - cd %VCPKG_ROOT%
-  - git checkout df6921c0b6
+  - git checkout df6921c0b6   # commit where SFML = 2.6.2
   - .\bootstrap-vcpkg.bat
   #- .\vcpkg x-update-baseline
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
+
 
 
 
