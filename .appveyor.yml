@@ -27,8 +27,9 @@ before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
 
 build_script:
-  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
+  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake"
   - cmake --build build --config Release
+
 
 after_build:
   - ps: |
