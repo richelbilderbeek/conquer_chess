@@ -22,8 +22,7 @@ install:
   #- .\vcpkg x-update-baseline
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
-  # manifest mode will automatically install what's in vcpkg.json
-  - .\vcpkg install
+  - vcpkg install --triplet x64-windows
 
 
 before_build:
