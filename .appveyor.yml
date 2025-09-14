@@ -12,9 +12,6 @@ environment:
 # Speed up repeat builds by caching vcpkg-installed packages + downloads
 cache:
   - C:\Tools\vcpkg\installed
-  - magic_enum
-  - chess-library
-  - SFGraphing
 
 install:
 
