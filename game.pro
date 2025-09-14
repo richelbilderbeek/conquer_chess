@@ -1,8 +1,6 @@
 # This is the general project file,
 # to be used to simply run the game.
 #
-# I will leave it as is, so that Sajid can do his job :-)
-#
 # Other .pro files are used for specific tasks,
 # such as codecov or profiling
 
@@ -14,7 +12,6 @@ CONFIG += static
 
 # All files are in here, the rest are just settings
 include(game.pri)
-include(game_view.pri)
 
 TARGET = conquer_chess
 
@@ -63,8 +60,6 @@ unix {
   # Link SFML modules
   LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 }
-
-
 
 # SFGraphing
 DEFINES += USE_SFGRAPHING
