@@ -12,7 +12,7 @@ environment:
 
 # Speed up repeat builds by caching vcpkg-installed packages + downloads
 cache:
-  - C:\Tools\vcpkg\installed
+  - C:\Tools\vcpkg\installed -> .appveyor.yml
 
 install:
 
