@@ -4,8 +4,6 @@ project(conquer-chess VERSION 0.13.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(EXTERNAL_SRC "")
-set(EXTERNAL_INCLUDES "")
 
 # Static build settings (only for non-MSVC)
 if(NOT MSVC)
@@ -18,17 +16,17 @@ include(FetchContent)
 
 # magic_enum (header-only)
 FetchContent_Declare(
-  magic_enum
-  GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
-  GIT_TAG v0.8.0
+    magic_enum
+    GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
+    GIT_TAG v0.8.0
 )
 FetchContent_MakeAvailable(magic_enum)
 
 # chess-library
 FetchContent_Declare(
-  chess_library
-  GIT_REPOSITORY https://github.com/richelbilderbeek/chess-library.git
-  GIT_TAG master
+    chess_library
+    GIT_REPOSITORY https://github.com/richelbilderbeek/chess-library.git
+    GIT_TAG master
 )
 FetchContent_MakeAvailable(chess_library)
 
@@ -39,33 +37,28 @@ endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# Find and link SFML (vcpkg)
+find_package(SFML 2.6 COMPONENTS system window graphics audio network REQUIRED)
 
-# Get local source files
+# Get local and external source files
 file(GLOB_RECURSE LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
-
-set(EXTERNAL_SRC "")   # add external sources if needed
-set(EXTERNAL_INCLUDES "")  # add external include directories
-
 file(GLOB_RECURSE CHESS_SRC "${chess_library_SOURCE_DIR}/src/*.cpp")
-
 
 # Debug output
 message(STATUS "Local source files: ${LOCAL_SRC}")
-message(STATUS "External source files: ${EXTERNAL_SRC}")
-message(STATUS "External includes: ${EXTERNAL_INCLUDES}")
+message(STATUS "External source files: ${CHESS_SRC}")
 
-# Create executable with all source files
+# Create executable
 add_executable(conquer_chess WIN32 MACOSX_BUNDLE
     ${LOCAL_SRC}
-    ${EXTERNAL_SRC}
+    ${CHESS_SRC}
 )
 
+# Include directories
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${magic_enum_SOURCE_DIR}/include
     ${chess_library_SOURCE_DIR}/include
-    ${EXTERNAL_INCLUDES}
-
 )
 
 
