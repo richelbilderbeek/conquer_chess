@@ -70,8 +70,11 @@ jobs:
       - name: make
         run: make debug
 
-      - name: run
+      - name: Run tests
         run: ./conquer_chess --test
+
+      - name: Show help
+        run: ./conquer_chess --help
 
       - name: Measure codecov 1
         run: ./scripts/get_code_cov.sh
