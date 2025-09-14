@@ -2,6 +2,7 @@
 branches:
   only:
     - main
+
 version: '{build}'
 image: Visual Studio 2022
 
@@ -12,7 +13,7 @@ environment:
 
 # Speed up repeat builds by caching vcpkg-installed packages + downloads
 cache:
-  - C:\Tools\vcpkg\installed -> .appveyor.yml
+  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
 
@@ -22,51 +23,54 @@ install:
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
 
+build_script:
+  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
+  - cmake --build build --config Release
+
 before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
-
-build_script:
-  # Use vcpkg toolchain; CMake FetchContent will handle magic_enum and chess-library
-  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake"
-  - cmake --build build --config Release
 
 after_build:
   - ps: |
       $root = $env:APPVEYOR_BUILD_FOLDER
       $out  = Join-Path $root 'dist'
       New-Item -ItemType Directory -Force -Path $out | Out-Null
+
       # Grab the first Release exe produced
       $exe = Get-ChildItem -Recurse -Filter *.exe -Path "$root\build" |
              Where-Object { $_.FullName -match '\\Release\\' } |
              Sort-Object Length -Descending |
              Select-Object -First 1
+
       if (-not $exe) { throw "No exe found in the Release build." }
       Copy-Item $exe.FullName $out
+
       # Copy runtime DLLs (SFML + deps)
       $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
       $patterns = @(
-        'sfml-system-2.dll',
-        'sfml-window-2.dll',
-        'sfml-graphics-2.dll',
-        'sfml-audio-2.dll',
-        'sfml-network-2.dll',
-        'openal32.dll',
-        'freetype*.dll',
-        'ogg*.dll',
-        'vorbis*.dll',
-        'vorbisfile*.dll',
-        'vorbisenc*.dll',
-        'zlib*.dll',
-        'brotli*.dll',
-        'bz2.dll',
-        'libpng16.dll',
-        'FLAC.dll'
+      'sfml-system-2.dll',
+      'sfml-window-2.dll',
+      'sfml-graphics-2.dll',
+      'sfml-audio-2.dll',
+      'sfml-network-2.dll',
+      'openal32.dll',
+      'freetype*.dll',
+      'ogg*.dll',
+      'vorbis*.dll',
+      'vorbisfile*.dll',
+      'vorbisenc*.dll',
+      'zlib*.dll',
+      'brotli*.dll',
+      'bz2.dll',
+      'libpng16.dll',
+      'FLAC.dll'
       )
       foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
+
       # Ship game assets if present
       foreach ($folder in @('resources','images')) {
         $src = Join-Path $root $folder
-        if (Test-Path $src) { Copy-Item $src -Recurse -Force $out }
+        if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
       }
 
 artifacts:
