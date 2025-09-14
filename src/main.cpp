@@ -296,6 +296,7 @@ int main(int argc, char **argv) //!OCLINT tests may be long
   {
     std::clog << "Start tests\n";
     test();
+    std::clog << "All tests passed. Testing done!\n";
   }
 
   #ifndef LOGIC_ONLY
