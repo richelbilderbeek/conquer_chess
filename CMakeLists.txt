@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(magic_enum)
 FetchContent_Declare(
   chess_library
   GIT_REPOSITORY https://github.com/richelbilderbeek/chess-library.git
-  GIT_TAG main
+  GIT_TAG master
 )
 FetchContent_MakeAvailable(chess_library)
 
@@ -36,6 +36,8 @@ target_include_directories(conquer_chess PRIVATE
     ${magic_enum_SOURCE_DIR}/include
     ${chess_library_SOURCE_DIR}/include
 )
+
+target_link_libraries(conquer_chess PRIVATE magic_enum)
 
 
 # Set vcpkg toolchain if not set
@@ -52,6 +54,9 @@ set(EXTERNAL_INCLUDES "")
 
 # Get local source files
 file(GLOB_RECURSE LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
+
+set(EXTERNAL_SRC "")   # add external sources if needed
+set(EXTERNAL_INCLUDES "")  # add external include directories
 
 file(GLOB_RECURSE CHESS_SRC "${chess_library_SOURCE_DIR}/src/*.cpp")
 target_sources(conquer_chess PRIVATE ${CHESS_SRC})
@@ -82,13 +87,8 @@ target_compile_definitions(conquer_chess PRIVATE
 # Version can be found at https://vcpkg.link/ports/sfml/versions
 find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQUIRED)
 
-target_link_libraries(conquer_chess PRIVATE
-    SFML::System
-    SFML::Window
-    SFML::Graphics
-    SFML::Network
-    SFML::Audio
-)
+target_link_libraries(conquer_chess PRIVATE sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+
 
 if(MSVC)
     add_compile_options(/bigobj)
