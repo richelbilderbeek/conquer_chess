@@ -12,6 +12,32 @@ if(NOT MSVC)
     set(CMAKE_EXE_LINKER_FLAGS "-static")
 endif()
 
+include(FetchContent)
+
+# magic_enum (header-only)
+FetchContent_Declare(
+  magic_enum
+  GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
+  GIT_TAG v0.8.0
+)
+FetchContent_MakeAvailable(magic_enum)
+
+# chess-library
+FetchContent_Declare(
+  chess_library
+  GIT_REPOSITORY https://github.com/richelbilderbeek/chess-library.git
+  GIT_TAG main
+)
+FetchContent_MakeAvailable(chess_library)
+
+
+target_include_directories(conquer_chess PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${magic_enum_SOURCE_DIR}/include
+    ${chess_library_SOURCE_DIR}/include
+)
+
+
 # Set vcpkg toolchain if not set
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
@@ -23,70 +49,13 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(EXTERNAL_SRC "")
 set(EXTERNAL_INCLUDES "")
 
-# Handle magic_enum (header-only)
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include")
-    message(STATUS "Found magic_enum - adding include path")
-    list(APPEND EXTERNAL_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include")
-else()
-    message(WARNING "magic_enum not found - enum reflection features may be disabled")
-endif()
-
-# Handle chess-library (source files)
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/chess-library")
-    message(STATUS "Found chess-library - searching for source files")
-    
-    # Look for source files in multiple possible locations
-    file(GLOB_RECURSE CHESS_LIBRARY_SRC 
-        "${CMAKE_CURRENT_SOURCE_DIR}/chess-library/*.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/chess-library/src/*.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/chess-library/source/*.cpp"
-    )
-    
-    if(CHESS_LIBRARY_SRC)
-        list(APPEND EXTERNAL_SRC ${CHESS_LIBRARY_SRC})
-        list(LENGTH CHESS_LIBRARY_SRC CHESS_LIB_COUNT)
-        message(STATUS "Found ${CHESS_LIB_COUNT} chess-library source files")
-    endif()
-    
-    # Add include directories
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/chess-library/include")
-        list(APPEND EXTERNAL_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/chess-library/include")
-    endif()
-    # Also add root directory in case headers are there
-    list(APPEND EXTERNAL_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/chess-library")
-else()
-    message(WARNING "chess-library not found")
-endif()
-
-# Handle SFGraphing (source files) 
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing")
-    message(STATUS "Found SFGraphing - searching for source files")
-    
-    # Look for source files in multiple possible locations
-    file(GLOB_RECURSE SFGRAPHING_SRC 
-        "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing/*.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing/src/*.cpp"
-        "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing/source/*.cpp"
-    )
-    
-    if(SFGRAPHING_SRC)
-        list(APPEND EXTERNAL_SRC ${SFGRAPHING_SRC})
-        list(LENGTH SFGRAPHING_SRC SFGRAPHING_COUNT)
-        message(STATUS "Found ${SFGRAPHING_COUNT} SFGraphing source files")
-    endif()
-    
-    # Add include directories
-    if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing/include")
-        list(APPEND EXTERNAL_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing/include")
-    endif()
-    # Also add root directory in case headers are there
-    list(APPEND EXTERNAL_INCLUDES "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing")
-else()
-    message(WARNING "SFGraphing not found")
-endif()
 
 # Get local source files
 file(GLOB_RECURSE LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
+
+file(GLOB_RECURSE CHESS_SRC "${chess_library_SOURCE_DIR}/src/*.cpp")
+target_sources(conquer_chess PRIVATE ${CHESS_SRC})
+
 
 # Debug output
 message(STATUS "Local source files: ${LOCAL_SRC}")
@@ -113,10 +82,9 @@ target_compile_definitions(conquer_chess PRIVATE
 # Version can be found at https://vcpkg.link/ports/sfml/versions
 find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQUIRED)
 
-# Link libraries
 target_link_libraries(conquer_chess PRIVATE
     SFML::System
-    SFML::Window  
+    SFML::Window
     SFML::Graphics
     SFML::Network
     SFML::Audio

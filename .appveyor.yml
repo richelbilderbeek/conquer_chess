@@ -11,10 +11,11 @@ environment:
 
 # Speed up repeat builds by caching vcpkg-installed packages + downloads
 cache:
-  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
-  - magic_enum -> .appveyor.yml
-  - chess-library -> .appveyor.yml
-  - SFGraphing -> .appveyor.yml
+  - C:\Tools\vcpkg\installed
+  - magic_enum
+  - chess-library
+  - SFGraphing
+
 install:
 
   - cd %VCPKG_ROOT%
@@ -23,19 +24,15 @@ install:
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
   # Clone dependencies
+ # Clone only magic_enum and chess-library
   - ps: |
-      # Clone magic_enum
       if (-not (Test-Path "magic_enum")) {
-        git clone --depth 1 https://github.com/Neargye/magic_enum.git magic_enum
+      git clone --depth 1 https://github.com/Neargye/magic_enum.git magic_enum
       }
-      # Clone chess-library (replace with actual repository URL)
       if (-not (Test-Path "chess-library")) {
-        git clone --depth 1 https://github.com/richelbilderbeek/chess-library.git chess-library
+      git clone --depth 1 https://github.com/richelbilderbeek/chess-library.git chess-library
       }
-      # Clone SFGraphing (replace with actual repository URL)
-      if (-not (Test-Path "SFGraphing")) {
-        git clone --depth 1 https://github.com/richelbilderbeek/SFGraphing.git SFGraphing
-      }
+
 build_script:
   - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
   - cmake --build build --config Release
