@@ -4,6 +4,8 @@ project(conquer-chess VERSION 0.13.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(EXTERNAL_SRC "")
+set(EXTERNAL_INCLUDES "")
 
 # Static build settings (only for non-MSVC)
 if(NOT MSVC)
@@ -30,26 +32,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(chess_library)
 
-
-target_include_directories(conquer_chess PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    ${magic_enum_SOURCE_DIR}/include
-    ${chess_library_SOURCE_DIR}/include
-)
-
-target_link_libraries(conquer_chess PRIVATE magic_enum)
-
-
 # Set vcpkg toolchain if not set
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
 endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-# Initialize source file lists
-set(EXTERNAL_SRC "")
-set(EXTERNAL_INCLUDES "")
 
 
 # Get local source files
@@ -59,7 +47,6 @@ set(EXTERNAL_SRC "")   # add external sources if needed
 set(EXTERNAL_INCLUDES "")  # add external include directories
 
 file(GLOB_RECURSE CHESS_SRC "${chess_library_SOURCE_DIR}/src/*.cpp")
-target_sources(conquer_chess PRIVATE ${CHESS_SRC})
 
 
 # Debug output
@@ -73,10 +60,12 @@ add_executable(conquer_chess WIN32 MACOSX_BUNDLE
     ${EXTERNAL_SRC}
 )
 
-# Add include directories
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${magic_enum_SOURCE_DIR}/include
+    ${chess_library_SOURCE_DIR}/include
     ${EXTERNAL_INCLUDES}
+
 )
 
 
