@@ -12,6 +12,7 @@ on:
       - "**.pro"
       - "**.pri"
       - "resources/**"
+      - "scripts/get_codecov.sh"
   pull_request:
     paths:
       - .github/workflows/check_build.yaml
@@ -20,6 +21,7 @@ on:
       - "**.pro"
       - "**.pri"
       - "resources/**"
+      - "scripts/get_codecov.sh"
 
 jobs:
   check_build:
