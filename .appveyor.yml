@@ -4,6 +4,7 @@ branches:
     - main
 version: '{build}'
 image: Visual Studio 2022
+
 environment:
   VCPKG_ROOT: C:\Tools\vcpkg
   VCPKG_DEFAULT_TRIPLET: x64-windows
@@ -20,21 +21,15 @@ install:
   #- .\vcpkg x-update-baseline
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
-  # Clone dependencies
- # Clone only magic_enum and chess-library
-  - ps: |
-      if (-not (Test-Path "magic_enum")) {
-      git clone --depth 1 https://github.com/Neargye/magic_enum.git magic_enum
-      }
-      if (-not (Test-Path "chess-library")) {
-      git clone --depth 1 https://github.com/richelbilderbeek/chess-library.git chess-library
-      }
 
-build_script:
-  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
-  - cmake --build build --config Release
 before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
+
+build_script:
+  # Use vcpkg toolchain; CMake FetchContent will handle magic_enum and chess-library
+  - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  - cmake --build build --config Release
+
 after_build:
   - ps: |
       $root = $env:APPVEYOR_BUILD_FOLDER
@@ -50,32 +45,34 @@ after_build:
       # Copy runtime DLLs (SFML + deps)
       $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
       $patterns = @(
-      'sfml-system-2.dll',
-      'sfml-window-2.dll',
-      'sfml-graphics-2.dll',
-      'sfml-audio-2.dll',
-      'sfml-network-2.dll',
-      'openal32.dll',
-      'freetype*.dll',
-      'ogg*.dll',
-      'vorbis*.dll',
-      'vorbisfile*.dll',
-      'vorbisenc*.dll',
-      'zlib*.dll',
-      'brotli*.dll',
-      'bz2.dll',
-      'libpng16.dll',
-      'FLAC.dll'
+        'sfml-system-2.dll',
+        'sfml-window-2.dll',
+        'sfml-graphics-2.dll',
+        'sfml-audio-2.dll',
+        'sfml-network-2.dll',
+        'openal32.dll',
+        'freetype*.dll',
+        'ogg*.dll',
+        'vorbis*.dll',
+        'vorbisfile*.dll',
+        'vorbisenc*.dll',
+        'zlib*.dll',
+        'brotli*.dll',
+        'bz2.dll',
+        'libpng16.dll',
+        'FLAC.dll'
       )
       foreach ($p in $patterns) { Copy-Item (Join-Path $bin $p) $out -ErrorAction SilentlyContinue }
       # Ship game assets if present
       foreach ($folder in @('resources','images')) {
         $src = Join-Path $root $folder
-        if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
+        if (Test-Path $src) { Copy-Item $src -Recurse -Force $out }
       }
+
 artifacts:
   - path: dist\**
     name: conquer-chess-win64
     type: WebDeployPackage
+
 on_failure:
   - ps: Get-ChildItem -Recurse "$env:APPVEYOR_BUILD_FOLDER\build" -ErrorAction SilentlyContinue | Out-String | Write-Host
