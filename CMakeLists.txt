@@ -5,18 +5,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-#set(SFGRAPHING_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing)
-#set(SFML_STATIC_LIBRARIES TRUE)
-
-
-
 # Static build settings (only for non-MSVC)
 if(NOT MSVC)
     set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
     set(BUILD_SHARED_LIBS OFF)
     set(CMAKE_EXE_LINKER_FLAGS "-static")
 endif()
-
 
 # Set vcpkg toolchain if not set
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{VCPKG_ROOT})
@@ -25,25 +19,33 @@ endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# Add external dependencies
+add_subdirectory(magic_enum EXCLUDE_FROM_ALL)
+add_subdirectory(chess-library)
+add_subdirectory(SFGraphing)
 
+# Get SFGraphing source files
+file(GLOB_RECURSE SFGRAPHING_SRC "${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing/src/*.cpp")
+file(GLOB_RECURSE CHESS_LIBRARY_SRC "${CMAKE_CURRENT_SOURCE_DIR}/chess-library/src/*.cpp")
 
-
-
-# Debug: Print found SFGraphing files
+# Debug: Print found external library files
 message(STATUS "Found SFGraphing files: ${SFGRAPHING_SRC}")
+message(STATUS "Found chess-library files: ${CHESS_LIBRARY_SRC}")
 
 # Get local source files
 file(GLOB LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
-
-
 add_executable(conquer_chess WIN32 MACOSX_BUNDLE
     ${LOCAL_SRC}
+    ${SFGRAPHING_SRC}
+    ${CHESS_LIBRARY_SRC}
 )
-
 
 target_include_directories(conquer_chess PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/magic_enum/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/chess-library/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/SFGraphing/include
 )
 
 
@@ -61,6 +63,7 @@ target_link_libraries(conquer_chess PRIVATE
     sfml-graphics
     sfml-network
     sfml-audio
+    magic_enum::magic_enum
 )
 
 if(MSVC)
