@@ -38,7 +38,7 @@ endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # Find and link SFML (vcpkg)
-find_package(SFML 2.6 COMPONENTS system window graphics audio network REQUIRED)
+find_package(SFML 2.6.2 COMPONENTS system window graphics audio network REQUIRED)
 
 # Get local and external source files
 file(GLOB_RECURSE LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
