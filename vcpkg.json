@@ -10,7 +10,7 @@
         "window",
         "network",
         "audio"
-      ],
+      ]
     }
   ],
   "overrides": [
@@ -22,7 +22,7 @@
         "window",
         "network",
         "audio"
-      ],
+      ]
     }
   ]
 }
