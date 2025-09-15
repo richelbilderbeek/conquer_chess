@@ -1,4 +1,4 @@
-# Build a Windows x64 Release exe with SFML 2.6.2 via vcpkg
+# Build a Windows x64 Release exe with SFML 2.6.1 via vcpkg
 branches:
   only:
     - main
@@ -19,7 +19,7 @@ install:
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
   # My attempt
-  - .\vcpkg install sfml[audio]:x64-windows@2.6.1
+  - .\vcpkg install sfml[audio]:x64-windows
   # 1. Below: Saraj's and Saira's work
   #- .\vcpkg install sfml[audio]:x64-windows@
   # 2. Below: my work, strategy 2

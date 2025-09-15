@@ -4,13 +4,13 @@
   "dependencies": [
     {
       "name": "sfml",
+      "version==": "2.6.1",
       "features": [
         "graphics",
         "window",
         "network",
         "audio",
-        "version==": "2.6.1"
-      ]
+      ],
     }
   ]
 }
