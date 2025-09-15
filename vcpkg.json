@@ -8,7 +8,8 @@
         "graphics",
         "window",
         "network",
-        "audio"
+        "audio",
+        "version==": "2.6.1"
       ]
     }
   ]
