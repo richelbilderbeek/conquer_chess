@@ -1,6 +1,6 @@
 {
-  "name": "Conquer Chess",
-  "version": "1.0.0",
+  "name": "conquer-chess",
+  "version": "0.13.0",
   "dependencies": [
     {
       "name": "sfml",
