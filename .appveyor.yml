@@ -18,13 +18,15 @@ cache:
 install:
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
-  # Below: Saraj's and Saira's work
-  - .\vcpkg install sfml[audio]:x64-windows
-  # Below: my work, strategy 2
-  - .\vcpkg install sfml[graphics]:x64-windows
-  - .\vcpkg install sfml[network]:x64-windows
-  - .\vcpkg install sfml[window]:x64-windows
-  # Below: my work, strategy 1
+  # My attempt
+  - .\vcpkg install sfml[audio]:x64-windows@2.6.1
+  # 1. Below: Saraj's and Saira's work
+  #- .\vcpkg install sfml[audio]:x64-windows@
+  # 2. Below: my work, strategy 2
+  #- .\vcpkg install sfml[graphics]:x64-windows
+  #- .\vcpkg install sfml[network]:x64-windows
+  #- .\vcpkg install sfml[window]:x64-windows
+  # 3. Below: my work, strategy 1
   #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
 
