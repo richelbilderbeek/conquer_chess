@@ -9,7 +9,7 @@
         "graphics",
         "window",
         "network",
-        "audio",
+        "audio"
       ],
     }
   ],
@@ -21,7 +21,7 @@
         "graphics",
         "window",
         "network",
-        "audio",
+        "audio"
       ],
     }
   ]
