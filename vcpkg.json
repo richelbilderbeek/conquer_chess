@@ -4,23 +4,12 @@
   "dependencies": [
     {
       "name": "sfml",
-      "features": [
-        "graphics",
-        "window",
-        "network",
-        "audio"
-      ]
-    }
-  ],
-  "overrides": [
-    {
-      "name": "sfml",
       "version": "2.6.1",
       "features": [
+        "audio",
         "graphics",
-        "window",
         "network",
-        "audio"
+        "window"
       ]
     }
   ]
