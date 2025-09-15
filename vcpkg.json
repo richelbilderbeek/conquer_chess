@@ -1,10 +1,10 @@
 {
-  "name": "conquer-chess",
+  "name": "Conquer Chess",
   "version": "1.0.0",
   "dependencies": [
     {
       "name": "sfml",
-      "version": "2.6.1#1",
+      "version": "2.6.1",
       "features": [
         "audio",
         "graphics",
