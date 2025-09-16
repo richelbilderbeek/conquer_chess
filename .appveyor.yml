@@ -17,10 +17,9 @@ cache:
 
 install:
 
-  # Why go there, I assume it is root
-  # - cd %VCPKG_ROOT%
-  - .\bootstrap-vcpkg.bat
-  - .\vcpkg x-update-baseline
+  - cd %VCPKG_ROOT%
+  - .\bootstrap-vcpkg.bat c:\projects\conquer_chess\vcpackage.json
+  - .\vcpkg x-update-baseline c:\projects\conquer_chess\vcpackage.json
   - .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
 
