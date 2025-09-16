@@ -22,7 +22,7 @@ FetchContent_MakeAvailable(magic_enum)
 FetchContent_Declare(
   chess-library
   GIT_REPOSITORY https://github.com/richelbilderbeek/chess-library.git
-  GIT_TAG        main
+  GIT_TAG        master
 )
 FetchContent_MakeAvailable(chess-library)
 
@@ -30,7 +30,7 @@ FetchContent_MakeAvailable(chess-library)
 FetchContent_Declare(
   SFGraphing
   GIT_REPOSITORY https://github.com/richelbilderbeek/SFGraphing.git
-  GIT_TAG        main
+  GIT_TAG        master
 )
 FetchContent_MakeAvailable(SFGraphing)
 
