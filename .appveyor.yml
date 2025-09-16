@@ -17,7 +17,8 @@ cache:
 
 install:
 
-  - cd %VCPKG_ROOT%
+  # Why go there, I assume it is root
+  # - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
   - .\vcpkg x-update-baseline
   - .\vcpkg install sfml:x64-windows
