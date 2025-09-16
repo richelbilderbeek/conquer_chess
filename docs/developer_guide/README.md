@@ -36,6 +36,31 @@ Then, download all these into the `windows_binary` folder.
 
 Then run `./scripts/run_steamcmd_to_upload.sh` to upload these.
 
+## How did you set the AppVeyor script to SFML 2.6.1?
+
+- Search for `vcpkg SFML`
+- Find [`https://vcpkg.link/ports/sfml`](https://vcpkg.link/ports/sfml)
+- Click on the 30+ versions tab
+
+- Click on SFML 2.6.1
+
+??? question "How does that look like?"
+
+  ![Click on SFML 2.6.1](vcpkg_select_sfml_2_6_1.png)
+
+- Click on 'Subtree'
+
+??? question "How does that look like?"
+
+  ![Click on 'Subtree'](vcpkg_select_sfml_2_6_1_subtree.png)
+
+- Extract the full commit number from the GitHub URL,
+  in this case `163b97d4625073093ae73585695cc4cfe4480998`
+
+??? question "How does that look like?"
+
+  ![Extract the full commit number from the GitHub URL](vcpkg_select_sfml_2_6_1_subtree_copy_commit.png)
+
 ## How did you generate the FEN strings
 
 I often used <https://www.365chess.com/analysis_board.php>.
@@ -46,4 +71,4 @@ See [architecture](architecture/README.md)
 
 ## Where is the code documentation?
 
-See [the Doxygen generated documentation](docs/index.html).
+See [the Doxygen generated documentation](../docs/index.html).

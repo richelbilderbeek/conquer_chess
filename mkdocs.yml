@@ -15,7 +15,7 @@ nav:
     - Architecture: architecture/README.md
     - Code of conduct: code_of_conduct.md
     - Contributing: contributing.md
-    - Developer documentation: developer_guide.md
+    - Developer documentation: developer_guide/README.md
     - FAQ: faq.md
     - Roadmap: roadmap.md
     - Rulebook: rulebook/README.md
