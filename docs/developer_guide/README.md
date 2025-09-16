@@ -61,6 +61,35 @@ Then run `./scripts/run_steamcmd_to_upload.sh` to upload these.
 
   ![Extract the full commit number from the GitHub URL](vcpkg_select_sfml_2_6_1_subtree_copy_commit.png)
 
+- In the root folder, the file `vcpkg.json` must use that commit number
+  as a `builtin-baseline`.
+
+??? question "How does that look like?"
+
+    Here is an example (and complete) `vcpkg.json`:
+
+    ```bash
+    {
+      "name": "conquer-chess",
+      "version": "0.13.0",
+      "dependencies": [
+        {
+          "name": "sfml",
+          "features": [
+            "audio",
+            "graphics",
+            "network",
+            "window"
+          ]
+        }
+      ],
+      "builtin-baseline": "163b97d4625073093ae73585695cc4cfe4480998"
+    }
+    ```
+
+Due to this, `vcpkg` will look for SFML 2.6.1 and all its dependencies
+at that point in its commit history.
+
 ## How did you generate the FEN strings
 
 I often used <https://www.365chess.com/analysis_board.php>.
