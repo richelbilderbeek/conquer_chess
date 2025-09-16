@@ -30,7 +30,7 @@ FetchContent_MakeAvailable(chess-library)
 FetchContent_Declare(
   SFGraphing
   GIT_REPOSITORY https://github.com/sairaatta/SFGraphing.git
-  GIT_TAG main
+  GIT_TAG master
 )
 FetchContent_MakeAvailable(SFGraphing)
 
