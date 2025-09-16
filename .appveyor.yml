@@ -16,8 +16,10 @@ cache:
   - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
+
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
+  - .\vcpkg x-update-baseline
   - .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
 
