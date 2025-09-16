@@ -16,12 +16,16 @@ cache:
   - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
+  # Clone vcpkg
+  - git clone https://github.com/microsoft/vcpkg.git %VCPKG_ROOT%
+
+  # Overwrite the broken libogg portfile with your fixed GitHub-based one
+  - copy patches\libogg\portfile.cmake %VCPKG_ROOT%\ports\libogg\portfile.cmake /Y
 
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
-  #- .\vcpkg x-update-baseline
-  #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
+
 
 build_script:
   - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
