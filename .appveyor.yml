@@ -77,7 +77,7 @@ after_build:
 
 artifacts:
   - path: dist\**
-    name: conquer_chess-win64
+    name: conquer-chess-win64
     type: WebDeployPackage
 
 on_failure:
