@@ -13,11 +13,10 @@ environment:
 
 # Speed up repeat builds by caching vcpkg-installed packages
 cache:
-  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
+#  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
 
-  - cp %APPVEYOR_BUILD_FOLDER%\vcpkg.json %VCPKG_ROOT%
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
   - .\vcpkg x-update-baseline
