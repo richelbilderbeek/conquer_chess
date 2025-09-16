@@ -29,22 +29,11 @@ FetchContent_MakeAvailable(chess-library)
 # SFGraphing
 FetchContent_Declare(
   SFGraphing
-  GIT_REPOSITORY https://github.com/richelbilderbeek/SFGraphing.git
-  GIT_TAG master
+  GIT_REPOSITORY https://github.com/sairaatta/SFGraphing.git
+  GIT_TAG main
 )
-FetchContent_GetProperties(SFGraphing)
-if(NOT SFGraphing_POPULATED)
-  FetchContent_Populate(SFGraphing)
+FetchContent_MakeAvailable(SFGraphing)
 
-  # Patch CMakeLists.txt to require at least 3.5
-  file(READ "${SFGraphing_SOURCE_DIR}/CMakeLists.txt" _sf_cmake)
-  string(REPLACE "cmake_minimum_required(VERSION 2.8)"
-                 "cmake_minimum_required(VERSION 3.5)"
-                 _sf_cmake "${_sf_cmake}")
-  file(WRITE "${SFGraphing_SOURCE_DIR}/CMakeLists.txt" "${_sf_cmake}")
-
-  add_subdirectory(${SFGraphing_SOURCE_DIR} ${SFGraphing_BINARY_DIR})
-endif()
 
 # -------------------------------------------------------------------
 # vcpkg toolchain (for SFML)
