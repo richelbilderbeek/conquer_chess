@@ -12,8 +12,8 @@ environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: false
 
 # Speed up repeat builds by caching vcpkg-installed packages
-#cache:
-#  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
+cache:
+  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
 
