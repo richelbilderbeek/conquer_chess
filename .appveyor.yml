@@ -30,6 +30,7 @@ build_script:
 before_build:
   - ps: if (Test-Path build) { Remove-Item build -Recurse -Force }
 
+
 after_build:
   - ps: |
       $root = $env:APPVEYOR_BUILD_FOLDER
@@ -72,6 +73,7 @@ after_build:
         $src = Join-Path $root $folder
         if (Test-Path $src) { Copy-Item $src $out -Recurse -Force }
       }
+
 
 artifacts:
   - path: dist\**
