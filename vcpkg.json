@@ -4,6 +4,7 @@
   "dependencies": [
     {
       "name": "sfml",
+      "version": "2.6.1",
       "features": [
         "audio",
         "graphics",
