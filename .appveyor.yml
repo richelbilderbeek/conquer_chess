@@ -13,14 +13,14 @@ environment:
 
 # Speed up repeat builds by caching vcpkg-installed packages
 cache:
-#  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
+  - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
 
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
-  - .\vcpkg x-update-baseline
-  - .\vcpkg install sfml:x64-windows
+  #- .\vcpkg x-update-baseline
+  #- .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
 
 build_script:
