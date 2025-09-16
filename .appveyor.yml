@@ -17,7 +17,7 @@ cache:
 
 install:
 
-  - cp c:\projects\conquer_chess\vcpkg.json %VCPKG_ROOT%
+  - cp %APPVEYOR_BUILD_FOLDER%\vcpkg.json %VCPKG_ROOT%
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
   - .\vcpkg x-update-baseline
