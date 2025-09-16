@@ -16,14 +16,9 @@ cache:
   - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
-  # Clone vcpkg
-  - git clone https://github.com/microsoft/vcpkg.git %VCPKG_ROOT%
-
-  # Overwrite the broken libogg portfile with your fixed GitHub-based one
-  - copy patches\libogg\portfile.cmake %VCPKG_ROOT%\ports\libogg\portfile.cmake /Y
-
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
+  - copy %APPVEYOR_BUILD_FOLDER%\patches\libogg\portfile.cmake %VCPKG_ROOT%\ports\libogg\portfile.cmake /Y
   - cd %APPVEYOR_BUILD_FOLDER%
 
 
