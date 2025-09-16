@@ -18,7 +18,6 @@ cache:
 install:
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
-  #- .\vcpkg install sfml[audio]:x64-windows
   - .\vcpkg install sfml:x64-windows
   - cd %APPVEYOR_BUILD_FOLDER%
 
