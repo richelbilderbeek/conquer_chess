@@ -25,3 +25,4 @@ rm conquer_chess
 rm tmp_*
 rm tmp.*
 rm *.wkt
+rm -f conquer_chess_error.txt
