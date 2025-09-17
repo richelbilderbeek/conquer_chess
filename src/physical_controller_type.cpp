@@ -5,7 +5,7 @@
 #include <iterator>
 #include <sstream>
 
-#include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
+#include "magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 std::vector<physical_controller_type> get_all_physical_controller_types() noexcept
 {

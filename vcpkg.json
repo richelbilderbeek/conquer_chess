@@ -11,6 +11,9 @@
         "network",
         "window"
       ]
+    },
+    {
+      "name": "magic-enum"
     }
   ],
   "builtin-baseline": "163b97d4625073093ae73585695cc4cfe4480998"
