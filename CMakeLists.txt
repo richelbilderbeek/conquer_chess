@@ -48,7 +48,7 @@ endif()
 # -------------------------------------------------------------------
 file(GLOB LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
-add_executable(conquer_chess WIN32 MACOSX_BUNDLE
+add_executable(conquer_chess
     ${LOCAL_SRC}
 )
 
@@ -71,6 +71,9 @@ target_compile_definitions(conquer_chess PRIVATE
 find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQUIRED)
 
 target_link_libraries(conquer_chess PRIVATE sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+
+# Link SFGraphing as well
+target_link_libraries(conquer_chess PRIVATE SFGraphing)
 
 
 if(MSVC)
