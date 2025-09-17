@@ -31,7 +31,8 @@ before_build:
 
 
 after_build:
-  - conquer_chess.exe --version
+  - C:\projects\conquer-chess\build\Release\conquer_chess.exe --version
+
   - ps: |
       $root = $env:APPVEYOR_BUILD_FOLDER
       $out  = Join-Path $root 'dist'
