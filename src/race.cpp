@@ -6,7 +6,7 @@
 #include <iterator>
 #include <sstream>
 
-#include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
+#include "magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 std::vector<race> get_all_races() noexcept
 {

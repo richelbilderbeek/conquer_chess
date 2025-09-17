@@ -1,6 +1,6 @@
 #include "user_input_type.h"
 
-#include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
+#include "magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 #include <iostream>
 #include <iterator>

@@ -6,7 +6,7 @@
 #include <iterator>
 #include <sstream>
 
-#include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
+#include "magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 std::vector<starting_position_type> get_all_starting_position_types() noexcept
 {

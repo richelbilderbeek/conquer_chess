@@ -12,7 +12,7 @@
 #include <fstream>
 
 // From https://github.com/jerr-it/SFGraphing
-#include "../SFGraphing/include/SFGraphing/SFPlot.h"
+#include "SFGraphing/SFPlot.h"
 
 replay_view::replay_view()
 {

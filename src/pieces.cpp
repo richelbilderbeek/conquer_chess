@@ -10,7 +10,7 @@
 #pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
 #endif
 
-#include "../chess-library/include/chess.hpp"
+#include "chess.hpp"
 
 // Ignore warnings on Windows, thanks https://stackoverflow.com/a/5850405/3364162
 #ifndef _MSC_VER
