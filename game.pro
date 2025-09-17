@@ -44,7 +44,9 @@ CONFIG(debug, debug|release) {
   LIBS += -lgcov
 }
 
+###############################################################################
 # SFML
+###############################################################################
 win32 {
   # Include path
   INCLUDEPATH += $$PWD/SFML-2.6.1/include
@@ -61,22 +63,48 @@ unix {
   LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 }
 
+###############################################################################
+# magic_enum
+###############################################################################
+unix {
+  INCLUDEPATH += $$PWD/../magic_enum/include
+}
+
+###############################################################################
 # SFGraphing
+###############################################################################
 DEFINES += USE_SFGRAPHING
 
-# Expand all .cpp and .h files explicitly
-SFGRAPHING_SRCS = $$files($$PWD/SFGraphing/src/*.cpp)
-SOURCES += $$SFGRAPHING_SRCS
+win32 {
+  SFGRAPHING_SRCS = $$files($$PWD/SFGraphing/src/*.cpp)
+  SOURCES += $$SFGRAPHING_SRCS
 
-SFGRAPHING_HDRS = $$files($$PWD/SFGraphing/include/SFGraphing/*.h)
-HEADERS += $$SFGRAPHING_HDRS
+  SFGRAPHING_HDRS = $$files($$PWD/SFGraphing/include/SFGraphing/*.h)
+  HEADERS += $$SFGRAPHING_HDRS
 
-# Add include directory
-INCLUDEPATH += $$PWD/SFGraphing/include
+  INCLUDEPATH += $$PWD/SFGraphing/include
 
-# Add chess-library include path
-INCLUDEPATH += $$PWD/chess-library/include
+  message("SFGraphing sources: $$SFGRAPHING_SRCS")
+  message("SFGraphing headers: $$SFGRAPHING_HDRS")
+}
+unix {
+  SFGRAPHING_SRCS = $$files($$PWD/../SFGraphing/src/*.cpp)
+  SOURCES += $$SFGRAPHING_SRCS
 
-# Debug output (will show when running qmake)
-message("SFGraphing sources: $$SFGRAPHING_SRCS")
-message("SFGraphing headers: $$SFGRAPHING_HDRS")
+  SFGRAPHING_HDRS = $$files($$PWD/../SFGraphing/include/SFGraphing/*.h)
+  HEADERS += $$SFGRAPHING_HDRS
+
+  INCLUDEPATH += $$PWD/../SFGraphing/include
+}
+
+
+###############################################################################
+# chess-library
+###############################################################################
+win32 {
+  INCLUDEPATH += $$PWD/chess-library/include
+}
+unix {
+  INCLUDEPATH += $$PWD/../chess-library/include
+}
+

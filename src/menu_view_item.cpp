@@ -4,7 +4,7 @@
 #include <cassert>
 #include <iterator>
 
-#include "../magic_enum/include/magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
+#include "magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
 std::vector<menu_view_item> get_all_menu_view_items() noexcept
 {

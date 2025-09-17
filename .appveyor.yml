@@ -11,17 +11,16 @@ environment:
   VCPKG_DEFAULT_TRIPLET: x64-windows
   APPVEYOR_SAVE_CACHE_ON_ERROR: false
 
-# Speed up repeat builds by caching vcpkg-installed packages
+# Speed up repeat builds by caching vcpkg-installed packages + downloads
 cache:
   - C:\Tools\vcpkg\installed -> **\CMakeLists.txt
 
 install:
-
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
-  #- .\vcpkg x-update-baseline
-  #- .\vcpkg install sfml:x64-windows
+  - copy %APPVEYOR_BUILD_FOLDER%\patches\libogg\portfile.cmake %VCPKG_ROOT%\ports\libogg\portfile.cmake /Y
   - cd %APPVEYOR_BUILD_FOLDER%
+
 
 build_script:
   - cmake -B build -S . -A x64 -DCMAKE_TOOLCHAIN_FILE="C:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake" -DVCPKG_MANIFEST_FEATURES="audio"
