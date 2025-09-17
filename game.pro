@@ -71,6 +71,11 @@ SOURCES += $$SFGRAPHING_SRCS
 SFGRAPHING_HDRS = $$files($$PWD/SFGraphing/include/SFGraphing/*.h)
 HEADERS += $$SFGRAPHING_HDRS
 
+# magic_enum
+unix {
+  INCLUDEPATH += $$PWD/../magic_enum/include
+}
+
 # Add include directory
 INCLUDEPATH += $$PWD/SFGraphing/include
 
