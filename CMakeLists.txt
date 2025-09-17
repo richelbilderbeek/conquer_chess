@@ -34,6 +34,11 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(SFGraphing)
 
+if(MSVC)
+    target_compile_definitions(SFGraphing PUBLIC _USE_MATH_DEFINES)
+endif()
+
+
 
 # -------------------------------------------------------------------
 # vcpkg toolchain (for SFML)
@@ -48,10 +53,6 @@ endif()
 # -------------------------------------------------------------------
 file(GLOB LOCAL_SRC "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
-# Enable math constants like M_PI on MSVC
-if(MSVC)
-    add_compile_definitions(_USE_MATH_DEFINES)
-endif()
 
 
 add_executable(conquer_chess
