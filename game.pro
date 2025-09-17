@@ -76,11 +76,22 @@ unix {
   INCLUDEPATH += $$PWD/../magic_enum/include
 }
 
-# Add include directory
-INCLUDEPATH += $$PWD/SFGraphing/include
 
-# Add chess-library include path
-INCLUDEPATH += $$PWD/chess-library/include
+# SFGraphing
+win32 {
+  INCLUDEPATH += $$PWD/SFGraphing/include
+}
+unix {
+  INCLUDEPATH += $$PWD/../SFGraphing/include
+}
+
+# chess-library
+win32 {
+  INCLUDEPATH += $$PWD/chess-library/include
+}
+unix {
+  INCLUDEPATH += $$PWD/../chess-library/include
+}
 
 # Debug output (will show when running qmake)
 message("SFGraphing sources: $$SFGRAPHING_SRCS")
