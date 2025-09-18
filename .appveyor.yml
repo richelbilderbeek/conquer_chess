@@ -32,7 +32,9 @@ before_build:
 
 
 after_build:
-  - C:\projects\conquer-chess\build\Release\conquer_chess.exe --version
+  # https://stackoverflow.com/a/39175056/3364162
+  - ps: Start-Process C:\projects\conquer-chess\build\Release\conquer_chess.exe --version
+
 
   - ps: |
       $root = $env:APPVEYOR_BUILD_FOLDER
