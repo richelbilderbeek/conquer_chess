@@ -18,6 +18,7 @@ cache:
 install:
   - cd %VCPKG_ROOT%
   - .\bootstrap-vcpkg.bat
+  - .\vcpkg install sfml[audio]:x64-windows
   - copy %APPVEYOR_BUILD_FOLDER%\patches\libogg\portfile.cmake %VCPKG_ROOT%\ports\libogg\portfile.cmake /Y
   - cd %APPVEYOR_BUILD_FOLDER%
 
@@ -78,8 +79,9 @@ after_build:
 
 artifacts:
   - path: dist\**
-    name: conquer-chess-win64
+    name: conquer_chess-win64
     type: WebDeployPackage
 
-on_failure:
-  - ps: Get-ChildItem -Recurse "$env:APPVEYOR_BUILD_FOLDER\build" -ErrorAction SilentlyContinue | Out-String | Write-Host
+# If one wants to see the full file structure
+# on_failure:
+#   - ps: Get-ChildItem -Recurse "$env:APPVEYOR_BUILD_FOLDER\build" -ErrorAction SilentlyContinue | Out-String | Write-Host
