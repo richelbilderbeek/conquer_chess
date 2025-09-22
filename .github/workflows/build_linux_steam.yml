@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # allows manual trigger
   push:
     branches:
-      - main          # runs on push to main branch
+      - main
   pull_request:
 
 jobs:
@@ -43,3 +43,4 @@ jobs:
         with:
           name: conquer_chess_linux_steam
           path: conquer_chess_linux_steam.tar.gz
+
