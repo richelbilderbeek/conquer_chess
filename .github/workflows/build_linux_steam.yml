@@ -1,0 +1,45 @@
+name: Build Linux (Steam Runtime 3 Sniper)
+
+on:
+  workflow_dispatch:  # allows manual trigger
+  push:
+    branches:
+      - main          # runs on push to main branch
+  pull_request:
+
+jobs:
+  build-linux-steam:
+    runs-on: ubuntu-latest
+
+    container:
+      image: registry.gitlab.steamos.cloud/steamrt/sniper/sdk:latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y \
+            cmake g++ make \
+            libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev
+
+      - name: Build project
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          make -j$(nproc)
+
+      - name: Package build
+        run: |
+          cd build
+          tar -czvf conquer_chess_linux_steam.tar.gz conquer_chess
+          mv conquer_chess_linux_steam.tar.gz $GITHUB_WORKSPACE
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: conquer_chess_linux_steam
+          path: conquer_chess_linux_steam.tar.gz
