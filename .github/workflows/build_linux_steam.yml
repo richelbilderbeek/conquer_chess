@@ -22,15 +22,22 @@ jobs:
         run: |
           apt-get update
           apt-get install -y \
-            cmake g++ make \
-            libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev \
-            libsfml-dev
+            cmake g++ make git \
+            libx11-dev libxrandr-dev libxi-dev libudev-dev \
+            libgl1-mesa-dev libopenal-dev libvorbis-dev libflac-dev
+
+      - name: Install SFML 2.6.1
+        run: |
+          git clone --branch 2.6.1 https://github.com/SFML/SFML.git
+          cd SFML
+          cmake -B build -DCMAKE_INSTALL_PREFIX=/usr/local
+          cmake --build build --target install -j$(nproc)
 
       - name: Build project
         run: |
           mkdir -p build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DSFML_DIR=/usr/local/lib/cmake/SFML
           make -j$(nproc)
 
       - name: Package build
