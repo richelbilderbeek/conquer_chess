@@ -75,7 +75,7 @@ target_compile_definitions(conquer_chess PRIVATE
 )
 # Tell CMake to use SFML from vcpkg
 # Version can be found at https://vcpkg.link/ports/sfml/versions
-find_package(SFML 2.6.1 COMPONENTS graphics audio network window system main REQUIRED)
+find_package(SFML 2.6.1 COMPONENTS graphics audio network window system REQUIRED)
 
 target_link_libraries(conquer_chess PRIVATE sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
 
