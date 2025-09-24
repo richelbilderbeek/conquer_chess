@@ -57,6 +57,8 @@ jobs:
           cp /usr/local/lib/libsfml-* steam_build/linux64/ || true
           # Optionally copy SFML .so.* (pattern)
           cp /usr/local/lib/libsfml* steam_build/linux64/ || true
+          # Copy libFLAC shared libraries (needed libFLAC.so.8)
+          cp /usr/lib/x86_64-linux-gnu/libFLAC.so* steam_build/linux64/ || true
           # set rpath so the binary prefers local dir
           patchelf --set-rpath '$ORIGIN' steam_build/linux64/conquer_chess || true
           # create a small launcher wrapper (fallback)
