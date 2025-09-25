@@ -5,9 +5,9 @@
 
     "FileMapping"
     {
-        "LocalPath" "build/Desktop-Debug/conquer_chess"
+        "LocalPath" "steam_build/linux64/*"
         "DepotPath" "."
-        "Recursive" "1"
+        "Recursive" "0"
     }
     "FileMapping"
     {
