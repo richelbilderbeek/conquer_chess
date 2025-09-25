@@ -9,23 +9,14 @@ tags:
 
 # Developer guide
 
-## How do you upload the non-standalone Linux executable?
+## How do you upload the Linux executable?
 
-In the Qt Creator project settings, use a shadow build,
-which will put `conquer_chess` in the `build/Desktop-Debug`
-folder.
+Using a GitHub Actions script that uploads the executable and
+all required shared objects.
 
-That folder must have a symbolic link to the resources:
+Then, download all these into the `steam_build/linux64` folder.
 
-```bash
-cd build/Desktop-Debug
-ln -s ../../resources
-```
-
-Compile Conquer Chess in debug mode.
-
-Then run `./scripts/run_steamcmd_to_upload.sh` to upload the executable
-and resources.
+Then run `./scripts/run_steamcmd_to_upload.sh` to upload these.
 
 ## How do you upload the Windows executable?
 
