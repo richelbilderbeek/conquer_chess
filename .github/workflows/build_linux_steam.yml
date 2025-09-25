@@ -1,10 +1,9 @@
 name: Build Linux (Steam Runtime 3 Sniper)
 
 on:
-  workflow_dispatch:  # allows manual trigger
+  workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
 
 jobs:
@@ -18,37 +17,71 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Install dependencies
+      - name: Install system deps
         run: |
+          export DEBIAN_FRONTEND=noninteractive
           apt-get update
           apt-get install -y \
-            cmake g++ make git \
+            cmake g++ make git pkg-config \
             libx11-dev libxrandr-dev libxi-dev libudev-dev \
-            libgl1-mesa-dev libopenal-dev libvorbis-dev libflac-dev
+            libgl1-mesa-dev libopenal-dev libvorbis-dev libflac-dev \
+            libfreetype6-dev libglew-dev libjpeg-dev libsndfile1-dev \
+            patchelf unzip
 
-      - name: Install SFML 2.6.1
+      - name: Build & install SFML 2.6.1
         run: |
-          git clone --branch 2.6.1 https://github.com/SFML/SFML.git
-          cd SFML
-          cmake -B build -DCMAKE_INSTALL_PREFIX=/usr/local
-          cmake --build build --target install -j$(nproc)
+          git clone --depth 1 --branch 2.6.1 https://github.com/SFML/SFML.git /tmp/SFML-2.6.1
+          mkdir -p /tmp/SFML-2.6.1/build
+          cd /tmp/SFML-2.6.1/build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+          make -j$(nproc)
+          make install
 
-      - name: Build project
+      - name: Build Conquer Chess
         run: |
           mkdir -p build
           cd build
           cmake .. -DCMAKE_BUILD_TYPE=Release -DSFML_DIR=/usr/local/lib/cmake/SFML
           make -j$(nproc)
 
-      - name: Package build
+      - name: Save ldd diagnostic
         run: |
-          cd build
-          tar -czvf conquer_chess_linux_steam.tar.gz conquer_chess
-          mv conquer_chess_linux_steam.tar.gz $GITHUB_WORKSPACE
+          ldd build/conquer_chess > build/ldd.txt || true
+          head -n 200 build/ldd.txt || true
 
-      - name: Upload artifact
+      - name: Bundle SFML libs and create steam-ready package
+        run: |
+          mkdir -p steam_build/linux64
+          cp build/conquer_chess steam_build/linux64/
+          # copy SFML libs we installed into /usr/local/lib
+          cp /usr/local/lib/libsfml-* steam_build/linux64/ || true
+          # Optionally copy SFML .so.* (pattern)
+          cp /usr/local/lib/libsfml* steam_build/linux64/ || true
+          # Copy libFLAC shared libraries (needed libFLAC.so.8)
+          cp /usr/lib/x86_64-linux-gnu/libFLAC.so* steam_build/linux64/ || true
+          # set rpath so the binary prefers local dir
+          patchelf --set-rpath '$ORIGIN' steam_build/linux64/conquer_chess || true
+          # create a small launcher wrapper (fallback)
+          cat > steam_build/linux64/run.sh <<'SH'
+          #!/bin/sh
+          DIR="$(cd "$(dirname "$0")" && pwd)"
+          export LD_LIBRARY_PATH="$DIR:$LD_LIBRARY_PATH"
+          exec "$DIR/conquer_chess" "$@"
+          SH
+          chmod +x steam_build/linux64/run.sh
+          # placeholder steam_appid; replace with real appid for upload testing if available
+          echo "YOUR_STEAM_APPID" > steam_build/steam_appid.txt
+          tar -czvf conquer_chess_steam_ready.tar.gz -C steam_build .
+
+      - name: Upload steam-ready artifact
         uses: actions/upload-artifact@v4
         with:
-          name: conquer_chess_linux_steam
-          path: conquer_chess_linux_steam.tar.gz
+          name: conquer_chess_steam_ready
+          path: conquer_chess_steam_ready.tar.gz
+
+      - name: Upload ldd diagnostic
+        uses: actions/upload-artifact@v4
+        with:
+          name: ldd-output
+          path: build/ldd.txt
 
