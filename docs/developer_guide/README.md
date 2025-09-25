@@ -11,6 +11,11 @@ tags:
 
 ## How do you upload the Linux executable?
 
+???- question "Prefer a video?"
+
+    Watch the YouTube video
+    [Conquer Chess: how to deploy the Linux Steam Runtime 3.0 (Sniper) build](https://youtu.be/cSTRn6L2lo4)
+
 Using a GitHub Actions script that uploads the executable and
 all required shared objects.
 
@@ -19,6 +24,11 @@ Then, download all these into the `steam_build/linux64` folder.
 Then run `./scripts/run_steamcmd_to_upload.sh` to upload these.
 
 ## How do you upload the Windows executable?
+
+???- question "Prefer a video?"
+
+    Watch the YouTube video
+    [Conquer Chess: deploying the Windows version](https://youtu.be/N8ZTGgE661c)
 
 Using an AppVeyor script that uploads the executable and
 all required DLLs.
