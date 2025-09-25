@@ -9,9 +9,9 @@ tags:
 
 # Developer guide
 
-## How can I build the game on my own computer
+## How can I build the game on my own computer?
 
-This should be your folder structure:
+This will be your folder structure:
 
 ```text
 .
@@ -31,6 +31,13 @@ git clone https://github.com/Disservin/chess-library.git
 git clone https://github.com/richelbilderbeek/SFGraphing -b patch-1
 ```
 
+Additionally, install Qt Creator and SFML:
+
+```
+sudo apt install libsfml-dev qtcreator
+```
+
+Start Qt Creator and open the Qt Creator project `game.pro`.
 
 ## How do you upload the Linux executable?
 
