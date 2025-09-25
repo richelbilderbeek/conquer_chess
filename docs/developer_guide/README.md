@@ -9,6 +9,29 @@ tags:
 
 # Developer guide
 
+## How can I build the game on my own computer
+
+This should be your folder structure:
+
+```text
+.
+├── chess-library
+├── conquer_chess
+├── magic_enum
+└── SFGraphing
+```
+
+Go to the place where you want these 4 folders to be created,
+then do:
+
+```bash
+git clone https://github.com/richelbilderbeek/conquer_chess
+git clone https://github.com/Neargye/magic_enum --branch v0.9.7
+git clone https://github.com/Disservin/chess-library.git
+git clone https://github.com/richelbilderbeek/SFGraphing -b patch-1
+```
+
+
 ## How do you upload the Linux executable?
 
 ???- question "Prefer a video?"
