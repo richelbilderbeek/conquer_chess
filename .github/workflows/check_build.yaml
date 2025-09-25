@@ -46,13 +46,6 @@ jobs:
           git clone https://github.com/Neargye/magic_enum --branch v0.9.7
           cd -
 
-      - name: Install magic_enum
-        run: |
-          cd ../magic_enum
-          #cmake .
-          #make
-          cd -
-
       - name: Download Disservin's chess library
         run: |
           cd ..
