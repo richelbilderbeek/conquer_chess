@@ -3,11 +3,12 @@ name: Build Linux (Steam Runtime 3 Sniper)
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
 
 jobs:
-  build-linux-steam:
+  build_linux_steam:
     runs-on: ubuntu-latest
 
     container:
@@ -28,7 +29,7 @@ jobs:
             libfreetype6-dev libglew-dev libjpeg-dev libsndfile1-dev \
             patchelf unzip
 
-      - name: Build & install SFML 2.6.1
+      - name: Build and install SFML 2.6.1
         run: |
           git clone --depth 1 --branch 2.6.1 https://github.com/SFML/SFML.git /tmp/SFML-2.6.1
           mkdir -p /tmp/SFML-2.6.1/build
@@ -71,13 +72,13 @@ jobs:
           chmod +x steam_build/linux64/run.sh
           # placeholder steam_appid; replace with real appid for upload testing if available
           echo "YOUR_STEAM_APPID" > steam_build/steam_appid.txt
-          tar -czvf conquer_chess_steam_ready.tar.gz -C steam_build .
+          tar -czvf conquer_chess_steam.tar.gz -C steam_build .
 
       - name: Upload steam-ready artifact
         uses: actions/upload-artifact@v4
         with:
-          name: conquer_chess_steam_ready
-          path: conquer_chess_steam_ready.tar.gz
+          name: conquer_chess_steam
+          path: conquer_chess_steam.tar.gz
 
       - name: Upload ldd diagnostic
         uses: actions/upload-artifact@v4
