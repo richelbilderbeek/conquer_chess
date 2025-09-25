@@ -49,8 +49,8 @@ jobs:
       - name: Install magic_enum
         run: |
           cd ../magic_enum
-          cmake .
-          make
+          #cmake .
+          #make
           cd -
 
       - name: Download Disservin's chess library
