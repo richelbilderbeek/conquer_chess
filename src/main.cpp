@@ -16,7 +16,7 @@
 /// - \link{physical_controllers::get}: to get the one-and-only \link{physical_controllers}
 /// - \link{lobby_options::get}: to get the one-and-only \link{lobby_options}
 
-// Use LOGIC_ONLY to be able to run on GHA
+// Use LOGIC_ONLY to be able to run on GitHub Actions
 
 #include "about.h"
 #include "about_view_layout.h"
