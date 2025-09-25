@@ -11,21 +11,6 @@ tags:
   
 Conquer Chess has bugs that happen before the game even starts.
 
-This page describes:
-
-- `1.` Check you've used the correct launcher
-- `2.` See the error
-
-## `1.` Check you launch with 'Legacy runtime 1.0'
-
-These should be your Conquer Chess properties:
-
-![Legact runtime 1.0 is selected](launch_on_steam/4_selected_legacy_runtime.png)
-
-To do so, read [how to select the right Steam launcher](launch_on_steam/README.md#1-click-on-manage).
-
-## `2.` See the error
-
 To see the error, run the game from a terminal.
 
 Go to the Conquer Chess folder. There are two options,
