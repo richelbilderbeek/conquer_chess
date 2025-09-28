@@ -33,7 +33,7 @@ git clone https://github.com/richelbilderbeek/SFGraphing -b patch-1
 
 Additionally, install Qt Creator and SFML:
 
-```
+```bash
 sudo apt install libsfml-dev qtcreator
 ```
 
