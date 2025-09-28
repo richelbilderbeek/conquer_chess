@@ -21,7 +21,7 @@
 void draw_about_button(const screen_rect& sr)
 {
   draw_texture(get_strip_texture(chess_color::white), sr);
-  draw_big_text(sf::String("Aboutx"), sr);
+  draw_big_text(sf::String("About"), sr);
   const screen_rect key_rect{
     screen_coordinate(
       sr.get_tl().get_x() + 16,
