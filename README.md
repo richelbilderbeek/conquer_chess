@@ -1,30 +1,5 @@
 # Conquer Chess: Battle for Liberty
 
-```m̀ermaid
-flowchart TD
-
-  classDef bjorn_node fill:#ddf,color:#000,stroke:#00f
-  classDef lars_node fill:#dfd,color:#000,stroke:#0f0
-  classDef richel_node fill:#fdd,color:#000,stroke:#f00
-
-  subgraph day_1[Monday]
-    git_basic[git basic workflow]:::bjorn_node
-    class_design[Class design]:::lars_node
-  end
-  subgraph day_2[Tuesday]
-    class_diagram[Create project's class diagram]:::lars_node
-    pair_programming[Pair programming]:::richel_node
-    tdd[TDD]:::richel_node
-  end
-
-  git_basic --> pair_programming
-  pair_programming --> tdd
-  class_design --> class_diagram
-  class_diagram --> tdd
-  git_basic --> tdd
-
-```
-
 <!-- markdownlint-disable MD013 --><!-- Badges cannot be split up over lines, hence will break 80 characters per line -->
 
 | Branch    | [![GitHub Actions logo](images/GitHubActions.png)](https://github.com/richelbilderbeek/conquer_chess/actions)                                                                                                         | [![Codecov logo](images/Codecov.png)](https://www.codecov.io)                                                                                                            |
