@@ -1,4 +1,5 @@
-# Conquer Chess: Battle for Liberty
+# Conquer Chess: Battle for Liberty 
+Conrad was here!
 
 <!-- markdownlint-disable MD013 --><!-- Badges cannot be split up over lines, hence will break 80 characters per line -->
 
