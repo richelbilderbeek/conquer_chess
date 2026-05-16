@@ -55,6 +55,8 @@
 #include "menu_view_layout.h"
 #include "navigation_controls_layout.h"
 #include "options_view_layout.h"
+#include "options_video_and_audio_view_item.h"
+#include "options_video_and_audio_view_layout.h"
 #include "pgn_move_string.h"
 #include "pgn_game_string.h"
 #include "physical_controller.h"
@@ -142,6 +144,8 @@ void test()
   test_message_type();
   test_mouse_bindings();
   test_navigation_controls_layout();
+  test_options_video_and_audio_view_layout();
+  test_options_video_and_audio_view_item();
   test_options_view_item();
   test_options_view_layout();
   test_pgn_game_string();

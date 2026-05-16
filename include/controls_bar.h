@@ -7,7 +7,9 @@
 #include "physical_controllers.h"
 #include "screen_rect.h"
 
-// The bar at the bottom of the screen
+/// The bar at the bottom of the screen,
+/// that shows the user the things that can be done,
+/// e.g. 'D' to go to the next item
 class controls_bar
 {
 public:

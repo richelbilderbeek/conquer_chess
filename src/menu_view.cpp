@@ -256,6 +256,9 @@ bool menu_view::process_event_impl(sf::Event& event)
     };
     if (is_in(mouse_screen_pos, m_layout.get_start())) set_selected(menu_view_item::start);
     else if (is_in(mouse_screen_pos, m_layout.get_options())) set_selected(menu_view_item::options);
+    else if (is_in(mouse_screen_pos, m_layout.get_options_controls())) set_selected(menu_view_item::controls);
+    else if (is_in(mouse_screen_pos, m_layout.get_options_laws())) set_selected(menu_view_item::laws);
+    else if (is_in(mouse_screen_pos, m_layout.get_options_video_and_audio())) set_selected(menu_view_item::video_and_audio);
     else if (is_in(mouse_screen_pos, m_layout.get_about())) set_selected(menu_view_item::about);
     else if (is_in(mouse_screen_pos, m_layout.get_quit())) set_selected(menu_view_item::quit);
   }
@@ -275,10 +278,21 @@ bool menu_view::process_event_impl(sf::Event& event)
         // Do nothing, #169
         // set_next_state(program_state::options);
       }
+      else if (is_in(mouse_screen_pos, m_layout.get_options_controls()))
+      {
+        set_next_state(program_state::option_controls);
+      }
+      else if (is_in(mouse_screen_pos, m_layout.get_options_laws()))
+      {
+        set_next_state(program_state::option_laws);
+      }
+      else if (is_in(mouse_screen_pos, m_layout.get_options_video_and_audio()))
+      {
+        set_next_state(program_state::option_video_and_audio);
+      }
       else if (is_in(mouse_screen_pos, m_layout.get_about()))
       {
         set_next_state(program_state::about);
-
       }
       else if (is_in(mouse_screen_pos, m_layout.get_quit()))
       {

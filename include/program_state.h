@@ -12,11 +12,14 @@ enum class program_state {
   lobby,
   main_menu,
   options,
+  option_controls,
+  option_laws,
+  option_video_and_audio,
   replay,
   right_controls
 };
 
-/// Get all the message_type values
+/// Get all the program_state values
 std::vector<program_state> get_all_program_states() noexcept;
 
 /// Test this class and its free functions
