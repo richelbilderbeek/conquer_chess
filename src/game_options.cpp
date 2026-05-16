@@ -36,6 +36,11 @@ void decrease_starting_position(game_options& g) noexcept
   g.set_starting_position(get_previous(g.get_starting_position()));
 }
 
+void decrease_when_to_make_a_move(game_options& g) noexcept
+{
+  g.set_when_to_make_a_move_law(get_previous(g.get_when_to_make_a_move_law()));
+}
+
 bool do_show_selected(const game_options& g) noexcept
 {
   return g.get_show_selected();
@@ -89,6 +94,11 @@ void increase_sound_effects_volume(game_options& g) noexcept
 void increase_starting_position(game_options& g) noexcept
 {
   g.set_starting_position(get_next(g.get_starting_position()));
+}
+
+void increase_when_to_make_a_move(game_options& g) noexcept
+{
+  g.set_when_to_make_a_move_law(get_next(g.get_when_to_make_a_move_law()));
 }
 
 void game_options::reset()

@@ -5,6 +5,7 @@
 #include "screen_coordinate.h"
 #include "starting_position_type.h"
 #include "volume.h"
+#include "when_to_make_a_move_law.h"
 #include "game_speed.h"
 
 #include <iosfwd>
@@ -45,6 +46,9 @@ public:
   /// Get the starting position
   starting_position_type get_starting_position() const noexcept { return m_starting_position; }
 
+  /// Get the law when a move can be made
+  when_to_make_a_move_law get_when_to_make_a_move_law() const noexcept { return m_when_to_make_a_move_law; }
+
   /// Get the music volume, as a percentage
   const auto& get_music_volume() const noexcept { return m_music_volume; }
 
@@ -68,6 +72,9 @@ public:
 
   /// Set the sound effects volume, as a percentage
   void set_sound_effects_volume(const volume& v) noexcept { m_sound_effects_volume = v; }
+
+  /// Set the law when to make a move
+  void set_when_to_make_a_move_law(const when_to_make_a_move_law law) noexcept { m_when_to_make_a_move_law = law; }
 
 private:
 
@@ -94,6 +101,9 @@ private:
 
   /// The starting position
   starting_position_type m_starting_position;
+
+  /// The starting position
+  when_to_make_a_move_law m_when_to_make_a_move_law;
 };
 
 /// Decrease the game speed
@@ -107,6 +117,9 @@ void decrease_sound_effects_volume(game_options& g) noexcept;
 
 /// Decrease the sound effects volume
 void decrease_starting_position(game_options& g) noexcept;
+
+/// Decrease the law on when moves can be made
+void decrease_when_to_make_a_move(game_options& g) noexcept;
 
 /// Are selected squares shown on-screen?
 bool do_show_selected(const game_options& g) noexcept;
@@ -151,6 +164,9 @@ void increase_sound_effects_volume(game_options& g) noexcept;
 
 /// Increase the starting position
 void increase_starting_position(game_options& g) noexcept;
+
+/// Increase the law on when moves can be made
+void increase_when_to_make_a_move(game_options& g) noexcept;
 
 /// Test this class and its free functions
 void test_game_options();

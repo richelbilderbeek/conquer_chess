@@ -39,6 +39,7 @@ void options_laws_view::decrease_selected()
     case options_laws_view_item::music_volume: decrease_music_volume(m_game_options); break;
     case options_laws_view_item::sound_effects_volume: decrease_sound_effects_volume(m_game_options); break;
     case options_laws_view_item::starting_position: decrease_starting_position(m_game_options); break;
+    case options_laws_view_item::when_to_make_a_move: decrease_when_to_make_a_move(m_game_options); break;
     case options_laws_view_item::left_controls:
     {
       set_next_state(program_state::left_controls);
@@ -61,6 +62,7 @@ void options_laws_view::increase_selected()
     case options_laws_view_item::music_volume: increase_music_volume(m_game_options); break;
     case options_laws_view_item::sound_effects_volume: increase_sound_effects_volume(m_game_options); break;
     case options_laws_view_item::starting_position: increase_starting_position(m_game_options); break;
+    case options_laws_view_item::when_to_make_a_move: increase_when_to_make_a_move(m_game_options); break;
     case options_laws_view_item::left_controls:
     {
       set_next_state(program_state::left_controls);

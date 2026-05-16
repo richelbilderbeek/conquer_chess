@@ -5,6 +5,7 @@
 #include <vector>
 
 /// @file The law when to make a move
+/// Extension to rule 1.2
 enum class when_to_make_a_move_law {
   classic,
   rts,
@@ -13,6 +14,12 @@ enum class when_to_make_a_move_law {
 
 /// Get all the message_type values
 std::vector<when_to_make_a_move_law> get_all_when_to_make_a_move_laws() noexcept;
+
+/// Get the next law when to make a move
+when_to_make_a_move_law get_next(const when_to_make_a_move_law law) noexcept;
+
+/// Get the previous law when to make a move
+when_to_make_a_move_law get_previous(const when_to_make_a_move_law law) noexcept;
 
 /// Test this class and its free functions
 void test_when_to_make_a_move_law();

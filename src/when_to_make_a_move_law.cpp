@@ -17,12 +17,57 @@ std::vector<when_to_make_a_move_law> get_all_when_to_make_a_move_laws() noexcept
   return v;
 }
 
+when_to_make_a_move_law get_next(const when_to_make_a_move_law speed) noexcept
+{
+  const auto v{get_all_when_to_make_a_move_laws()};
+  auto there{std::find(std::begin(v), std::end(v), speed)};
+  assert(there != std::end(v));
+  if (there == std::end(v) - 1)
+  {
+    assert(!v.empty());
+    const auto t{v.front()};
+    return t;
+  }
+  return *(++there);
+}
+
+when_to_make_a_move_law get_previous(const when_to_make_a_move_law speed) noexcept
+{
+  const auto v{get_all_when_to_make_a_move_laws()};
+  auto there{std::find(std::begin(v), std::end(v), speed)};
+  assert(there != std::end(v));
+  if (there == std::begin(v))
+  {
+    assert(!v.empty());
+    const auto t{v.back()};
+    return t;
+  }
+  return *(--there);
+}
+
 void test_when_to_make_a_move_law()
 {
 #ifndef NDEBUG
   // get_all_when_to_make_a_move_laws
   {
     assert(!get_all_when_to_make_a_move_laws().empty());
+  }
+  // get_next
+  {
+    for (const auto law: get_all_when_to_make_a_move_laws())
+    {
+      const auto next{get_next(law)};
+      assert(next != law);
+    }
+  }
+  // get_previous
+  {
+    for (const auto law: get_all_when_to_make_a_move_laws())
+    {
+      const auto next{get_next(law)};
+      const auto previous{get_previous(next)};
+      assert(previous == law);
+    }
   }
   // to_str
   {
