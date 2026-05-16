@@ -15,6 +15,7 @@
 #include "menu_view.h"
 #include "options_view.h"
 #include "options_controls_view.h"
+#include "options_laws_view.h"
 #include "options_video_and_audio_view.h"
 #include "render_window.h"
 #include "replay_view.h"
@@ -40,6 +41,7 @@ main_window::main_window(const cc_cli_options& options)
   m_views[program_state::main_menu] = std::make_unique<menu_view>();
   m_views[program_state::options] = std::make_unique<options_view>();
   m_views[program_state::option_controls] = std::make_unique<options_controls_view>();
+  m_views[program_state::option_laws] = std::make_unique<options_laws_view>();
   m_views[program_state::option_video_and_audio] = std::make_unique<option_video_and_audio_view>();
   m_views[program_state::replay] = std::make_unique<replay_view>();
   m_views[program_state::right_controls] = std::make_unique<controls_view>(side::rhs);
