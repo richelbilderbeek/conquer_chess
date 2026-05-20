@@ -14,6 +14,7 @@
 #include "game_speed.h"
 #include "physical_controller_type.h"
 #include "starting_position_type.h"
+#include "when_to_make_a_move_law.h"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/String.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -55,10 +56,19 @@ void draw_fancy_text(
 /// The button that shows the text 'Game Speed'
 void draw_game_speed_icon(const screen_rect& sr);
 
+/// The button that shows the text 'When to make a move'
+void draw_when_to_make_a_move_icon(const screen_rect& sr);
+
 /// The button that shows the value for the game speed
 void draw_game_speed_value(
   const screen_rect& sr,
   const game_speed speed
+);
+
+/// The button that shows the value for the game speed
+void draw_when_to_make_a_move_value(
+  const screen_rect& sr,
+  const when_to_make_a_move_law law
 );
 
 /// Draw fancy text at a huge size

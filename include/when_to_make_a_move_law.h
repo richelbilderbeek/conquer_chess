@@ -27,6 +27,11 @@ void test_when_to_make_a_move_law();
 /// Convert the type to a string that spelled identical to the C++ value
 /// @example
 /// assert(to_str(when_to_make_a_move_law::classic) == "classic");
-std::string to_str(const when_to_make_a_move_law t) noexcept;
+std::string to_str(const when_to_make_a_move_law law) noexcept;
+
+/// Convert the type to a string that could be spelled by a human
+/// @example
+/// assert(to_str(when_to_make_a_move_law::white_first) == "White first");
+std::string to_human_str(const when_to_make_a_move_law law) noexcept;
 
 #endif // WHEN_TO_MAKE_A_MOVE_LAW

@@ -64,8 +64,8 @@ public:
 
   const screen_rect& get_selectable_rect(const options_laws_view_item item) const noexcept;
 
-  const screen_rect& get_game_speed_label() const noexcept { return m_game_speed_label; }
-  const screen_rect& get_game_speed_value() const noexcept { return m_game_speed_value; }
+  const screen_rect& get_when_to_make_a_move_label() const noexcept { return m_when_to_make_a_move_label; }
+  const screen_rect& get_when_to_make_a_move_value() const noexcept { return m_when_to_make_a_move_value; }
 
   const screen_rect& get_music_volume_label() const noexcept { return m_music_volume_label; }
   const screen_rect& get_music_volume_value() const noexcept { return m_music_volume_value; }
@@ -89,8 +89,8 @@ private:
   screen_rect m_background;
   board_layout m_chess_board;
   screen_rect m_controls_label;
-  screen_rect m_game_speed_label;
-  screen_rect m_game_speed_value;
+  screen_rect m_when_to_make_a_move_label;
+  screen_rect m_when_to_make_a_move_value;
   screen_rect m_left_controls_value;
   screen_rect m_music_volume_label;
   screen_rect m_music_volume_value;

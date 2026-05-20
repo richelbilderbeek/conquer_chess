@@ -73,10 +73,29 @@ void test_when_to_make_a_move_law()
   {
     assert(to_str(when_to_make_a_move_law::classic) == "classic");
   }
+  // to_str
+  {
+    assert(to_human_str(when_to_make_a_move_law::classic) == "Classic");
+    assert(to_human_str(when_to_make_a_move_law::rts) == "RTS");
+    assert(to_human_str(when_to_make_a_move_law::white_first) == "White first");
+  }
 #endif // NDEBUG
 }
 
-std::string to_str(const when_to_make_a_move_law t) noexcept
+std::string to_human_str(const when_to_make_a_move_law law) noexcept
 {
-  return std::string(magic_enum::enum_name(t));
+  switch (law)
+  {
+    case when_to_make_a_move_law::classic: return "Classic";
+    case when_to_make_a_move_law::rts: return "RTS";
+    default:
+    case when_to_make_a_move_law::white_first:
+      assert(law == when_to_make_a_move_law::white_first);
+      return "White first";
+  }
+}
+
+std::string to_str(const when_to_make_a_move_law law) noexcept
+{
+  return std::string(magic_enum::enum_name(law));
 }

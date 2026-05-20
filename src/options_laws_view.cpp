@@ -21,7 +21,7 @@
 #include <cassert>
 
 options_laws_view::options_laws_view()
-  : m_selected{options_laws_view_item::game_speed}
+  : m_selected{options_laws_view_item::when_to_make_a_move}
 {
   m_controls_bar.set_draw_player_controls(false);
   m_controls_bar.set_draw_invert(true);
@@ -35,11 +35,10 @@ void options_laws_view::decrease_selected()
 {
   switch (m_selected)
   {
-    case options_laws_view_item::game_speed: decrease_game_speed(m_game_options); break;
+    case options_laws_view_item::when_to_make_a_move: decrease_when_to_make_a_move(m_game_options); break;
     case options_laws_view_item::music_volume: decrease_music_volume(m_game_options); break;
     case options_laws_view_item::sound_effects_volume: decrease_sound_effects_volume(m_game_options); break;
     case options_laws_view_item::starting_position: decrease_starting_position(m_game_options); break;
-    case options_laws_view_item::when_to_make_a_move: decrease_when_to_make_a_move(m_game_options); break;
     case options_laws_view_item::left_controls:
     {
       set_next_state(program_state::left_controls);
@@ -58,11 +57,10 @@ void options_laws_view::increase_selected()
 {
   switch (m_selected)
   {
-    case options_laws_view_item::game_speed: increase_game_speed(m_game_options); break;
+    case options_laws_view_item::when_to_make_a_move: increase_when_to_make_a_move(m_game_options); break;
     case options_laws_view_item::music_volume: increase_music_volume(m_game_options); break;
     case options_laws_view_item::sound_effects_volume: increase_sound_effects_volume(m_game_options); break;
     case options_laws_view_item::starting_position: increase_starting_position(m_game_options); break;
-    case options_laws_view_item::when_to_make_a_move: increase_when_to_make_a_move(m_game_options); break;
     case options_laws_view_item::left_controls:
     {
       set_next_state(program_state::left_controls);
@@ -183,9 +181,9 @@ bool options_laws_view::process_event_impl(sf::Event& event)
     {
       switch (m_selected)
       {
-        case options_laws_view_item::game_speed:
+        case options_laws_view_item::when_to_make_a_move:
         default:
-        assert(m_selected == options_laws_view_item::game_speed);
+        assert(m_selected == options_laws_view_item::when_to_make_a_move);
         case options_laws_view_item::music_volume:
         case options_laws_view_item::sound_effects_volume:
         case options_laws_view_item::starting_position:
@@ -205,9 +203,9 @@ bool options_laws_view::process_event_impl(sf::Event& event)
     {
       switch (m_selected)
       {
-        case options_laws_view_item::game_speed:
+        case options_laws_view_item::when_to_make_a_move:
         default:
-        assert(m_selected == options_laws_view_item::game_speed);
+        assert(m_selected == options_laws_view_item::when_to_make_a_move);
         case options_laws_view_item::music_volume:
         case options_laws_view_item::sound_effects_volume:
         case options_laws_view_item::starting_position:
@@ -230,7 +228,7 @@ bool options_laws_view::process_event_impl(sf::Event& event)
       screen_coordinate(event.mouseMove.x, event.mouseMove.y)
     };
     if (is_in(mouse_screen_pos, m_layout.get_chess_board().get_board())) set_selected(options_laws_view_item::starting_position);
-    else if (is_in(mouse_screen_pos, m_layout.get_game_speed_value())) set_selected(options_laws_view_item::game_speed);
+    else if (is_in(mouse_screen_pos, m_layout.get_when_to_make_a_move_value())) set_selected(options_laws_view_item::when_to_make_a_move);
     else if (is_in(mouse_screen_pos, m_layout.get_controller_type_value(side::lhs))) set_selected(options_laws_view_item::left_controls);
     else if (is_in(mouse_screen_pos, m_layout.get_music_volume_value())) set_selected(options_laws_view_item::music_volume);
     else if (is_in(mouse_screen_pos, m_layout.get_controller_type_value(side::rhs))) set_selected(options_laws_view_item::right_controls);
@@ -293,7 +291,7 @@ void options_laws_view::draw_impl()
 
   // Update the controls bar
   m_controls_bar.set_draw_left_right_increase_descrease(
-       m_selected == options_laws_view_item::game_speed
+       m_selected == options_laws_view_item::when_to_make_a_move
     || m_selected == options_laws_view_item::music_volume
     || m_selected == options_laws_view_item::sound_effects_volume
     || m_selected == options_laws_view_item::starting_position
@@ -348,11 +346,11 @@ void draw_bottom_row(options_laws_view& v, const side player_side)
   draw_input_prompt_symbol_on_background(k, r, sf::Color(128, 128, 128, 128));
 }
 
-void draw_game_speed(options_laws_view& v)
+void draw_when_to_make_a_move(options_laws_view& v)
 {
   const auto& layout = v.get_layout();
-  draw_game_speed_icon(layout.get_game_speed_label());
-  draw_game_speed_value(layout.get_game_speed_value(), v.get_game_options().get_game_speed());
+  draw_when_to_make_a_move_icon(layout.get_when_to_make_a_move_label());
+  draw_when_to_make_a_move_value(layout.get_when_to_make_a_move_value(), v.get_game_options().get_when_to_make_a_move_law());
 }
 
 
@@ -380,7 +378,7 @@ void draw_top(options_laws_view& v)
 {
   assert(!to_str(get_starting_position(v.get_game_options())).empty());
 
-  draw_game_speed(v);
+  draw_when_to_make_a_move(v);
   draw_music_volume(v);
   draw_sound_effects_volume(v);
   draw_starting_position(v);

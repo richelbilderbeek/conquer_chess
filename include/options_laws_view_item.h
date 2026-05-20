@@ -10,7 +10,6 @@
 /// A thing that can be changed in the Options menu.
 enum class options_laws_view_item
 {
-  game_speed,
   left_controls,
   music_volume,
   right_controls,

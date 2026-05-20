@@ -39,11 +39,11 @@ options_laws_view_layout::options_laws_view_layout(
   const int y9{y8 + panel_height};
   const int y10{y9 + panel_height};
 
-  m_game_speed_label = screen_rect(
+  m_when_to_make_a_move_label = screen_rect(
     screen_coordinate(x1, y1),
     screen_coordinate(x3, y2)
   );
-  m_game_speed_value = screen_rect(
+  m_when_to_make_a_move_value = screen_rect(
     screen_coordinate(x3, y1),
     screen_coordinate(x5, y2)
   );
@@ -109,7 +109,7 @@ const screen_rect& options_laws_view_layout::get_selectable_rect(const options_l
 {
   switch (item)
   {
-    case options_laws_view_item::game_speed: return m_game_speed_value;
+    case options_laws_view_item::when_to_make_a_move: return m_when_to_make_a_move_value;
     case options_laws_view_item::music_volume: return m_music_volume_value;
     case options_laws_view_item::sound_effects_volume: return m_sound_effects_volume_value;
     case options_laws_view_item::starting_position: return m_starting_pos_value;
@@ -125,8 +125,8 @@ std::vector<screen_rect> get_panels(const options_laws_view_layout& layout)
 {
   return
   {
-    layout.get_game_speed_label(),
-    layout.get_game_speed_value(),
+    layout.get_when_to_make_a_move_label(),
+    layout.get_when_to_make_a_move_value(),
     layout.get_music_volume_label(),
     layout.get_music_volume_value(),
     layout.get_sound_effects_volume_label(),

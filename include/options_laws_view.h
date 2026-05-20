@@ -113,8 +113,8 @@ void draw_bottom_header(options_laws_view& v);
 /// i.e. 'Left' and the LHS controller
 void draw_bottom_row(options_laws_view& v, const side player_side);
 
-/// Show the game speed label and value
-void draw_game_speed(options_laws_view& v);
+/// Show the 'When to make a move' label and value
+void draw_when_to_make_a_move(options_laws_view& v);
 
 /// Show the music volume label and value
 void draw_music_volume(options_laws_view& v);

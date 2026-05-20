@@ -23,8 +23,8 @@ options_laws_view_item get_above(const options_laws_view_item item) noexcept
 
   switch (item)
   {
-    case options_laws_view_item::game_speed: return options_laws_view_item::right_controls;
-    case options_laws_view_item::music_volume: return options_laws_view_item::game_speed;
+    case options_laws_view_item::when_to_make_a_move: return options_laws_view_item::right_controls;
+    case options_laws_view_item::music_volume: return options_laws_view_item::when_to_make_a_move;
     case options_laws_view_item::sound_effects_volume: return options_laws_view_item::music_volume;
     case options_laws_view_item::starting_position: return options_laws_view_item::sound_effects_volume;
     case options_laws_view_item::left_controls: return options_laws_view_item::starting_position;
@@ -39,7 +39,7 @@ options_laws_view_item get_below(const options_laws_view_item item) noexcept
 {
   switch (item)
   {
-    case options_laws_view_item::game_speed: return options_laws_view_item::music_volume;
+    case options_laws_view_item::when_to_make_a_move: return options_laws_view_item::music_volume;
     case options_laws_view_item::music_volume: return options_laws_view_item::sound_effects_volume;
     case options_laws_view_item::sound_effects_volume: return options_laws_view_item::starting_position;
     case options_laws_view_item::starting_position: return options_laws_view_item::left_controls;
@@ -47,7 +47,7 @@ options_laws_view_item get_below(const options_laws_view_item item) noexcept
     default:
     case options_laws_view_item::right_controls:
       assert(item == options_laws_view_item::right_controls);
-      return options_laws_view_item::game_speed;
+      return options_laws_view_item::when_to_make_a_move;
   }
 }
 
@@ -56,15 +56,15 @@ options_laws_view_item get_left_of(const options_laws_view_item item)
 {
   switch (item)
   {
-    case options_laws_view_item::game_speed: return options_laws_view_item::right_controls;
-    case options_laws_view_item::music_volume: return options_laws_view_item::game_speed;
+    case options_laws_view_item::when_to_make_a_move: return options_laws_view_item::right_controls;
+    case options_laws_view_item::music_volume: return options_laws_view_item::when_to_make_a_move;
     case options_laws_view_item::sound_effects_volume: return options_laws_view_item::music_volume;
     case options_laws_view_item::starting_position: return options_laws_view_item::sound_effects_volume;
     case options_laws_view_item::left_controls: return options_laws_view_item::starting_position;
     default:
     case options_laws_view_item::right_controls:
       assert(item == options_laws_view_item::right_controls);
-      return options_laws_view_item::game_speed;
+      return options_laws_view_item::when_to_make_a_move;
   }
 }
 
@@ -73,7 +73,7 @@ options_laws_view_item get_right_of(const options_laws_view_item item)
 {
   switch (item)
   {
-    case options_laws_view_item::game_speed: return options_laws_view_item::music_volume;
+    case options_laws_view_item::when_to_make_a_move: return options_laws_view_item::music_volume;
     case options_laws_view_item::music_volume: return options_laws_view_item::sound_effects_volume;
     case options_laws_view_item::sound_effects_volume: return options_laws_view_item::starting_position;
     case options_laws_view_item::starting_position: return options_laws_view_item::left_controls;
@@ -81,7 +81,7 @@ options_laws_view_item get_right_of(const options_laws_view_item item)
     default:
     case options_laws_view_item::right_controls:
       assert(item == options_laws_view_item::right_controls);
-      return options_laws_view_item::game_speed;
+      return options_laws_view_item::when_to_make_a_move;
   }
 }
 

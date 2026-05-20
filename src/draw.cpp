@@ -177,6 +177,46 @@ void draw_game_speed_icon(const screen_rect& sr)
   }
 }
 
+void draw_when_to_make_a_move_icon(const screen_rect& sr)
+{
+  sf::RectangleShape rectangle;
+  set_rect(rectangle, sr);
+  rectangle.setTexture(
+    &get_game_option_icon(
+      options_view_item::when_to_make_a_move
+      )
+    );
+  // Zoom in
+  rectangle.setTextureRect(
+    sf::IntRect(
+      0,
+      rectangle.getTexture()->getSize().y / 4,
+      rectangle.getTexture()->getSize().x,
+      rectangle.getTexture()->getSize().y / 2
+      )
+    );
+  get_render_window().draw(rectangle);
+
+  draw_normal_fancy_text("When to make a move", sr);
+  const sf::Keyboard::Key k{sf::Keyboard::Key::W};
+  const int x1{sr.get_tl().get_x() + 16};
+  const int x2{x1 + 64};
+  const int y1{sr.get_tl().get_y() + 16};
+  const int y2{y1 + 64};
+  const screen_rect r{
+    screen_coordinate(x1, y1),
+    screen_coordinate(x2, y2)
+  };
+  if (is_shift_pressed())
+  {
+    draw_input_prompt_inverted_symbol_on_background(k, r, sf::Color(128, 128, 128, 128));
+  }
+  else
+  {
+    draw_input_prompt_symbol_on_background(k, r, sf::Color(128, 128, 128, 128));
+  }
+}
+
 void draw_game_speed_value(
   const screen_rect& sr,
   const game_speed speed
@@ -184,8 +224,17 @@ void draw_game_speed_value(
 {
   draw_chessboard_strip_texture(chess_color::black, sr);
   draw_normal_text(to_human_str(speed), sr);
-
 }
+
+void draw_when_to_make_a_move_value(
+  const screen_rect& sr,
+  const when_to_make_a_move_law law
+)
+{
+  draw_chessboard_strip_texture(chess_color::black, sr);
+  draw_normal_text(to_human_str(law), sr);
+}
+
 
 void draw_huge_fancy_text(const sf::String& s, const screen_rect& sr)
 {

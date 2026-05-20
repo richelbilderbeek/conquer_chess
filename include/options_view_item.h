@@ -16,6 +16,7 @@ enum class options_view_item
   right_controls,
   sound_effects_volume,
   starting_position,
+  when_to_make_a_move,
 };
 
 /// Get all the options view items
