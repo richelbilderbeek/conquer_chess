@@ -95,17 +95,17 @@ void test_options_laws_view_item()
   }
   // Game speed
   {
-    assert(get_above(options_laws_view_item::game_speed) == options_laws_view_item::right_controls);
-    assert(get_right_of(options_laws_view_item::game_speed) == options_laws_view_item::music_volume);
-    assert(get_below(options_laws_view_item::game_speed) == options_laws_view_item::music_volume);
-    assert(get_left_of(options_laws_view_item::game_speed) == options_laws_view_item::right_controls);
+    assert(get_above(options_laws_view_item::when_to_make_a_move) == options_laws_view_item::right_controls);
+    assert(get_right_of(options_laws_view_item::when_to_make_a_move) == options_laws_view_item::music_volume);
+    assert(get_below(options_laws_view_item::when_to_make_a_move) == options_laws_view_item::music_volume);
+    assert(get_left_of(options_laws_view_item::when_to_make_a_move) == options_laws_view_item::right_controls);
   }
   // Music volume
   {
-    assert(get_above(options_laws_view_item::music_volume) == options_laws_view_item::game_speed);
+    assert(get_above(options_laws_view_item::music_volume) == options_laws_view_item::when_to_make_a_move);
     assert(get_right_of(options_laws_view_item::music_volume) == options_laws_view_item::sound_effects_volume);
     assert(get_below(options_laws_view_item::music_volume) == options_laws_view_item::sound_effects_volume);
-    assert(get_left_of(options_laws_view_item::music_volume) == options_laws_view_item::game_speed);
+    assert(get_left_of(options_laws_view_item::music_volume) == options_laws_view_item::when_to_make_a_move);
   }
   // Starting position
   {
@@ -124,9 +124,9 @@ void test_options_laws_view_item()
   // Right controls
   {
     assert(get_above(options_laws_view_item::right_controls) == options_laws_view_item::left_controls);
-    assert(get_right_of(options_laws_view_item::right_controls) == options_laws_view_item::game_speed);
-    assert(get_below(options_laws_view_item::right_controls) == options_laws_view_item::game_speed);
-    assert(get_left_of(options_laws_view_item::right_controls) == options_laws_view_item::game_speed);
+    assert(get_right_of(options_laws_view_item::right_controls) == options_laws_view_item::when_to_make_a_move);
+    assert(get_below(options_laws_view_item::right_controls) == options_laws_view_item::when_to_make_a_move);
+    assert(get_left_of(options_laws_view_item::right_controls) == options_laws_view_item::when_to_make_a_move);
   }
   // get_above
   {

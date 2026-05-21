@@ -1,4 +1,7 @@
+#ifdef OPTIONS_VIEW_IS_STILL_NEEDED
+
 #include "options_view.h"
+
 
 #ifndef LOGIC_ONLY
 
@@ -439,3 +442,5 @@ void options_view::tick_impl(const delta_t)
 
 
 #endif // LOGIC_ONLY
+
+#endif // OPTIONS_VIEW_IS_STILL_NEEDED

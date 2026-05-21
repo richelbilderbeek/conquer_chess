@@ -1,7 +1,5 @@
-#ifndef OPTIONS_VIEW_ITEM_H
-#define OPTIONS_VIEW_ITEM_H
-
-#ifdef OPTIONS_VIEW_IS_STILL_NEEDED
+#ifndef OPTIONS_LAWS_ITEM_H
+#define OPTIONS_LAWS_ITEM_H
 
 #include <iosfwd>
 #include <string>
@@ -10,7 +8,7 @@
 /// A selectable item at in the Options menu.
 ///
 /// A thing that can be changed in the Options menu.
-enum class options_view_item
+enum class options_laws_item
 {
   game_speed,
   left_controls,
@@ -22,31 +20,29 @@ enum class options_view_item
 };
 
 /// Get all the options view items
-std::vector<options_view_item> get_all_options_view_items() noexcept;
+std::vector<options_laws_item> get_all_options_laws_items() noexcept;
 
 /// Get the item above the current one,
 /// i.e. the item when the user presses up
-options_view_item get_above(const options_view_item item) noexcept;
+options_laws_item get_above(const options_laws_item item) noexcept;
 
 /// Get the item below the current one,
 /// i.e. the item when the user presses down
-options_view_item get_below(const options_view_item item) noexcept;
+options_laws_item get_below(const options_laws_item item) noexcept;
 
 /// Get the item left of the current one,
 /// i.e. the item when the user presses left
-options_view_item get_left_of(const options_view_item item) noexcept;
+options_laws_item get_left_of(const options_laws_item item) noexcept;
 
 /// Get the item right of the current one,
 /// i.e. the item when the user presses right
-options_view_item get_right_of(const options_view_item item) noexcept;
+options_laws_item get_right_of(const options_laws_item item) noexcept;
 
-std::string to_str(const options_view_item item) noexcept;
+std::string to_str(const options_laws_item item) noexcept;
 
 /// Test this class and free functions
-void test_options_view_item();
+void test_options_laws_item();
 
-std::ostream& operator<<(std::ostream& os, const options_view_item i) noexcept;
+std::ostream& operator<<(std::ostream& os, const options_laws_item i) noexcept;
 
-#endif // OPTIONS_VIEW_IS_STILL_NEEDED
-
-#endif // OPTIONS_VIEW_ITEM_H
+#endif // OPTIONS_LAWS_ITEM_H

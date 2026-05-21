@@ -307,7 +307,7 @@ void options_laws_view::draw_impl()
 void draw_background(options_laws_view& v)
 {
   draw_texture(
-    game_resources::get().get_options_menu_textures().get_texture(options_view_item::sound_effects_volume),
+    game_resources::get().get_options_video_and_audio_textures().get_texture(options_video_and_audio_item::sound_effects_volume),
     v.get_layout().get_background()
   );
 }

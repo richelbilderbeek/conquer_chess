@@ -11,7 +11,6 @@ enum class program_state {
   loading,
   lobby,
   main_menu,
-  options,
   option_controls,
   option_laws,
   option_video_and_audio,

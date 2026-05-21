@@ -74,7 +74,7 @@ void about_view::draw_impl()
 void draw_background(about_view& v)
 {
   draw_texture(
-    get_game_option_icon(options_view_item::starting_position),
+    get_game_laws_icon(options_laws_item::starting_position),
     v.get_layout().get_background()
   );
 

@@ -1,17 +1,17 @@
-#include "options_menu_textures.h"
+#include "options_laws_textures.h"
 
 #ifndef LOGIC_ONLY
 
 #include <cassert>
 #include <sstream>
 
-options_menu_textures::options_menu_textures()
+options_laws_textures::options_laws_textures()
 {
-  for (const auto r: get_all_options_view_items())
+  for (const auto r: get_all_options_laws_items())
   {
     const std::string filename_str{get_filename(r)};
     const auto filename{
-      std::string("resources/textures/options_menu/")
+      std::string("resources/textures/options_laws/")
       + filename_str.c_str()
     };
     if (!m_textures[r].loadFromFile(filename))
@@ -22,8 +22,8 @@ options_menu_textures::options_menu_textures()
   }
 }
 
-std::string options_menu_textures::get_filename(
-  const options_view_item item
+std::string options_laws_textures::get_filename(
+  const options_laws_item item
 ) const noexcept
 {
   std::stringstream s;
@@ -31,8 +31,8 @@ std::string options_menu_textures::get_filename(
   return s.str();
 }
 
-sf::Texture& options_menu_textures::get_texture(
-  const options_view_item item
+sf::Texture& options_laws_textures::get_texture(
+  const options_laws_item item
 ) noexcept
 {
   return m_textures[item];

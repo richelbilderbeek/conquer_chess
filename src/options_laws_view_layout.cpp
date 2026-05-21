@@ -151,7 +151,7 @@ void test_options_laws_view_layout()
   // get_selectable_rect
   {
     const options_laws_view_layout layout;
-    assert(layout.get_selectable_rect(options_laws_view_item::game_speed) == layout.get_game_speed_value());
+    assert(layout.get_selectable_rect(options_laws_view_item::when_to_make_a_move) == layout.get_when_to_make_a_move_value());
     assert(layout.get_selectable_rect(options_laws_view_item::music_volume) == layout.get_music_volume_value());
     assert(layout.get_selectable_rect(options_laws_view_item::sound_effects_volume) == layout.get_sound_effects_volume_value());
     assert(layout.get_selectable_rect(options_laws_view_item::starting_position) == layout.get_starting_pos_value());

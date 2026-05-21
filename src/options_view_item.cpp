@@ -1,3 +1,5 @@
+#ifdef KEEP_OPTIONS
+
 #include "options_view_item.h"
 
 #include "magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
@@ -185,3 +187,5 @@ std::ostream& operator<<(std::ostream& os, const options_view_item i) noexcept
   os << to_str(i);
   return os;
 }
+
+#endif // KEEP_OPTIONS

@@ -112,7 +112,7 @@ bool controls_view::process_event_impl(sf::Event& event)
 {
   if (event.type == sf::Event::Closed)
   {
-    set_next_state(program_state::options);
+    set_next_state(program_state::main_menu);
     return false;
   }
   else if (event.type == sf::Event::KeyPressed)
@@ -120,7 +120,7 @@ bool controls_view::process_event_impl(sf::Event& event)
     sf::Keyboard::Key key_pressed = event.key.code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
-      set_next_state(program_state::options);
+      set_next_state(program_state::main_menu);
       return false;
     }
     else if (key_pressed == sf::Keyboard::Key::Up)
@@ -149,7 +149,7 @@ bool controls_view::process_event_impl(sf::Event& event)
     }
     else if (key_pressed == sf::Keyboard::Key::Q)
     {
-      set_next_state(program_state::options);
+      set_next_state(program_state::main_menu);
       return false;
     }
   }

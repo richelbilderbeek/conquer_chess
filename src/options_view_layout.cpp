@@ -1,3 +1,5 @@
+#ifdef OPTIONS_VIEW_IS_STILL_NEEDED
+
 #include "options_view_layout.h"
 
 #include <cassert>
@@ -167,3 +169,5 @@ void test_options_view_layout()
   }
   #endif
 }
+
+#endif // OPTIONS_VIEW_IS_STILL_NEEDED

@@ -1,6 +1,8 @@
 #ifndef OPTIONS_VIEW_H
 #define OPTIONS_VIEW_H
 
+#ifdef OPTIONS_VIEW_IS_STILL_NEEDED
+
 #ifndef LOGIC_ONLY
 
 #include "ccfwd.h"
@@ -138,5 +140,7 @@ void draw_selected_panel(options_view& v);
 void draw_top(options_view& v);
 
 #endif // LOGIC_ONLY
+
+#endif // OPTIONS_VIEW_IS_STILL_NEEDED
 
 #endif // OPTIONS_VIEW_H

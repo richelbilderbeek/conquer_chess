@@ -39,7 +39,6 @@ main_window::main_window(const cc_cli_options& options)
   m_views[program_state::loading] = std::make_unique<loading_view>();
   m_views[program_state::lobby] = std::make_unique<lobby_view>();
   m_views[program_state::main_menu] = std::make_unique<menu_view>();
-  m_views[program_state::options] = std::make_unique<options_view>();
   m_views[program_state::option_controls] = std::make_unique<options_controls_view>();
   m_views[program_state::option_laws] = std::make_unique<options_laws_view>();
   m_views[program_state::option_video_and_audio] = std::make_unique<option_video_and_audio_view>();
@@ -176,10 +175,27 @@ void main_window::set_new_state(const program_state s)
 
       }
     }
-    // Get the game options
-    else if (m_program_state == program_state::options)
+    else if (m_program_state == program_state::option_controls)
     {
-      const auto p{dynamic_cast<options_view*>(m_views[program_state::options].get())};
+      const auto p{dynamic_cast<options_controls_view*>(m_views[program_state::option_controls].get())};
+      assert(p);
+      if (p->has_accepted())
+      {
+          m_game_options = p->get_game_options();
+      }
+    }
+    else if (m_program_state == program_state::option_laws)
+    {
+      const auto p{dynamic_cast<options_laws_view*>(m_views[program_state::option_laws].get())};
+      assert(p);
+      if (p->has_accepted())
+      {
+          m_game_options = p->get_game_options();
+      }
+    }
+    else if (m_program_state == program_state::option_video_and_audio)
+    {
+      const auto p{dynamic_cast<option_video_and_audio_view*>(m_views[program_state::option_video_and_audio].get())};
       assert(p);
       if (p->has_accepted())
       {
@@ -208,9 +224,21 @@ void main_window::set_new_state(const program_state s)
       p->set_cli_options(m_cli_options);
     }
     // Re-/set the game options
-    else if (s == program_state::options)
+    else if (s == program_state::option_controls)
     {
-      const auto p{dynamic_cast<options_view*>(m_views[program_state::options].get())};
+      const auto p{dynamic_cast<options_controls_view*>(m_views[program_state::option_controls].get())};
+      assert(p);
+      p->set_game_options(m_game_options);
+    }
+    else if (s == program_state::option_laws)
+    {
+      const auto p{dynamic_cast<options_laws_view*>(m_views[program_state::option_laws].get())};
+      assert(p);
+      p->set_game_options(m_game_options);
+    }
+    else if (s == program_state::option_video_and_audio)
+    {
+      const auto p{dynamic_cast<option_video_and_audio_view*>(m_views[program_state::option_video_and_audio].get())};
       assert(p);
       p->set_game_options(m_game_options);
     }

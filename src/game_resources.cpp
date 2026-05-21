@@ -10,7 +10,9 @@ std::optional<board_game_textures> game_resources::m_board_game_textures;
 std::optional<fonts> game_resources::m_fonts;
 std::optional<input_prompt_textures> game_resources::m_input_prompt_textures;
 std::optional<lobby_menu_textures> game_resources::m_lobby_menu_textures = {};
-std::optional<options_menu_textures> game_resources::m_options_menu_textures = {};
+std::optional<options_controls_textures> game_resources::m_options_controls_textures = {};
+std::optional<options_laws_textures> game_resources::m_options_laws_textures = {};
+std::optional<options_video_and_audio_textures> game_resources::m_options_video_and_audio_textures = {};
 std::optional<loading_screen_fonts> game_resources::m_loading_screen_fonts = {};
 loading_screen_songs * game_resources::m_loading_screen_songs{nullptr};
 std::optional<loading_screen_textures> game_resources::m_loading_screen_textures = {};
@@ -69,11 +71,34 @@ fonts& game_resources::get_fonts() noexcept
 }
 
 
+/*
 sf::Texture& get_game_option_icon(
   const options_view_item item
 ) noexcept
 {
   return game_resources::get().get_options_menu_textures().get_texture(item);
+}
+*/
+
+sf::Texture& get_game_controls_icon(
+  const options_controls_item item
+) noexcept
+{
+  return game_resources::get().get_options_controls_textures().get_texture(item);
+}
+
+sf::Texture& get_game_laws_icon(
+  const options_laws_item item
+) noexcept
+{
+  return game_resources::get().get_options_laws_textures().get_texture(item);
+}
+
+sf::Texture& get_game_video_and_audio_icon(
+  const options_video_and_audio_item item
+) noexcept
+{
+  return game_resources::get().get_options_video_and_audio_textures().get_texture(item);
 }
 
 input_prompt_textures& game_resources::get_input_prompt_textures() noexcept

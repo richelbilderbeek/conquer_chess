@@ -8,7 +8,9 @@
 #include "chess_color.h"
 #include "fonts.h"
 #include "lobby_menu_textures.h"
-#include "options_menu_textures.h"
+#include "options_controls_textures.h"
+#include "options_laws_textures.h"
+#include "options_video_and_audio_textures.h"
 #include "loading_screen_fonts.h"
 #include "loading_screen_songs.h"
 #include "loading_screen_textures.h"
@@ -90,7 +92,9 @@ public:
 
   misc_textures& get_misc_textures() noexcept;
 
-  options_menu_textures& get_options_menu_textures() noexcept;
+  options_controls_textures& get_options_controls_textures() noexcept;
+  options_laws_textures& get_options_laws_textures() noexcept;
+  options_video_and_audio_textures& get_options_video_and_audio_textures() noexcept;
 
   physical_controller_textures& get_physical_controller_textures() noexcept;
 
@@ -123,7 +127,9 @@ private:
   static std::optional<lobby_menu_textures> m_lobby_menu_textures;
   static std::optional<map_textures> m_map_textures;
   static std::optional<misc_textures> m_misc_textures;
-  static std::optional<options_menu_textures> m_options_menu_textures;
+  static std::optional<options_controls_textures> m_options_controls_textures;
+  static std::optional<options_laws_textures> m_options_laws_textures;
+  static std::optional<options_video_and_audio_textures> m_options_video_and_audio_textures;
   static std::optional<physical_controller_textures> m_physical_controller_type_textures;
   static std::optional<piece_action_textures> m_piece_action_textures;
   static std::optional<piece_portrait_textures> m_piece_portrait_textures;
@@ -147,10 +153,22 @@ sf::Font& get_arial_font() noexcept;
 /// Get the Code Squared font
 sf::Font& get_code_squared_font() noexcept;
 
-/// Get an icon that accompanies a game option,
+/// Get an icon that accompanies a Controls option,
 /// to be used in the Options screen
-sf::Texture& get_game_option_icon(
-  const options_view_item item
+sf::Texture& get_game_controls_icon(
+  const options_controls_item item
+) noexcept;
+
+/// Get an icon that accompanies a Laws option,
+/// to be used in the Options screen
+sf::Texture& get_game_laws_icon(
+  const options_laws_item item
+) noexcept;
+
+/// Get an icon that accompanies a Video and Audio option,
+/// to be used in the Options screen
+sf::Texture& get_game_video_and_audio_icon(
+  const options_video_and_audio_item item
 ) noexcept;
 
 

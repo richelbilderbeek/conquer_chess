@@ -1,6 +1,8 @@
 #ifndef OPTIONS_VIEW_LAYOUT_H
 #define OPTIONS_VIEW_LAYOUT_H
 
+#ifdef OPTIONS_VIEW_IS_STILL_NEEDED
+
 #include "screen_rect.h"
 #include "layout.h"
 #include "options_view_item.h"
@@ -106,5 +108,7 @@ std::vector<screen_rect> get_panels(const options_view_layout& layout);
 
 /// Test the options_view_layout class
 void test_options_view_layout();
+
+#endif // OPTIONS_VIEW_IS_STILL_NEEDED
 
 #endif // OPTIONS_VIEW_LAYOUT_H

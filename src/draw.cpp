@@ -71,8 +71,8 @@ void draw_controls_label(const screen_rect& sr)
 
   set_rect(rectangle, sr);
   rectangle.setTexture(
-    &get_game_option_icon(
-      options_view_item::left_controls
+    &get_game_controls_icon(
+      options_controls_item::left_controls
     )
   );
   // Zoom in
@@ -142,8 +142,8 @@ void draw_game_speed_icon(const screen_rect& sr)
   sf::RectangleShape rectangle;
   set_rect(rectangle, sr);
   rectangle.setTexture(
-    &get_game_option_icon(
-      options_view_item::game_speed
+    &get_game_controls_icon(
+      options_controls_item::game_speed
       )
     );
   // Zoom in
