@@ -70,7 +70,10 @@ public:
   int get_n_lobby_menu_textures() noexcept;
   int get_n_map_textures() noexcept;
   int get_n_misc_textures() noexcept;
-  int get_n_options_menu_textures() noexcept;
+  //int get_n_options_menu_textures() noexcept;
+  int get_n_options_controls_textures() noexcept;
+  int get_n_options_laws_textures() noexcept;
+  int get_n_options_video_and_audio_textures() noexcept;
   int get_n_physical_controller_type_textures() noexcept;
   int get_n_piece_action_textures() noexcept;
   int get_n_piece_portrait_textures() noexcept;

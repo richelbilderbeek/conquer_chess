@@ -182,8 +182,8 @@ void draw_when_to_make_a_move_icon(const screen_rect& sr)
   sf::RectangleShape rectangle;
   set_rect(rectangle, sr);
   rectangle.setTexture(
-    &get_game_option_icon(
-      options_view_item::when_to_make_a_move
+    &get_game_laws_icon(
+      options_laws_item::when_to_make_a_move
       )
     );
   // Zoom in
@@ -299,8 +299,8 @@ void draw_music_volume_label(const screen_rect& sr)
 {
   sf::RectangleShape rectangle;
   rectangle.setTexture(
-    &get_game_option_icon(
-      options_view_item::music_volume
+    &get_game_video_and_audio_icon(
+      options_video_and_audio_item::music_volume
       )
     );
   set_rect(rectangle, sr);
@@ -556,8 +556,8 @@ void draw_sound_effects_volume_label(const screen_rect& sr)
 {
   sf::RectangleShape rectangle;
   rectangle.setTexture(
-    &get_game_option_icon(
-      options_view_item::sound_effects_volume
+    &get_game_video_and_audio_icon(
+      options_video_and_audio_item::sound_effects_volume
     )
   );
   // Zoom in
@@ -629,8 +629,8 @@ void draw_starting_position_label(const screen_rect& sr)
 {
   sf::RectangleShape rectangle;
   rectangle.setTexture(
-    &get_game_option_icon(
-      options_view_item::starting_position
+    &get_game_laws_icon(
+      options_laws_item::starting_position
     )
   );
   set_rect(rectangle, sr);

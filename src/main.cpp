@@ -146,8 +146,8 @@ void test()
   test_navigation_controls_layout();
   test_options_video_and_audio_view_layout();
   test_options_video_and_audio_view_item();
-  test_options_view_item();
-  test_options_view_layout();
+  //test_options_view_item();
+  //test_options_view_layout();
   test_pgn_game_string();
   test_pgn_move_string();
   test_physical_controller_type();

@@ -213,7 +213,7 @@ void draw_background(controls_view& v)
 {
   const auto& layout = v.get_layout();
   draw_texture(
-    game_resources::get().get_options_menu_textures().get_texture(options_view_item::left_controls),
+    game_resources::get().get_options_controls_textures().get_texture(options_controls_item::left_controls),
     layout.get_background()
   );
 }

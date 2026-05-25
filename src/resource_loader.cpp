@@ -87,67 +87,77 @@ void resource_loader::process_next()
       break;
     case 8:
       m_descriptor = "Loaded "
-        + std::to_string(resources.get_n_options_menu_textures())
-        + " game options menu textures";
+        + std::to_string(resources.get_n_options_controls_textures())
+        + " game options controls menu textures";
       break;
     case 9:
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_options_laws_textures())
+        + " game options laws menu textures";
+      break;
+    case 10:
+      m_descriptor = "Loaded "
+        + std::to_string(resources.get_n_options_video_and_audio_textures())
+        + " game options video and audio menu textures";
+      break;
+    case 11:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_map_textures())
         + " maps";
       break;
-    case 10:
+    case 12:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_physical_controller_type_textures())
         + " physical controller textures";
       break;
-    case 11:
+    case 13:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_piece_textures())
         + " piece textures";
       break;
-    case 12:
+    case 14:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_piece_action_textures())
         + " piece actions";
       break;
-    case 13:
+    case 15:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_piece_portrait_textures())
         + " piece portraits";
       break;
-    case 14:
+    case 16:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_lobby_menu_textures())
         + " lobby menu textures";
       break;
-    case 15:
+    case 17:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_input_prompt_textures())
         + " input prompt textures";
       break;
-    case 16:
+    case 18:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_themba_textures())
         + " Themba textures";
       break;
-    case 17:
+    case 19:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_artwork_textures())
         + " artwork textures";
       break;
-    case 18:
+    case 20:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_board_game_textures())
         + " board game textures";
       break;
-    case 19:
+    case 21:
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_misc_textures())
         + " miscellaneous textures";
       break;
     default:
-    case 20:
-      assert(m_index == 20);
+    case 22:
+      assert(m_index == 22);
       assert(m_index + 1 == get_n_items() && "Decrease the value in resource_load::get_n_items");
       m_descriptor = "Loaded "
         + std::to_string(resources.get_n_textures())

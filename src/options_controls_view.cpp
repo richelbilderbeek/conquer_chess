@@ -307,7 +307,7 @@ void options_controls_view::draw_impl()
 void draw_background(options_controls_view& v)
 {
   draw_texture(
-    game_resources::get().get_options_menu_textures().get_texture(options_view_item::sound_effects_volume),
+    game_resources::get().get_options_controls_textures().get_texture(options_controls_item::sound_effects_volume),
     v.get_layout().get_background()
   );
 }

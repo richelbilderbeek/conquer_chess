@@ -115,11 +115,34 @@ lobby_menu_textures& game_resources::get_lobby_menu_textures() noexcept
   return m_lobby_menu_textures.value();
 }
 
+/*
 options_menu_textures& game_resources::get_options_menu_textures() noexcept
 {
   if (!m_options_menu_textures) m_options_menu_textures = options_menu_textures();
   assert(m_options_menu_textures);
   return m_options_menu_textures.value();
+}
+*/
+
+options_controls_textures& game_resources::get_options_controls_textures() noexcept
+{
+  if (!m_options_controls_textures) m_options_controls_textures = options_controls_textures();
+  assert(m_options_controls_textures);
+  return m_options_controls_textures.value();
+}
+
+options_laws_textures& game_resources::get_options_laws_textures() noexcept
+{
+  if (!m_options_laws_textures) m_options_laws_textures = options_laws_textures();
+  assert(m_options_laws_textures);
+  return m_options_laws_textures.value();
+}
+
+options_video_and_audio_textures& game_resources::get_options_video_and_audio_textures() noexcept
+{
+  if (!m_options_video_and_audio_textures) m_options_video_and_audio_textures = options_video_and_audio_textures();
+  assert(m_options_video_and_audio_textures);
+  return m_options_video_and_audio_textures.value();
 }
 
 int game_resources::get_n_fonts() noexcept
@@ -191,9 +214,26 @@ int game_resources::get_n_lobby_menu_textures() noexcept
   return get_lobby_menu_textures().get_n_textures();
 }
 
+/*
 int game_resources::get_n_options_menu_textures() noexcept
 {
   return get_options_menu_textures().get_n_textures();
+}
+*/
+
+int game_resources::get_n_options_controls_textures() noexcept
+{
+  return get_options_controls_textures().get_n_textures();
+}
+
+int game_resources::get_n_options_laws_textures() noexcept
+{
+  return get_options_laws_textures().get_n_textures();
+}
+
+int game_resources::get_n_options_video_and_audio_textures() noexcept
+{
+  return get_options_video_and_audio_textures().get_n_textures();
 }
 
 int game_resources::get_n_loading_screen_fonts() noexcept
