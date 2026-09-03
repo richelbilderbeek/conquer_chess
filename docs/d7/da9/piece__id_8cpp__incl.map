@@ -1,0 +1,13 @@
+<map id="src/piece_id.cpp" name="src/piece_id.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="138,5,265,31"/>
+<area shape="rect" id="Node000002" href="$d8/df0/piece__id_8h.html" title=" " alt="" coords="5,79,93,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="178,33,87,75,85,70,176,28"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="117,79,187,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="195,33,170,69,166,66,191,29"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="211,79,291,104"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="212,29,237,66,233,69,207,33"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="315,79,389,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="227,28,316,70,314,75,224,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="17,152,81,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="52,104,52,138,47,138,47,104"/>
+</map>

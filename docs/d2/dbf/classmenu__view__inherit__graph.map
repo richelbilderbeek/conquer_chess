@@ -1,0 +1,5 @@
+<map id="menu_view" name="menu_view">
+<area shape="rect" id="Node000001" title="The main Menu dialog." alt="" coords="5,79,103,104"/>
+<area shape="rect" id="Node000002" href="$d8/da6/classview.html" title="The abstract base class of all other views." alt="" coords="27,5,81,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="57,44,57,79,51,79,51,44"/>
+</map>

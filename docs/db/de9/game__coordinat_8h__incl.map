@@ -1,0 +1,16 @@
+<map id="include/game_coordinat.h" name="include/game_coordinat.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="64,5,255,31"/>
+<area shape="rect" id="Node000002" href="$d7/db1/ccfwd_8h.html" title=" " alt="" coords="5,79,76,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="142,33,73,74,71,69,139,28"/>
+<area shape="rect" id="Node000003" href="$d8/d10/chess__color_8h.html" title=" " alt="" coords="151,79,261,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="169,30,193,66,189,69,165,32"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="85,152,149,177"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="158,32,142,79,125,139,120,138,137,78,153,30"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="285,79,357,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="186,28,283,71,281,75,184,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="193,106,144,145,140,141,190,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="174,152,233,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="208,104,207,139,202,138,203,104"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="257,152,320,177"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="221,102,266,141,263,145,218,106"/>
+</map>

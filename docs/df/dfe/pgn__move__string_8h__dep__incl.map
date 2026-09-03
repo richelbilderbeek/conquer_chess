@@ -1,0 +1,16 @@
+<map id="include/pgn_move_string.h" name="include/pgn_move_string.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="503,5,700,31"/>
+<area shape="rect" id="Node000002" href="$d0/dcd/chess__move_8h.html" title=" " alt="" coords="375,79,542,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="568,39,483,81,481,76,565,34"/>
+<area shape="rect" id="Node000006" href="$df/d0a/main_8cpp.html" title=" " alt="" coords="571,152,677,177"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="608,44,625,151,620,152,603,45"/>
+<area shape="rect" id="Node000007" href="$dd/d00/pgn__move__string_8cpp.html" title=" " alt="" coords="639,79,823,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="636,35,711,76,708,81,633,40"/>
+<area shape="rect" id="Node000003" href="$d8/da5/action__history_8cpp.html" title=" " alt="" coords="5,152,168,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="386,109,147,155,146,149,385,104"/>
+<area shape="rect" id="Node000004" href="$df/d52/chess__move_8cpp.html" title=" " alt="" coords="193,152,346,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="416,111,301,154,299,149,415,106"/>
+<area shape="rect" id="Node000005" href="$d9/dd8/game__controller_8cpp.html" title=" " alt="" coords="370,152,547,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="461,118,461,152,456,152,456,118"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="499,107,598,149,596,154,497,112"/>
+</map>
