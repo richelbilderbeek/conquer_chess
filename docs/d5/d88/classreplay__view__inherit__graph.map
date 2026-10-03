@@ -1,0 +1,5 @@
+<map id="replay_view" name="replay_view">
+<area shape="rect" id="Node000001" title="Dialog to view a played Conquer Chess game." alt="" coords="5,79,107,104"/>
+<area shape="rect" id="Node000002" href="$d8/da6/classview.html" title="The abstract base class of all other views." alt="" coords="29,5,83,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="59,44,59,79,53,79,53,44"/>
+</map>

@@ -1,0 +1,19 @@
+<map id="view" name="view">
+<area shape="rect" id="Node000001" title="The abstract base class of all other views." alt="" coords="5,179,59,204"/>
+<area shape="rect" id="Node000002" href="$d3/d76/classabout__view.html" title="The About screen." alt="" coords="114,5,211,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="38,164,61,103,80,70,105,40,121,29,124,33,108,44,85,73,66,105,43,166"/>
+<area shape="rect" id="Node000003" href="$d5/d4c/classcontrols__view.html" title="The Controls dialog." alt="" coords="107,55,219,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="44,165,69,127,105,89,124,78,126,82,108,93,74,130,49,168"/>
+<area shape="rect" id="Node000004" href="$de/d01/classgame__view.html" title="The Game dialog." alt="" coords="114,104,211,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="60,168,105,138,128,127,131,132,108,143,63,173"/>
+<area shape="rect" id="Node000005" href="$d9/d62/classloading__view.html" title="The Loading screen." alt="" coords="109,153,217,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="72,181,108,174,109,179,73,186"/>
+<area shape="rect" id="Node000006" href="$db/dbc/classlobby__view.html" title="The lobby screen." alt="" coords="115,203,211,228"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="73,196,115,204,114,209,72,201"/>
+<area shape="rect" id="Node000007" href="$d4/d9b/classmenu__view.html" title="The main Menu dialog." alt="" coords="114,252,211,277"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="64,210,108,237,133,249,130,254,105,242,61,214"/>
+<area shape="rect" id="Node000008" href="$d8/dd9/classoptions__view.html" title="The Options dialog." alt="" coords="109,301,217,327"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="50,215,75,251,108,287,128,299,125,303,105,291,70,255,45,218"/>
+<area shape="rect" id="Node000009" href="$db/daa/classreplay__view.html" title="Dialog to view a played Conquer Chess game." alt="" coords="112,351,213,376"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="43,216,66,276,85,308,108,336,126,348,123,353,105,340,81,311,62,278,38,218"/>
+</map>

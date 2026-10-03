@@ -1,0 +1,22 @@
+<map id="src/screen_coordinat.cpp" name="src/screen_coordinat.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="137,5,320,31"/>
+<area shape="rect" id="Node000002" href="$d1/d4a/screen__coordinat_8h.html" title=" " alt="" coords="5,79,151,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="206,33,116,75,114,70,203,28"/>
+<area shape="rect" id="Node000004" href="$d4/da1/helper_8h.html" title=" " alt="" coords="230,79,305,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="237,30,257,65,252,68,233,32"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="131,152,201,177"/>
+<area shape="poly" id="edge9_Node000001_Node000006" title=" " alt="" coords="226,32,179,140,174,138,221,30"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="329,79,409,104"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="252,28,335,70,333,75,250,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="43,152,107,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,104,79,139,74,138,75,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="225,152,310,177"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="270,104,270,138,265,138,265,104"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="253,106,195,146,192,142,250,102"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="335,152,397,177"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="285,102,340,142,337,146,282,106"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="422,152,481,177"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="298,102,410,145,408,150,296,107"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="505,152,568,177"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="305,100,492,149,491,154,304,105"/>
+</map>

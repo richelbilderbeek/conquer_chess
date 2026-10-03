@@ -1,0 +1,23 @@
+<map id="src/textures.cpp" name="src/textures.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="326,5,453,31"/>
+<area shape="rect" id="Node000002" href="$de/d83/textures_8h.html" title=" " alt="" coords="155,79,243,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="360,33,244,76,242,71,358,28"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="267,79,322,104"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="376,33,323,72,320,68,373,29"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="346,79,433,104"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="392,31,392,65,387,65,387,31"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="457,79,527,104"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="407,28,465,68,462,73,404,33"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="551,79,625,104"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="422,28,543,71,542,76,420,33"/>
+<area shape="rect" id="Node000003" href="$d8/d10/chess__color_8h.html" title=" " alt="" coords="68,152,177,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="188,106,147,144,143,141,185,102"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="201,152,348,177"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="213,102,254,141,250,144,209,106"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,225,69,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,179,63,219,60,214,107,175"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="93,225,152,251"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="125,178,125,212,120,212,120,178"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="177,225,239,251"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="138,175,185,214,182,219,135,179"/>
+</map>

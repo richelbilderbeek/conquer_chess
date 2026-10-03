@@ -1,0 +1,21 @@
+<map id="src/map_textures.cpp" name="src/map_textures.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="261,5,424,31"/>
+<area shape="rect" id="Node000002" href="$dc/d8b/map__textures_8h.html" title=" " alt="" coords="125,79,249,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="319,33,226,75,224,70,317,28"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="273,79,327,104"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="338,32,316,68,312,66,333,30"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="352,79,421,104"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="352,30,375,66,370,68,348,32"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="445,79,520,104"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="366,28,449,70,447,75,364,33"/>
+<area shape="rect" id="Node000003" href="$d6/d82/race_8h.html" title=" " alt="" coords="91,152,154,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="178,106,144,144,140,140,174,103"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="179,152,325,177"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="199,103,234,140,230,144,195,106"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,225,69,251"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="111,179,63,219,60,214,107,175"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="93,225,152,251"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="125,178,125,212,120,212,120,178"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="177,225,239,251"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="138,175,185,214,182,219,135,179"/>
+</map>

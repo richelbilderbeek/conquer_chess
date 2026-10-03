@@ -1,0 +1,22 @@
+<map id="include/piece_textures.h" name="include/piece_textures.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="154,5,335,31"/>
+<area shape="rect" id="Node000002" href="$d8/d10/chess__color_8h.html" title=" " alt="" coords="135,79,245,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="238,33,209,69,205,66,234,29"/>
+<area shape="rect" id="Node000006" href="$de/d45/piece__type_8h.html" title=" " alt="" coords="5,79,111,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="216,33,102,76,100,71,214,28"/>
+<area shape="rect" id="Node000007" href="$d6/d82/race_8h.html" title=" " alt="" coords="269,79,332,104"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="256,29,285,66,281,69,252,33"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="357,79,503,104"/>
+<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="275,28,388,71,386,76,273,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="165,152,229,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="194,104,197,138,192,139,188,105"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="265,152,323,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="208,102,267,142,264,146,205,106"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="77,152,140,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="179,106,134,145,130,141,175,102"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="81,102,163,143,161,148,79,106"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="69,103,95,139,90,142,64,106"/>
+<area shape="poly" id="edge9_Node000007_Node000003" title=" " alt="" coords="285,106,227,146,224,142,282,102"/>
+<area shape="poly" id="edge10_Node000007_Node000004" title=" " alt="" coords="302,105,299,139,294,138,297,104"/>
+<area shape="poly" id="edge11_Node000007_Node000005" title=" " alt="" coords="271,107,154,149,152,144,269,102"/>
+</map>

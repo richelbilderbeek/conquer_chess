@@ -1,0 +1,13 @@
+<map id="include/textures.h" name="include/textures.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="129,5,268,31"/>
+<area shape="rect" id="Node000002" href="$d8/d10/chess__color_8h.html" title=" " alt="" coords="68,79,177,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="188,33,147,71,143,67,185,29"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="201,79,348,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="213,29,254,67,250,71,209,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,69,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="111,106,63,145,60,141,107,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,152,152,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="125,104,125,138,120,138,120,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="177,152,239,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="138,102,185,141,182,145,135,106"/>
+</map>
