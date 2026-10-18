@@ -17,6 +17,9 @@ cache:
 
 install:
   - cd %VCPKG_ROOT%
+  # The preinstalled vcpkg may predate the builtin-baseline in vcpkg.json:
+  # fetch so that commit can be found
+  - git fetch --quiet origin
   - .\bootstrap-vcpkg.bat
   - .\vcpkg install sfml[audio]:x64-windows
   - copy %APPVEYOR_BUILD_FOLDER%\patches\libogg\portfile.cmake %VCPKG_ROOT%\ports\libogg\portfile.cmake /Y
