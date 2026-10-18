@@ -319,7 +319,6 @@ void test_rule_3_1()
   /// the piece that started the attack first, will end up
   /// on the square of the captured piece.
   //
-  #ifdef FIX_ISSUE_157
   // scenario 1: a4xb5, beats c4xb5
   {
     game_controller c{
@@ -365,7 +364,6 @@ void test_rule_3_1()
     assert(is_piece_at(c.get_game(), square("a4")));
     assert(!is_piece_at(c.get_game(), square("c4")));
   }
-  #endif // FIX_ISSUE_157
   /// `[3.1.2]` A piece is said to attack an opponent's piece
   /// if the piece could make a capture on that square according
   /// to Articles 3.2 to 3.8.
