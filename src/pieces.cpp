@@ -1076,6 +1076,40 @@ bool is_king_under_attack(
   return is_square_attacked(pieces, king_square, opponent_color);
 }
 
+bool would_leave_king_under_attack(
+  const std::vector<piece>& pieces,
+  const square& from,
+  const square& to,
+  const std::optional<square>& captured_square
+)
+{
+  assert(is_piece_at(pieces, from));
+  const chess_color player_color{get_piece_at(pieces, from).get_color()};
+  if (!has_king(pieces, player_color)) return false;
+
+  // The square of the piece that would be captured, if any
+  const square capture_square{captured_square.value_or(to)};
+
+  // Simulate the resulting position
+  std::vector<piece> after;
+  after.reserve(pieces.size());
+  for (const auto& p: pieces)
+  {
+    if (p.get_current_square() == capture_square
+      && p.get_color() != player_color
+    )
+    {
+      continue; // Captured
+    }
+    after.push_back(p);
+    if (p.get_current_square() == from)
+    {
+      after.back().set_current_square(to);
+    }
+  }
+  return is_king_under_attack(after, player_color);
+}
+
 bool is_piece_at(
   const std::vector<piece>& pieces,
   const game_coordinate& coordinat,
@@ -1457,6 +1491,39 @@ void test_pieces()
     auto pieces{get_pieces_queen_endgame()};
     assert(!is_king_under_attack(pieces, chess_color::black));
     assert(!is_king_under_attack(pieces, chess_color::white));
+  }
+  // would_leave_king_under_attack, 1.4.1b: king cannot move into check
+  {
+    const auto pieces{
+      create_pieces_from_fen_string(fen_string("4k3/8/4q3/8/8/8/8/4K3 w - - 0 1"))
+    };
+    assert(would_leave_king_under_attack(pieces, square("e1"), square("e2")));
+    assert(!would_leave_king_under_attack(pieces, square("e1"), square("d1")));
+    assert(!would_leave_king_under_attack(pieces, square("e1"), square("f2")));
+  }
+  // would_leave_king_under_attack, 1.4.1c: pinned piece cannot expose king
+  {
+    const auto pieces{
+      create_pieces_from_fen_string(fen_string("4k3/8/4q3/8/8/4Q3/8/4K3 w - - 0 1"))
+    };
+    assert(would_leave_king_under_attack(pieces, square("e3"), square("a3")));
+    assert(!would_leave_king_under_attack(pieces, square("e3"), square("e4")));
+    // Capturing the pinning piece is fine
+    assert(!would_leave_king_under_attack(pieces, square("e3"), square("e6")));
+  }
+  // would_leave_king_under_attack, king may capture an unprotected attacker
+  {
+    const auto pieces{
+      create_pieces_from_fen_string(fen_string("4k3/8/8/8/8/8/4q3/4K3 w - - 0 1"))
+    };
+    assert(!would_leave_king_under_attack(pieces, square("e1"), square("e2")));
+  }
+  // would_leave_king_under_attack, king may not capture a protected attacker
+  {
+    const auto pieces{
+      create_pieces_from_fen_string(fen_string("4k3/8/8/7b/8/8/4q3/4K3 w - - 0 1"))
+    };
+    assert(would_leave_king_under_attack(pieces, square("e1"), square("e2")));
   }
   // is_piece_at, const
   {
