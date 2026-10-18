@@ -22,6 +22,7 @@
 #include "screen_rect.h"
 
 #include <cassert>
+#include <optional>
 #include <cmath>
 
 main_window::main_window(const cc_cli_options& options)
@@ -99,10 +100,9 @@ void main_window::exec()
 
 bool main_window::process_events()
 {
-  sf::Event event;
-  while (get_render_window().pollEvent(event))
+  while (std::optional<sf::Event> event = get_render_window().pollEvent())
   {
-    const bool stop_program{process_event(event)};
+    const bool stop_program{process_event(*event)};
     if (stop_program == true) return true;
   }
   return false; // Do not close the window :-)
@@ -111,14 +111,14 @@ bool main_window::process_events()
 bool main_window::process_event(sf::Event& event)
 {
   // General events
-  if (event.type == sf::Event::Resized)
+  if (event.is<sf::Event::Resized>())
   {
     process_resize_event(event);
     return false; // Do not close the program
   }
-  if (event.type == sf::Event::KeyPressed)
+  if (event.is<sf::Event::KeyPressed>())
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::F3)
     {
       m_game_options.set_show_debug_info(
@@ -133,13 +133,16 @@ bool main_window::process_event(sf::Event& event)
 }
 void main_window::process_resize_event(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<sf::Event::Resized>());
 
   // Add screen size to diagnostics file
-  diagnostics_file().add_screen_size(event.size.width, event.size.height);
+  diagnostics_file().add_screen_size(event.getIf<sf::Event::Resized>()->size.x, event.getIf<sf::Event::Resized>()->size.y);
 
   // From https://www.sfml-dev.org/tutorials/2.2/graphics-view.php#showing-more-when-the-window-is-resized
-  const sf::FloatRect visible_area(0, 0, event.size.width, event.size.height);
+  const sf::FloatRect visible_area(
+    {0.0f, 0.0f},
+    sf::Vector2f(event.getIf<sf::Event::Resized>()->size)
+  );
   get_render_window().setView(sf::View(visible_area));
 
   // Resize all windows
