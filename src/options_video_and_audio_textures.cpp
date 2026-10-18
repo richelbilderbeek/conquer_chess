@@ -11,7 +11,7 @@ options_video_and_audio_textures::options_video_and_audio_textures()
   {
     const std::string filename_str{get_filename(r)};
     const auto filename{
-      std::string("resources/textures/options_video_and_audio/")
+      std::string("resources/textures/options_menu/")
       + filename_str.c_str()
     };
     if (!m_textures[r].loadFromFile(filename))
