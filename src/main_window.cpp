@@ -46,7 +46,12 @@ main_window::main_window(const cc_cli_options& options)
   m_views[program_state::replay] = std::make_unique<replay_view>();
   m_views[program_state::right_controls] = std::make_unique<controls_view>(side::rhs);
 
+  #define REPLAY_SIMPLE_GAME
+  #ifdef REPLAY_SIMPLE_GAME
   m_replay = get_played_scholars_mate();
+  #else
+  m_replay = get_played_kasparov_vs_topalov();
+  #endif
 
   // All programs states have a view
   for (const auto s: get_all_program_states())

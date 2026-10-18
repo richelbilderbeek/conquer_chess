@@ -133,6 +133,23 @@ replay get_played_scholars_mate()
   return r;
 }
 
+replay get_played_kasparov_vs_topalov()
+{
+  replay r(
+    create_action_history_from_pgn(get_kasparov_vs_topalov_as_pgn_str()),
+    game_controller()
+  );
+  const int n_moves{get_n_moves(r)};
+  for (int i{0}; i!= n_moves; ++i)
+  {
+    r.do_move();
+  }
+  // Topalov resigned: no checkmate
+  assert(!is_checkmate(r.get_game().get_pieces(), chess_color::white));
+  assert(!is_checkmate(r.get_game().get_pieces(), chess_color::black));
+  return r;
+}
+
 bool replay::is_done() const noexcept
 {
   assert(m_index >= 0);

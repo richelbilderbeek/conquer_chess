@@ -83,6 +83,9 @@ int get_n_moves(const replay& r) noexcept;
 
 replay get_played_scholars_mate();
 
+replay get_played_kasparov_vs_topalov();
+
+
 /// Determine if there is a piece at the coordinat
 bool is_piece_at(
   const replay& r,
