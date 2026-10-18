@@ -4,7 +4,7 @@
 #include <cassert>
 #include <iostream>
 #include <regex>
-
+#include <sstream>
 
 chess_move::chess_move(
   const pgn_move_string& pgn_str,
