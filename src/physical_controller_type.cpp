@@ -1,5 +1,6 @@
 #include "physical_controller_type.h"
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <iterator>

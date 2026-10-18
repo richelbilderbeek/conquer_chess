@@ -77,7 +77,6 @@ void test_rule_1_4_1()
   }
   // [1.4.1b]
   // Leaving one’s own king under attack is not allowed.
-  #ifdef FIX_1_4_1_B
   {
     game_controller c{
       game(create_game_from_fen_string(fen_string("4k3/8/4q3/8/8/8/8/4K3 w - - 0 1")))
@@ -90,8 +89,6 @@ void test_rule_1_4_1()
 
     assert(get_piece_actions(c, side::lhs).empty()); // Cannot
   }
-  #endif // FIX_1_4_1_B
-  #ifdef FIX_1_4_1_C
   // [1.4.1c]
   // Exposing one’s own king to attack is not allowed
   {
@@ -106,7 +103,6 @@ void test_rule_1_4_1()
 
     assert(get_piece_actions(c, side::lhs).empty()); // Cannot
   }
-  #endif // FIX_1_4_1_C
   // [1.4.1d]
   //
   // ’capturing’ the opponent’s king is not allowed in regular chess.

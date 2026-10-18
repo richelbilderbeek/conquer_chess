@@ -2,6 +2,7 @@
 
 #include "magic_enum/magic_enum.hpp" // https://github.com/Neargye/magic_enum
 
+#include <algorithm>
 #include <SFML/Graphics/RectangleShape.hpp>
 
 #include <cassert>
