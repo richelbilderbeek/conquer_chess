@@ -34,8 +34,18 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
 
-      - name: Install SFML
-        run: sudo apt install libsfml-dev
+      - name: Install SFML 3 dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev libfreetype-dev libflac-dev libvorbis-dev
+
+      - name: Build and install SFML 3
+        run: |
+          git clone --depth 1 --branch 3.0.2 https://github.com/SFML/SFML.git /tmp/SFML
+          cmake -S /tmp/SFML -B /tmp/SFML/build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
+          cmake --build /tmp/SFML/build -j$(nproc)
+          sudo cmake --install /tmp/SFML/build
+          sudo ldconfig
 
       - name: Install Codecov
         run: sudo pip install codecov

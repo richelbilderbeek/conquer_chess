@@ -27,16 +27,21 @@ jobs:
             libx11-dev libxrandr-dev libxi-dev libudev-dev \
             libgl1-mesa-dev libopenal-dev libvorbis-dev libflac-dev \
             libfreetype6-dev libglew-dev libjpeg-dev libsndfile1-dev \
-            patchelf unzip
+            patchelf unzip curl \
+            libxcursor-dev
 
-      - name: Build and install SFML 2.6.1
+      # SFML 3 needs CMake 3.22 or newer, which the Sniper SDK does not have
+      - name: Install a recent CMake
         run: |
-          git clone --depth 1 --branch 2.6.1 https://github.com/SFML/SFML.git /tmp/SFML-2.6.1
-          mkdir -p /tmp/SFML-2.6.1/build
-          cd /tmp/SFML-2.6.1/build
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
-          make -j$(nproc)
-          make install
+          curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.31.6/cmake-3.31.6-linux-x86_64.tar.gz | tar -xz -C /opt
+          echo "/opt/cmake-3.31.6-linux-x86_64/bin" >> "$GITHUB_PATH"
+
+      - name: Build and install SFML 3
+        run: |
+          git clone --depth 1 --branch 3.0.2 https://github.com/SFML/SFML.git /tmp/SFML
+          cmake -S /tmp/SFML -B /tmp/SFML/build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/usr/local
+          cmake --build /tmp/SFML/build -j$(nproc)
+          cmake --install /tmp/SFML/build
 
       - name: Build Conquer Chess
         run: |

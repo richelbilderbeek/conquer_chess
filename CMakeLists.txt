@@ -26,11 +26,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(chess-library)
 
-# SFGraphing
+# SFGraphing, ported to SFML 3
+set(ENABLE_SAMPLE OFF CACHE BOOL "Do not build the SFGraphing sample" FORCE)
 FetchContent_Declare(
   SFGraphing
-  GIT_REPOSITORY https://github.com/sairaatta/SFGraphing.git
-  GIT_TAG master
+  GIT_REPOSITORY https://github.com/richelbilderbeek/SFGraphing.git
+  GIT_TAG patch-1
 )
 FetchContent_MakeAvailable(SFGraphing)
 
@@ -75,9 +76,9 @@ target_compile_definitions(conquer_chess PRIVATE
 )
 # Tell CMake to use SFML from vcpkg
 # Version can be found at https://vcpkg.link/ports/sfml/versions
-find_package(SFML 2.6.1 COMPONENTS graphics audio network window system REQUIRED)
+find_package(SFML 3 COMPONENTS Graphics Audio Network Window System REQUIRED)
 
-target_link_libraries(conquer_chess PRIVATE sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+target_link_libraries(conquer_chess PRIVATE SFML::System SFML::Window SFML::Graphics SFML::Audio SFML::Network)
 
 # Link SFGraphing as well
 target_link_libraries(conquer_chess PRIVATE SFGraphing)
