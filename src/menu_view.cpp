@@ -278,6 +278,8 @@ bool menu_view::process_event_impl(sf::Event& event)
       {
         // Do nothing, #169
         // set_next_state(program_state::options);
+        // But do select it
+        set_selected(menu_view_item::options);
       }
       else if (is_in(mouse_screen_pos, m_layout.get_options_controls()))
       {
