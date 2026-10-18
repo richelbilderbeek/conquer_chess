@@ -30,8 +30,18 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
 
-      - name: Install SFML
-        run: sudo apt install libsfml-dev
+      - name: Install SFML 3 dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libx11-dev libxrandr-dev libxcursor-dev libxi-dev libudev-dev libgl1-mesa-dev libfreetype-dev libflac-dev libvorbis-dev
+
+      - name: Build and install SFML 3
+        run: |
+          git clone --depth 1 --branch 3.0.2 https://github.com/SFML/SFML.git /tmp/SFML
+          cmake -S /tmp/SFML -B /tmp/SFML/build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
+          cmake --build /tmp/SFML/build -j$(nproc)
+          sudo cmake --install /tmp/SFML/build
+          sudo ldconfig
 
       - name: Install Codecov
         run: sudo pip install codecov
@@ -61,6 +71,10 @@ jobs:
           cd ..
           git clone https://github.com/richelbilderbeek/SFGraphing -b patch-1
           cd -
+
+      # Until richelbilderbeek/SFGraphing has the SFML 3 port
+      - name: Port SFGraphing to SFML 3, if needed
+        run: ./patches/sfgraphing/apply_patch.sh ../SFGraphing
 
       - name: qmake
         run: qmake "DEFINES+=LOGIC_ONLY" game.pro

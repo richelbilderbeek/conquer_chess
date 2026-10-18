@@ -1,0 +1,367 @@
+From f77939e617f69ea8abf7e678e2d24612a440f89f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sun, 18 Oct 2026 11:34:18 +0200
+Subject: [PATCH] Port to SFML 3
+
+- sf::Vertex is an aggregate, sf::Text needs its font at construction
+- Quads no longer exist: draw each quad as two triangles
+- LineStrip is scoped (and LinesStrip was a typo), rotations use
+  sf::degrees, rect members are position/size, transform calls take vectors
+- Sample: new window, event, font and texture APIs
+- CMake: require SFML 3, link the SFML:: targets, CMake 3.22
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_019DZ2BoCqi9U7VotnpVjRMp
+---
+ CMakeLists.txt     |  8 ++--
+ sample/main.cpp    | 23 +++++------
+ src/SFPieChart.cpp |  9 ++---
+ src/SFPlot.cpp     | 95 +++++++++++++++++++++++++++-------------------
+ 4 files changed, 75 insertions(+), 60 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b9d47fa..ce6255b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,4 +1,4 @@
+-cmake_minimum_required(VERSION 3.0)
++cmake_minimum_required(VERSION 3.22)
+ project(graphing)
+ 
+ ###################################################################
+@@ -7,10 +7,8 @@ option(ENABLE_SAMPLE "build sample program.(Default:ON)" ON)
+ 
+ ###################################################################
+ # import SFML library
+-find_package(SFML 2.5.1 COMPONENTS system window graphics)
++find_package(SFML 3 COMPONENTS System Window Graphics)
+ if (SFML_FOUND)
+-    message(STATUS "SFML_INCLUDE_DIRS: ${SFML_INCLUDE_DIR}")
+-    message(STATUS "SFML_LIBRARIES: ${SFML_LIBRARIES}")
+     message(STATUS "SFML_VERSION: ${SFML_VERSION}")
+ endif ()
+ 
+@@ -22,7 +20,7 @@ set(CMAKE_CXX_STANDARD 17)
+ # Configure build for SFGraphing library
+ file(GLOB SFGRAPHING_SRC src/*.cpp)
+ add_library(SFGraphing ${SFGRAPHING_SRC} )
+-target_link_libraries(SFGraphing PUBLIC sfml-graphics sfml-window sfml-system)
++target_link_libraries(SFGraphing PUBLIC SFML::Graphics SFML::Window SFML::System)
+ target_include_directories(SFGraphing PUBLIC include/)
+ 
+ ###################################################################
+diff --git a/sample/main.cpp b/sample/main.cpp
+index c9c29e1..23e8b1c 100644
+--- a/sample/main.cpp
++++ b/sample/main.cpp
+@@ -1,4 +1,5 @@
+ #include <iostream>
++#include <optional>
+ 
+ #include "SFGraphing/SFPlot.h"
+ #include "SFGraphing/SFPieChart.h"
+@@ -8,12 +9,12 @@ using namespace csrc;
+ int main()
+ {
+     sf::ContextSettings settings;
+-    settings.antialiasingLevel = 4;
++    settings.antiAliasingLevel = 4;
+ 
+-    sf::RenderWindow window(sf::VideoMode(1600, 800), "SF-Graphing", sf::Style::Default, settings);
++    sf::RenderWindow window(sf::VideoMode({1600, 800}), "SF-Graphing", sf::Style::Default, sf::State::Windowed, settings);
+ 
+     sf::Font font;
+-    font.loadFromFile("JetBrainsMono-Regular.ttf");
++    if (!font.openFromFile("JetBrainsMono-Regular.ttf")) return 1;
+ 
+     /*
+      * Plot
+@@ -49,10 +50,9 @@ int main()
+         SFPieChart pChart(pSet, sf::Vector2f(250, 400), 200, font);
+         pChart.GenerateVertices();
+ 
+-        sf::Event event;
+-        if (window.pollEvent(event))
++        while (const std::optional<sf::Event> event = window.pollEvent())
+         {
+-            if (event.type == sf::Event::Closed)
++            if (event->is<sf::Event::Closed>())
+             {
+                 window.close();
+             }
+@@ -86,14 +86,15 @@ int main()
+          * ----------------------------------
+          */
+ 
+-        if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
++        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right))
+         {
+-            sf::Vector2u wSize = window.getSize();
+-            sf::Texture texture;
+-            texture.create(wSize.x, wSize.y);
++            sf::Texture texture(window.getSize());
+             texture.update(window);
+             sf::Image screenshot = texture.copyToImage();
+-            screenshot.saveToFile("screenshot.png");
++            if (!screenshot.saveToFile("screenshot.png"))
++            {
++                std::cerr << "Cannot save screenshot\n";
++            }
+         }
+ 
+         window.display();
+diff --git a/src/SFPieChart.cpp b/src/SFPieChart.cpp
+index 7ae5f89..dec7753 100644
+--- a/src/SFPieChart.cpp
++++ b/src/SFPieChart.cpp
+@@ -53,7 +53,7 @@ void SFPieChart::GenerateVertices()
+         segment.setPrimitiveType(sf::PrimitiveType::TriangleFan);
+ 
+         //Middle point
+-        segment.append(sf::Vertex(_position, _dataset.GetColor(i)));
++        segment.append(sf::Vertex{_position, _dataset.GetColor(i)});
+ 
+         float segmentAngle = (_dataset.GetValue(i) / totalSegmentsValue) * static_cast<float>(2 * M_PI);
+ 
+@@ -62,7 +62,7 @@ void SFPieChart::GenerateVertices()
+             float xPos = _position.x + _radius * cos(theta);
+             float yPos = _position.y + _radius * sin(theta);
+ 
+-            segment.append(sf::Vertex(sf::Vector2f(xPos, yPos), _dataset.GetColor(i)));
++            segment.append(sf::Vertex{sf::Vector2f(xPos, yPos), _dataset.GetColor(i)});
+         }
+ 
+         _pieSegments.push_back(segment);
+@@ -71,8 +71,7 @@ void SFPieChart::GenerateVertices()
+         /*
+          * Pie Legend
+          */
+-        sf::Text text;
+-        text.setFont(_font);
++        sf::Text text(_font);
+         std::string label;
+         if (_dataset.GetRepresentation() == Representation::ABSOLUTE)
+         {
+@@ -89,7 +88,7 @@ void SFPieChart::GenerateVertices()
+         text.setCharacterSize(static_cast<unsigned int>(charSize));
+ 
+         sf::FloatRect fr = text.getLocalBounds();
+-        text.move(0, i * fr.height * 1.2f);
++        text.move(sf::Vector2f(0, i * fr.size.y * 1.2f));
+ 
+         _textElements.push_back(text);
+     }
+diff --git a/src/SFPlot.cpp b/src/SFPlot.cpp
+index 00994f9..03fce7a 100644
+--- a/src/SFPlot.cpp
++++ b/src/SFPlot.cpp
+@@ -122,6 +122,21 @@ void SFPlot::AddDataSet(const PlotDataSet& data_set)
+     _plotDataSets.push_back(data_set);
+ }
+ 
++namespace
++{
++// SFML 3 has no quads: draw the quad a-b-c-d as the triangles a-b-c and a-c-d
++void AppendQuad(sf::VertexArray& v, const sf::Vector2f& a, const sf::Vector2f& b,
++                const sf::Vector2f& c, const sf::Vector2f& d, const sf::Color& col)
++{
++    v.append(sf::Vertex{a, col});
++    v.append(sf::Vertex{b, col});
++    v.append(sf::Vertex{c, col});
++    v.append(sf::Vertex{a, col});
++    v.append(sf::Vertex{c, col});
++    v.append(sf::Vertex{d, col});
++}
++} // namespace
++
+ void SFPlot::GenerateVertices()
+ {
+     this->ClearVertices();
+@@ -130,37 +145,35 @@ void SFPlot::GenerateVertices()
+     /*
+      * Calculating axes themselves
+      */
+-    _axesVertexArray.setPrimitiveType(sf::LineStrip);
++    _axesVertexArray.setPrimitiveType(sf::PrimitiveType::LineStrip);
+     //Topleft
+-    _axesVertexArray.append(sf::Vertex(CoordToWindowPosition(sf::Vector2f(0, _yCoordBounds.y)), _axesColor));
++    _axesVertexArray.append(sf::Vertex{CoordToWindowPosition(sf::Vector2f(0, _yCoordBounds.y)), _axesColor});
+     //Origin
+-    _axesVertexArray.append(sf::Vertex(CoordToWindowPosition(sf::Vector2f(0, 0)), _axesColor));
++    _axesVertexArray.append(sf::Vertex{CoordToWindowPosition(sf::Vector2f(0, 0)), _axesColor});
+     //BottomRight
+-    _axesVertexArray.append(sf::Vertex(CoordToWindowPosition(sf::Vector2f(_xCoordBounds.y, 0)), _axesColor));
++    _axesVertexArray.append(sf::Vertex{CoordToWindowPosition(sf::Vector2f(_xCoordBounds.y, 0)), _axesColor});
+ 
+     /*
+      * Axis Labels
+      */
+-    sf::Text xaxislabel;
+-    xaxislabel.setFont(_font);
++    sf::Text xaxislabel(_font);
+     xaxislabel.setCharacterSize(characterSize);
+     xaxislabel.setFillColor(_axesColor);
+     xaxislabel.setString(_xAxisLabel);
+ 
+     xaxislabel.setPosition(CoordToWindowPosition(sf::Vector2f(_xCoordBounds.y, 0)) + sf::Vector2f(_margin * 0.3f, 0));
+ 
+-    xaxislabel.rotate(-90);
++    xaxislabel.rotate(sf::degrees(-90));
+ 
+     _textElementArray.push_back(xaxislabel);
+ 
+     //------
+-    sf::Text yaxislabel;
+-    yaxislabel.setFont(_font);
++    sf::Text yaxislabel(_font);
+     yaxislabel.setCharacterSize(characterSize);
+     yaxislabel.setFillColor(_axesColor);
+     yaxislabel.setString(_yAxisLabel);
+ 
+-    yaxislabel.setPosition(_origin.x, _origin.y);
++    yaxislabel.setPosition(sf::Vector2f(_origin.x, _origin.y));
+ 
+     _textElementArray.push_back(yaxislabel);
+ 
+@@ -174,21 +187,20 @@ void SFPlot::GenerateVertices()
+         //indicator
+         sf::Vector2f windowPosition = CoordToWindowPosition(sf::Vector2f(x, 0));
+ 
+-        _axesIndicatorVertexArray.append(sf::Vertex(windowPosition, _axesColor));
++        _axesIndicatorVertexArray.append(sf::Vertex{windowPosition, _axesColor});
+         _axesIndicatorVertexArray.append(
+-            sf::Vertex(sf::Vector2f(windowPosition.x, windowPosition.y + (_margin * 0.25f)), _axesColor));
++            sf::Vertex{sf::Vector2f(windowPosition.x, windowPosition.y + (_margin * 0.25f)), _axesColor});
+ 
+         //text
+-        sf::Text indicatorText;
++        sf::Text indicatorText(_font);
+         indicatorText.setCharacterSize(characterSize);
+-        indicatorText.setFont(_font);
+         indicatorText.setString(ToString(x, 2));
+         indicatorText.setFillColor(_axesColor);
+ 
+         sf::FloatRect tDimension = indicatorText.getLocalBounds();
+-        indicatorText.setOrigin(tDimension.left + tDimension.width / 2, tDimension.top + tDimension.height / 2);
++        indicatorText.setOrigin(sf::Vector2f(tDimension.position.x + tDimension.size.x / 2, tDimension.position.y + tDimension.size.y / 2));
+ 
+-        indicatorText.setPosition(windowPosition.x, windowPosition.y + (_margin * 0.5f));
++        indicatorText.setPosition(sf::Vector2f(windowPosition.x, windowPosition.y + (_margin * 0.5f)));
+ 
+         _textElementArray.push_back(indicatorText);
+     }
+@@ -199,20 +211,19 @@ void SFPlot::GenerateVertices()
+         //indicator
+         sf::Vector2f windowPosition = CoordToWindowPosition(sf::Vector2f(0, y));
+ 
+-        _axesIndicatorVertexArray.append(sf::Vertex(windowPosition, _axesColor));
++        _axesIndicatorVertexArray.append(sf::Vertex{windowPosition, _axesColor});
+         _axesIndicatorVertexArray.append(
+-            sf::Vertex(sf::Vector2f(windowPosition.x - (_margin * 0.25f), windowPosition.y), _axesColor));
++            sf::Vertex{sf::Vector2f(windowPosition.x - (_margin * 0.25f), windowPosition.y), _axesColor});
+ 
+         //text
+-        sf::Text indicatorText;
++        sf::Text indicatorText(_font);
+         indicatorText.setCharacterSize(characterSize);
+-        indicatorText.setFont(_font);
+         indicatorText.setString(ToString(y, 2));
+         indicatorText.setFillColor(_axesColor);
+ 
+-        indicatorText.setPosition(windowPosition.x - (_margin * 0.25f), windowPosition.y - 5);
++        indicatorText.setPosition(sf::Vector2f(windowPosition.x - (_margin * 0.25f), windowPosition.y - 5));
+         sf::FloatRect tDimension = indicatorText.getLocalBounds();
+-        indicatorText.move(-tDimension.width - 2, -tDimension.height / 2);
++        indicatorText.move(sf::Vector2f(-tDimension.size.x - 2, -tDimension.size.y / 2));
+ 
+         _textElementArray.push_back(indicatorText);
+     }
+@@ -225,17 +236,16 @@ void SFPlot::GenerateVertices()
+     for (const auto& dataset : _plotDataSets)
+     {
+         //Generate legend
+-        sf::Text segmentLegend;
++        sf::Text segmentLegend(_font);
+         segmentLegend.setPosition(legendPos);
+-        segmentLegend.setFont(_font);
+         segmentLegend.setCharacterSize(static_cast<unsigned int>(_margin * 0.6));
+         segmentLegend.setString(dataset.GetLabel());
+         segmentLegend.setFillColor(dataset.GetColor());
+ 
+         sf::FloatRect dim = segmentLegend.getLocalBounds();
+-        segmentLegend.move(-dim.width, 0);
++        segmentLegend.move(sf::Vector2f(-dim.size.x, 0));
+ 
+-        legendPos -= sf::Vector2f(dim.width + 5, 0);
++        legendPos -= sf::Vector2f(dim.size.x + 5, 0);
+ 
+         _textElementArray.push_back(segmentLegend);
+ 
+@@ -247,32 +257,36 @@ void SFPlot::GenerateVertices()
+ 
+         if (type == PlottingType::POINTS)
+         {
+-            graph.setPrimitiveType(sf::PrimitiveType::Quads);
++            graph.setPrimitiveType(sf::PrimitiveType::Triangles);
+ 
+             for (size_t i = 0; i < dataset.GetDataLength(); i++)
+             {
+                 sf::Vector2f windowPosition = CoordToWindowPosition(dataset.GetDataValue(i));
+ 
+-                graph.append(sf::Vertex(sf::Vector2f(windowPosition.x - 2, windowPosition.y - 2), col));
+-                graph.append(sf::Vertex(sf::Vector2f(windowPosition.x + 2, windowPosition.y - 2), col));
+-                graph.append(sf::Vertex(sf::Vector2f(windowPosition.x + 2, windowPosition.y + 2), col));
+-                graph.append(sf::Vertex(sf::Vector2f(windowPosition.x - 2, windowPosition.y + 2), col));
++                AppendQuad(
++                    graph,
++                    sf::Vector2f(windowPosition.x - 2, windowPosition.y - 2),
++                    sf::Vector2f(windowPosition.x + 2, windowPosition.y - 2),
++                    sf::Vector2f(windowPosition.x + 2, windowPosition.y + 2),
++                    sf::Vector2f(windowPosition.x - 2, windowPosition.y + 2),
++                    col
++                );
+             }
+         }
+         else if (type == PlottingType::LINE)
+         {
+-            graph.setPrimitiveType(sf::PrimitiveType::LinesStrip);
++            graph.setPrimitiveType(sf::PrimitiveType::LineStrip);
+ 
+             for (size_t i = 0; i < dataset.GetDataLength(); i++)
+             {
+                 sf::Vector2f windowPosition = CoordToWindowPosition(dataset.GetDataValue(i));
+ 
+-                graph.append(sf::Vertex(windowPosition, col));
++                graph.append(sf::Vertex{windowPosition, col});
+             }
+         }
+         else if (type == PlottingType::BARS)
+         {
+-            graph.setPrimitiveType(sf::PrimitiveType::Quads);
++            graph.setPrimitiveType(sf::PrimitiveType::Triangles);
+ 
+             for (size_t i = 0; i < dataset.GetDataLength(); i++)
+             {
+@@ -281,11 +295,14 @@ void SFPlot::GenerateVertices()
+                 sf::Vector2f windowPosition = CoordToWindowPosition(dataValue);
+                 sf::Vector2f zeroWindowPosition = CoordToWindowPosition(sf::Vector2f(dataValue.x, 0));
+ 
+-                graph.append(sf::Vertex(sf::Vector2f(windowPosition.x - 2, windowPosition.y), col));
+-                graph.append(sf::Vertex(sf::Vector2f(windowPosition.x + 2, windowPosition.y), col));
+-
+-                graph.append(sf::Vertex(sf::Vector2f(zeroWindowPosition.x + 2, zeroWindowPosition.y), col));
+-                graph.append(sf::Vertex(sf::Vector2f(zeroWindowPosition.x - 2, zeroWindowPosition.y), col));
++                AppendQuad(
++                    graph,
++                    sf::Vector2f(windowPosition.x - 2, windowPosition.y),
++                    sf::Vector2f(windowPosition.x + 2, windowPosition.y),
++                    sf::Vector2f(zeroWindowPosition.x + 2, zeroWindowPosition.y),
++                    sf::Vector2f(zeroWindowPosition.x - 2, zeroWindowPosition.y),
++                    col
++                );
+             }
+         }
+         else
+-- 
+2.43.0
+

@@ -15,7 +15,7 @@ std::string button_str_to_resource_name(std::string button_str)
   // This can be made constant-time, by using a LUT
   assert(!button_str.empty());
 
-  if (button_str == "ButtonCount" || button_str == "XButton1" || button_str == "XButton2")
+  if (button_str == "Extra1" || button_str == "Extra2")
   {
     return "keyboard_question_outline";
   }
@@ -93,7 +93,6 @@ std::string key_str_to_resource_name(std::string key_str)
     || key_str == "F14"
     || key_str == "F15"
     || key_str == "Pause"
-    || key_str == "KeyCount"
   )
   {
     // Keys without a symbol
@@ -147,14 +146,14 @@ void set_rect(sf::RectangleShape& rectangle, const screen_coordinate& screen_siz
 
 void set_rect(sf::RectangleShape& rectangle, const screen_rect& screen_rect)
 {
-  rectangle.setOrigin(
+  rectangle.setOrigin(sf::Vector2f(
     get_width(screen_rect) / 2,
     get_height(screen_rect) / 2
-  );
-  rectangle.setPosition(
+  ));
+  rectangle.setPosition(sf::Vector2f(
     get_center(screen_rect).get_x(),
     get_center(screen_rect).get_y()
-  );
+  ));
   rectangle.setSize(
     sf::Vector2f(
       get_width(screen_rect),
@@ -167,22 +166,22 @@ void set_text_position(sf::Text& text, const screen_rect& screen_rect)
 {
   assert(text.getString().getSize() > 0);
   // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  text.setPosition(
+  text.setPosition(sf::Vector2f(
     get_center(screen_rect).get_x(),
     get_center(screen_rect).get_y()
-  );
+  ));
   // https://en.sfml-dev.org/forums/index.php?topic=15875.msg113439#msg113439
-  const double text_center_y{0.5 * static_cast<double>(text.getLocalBounds().height)};
+  const double text_center_y{0.5 * static_cast<double>(text.getLocalBounds().size.y)};
 
   // Text always seems to appear too low, move it somewhat up
   const double f_correction{0.08}; // Set to zero for no correction
   const double corrected_text_center_y{
     text_center_y + (f_correction * get_height(screen_rect))
   };
-  text.setOrigin(
-    0.5 * text.getLocalBounds().width,
+  text.setOrigin(sf::Vector2f(
+    0.5 * text.getLocalBounds().size.x,
     corrected_text_center_y
-  );
+  ));
 
 }
 
@@ -274,13 +273,18 @@ void test_sfml_helper()
   }
 
   // set_text_position
+  // In SFML 3, measuring a sf::Text needs an OpenGL context,
+  // hence a display, which a LOGIC_ONLY build (e.g. on CI) may not have
+  #ifndef LOGIC_ONLY
   {
-    sf::Text t;
+    const sf::Font font;
+    sf::Text t(font);
     t.setString("X");
     const screen_rect screen_size{get_default_screen_rect()};
     set_text_position(t, screen_size);
     assert(!t.getString().isEmpty()); // Does not test set_text_poistion at all
   }
+  #endif // LOGIC_ONLY
 
   // to_resource_name, for keys
   {
@@ -317,13 +321,12 @@ void test_sfml_helper()
     assert(to_resource_name(sf::Keyboard::Key::F14) == "keyboard_question_outline");
     assert(to_resource_name(sf::Keyboard::Key::F15) == "keyboard_question_outline");
     assert(to_resource_name(sf::Keyboard::Key::Pause) == "keyboard_question_outline");
-    assert(to_resource_name(sf::Keyboard::Key::KeyCount) == "keyboard_question_outline");
     {
       const auto x{"keyboard_slash_back"};
-      const auto r{to_resource_name(sf::Keyboard::Key::BackSlash)};
+      const auto r{to_resource_name(sf::Keyboard::Key::Backslash)};
       assert(x == r);
     }
-    assert(to_resource_name(sf::Keyboard::Key::BackSlash) == "keyboard_slash_back");
+    assert(to_resource_name(sf::Keyboard::Key::Backslash) == "keyboard_slash_back");
   }
 
   // to_inverted_resource_name, for keys
@@ -337,9 +340,8 @@ void test_sfml_helper()
     assert(to_resource_name(sf::Mouse::Button::Left) == "mouse_left");
     assert(to_resource_name(sf::Mouse::Button::Right) == "mouse_right");
     assert(to_resource_name(sf::Mouse::Button::Middle) == "mouse_scroll");
-    assert(to_resource_name(sf::Mouse::Button::ButtonCount) == "keyboard_question_outline");
-    assert(to_resource_name(sf::Mouse::Button::XButton1) == "keyboard_question_outline");
-    assert(to_resource_name(sf::Mouse::Button::XButton2) == "keyboard_question_outline");
+    assert(to_resource_name(sf::Mouse::Button::Extra1) == "keyboard_question_outline");
+    assert(to_resource_name(sf::Mouse::Button::Extra2) == "keyboard_question_outline");
   }
 
   // to_str, for keys
@@ -384,7 +386,6 @@ void test_sfml_helper()
     assert(to_str(sf::Keyboard::Key::Insert) == "Insert");
     assert(to_str(sf::Keyboard::Key::J) == "J");
     assert(to_str(sf::Keyboard::Key::K) == "K");
-    assert(to_str(sf::Keyboard::Key::KeyCount) == "KeyCount");
     assert(to_str(sf::Keyboard::Key::L) == "L");
     assert(to_str(sf::Keyboard::Key::LAlt) == "LAlt");
     assert(to_str(sf::Keyboard::Key::LBracket) == "LBracket");
@@ -426,10 +427,10 @@ void test_sfml_helper()
     // Quote is a deprecated value
     {
       const std::string expected{"Apostrophe"};
-      const std::string created{to_str(sf::Keyboard::Key::Quote)};
+      const std::string created{to_str(sf::Keyboard::Key::Apostrophe)};
       assert(expected == created);
     }
-    assert(to_str(sf::Keyboard::Key::Quote) == "Apostrophe"); // deprecated value
+    assert(to_str(sf::Keyboard::Key::Apostrophe) == "Apostrophe"); // deprecated value
     assert(to_str(sf::Keyboard::Key::R) == "R");
     assert(to_str(sf::Keyboard::Key::RAlt) == "RAlt");
     assert(to_str(sf::Keyboard::Key::RBracket) == "RBracket");
@@ -447,10 +448,10 @@ void test_sfml_helper()
     // Tilde is a deprecated value
     {
       const std::string expected{"Grave"};
-      const std::string created{to_str(sf::Keyboard::Key::Tilde)};
+      const std::string created{to_str(sf::Keyboard::Key::Grave)};
       assert(expected == created);
     }
-    assert(to_str(sf::Keyboard::Key::Tilde) == "Grave"); // Deprecated value
+    assert(to_str(sf::Keyboard::Key::Grave) == "Grave"); // Deprecated value
     assert(to_str(sf::Keyboard::Key::U) == "U");
     assert(to_str(sf::Keyboard::Key::Unknown) == "Unknown");
     assert(to_str(sf::Keyboard::Key::Up) == "Up");
@@ -493,42 +494,42 @@ void test_sfml_helper()
 
   // 62: to_one_char_str
   {
-    assert(to_one_char_str(sf::Keyboard::A) == "A");
-    assert(to_one_char_str(sf::Keyboard::Num0) == "0");
-    assert(to_one_char_str(sf::Keyboard::Num1) == "1");
-    assert(to_one_char_str(sf::Keyboard::Num2) == "2");
-    assert(to_one_char_str(sf::Keyboard::Num3) == "3");
-    assert(to_one_char_str(sf::Keyboard::Num4) == "4");
-    assert(to_one_char_str(sf::Keyboard::Num5) == "5");
-    assert(to_one_char_str(sf::Keyboard::Num6) == "6");
-    assert(to_one_char_str(sf::Keyboard::Num7) == "7");
-    assert(to_one_char_str(sf::Keyboard::Num8) == "8");
-    assert(to_one_char_str(sf::Keyboard::Num9) == "9");
-    assert(to_one_char_str(sf::Keyboard::LBracket) == "[");
-    assert(to_one_char_str(sf::Keyboard::RBracket) == "]");
-    assert(to_one_char_str(sf::Keyboard::Semicolon) == ";");
-    assert(to_one_char_str(sf::Keyboard::Comma) == ",");
-    assert(to_one_char_str(sf::Keyboard::Period) == "'");
-    assert(to_one_char_str(sf::Keyboard::Quote) == "\"");
-    assert(to_one_char_str(sf::Keyboard::Slash) == "/");
-    assert(to_one_char_str(sf::Keyboard::Backslash) == "\\");
-    assert(to_one_char_str(sf::Keyboard::Tilde) == "~");
-    assert(to_one_char_str(sf::Keyboard::Equal) == "=");
-    assert(to_one_char_str(sf::Keyboard::Hyphen) == "-");
-    assert(to_one_char_str(sf::Keyboard::Add) == "+");
-    assert(to_one_char_str(sf::Keyboard::Subtract) == "-");
-    assert(to_one_char_str(sf::Keyboard::Multiply) == "*");
-    assert(to_one_char_str(sf::Keyboard::Divide) == "/");
-    assert(to_one_char_str(sf::Keyboard::Numpad0) == "0");
-    assert(to_one_char_str(sf::Keyboard::Numpad1) == "1");
-    assert(to_one_char_str(sf::Keyboard::Numpad2) == "2");
-    assert(to_one_char_str(sf::Keyboard::Numpad3) == "3");
-    assert(to_one_char_str(sf::Keyboard::Numpad4) == "4");
-    assert(to_one_char_str(sf::Keyboard::Numpad5) == "5");
-    assert(to_one_char_str(sf::Keyboard::Numpad6) == "6");
-    assert(to_one_char_str(sf::Keyboard::Numpad7) == "7");
-    assert(to_one_char_str(sf::Keyboard::Numpad8) == "8");
-    assert(to_one_char_str(sf::Keyboard::Numpad9) == "9");
+    assert(to_one_char_str(sf::Keyboard::Key::A) == "A");
+    assert(to_one_char_str(sf::Keyboard::Key::Num0) == "0");
+    assert(to_one_char_str(sf::Keyboard::Key::Num1) == "1");
+    assert(to_one_char_str(sf::Keyboard::Key::Num2) == "2");
+    assert(to_one_char_str(sf::Keyboard::Key::Num3) == "3");
+    assert(to_one_char_str(sf::Keyboard::Key::Num4) == "4");
+    assert(to_one_char_str(sf::Keyboard::Key::Num5) == "5");
+    assert(to_one_char_str(sf::Keyboard::Key::Num6) == "6");
+    assert(to_one_char_str(sf::Keyboard::Key::Num7) == "7");
+    assert(to_one_char_str(sf::Keyboard::Key::Num8) == "8");
+    assert(to_one_char_str(sf::Keyboard::Key::Num9) == "9");
+    assert(to_one_char_str(sf::Keyboard::Key::LBracket) == "[");
+    assert(to_one_char_str(sf::Keyboard::Key::RBracket) == "]");
+    assert(to_one_char_str(sf::Keyboard::Key::Semicolon) == ";");
+    assert(to_one_char_str(sf::Keyboard::Key::Comma) == ",");
+    assert(to_one_char_str(sf::Keyboard::Key::Period) == "'");
+    assert(to_one_char_str(sf::Keyboard::Key::Apostrophe) == "\"");
+    assert(to_one_char_str(sf::Keyboard::Key::Slash) == "/");
+    assert(to_one_char_str(sf::Keyboard::Key::Backslash) == "\\");
+    assert(to_one_char_str(sf::Keyboard::Key::Grave) == "~");
+    assert(to_one_char_str(sf::Keyboard::Key::Equal) == "=");
+    assert(to_one_char_str(sf::Keyboard::Key::Hyphen) == "-");
+    assert(to_one_char_str(sf::Keyboard::Key::Add) == "+");
+    assert(to_one_char_str(sf::Keyboard::Key::Subtract) == "-");
+    assert(to_one_char_str(sf::Keyboard::Key::Multiply) == "*");
+    assert(to_one_char_str(sf::Keyboard::Key::Divide) == "/");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad0) == "0");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad1) == "1");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad2) == "2");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad3) == "3");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad4) == "4");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad5) == "5");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad6) == "6");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad7) == "7");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad8) == "8");
+    assert(to_one_char_str(sf::Keyboard::Key::Numpad9) == "9");
   }
 #endif // NDEBUG
 }
@@ -537,41 +538,41 @@ std::string to_one_char_str(const sf::Keyboard::Key k)
 {
   switch (k)
   {
-    case sf::Keyboard::Num0: return "0";
-    case sf::Keyboard::Num1: return "1";
-    case sf::Keyboard::Num2: return "2";
-    case sf::Keyboard::Num3: return "3";
-    case sf::Keyboard::Num4: return "4";
-    case sf::Keyboard::Num5: return "5";
-    case sf::Keyboard::Num6: return "6";
-    case sf::Keyboard::Num7: return "7";
-    case sf::Keyboard::Num8: return "8";
-    case sf::Keyboard::Num9: return "9";
-    case sf::Keyboard::LBracket: return "[";
-    case sf::Keyboard::RBracket: return "]";
-    case sf::Keyboard::Semicolon: return ";";
-    case sf::Keyboard::Comma: return ",";
-    case sf::Keyboard::Period: return "'";
-    case sf::Keyboard::Quote: return "\"";
-    case sf::Keyboard::Slash: return "/";
-    case sf::Keyboard::Backslash: return "\\";
-    case sf::Keyboard::Tilde: return "~";
-    case sf::Keyboard::Equal: return "=";
-    case sf::Keyboard::Hyphen: return "-";
-    case sf::Keyboard::Add: return "+";
-    case sf::Keyboard::Subtract: return "-";
-    case sf::Keyboard::Multiply: return "*";
-    case sf::Keyboard::Divide: return "/";
-    case sf::Keyboard::Numpad0: return "0";
-    case sf::Keyboard::Numpad1: return "1";
-    case sf::Keyboard::Numpad2: return "2";
-    case sf::Keyboard::Numpad3: return "3";
-    case sf::Keyboard::Numpad4: return "4";
-    case sf::Keyboard::Numpad5: return "5";
-    case sf::Keyboard::Numpad6: return "6";
-    case sf::Keyboard::Numpad7: return "7";
-    case sf::Keyboard::Numpad8: return "8";
-    case sf::Keyboard::Numpad9: return "9";
+    case sf::Keyboard::Key::Num0: return "0";
+    case sf::Keyboard::Key::Num1: return "1";
+    case sf::Keyboard::Key::Num2: return "2";
+    case sf::Keyboard::Key::Num3: return "3";
+    case sf::Keyboard::Key::Num4: return "4";
+    case sf::Keyboard::Key::Num5: return "5";
+    case sf::Keyboard::Key::Num6: return "6";
+    case sf::Keyboard::Key::Num7: return "7";
+    case sf::Keyboard::Key::Num8: return "8";
+    case sf::Keyboard::Key::Num9: return "9";
+    case sf::Keyboard::Key::LBracket: return "[";
+    case sf::Keyboard::Key::RBracket: return "]";
+    case sf::Keyboard::Key::Semicolon: return ";";
+    case sf::Keyboard::Key::Comma: return ",";
+    case sf::Keyboard::Key::Period: return "'";
+    case sf::Keyboard::Key::Apostrophe: return "\"";
+    case sf::Keyboard::Key::Slash: return "/";
+    case sf::Keyboard::Key::Backslash: return "\\";
+    case sf::Keyboard::Key::Grave: return "~";
+    case sf::Keyboard::Key::Equal: return "=";
+    case sf::Keyboard::Key::Hyphen: return "-";
+    case sf::Keyboard::Key::Add: return "+";
+    case sf::Keyboard::Key::Subtract: return "-";
+    case sf::Keyboard::Key::Multiply: return "*";
+    case sf::Keyboard::Key::Divide: return "/";
+    case sf::Keyboard::Key::Numpad0: return "0";
+    case sf::Keyboard::Key::Numpad1: return "1";
+    case sf::Keyboard::Key::Numpad2: return "2";
+    case sf::Keyboard::Key::Numpad3: return "3";
+    case sf::Keyboard::Key::Numpad4: return "4";
+    case sf::Keyboard::Key::Numpad5: return "5";
+    case sf::Keyboard::Key::Numpad6: return "6";
+    case sf::Keyboard::Key::Numpad7: return "7";
+    case sf::Keyboard::Key::Numpad8: return "8";
+    case sf::Keyboard::Key::Numpad9: return "9";
     default:
       std::string s{to_str(k)};
       assert(s.length() == 1);

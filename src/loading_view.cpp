@@ -35,9 +35,9 @@ bool loading_view::process_event_impl(sf::Event& event)
   {
     return true; // Close the program
   }
-  if (event.type == sf::Event::KeyPressed)
+  if (event.is<sf::Event::KeyPressed>())
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       return true; // Close the program
@@ -48,7 +48,7 @@ bool loading_view::process_event_impl(sf::Event& event)
 
 void loading_view::process_resize_event_impl(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<sf::Event::Resized>());
   // The draw method checks the screen size
 }
 
@@ -62,8 +62,7 @@ void loading_view::set_text_style(sf::Text& text)
 
 sf::Text get_loading_screen_text() noexcept
 {
-  sf::Text text;
-  text.setFont(get_arial_font());
+  sf::Text text(get_arial_font());
   text.setStyle(sf::Text::Bold);
   text.setCharacterSize(44);
   text.setFillColor(sf::Color::White);
@@ -91,7 +90,7 @@ void loading_view::draw_impl()
   }
   // loading text
   {
-    sf::Text text;
+    sf::Text text(get_arial_font());
     const auto text_rect{
       get_upper_half(get_lower_eighth(window_rect))
     };

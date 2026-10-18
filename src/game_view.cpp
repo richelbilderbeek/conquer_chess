@@ -158,14 +158,14 @@ const in_game_time& get_time(const game_view& v) noexcept
 
 bool game_view::process_event_impl(sf::Event& event)
 {
-  if (event.type == sf::Event::Closed)
+  if (event.is<sf::Event::Closed>())
   {
       set_next_state(program_state::lobby);
       return false;
   }
-  else if (event.type == sf::Event::KeyPressed)
+  else if (event.is<sf::Event::KeyPressed>())
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       set_next_state(program_state::lobby);
@@ -198,10 +198,10 @@ bool game_view::process_event_impl(sf::Event& event)
 
 void game_view::process_resize_event_impl(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<sf::Event::Resized>());
   const screen_rect w(
     screen_coordinate(0, 0),
-    screen_coordinate(event.size.width, event.size.height)
+    screen_coordinate(event.getIf<sf::Event::Resized>()->size.x, event.getIf<sf::Event::Resized>()->size.y)
   );
   m_layout = game_view_layout(w);
   m_controls_bar.set_screen_rect(w);
@@ -401,8 +401,7 @@ void show_debug(game_view& view, const side player_side)
   const auto& g{view.get_game()};
   const auto& c{view.get_game_controller()};
   const auto& layout{view.get_layout()};
-  sf::Text text;
-  text.setFont(game_resources::get().get_fonts().get_arial_font());
+  sf::Text text(game_resources::get().get_fonts().get_arial_font());
   const piece& closest_piece{
     get_closest_piece_to(g, get_cursor_pos(c, player_side))
   };
@@ -431,34 +430,33 @@ void game_view::show_mouse_cursor()
   cursor.setFillColor(sf::Color::Transparent);
   cursor.setOutlineColor(sf::Color::Black);
   cursor.setOutlineThickness(2.0);
-  cursor.setScale(1.0, 1.0);
-  cursor.setOrigin(16.0, 16.0);
+  cursor.setScale(sf::Vector2f(1.0, 1.0));
+  cursor.setOrigin(sf::Vector2f(16.0, 16.0));
   const screen_coordinate cursor_pos{
     convert_to_screen_coordinate(
       get_cursor_pos(m_game_controller, side::rhs),
       layout
     )
   };
-  cursor.setPosition(
+  cursor.setPosition(sf::Vector2f(
     cursor_pos.get_x(),
     cursor_pos.get_y()
-  );
+  ));
   get_render_window().draw(cursor);
 }
 
 void draw_log(game_view& view, const side player)
 {
   const auto& layout = view.get_layout();
-  sf::Text text;
-  text.setFont(game_resources::get().get_fonts().get_arial_font());
+  sf::Text text(game_resources::get().get_fonts().get_arial_font());
   std::stringstream s;
   s << get_last_log_messages(view, player);
   text.setString(s.str().c_str());
   text.setCharacterSize(20);
-  text.setPosition(
+  text.setPosition(sf::Vector2f(
     layout.get_log(player).get_tl().get_x(),
     layout.get_log(player).get_tl().get_y()
-  );
+  ));
   get_render_window().draw(text);
 }
 
@@ -530,8 +528,8 @@ void draw_possible_moves(game_view& view)
     );
     rectangle.setOutlineThickness(get_square_width(layout) / 10.0);
     rectangle.setFillColor(sf::Color::Transparent);
-    rectangle.setScale(0.5, 0.5);
-    rectangle.setRotation(action.get_color() == chess_color::white ? 30 : -30);
+    rectangle.setScale(sf::Vector2f(0.5, 0.5));
+    rectangle.setRotation(sf::degrees(static_cast<float>(action.get_color() == chess_color::white ? 30 : -30)));
     get_render_window().draw(rectangle);
   }
 }
@@ -570,7 +568,7 @@ void draw_cursor(
       layout
     )
   };
-  s.setPosition(square_pos.get_x(), square_pos.get_y());
+  s.setPosition(sf::Vector2f(square_pos.get_x(), square_pos.get_y()));
   const auto old_fill_color = s.getFillColor();
   const auto old_outline_color = s.getOutlineColor();
   const auto old_thickness = s.getOutlineThickness();

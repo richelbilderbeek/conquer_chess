@@ -11,7 +11,7 @@ options_controls_textures::options_controls_textures()
   {
     const std::string filename_str{get_filename(r)};
     const auto filename{
-      std::string("resources/textures/options_controls/")
+      std::string("resources/textures/options_menu/")
       + filename_str.c_str()
     };
     if (!m_textures[r].loadFromFile(filename))

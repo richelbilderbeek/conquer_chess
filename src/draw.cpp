@@ -78,10 +78,8 @@ void draw_controls_label(const screen_rect& sr)
   // Zoom in
   rectangle.setTextureRect(
     sf::IntRect(
-      0,
-      rectangle.getTexture()->getSize().y / 4,
-      rectangle.getTexture()->getSize().x,
-      rectangle.getTexture()->getSize().y / 2
+      sf::Vector2i(0, rectangle.getTexture()->getSize().y / 4),
+      sf::Vector2i(rectangle.getTexture()->getSize().x, rectangle.getTexture()->getSize().y / 2)
     )
   );
   get_render_window().draw(rectangle);
@@ -116,10 +114,8 @@ void draw_fancy_physical_controller_type(const physical_controller_type& t, cons
   // Zoom in
   rectangle.setTextureRect(
    sf::IntRect(
-     0,
-     rectangle.getTexture()->getSize().y / 4,
-     rectangle.getTexture()->getSize().x,
-     rectangle.getTexture()->getSize().y / 2
+     sf::Vector2i(0, rectangle.getTexture()->getSize().y / 4),
+     sf::Vector2i(rectangle.getTexture()->getSize().x, rectangle.getTexture()->getSize().y / 2)
    )
   );
   get_render_window().draw(rectangle);
@@ -149,10 +145,8 @@ void draw_game_speed_icon(const screen_rect& sr)
   // Zoom in
   rectangle.setTextureRect(
     sf::IntRect(
-      0,
-      rectangle.getTexture()->getSize().y / 4,
-      rectangle.getTexture()->getSize().x,
-      rectangle.getTexture()->getSize().y / 2
+      sf::Vector2i(0, rectangle.getTexture()->getSize().y / 4),
+      sf::Vector2i(rectangle.getTexture()->getSize().x, rectangle.getTexture()->getSize().y / 2)
       )
     );
   get_render_window().draw(rectangle);
@@ -189,10 +183,8 @@ void draw_when_to_make_a_move_icon(const screen_rect& sr)
   // Zoom in
   rectangle.setTextureRect(
     sf::IntRect(
-      0,
-      rectangle.getTexture()->getSize().y / 4,
-      rectangle.getTexture()->getSize().x,
-      rectangle.getTexture()->getSize().y / 2
+      sf::Vector2i(0, rectangle.getTexture()->getSize().y / 4),
+      sf::Vector2i(rectangle.getTexture()->getSize().x, rectangle.getTexture()->getSize().y / 2)
       )
     );
   get_render_window().draw(rectangle);
@@ -307,10 +299,8 @@ void draw_music_volume_label(const screen_rect& sr)
   // Zoom in
   rectangle.setTextureRect(
     sf::IntRect(
-      0,
-      rectangle.getTexture()->getSize().y / 4,
-      rectangle.getTexture()->getSize().x,
-      rectangle.getTexture()->getSize().y / 2
+      sf::Vector2i(0, rectangle.getTexture()->getSize().y / 4),
+      sf::Vector2i(rectangle.getTexture()->getSize().x, rectangle.getTexture()->getSize().y / 2)
       )
     );
   get_render_window().draw(rectangle);
@@ -563,10 +553,8 @@ void draw_sound_effects_volume_label(const screen_rect& sr)
   // Zoom in
   rectangle.setTextureRect(
     sf::IntRect(
-      0,
-      rectangle.getTexture()->getSize().y / 4,
-      rectangle.getTexture()->getSize().x,
-      rectangle.getTexture()->getSize().y / 2
+      sf::Vector2i(0, rectangle.getTexture()->getSize().y / 4),
+      sf::Vector2i(rectangle.getTexture()->getSize().x, rectangle.getTexture()->getSize().y / 2)
     )
   );
   set_rect(rectangle, sr);
@@ -637,10 +625,8 @@ void draw_starting_position_label(const screen_rect& sr)
   // Zoom in
   rectangle.setTextureRect(
     sf::IntRect(
-      0,
-      rectangle.getTexture()->getSize().y / 4,
-      rectangle.getTexture()->getSize().x,
-      rectangle.getTexture()->getSize().y / 2
+      sf::Vector2i(0, rectangle.getTexture()->getSize().y / 4),
+      sf::Vector2i(rectangle.getTexture()->getSize().x, rectangle.getTexture()->getSize().y / 2)
     )
   );
   get_render_window().draw(rectangle);
@@ -685,8 +671,7 @@ void draw_text(
 )
 {
   assert(character_size > 7);
-  sf::Text text;
-  text.setFont(get_arial_font());
+  sf::Text text(get_arial_font());
   text.setStyle(sf::Text::Bold);
   text.setString(s);
   text.setCharacterSize(character_size);

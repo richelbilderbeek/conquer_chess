@@ -1,4 +1,4 @@
-# Build a Windows x64 Release exe with SFML 2.6.1 via vcpkg
+# Build a Windows x64 Release exe with SFML 3 via vcpkg
 branches:
   only:
     - main
@@ -17,6 +17,10 @@ cache:
 
 install:
   - cd %VCPKG_ROOT%
+  # The preinstalled vcpkg may predate the builtin-baseline in vcpkg.json:
+  # update it, so that it knows the baseline and the package versions in it
+  - git fetch --quiet origin
+  - git reset --quiet --hard origin/master
   - .\bootstrap-vcpkg.bat
   - .\vcpkg install sfml[audio]:x64-windows
   - copy %APPVEYOR_BUILD_FOLDER%\patches\libogg\portfile.cmake %VCPKG_ROOT%\ports\libogg\portfile.cmake /Y
@@ -53,11 +57,11 @@ after_build:
       # Copy runtime DLLs (SFML + deps)
       $bin = Join-Path $env:VCPKG_ROOT 'installed\x64-windows\bin'
       $patterns = @(
-      'sfml-system-2.dll',
-      'sfml-window-2.dll',
-      'sfml-graphics-2.dll',
-      'sfml-audio-2.dll',
-      'sfml-network-2.dll',
+      'sfml-system-3.dll',
+      'sfml-window-3.dll',
+      'sfml-graphics-3.dll',
+      'sfml-audio-3.dll',
+      'sfml-network-3.dll',
       'openal32.dll',
       'freetype*.dll',
       'ogg*.dll',

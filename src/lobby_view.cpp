@@ -66,14 +66,14 @@ bool lobby_view::get_start(const side player_side) const noexcept
 
 bool lobby_view::process_event_impl(sf::Event& event)
 {
-  if (event.type == sf::Event::Closed)
+  if (event.is<sf::Event::Closed>())
   {
     set_next_state(program_state::main_menu);
     return false;
   }
-  else if (event.type == sf::Event::KeyPressed)
+  else if (event.is<sf::Event::KeyPressed>())
   {
-    sf::Keyboard::Key key_pressed = event.key.code;
+    sf::Keyboard::Key key_pressed = event.getIf<sf::Event::KeyPressed>()->code;
     if (key_pressed == sf::Keyboard::Key::Escape)
     {
       set_next_state(program_state::main_menu);
@@ -179,10 +179,10 @@ bool lobby_view::process_event_impl(sf::Event& event)
 
 void lobby_view::process_resize_event_impl(sf::Event& event)
 {
-  assert(event.type == sf::Event::Resized);
+  assert(event.is<sf::Event::Resized>());
   const screen_rect window_rect(
     screen_coordinate(0, 0),
-    screen_coordinate(event.size.width, event.size.height)
+    screen_coordinate(event.getIf<sf::Event::Resized>()->size.x, event.getIf<sf::Event::Resized>()->size.y)
   );
   m_layout = lobby_view_layout(
     window_rect,
@@ -258,7 +258,6 @@ void draw_race_panel(lobby_view& v, const side player_side)
   get_render_window().draw(rectangle);
 
   // Text
-  sf::Text text;
   const auto text_rect{
     get_lower_half(screen_rect)
   };

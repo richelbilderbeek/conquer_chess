@@ -4,7 +4,7 @@
   "dependencies": [
     {
       "name": "sfml",
-      "version>=": "2.6.1",
+      "version>=": "3.0.2",
       "features": [
         "audio",
         "graphics",
@@ -16,5 +16,5 @@
       "name": "magic-enum"
     }
   ],
-  "builtin-baseline": "163b97d4625073093ae73585695cc4cfe4480998"
+  "builtin-baseline": "bf19794383e8fb95eba5aa553235bc8ec2271688"
 }
