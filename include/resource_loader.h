@@ -18,7 +18,7 @@ public:
   ///
   /// This value is tested to be correct.
   /// The failed assert will give a helpful error message.
-  constexpr int get_n_items() const noexcept { return 21; }
+  constexpr int get_n_items() const noexcept { return 23; }
 
   /// Describe the current progress
   std::string get_current() const noexcept { return m_descriptor; }
