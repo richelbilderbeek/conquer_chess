@@ -8,6 +8,8 @@
 #include "piece.h"
 #include "starting_position_type.h"
 
+#include <optional>
+
 /// Surround the 8x8 strings of a chessboard by coordinats
 /// Without coordinats:
 ///
@@ -324,6 +326,22 @@ bool is_draw(const std::vector<piece>& pieces);
 bool is_king_under_attack(
   const std::vector<piece>& pieces,
   const chess_color player_color
+);
+
+/// Determine if moving the piece at `from` to `to`
+/// would leave its own king under attack,
+/// as forbidden by rules 1.4.1b and 1.4.1c.
+///
+/// If there is an enemy piece at `to`, it is assumed to be captured.
+/// If `captured_square` is given (e.g. for en-passant),
+/// the piece at that square is assumed to be captured.
+///
+/// Returns false if the player has no king.
+bool would_leave_king_under_attack(
+  const std::vector<piece>& pieces,
+  const square& from,
+  const square& to,
+  const std::optional<square>& captured_square = {}
 );
 
 /// Determine if there is a piece at the coordinat

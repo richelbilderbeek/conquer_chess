@@ -532,7 +532,16 @@ bool can_attack(
     return false;
   }
   const square cursor_square(square(c.get_cursor_pos(player_side)));
-  return can_do_attack(c.get_game(), selected_piece, cursor_square, lobby_options().get_color(player_side));
+  if (!can_do_attack(c.get_game(), selected_piece, cursor_square, lobby_options().get_color(player_side)))
+  {
+    return false;
+  }
+  // 1.4.1b and 1.4.1c
+  return !would_leave_king_under_attack(
+    c.get_game().get_pieces(),
+    selected_piece.get_current_square(),
+    cursor_square
+  );
 }
 
 bool can_attack_en_passant(
@@ -559,7 +568,17 @@ bool can_attack_en_passant(
     return false;
   }
   const square cursor_square(square(c.get_cursor_pos(player_side)));
-  return can_do_en_passant(c.get_game(), selected_piece, cursor_square, c.get_lobby_options().get_color(player_side));
+  if (!can_do_en_passant(c.get_game(), selected_piece, cursor_square, c.get_lobby_options().get_color(player_side)))
+  {
+    return false;
+  }
+  // 1.4.1b and 1.4.1c
+  return !would_leave_king_under_attack(
+    c.get_game().get_pieces(),
+    selected_piece.get_current_square(),
+    cursor_square,
+    get_en_passant_capture_square(selected_piece.get_current_square(), cursor_square)
+  );
 }
 
 bool can_castle_kingside(
@@ -623,7 +642,16 @@ bool can_move(
     return false;
   }
   const square cursor_square(square(c.get_cursor_pos(player_side)));
-  return can_do_move(c.get_game(), selected_piece, cursor_square, c.get_lobby_options().get_color(player_side));
+  if (!can_do_move(c.get_game(), selected_piece, cursor_square, c.get_lobby_options().get_color(player_side)))
+  {
+    return false;
+  }
+  // 1.4.1b and 1.4.1c
+  return !would_leave_king_under_attack(
+    c.get_game().get_pieces(),
+    selected_piece.get_current_square(),
+    cursor_square
+  );
 }
 
 bool can_player_select_piece_at_cursor_pos(
