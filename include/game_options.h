@@ -103,7 +103,7 @@ private:
   starting_position_type m_starting_position;
 
   /// The starting position
-  when_to_make_a_move_law m_when_to_make_a_move_law;
+  when_to_make_a_move_law m_when_to_make_a_move_law{when_to_make_a_move_law::rts};
 };
 
 /// Decrease the game speed
