@@ -9,6 +9,7 @@
 #include "sfml_helper.h"
 #include "render_window.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <iterator>

@@ -1,5 +1,6 @@
 #include "message_type.h"
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <iterator>

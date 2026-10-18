@@ -4,6 +4,7 @@
 #include "game_rect.h"
 #include "helper.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cmath>
 #include <iostream>

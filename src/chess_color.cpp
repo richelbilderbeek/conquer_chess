@@ -1,5 +1,6 @@
 #include "chess_color.h"
 
+#include <algorithm>
 #include <cassert>
 #include <iostream>
 #include <sstream>

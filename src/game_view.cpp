@@ -22,6 +22,7 @@
 #include "screen_rect.h"
 #include "sfml_helper.h"
 
+#include <algorithm>
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/Text.hpp>
 
