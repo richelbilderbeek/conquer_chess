@@ -27,14 +27,17 @@ jobs:
             libx11-dev libxrandr-dev libxi-dev libudev-dev \
             libgl1-mesa-dev libopenal-dev libvorbis-dev libflac-dev \
             libfreetype6-dev libglew-dev libjpeg-dev libsndfile1-dev \
-            patchelf unzip curl \
+            patchelf unzip curl ca-certificates \
             libxcursor-dev
 
       # SFML 3 needs CMake 3.22 or newer, which the Sniper SDK does not have
       - name: Install a recent CMake
         run: |
-          curl -fsSL https://github.com/Kitware/CMake/releases/download/v3.31.6/cmake-3.31.6-linux-x86_64.tar.gz | tar -xz -C /opt
-          echo "/opt/cmake-3.31.6-linux-x86_64/bin" >> "$GITHUB_PATH"
+          mkdir -p /opt/cmake
+          curl -fL --retry 3 -o /tmp/cmake.tar.gz https://github.com/Kitware/CMake/releases/download/v3.31.6/cmake-3.31.6-linux-x86_64.tar.gz
+          tar -xzf /tmp/cmake.tar.gz -C /opt/cmake --strip-components=1
+          /opt/cmake/bin/cmake --version
+          echo "/opt/cmake/bin" >> "$GITHUB_PATH"
 
       - name: Build and install SFML 3
         run: |

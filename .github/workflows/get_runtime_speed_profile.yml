@@ -72,6 +72,10 @@ jobs:
           git clone https://github.com/richelbilderbeek/SFGraphing -b patch-1
           cd -
 
+      # Until richelbilderbeek/SFGraphing has the SFML 3 port
+      - name: Port SFGraphing to SFML 3, if needed
+        run: ./patches/sfgraphing/apply_patch.sh ../SFGraphing
+
       - name: qmake
         run: qmake "DEFINES+=LOGIC_ONLY" game.pro
 

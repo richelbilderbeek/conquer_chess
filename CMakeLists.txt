@@ -32,6 +32,11 @@ FetchContent_Declare(
   SFGraphing
   GIT_REPOSITORY https://github.com/richelbilderbeek/SFGraphing.git
   GIT_TAG patch-1
+  # Until richelbilderbeek/SFGraphing has the SFML 3 port
+  PATCH_COMMAND ${CMAKE_COMMAND}
+    -DPATCH_FILE=${CMAKE_CURRENT_SOURCE_DIR}/patches/sfgraphing/0001-Port-to-SFML-3.patch
+    -P ${CMAKE_CURRENT_SOURCE_DIR}/patches/sfgraphing/apply_patch.cmake
+  UPDATE_DISCONNECTED TRUE
 )
 FetchContent_MakeAvailable(SFGraphing)
 
