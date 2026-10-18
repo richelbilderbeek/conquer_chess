@@ -30,7 +30,8 @@ void loading_view::tick_impl(const delta_t)
 
 bool loading_view::process_event_impl(sf::Event& event)
 {
-  if (event.type == sf::Event::Closed)
+
+  if (event.is<sf::Event::Closed>())
   {
     return true; // Close the program
   }

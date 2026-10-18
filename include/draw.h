@@ -15,6 +15,7 @@
 #include "physical_controller_type.h"
 #include "starting_position_type.h"
 #include "when_to_make_a_move_law.h"
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/String.hpp>
 #include <SFML/Window/Keyboard.hpp>
