@@ -273,6 +273,9 @@ void test_sfml_helper()
   }
 
   // set_text_position
+  // In SFML 3, measuring a sf::Text needs an OpenGL context,
+  // hence a display, which a LOGIC_ONLY build (e.g. on CI) may not have
+  #ifndef LOGIC_ONLY
   {
     const sf::Font font;
     sf::Text t(font);
@@ -281,6 +284,7 @@ void test_sfml_helper()
     set_text_position(t, screen_size);
     assert(!t.getString().isEmpty()); // Does not test set_text_poistion at all
   }
+  #endif // LOGIC_ONLY
 
   // to_resource_name, for keys
   {
