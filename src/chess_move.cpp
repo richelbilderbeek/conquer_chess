@@ -1,10 +1,71 @@
 #include "chess_move.h"
 #include "game.h"
 #include "fen_string.h"
+// Ignore warnings in the chess library, as is done in pieces.cpp
+#ifndef _MSC_VER
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wshadow"
+#pragma GCC diagnostic ignored "-Wnon-virtual-dtor"
+#endif
+
+#include "chess.hpp"
+
+#ifndef _MSC_VER
+#pragma GCC diagnostic pop
+#endif // _MSC_VER
+
 #include <cassert>
 #include <iostream>
 #include <regex>
 #include <sstream>
+
+namespace {
+
+/// Remove what is not part of the move itself:
+/// a move number ('1.e4', '1...e5') and annotations ('Rxd4!!', 'Nf6??').
+/// Castling written with zeros ('0-0', '0-0-0') is written with O's.
+std::string normalize_move_str(std::string s)
+{
+  s = std::regex_replace(s, std::regex("^[0-9]+\\.+"), "");
+  s = std::regex_replace(s, std::regex("[!?]+$"), "");
+  s = std::regex_replace(s, std::regex("^0-0-0"), "O-O-O");
+  s = std::regex_replace(s, std::regex("^0-0(?!-[01])"), "O-O");
+  return s;
+}
+
+piece_type to_piece_type(const chess::PieceType pt) noexcept
+{
+  if (pt == chess::PieceType::BISHOP) return piece_type::bishop;
+  if (pt == chess::PieceType::KING) return piece_type::king;
+  if (pt == chess::PieceType::KNIGHT) return piece_type::knight;
+  if (pt == chess::PieceType::PAWN) return piece_type::pawn;
+  if (pt == chess::PieceType::QUEEN) return piece_type::queen;
+  assert(pt == chess::PieceType::ROOK);
+  return piece_type::rook;
+}
+
+square to_square(const chess::Square& s)
+{
+  return square(static_cast<std::string>(s));
+}
+
+/// Find the legal move described by the SAN string in this position, if any
+std::optional<chess::Move> find_legal_move(const fen_string& fen_str, const std::string& san)
+{
+  try
+  {
+    const chess::Board board(fen_str.get());
+    const chess::Move move{chess::uci::parseSan(board, san)};
+    if (move == chess::Move::NO_MOVE) return {};
+    return move;
+  }
+  catch (const std::exception&)
+  {
+    return {};
+  }
+}
+
+} // namespace
 
 chess_move::chess_move(
   const pgn_move_string& pgn_str,
@@ -15,39 +76,63 @@ chess_move::chess_move(
     m_is_capture{false},
     m_pgn_str{pgn_str}
 {
-  // Simple 'go to there' move, no 'from'
-  std::string s{pgn_str.get()};
-  if (std::regex_match(s, std::regex("^[BKNQR]?x?[a-h][1-8](=[BKNQR])?(\\?\\?|\\?|\\+|#)?$")))
-  {
-    m_to = get_square(s);
-    m_from = ::get_from(fen_str, pgn_str);
-    m_piece_type = ::get_piece_type(s);
-    m_is_capture = ::is_capture(s);
-    m_promotion_type = ::get_promotion_type(s);
-
-    // TODO: Ignores en passant
-    m_action_type = m_is_capture ? piece_action_type::attack : piece_action_type::move;
-  }
-  else if (std::regex_match(s, std::regex("^(0-1)|1-0|(1/2-1/2)$")))
+  const std::string s{normalize_move_str(pgn_str.get())};
+  if (std::regex_match(s, std::regex("^(0-1)|1-0|(1/2-1/2)$")))
   {
     m_winner = ::get_winner(s);
     m_action_type = {};
   }
-  else if (std::regex_match(s, std::regex("^O-O(-O)?$")))
+  else if (std::regex_match(s, std::regex("^O-O(-O)?[+#]?$")))
   {
-    if (s == "O-O")
+    // Recognized without checking if castling is possible
+    if (std::regex_match(s, std::regex("^O-O[+#]?$")))
     {
       m_castling_type = castling_type::king_side;
       m_action_type = piece_action_type::castle_kingside;
     }
     else
     {
-      assert(s == "O-O-O");
       m_castling_type = castling_type::queen_side;
       m_action_type = piece_action_type::castle_queenside;
     }
+    m_piece_type = piece_type::king;
+    m_from = get_initial_king_square(m_color);
+    m_to = get_king_target_square(m_color, m_action_type.value());
   }
-
+  else if (const auto move{find_legal_move(fen_str, s)}; move.has_value())
+  {
+    // The chess library found the move in this position,
+    // which takes care of disambiguation ('Nbd7'), pins,
+    // pawn captures, en-passant and promotion
+    const chess::Board board(fen_str.get());
+    m_from = to_square(move->from());
+    m_to = to_square(move->to());
+    m_piece_type = to_piece_type(board.at<chess::PieceType>(move->from()));
+    m_is_capture = board.isCapture(move.value());
+    if (move->typeOf() == chess::Move::PROMOTION)
+    {
+      m_promotion_type = to_piece_type(move->promotionType());
+    }
+    if (move->typeOf() == chess::Move::ENPASSANT)
+    {
+      m_action_type = piece_action_type::attack_en_passant;
+    }
+    else
+    {
+      m_action_type = m_is_capture ? piece_action_type::attack : piece_action_type::move;
+    }
+  }
+  else if (std::regex_match(s, std::regex("^[BKNQR]?x?[a-h][1-8](=[BKNQR])?(\\+|#)?$")))
+  {
+    // Not a legal move in this position: find the piece
+    // by its type and the target square only
+    m_to = get_square(s);
+    m_from = ::get_from(fen_str, pgn_move_string(s));
+    m_piece_type = ::get_piece_type(s);
+    m_is_capture = ::is_capture(s);
+    m_promotion_type = ::get_promotion_type(s);
+    m_action_type = m_is_capture ? piece_action_type::attack : piece_action_type::move;
+  }
 }
 
 bool is_capture(const pgn_move_string& s)

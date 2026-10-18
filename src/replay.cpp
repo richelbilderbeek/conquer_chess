@@ -429,16 +429,15 @@ void test_replay()
   }
   // replayer can do a complex game
   {
-    #ifdef FIX_PARSING_COMPLEX_GAME
     replay r(create_action_history_from_pgn(pgn_game_string(get_kasparov_vs_topalov_as_pgn_str())));
     const int n_moves{get_n_moves(r)};
     for (int i{0}; i!=n_moves; ++i)
     {
       r.do_move();
     }
-    assert(is_checkmate(r.get_game().get_pieces(), chess_color::white));
+    // Topalov resigned: no checkmate
+    assert(!is_checkmate(r.get_game().get_pieces(), chess_color::white));
     assert(!is_checkmate(r.get_game().get_pieces(), chess_color::black));
-    #endif // FIX_PARSING_COMPLEX_GAME
   }
   // extract_game_statistics_in_time
   {
