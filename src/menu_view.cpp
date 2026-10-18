@@ -225,7 +225,7 @@ bool menu_view::process_event_impl(sf::Event& event)
     else if (key_pressed == sf::Keyboard::Key::O)
     {
       // Nothing
-      // set_next_state(program_state::options);
+      //set_next_state(program_state::options);
     }
     else if (key_pressed == sf::Keyboard::Key::S)
     {

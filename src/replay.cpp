@@ -6,7 +6,6 @@
 #include "pgn_game_string.h"
 #include <cassert>
 
-#include <filesystem>
 #include <sstream>
 
 replay::replay(
@@ -420,8 +419,6 @@ void test_replay()
     // 1. f3 e6 2. g4 Qh4#
     replay r(create_action_history_from_pgn(pgn_game_string("1. f3 e6 2. g4 Qh4#")));
     assert(get_n_moves(r) == 4);
-    //game g{create_game_with_starting_position(starting_position_type::standard)};
-    //game_controller c{create_game_controller_with_keyboard_mouse()};
 
     r.do_move(); // e2-e4
     r.do_move(); // e7-e5

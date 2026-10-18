@@ -21,6 +21,11 @@ private:
   std::string m_pgn_str;
 };
 
+/// Number 1 at
+/// https://www.raindropchess.com/the-greatest-chess-games-of-all-time-a-curated-ranking/
+/// Kasparov vs Topalov, Wijk aan Zee 1999
+pgn_game_string get_kasparov_vs_topalov_as_pgn_str() noexcept;
+
 pgn_game_string get_replay_1_as_pgn_str() noexcept;
 
 
