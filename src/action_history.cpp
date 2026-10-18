@@ -76,6 +76,21 @@ action_history create_action_history_from_pgn(const pgn_game_string& s)
       );
       h.add_action(t, pa);
       get_piece_at(c.get_game(), from).add_action(pa);
+      if (is_castling(m))
+      {
+        // The rook castles too
+        const castling_type ct{m.get_castling_type().value()};
+        const square rook_from{get_initial_rook_square(piece_color, ct)};
+        const piece_action rook_action(
+          piece_color,
+          piece_type::rook,
+          at.value(),
+          rook_from,
+          get_rook_target_square(piece_color, at.value())
+        );
+        h.add_action(t, rook_action);
+        get_piece_at(c.get_game(), rook_from).add_action(rook_action);
+      }
     }
     c.tick();
   }
@@ -257,15 +272,23 @@ void test_action_history()
     const int n_piece_actions{get_n_piece_actions(r)};
     assert(n_piece_actions == 7); // Winning is not a piece action
   }
-  //#define FIX_COMPLEX_PGN_20250702
-  #ifdef FIX_COMPLEX_PGN_20250702
   // create_action_history_from_pgn from get_replay_1_as_pgn_str
   {
     // It is a complex PGN
     const action_history r(create_action_history_from_pgn(get_replay_1_as_pgn_str()));
     assert(get_n_piece_actions(r) > 8);
   }
-  #endif // FIX_COMPLEX_PGN_20250702
+  // create_action_history_from_pgn handles move numbers without a space,
+  // castling written with zeros (which moves the rook too) and annotations
+  {
+    const action_history r(create_action_history_from_pgn(pgn_game_string("1.e4 e5 2.Nf3 Nc6 3.Bc4!? Nf6 4.0-0")));
+    assert(get_n_piece_actions(r) == 8);
+  }
+  // create_action_history_from_pgn handles pawn captures
+  {
+    const action_history r(create_action_history_from_pgn(pgn_game_string("1. e4 d5 2. exd5")));
+    assert(get_n_piece_actions(r) == 3);
+  }
   #ifdef REALLY_NEED_ISSUE_153
   // create_r_scrip_from_pgn
   {
