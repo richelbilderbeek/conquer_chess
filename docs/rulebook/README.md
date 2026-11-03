@@ -1,8 +1,9 @@
 # Rulebook
 
-- [FIDE 2023 Laws of Chess online handbook](https://handbook.fide.com/chapter/E012023)
+- [FIDE 2023 Laws of Chess online handbook](https://handbook.fide.com/chapter/e012023)
 - [FIDE 2023 Laws of Chess site](https://rcc.fide.com/2023-laws-of-chess/)
 - [FIDE 2023 Laws of Chess as PDF](20230101Laws-of-Chess.pdf)
+
 
 Conquer Chess intends to follow all the rules of regular chess.
 Most deviations from these rules are expensions to take into account
