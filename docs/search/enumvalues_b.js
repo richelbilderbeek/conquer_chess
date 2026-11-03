@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['pawn_0',['pawn',['../de/d45/piece__type_8h.html#a468557e39605f442cb3f6247ae7a37a3a54593f6b9413fc4ff2b4dec2da337806',1,'piece_type.h']]],
+  ['pawn_5fall_5fout_5fassault_1',['pawn_all_out_assault',['../d0/da3/starting__position__type_8h.html#ace47c30cedfb1ff33830309e0d76fad5a28731431fe547c28d80f099d230b71ed',1,'starting_position_type.h']]],
+  ['pawns_5fat_5fpromotion_2',['pawns_at_promotion',['../d0/da3/starting__position__type_8h.html#ace47c30cedfb1ff33830309e0d76fad5ad798ced3946bce3642d89c3ca139b023',1,'starting_position_type.h']]],
+  ['pawns_5fnear_5fpromotion_3',['pawns_near_promotion',['../d0/da3/starting__position__type_8h.html#ace47c30cedfb1ff33830309e0d76fad5a65444e2aaaaa94d998a9fdc193e88626',1,'starting_position_type.h']]],
+  ['pawns_5fnearly_5fnear_5fpromotion_4',['pawns_nearly_near_promotion',['../d0/da3/starting__position__type_8h.html#ace47c30cedfb1ff33830309e0d76fad5a81b06940d6f65effde396601afe3a777',1,'starting_position_type.h']]],
+  ['press_5faction_5f1_5',['press_action_1',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09a135bed358dde7191477cfd4ee5040cda',1,'user_input_type.h']]],
+  ['press_5faction_5f2_6',['press_action_2',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09a86fbe692ad3d6bc1d25dd34918e3784c',1,'user_input_type.h']]],
+  ['press_5faction_5f3_7',['press_action_3',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09a5fc01ea89c78c265449ed856dc688c18',1,'user_input_type.h']]],
+  ['press_5faction_5f4_8',['press_action_4',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09a94b9df0fdf5b909b8239ba830fef7235',1,'user_input_type.h']]],
+  ['press_5fdown_9',['press_down',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09a514095d2a00539932eeb9fab87e3ab71',1,'user_input_type.h']]],
+  ['press_5fleft_10',['press_left',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09a16f300401730ef956882843bd0db0a64',1,'user_input_type.h']]],
+  ['press_5fright_11',['press_right',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09afa4d2c82971390a5cbf4d8a95a1424d1',1,'user_input_type.h']]],
+  ['press_5fup_12',['press_up',['../d7/de7/user__input__type_8h.html#afb12242cff78e1daafb90d5d1deb5b09a3900c8eff26532e1adadc3fd73af4cbb',1,'user_input_type.h']]],
+  ['promote_5fto_5fbishop_13',['promote_to_bishop',['../dc/dd7/piece__action__type_8h.html#a030a3df524487ad755418e3dc1836f50ae2501806029dceaf4ae4e606e19c11db',1,'piece_action_type.h']]],
+  ['promote_5fto_5fknight_14',['promote_to_knight',['../dc/dd7/piece__action__type_8h.html#a030a3df524487ad755418e3dc1836f50ad60d5e6003d25d35a3e74b59776c2ced',1,'piece_action_type.h']]],
+  ['promote_5fto_5fqueen_15',['promote_to_queen',['../dc/dd7/piece__action__type_8h.html#a030a3df524487ad755418e3dc1836f50a4229ced561495f81904017ae93b281e9',1,'piece_action_type.h']]],
+  ['promote_5fto_5frook_16',['promote_to_rook',['../dc/dd7/piece__action__type_8h.html#a030a3df524487ad755418e3dc1836f50a091cb28cdd365c9b60350b00a0da89b3',1,'piece_action_type.h']]],
+  ['protectedness_17',['protectedness',['../d3/d83/game__statistic__type_8h.html#a6e2f534d4e11cf05b495397d034db9e1ab5dc8ca39022bf0e5ee4030450774fcb',1,'game_statistic_type.h']]]
+];

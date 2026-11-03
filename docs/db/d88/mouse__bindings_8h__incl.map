@@ -1,0 +1,16 @@
+<map id="include/mouse_bindings.h" name="include/mouse_bindings.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="121,5,312,31"/>
+<area shape="rect" id="Node000002" href="$d7/db1/ccfwd_8h.html" title=" " alt="" coords="5,79,76,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="189,33,83,76,81,71,187,28"/>
+<area shape="rect" id="Node000003" href="$d3/d28/action__number_8h.html" title=" " alt="" coords="151,79,282,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="219,31,219,65,214,65,214,31"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="90,152,154,177"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="196,33,167,53,142,80,130,109,125,138,120,137,125,107,137,77,163,49,193,29"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="307,79,495,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="247,28,359,71,357,76,245,33"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="519,79,570,104"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="282,28,384,48,507,76,505,81,382,53,281,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="203,106,150,146,147,141,200,102"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="185,152,248,177"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="219,104,219,138,214,138,214,104"/>
+</map>

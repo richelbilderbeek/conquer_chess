@@ -1,0 +1,20 @@
+<map id="include/lobby_menu_textures.h" name="include/lobby_menu_textures.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="177,5,330,45"/>
+<area shape="rect" id="Node000002" href="$d6/d82/race_8h.html" title=" " alt="" coords="35,93,98,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,48,108,90,106,85,208,43"/>
+<area shape="rect" id="Node000006" href="$d8/d10/chess__color_8h.html" title=" " alt="" coords="123,93,232,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="237,47,200,85,196,81,233,44"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="256,93,403,119"/>
+<area shape="poly" id="edge9_Node000001_Node000007" title=" " alt="" coords="274,44,310,81,306,85,270,47"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="427,93,477,119"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="302,43,415,87,413,92,300,48"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,69,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="64,120,50,155,45,153,59,118"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,167,152,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="78,117,107,154,103,157,74,121"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="177,167,239,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="91,116,174,158,172,163,88,121"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="156,121,73,163,71,158,154,116"/>
+<area shape="poly" id="edge7_Node000006_Node000004" title=" " alt="" coords="170,121,142,157,138,154,166,117"/>
+<area shape="poly" id="edge8_Node000006_Node000005" title=" " alt="" coords="185,118,200,153,195,155,180,120"/>
+</map>

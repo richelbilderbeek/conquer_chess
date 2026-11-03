@@ -1,0 +1,7 @@
+<map id="include/loading_screen_textures.h" name="include/loading_screen_textures.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="55,5,225,45"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,93,152,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,47,98,84,94,81,123,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="176,93,227,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="157,44,186,81,182,84,153,47"/>
+</map>

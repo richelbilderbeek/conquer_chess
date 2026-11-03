@@ -1,0 +1,19 @@
+<map id="src/chess_color.cpp" name="src/chess_color.cpp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="261,5,408,31"/>
+<area shape="rect" id="Node000002" href="$d8/d10/chess__color_8h.html" title=" " alt="" coords="68,86,177,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="305,33,167,84,165,79,303,28"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="201,86,271,111"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="322,33,263,79,260,75,318,29"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="295,86,375,111"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="337,31,337,72,332,72,332,31"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="399,86,473,111"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="351,29,412,75,408,79,348,33"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="497,79,724,119"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="376,28,532,72,530,77,374,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,167,69,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,113,62,159,58,155,108,110"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,167,152,192"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="125,112,125,153,120,153,120,112"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="177,167,239,192"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="137,110,187,155,183,159,133,113"/>
+</map>

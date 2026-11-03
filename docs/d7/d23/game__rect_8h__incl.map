@@ -1,0 +1,19 @@
+<map id="include/game_rect.h" name="include/game_rect.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,160,31"/>
+<area shape="rect" id="Node000002" href="$d2/d60/game__coordinate_8h.html" title=" " alt="" coords="72,79,219,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,29,128,66,124,70,91,33"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="40,225,104,251"/>
+<area shape="poly" id="edge9_Node000001_Node000005" title=" " alt="" coords="79,32,70,53,63,79,59,115,60,151,69,211,64,212,55,151,54,115,57,78,65,52,74,30"/>
+<area shape="rect" id="Node000003" href="$d7/db1/ccfwd_8h.html" title=" " alt="" coords="206,152,277,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="162,102,216,141,213,146,159,106"/>
+<area shape="rect" id="Node000004" href="$d8/d10/chess__color_8h.html" title=" " alt="" coords="301,152,411,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="180,101,310,145,308,150,178,107"/>
+<area shape="poly" id="edge7_Node000002_Node000005" title=" " alt="" coords="136,106,117,127,100,153,87,183,79,212,74,211,82,182,95,151,113,124,131,103"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="109,152,181,177"/>
+<area shape="poly" id="edge8_Node000002_Node000008" title=" " alt="" coords="148,104,148,138,143,138,143,104"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="311,180,118,228,117,223,310,175"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="284,225,343,251"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="351,179,329,215,325,212,347,176"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="367,225,430,251"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="365,176,387,212,383,215,361,179"/>
+</map>
